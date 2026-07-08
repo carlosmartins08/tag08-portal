@@ -1,0 +1,6 @@
+{
+  "name": "TAG08",
+  "description": "Site institucional e comercial da TAG08, agência estratégica de marketing, branding, web e processos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
