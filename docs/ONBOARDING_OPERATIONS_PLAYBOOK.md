@@ -1,4 +1,4 @@
-﻿# Playbook operacional - Onboarding TAG08
+# Playbook operacional - Onboarding TAG08
 
 ## Objetivo
 
@@ -7,44 +7,46 @@ Recuperar fila local, restaurar envio e documentar incidente de onboarding.
 ## Acionamentos
 
 - Falha persistente do endpoint.
-- Picos de rejeições acima de 5% em `GET /api/onboarding/metrics`.
-- Usuários sem confirmação de envio no final do fluxo.
+- Picos de rejeicoes acima de 5% em `GET /api/onboarding/metrics`.
+- Usuarios sem confirmacao de envio no final do fluxo.
 
-## Ações de primeiro socorro
+## Acoes de primeiro socorro
 
 1. Abrir o console do projeto e validar:
    - `GET /api/onboarding/metrics`
    - `totalFailure` e `failureRate`
-2. Validar se existe fila local no navegador do usuário:
+2. Validar se existe fila local no navegador do usuario:
    - chave `tag08_onboarding_queue`
    - status `pending`, `retrying` ou `error`
 3. Confirmar eventos de conectividade:
    - status da rede no browser
    - retorno `navigator.onLine`
-4. Confirmar `VITE_USE_MOCK_ONBOARDING`:
-   - local deve usar mock apenas em dev
-   - produção deve apontar para `http://127.0.0.1:3001` no proxy
+4. Confirmar que a stack local esta ativa:
+   - `npm run dev:backend`
+   - `npm run dev`
+   - ou `npm run dev:with-backend`
+5. Confirmar que o proxy do Vite esta apontando para `ONBOARDING_PORT`.
 
-## Recuperação de fila
+## Recuperacao de fila
 
-- O fluxo de envio automático roda em:
+- O fluxo de envio automatico roda em:
   - evento `online`
   - intervalo `ONBOARDING_QUEUE_SYNC_WINDOW_SECONDS`
-- Se a entrada ficou em `error`, manter para revisão até limpeza por idade/retries.
-- Se necessário, reduzir temporariamente `ONBOARDING_QUEUE_MAX_AGE_DAYS` para limpeza controlada.
+- Se a entrada ficou em `error`, manter para revisao ate limpeza por idade ou retries.
+- Se necessario, reduzir temporariamente `ONBOARDING_QUEUE_MAX_AGE_DAYS` para limpeza controlada.
 
 ## Limpeza
 
 - A fila local remove automaticamente:
   - itens com `attempts` acima do limite
-  - itens com idade acima do período definido
-- Envio novo deve sempre atualizar o `localStorage` com o último estado da fila.
+  - itens com idade acima do periodo definido
+- Envio novo deve sempre atualizar o `localStorage` com o ultimo estado da fila.
 
-## Pauta de pós-incidente
+## Pauta de pos-incidente
 
-- Hora do início
-- Número de entradas afetadas
-- Raiz do problema: validação, infra ou endpoint
-- Correções aplicadas
+- Hora do inicio
+- Numero de entradas afetadas
+- Raiz do problema: validacao, infra ou endpoint
+- Correcao aplicada
 - Passo para rollback
-- Data e hora da recuperação e da próxima verificação
+- Data e hora da recuperacao e da proxima verificacao

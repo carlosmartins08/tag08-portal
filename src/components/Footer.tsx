@@ -53,7 +53,7 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
     servicesTitle: "SOLUÇÕES",
     programsTitle: "PROGRAMAS",
     institutionTitle: "INSTITUCIONAL",
-    connectTitle: "CONEXÃO",
+    connectTitle: "CONEX�O",
     ecosystemTitle: "ECOSISTEMA TAG08",
     serviceLinks: [
       { label: "Assessoria de Marketing", path: "/servicos/assessoria-marketing-digital-estrategico" },

@@ -98,72 +98,72 @@ const isValidSubmissionResult = (value: unknown): value is OnboardingSubmitResul
 const translations: Record<Language, Record<string, string>> = {
   pt: {
     // Header & Titles
-    op_tool: "Ferramenta Operacional de IntegraÃ§Ã£o",
+    op_tool: "Ferramenta Operacional de Integração",
     title_prefix: "Assistente de Onboarding",
-    header_desc: "Inicie a engenharia de seu projeto de forma leve e progressiva. Evitamos a rigidez de formulÃ¡rios tradicionais por meio de perguntas tÃ¡ticas guiadas.",
+    header_desc: "Inicie a engenharia de seu projeto de forma leve e progressiva. Evitamos a rigidez de formulários tradicionais por meio de perguntas táticas guiadas.",
     
     // Privacy Sidebar
     privacy_title: "GARANTIAS DE PRIVACIDADE",
-    privacy_desc: "Sua empresa goza de absoluta proteÃ§Ã£o jurÃ­dica. Assinamos NDAs de confidencialidade padrÃ£o caso seja necessÃ¡rio antes do inÃ­cio de qualquer procedimento.",
+    privacy_desc: "Sua empresa goza de absoluta proteção jurídica. Assinamos NDAs de confidencialidade padrão caso seja necessário antes do início de qualquer procedimento.",
     privacy_indicators: "PROTETORES ATIVOS:",
     privacy_p1: "Tratamento de dados sob a LGPD",
-    privacy_p2: "Criptografia de upload no formulÃ¡rio",
+    privacy_p2: "Criptografia de upload no formulário",
     privacy_p3: "Suporte corporativo sob demanda",
     
     // Step indicator & generic
     step_label: "ETAPA",
     step_of: "DE",
-    completed: "CONCLUÃDO",
-    senior_info: "InformaÃ§Ãµes sÃªnior seguras",
+    completed: "CONCLUÍDO",
+    senior_info: "Informações sênior seguras",
     live_state: "LIVE STATE",
     
     // Buttons & Actions
-    btn_start: "ComeÃ§ar Onboarding",
+    btn_start: "Começar Onboarding",
     btn_back: "Voltar",
-    btn_next: "AvanÃ§ar",
+    btn_next: "Avançar",
     btn_submit: "Enviar Onboarding Completo",
     btn_submitting: "Enviando dados...",
     btn_whatsapp: "Falar com a TAG08 no WhatsApp",
-    back_to_start: "  Voltar para o inÃ­cio",
+    back_to_start: "  Voltar para o início",
     status_idle: "Pronto para envio",
-    status_online: "FormulÃ¡rio enviado com sucesso para o fluxo operacional da TAG08.",
+    status_online: "Formulário enviado com sucesso para o fluxo operacional da TAG08.",
     status_online_ref: "Envio confirmado: {status} ({submissionId}) em {receivedAt}.",
-    status_queue_fallback: "Sem conectividade no momento. Seu envio foi salvo em fila local e serÃ¡ reenviado automaticamente.",
-    status_queue_store_error: "NÃ£o foi possÃ­vel salvar sua submissÃ£o para retry automÃ¡tico.",
-    status_validation_error: "Dados invÃ¡lidos: {details}. Corrija os campos e tente novamente.",
-    status_transport_error: "NÃ£o foi possÃ­vel concluir o envio agora. Tentativa em andamento em seguida.",
-    status_sync_error: "NÃ£o foi possÃ­vel sincronizar envios pendentes automaticamente.",
-    status_queue_summary: "HÃ¡ {count} envio(s) aguardando sincronizaÃ§Ã£o com a API.",
+    status_queue_fallback: "Sem conectividade no momento. Seu envio foi salvo em fila local e será reenviado automaticamente.",
+    status_queue_store_error: "Não foi possível salvar sua submissão para retry automático.",
+    status_validation_error: "Dados inválidos: {details}. Corrija os campos e tente novamente.",
+    status_transport_error: "Não foi possível concluir o envio agora. Tentativa em andamento em seguida.",
+    status_sync_error: "Não foi possível sincronizar envios pendentes automaticamente.",
+    status_queue_summary: "Há {count} envio(s) aguardando sincronização com a API.",
     
     // Step 0: Welcome Screen
-    welcome_title: "Bem-vindo  TAG08. <br />Vamos organizar o inÃ­cio do seu projeto.",
-    welcome_desc: "Este assistente vai reunir as informaÃ§Ãµes essenciais para preparar sua jornada com clareza, seguranÃ§a e direÃ§Ã£o. Responda no seu ritmo. O objetivo nÃ£o burocratizar o inÃ­cio, mas evitar retrabalho e preparar nossa equipe para te atender melhor.",
+    welcome_title: "Bem-vindo  TAG08. <br />Vamos organizar o início do seu projeto.",
+    welcome_desc: "Este assistente vai reunir as informações essenciais para preparar sua jornada com clareza, segurança e direção. Responda no seu ritmo. O objetivo não burocratizar o início, mas evitar retrabalho e preparar nossa equipe para te atender melhor.",
     est_time: "Tempo Estimado",
-    est_time_desc: "8 a 15 minutos em preenchimento fluido. NÃ£o Ã© necessÃ¡rio preencher tudo de uma vez.",
+    est_time_desc: "8 a 15 minutos em preenchimento fluido. Não é necessário preencher tudo de uma vez.",
     pass_guideline: "Diretriz de Senhas",
-    pass_desc: "NÃ£o solicitamos ou aceitamos qualquer senha por este formulÃ¡rio. Suas credenciais estÃ£o preservadas.",
+    pass_desc: "Não solicitamos ou aceitamos qualquer senha por este formulário. Suas credenciais estão preservadas.",
     
     // Sidebar Summary Box
-    sidebar_title: "RESUMO DE CONSOLIDAÃ‡ÃƒO",
-    sidebar_org: "ORGANIZAÃ‡ÃƒO",
-    sidebar_rep: "RESPONSÃVEL",
+    sidebar_title: "RESUMO DE CONSOLIDA�!ÒO",
+    sidebar_org: "ORGANIZA�!ÒO",
+    sidebar_rep: "RESPONSÁVEL",
     sidebar_moment: "MOMENTO SELECIONADO",
     sidebar_scope: "ESCOPO CONTRATADO",
     sidebar_target_90: "ALVO EM 90 DIAS",
     sidebar_pending: "Pendente preenchimento...",
     sidebar_waiting: "Aguardando dados...",
-    sidebar_none_selected: "NÃ£o selecionado...",
-    sidebar_no_service: "Nenhum serviÃ§o selecionado...",
+    sidebar_none_selected: "Não selecionado...",
+    sidebar_no_service: "Nenhum serviço selecionado...",
     sidebar_lang_val: "Idioma",
     
     // Step 1: Dados da Empresa
     empresa_label_name: "Nome da Empresa ou Projeto *",
-    empresa_placeholder_name: "Ex: ConsultÃ³rio ClÃ­nico AvanÃ§ado",
+    empresa_placeholder_name: "Ex: Consultório Clínico Avançado",
     empresa_label_cnpj: "CNPJ ou CPF (Para faturamento de notas)",
     empresa_placeholder_cnpj: "Ex: 00.000.000/0001-00",
-    empresa_label_city: "Cidade / Estado (LocalizaÃ§Ã£o Sede)",
-    empresa_placeholder_city: "Ex: SÃ£o Paulo / SP",
-    empresa_label_site: "EndereÃ§o do Site Institucional",
+    empresa_label_city: "Cidade / Estado (Localização Sede)",
+    empresa_placeholder_city: "Ex: São Paulo / SP",
+    empresa_label_site: "Endereço do Site Institucional",
     empresa_placeholder_site: "Ex: https://suaempresa.com.br",
     empresa_label_insta: "Instagram Corporativo",
     empresa_placeholder_insta: "Ex: instagram.com/empresa",
@@ -171,24 +171,24 @@ const translations: Record<Language, Record<string, string>> = {
     empresa_placeholder_linkedin: "Ex: linkedin.com/company/suaempresa",
     empresa_lang_title: "Idioma Preferencial de Atendimento / Preferred Language",
     empresa_lang_badge: "Global Coverage / Suporte Internacional",
-    empresa_lang_desc: "Oferecemos atendimento tÃ©cnico corporativo em portuguÃªs para empresas brasileiras, com suporte operacional de engenharia em inglÃªs ou espanhol para clientes internacionais.",
+    empresa_lang_desc: "Oferecemos atendimento técnico corporativo em português para empresas brasileiras, com suporte operacional de engenharia em inglês ou espanhol para clientes internacionais.",
     empresa_lang_pt_desc: "Equipe nativa e playbooks em PT-BR",
     empresa_lang_en_desc: "Global support & English technical delivery",
-    empresa_lang_es_desc: "Soporte y flujos estratÃ©gicos en espaÃ±ol",
+    empresa_lang_es_desc: "Soporte y flujos estratégicos en español",
     
-    // Step 2: ResponsÃ¡vel / Contatos
+    // Step 2: Responsável / Contatos
     equipe_label_name: "Qual o seu nome? *",
     equipe_placeholder_name: "Ex: Dr. Fernando Guedes",
-    equipe_label_role: "Cargo / FunÃ§Ã£o na Empresa",
-    equipe_placeholder_role: "Ex: Fundador e Diretor ClÃ­nico",
+    equipe_label_role: "Cargo / Função na Empresa",
+    equipe_placeholder_role: "Ex: Fundador e Diretor Clínico",
     equipe_label_email: "E-mail de Contato Comercial *",
     equipe_placeholder_email: "Ex: dr@clinicaguedes.com",
     equipe_label_whatsapp: "WhatsApp Corporativo / Pessoal *",
     equipe_placeholder_whatsapp: "Ex: (11) 99999-9999",
     equipe_section_focal: "Definies de Ponto Focal",
-    equipe_label_ti: "Ponto focal tÃ©cnico (ex: DNS, TI)",
+    equipe_label_ti: "Ponto focal técnico (ex: DNS, TI)",
     equipe_placeholder_ti: "Ex: Camila (Marketing)",
-    equipe_label_approver: "Quem aprova decisÃµes estratÃ©gicas? *",
+    equipe_label_approver: "Quem aprova decisões estratégicas? *",
     equipe_placeholder_approver: "Ex: Fernando Guedes",
     equipe_label_finance: "Recebe o financeiro? (Notas/Boletos)",
     equipe_placeholder_finance: "Ex: financeiro@empresa.com",
@@ -196,80 +196,80 @@ const translations: Record<Language, Record<string, string>> = {
     // Step 3: Radar
     radar_label_moment: "Atualmente, qual destas frases melhor simboliza a realidade da sua empresa? *",
     radar_label_priority: "Caso a TAG08 pudesse solucionar uma prioridade primeiro, qual seria? *",
-    radar_label_term: "TermÃ´metro de OrganizaÃ§Ã£o Atual",
-    radar_term_desc: "Arraste para avaliar a organizaÃ§Ã£o e padrÃ£o de sua comunicaÃ§Ã£o ou operaÃ§Ãµes internas atualmente.",
+    radar_label_term: "Termômetro de Organização Atual",
+    radar_term_desc: "Arraste para avaliar a organização e padrão de sua comunicação ou operações internas atualmente.",
     radar_term_score: "Nota:",
     radar_term_n1: "1\nMuito improvisada",
-    radar_term_n2: "2\nExiste algo, mas sem padrÃ£o",
+    radar_term_n2: "2\nExiste algo, mas sem padrão",
     radar_term_n3: "3\nFunciona, mas precisa de capricho",
-    radar_term_n4: "4\nBoa, mas quer escalar de nÃ­vel",
-    radar_term_n5: "5\nEstruturada e em evoluÃ§Ã£o",
+    radar_term_n4: "4\nBoa, mas quer escalar de nível",
+    radar_term_n5: "5\nEstruturada e em evolução",
     
-    // Step 4: ServiÃ§os
+    // Step 4: Serviços
     escopo_title: "MAPEAMENTO DE ENTRADA",
-    escopo_heading: "Quais foram as soluÃ§Ãµes ou frentes acordadas com o comercial da TAG08?",
-    escopo_desc: "Selecione um ou mais mÃ³dulos abaixo contratados para ativarmos os briefings correspondentes.",
+    escopo_heading: "Quais foram as soluções ou frentes acordadas com o comercial da TAG08?",
+    escopo_desc: "Selecione um ou mais módulos abaixo contratados para ativarmos os briefings correspondentes.",
     escopo_label_custom: "Caso tenha escolhido \"Outro\", descreva brevemente qual o escopo contratado:",
-    escopo_placeholder_custom: "Ex: Assessoria em automaÃ§Ãµes de CRMs especÃ­ficos",
+    escopo_placeholder_custom: "Ex: Assessoria em automações de CRMs específicos",
     
     // Step 5: Briefing
-    briefing_module_title: "MÃ“DULO CUSTOMIZADO ATIVO",
-    briefing_module_desc: "Sua empresa contratou {services}. Responda abaixo os detalhes operacionais que ditou nossa produÃ§Ã£o tÃ©cnica:",
-    briefing_not_selected_desc: "Descreva brevemente detalhes, metas ou escopo contratado para as divisÃµes assinaladas:",
-    briefing_not_selected_placeholder: "Informe aqui metas de trÃ¡fego, detalhes do ecossistema audiovisual ou observaÃ§Ãµes especÃ­ficas do seu projeto.",
+    briefing_module_title: "M�DULO CUSTOMIZADO ATIVO",
+    briefing_module_desc: "Sua empresa contratou {services}. Responda abaixo os detalhes operacionais que ditou nossa produção técnica:",
+    briefing_not_selected_desc: "Descreva brevemente detalhes, metas ou escopo contratado para as divisões assinaladas:",
+    briefing_not_selected_placeholder: "Informe aqui metas de tráfego, detalhes do ecossistema audiovisual ou observações específicas do seu projeto.",
     
     // Step 6: Materiais
     materiais_title: "MATERIAIS E LINKS DE SUPORTE",
-    materiais_desc: "ForneÃ§a links de pastas compartilhadas pÃºblicas ou materiais comerciais para abastecer nossa equipe (Ex: Google Drive, Dropbox, Figma).",
-    materiais_warning: "ALERTA SEGURO: NÃ£o insira senhas sensÃ­veis ou PINs de e-mails em nenhum dos campos.",
+    materiais_desc: "Forneça links de pastas compartilhadas públicas ou materiais comerciais para abastecer nossa equipe (Ex: Google Drive, Dropbox, Figma).",
+    materiais_warning: "ALERTA SEGURO: Não insira senhas sensíveis ou PINs de e-mails em nenhum dos campos.",
     materiais_label_drive: "Link Pasta Principal (Google Drive/Dropbox)",
     materiais_label_insta: "Link Instagram Atual",
-    materiais_label_site: "Link Site Institucional do NegÃ³cio",
-    materiais_label_portfolio: "Link PortfÃ³lio / CatÃ¡logo Oficial",
-    materiais_label_references: "ReferÃªncias Visuais (Links ou Pinterest)",
+    materiais_label_site: "Link Site Institucional do Negócio",
+    materiais_label_portfolio: "Link Portfólio / Catálogo Oficial",
+    materiais_label_references: "Referências Visuais (Links ou Pinterest)",
     materiais_label_documents: "Manual de Marca ou Logotipos (.PDF / .AI / .PNG)",
-    materiais_label_commercial: "ApresentaÃ§Ã£o Comercial / Pitch Deck",
+    materiais_label_commercial: "Apresentação Comercial / Pitch Deck",
     
     // Step 7: Expectativas
-    expectativas_title: "DIREÃ‡ÃƒO E EXPECTATIVAS DE SUCESSO na TAG08",
-    expectativas_subtitle: "Por que vocÃª buscou a TAG08 neste exato momento corporativo?",
-    expectativas_desc: "Compreender os pontos sensÃ­veis da sua marca nos blinda contra falhas e acelera a transiÃ§Ã£o de seus novos canais.",
-    expectativas_placeholder_1: "Ex: Sentimos que nossa comunicaÃ§Ã£o atual nos faz parecer menores do que realmente somos...",
-    expectativas_label_tried: "O que vocÃª jÃ¡ tentou antes para resolver esse desafio? (Ex: agÃªncias, time interno)",
-    expectativas_placeholder_tried: "Ex: Contratamos uma agÃªncia tradicional de postagens cotidianas...",
+    expectativas_title: "DIRE�!ÒO E EXPECTATIVAS DE SUCESSO na TAG08",
+    expectativas_subtitle: "Por que você buscou a TAG08 neste exato momento corporativo?",
+    expectativas_desc: "Compreender os pontos sensíveis da sua marca nos blinda contra falhas e acelera a transição de seus novos canais.",
+    expectativas_placeholder_1: "Ex: Sentimos que nossa comunicação atual nos faz parecer menores do que realmente somos...",
+    expectativas_label_tried: "O que você já tentou antes para resolver esse desafio? (Ex: agências, time interno)",
+    expectativas_placeholder_tried: "Ex: Contratamos uma agência tradicional de postagens cotidianas...",
     expectativas_label_did_not_work: "O que NO funcionou nessas tentativas passadas corporativas?",
-    expectativas_placeholder_did_not_work: "Ex: Muitas postagens sem estÃ©tica profissional, artes genÃ©ricas e falta de inteligÃªncia comercial...",
-    expectativas_label_good_result: "Ao final de 90 dias de parceria com a TAG08, o que faria vocÃª sentir de verdade que deu o passo correto?",
-    expectativas_placeholder_good_result: "Ex: Um posicionamento institucional sÃ³lido que atraia leads corporativos qualificados...",
-    expectativas_label_urgency: "Qual Ã© a sua principal urgÃªncia operacional ou comercial no momento?",
-    expectativas_placeholder_urgency: "Ex: Redesenhar nosso site institucional que estÃ¡ obsoleto...",
-    expectativas_label_not_err: "O que nÃ³s NÃƒO podemos errar de jeito nenhum na sua comunicaÃ§Ã£o institucional ou de processos? *",
+    expectativas_placeholder_did_not_work: "Ex: Muitas postagens sem estética profissional, artes genéricas e falta de inteligência comercial...",
+    expectativas_label_good_result: "Ao final de 90 dias de parceria com a TAG08, o que faria você sentir de verdade que deu o passo correto?",
+    expectativas_placeholder_good_result: "Ex: Um posicionamento institucional sólido que atraia leads corporativos qualificados...",
+    expectativas_label_urgency: "Qual é a sua principal urgência operacional ou comercial no momento?",
+    expectativas_placeholder_urgency: "Ex: Redesenhar nosso site institucional que está obsoleto...",
+    expectativas_label_not_err: "O que n�s NÒO podemos errar de jeito nenhum na sua comunica��o institucional ou de processos? *",
     expectativas_placeholder_not_err: "Ex: Linguagem informal demais, ou alterar a paleta de cores original da marca...",
     
     // Step 8: Consentimento
-    consent_title: "TERMOS DE CONSENTIMENTO & SEGURANÃ‡A",
-    consent_subtitle: "AutorizaÃ§Ã£o para upload estratÃ©gico operacional de diretrizes",
+    consent_title: "TERMOS DE CONSENTIMENTO & SEGURAN�!A",
+    consent_subtitle: "Autorização para upload estratégico operacional de diretrizes",
     consent_desc: "Leia e marque as caixas abaixo para fins operacionais imediatos de kick-off.",
-    consent_opt1: "Declaro que todas as informaÃ§Ãµes corporativas prestadas sÃ£o Ã­ntegras e verdadeiras.",
-    consent_opt2: "Autorizo o uso destes dados unicamente pela equipe tÃ©cnica da TAG08 para estrutura estratÃ©gica.",
-    consent_opt3: "Confirmo que nÃ£o forneci qualquer credencial de acesso direto ou senha de seguranÃ§a neste fluxo.",
+    consent_opt1: "Declaro que todas as informações corporativas prestadas são íntegras e verdadeiras.",
+    consent_opt2: "Autorizo o uso destes dados unicamente pela equipe técnica da TAG08 para estrutura estratégica.",
+    consent_opt3: "Confirmo que não forneci qualquer credencial de acesso direto ou senha de segurança neste fluxo.",
     
     // Step 9: Finalizado (WhatsApp)
     finalized_badge: "ONBOARDING ENVIADO COM SUCESSO",
-    finalized_title: "IntegraÃ§Ã£o operacional em andamento!",
-    finalized_desc_1: "Seus dados de direÃ§Ã£o corporativa foram consolidados com sucesso e jÃ¡ estÃ¡ na fila de triagem tÃ©cnica de nossa equipe de engenharia e branding.",
-    finalized_desc_2: "Para acelerar seu kickoff e confirmar o recebimento direto com o diretor tÃ©cnico do seu projeto, clique no link abaixo para nos notificar via WhatsApp corporativo.",
-    whatsapp_template_msg: "OlÃ¡ time TAG08! ConcluÃ­mos o preenchimento do nosso onboarding institucional via Assistente Conversacional.\\n\\nEmpresa: {company}\\nRepresentante: {name}\\nMeta dos prÃ³ximos 90 dias: {goal}.\\n\\nAguardamos contato tÃ©cnico para agendarmos nosso kickoff!",
+    finalized_title: "Integração operacional em andamento!",
+    finalized_desc_1: "Seus dados de direção corporativa foram consolidados com sucesso e já está na fila de triagem técnica de nossa equipe de engenharia e branding.",
+    finalized_desc_2: "Para acelerar seu kickoff e confirmar o recebimento direto com o diretor técnico do seu projeto, clique no link abaixo para nos notificar via WhatsApp corporativo.",
+    whatsapp_template_msg: "Olá time TAG08! Concluímos o preenchimento do nosso onboarding institucional via Assistente Conversacional.\\n\\nEmpresa: {company}\\nRepresentante: {name}\\nMeta dos próximos 90 dias: {goal}.\\n\\nAguardamos contato técnico para agendarmos nosso kickoff!",
     
     // Errors
-    err_company_name: "O nome da sua empresa Ã© essencial para darmos o pontapÃ©.",
-    err_responsible_name: "Informe o nome do responsÃ¡vel principal.",
-    err_responsible_email: "Insira um endereÃ§o de e-mail corporativo vÃ¡lido.",
-    err_responsible_whatsapp: "Precisamos de um nÃºmero de WhatsApp ativo para contato tÃ©cnico.",
+    err_company_name: "O nome da sua empresa é essencial para darmos o pontapé.",
+    err_responsible_name: "Informe o nome do responsável principal.",
+    err_responsible_email: "Insira um endereço de e-mail corporativo válido.",
+    err_responsible_whatsapp: "Precisamos de um número de WhatsApp ativo para contato técnico.",
     err_business_moment: "Por favor, selecione a alternativa que mais condiz com o momento de sua empresa.",
     err_priority_map: "Por favor, assinale qual rea de prioridade podemos te auxiliar primeiro.",
-    err_selected_services: "Selecione ao menos um dos formatos ou serviÃ§os contratados de seu projeto.",
-    err_consent: "VocÃª precisa estar ciente e marcar todos os 3 tÃ³picos de consentimento sob LGPD para submeter o onboarding."
+    err_selected_services: "Selecione ao menos um dos formatos ou serviços contratados de seu projeto.",
+    err_consent: "Você precisa estar ciente e marcar todos os 3 tópicos de consentimento sob LGPD para submeter o onboarding."
   },
   en: {
     // Header & Titles
@@ -351,7 +351,7 @@ const translations: Record<Language, Record<string, string>> = {
     empresa_lang_en_desc: "Global support & English technical delivery",
     empresa_lang_es_desc: "Support and strategic flows in Spanish",
     
-    // Step 2: ResponsÃ¡vel / Contatos
+    // Step 2: Responsável / Contatos
     equipe_label_name: "What is your name? *",
     equipe_placeholder_name: "e.g., Mary Smith",
     equipe_label_role: "Role / Position in Company",
@@ -380,7 +380,7 @@ const translations: Record<Language, Record<string, string>> = {
     radar_term_n4: "4\nGood, but looking to scale up",
     radar_term_n5: "5\nFully structured and scaling",
     
-    // Step 4: ServiÃ§os
+    // Step 4: Serviços
     escopo_title: "INPUT SCOPE",
     escopo_heading: "What are the modules or service areas agreed with TAG08?",
     escopo_desc: "Select one or more modules below to unlock corresponding brief templates.",
@@ -447,15 +447,15 @@ const translations: Record<Language, Record<string, string>> = {
   },
   es: {
     // Header & Titles
-    op_tool: "Herramienta Operacional de IntegraciÃ³n",
+    op_tool: "Herramienta Operacional de Integración",
     title_prefix: "Asistente de Onboarding",
-    header_desc: "Inicie la ingenierÃ­a de su proyecto de manera fluida y progresiva. Evitamos la rigidez de formularios tradicionales mediante preguntas tÃ¡cticas guiadas.",
+    header_desc: "Inicie la ingeniería de su proyecto de manera fluida y progresiva. Evitamos la rigidez de formularios tradicionales mediante preguntas tácticas guiadas.",
     
     // Privacy Sidebar
     privacy_title: "GARANTAS DE PRIVACIDAD",
-    privacy_desc: "Su empresa goza de absoluta protecciÃ³n jurÃ­dica. Si es necesario, firmamos NDAs estÃ¡ndar de confidencialidad antes de iniciar cualquier procedimiento.",
+    privacy_desc: "Su empresa goza de absoluta protección jurídica. Si es necesario, firmamos NDAs estándar de confidencialidad antes de iniciar cualquier procedimiento.",
     privacy_indicators: "PROTECTORES ACTIVOS:",
-    privacy_p1: "Procesamiento bajo regulaciones de protecciÃ³n de datos",
+    privacy_p1: "Procesamiento bajo regulaciones de protección de datos",
     privacy_p2: "Encriptacin de archivos adjuntos en el formulario",
     privacy_p3: "Soporte corporativo especializado bajo demanda",
     
@@ -475,25 +475,25 @@ const translations: Record<Language, Record<string, string>> = {
     btn_whatsapp: "Contactar a TAG08 en WhatsApp",
     back_to_start: "  Volver al inicio",
     status_idle: "Listo para enviar",
-    status_online: "Los datos se enviaron y estÃ¡n siendo procesados.",
-    status_online_ref: "EnvÃ­o confirmado: {status} ({submissionId}) a las {receivedAt}.",
-    status_queue_fallback: "Sin conexiÃ³n. La solicitud se guardÃ³ en cola local y se reenviarÃ¡ automÃ¡ticamente.",
-    status_queue_store_error: "No fue posible guardar la solicitud para reintento automÃ¡tico.",
-    status_validation_error: "Error de validaciÃ³n: {details}. Corrija los campos y vuelva a intentar.",
-    status_transport_error: "No fue posible completar el envÃ­o ahora. Reintentaremos automÃ¡ticamente.",
-    status_sync_error: "No se pudo sincronizar la cola pendiente automÃ¡ticamente.",
-    status_queue_summary: "Hay {count} envÃ­o(s) esperando sincronizaciÃ³n.",
+    status_online: "Los datos se enviaron y están siendo procesados.",
+    status_online_ref: "Envío confirmado: {status} ({submissionId}) a las {receivedAt}.",
+    status_queue_fallback: "Sin conexión. La solicitud se guardó en cola local y se reenviará automáticamente.",
+    status_queue_store_error: "No fue posible guardar la solicitud para reintento automático.",
+    status_validation_error: "Error de validación: {details}. Corrija los campos y vuelva a intentar.",
+    status_transport_error: "No fue posible completar el envío ahora. Reintentaremos automáticamente.",
+    status_sync_error: "No se pudo sincronizar la cola pendiente automáticamente.",
+    status_queue_summary: "Hay {count} envío(s) esperando sincronización.",
     
     // Step 0: Welcome Screen
     welcome_title: "Bienvenido a TAG08. <br />Vamos a organizar el inicio de su proyecto.",
-    welcome_desc: "Este asistente reunir la informaciÃ³n esencial para trazar su camino estratÃ©gico con claridad, seguridad y direcciÃ³n. Responda a su propio ritmo. El objetivo no es burocratizar el inicio, sino evitar el retrabajo y preparar a nuestro equipo para servirle mejor.",
+    welcome_desc: "Este asistente reunir la información esencial para trazar su camino estratégico con claridad, seguridad y dirección. Responda a su propio ritmo. El objetivo no es burocratizar el inicio, sino evitar el retrabajo y preparar a nuestro equipo para servirle mejor.",
     est_time: "Tiempo Estimado",
     est_time_desc: "De 8 a 15 minutos en completado fluido. No es necesario rellenarlo todo de una sola vez.",
     pass_guideline: "Guas de Contraseas",
-    pass_desc: "NÃ£o solicitamos ni aceptamos ningÃºn tipo de contraseÃ±a a travÃ©s de este formulario. Sus credenciales estÃ¡n totalmente preservadas.",
+    pass_desc: "Não solicitamos ni aceptamos ningún tipo de contraseña a través de este formulario. Sus credenciales están totalmente preservadas.",
     
     // Sidebar Summary Box
-    sidebar_title: "RESUMEN DE CONSOLIDACIÃ“N",
+    sidebar_title: "RESUMEN DE CONSOLIDACI�N",
     sidebar_org: "EMPRESA / PROYECTO",
     sidebar_rep: "RESPONSABLE",
     sidebar_moment: "DESAFO SELECCIONADO",
@@ -507,116 +507,116 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Step 1: Dados da Empresa
     empresa_label_name: "Nombre de la Empresa o Proyecto *",
-    empresa_placeholder_name: "ej. Oficina ClÃ­nica Avanzada",
+    empresa_placeholder_name: "ej. Oficina Clínica Avanzada",
     empresa_label_cnpj: "Cdigo de Registro Comercial (RUT / TAX ID)",
     empresa_placeholder_cnpj: "ej. RUT / RFC / NIT / ID Fiscal",
     empresa_label_city: "Ciudad / Estado / Pas (Sede)",
-    empresa_placeholder_city: "ej. BogotÃ¡ / Cundinamarca / Colombia",
-    empresa_label_site: "DirecciÃ³n del Sitio Web",
+    empresa_placeholder_city: "ej. Bogotá / Cundinamarca / Colombia",
+    empresa_label_site: "Dirección del Sitio Web",
     empresa_placeholder_site: "ej. https://suempresa.com",
     empresa_label_insta: "Instagram Oficial",
     empresa_placeholder_insta: "ej. instagram.com/empresa",
     empresa_label_linkedin: "LinkedIn Corporativo / Personal",
     empresa_placeholder_linkedin: "ej. linkedin.com/company/suempresa",
-    empresa_lang_title: "Idioma preferido de atenciÃ³n / Preferred Language",
+    empresa_lang_title: "Idioma preferido de atención / Preferred Language",
     empresa_lang_badge: "Cobertura Global / Soporte Internacional",
-    empresa_lang_desc: "Ofrecemos atenciÃ³n tÃ©cnica corporativa en portuguÃ©s para empresas brasileÃ±as, con soporte tÃ©cnico de implementaciÃ³n en inglÃ©s o espaÃ±ol para clientes internacionales.",
+    empresa_lang_desc: "Ofrecemos atención técnica corporativa en portugués para empresas brasileñas, con soporte técnico de implementación en inglés o español para clientes internacionales.",
     empresa_lang_pt_desc: "Equipo nativo y documentos base en PT-BR",
     empresa_lang_en_desc: "Global support & English technical delivery",
-    empresa_lang_es_desc: "AtenciÃ³n y flujos estratÃ©gicos en espaÃ±ol",
+    empresa_lang_es_desc: "Atención y flujos estratégicos en español",
     
-    // Step 2: ResponsÃ¡vel / Contatos
-    equipe_label_name: "Â¿CuÃ¡l es su nombre? *",
+    // Step 2: Responsável / Contatos
+    equipe_label_name: "¿Cuál es su nombre? *",
     equipe_placeholder_name: "ej. Mara Silva",
-    equipe_label_role: "Cargo / FunciÃ³n en la Empresa",
-    equipe_placeholder_role: "ej. Fundador y Director ClÃ­nico",
-    equipe_label_email: "Correo ElectrÃ³nico de Contacto *",
+    equipe_label_role: "Cargo / Función en la Empresa",
+    equipe_placeholder_role: "ej. Fundador y Director Clínico",
+    equipe_label_email: "Correo Electrónico de Contacto *",
     equipe_placeholder_email: "ej. maria@suempresa.com",
     equipe_label_whatsapp: "WhatsApp Corporativo / Personal *",
     equipe_placeholder_whatsapp: "ej. +57 300 123 4567",
     equipe_section_focal: "Definiciones de Punto Focal",
-    equipe_label_ti: "Punto focal tÃ©cnico (ej. DNS, TI)",
+    equipe_label_ti: "Punto focal técnico (ej. DNS, TI)",
     equipe_placeholder_ti: "ej. Camila (Marketing)",
-    equipe_label_approver: "Â¿QuiÃ©n aprueba decisiones estratÃ©gicas? *",
+    equipe_label_approver: "¿Quién aprueba decisiones estratégicas? *",
     equipe_placeholder_approver: "ej. CEO, Director de Marketing o la propia Mara",
-    equipe_label_finance: "Â¿Recibe facturaciÃ³n y cobros?",
+    equipe_label_finance: "¿Recibe facturación y cobros?",
     equipe_placeholder_finance: "ej. financeiro@empresa.com",
     
     // Step 3: Radar
-    radar_label_moment: "Â¿CuÃ¡l es el mayor desafÃ­o en su ecosistema actual? *",
-    radar_label_priority: "Â¿CuÃ¡l es su mÃ¡xima prioridad comercial con TAG08? *",
-    radar_label_term: "Nivel de OrganizaciÃ³n Actual",
-    radar_term_desc: "Arrastren para evaluar la organizaciÃ³n y estÃ¡ndares de sus comunicaciones u operaciones internas.",
+    radar_label_moment: "¿Cuál es el mayor desafío en su ecosistema actual? *",
+    radar_label_priority: "¿Cuál es su máxima prioridad comercial con TAG08? *",
+    radar_label_term: "Nivel de Organización Actual",
+    radar_term_desc: "Arrastren para evaluar la organización y estándares de sus comunicaciones u operaciones internas.",
     radar_term_score: "Nota:",
     radar_term_n1: "1\nMuy improvisada",
-    radar_term_n2: "2\nExiste algo establecido pero sin estÃ¡ndares",
-    radar_term_n3: "3\nFunciona bien pero requiere mayor estilizaciÃ³n",
-    radar_term_n4: "4\nBuena organizaciÃ³n que busca escalar de nivel",
+    radar_term_n2: "2\nExiste algo establecido pero sin estándares",
+    radar_term_n3: "3\nFunciona bien pero requiere mayor estilización",
+    radar_term_n4: "4\nBuena organización que busca escalar de nivel",
     radar_term_n5: "5\nTotalmente estandarizada y en crecimiento",
     
-    // Step 4: ServiÃ§os
+    // Step 4: Serviços
     escopo_title: "ALCANCE DE ENTRADA",
-    escopo_heading: "Â¿CuÃ¡les son los mÃ³dulos o Ã¡reas de servicio acordados con TAG08?",
-    escopo_desc: "Seleccione uno o mÃ¡s mÃ³dulos abajo contratados para activar las directrices de briefing correspondientes.",
+    escopo_heading: "¿Cuáles son los módulos o áreas de servicio acordados con TAG08?",
+    escopo_desc: "Seleccione uno o más módulos abajo contratados para activar las directrices de briefing correspondientes.",
     escopo_label_custom: "Si ha seleccionado \"Otro\", describa brevemente el alcance personalizado contratado:",
-    escopo_placeholder_custom: "ej. AsesorÃ­a en automatizaciones de CRMs y API de ventas",
+    escopo_placeholder_custom: "ej. Asesoría en automatizaciones de CRMs y API de ventas",
     
     // Step 5: Briefing
-    briefing_module_title: "MÃ“DULO SELECCIONADO ACTIVO",
-    briefing_module_desc: "Su empresa ha contratado {services}. Responda por favor las preguntas tÃ¡cticas a continuaciÃ³n:",
+    briefing_module_title: "M�DULO SELECCIONADO ACTIVO",
+    briefing_module_desc: "Su empresa ha contratado {services}. Responda por favor las preguntas tácticas a continuación:",
     briefing_not_selected_desc: "Describa brevemente los detalles, requerimientos o alcance del servicio personalizado contratado:",
-    briefing_not_selected_placeholder: "Indique aqu sus objetivos comerciales, particularidades del ecosistema audiovisual o notas estratÃ©gicas.",
+    briefing_not_selected_placeholder: "Indique aqu sus objetivos comerciales, particularidades del ecosistema audiovisual o notas estratégicas.",
     
     // Step 6: Materiais
     materiais_title: "MATERIALES Y ENLACES DE SOPORTE",
-    materiais_desc: "Adicione links de pastas pÃºblicas compartidas de marca o recursos estratÃ©gicos para nuestro equipo (ej. Google Drive, Dropbox, Figma).",
-    materiais_warning: "AVISO DE SEGURIDAD: No comparta contraseÃ±as ni pins de acceso mediante este formulario.",
+    materiais_desc: "Adicione links de pastas públicas compartidas de marca o recursos estratégicos para nuestro equipo (ej. Google Drive, Dropbox, Figma).",
+    materiais_warning: "AVISO DE SEGURIDAD: No comparta contraseñas ni pins de acceso mediante este formulario.",
     materiais_label_drive: "Enlace Carpeta Principal (Google Drive/Dropbox)",
     materiais_label_insta: "Enlace de Instagram Corporativo",
     materiais_label_site: "Enlace de Sitio Web Actual",
-    materiais_label_portfolio: "Enlace del CatÃ¡logo / Portafolio Oficial",
+    materiais_label_portfolio: "Enlace del Catálogo / Portafolio Oficial",
     materiais_label_references: "Referencias Visuales (Enlace o tablero Pinterest)",
     materiais_label_documents: "Manuales de Identidad Visual o Logotipos (.PDF / .AI / .PNG)",
     materiais_label_commercial: "Presentaciones de Ventas / Pitch Deck",
     
     // Step 7: Expectativas
-    expectativas_title: "PERSPECTIVAS OPERACIONALES & METAS DE Ã‰XITO",
-    expectativas_subtitle: "Â¿Por quÃ© recurriÃ³ a TAG08 en este momento particular?",
-    expectativas_desc: "Mapear los dolores de su organizaciÃ³n protege nuestras entregas tÃ©cnicas y acelera la definiciÃ³n de canales de comunicaciÃ³n.",
-    expectativas_placeholder_1: "ej. Sentimos que nuestra comunicaciÃ³n actual nos hace lucir mÃ¡s pequeÃ±os de lo que realmente somos...",
-    expectativas_label_tried: "Â¿QuÃ© ha intentado antes para resolver este desafÃ­o? (ej. agencias, recursos internos)",
+    expectativas_title: "PERSPECTIVAS OPERACIONALES & METAS DE �0XITO",
+    expectativas_subtitle: "¿Por qué recurrió a TAG08 en este momento particular?",
+    expectativas_desc: "Mapear los dolores de su organización protege nuestras entregas técnicas y acelera la definición de canales de comunicación.",
+    expectativas_placeholder_1: "ej. Sentimos que nuestra comunicación actual nos hace lucir más pequeños de lo que realmente somos...",
+    expectativas_label_tried: "¿Qué ha intentado antes para resolver este desafío? (ej. agencias, recursos internos)",
     expectativas_placeholder_tried: "ej. Trabajamos provisionalmente con una agencia tradicional para posteos cotidianos...",
-    expectativas_label_did_not_work: "Â¿QuÃ© considera que fallÃ³ en esos intentos pasados?",
-    expectativas_placeholder_did_not_work: "ej. Publicaciones genÃ©ricas sin estÃ©tica sofisticada, alta demanda de correcciones...",
-    expectativas_label_good_result: "Al cabo de 90 dÃ­as de iniciar con TAG08, Â¿quÃ© logros le confirmarÃ­an que tomamos la decisiÃ³n adecuada?",
-    expectativas_placeholder_good_result: "ej. Un posicionamiento institucional sÃ³lido en redes que capte leads de alto poder adquisitivo...",
-    expectativas_label_urgency: "Â¿CuÃ¡l es su principal urgencia de operaciones o marketing en este instante?",
-    expectativas_placeholder_urgency: "ej. RediseÃ±ar y optimizar nuestro sitio web que estÃ¡ obsoleto...",
-    expectativas_label_not_err: "Â¿QuÃ© considera que NO podemos fallar de ninguna manera en sus entregables u operaciones de comunicaciÃ³n? *",
-    expectativas_placeholder_not_err: "ej. Emplear un lenguaje demasiado informal, o variar las tipografÃ­as oficiales de marca...",
+    expectativas_label_did_not_work: "¿Qué considera que falló en esos intentos pasados?",
+    expectativas_placeholder_did_not_work: "ej. Publicaciones genéricas sin estética sofisticada, alta demanda de correcciones...",
+    expectativas_label_good_result: "Al cabo de 90 días de iniciar con TAG08, ¿qué logros le confirmarían que tomamos la decisión adecuada?",
+    expectativas_placeholder_good_result: "ej. Un posicionamiento institucional sólido en redes que capte leads de alto poder adquisitivo...",
+    expectativas_label_urgency: "¿Cuál es su principal urgencia de operaciones o marketing en este instante?",
+    expectativas_placeholder_urgency: "ej. Rediseñar y optimizar nuestro sitio web que está obsoleto...",
+    expectativas_label_not_err: "¿Qué considera que NO podemos fallar de ninguna manera en sus entregables u operaciones de comunicación? *",
+    expectativas_placeholder_not_err: "ej. Emplear un lenguaje demasiado informal, o variar las tipografías oficiales de marca...",
     
     // Step 8: Consentimento
-    consent_title: "POLÃTICAS DE CONSENTIMIENTO & PRIVACIDAD",
-    consent_subtitle: "AutorizaciÃ³n tÃ¡ctica para carga estratÃ©gica de guÃ­as de integraciÃ³n",
-    consent_desc: "Marque las opciones de consentimiento para realizar el envÃ­o definitivo del onboarding.",
-    consent_opt1: "Declaro que toda la informaciÃ³n corporativa proporcionada es honesta y verÃ­dica.",
-    consent_opt2: "Autorizo el uso de estos datos Ãºnicamente por el equipo tÃ©cnico de TAG08 para definir la estrategia tÃ¡ctica.",
-    consent_opt3: "Confirmo que no he proporcionado ninguna credencial directa de acceso ni contraseÃ±as en este flujo.",
+    consent_title: "POLÍTICAS DE CONSENTIMIENTO & PRIVACIDAD",
+    consent_subtitle: "Autorización táctica para carga estratégica de guías de integración",
+    consent_desc: "Marque las opciones de consentimiento para realizar el envío definitivo del onboarding.",
+    consent_opt1: "Declaro que toda la información corporativa proporcionada es honesta y verídica.",
+    consent_opt2: "Autorizo el uso de estos datos únicamente por el equipo técnico de TAG08 para definir la estrategia táctica.",
+    consent_opt3: "Confirmo que no he proporcionado ninguna credencial directa de acceso ni contraseñas en este flujo.",
     
     // Step 9: Finalizado (WhatsApp)
-    finalized_badge: "ONBOARDING ENVIADO CON Ã‰XITO",
-    finalized_title: "IntegraciÃ³n Operativa en proceso!",
-    finalized_desc_1: "Sus directrices operativas han sido integradas en nuestro sistema de forma exitosa y se encuentran en nuestra cola de revisiÃ³n tÃ©cnica por los equipos creativo y de ingenierÃ­a.",
-    finalized_desc_2: "Para acelerar la programaciÃ³n de su sesiÃ³n de arranque (kickoff) y confirmar el recibimiento tÃ©cnico con el director del proyecto, haga clic a continuaciÃ³n para notificarnos via WhatsApp.",
-    whatsapp_template_msg: "Hola equipo TAG08! CompletÃ© nuestro onboarding de integraciÃ³n con el asistente conversacional.\\n\\nEmpresa: {company}\\nRepresentante: {name}\\nMeta de 90 dÃ­as: {goal}.\\n\\nÂ¡Quedamos atentos para agendar nuestro kickoff!",
+    finalized_badge: "ONBOARDING ENVIADO CON �0XITO",
+    finalized_title: "Integración Operativa en proceso!",
+    finalized_desc_1: "Sus directrices operativas han sido integradas en nuestro sistema de forma exitosa y se encuentran en nuestra cola de revisión técnica por los equipos creativo y de ingeniería.",
+    finalized_desc_2: "Para acelerar la programación de su sesión de arranque (kickoff) y confirmar el recibimiento técnico con el director del proyecto, haga clic a continuación para notificarnos via WhatsApp.",
+    whatsapp_template_msg: "Hola equipo TAG08! Completé nuestro onboarding de integración con el asistente conversacional.\\n\\nEmpresa: {company}\\nRepresentante: {name}\\nMeta de 90 días: {goal}.\\n\\n¡Quedamos atentos para agendar nuestro kickoff!",
     
     // Errors
     err_company_name: "Por favor, ingrese el nombre de su empresa en la Etapa 1.",
     err_responsible_name: "Por favor, complete los datos del Responsable (Etapa 2).",
-    err_responsible_email: "Por favor, ingrese un correo electrÃ³nico corporativo vÃ¡lido.",
-    err_responsible_whatsapp: "Necesitamos un nÃºmero de WhatsApp activo para contacto tÃ¡ctico.",
-    err_business_moment: "Por favor, seleccione la opciÃ³n que mejor se ajuste al momento actual de su empresa.",
-    err_priority_map: "Por favor, indique quÃ© Ã¡rea de prioridad podemos ayudarle a resolver primero.",
+    err_responsible_email: "Por favor, ingrese un correo electrónico corporativo válido.",
+    err_responsible_whatsapp: "Necesitamos un número de WhatsApp activo para contacto táctico.",
+    err_business_moment: "Por favor, seleccione la opción que mejor se ajuste al momento actual de su empresa.",
+    err_priority_map: "Por favor, indique qué área de prioridad podemos ayudarle a resolver primero.",
     err_selected_services: "Seleccione al menos uno de los servicios o formatos contratados para su proyecto.",
     err_consent: "Debe revisar y marcar las 3 casillas de consentimiento para continuar."
   }
@@ -624,12 +624,12 @@ const translations: Record<Language, Record<string, string>> = {
 
 const momentOptions = {
   pt: [
-    { label: "Tenho valor, mas nossa comunicaÃ§Ã£o no reflete nossa magnitude.", value: "Tenho valor, mas minha comunicaÃ§Ã£o no mostra isso." },
-    { label: "Postamos frequentemente, mas sentimos falta de uma direÃ§Ã£o estratÃ©gica clara.", value: "Postamos, mas sem muita direÃ§Ã£o." },
-    { label: "Meu site corporativo ou logotipo atual jÃ¡ nÃ£o acompanha nossa maturidade.", value: "Meu site ou marca jÃ¡ nÃ£o acompanha nosso momento." },
-    { label: "Minha empresa cresceu rÃ¡pido e a operaÃ§Ã£o de entrega interna ficou desordenada.", value: "Minha empresa cresceu e a operaÃ§Ã£o ficou confusa." },
-    { label: "Nossos processos j existem no papel, mas o time no consegue aplic-los com zelo.", value: "JÃ¡ temos processos, mas eles nÃ£o sÃ£o aplicados." },
-    { label: "Queremos expandir nosso faturamento tÃ©cnico corporativo, mas precisamos organizar a base.", value: "Quero crescer, mas preciso organizar a base." }
+    { label: "Tenho valor, mas nossa comunicação no reflete nossa magnitude.", value: "Tenho valor, mas minha comunicação no mostra isso." },
+    { label: "Postamos frequentemente, mas sentimos falta de uma direção estratégica clara.", value: "Postamos, mas sem muita direção." },
+    { label: "Meu site corporativo ou logotipo atual já não acompanha nossa maturidade.", value: "Meu site ou marca já não acompanha nosso momento." },
+    { label: "Minha empresa cresceu rápido e a operação de entrega interna ficou desordenada.", value: "Minha empresa cresceu e a operação ficou confusa." },
+    { label: "Nossos processos j existem no papel, mas o time no consegue aplic-los com zelo.", value: "Já temos processos, mas eles não são aplicados." },
+    { label: "Queremos expandir nosso faturamento técnico corporativo, mas precisamos organizar a base.", value: "Quero crescer, mas preciso organizar a base." }
   ],
   en: [
     { label: "We have value, but our communication does not reflect our magnitude.", value: "Have value, but communication doesn't show it." },
@@ -640,26 +640,26 @@ const momentOptions = {
     { label: "We want to expand our corporate revenues, but we need to organize the base.", value: "Want to grow, but need to organize base." }
   ],
   es: [
-    { label: "Tenemos valor, pero nuestra comunicaciÃ³n no refleja nuestra magnitud.", value: "Tenemos valor, pero la comunicaciÃ³n no lo muestra." },
-    { label: "Publicamos con frecuencia, pero sentimos que nos falta una direcciÃ³n estratÃ©gica clara.", value: "Publicamos, pero sin mucha direcciÃ³n." },
-    { label: "Nuestro sitio web corporativo o logotipo actual ya no acompaÃ±a nuestra madurez.", value: "El sitio o marca ya no acompaÃ±a nuestro momento." },
-    { label: "Mi empresa cresceu rÃ¡pido y la operaciÃ³n de entrega interna se desorden.", value: "Mi empresa cresceu y la operaciÃ³n se voltou a confusa." },
+    { label: "Tenemos valor, pero nuestra comunicación no refleja nuestra magnitud.", value: "Tenemos valor, pero la comunicación no lo muestra." },
+    { label: "Publicamos con frecuencia, pero sentimos que nos falta una dirección estratégica clara.", value: "Publicamos, pero sin mucha dirección." },
+    { label: "Nuestro sitio web corporativo o logotipo actual ya no acompaña nuestra madurez.", value: "El sitio o marca ya no acompaña nuestro momento." },
+    { label: "Mi empresa cresceu rápido y la operación de entrega interna se desorden.", value: "Mi empresa cresceu y la operación se voltou a confusa." },
     { label: "Nuestros procesos existen en papel, pero el equipo de trabajo no logra aplicarlos con esmero.", value: "Tenemos procesos, pero no se aplican." },
-    { label: "Queremos expandir nuestra facturaciÃ³n tÃ©cnica corporativa, pero necesitamos organizar la base.", value: "Queremos crecer, pero falta organizar la base." }
+    { label: "Queremos expandir nuestra facturación técnica corporativa, pero necesitamos organizar la base.", value: "Queremos crecer, pero falta organizar la base." }
   ]
 };
 
 const priorityOptions = {
   pt: [
     { label: "Construir clareza de posicionamento de nosso nicho", value: "Clareza de posicionamento" },
-    { label: "Organizar conteÃºdo editorial e presenÃ§a estratÃ©gica nas redes", value: "ConteÃºdo e presenÃ§a digital" },
-    { label: "Refinar a identidade de marca para um padrÃ£o mais profissional", value: "Visual mais profissional" },
-    { label: "Desenvolver um site de engenharia s sÃªnior ou pÃ¡gina de conversÃ£o", value: "Site ou pÃ¡gina de venda" },
+    { label: "Organizar conteúdo editorial e presença estratégica nas redes", value: "Conteúdo e presença digital" },
+    { label: "Refinar a identidade de marca para um padrão mais profissional", value: "Visual mais profissional" },
+    { label: "Desenvolver um site de engenharia s sênior ou página de conversão", value: "Site ou página de venda" },
     { label: "Mapear e documentar nossos fluxos internos de processos", value: "Organizao de processos" },
-    { label: "Estruturar anÃºncios, performance ativa e captaÃ§Ã£o comercial", value: "Performance e captaÃ§Ã£o" }
+    { label: "Estruturar anúncios, performance ativa e captação comercial", value: "Performance e captação" }
   ],
   en: [
-    { label: "Build clear positioning inÃ£our market niche", value: "Positioning clarity" },
+    { label: "Build clear positioning inãour market niche", value: "Positioning clarity" },
     { label: "Organize editorial content and strategic social media presence", value: "Content and digital presence" },
     { label: "Refine brand identity to a more professional standard", value: "More professional visuals" },
     { label: "Develop a senior-engineered website or high-converting landing page", value: "Website or sales page" },
@@ -668,10 +668,10 @@ const priorityOptions = {
   ],
   es: [
     { label: "Construir claridad de posicionamiento de nuestro nicho", value: "Claridad de posicionamiento" },
-    { label: "Organizar contenido editorial y presencia estratÃ©gica en redes", value: "Contenido y presencia digital" },
-    { label: "Refinar la identidad de marca hacia un estÃ¡ndar mÃ¡s profesional", value: "Visual mÃ¡s profesional" },
-    { label: "Desarrollar un sitio web corporativo o pÃ¡gina de conversiÃ³n", value: "Sitio o pÃ¡gina de ventas" },
-    { label: "Mapear y documentar nuestros flujos internos de procesos", value: "OrganizaciÃ³n de procesos" },
+    { label: "Organizar contenido editorial y presencia estratégica en redes", value: "Contenido y presencia digital" },
+    { label: "Refinar la identidad de marca hacia un estándar más profesional", value: "Visual más profesional" },
+    { label: "Desarrollar un sitio web corporativo o página de conversión", value: "Sitio o página de ventas" },
+    { label: "Mapear y documentar nuestros flujos internos de procesos", value: "Organización de procesos" },
     { label: "Estructurar anuncios, rendimiento activo y captacin comercial", value: "Rendimiento y captacin" }
   ]
 };
@@ -702,7 +702,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
   const [companyLinkedin, setCompanyLinkedin] = useState("");
   const [preferredLanguage, setPreferredLanguage] = useState("pt");
 
-  // STEP 2: ResponsÃ¡veis pelo projeto
+  // STEP 2: Responsáveis pelo projeto
   const [responsibleName, setResponsibleName] = useState("");
   const [responsibleRole, setResponsibleRole] = useState("");
   const [responsibleEmail, setResponsibleEmail] = useState("");
@@ -716,11 +716,11 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
   const [priorityMap, setPriorityMap] = useState("");
   const [maturityScore, setMaturityScore] = useState<number>(3);
 
-  // STEP 4: ServiÃ§o contratado
+  // STEP 4: Serviço contratado
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [customServiceText, setCustomServiceText] = useState("");
 
-  // STEP 5: Briefings especficos por serviÃ§o
+  // STEP 5: Briefings especficos por serviço
   // 5a. Redes Sociais
   const [smChannels, setSmChannels] = useState("");
   const [smTargetAudience, setSmTargetAudience] = useState("");
@@ -733,7 +733,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
   const [smForbiddenTopics, setSmForbiddenTopics] = useState("");
 
   // 5b. Branding
-  const [brBrandExists, setBrBrandExists] = useState("nÃ£o");
+  const [brBrandExists, setBrBrandExists] = useState("não");
   const [brReasonForChange, setBrReasonForChange] = useState("");
   const [brDesiredAttributes, setBrDesiredAttributes] = useState("");
   const [brReferencesLink, setBrReferencesLink] = useState("");
@@ -750,7 +750,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
   const [webMainGoal, setWebMainGoal] = useState("");
   const [webRequiredPages, setWebRequiredPages] = useState("");
   const [webHasBrandIdentity, setWebHasBrandIdentity] = useState("sim");
-  const [webHasTextsReady, setWebHasTextsReady] = useState("nÃ£o");
+  const [webHasTextsReady, setWebHasTextsReady] = useState("não");
   const [webHasFilesReady, setWebHasFilesReady] = useState("sim");
   const [webIntegrateWhatsApp, setWebIntegrateWhatsApp] = useState(false);
   const [webIntegrateForm, setWebIntegrateForm] = useState(false);
@@ -765,13 +765,13 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
   const [piPersonDependent, setPiPersonDependent] = useState("");
   const [piReworkTasks, setPiReworkTasks] = useState("");
   const [piCurrentTools, setPiCurrentTools] = useState("");
-  const [piHasDocumentation, setPiHasDocumentation] = useState("nÃ£o");
-  const [piHasOrgChart, setPiHasOrgChart] = useState("nÃ£o");
-  const [piHasMeetings, setPiHasMeetings] = useState("nÃ£o");
+  const [piHasDocumentation, setPiHasDocumentation] = useState("não");
+  const [piHasOrgChart, setPiHasOrgChart] = useState("não");
+  const [piHasMeetings, setPiHasMeetings] = useState("não");
   const [piMainBottleneck, setPiMainBottleneck] = useState("");
 
   // 5e. Process Activation
-  const [paHasPiDiagnose, setPaHasPiDiagnose] = useState("nÃ£o");
+  const [paHasPiDiagnose, setPaHasPiDiagnose] = useState("não");
   const [paDocumentedProcesses, setPaDocumentedProcesses] = useState("");
   const [paUnappliedProcesses, setPaUnappliedProcesses] = useState("");
   const [paTeamsToTrain, setPaTeamsToTrain] = useState("");
@@ -846,7 +846,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     try {
       localStorage.setItem(ONBOARDING_QUEUE_KEY, JSON.stringify(entries));
     } catch {
-      // MantÃ©m apenas estado em memÃ³ria se localStorage estiver indisponÃ­vel.
+      // Mantém apenas estado em memória se localStorage estiver indisponível.
     }
     setPendingQueueCount(entries.filter((entry) => entry.status !== "sent").length);
   };
@@ -890,7 +890,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     }
 
     if (!isValidSubmissionResult(parsedResult)) {
-      throw new OnboardingSubmitError("Resposta invÃ¡lida do endpoint /api/onboarding", "payload", response.status);
+      throw new OnboardingSubmitError("Resposta inválida do endpoint /api/onboarding", "payload", response.status);
     }
 
     return parsedResult;
@@ -985,16 +985,16 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     const lang = (preferredLanguage as Language) || "pt";
     const localizedSteps = {
       pt: [
-        { title: "Boas-vindas", desc: "IntroduÃ§Ã£o ao Assistente" },
-        { title: "Empresa", desc: "Dados da organizaÃ§Ã£o" },
-        { title: "Equipe e Contatos", desc: "ResponsÃ¡veis pelo projeto" },
+        { title: "Boas-vindas", desc: "Introdução ao Assistente" },
+        { title: "Empresa", desc: "Dados da organização" },
+        { title: "Equipe e Contatos", desc: "Responsáveis pelo projeto" },
         { title: "Radar", desc: "Momento e prioridades" },
-        { title: "Escopo", desc: "ServiÃ§o contratado" },
+        { title: "Escopo", desc: "Serviço contratado" },
         { title: "Briefing", desc: "Perguntas especficas" },
         { title: "Materiais", desc: "Arquivos e links de apoio" },
-        { title: "Expectativas", desc: "Os prÃ³ximos 90 dias" },
-        { title: "Consentimento", desc: "AutorizaÃ§Ã£o de dados" },
-        { title: "Finalizado", desc: "ConfirmaÃ§Ã£o e prÃ³ximos passos" }
+        { title: "Expectativas", desc: "Os próximos 90 dias" },
+        { title: "Consentimento", desc: "Autorização de dados" },
+        { title: "Finalizado", desc: "Confirmação e próximos passos" }
       ],
       en: [
         { title: "Welcome", desc: "Introduction to the Assistant" },
@@ -1009,16 +1009,16 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
         { title: "Completed", desc: "Confirmation & next steps" }
       ],
       es: [
-        { title: "Bienvenida", desc: "IntroducciÃ³n al Asistente" },
-        { title: "Empresa", desc: "Datos de la organizaciÃ³n" },
+        { title: "Bienvenida", desc: "Introducción al Asistente" },
+        { title: "Empresa", desc: "Datos de la organización" },
         { title: "Equipo y Contactos", desc: "Responsables del proyecto" },
         { title: "Radar", desc: "Momento y prioridades" },
         { title: "Alcance", desc: "Servicio contratado" },
         { title: "Briefing", desc: "Preguntas especficas" },
         { title: "Materiales", desc: "Materiales y enlaces de apoyo" },
-        { title: "Expectativas", desc: "Los prÃ³ximos 90 das" },
-        { title: "Consentimiento", desc: "AutorizaciÃ³n de datos" },
-        { title: "Finalizado", desc: "ConfirmaciÃ³n y siguientes pasos" }
+        { title: "Expectativas", desc: "Los próximos 90 das" },
+        { title: "Consentimiento", desc: "Autorización de datos" },
+        { title: "Finalizado", desc: "Confirmación y siguientes pasos" }
       ]
     };
     return localizedSteps[lang] || localizedSteps.pt;
@@ -1030,20 +1030,20 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
       pt: [
         {
           phase: "Fase 01 // Diagnstico",
-          title: "Mapeamento TÃ¡tico",
+          title: "Mapeamento Tático",
           desc: "Alinhamento das dores e prioridades corporativas em minutos.",
           isHighlighted: false
         },
         {
-          phase: "Fase 02 // ConfiguraÃ§Ã£o",
+          phase: "Fase 02 // Configuração",
           title: "Setup de Ativos",
-          desc: "Upload limpo de manuais de marca, acessos tÃ©cnicos e links sem estresse.",
+          desc: "Upload limpo de manuais de marca, acessos técnicos e links sem estresse.",
           isHighlighted: true
         },
         {
           phase: "Fase 03 // Kickoff",
           title: "Engenharia Ativa",
-          desc: "Mapeamento tabulado entregue diretamente ao diretor sÃªnior de seu projeto.",
+          desc: "Mapeamento tabulado entregue diretamente ao diretor sênior de seu projeto.",
           isHighlighted: false
         }
       ],
@@ -1070,14 +1070,14 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
       es: [
         {
           phase: "Fase 01 // Diagnstico",
-          title: "AlineaciÃ³n TÃ¡ctica",
+          title: "Alineación Táctica",
           desc: "Mapeo inmediato de dolores operativos y metas comerciales en minutos.",
           isHighlighted: false
         },
         {
           phase: "Fase 02 // Configuracin",
           title: "Setup de Activos",
-          desc: "Carga segura de carpetas, recursos de diseÃ±o y credenciales pÃºblicas.",
+          desc: "Carga segura de carpetas, recursos de diseño y credenciales públicas.",
           isHighlighted: true
         },
         {
@@ -1097,14 +1097,14 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     const lang = (preferredLanguage as Language) || "pt";
     const sTexts = {
       pt: {
-        sm: "GestÃ£o de Redes Sociais",
+        sm: "Gestão de Redes Sociais",
         br: "Branding & Identidade",
         web: "Desenvolvimento Web",
         pi: "Process Intelligence",
         pa: "Process Activation",
-        traff: "TrÃ¡fego Pago",
-        audio: "ProduÃ§Ã£o Audiovisual",
-        other: "Outro serviÃ§o customizado",
+        traff: "Tráfego Pago",
+        audio: "Produção Audiovisual",
+        other: "Outro serviço customizado",
         other_lbl: "Outro"
       },
       en: {
@@ -1119,13 +1119,13 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
         other_lbl: "Other"
       },
       es: {
-        sm: "GestiÃ³n de Redes Sociales",
+        sm: "Gestión de Redes Sociales",
         br: "Branding e Identidad",
         web: "Desarrollo Web",
         pi: "Process Intelligence",
         pa: "Process Activation",
         traff: "Trfico Pago",
-        audio: "ProducciÃ³n Audiovisual",
+        audio: "Producción Audiovisual",
         other: "Otro servicio personalizado",
         other_lbl: "Otro"
       }
@@ -1134,13 +1134,13 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     const sx = sTexts[lang] || sTexts.pt;
     
     return [
-      { label: sx.sm, icon: Instagram, id: "GestÃ£o de Redes Sociais" },
+      { label: sx.sm, icon: Instagram, id: "Gestão de Redes Sociais" },
       { label: sx.br, icon: Palette, id: "Branding & Identidade" },
       { label: sx.web, icon: FileCode, id: "Desenvolvimento Web" },
       { label: sx.pi, icon: Cpu, id: "Process Intelligence" },
       { label: sx.pa, icon: Gauge, id: "Process Activation" },
-      { label: sx.traff, icon: TrendingUp, id: "TrÃ¡fego Pago" },
-      { label: sx.audio, icon: FolderDot, id: "ProduÃ§Ã£o Audiovisual" },
+      { label: sx.traff, icon: TrendingUp, id: "Tráfego Pago" },
+      { label: sx.audio, icon: FolderDot, id: "Produção Audiovisual" },
       { label: sx.other, icon: Sparkles, id: "Outro" }
     ];
   };
@@ -1238,9 +1238,9 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
       role: responsibleRole,
       email: responsibleEmail,
       whatsapp: responsibleWhatsapp,
-      focalPoint: focalPointText || "Mesmo que o responsÃ¡vel de onboarding",
-      approver: approverText || "Mesmo que o responsÃ¡vel de onboarding",
-      financePoint: financePointText || "Mesmo que o responsÃ¡vel de onboarding"
+      focalPoint: focalPointText || "Mesmo que o responsável de onboarding",
+      approver: approverText || "Mesmo que o responsável de onboarding",
+      financePoint: financePointText || "Mesmo que o responsável de onboarding"
     };
 
     const businessMomentData = {
@@ -1251,7 +1251,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
     // Bundle specific questionnaires
     const serviceSpecificBriefing: any = {};
-    if (isSelected("GestÃ£o de Redes Sociais")) {
+    if (isSelected("Gestão de Redes Sociais")) {
       serviceSpecificBriefing.gestaoRedesSociais = {
         channels: smChannels,
         targetAudience: smTargetAudience,
@@ -1322,8 +1322,8 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
       };
     }
     
-    // Fallback if none of specifically handled services are chosenÃ£or they choose "TrÃ¡fego Pago", "ProduÃ§Ã£o Audiovisual", "Outro"
-    const hasUnmanagedService = selectedServices.some(s => ["TrÃ¡fego Pago", "ProduÃ§Ã£o Audiovisual", "Outro"].includes(s));
+    // Fallback if none of specifically handled services are chosenãor they choose "Tráfego Pago", "Produção Audiovisual", "Outro"
+    const hasUnmanagedService = selectedServices.some(s => ["Tráfego Pago", "Produção Audiovisual", "Outro"].includes(s));
     if (hasUnmanagedService || selectedServices.length === 0) {
       serviceSpecificBriefing.geral = {
         generalBriefingText
@@ -1365,17 +1365,17 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     const clickupPayload = {
       task: {
         name: taskTitle,
-        description: `Processo de Onboarding TAG08 submetido pelo representante da empresa.\n\nEmpresa: ${companyName}\nResponsÃ¡vel: ${responsibleName}\nWpp: ${responsibleWhatsapp}\nEmail: ${responsibleEmail}\nVisualizar payload completo para extrair o briefing de produÃ§Ã£o.`,
+        description: `Processo de Onboarding TAG08 submetido pelo representante da empresa.\n\nEmpresa: ${companyName}\nResponsável: ${responsibleName}\nWpp: ${responsibleWhatsapp}\nEmail: ${responsibleEmail}\nVisualizar payload completo para extrair o briefing de produção.`,
         status: "Onboarding recebido",
         checklist: [
           { name: "Conferir dados cadastrais", resolved: false },
-          { name: "Validar serviÃ§o contratado", resolved: false },
+          { name: "Validar serviço contratado", resolved: false },
           { name: "Criar pasta no Drive", resolved: false },
           { name: "Criar projeto/card operacional", resolved: false },
           { name: "Adicionar cliente ao fluxo interno", resolved: false },
           { name: "Agendar kickoff", resolved: false },
           { name: "Solicitar materiais pendentes", resolved: false },
-          { name: "Confirmar responsÃ¡vel interno", resolved: false },
+          { name: "Confirmar responsável interno", resolved: false },
           { name: "Atualizar status comercial", resolved: false },
           { name: "Concluir onboarding", resolved: false }
         ]
@@ -1390,11 +1390,11 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
         "CNPJ/CPF": cnpjCpf,
         "Cidade/Estado": cityState,
         "Site Atual": companyWebsite,
-        "ResponsÃ¡vel Principal": responsibleName,
+        "Responsável Principal": responsibleName,
         "Cargo": responsibleRole,
         "Email": responsibleEmail,
         "WhatsApp": responsibleWhatsapp,
-        "ServiÃ§o Contratado": selectedServices.join(", ") + (customServiceText ? ` (${customServiceText})` : ""),
+        "Serviço Contratado": selectedServices.join(", ") + (customServiceText ? ` (${customServiceText})` : ""),
         "Momento do Negcio": businessMoment,
         "Prioridade": priorityMap,
         "Maturidade": maturityScore,
@@ -1491,7 +1491,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
             language: preferredLanguage
           });
           shouldShowSuccessScreen = true;
-        console.warn("Rota /api/onboarding indisponÃ­vel. FormulÃ¡rio salvo localmente.");
+        console.warn("Rota /api/onboarding indisponível. Formulário salvo localmente.");
         } catch {
           setDeliveryState("error");
           setDeliveryMessage(t("status_queue_store_error"));
@@ -1520,7 +1520,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
   };
 
   const handleLaunchWhatsAppOnboardingFastTrack = () => {
-    const text = `OlÃ¡ time TAG08! ConcluÃ­mos o preenchimento do nosso onboarding institucional via Assistente Conversacional.\n\nEmpresa: ${companyName}\nRepresentante: ${responsibleName}\nMeta dos prÃ³ximos 90 dias: ${goodResult90Days || "(Preenchido no formulÃ¡rio)"}.\n\nAguardamos contato tÃ©cnico para agendarmos nosso kickoff!`;
+    const text = `Olá time TAG08! Concluímos o preenchimento do nosso onboarding institucional via Assistente Conversacional.\n\nEmpresa: ${companyName}\nRepresentante: ${responsibleName}\nMeta dos próximos 90 dias: ${goodResult90Days || "(Preenchido no formulário)"}.\n\nAguardamos contato técnico para agendarmos nosso kickoff!`;
     const href = buildBrazilWhatsAppUrl(text);
     trackOutboundClick({
       label: "WhatsApp Brasil",
@@ -1553,7 +1553,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
             )}
             <div className="flex gap-1 pt-1">
               <span className="px-1.5 py-0.5 bg-white/[0.04] border border-white/[0.06] text-[8.5px] rounded text-zinc-300 font-mono uppercase">
-                {t("sidebar_lang_val")}: {preferredLanguage === "pt" ? "PortuguÃªs" : preferredLanguage === "en" ? "English" : "EspaÃ±ol"}
+                {t("sidebar_lang_val")}: {preferredLanguage === "pt" ? "Português" : preferredLanguage === "en" ? "English" : "Español"}
               </span>
             </div>
           </div>
@@ -1580,7 +1580,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
             )}
           </div>
 
-          {/* ServiÃ§os contratados */}
+          {/* Serviços contratados */}
           <div className="space-y-1">
             <span className="text-zinc-500 font-sans text-[9px] block">{t("sidebar_scope")}</span>
             {selectedServices.length > 0 ? (
@@ -1618,13 +1618,13 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     const lang = (preferredLanguage as Language) || "pt";
     const speaks: Record<Language, Record<number, string>> = {
       pt: {
-        1: "Vamos comeÃ§ar pelo bÃ¡sico. Qual Ã© o nome oficial da empresa ou projeto que iniciaremos?",
-        2: "Legal. Agora me diz quem serÃ¡ a pessoa sÃªnior principal que manterÃ¡ contato tÃ©cnico direto com a TAG08.",
-        3: "Para eu interpretar melhor o seu ecossistema atual, escolha a frase tÃ¡tica que mais se alinha com sua realidade comercial.",
-        4: "Excelente sintonia. Vamos delimitar quais sÃ£o os formatos ou divisÃµes de serviÃ§o contratadas da TAG08.",
-        5: "Certo. Mapeamos seus serviÃ§os. Agora, vamos responder a algumas perguntas tÃ©cnicas para abastecer nossa engenharia e criativos:",
-        6: "Caso disponha de direitos, PDFs de identidade visual ou apresentaÃ§Ãµes comerciais, forneÃ§a os links correspondentes abaixo (nÃ£o envie senhas).",
-        7: "Para finalizar nosso mapeamento institucional, me diga: daqui a 90 dias de parceria, o que faria vocÃª sentir que demos o passo correto?",
+        1: "Vamos começar pelo básico. Qual é o nome oficial da empresa ou projeto que iniciaremos?",
+        2: "Legal. Agora me diz quem será a pessoa sênior principal que manterá contato técnico direto com a TAG08.",
+        3: "Para eu interpretar melhor o seu ecossistema atual, escolha a frase tática que mais se alinha com sua realidade comercial.",
+        4: "Excelente sintonia. Vamos delimitar quais são os formatos ou divisões de serviço contratadas da TAG08.",
+        5: "Certo. Mapeamos seus serviços. Agora, vamos responder a algumas perguntas técnicas para abastecer nossa engenharia e criativos:",
+        6: "Caso disponha de direitos, PDFs de identidade visual ou apresentações comerciais, forneça os links correspondentes abaixo (não envie senhas).",
+        7: "Para finalizar nosso mapeamento institucional, me diga: daqui a 90 dias de parceria, o que faria você sentir que demos o passo correto?",
         8: "Estamos prontos. Leia e marque as caixas de consentimento para fazermos o upload seguro de suas diretrizes operacionais."
       },
       en: {
@@ -1638,12 +1638,12 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
         8: "We are ready. Please read and check the consent boxes to safely upload your operational guidelines."
       },
       es: {
-        1: "Comencemos con lo bÃ¡sico. Â¿CuÃ¡l es el nombre oficial de la empresa o proyecto que iniciaremos?",
+        1: "Comencemos con lo básico. ¿Cuál es el nombre oficial de la empresa o proyecto que iniciaremos?",
         2: "Estupendo. Ahora dgame quin ser la persona principal de contacto coordinando directamente con TAG08.",
-        3: "Para entender mejor su ecosistema actual, elija la frase tÃ¡ctica que mejor se alinee con su realidad comercial.",
-        4: "Sintona excelente. Vamos a definir qu ramas o mÃ³dulos de servicio se han acordado con TAG08.",
-        5: "De acuerdo. Mapeamos sus servicios. Ahora, respondamos algunas preguntas tÃ©cnicas para abastecer a nuestros equipos creativos y de ingenierÃ­a.",
-        6: "Si dispone de carpetas compartidas, manuales de identidad visual o presentaciones de ventas, comparta los enlaces a continuaciÃ³n (no comparta contraseÃ±as).",
+        3: "Para entender mejor su ecosistema actual, elija la frase táctica que mejor se alinee con su realidad comercial.",
+        4: "Sintona excelente. Vamos a definir qu ramas o módulos de servicio se han acordado con TAG08.",
+        5: "De acuerdo. Mapeamos sus servicios. Ahora, respondamos algunas preguntas técnicas para abastecer a nuestros equipos creativos y de ingeniería.",
+        6: "Si dispone de carpetas compartidas, manuales de identidad visual o presentaciones de ventas, comparta los enlaces a continuación (no comparta contraseñas).",
         7: "Para finalizar nuestro mapa de ruta corporativo, dgame: al cabo de 90 das de sociedad, qu logros le confirmaran que tomamos la decisin adecuada?",
         8: "Estamos del todo listos. Lea y marque las casillas de consentimiento para enviar de forma segura sus directrices operacionales."
       }
@@ -1679,9 +1679,9 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
             <div className="flex items-center justify-center gap-1.5 self-center md:self-end bg-neutral-900/60 p-1.5 rounded-xl border border-white/[0.06] shrink-0">
             <span className="text-[10px] font-mono text-zinc-500 uppercase px-2 hidden sm:inline">Idioma / Language:</span>
             {[
-              { code: "pt", label: "PT", title: "PortuguÃªs" },
+              { code: "pt", label: "PT", title: "Português" },
               { code: "en", label: "EN", title: "English" },
-              { code: "es", label: "ES", title: "EspaÃ±ol" }
+              { code: "es", label: "ES", title: "Español" }
             ].map((lang) => (
               <button
                 key={lang.code}
@@ -1746,8 +1746,8 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
               </div>
             ) : (
               <div className="p-6 rounded-3xl bg-neutral-900/20 border border-white/[0.03] text-left text-xs text-zinc-500 font-sans space-y-4">
-                <span>PLANO TÃTICO INICIAL TAG08 // SOBERANIA EMPRESARIAL</span>
-                <p className="leading-relaxed">Nosso foco  dar clareza de posicionamento visual, desenvolvimento de engenharia web limpa e automaÃ§Ã£o de playbooks de processos corporativos.</p>
+                <span>PLANO TÁTICO INICIAL TAG08 // SOBERANIA EMPRESARIAL</span>
+                <p className="leading-relaxed">Nosso foco  dar clareza de posicionamento visual, desenvolvimento de engenharia web limpa e automação de playbooks de processos corporativos.</p>
               </div>
             )}
           </div>
@@ -2000,9 +2000,9 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                           {[
-                            { value: "pt", title: "PortuguÃªs", desc: t("empresa_lang_pt_desc") },
+                            { value: "pt", title: "Português", desc: t("empresa_lang_pt_desc") },
                             { value: "en", title: "English", desc: t("empresa_lang_en_desc") },
-                            { value: "es", title: "EspaÃ±ol", desc: t("empresa_lang_es_desc") }
+                            { value: "es", title: "Español", desc: t("empresa_lang_es_desc") }
                           ].map((lang) => (
                             <button
                               key={lang.value}
@@ -2162,7 +2162,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                                 {opt.label}
                               </p>
                               <div className="flex items-center justify-between pt-2 border-t border-white/[0.02] text-[9px] font-sans text-zinc-500">
-                                <span>{preferredLanguage === "en" ? "OPTION CODE" : preferredLanguage === "es" ? "OPCIÃ“N CÃ“D" : "OPÃ‡ÃƒO COD"} {idx+1}</span>
+                                <span>{preferredLanguage === "en" ? "OPTION CODE" : preferredLanguage === "es" ? "OPCI�N C�D" : "OP�!ÒO COD"} {idx+1}</span>
                                 {businessMoment === opt.value && <span className="text-brand-secondary font-extrabold font-sans">{preferredLanguage === "en" ? "SELECTED" : preferredLanguage === "es" ? "SELECCIONADO" : "SELECIONADO"}</span>}
                               </div>
                             </div>
@@ -2297,17 +2297,17 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                   {currentStep === 5 && (
                     <div className="space-y-6 py-2 overflow-y-auto max-h-[500px] pr-2">
                       <div className="space-y-2 bg-neutral-950 p-4 rounded-xl border border-white/[0.03] mb-4">
-                        <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black uppercase inline-block">MÃ“DULO CUSTOMIZADO ATIVO</span>
+                        <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black uppercase inline-block">M�DULO CUSTOMIZADO ATIVO</span>
                         <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                          Sua empresa contratou <strong>{selectedServices.join(", ")}</strong>. Responda abaixo os detalhes operacionais que ditou nossa produÃ§Ã£o tÃ©cnica:
+                          Sua empresa contratou <strong>{selectedServices.join(", ")}</strong>. Responda abaixo os detalhes operacionais que ditou nossa produção técnica:
                         </p>
                       </div>
 
                       {/* 5a. GESTO DE REDES SOCIAIS BRIEFING */}
-                      {isSelected("GestÃ£o de Redes Sociais") && (
+                      {isSelected("Gestão de Redes Sociais") && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 p-5 rounded-2xl border border-white/[0.05] bg-neutral-900/30 text-left">
                           <h4 className="text-brand-secondary font-mono text-xs uppercase font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-brand-secondary" /> Redes Sociais & ConteÃºdo
+                            <span className="w-2 h-2 rounded-full bg-brand-secondary" /> Redes Sociais & Conteúdo
                           </h4>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2323,11 +2323,11 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-sans">
                             <div className="space-y-1.5">
-                              <label className="text-xs text-zinc-400 font-sans">Produtos/ServiÃ§os prioritrios a vender</label>
-                              <input type="text" value={smPriorityProducts} onChange={(e) => setSmPriorityProducts(e.target.value)} placeholder="Tratamento estÃ©tico VIP" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                              <label className="text-xs text-zinc-400 font-sans">Produtos/Serviços prioritrios a vender</label>
+                              <input type="text" value={smPriorityProducts} onChange={(e) => setSmPriorityProducts(e.target.value)} placeholder="Tratamento estético VIP" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                             <div className="space-y-1.5">
-                              <label className="text-xs text-zinc-400 font-sans">Quem sÃ£o seus concorrentes diretos?</label>
+                              <label className="text-xs text-zinc-400 font-sans">Quem são seus concorrentes diretos?</label>
                               <input type="text" value={smCompetitors} onChange={(e) => setSmCompetitors(e.target.value)} placeholder="..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                           </div>
@@ -2336,22 +2336,22 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                             <div className="space-y-1.5">
                               <label className="text-xs text-zinc-400 font-sans">Possui identidade visual consolidada?</label>
                               <select value={smHasBrandIdentity} onChange={(e) => setSmHasBrandIdentity(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white">
-                                <option value="sim">Sim, possuo manual completo e cores padrÃ£o</option>
-                                <option value="no">NÃ£o possuo, necessito estrutura</option>
+                                <option value="sim">Sim, possuo manual completo e cores padrão</option>
+                                <option value="no">Não possuo, necessito estrutura</option>
                               </select>
                             </div>
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400 font-sans">Possui banco de fotos/vÃ­deos corporativos?</label>
+                              <label className="text-xs text-zinc-400 font-sans">Possui banco de fotos/vídeos corporativos?</label>
                               <select value={smHasMediaBank} onChange={(e) => setSmHasMediaBank(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white">
-                                <option value="sim">Sim, temos acervo de fotos da equipe e operaÃ§Ã£o</option>
-                                <option value="no">NÃ£o possuÃ­mos acervo atual</option>
+                                <option value="sim">Sim, temos acervo de fotos da equipe e operação</option>
+                                <option value="no">Não possuímos acervo atual</option>
                               </select>
                             </div>
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
                             <div className="space-y-1">
-                              <label className="text-[11px] text-zinc-400">Quem gravar os vÃ­deos?</label>
+                              <label className="text-[11px] text-zinc-400">Quem gravar os vídeos?</label>
                               <input type="text" value={smRecordsVideos} onChange={(e) => setSmRecordsVideos(e.target.value)} placeholder="Dr. Fernando Guedes" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white" />
                             </div>
                             <div className="space-y-1 font-sans">
@@ -2375,26 +2375,26 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400">A marca/empresa jÃ¡ possui identidade visual ativa?</label>
+                              <label className="text-xs text-zinc-400">A marca/empresa já possui identidade visual ativa?</label>
                               <select value={brBrandExists} onChange={(e) => setBrBrandExists(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white">
-                                <option value="sim">Sim, mas estÃ¡ obsoleta (rebranding)</option>
-                                <option value="nÃ£o">NÃ£o, iniciaremos do zero completo</option>
+                                <option value="sim">Sim, mas está obsoleta (rebranding)</option>
+                                <option value="não">Não, iniciaremos do zero completo</option>
                               </select>
                             </div>
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400">MotivaÃ§Ã£o por trÃ¡s do projeto de identidade</label>
+                              <label className="text-xs text-zinc-400">Motivação por trás do projeto de identidade</label>
                               <input type="text" value={brReasonForChange} onChange={(e) => setBrReasonForChange(e.target.value)} placeholder="Atrair leads de maior poder aquisitivo" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                           </div>
 
                           <div className="space-y-2 font-sans">
                             <label className="text-xs text-zinc-400">Quais atributos comportamentais e conceitos visuais a marca deve transmitir?</label>
-                            <textarea value={brDesiredAttributes} onChange={(e) => setBrDesiredAttributes(e.target.value)} rows={2} placeholder="ElegÃ¢ncia discreta, sobriedade, robustez clÃ­nica e minimalismo sofisticado" className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-xs text-white resize-none" />
+                            <textarea value={brDesiredAttributes} onChange={(e) => setBrDesiredAttributes(e.target.value)} rows={2} placeholder="Elegância discreta, sobriedade, robustez clínica e minimalismo sofisticado" className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-xs text-white resize-none" />
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
                             <div className="space-y-1">
-                              <label className="text-[11px] text-zinc-400">Marcas referÃªncia</label>
+                              <label className="text-[11px] text-zinc-400">Marcas referência</label>
                               <input type="text" value={brReferencesLink} onChange={(e) => setBrReferencesLink(e.target.value)} placeholder="Ex: Apple" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white" />
                             </div>
                             <div className="space-y-1 font-sans">
@@ -2409,10 +2409,10 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
                             <div className="space-y-1">
-                              <label className="text-[11px] text-zinc-400">Nome jÃ¡ estÃ¡ definido?</label>
+                              <label className="text-[11px] text-zinc-400">Nome já está definido?</label>
                               <select value={brHasNameSelected} onChange={(e) => setBrHasNameSelected(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
                                 <option value="sim">Sim, definitivo</option>
-                                <option value="nÃ£o">NÃ£o, necessito Naming</option>
+                                <option value="não">Não, necessito Naming</option>
                               </select>
                             </div>
                             <div className="space-y-1 font-sans">
@@ -2420,8 +2420,8 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                               <input type="text" value={brHasSloganText} onChange={(e) => setBrHasSloganText(e.target.value)} placeholder="Slogan atual" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white" />
                             </div>
                             <div className="space-y-1 font-sans">
-                              <label className="text-[11px] text-zinc-400">AplicaÃ§Ãµes necessÃ¡rias (.doc, sacolas, fardas)</label>
-                              <input type="text" value={brRequiredApplications} onChange={(e) => setBrRequiredApplications(e.target.value)} placeholder="Ex: ReceituÃ¡rios, Assinatura de Email" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white" />
+                              <label className="text-[11px] text-zinc-400">Aplicações necessárias (.doc, sacolas, fardas)</label>
+                              <input type="text" value={brRequiredApplications} onChange={(e) => setBrRequiredApplications(e.target.value)} placeholder="Ex: Receituários, Assinatura de Email" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white" />
                             </div>
                           </div>
                         </motion.div>
@@ -2436,17 +2436,17 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400">J possui domÃ­nio registrado (ex: suaempresa.com.br)?</label>
+                              <label className="text-xs text-zinc-400">J possui domínio registrado (ex: suaempresa.com.br)?</label>
                               <select value={webHasDomain} onChange={(e) => setWebHasDomain(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white">
-                                <option value="sim">Sim, domÃ­nio ativo e disponÃ­vel</option>
-                                <option value="nÃ£o">NÃ£o temos, requeremos auxÃ­lio de compra</option>
+                                <option value="sim">Sim, domínio ativo e disponível</option>
+                                <option value="não">Não temos, requeremos auxílio de compra</option>
                               </select>
                             </div>
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400">Possui serviÃ§o de hospedagem ativada?</label>
+                              <label className="text-xs text-zinc-400">Possui serviço de hospedagem ativada?</label>
                               <select value={webHasHosting} onChange={(e) => setWebHasHosting(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white">
                                 <option value="sim">Sim, possuo Cloud ativo</option>
-                                <option value="nÃ£o">NÃ£o, indicaremos os provedores modernos</option>
+                                <option value="não">Não, indicaremos os provedores modernos</option>
                               </select>
                             </div>
                           </div>
@@ -2458,13 +2458,13 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                             </div>
                             <div className="space-y-1.5 font-sans">
                               <label className="text-xs text-zinc-400">Qual o objetivo principal do novo site?</label>
-                              <input type="text" value={webMainGoal} onChange={(e) => setWebMainGoal(e.target.value)} placeholder="Captar leads de alto padrÃ£o para reuniÃµes" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                              <input type="text" value={webMainGoal} onChange={(e) => setWebMainGoal(e.target.value)} placeholder="Captar leads de alto padrão para reuniões" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                           </div>
 
                           <div className="space-y-1.5 font-sans">
-                            <label className="text-xs text-zinc-400">PÃ¡ginas e seÃ§Ãµes necessÃ¡rias (Ex: Quem Somos, serviÃ§os, contato)</label>
-                            <input type="text" value={webRequiredPages} onChange={(e) => setWebRequiredPages(e.target.value)} placeholder="Ex: InÃ­cio, Equipe, 3 pÃ¡ginas de serviÃ§os, Contato" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                            <label className="text-xs text-zinc-400">Páginas e seções necessárias (Ex: Quem Somos, serviços, contato)</label>
+                            <input type="text" value={webRequiredPages} onChange={(e) => setWebRequiredPages(e.target.value)} placeholder="Ex: Início, Equipe, 3 páginas de serviços, Contato" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
@@ -2472,33 +2472,33 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                               <label className="text-[11px] text-zinc-400">Identidade de marca pronta?</label>
                               <select value={webHasBrandIdentity} onChange={(e) => setWebHasBrandIdentity(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
                                 <option value="sim">Sim, possuo assets e vetor</option>
-                                <option value="nÃ£o">NÃ£o, necessitamos branding previo</option>
+                                <option value="não">Não, necessitamos branding previo</option>
                               </select>
                             </div>
                             <div className="space-y-1">
-                              <label className="text-[11px] text-zinc-400">O material impresso/textos jÃ¡ estÃ£o prontos?</label>
+                              <label className="text-[11px] text-zinc-400">O material impresso/textos já estão prontos?</label>
                               <select value={webHasTextsReady} onChange={(e) => setWebHasTextsReady(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
                                 <option value="sim">Sim, textos finais redigidos</option>
-                                <option value="nÃ£o">NÃ£o, criaremos sob copy da TAG08</option>
+                                <option value="não">Não, criaremos sob copy da TAG08</option>
                               </select>
                             </div>
                             <div className="space-y-1 font-sans">
                               <label className="text-[11px] text-zinc-400">Temos acervo real corporativo?</label>
                               <select value={webHasFilesReady} onChange={(e) => setWebHasFilesReady(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
                                 <option value="sim">Sim, fotos de excelente qualidade</option>
-                                <option value="nÃ£o">NÃ£o, usaremos banco premium</option>
+                                <option value="não">Não, usaremos banco premium</option>
                               </select>
                             </div>
                           </div>
 
                           <div className="space-y-2 border-t border-white/[0.03] pt-3 font-sans">
-                            <span className="text-[11px] font-sans uppercase tracking-widest text-zinc-500 font-bold block">IntegraÃ§Ãµes desejadas:</span>
+                            <span className="text-[11px] font-sans uppercase tracking-widest text-zinc-500 font-bold block">Integrações desejadas:</span>
                             <div className="flex flex-wrap gap-4 pt-1">
                               <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
                                 <input type="checkbox" checked={webIntegrateWhatsApp} onChange={(e) => setWebIntegrateWhatsApp(e.target.checked)} className="accent-brand-secondary bg-zinc-950 border-white/[0.1] rounded" /> WhatsApp Fluido
                               </label>
                               <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
-                                <input type="checkbox" checked={webIntegrateForm} onChange={(e) => setWebIntegrateForm(e.target.checked)} className="accent-brand-secondary bg-zinc-950 border-white/[0.1] rounded" /> FormulÃ¡rios Seguros
+                                <input type="checkbox" checked={webIntegrateForm} onChange={(e) => setWebIntegrateForm(e.target.checked)} className="accent-brand-secondary bg-zinc-950 border-white/[0.1] rounded" /> Formulários Seguros
                               </label>
                               <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
                                 <input type="checkbox" checked={webIntegrateCRM} onChange={(e) => setWebIntegrateCRM(e.target.checked)} className="accent-brand-secondary bg-zinc-950 border-white/[0.1] rounded" /> CRM (ex: RD Station)
@@ -2510,8 +2510,8 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           </div>
 
                           <div className="space-y-1.5 font-sans">
-                            <label className="text-xs text-zinc-400">Websites de referÃªncia que consideram sofisticados</label>
-                            <input type="text" value={webReferenceUrls} onChange={(e) => setWebReferenceUrls(e.target.value)} placeholder="www.referÃªncia.com, www.exemplo.com" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                            <label className="text-xs text-zinc-400">Websites de referência que consideram sofisticados</label>
+                            <input type="text" value={webReferenceUrls} onChange={(e) => setWebReferenceUrls(e.target.value)} placeholder="www.referência.com, www.exemplo.com" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                           </div>
                         </motion.div>
                       )}
@@ -2529,14 +2529,14 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                               <input type="text" value={piTeamSize} onChange={(e) => setPiTeamSize(e.target.value)} placeholder="Ex: 12 pessoas" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400">Quais divisÃµes/setores estruturados operam hoje?</label>
-                              <input type="text" value={piDepartments} onChange={(e) => setPiDepartments(e.target.value)} placeholder="Ex: Comercial, Financeiro, PÃ³s-venda" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                              <label className="text-xs text-zinc-400">Quais divisões/setores estruturados operam hoje?</label>
+                              <input type="text" value={piDepartments} onChange={(e) => setPiDepartments(e.target.value)} placeholder="Ex: Comercial, Financeiro, Pós-venda" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-sans">
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400">Quais setores estÃ£o operando em maior desalinhamento?</label>
+                              <label className="text-xs text-zinc-400">Quais setores estão operando em maior desalinhamento?</label>
                               <input type="text" value={piDisorganizedAreas} onChange={(e) => setPiDisorganizedAreas(e.target.value)} placeholder="Ex: Atendimento comercial de entrada" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                             <div className="space-y-1.5 font-sans">
@@ -2548,7 +2548,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-1.5 font-sans">
                               <label className="text-xs text-zinc-400">Qual tarefa que costuma acumular maior retrabalho interno?</label>
-                              <input type="text" value={piReworkTasks} onChange={(e) => setPiReworkTasks(e.target.value)} placeholder="Ex: Passagem de bastÃ£o do comercial para produÃ§Ã£o" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                              <input type="text" value={piReworkTasks} onChange={(e) => setPiReworkTasks(e.target.value)} placeholder="Ex: Passagem de bastão do comercial para produção" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                             <div className="space-y-1.5 font-sans">
                               <label className="text-xs text-zinc-400">Quais ferramentas/softwares utilizam hoje de forma fixa?</label>
@@ -2558,31 +2558,31 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
                             <div className="space-y-1">
-                              <label className="text-[11px] text-zinc-400">HÃ¡ documentaÃ§Ã£o prÃ©via?</label>
+                              <label className="text-[11px] text-zinc-400">Há documentação prévia?</label>
                               <select value={piHasDocumentation} onChange={(e) => setPiHasDocumentation(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
-                                <option value="nÃ£o">NÃ£o, operamos no intuitivo</option>
-                                <option value="sim">Sim, temos manuais bÃ¡sicos</option>
+                                <option value="não">Não, operamos no intuitivo</option>
+                                <option value="sim">Sim, temos manuais básicos</option>
                               </select>
                             </div>
                             <div className="space-y-1 font-sans">
-                              <label className="text-[11px] text-zinc-400">DispÃµe de Organograma?</label>
+                              <label className="text-[11px] text-zinc-400">Dispõe de Organograma?</label>
                               <select value={piHasOrgChart} onChange={(e) => setPiHasOrgChart(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
-                                <option value="nÃ£o">NÃ£o, organograma inconsistente</option>
+                                <option value="não">Não, organograma inconsistente</option>
                                 <option value="sim">Sim, desenhado definitivo</option>
                               </select>
                             </div>
                             <div className="space-y-1 font-sans">
-                              <label className="text-[11px] text-zinc-400">HÃ¡ rotina semanal de reuniÃµes?</label>
+                              <label className="text-[11px] text-zinc-400">Há rotina semanal de reuniões?</label>
                               <select value={piHasMeetings} onChange={(e) => setPiHasMeetings(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
-                                <option value="nÃ£o">NÃ£o, apenas esporÃ¡dico</option>
-                                <option value="sim">Sim, de checkpoint diÃ¡rio/semanal</option>
+                                <option value="não">Não, apenas esporádico</option>
+                                <option value="sim">Sim, de checkpoint diário/semanal</option>
                               </select>
                             </div>
                           </div>
 
                           <div className="space-y-1.5 font-sans">
-                            <label className="text-xs text-zinc-400">Aponte o estopim de maior cansaÃ§o ou gargalo operacional atual</label>
-                            <input type="text" value={piMainBottleneck} onChange={(e) => setPiMainBottleneck(e.target.value)} placeholder="Ex: Falta de padrÃ£o nas passagens de briefing tÃ©cnicos" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                            <label className="text-xs text-zinc-400">Aponte o estopim de maior cansaço ou gargalo operacional atual</label>
+                            <input type="text" value={piMainBottleneck} onChange={(e) => setPiMainBottleneck(e.target.value)} placeholder="Ex: Falta de padrão nas passagens de briefing técnicos" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                           </div>
                         </motion.div>
                       )}
@@ -2591,57 +2591,57 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {isSelected("Process Activation") && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 p-5 rounded-2xl border border-white/[0.05] bg-neutral-900/30 text-left">
                           <h4 className="text-brand-secondary font-mono text-xs uppercase font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-brand-secondary" /> GovernanÃ§a &amp; Process Activation
+                            <span className="w-2 h-2 rounded-full bg-brand-secondary" /> Governança &amp; Process Activation
                           </h4>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400">JÃ¡ realizaram Process Intelligence com a TAG08?</label>
+                              <label className="text-xs text-zinc-400">Já realizaram Process Intelligence com a TAG08?</label>
                               <select value={paHasPiDiagnose} onChange={(e) => setPaHasPiDiagnose(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white">
                                 <option value="sim">Sim, temos os playbooks desenhados</option>
-                                <option value="nÃ£o">NÃ£o, requeremos documentaÃ§Ã£o inicial</option>
+                                <option value="não">Não, requeremos documentação inicial</option>
                               </select>
                             </div>
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400">Quais processos jÃ¡ se encontram prontos no papel?</label>
-                              <input type="text" value={paDocumentedProcesses} onChange={(e) => setPaDocumentedProcesses(e.target.value)} placeholder="Ex: Fluxograma do comercial e admissÃ£o" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                              <label className="text-xs text-zinc-400">Quais processos já se encontram prontos no papel?</label>
+                              <input type="text" value={paDocumentedProcesses} onChange={(e) => setPaDocumentedProcesses(e.target.value)} placeholder="Ex: Fluxograma do comercial e admissão" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400">Processos nÃ£o utilizados/adotados na rotina</label>
+                              <label className="text-xs text-zinc-400">Processos não utilizados/adotados na rotina</label>
                               <input type="text" value={paUnappliedProcesses} onChange={(e) => setPaUnappliedProcesses(e.target.value)} placeholder="..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400">Quais times/lideranÃ§as internas devem ser treinados?</label>
+                              <label className="text-xs text-zinc-400">Quais times/lideranças internas devem ser treinados?</label>
                               <input type="text" value={paTeamsToTrain} onChange={(e) => setPaTeamsToTrain(e.target.value)} placeholder="Ex: Equipe operacional de vendas" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400">Indique o lÃ­der pela aplicaÃ§Ã£o diÃ¡ria dos planos</label>
+                              <label className="text-xs text-zinc-400">Indique o líder pela aplicação diária dos planos</label>
                               <input type="text" value={paResponsibleLeader} onChange={(e) => setPaResponsibleLeader(e.target.value)} placeholder="Ex: Gerente Administrativo" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400">Maior dificuldade na adoÃ§Ã£o de manuais operacionais</label>
-                              <input type="text" value={paBiggestDifficulty} onChange={(e) => setPaBiggestDifficulty(e.target.value)} placeholder="Ex: Esquecimento e resistÃªncia a novos softwares" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                              <label className="text-xs text-zinc-400">Maior dificuldade na adoção de manuais operacionais</label>
+                              <input type="text" value={paBiggestDifficulty} onChange={(e) => setPaBiggestDifficulty(e.target.value)} placeholder="Ex: Esquecimento e resistência a novos softwares" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                           </div>
 
                           <div className="space-y-1.5 font-sans">
-                            <label className="text-xs text-zinc-400">A equipe possui agenda livre e disposiÃ§Ã£o para mentorias de lideranÃ§a?</label>
+                            <label className="text-xs text-zinc-400">A equipe possui agenda livre e disposição para mentorias de liderança?</label>
                             <select value={paHasTimeForTraining} onChange={(e) => setPaHasTimeForTraining(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white">
                               <option value="sim">Sim, de forma integrada no expediente</option>
-                              <option value="nÃ£o">NÃ£o, necessitaremos de horÃ¡rios restritivos</option>
+                              <option value="não">Não, necessitaremos de horários restritivos</option>
                             </select>
                           </div>
                         </motion.div>
                       )}
 
                       {/* General fallback fields for other types */}
-                      {(!isSelected("GestÃ£o de Redes Sociais") && !isSelected("Branding & Identidade") && !isSelected("Desenvolvimento Web") && !isSelected("Process Intelligence") && !isSelected("Process Activation")) && (
+                      {(!isSelected("Gestão de Redes Sociais") && !isSelected("Branding & Identidade") && !isSelected("Desenvolvimento Web") && !isSelected("Process Intelligence") && !isSelected("Process Activation")) && (
                         <div className="space-y-3 font-sans">
                           <label className="text-xs text-zinc-400">{t("briefing_not_selected_desc")}</label>
                           <textarea value={generalBriefingText} onChange={(e) => setGeneralBriefingText(e.target.value)} rows={5} placeholder={t("briefing_not_selected_placeholder")} className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-xs text-white resize-none" />
@@ -2703,7 +2703,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                     </div>
                   )}
 
-                  {/* STEP 7: EXPECTATIVAS PARA PRÃ“XIMOS 90 DIAS */}
+                  {/* STEP 7: EXPECTATIVAS PARA PR�XIMOS 90 DIAS */}
                   {currentStep === 7 && (
                     <div className="space-y-6 py-2 overflow-y-auto max-h-[500px] pr-2 font-sans">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2735,7 +2735,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         </div>
                         <div className="space-y-1.5">
                           <label className="text-xs text-zinc-400">{preferredLanguage === "en" ? "Are there important deadlines/launch dates?" : preferredLanguage === "es" ? "Tiene plazos de entrega/kickoff importantes?" : "Existe algum prazo importante ou kickoff agendado?"}</label>
-                          <input type="text" value={importantDeadlines} onChange={(e) => setImportantDeadlines(e.target.value)} placeholder={preferredLanguage === "en" ? "e.g., Launch complete site by 30th" : preferredLanguage === "es" ? "Ej: Lanzar la web estratÃ©gica para el dÃ­a 30" : "Ex: LanÃ§ar o site estratÃ©gico atÃ© o dia 30"} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                          <input type="text" value={importantDeadlines} onChange={(e) => setImportantDeadlines(e.target.value)} placeholder={preferredLanguage === "en" ? "e.g., Launch complete site by 30th" : preferredLanguage === "es" ? "Ej: Lanzar la web estratégica para el día 30" : "Ex: Lançar o site estratégico até o dia 30"} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                         </div>
                       </div>
 
@@ -2826,7 +2826,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* Onboarding automatic system checks */}
                       <div className="p-5 rounded-2xl bg-neutral-950 border border-white/[0.03] space-y-4 text-left">
                         <span className="font-mono text-[9px] text-brand-secondary uppercase font-black block">
-                          {preferredLanguage === "en" ? "RECEIPT CHECKLIST // SYSTEM INDICATORS" : preferredLanguage === "es" ? "LISTA DE RECEPCIÃ“N // INDICADORES DEL SISTEMA" : "CHECKLIST DE RECEBIMENTO // SINALIZADORES SISTÃŠMICOS"}
+                          {preferredLanguage === "en" ? "RECEIPT CHECKLIST // SYSTEM INDICATORS" : preferredLanguage === "es" ? "LISTA DE RECEPCI�N // INDICADORES DEL SISTEMA" : "CHECKLIST DE RECEBIMENTO // SINALIZADORES SIST�`MICOS"}
                         </span>
                         
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2836,15 +2836,15 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300">
                             <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-[9px]"><Check className="w-3 h-3" /></div>
-                            <span>{preferredLanguage === "en" ? "Production briefing registered" : preferredLanguage === "es" ? "Briefing de producciÃ³n registrado" : "Briefing de produÃ§Ã£o registrado"}</span>
+                            <span>{preferredLanguage === "en" ? "Production briefing registered" : preferredLanguage === "es" ? "Briefing de producción registrado" : "Briefing de produção registrado"}</span>
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300">
                             <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-[9px]"><Check className="w-3 h-3" /></div>
-                            <span>{preferredLanguage === "en" ? "Notification sent to TAG08 board" : preferredLanguage === "es" ? "NotificaciÃ³n enviada a la directiva" : "NotificaÃ§Ã£o enviada Ã  diretoria TAG08"}</span>
+                            <span>{preferredLanguage === "en" ? "Notification sent to TAG08 board" : preferredLanguage === "es" ? "Notificación enviada a la directiva" : "Notificação enviada à diretoria TAG08"}</span>
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300 animate-pulse">
                             <div className="w-3 h-3 rounded-full bg-amber-400 shrink-0 shadow-[0_0_8px_#fbbf24]" />
-                            <span className="text-zinc-400">{preferredLanguage === "en" ? "Next step: Internal review" : preferredLanguage === "es" ? "Siguiente etapa: RevisÃ£o interna" : "PrÃ³xima etapa: ConferÃªncia interna"}</span>
+                            <span className="text-zinc-400">{preferredLanguage === "en" ? "Next step: Internal review" : preferredLanguage === "es" ? "Siguiente etapa: Revisão interna" : "Próxima etapa: Conferência interna"}</span>
                           </div>
                         </div>
                       </div>
@@ -2856,10 +2856,10 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         
                         <ul className="space-y-1.5 text-zinc-400 text-xs">
                           <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Original brand assets (.EPS or vector Logo)" : preferredLanguage === "es" ? "Archivos originales de marca (.EPS o vector de Logo)" : "Arquivos originais da marca (.EPS ou vetor do Logotipo)"}</li>
-                          <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Links and basic credentials of current channels" : preferredLanguage === "es" ? "Enlaces y credenciales bÃ¡sicas de canales actuales" : "Links e credenciais bÃ¡sicas dos canais atuais"}</li>
-                          <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Image bank (team photos, physical workspace, or clinic)" : preferredLanguage === "es" ? "Banco de imagens (fotos del equipo, espacio fÃ­sico o clÃ­nica)" : "Acervo de imagens (fotos da equipe, operaÃ§Ã£o fsica ou clÃ­nica)"}</li>
-                          <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Additional reference documents for scripts" : preferredLanguage === "es" ? "Documentos de referÃªncia adicionales para guiones" : "Documentos de referÃªncia adicionais para os roteiros"}</li>
-                          <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Access details to be requested via secure & auditable channel" : preferredLanguage === "es" ? "Detalles de acceso que se solicitarÃ¡n por canal seguro y auditable" : "Acessos que serÃ£o solicitados por canal seguro e auditÃ¡vel"}</li>
+                          <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Links and basic credentials of current channels" : preferredLanguage === "es" ? "Enlaces y credenciales básicas de canales actuales" : "Links e credenciais básicas dos canais atuais"}</li>
+                          <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Image bank (team photos, physical workspace, or clinic)" : preferredLanguage === "es" ? "Banco de imagens (fotos del equipo, espacio físico o clínica)" : "Acervo de imagens (fotos da equipe, operação fsica ou clínica)"}</li>
+                          <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Additional reference documents for scripts" : preferredLanguage === "es" ? "Documentos de referência adicionales para guiones" : "Documentos de referência adicionais para os roteiros"}</li>
+                          <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Access details to be requested via secure & auditable channel" : preferredLanguage === "es" ? "Detalles de acceso que se solicitarán por canal seguro y auditable" : "Acessos que serão solicitados por canal seguro e auditável"}</li>
                         </ul>
                       </div>
 
@@ -2905,7 +2905,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           onClick={() => onNavigate("/")}
                           className="font-sans text-[11px] text-zinc-500 hover:text-white uppercase tracking-wider transition-colors pt-1.5"
                         >
-                          &larr; {preferredLanguage === "en" ? "Back to home" : preferredLanguage === "es" ? "Volver al inicio" : "Voltar para o inÃ­cio"}
+                          &larr; {preferredLanguage === "en" ? "Back to home" : preferredLanguage === "es" ? "Volver al inicio" : "Voltar para o início"}
                         </button>
 
                         <button
@@ -2943,7 +2943,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           onClick={handleNext}
                           className="px-6 py-3.5 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center gap-1.5 cursor-pointer shadow-[0_4px_20px_rgba(var(--color-brand-secondary-rgb),0.12)] hover:-translate-y-0.5"
                         >
-                          AvanÃ§ar <ArrowRight className="w-4 h-4" />
+                          Avançar <ArrowRight className="w-4 h-4" />
                         </button>
                       ) : (
                         <button

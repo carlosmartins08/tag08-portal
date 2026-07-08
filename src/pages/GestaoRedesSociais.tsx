@@ -28,84 +28,84 @@ interface PlayableShort {
 const shortsData: PlayableShort[] = [
   {
     id: "short-01",
-    title: "O Segredo do Minimalismo SÃ³brio",
-    subtitle: "Bastidores de CriaÃ§Ã£o de Marca SÃªnior",
+    title: "O Segredo do Minimalismo Sóbrio",
+    subtitle: "Bastidores de Criação de Marca Sênior",
     category: "Branding & Design",
     duration: "42s",
     videoUrl: "https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0227e333ef33d97d477e6e5d8a011de&profile_id=165&oauth2_token_id=57447761",
     thumbnail: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=600",
-    behindTheScenes: "Gravado com luz natural no estÃºdio da TAG08, focado na suavidade das transiÃ§Ãµes e no som ambiente refinado de escrita tÃ¡til (ASMR corporativo). Eliminamos trilhas sonoras genÃ©ricas e agitadas para manter o clima sÃ³brio da marca intelectual do cliente.",
-    strategy: "Capturar atenÃ§Ã£o imediata nos primeiros 3 segundos exibindo um caderno Moleskine com esboÃ§os manuais antes de transicionar cirurgicamente para a vetorizaÃ§Ã£o no software CAD/iPad, demonstrando a obsessÃ£o artesanal por trÃ¡s do preÃ§o premium.",
-    successMetric: "+45.000 visualizaÃ§Ãµes orgÃ¢nicas nas primeiras 48 horas e 18 leads corporativos entrando em contato na inbox de forma espontÃ¢nea.",
+    behindTheScenes: "Gravado com luz natural no estúdio da TAG08, focado na suavidade das transições e no som ambiente refinado de escrita tátil (ASMR corporativo). Eliminamos trilhas sonoras genéricas e agitadas para manter o clima sóbrio da marca intelectual do cliente.",
+    strategy: "Capturar atenção imediata nos primeiros 3 segundos exibindo um caderno Moleskine com esboços manuais antes de transicionar cirurgicamente para a vetorização no software CAD/iPad, demonstrando a obsessão artesanal por trás do preço premium.",
+    successMetric: "+45.000 visualizações orgânicas nas primeiras 48 horas e 18 leads corporativos entrando em contato na inbox de forma espontânea.",
     metrics: {
       reach: "45.2K",
       saves: "411",
       directs: "18"
     },
     deliverables: [
-      "DireÃ§Ã£o de arte e curadoria de cores",
-      "CaptaÃ§Ã£o em alta resoluÃ§Ã£o (4K 60fps)",
-      "EdiÃ§Ã£o rÃ­tmica e color grading cinematogrÃ¡fico",
-      "RoteirizaÃ§Ã£o tÃ¡tica baseada em funil de imagem"
+      "Direção de arte e curadoria de cores",
+      "Captação em alta resolução (4K 60fps)",
+      "Edição rítmica e color grading cinematográfico",
+      "Roteirização tática baseada em funil de imagem"
     ]
   },
   {
     id: "short-02",
-    title: "Um Dia na Rotina de um CirurgiÃ£o SÃªnior",
-    subtitle: "ElevaÃ§Ã£o de Imagem na Medicina de Elite",
+    title: "Um Dia na Rotina de um Cirurgião Sênior",
+    subtitle: "Elevação de Imagem na Medicina de Elite",
     category: "Lifestyle Profissional",
     duration: "58s",
     videoUrl: "https://player.vimeo.com/external/435674703.sd.mp4?s=7f60714b9b94091ecf3306ee1b14c1e4004cbe90&profile_id=165&oauth2_token_id=57447761",
     thumbnail: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=600",
-    behindTheScenes: "Grips e enquadramentos imersivos da chegada do mÃ©dico cirurgiÃ£o ao complexo hospitalar de excelÃªncia. O conteÃºdo evita futilidades e foca puramente no prestÃ­gio cirÃºrgico, nas decisÃµes sob pressÃ£o e no cuidado Ã©tico inquestionÃ¡vel.",
-    strategy: "Uso de trilhas orquestrais lentas com voz de estÃºdio refinada. A montagem cria um clima de responsabilidade e autoridade acadÃªmica insubstituÃ­vel. O encerramento sutil direciona ao agendamento de consultas exclusivas.",
-    successMetric: "Aumento palpÃ¡vel de 350% em cliques orgÃ¢nicos no link de agendamento de consulta particular na biografia, elevando a percepÃ§Ã£o financeira.",
+    behindTheScenes: "Grips e enquadramentos imersivos da chegada do médico cirurgião ao complexo hospitalar de excelência. O conteúdo evita futilidades e foca puramente no prestígio cirúrgico, nas decisões sob pressão e no cuidado ético inquestionável.",
+    strategy: "Uso de trilhas orquestrais lentas com voz de estúdio refinada. A montagem cria um clima de responsabilidade e autoridade acadêmica insubstituível. O encerramento sutil direciona ao agendamento de consultas exclusivas.",
+    successMetric: "Aumento palpável de 350% em cliques orgânicos no link de agendamento de consulta particular na biografia, elevando a percepção financeira.",
     metrics: {
       reach: "62.8K",
       saves: "582",
       directs: "32"
     },
     deliverables: [
-      "Storyboarding estratÃ©gico completo",
-      "CaptaÃ§Ã£o tÃ¡tica interna com direÃ§Ã£o",
-      "Tratamento sonoro e locuÃ§Ã£o qualificada",
-      "Ganchos dialÃ©ticos de alto status"
+      "Storyboarding estratégico completo",
+      "Captação tática interna com direção",
+      "Tratamento sonoro e locução qualificada",
+      "Ganchos dialéticos de alto status"
     ]
   },
   {
     id: "short-03",
-    title: "PresenÃ§a de Impacto InstantÃ¢neo em PainÃ©is",
+    title: "Presença de Impacto Instantâneo em Painéis",
     subtitle: "Captando Ativos de Valor em Eventos Reais",
     category: "Bastidores Corporativos",
     duration: "35s",
     videoUrl: "https://player.vimeo.com/external/403841133.sd.mp4?s=d010d9c4fecd6a56f082e6ea9a75677ff0a65383&profile_id=165&oauth2_token_id=57447761",
     thumbnail: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=600",
-    behindTheScenes: "Acompanhamento dinÃ¢mico discreto de palestrantes e executivos de ponta em painÃ©is. Produzimos captaÃ§Ãµes que evidenciam o network, o palco e o prestÃ­gio pÃºblico da marca sem atrapalhar a dinÃ¢mica do evento.",
-    strategy: "CriaÃ§Ã£o de montagens dinÃ¢micas enviadas e publicadas nas redes sociais da empresa apenas 40 minutos apÃ³s a fala final. O contraste de agilidade com design limpo passa uma sensaÃ§Ã£o de controle inabalÃ¡vel.",
-    successMetric: "Onboarding qualificado de participantes em tempo real com aumento vertiginoso de networking orgÃ¢nico pÃ³s-painel.",
+    behindTheScenes: "Acompanhamento dinâmico discreto de palestrantes e executivos de ponta em painéis. Produzimos captações que evidenciam o network, o palco e o prestígio público da marca sem atrapalhar a dinâmica do evento.",
+    strategy: "Criação de montagens dinâmicas enviadas e publicadas nas redes sociais da empresa apenas 40 minutos após a fala final. O contraste de agilidade com design limpo passa uma sensação de controle inabalável.",
+    successMetric: "Onboarding qualificado de participantes em tempo real com aumento vertiginoso de networking orgânico pós-painel.",
     metrics: {
       reach: "28.1K",
       saves: "193",
       directs: "11"
     },
     deliverables: [
-      "OperaÃ§Ã£o Ã¡gil presencial sem interferÃªncia",
-      "EdiÃ§Ã£o 'flash' em tempo real",
-      "Copys voltadas a engajamento instantÃ¢neo",
+      "Operação ágil presencial sem interferência",
+      "Edição 'flash' em tempo real",
+      "Copys voltadas a engajamento instantâneo",
       "Monitoramento de alcance territorial"
     ]
   },
   {
     id: "short-04",
     title: "Por que seu Canva afasta Clientes?",
-    subtitle: "Teses de Posicionamento IrreversÃ­veis",
-    category: "Design & NegÃ³cios",
+    subtitle: "Teses de Posicionamento Irreversíveis",
+    category: "Design & Negócios",
     duration: "50s",
     videoUrl: "https://player.vimeo.com/external/517602126.sd.mp4?s=eef87fc4dc8d3df623f9bca7ddaff8e16fd4eb17&profile_id=165&oauth2_token_id=57447761",
     thumbnail: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=600",
-    behindTheScenes: "GravaÃ§Ã£o frontal com contraste de luz dramÃ¡tica de estÃºdio. O especialista posiciona-se de forma direta, emitindo opiniÃµes fortes contra o design clichÃª fofinho de mÃ­dias genÃ©ricas.",
-    strategy: "Derrubar crenÃ§as consolidadas logo no inÃ­cio ('posts amigÃ¡veis demais dÃ£o prejuÃ­zo'). Uso de legendas com fontes mono, limpas e geomÃ©tricas que facilitam a leitura rÃ¡pida e retÃªm o usuÃ¡rio atÃ© o final da tese.",
-    successMetric: "Compartilhado ativamente por mais de 150 tomadores de decisÃ£o e fundadores nas primeiras semanas do reels.",
+    behindTheScenes: "Gravação frontal com contraste de luz dramática de estúdio. O especialista posiciona-se de forma direta, emitindo opiniões fortes contra o design clichê fofinho de mídias genéricas.",
+    strategy: "Derrubar crenças consolidadas logo no início ('posts amigáveis demais dão prejuízo'). Uso de legendas com fontes mono, limpas e geométricas que facilitam a leitura rápida e retêm o usuário até o final da tese.",
+    successMetric: "Compartilhado ativamente por mais de 150 tomadores de decisão e fundadores nas primeiras semanas do reels.",
     metrics: {
       reach: "78.4K",
       saves: "1.1K",
@@ -113,9 +113,9 @@ const shortsData: PlayableShort[] = [
     },
     deliverables: [
       "Pesquisa profunda e embasamento de tese",
-      "Metodologia tÃ¡tica de oratÃ³ria verbal",
-      "EdiÃ§Ã£o limpa e efeitos visuais tÃ©cnicos",
-      "Identidade tipogrÃ¡fica geomÃ©trica"
+      "Metodologia tática de oratória verbal",
+      "Edição limpa e efeitos visuais técnicos",
+      "Identidade tipográfica geométrica"
     ]
   }
 ];
@@ -152,16 +152,16 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
-                DIVIsÃ£o DE NARRATIVAS DE CONTEaDO // TAG08
+                DIVIsão DE NARRATIVAS DE CONTEaDO // TAG08
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
                 Gestao de redes sociais <br />
-                <span className="text-brand">com estratÃ©gia, conteÃºdo e posicionamento.</span>
+                <span className="text-brand">com estratégia, conteúdo e posicionamento.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
-                Sua marca nÃ£o precisa de posts rasos, calendÃ¡rios genÃ©ricos de datas comemorativas ou artes sem critÃ©rio que enfraquecem a percepÃ§Ã£o do negÃ³cio. Unimos direÃ§Ã£o de arte sÃ³bria, copywriting consistente e planejamento editorial claro para que seus perfis atraiam contatos mais qualificados.
+                Sua marca não precisa de posts rasos, calendários genéricos de datas comemorativas ou artes sem critério que enfraquecem a percepção do negócio. Unimos direção de arte sóbria, copywriting consistente e planejamento editorial claro para que seus perfis atraiam contatos mais qualificados.
               </p>
             </div>
           </div>
@@ -171,7 +171,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
               <img 
                 src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1600"
-                alt="DireÃ§Ã£o de Arte e CriaÃ§Ã£o Editorial TAG08"
+                alt="Direção de Arte e Criação Editorial TAG08"
                 className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
               />
@@ -213,10 +213,10 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">3.2x</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Mais QualificaÃ§Ã£o de Leads<br/>nas Conversas de Direct</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Mais Qualificação de Leads<br/>nas Conversas de Direct</span>
             </div>
             <div className="space-y-2">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-white">SÃªnior</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-white">Sênior</span>
               <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Linguagem e Imagem Alinhadas<br/>com Faturamento de Fato</span>
             </div>
             <div className="space-y-2">
@@ -237,24 +237,24 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               CHEGA DAS REDES <span className="text-brand">SOCIAIS INFANTIS.</span>
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Descubra por que a presenÃ§a atual de suas mÃ­dias sociais esta gerando ruÃ­dos graves de imagem e perdendo retenaao.
+              Descubra por que a presença atual de suas mídias sociais esta gerando ruídos graves de imagem e perdendo retenaao.
             </p>
           </div>
 
           <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
               <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">01 // FIM DO CANVA AMADOR</span>
-              <h4 className="text-white font-display font-black text-sm uppercase">Artes genÃ©ricas e coloridas demais</h4>
+              <h4 className="text-white font-display font-black text-sm uppercase">Artes genéricas e coloridas demais</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                PadrÃµes de design desorganizados transmitem imagem de empresa sem direÃ§Ã£o. SubstituÃ­mos posts genÃ©ricos por grades minimalistas e tipografia limpa, coerentes com a marca.
+                Padrões de design desorganizados transmitem imagem de empresa sem direção. Substituímos posts genéricos por grades minimalistas e tipografia limpa, coerentes com a marca.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
               <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">02 // CONTEaDOS COM VERDADEIRA SUBSTaNCIA</span>
-              <h4 className="text-white font-display font-black text-sm uppercase">Chega de dancinhas e clichÃªs de autoajuda</h4>
+              <h4 className="text-white font-display font-black text-sm uppercase">Chega de dancinhas e clichês de autoajuda</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                O cliente qualificado nÃ£o tem tempo para dicas superficiais. Criamos narrativas tÃ©cnicas que educam sobre problemas profundos e estruturam o valor inquestionÃ­vel da sua soluaao.
+                O cliente qualificado não tem tempo para dicas superficiais. Criamos narrativas técnicas que educam sobre problemas profundos e estruturam o valor inquestionível da sua soluaao.
               </p>
             </div>
 
@@ -268,9 +268,9 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
               <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">04 // PRESENaA DIGITAL CONVENIENTE</span>
-              <h4 className="text-white font-display font-black text-sm uppercase">Regularidade e constÃ¢ncia de entrega</h4>
+              <h4 className="text-white font-display font-black text-sm uppercase">Regularidade e constância de entrega</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                VocÃª nÃ£o precisa mais se preocupar em lembrar o que postar ou correr no fim do dia gravando Ã s pressas. A equipe de redatores e designers da TAG08 planeja e entrega todo o fluxo com antecedÃªncia.
+                Você não precisa mais se preocupar em lembrar o que postar ou correr no fim do dia gravando às pressas. A equipe de redatores e designers da TAG08 planeja e entrega todo o fluxo com antecedência.
               </p>
             </div>
           </div>
@@ -281,10 +281,10 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
       <section className="px-4 sm:px-6 md:px-8 py-16 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-2 max-w-2xl">
-            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">SUSTENTaÃ§Ã£o 360a TOTALMENTE GERENCIADA</span>
+            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">SUSTENTação 360a TOTALMENTE GERENCIADA</span>
             <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">O QUE CONSTRaI O SEU ECOSSISTEMA</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              EsqueÃ§a freelancers amadores que somem ou geram artes feias. Entregamos uma agÃªncia inteira de performance e copy cuidando de cada etapa do seu conteÃºdo.
+              Esqueça freelancers amadores que somem ou geram artes feias. Entregamos uma agência inteira de performance e copy cuidando de cada etapa do seu conteúdo.
             </p>
           </div>
 
@@ -296,7 +296,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Curadoria Visual</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  DireÃ§Ã£o de arte estrita e refinada utilizando fontes geomÃ©tricas limpas, contrastes de alto impacto e aplicaÃ§Ã£o correta da herÃ¡ldica e branding para impor peso visual imediato.
+                  Direção de arte estrita e refinada utilizando fontes geométricas limpas, contrastes de alto impacto e aplicação correta da heráldica e branding para impor peso visual imediato.
                 </p>
               </div>
             </div>
@@ -308,7 +308,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Copywriting Salida</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Roteiros estruturados de reels, carrossÃ©is educativos com boa profundidade de leitura e legendas sÃ³brias com base em copywriting corporativo, convertendo interaÃ§Ãµes em Direct.
+                  Roteiros estruturados de reels, carrosséis educativos com boa profundidade de leitura e legendas sóbrias com base em copywriting corporativo, convertendo interações em Direct.
                 </p>
               </div>
             </div>
@@ -320,7 +320,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Direcionamento de Vadeos</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Pautas, ganchos visuais e roteiros completos dinÃ¢micos para vocÃª ou representantes de ponta gravarem reels com maestria, incluindo referancias finas de enquadramento moderno.
+                  Pautas, ganchos visuais e roteiros completos dinâmicos para você ou representantes de ponta gravarem reels com maestria, incluindo referancias finas de enquadramento moderno.
                 </p>
               </div>
             </div>
@@ -330,9 +330,9 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 <Users className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">AgÃªnciamento e Post</h4>
+                <h4 className="text-white font-display font-black text-sm uppercase">Agênciamento e Post</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Agendamento, acompanhamento de hashtags estratÃ©gicas territoriais de SEO e postagens estritas no cronograma diario, deixando vocÃª livre para focar em gerenciar as operaÃ§Ãµes de faturamento.
+                  Agendamento, acompanhamento de hashtags estratégicas territoriais de SEO e postagens estritas no cronograma diario, deixando você livre para focar em gerenciar as operações de faturamento.
                 </p>
               </div>
             </div>
@@ -351,7 +351,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 DIRECIONAMENTO // PRATELEIRA DE ESCOPOS
               </span>
               <h2 className="font-display font-medium text-3xl sm:text-4xl text-white leading-tight uppercase">
-                Roteiros de ProduÃ§Ã£o de Redes de Alta Autoridade
+                Roteiros de Produção de Redes de Alta Autoridade
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
                 Nossos planos de acompanhamento mensal alinham o seu investimento de posicionamento aos objetivos de retenaao e faturamento da empresa. Escolha sua rota de escala:
@@ -363,23 +363,23 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 {
                   name: "Plano Start",
                   audience: "EMPREENDEDORES & MEIS",
-                  desc: "Estruturamos as bases qualificadas da sua presenÃ§a digital corporativa sem recorrer ao amadorismo visual e de roteiros.",
-                  features: ["Planejamento de Pautas Semanais", "Roteiros SÃªnior de Reels", "CarrossÃ©is Educativos Limpos", "Legendas de Alta ConversÃ£o", "Suporte Completo no Onboarding"],
+                  desc: "Estruturamos as bases qualificadas da sua presença digital corporativa sem recorrer ao amadorismo visual e de roteiros.",
+                  features: ["Planejamento de Pautas Semanais", "Roteiros Sênior de Reels", "Carrosséis Educativos Limpos", "Legendas de Alta Conversão", "Suporte Completo no Onboarding"],
                   badge: "R-01"
                 },
                 {
                   name: "Plano Base",
                   audience: "MARCAS EM CRESCIMENTO",
                   desc: "Para empresas consolidadas que necessitam de consistancia inabalavel, design premium superior e narrativa de referancia.",
-                  features: ["Todos os recursos do Start", "DireÃ§Ã£o Editorial Personalizada", "Identidade Visual de Feed Integrada", "Analise Mensal de Indicadores", "Relatarios Detalhados de Alcance"],
+                  features: ["Todos os recursos do Start", "Direção Editorial Personalizada", "Identidade Visual de Feed Integrada", "Analise Mensal de Indicadores", "Relatarios Detalhados de Alcance"],
                   featured: true,
                   badge: "R-02"
                 },
                 {
                   name: "Plano Performance",
                   audience: "LaDERES DE MATURIDADE",
-                  desc: "Tratamento profundo focado em clusters de trÃ¡fego, criativos exclusivos, conversÃ£o consistente e pautas estratÃ©gicas.",
-                  features: ["Todos os recursos do Base", "Copy de Lanaamentos de Vendas", "Suporte sÃªnior prioritario", "EstruturaÃ§Ã£o de Clusters de Trafego", "Insights e OtimizaÃ§Ãµes de ConversÃ£o"],
+                  desc: "Tratamento profundo focado em clusters de tráfego, criativos exclusivos, conversão consistente e pautas estratégicas.",
+                  features: ["Todos os recursos do Base", "Copy de Lanaamentos de Vendas", "Suporte sênior prioritario", "Estruturação de Clusters de Trafego", "Insights e Otimizações de Conversão"],
                   badge: "R-03"
                 }
               ].map((plan, idx) => (
@@ -429,7 +429,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
             </div>
           </div>
 
-          {/* Incluso x NÃ£o Incluso */}
+          {/* Incluso x Não Incluso */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start pt-12 border-t border-white/[0.04]">
             
             {/* Left intro details column */}
@@ -441,11 +441,11 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 O que garantimos (e o que foca em outras areas)
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                Nossa filosofia repudia falsas promessas de escopo infinito sem direÃ§Ã£o tÃ¡tica. Esclarecer com integridade os limites da nossa produÃ§Ã£o corporativa Ã© nossa garantia de sinergia:
+                Nossa filosofia repudia falsas promessas de escopo infinito sem direção tática. Esclarecer com integridade os limites da nossa produção corporativa é nossa garantia de sinergia:
               </p>
 
               <div className="p-5 rounded-2xl bg-brand-secondary/[0.01] border border-white/[0.03] text-xs text-zinc-400 font-sans leading-relaxed">
-                Nossa equipe foca estritamente no planejamento, design e rotinas intelectuais. Para gravaÃ§Ã£o fÃ­sica, fornecemos roteiros clÃ­nicos que vocÃª ou seu time gravam de forma descomplicada.
+                Nossa equipe foca estritamente no planejamento, design e rotinas intelectuais. Para gravação física, fornecemos roteiros clínicos que você ou seu time gravam de forma descomplicada.
               </div>
             </div>
 
@@ -463,9 +463,9 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                   {[
                     "Planejamento de linha editorial sob medida",
                     "Roteiros escritos com gancho e call-to-action",
-                    "Design exclusivo sob Figma para carrossÃ©is",
-                    "Legendas magnÃ©ticas para educar o pÃºblico",
-                    "Agendamento e automaÃ§Ã£o das postagens"
+                    "Design exclusivo sob Figma para carrosséis",
+                    "Legendas magnéticas para educar o público",
+                    "Agendamento e automação das postagens"
                   ].map((inc, index) => (
                     <div key={index} className="flex gap-3 text-xs text-zinc-300 font-sans items-start font-medium leading-relaxed font-semibold">
                       <div className="w-1.5 h-1.5 rounded-full bg-brand-secondary mt-1.5 shrink-0" />
@@ -475,20 +475,20 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 </div>
               </div>
 
-              {/* NÃ£o incluso */}
+              {/* Não incluso */}
               <div className="bg-charcoal-900 border border-white/[0.05] p-7 rounded-3xl space-y-5 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-zinc-600/30" />
                 <span className="font-mono text-[9px] text-zinc-500 bg-white/[0.02] border border-white/5 px-2.5 py-1 rounded font-black uppercase inline-block">
-                  NaO INCLUaDO NESTA DIVIsÃ£o
+                  NaO INCLUaDO NESTA DIVIsão
                 </span>
                 
                 <div className="space-y-3.5">
                   {[
-                    "GravaÃ§Ãµes de camera (deslocamento fasico)",
+                    "Gravações de camera (deslocamento fasico)",
                     "Oraamento de trafego pago ativo",
-                    "InteraÃ§Ãµes de Direct, comentarios e SAC",
-                    "Apoio de co-produÃ§Ã£o fÃ­sica presencial",
-                    "CriaÃ§Ã£o integral de nova marca/rebranding"
+                    "Interações de Direct, comentarios e SAC",
+                    "Apoio de co-produção física presencial",
+                    "Criação integral de nova marca/rebranding"
                   ].map((exc, index) => (
                     <div key={index} className="flex gap-3 text-xs text-zinc-400 font-sans items-start font-medium leading-relaxed">
                       <div className="w-1.5 h-1.5 rounded-full bg-zinc-600 mt-1.5 shrink-0" />
@@ -504,26 +504,26 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
             </div>
           </div>
 
-          {/* Ciclo Mensal de OperaÃ§Ã£o - CHRONOLOGICAL TIMELINE */}
+          {/* Ciclo Mensal de Operação - CHRONOLOGICAL TIMELINE */}
           <div className="space-y-10 pt-12 border-t border-white/[0.04]">
             <div className="space-y-3">
               <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
                 METODOLOGIA DE FLUXO
               </span>
               <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
-                Nosso Ciclo Mensal SistemÃ¡tico
+                Nosso Ciclo Mensal Sistemático
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
-                Seguimos um ritmo de planejamento consistente para manter sua grade de canais digitais organizada, previsÃ­vel e sem dependÃªncia de Ãºltima hora:
+                Seguimos um ritmo de planejamento consistente para manter sua grade de canais digitais organizada, previsível e sem dependência de última hora:
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {[
-                { title: "Briefing & DireÃ§Ã£o", desc: "Alinhamos os seus gatilhos comerciais de ofertas e compromissos do perÃ­odo para mapear os temas do mÃªs." },
-                { title: "Desenho e Roteiros", desc: "ConstruÃ­mos as falas e os carrossÃ©is no Notion para revisÃ£o estrutural." },
-                { title: "Refinamento Visual", desc: "Criamos as artes estÃ¡ticas limpas exclusivas adequadas ao tom premium e liberamos para validaÃ§Ã£o pÃºblica." },
-                { title: "AutomaÃ§Ã£o e AnÃ¡lise", desc: "Agendamos as postagens oficiais e extraÃ­mos mÃ©tricas e insights reais no tÃ©rmino de cada ciclo." }
+                { title: "Briefing & Direção", desc: "Alinhamos os seus gatilhos comerciais de ofertas e compromissos do período para mapear os temas do mês." },
+                { title: "Desenho e Roteiros", desc: "Construímos as falas e os carrosséis no Notion para revisão estrutural." },
+                { title: "Refinamento Visual", desc: "Criamos as artes estáticas limpas exclusivas adequadas ao tom premium e liberamos para validação pública." },
+                { title: "Automação e Análise", desc: "Agendamos as postagens oficiais e extraímos métricas e insights reais no término de cada ciclo." }
               ].map((step, sIdx) => (
                 <div key={sIdx} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-2xl text-left space-y-4 hover:border-brand/10 transition-all duration-300">
                   <div className="font-sans text-[10px] font-black text-brand-secondary bg-brand-secondary/5 w-8 h-8 rounded-lg flex items-center justify-center border border-brand-secondary/10 shadow-[0_4px_10px_rgba(var(--color-brand-secondary-rgb),0.05)]">
@@ -545,19 +545,19 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 CULTURE OF METRICS MENSAL
               </span>
               <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
-                Monitoramos o seu Crescimento de Forma AnalÃ­tica
+                Monitoramos o seu Crescimento de Forma Analítica
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                NÃ£o publicamos criativos por publicar. Acompanhamos indicadores cruciais para depurar o funil comercial e calibrar os desvios editoriais a cada ciclo renovado:
+                Não publicamos criativos por publicar. Acompanhamos indicadores cruciais para depurar o funil comercial e calibrar os desvios editoriais a cada ciclo renovado:
               </p>
             </div>
 
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { title: "Alcance Qualificado", desc: "Quantas contas executivas e tomadores de decisÃ£o visualizam sua marca no LinkedIn e Instagram mensalmente." },
-                { title: "MÃ©tricas de RetenÃ§Ã£o", desc: "Mapeamos se os carrossÃ©is e vÃ­deos sÃ£o realmente lidos por completo ou abandonados antes do CTA." },
-                { title: "AderÃªncia Direta", desc: "Monitoramos o volume real de novos links acessados ou directs que chegam ao comercial provindos espontÃ¢neamente." },
-                { title: "CalibraÃ§Ã£o ContÃ­nua", desc: "Ajustamos os ganchos baseando-nos nos dados do perÃ­odo anterior para elevar a conversÃ£o sistÃªmica." }
+                { title: "Alcance Qualificado", desc: "Quantas contas executivas e tomadores de decisão visualizam sua marca no LinkedIn e Instagram mensalmente." },
+                { title: "Métricas de Retenção", desc: "Mapeamos se os carrosséis e vídeos são realmente lidos por completo ou abandonados antes do CTA." },
+                { title: "Aderência Direta", desc: "Monitoramos o volume real de novos links acessados ou directs que chegam ao comercial provindos espontâneamente." },
+                { title: "Calibração Contínua", desc: "Ajustamos os ganchos baseando-nos nos dados do período anterior para elevar a conversão sistêmica." }
               ].map((item, iIdx) => (
                 <div key={iIdx} className="p-5 rounded-2xl bg-charcoal-900/60 border border-white/[0.03] space-y-1.5 text-left hover:border-brand/10 transition-colors">
                   <div className="w-2 h-2 rounded-full bg-brand-secondary" />
@@ -577,7 +577,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
           <div className="space-y-1 max-w-3xl">
             <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">MONITORAMENTO DE DADOS E RELATaRIOS MENSAIS SaRIOS</h4>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed">
-              Sem enrolaÃ§Ã£o de mÃ©tricas de vaidade. Mensuramos e apresentamos relatÃ³rios exclusivos focados unicamente no crescimento real de pÃºblico qualificado, cliques efetivos em links de compra e volume real de leads captados atravÃ©s de conversas.
+              Sem enrolação de métricas de vaidade. Mensuramos e apresentamos relatórios exclusivos focados unicamente no crescimento real de público qualificado, cliques efetivos em links de compra e volume real de leads captados através de conversas.
             </p>
           </div>
           <span className="font-mono text-[8.5px] text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
@@ -590,14 +590,14 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
       <MiniCases 
         onNavigate={onNavigate} 
         title="Impacto Editorial e Audiancia Real"
-        subtitle="Empresas e mÃ©dicos que escalaram sua representaÃ§Ã£o digital atravÃ©s da curadoria e conteÃºdo qualificado da TAG08."
+        subtitle="Empresas e médicos que escalaram sua representação digital através da curadoria e conteúdo qualificado da TAG08."
         badge="REEL & SOCIAL PROOF // MARCAS ATIVAS"
       />
 
       <MiniCases 
         onNavigate={onNavigate} 
         title="Impacto Editorial e Audiancia Real"
-        subtitle="Empresas e mÃ©dicos que escalaram sua representaÃ§Ã£o digital atravÃ©s da curadoria e conteÃºdo qualificado da TAG08."
+        subtitle="Empresas e médicos que escalaram sua representação digital através da curadoria e conteúdo qualificado da TAG08."
         badge="REEL & SOCIAL PROOF // MARCAS ATIVAS"
       />
 
@@ -608,13 +608,13 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
         <div className="max-w-7xl mx-auto space-y-12 relative z-10">
           <div className="space-y-3 max-w-3xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-              PLANEJAMENTO ESTRATaGICO // SIMULaÃ§Ã£o CORPORATIVA
+              PLANEJAMENTO ESTRATaGICO // SIMULação CORPORATIVA
             </span>
             <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
               Simulador de Alcance Organico e Funil Social
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-              O alcance orgÃ¢nico sÃªnior Ã© um jogo de regularidade editorial e distribuiÃ§Ã£o de alta qualidade tÃ©cnica. Ajuste a frequÃªncia de postagens semanais e descubra o impacto cumulativo projetado no LinkedIn e Instagram para a sua marca B2B ou Perfil MÃ©dico.
+              O alcance orgânico sênior é um jogo de regularidade editorial e distribuição de alta qualidade técnica. Ajuste a frequência de postagens semanais e descubra o impacto cumulativo projetado no LinkedIn e Instagram para a sua marca B2B ou Perfil Médico.
             </p>
           </div>
 
@@ -623,13 +623,13 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
             <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-6">
                 <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block pb-3 border-b border-white/[0.05]">
-                  FrequÃªncia Semanal Estimada:
+                  Frequência Semanal Estimada:
                 </span>
 
                 {/* LinkedIn Frequency Selector */}
                 <div className="space-y-3">
                   <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    FrequÃªncia LinkedIn (Artigos/Posts):
+                    Frequência LinkedIn (Artigos/Posts):
                   </label>
                   <div className="grid grid-cols-3 gap-2">
                     {[
@@ -665,7 +665,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 {/* Instagram Reels Frequency Selector */}
                 <div className="space-y-3">
                   <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    FrequÃªncia Instagram / TikTok (Vadeos Reels):
+                    Frequência Instagram / TikTok (Vadeos Reels):
                   </label>
                   <div className="grid grid-cols-3 gap-2">
                     {[
@@ -701,7 +701,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 {/* Content Pillar Selector */}
                 <div className="space-y-3">
                   <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    Linha Editorial Principal de NegÃ³cios:
+                    Linha Editorial Principal de Negócios:
                   </label>
                   <select 
                     id="editorial-pillar"
@@ -710,7 +710,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                     }}
                     className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-xs text-zinc-300 font-sans focus:outline-none focus:border-brand"
                   >
-                    <option value="tech">Autoridade TÃ©cnica (Estudos Cientaficos e Engenharia)</option>
+                    <option value="tech">Autoridade Técnica (Estudos Cientaficos e Engenharia)</option>
                     <option value="behind">Bastidores Premium (Rotina Corporativa e Clientes Reais)</option>
                     <option value="sales">Venda Direta / Casos de Sucesso Comerciais</option>
                   </select>
@@ -723,7 +723,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                   <span className="text-[10px] font-mono font-black uppercase tracking-wider">Distribuiaao Inteligente TAG08</span>
                 </div>
                 <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                  Nas nÃ£o apenas criamos artes bonitas. Nas estruturamos de forma ativa o tom de voz sÃªnior, criamos roteiros, fazemos a curadoria visual e cuidamos da distribuiÃ§Ã£o orgÃ¢nica e paga para que sua marca tenha falado comercial constante.
+                  Nas não apenas criamos artes bonitas. Nas estruturamos de forma ativa o tom de voz sênior, criamos roteiros, fazemos a curadoria visual e cuidamos da distribuição orgânica e paga para que sua marca tenha falado comercial constante.
                 </p>
               </div>
             </div>
@@ -743,7 +743,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                     <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Impressaes Organicas / Mas</span>
                     <p id="sim-impressions" className="text-3xl font-display font-black text-white">42.400</p>
                     <span className="text-[9.5px] text-zinc-400 block leading-tight font-sans">
-                      VisualizaÃ§Ãµes de suas postagens no feed orgÃ¢nico.
+                      Visualizações de suas postagens no feed orgânico.
                     </span>
                   </div>
 
@@ -751,7 +751,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                     <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Novos Visitantes de Perfil</span>
                     <p id="sim-growth" className="text-3xl font-display font-black text-brand">2.120</p>
                     <span className="text-[9.5px] text-zinc-400 block leading-tight font-sans">
-                      EmpresÃ¡rios e potenciais parceiros acessando seu hub.
+                      Empresários e potenciais parceiros acessando seu hub.
                     </span>
                   </div>
 
@@ -759,7 +759,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                     <span className="font-mono text-[8px] text-brand-secondary/80 uppercase font-black block">Leads de Alto Padrao (SQL)</span>
                     <p id="sim-leads" className="text-3xl font-display font-black text-brand-secondary">18</p>
                     <span className="text-[9.5px] text-zinc-400 block leading-tight font-sans">
-                      Contatos ultra-qualificados agendando reuniÃµes.
+                      Contatos ultra-qualificados agendando reuniões.
                     </span>
                   </div>
                 </div>
@@ -767,7 +767,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 {/* Monthly Editorial Grid Preview */}
                 <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-5 space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-bold block">SimulaÃ§Ã£o de Grid do Feed Comercial</span>
+                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-bold block">Simulação de Grid do Feed Comercial</span>
                     <span className="font-sans text-[9px] text-zinc-500">Mas 01 (Preview do Planejamento)</span>
                   </div>
 
@@ -776,11 +776,11 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                       { week: "W1", name: "Analise Cientafica", tag: "AUTORIDADE" },
                       { week: "W1", name: "Estudo de Caso", tag: "PROVA SOCIAL" },
                       { week: "W2", name: "Entrevista de Time", tag: "BASTIDORES" },
-                      { week: "W2", name: "VisÃ£o de Vanguarda", tag: "CONCEITO" },
+                      { week: "W2", name: "Visão de Vanguarda", tag: "CONCEITO" },
                       { week: "W3", name: "Diagnastico Clanico", tag: "CONCEITO" },
                       { week: "W3", name: "Venda Direta", tag: "OFERTA" },
                       { week: "W4", name: "Processo Interno", tag: "BASTIDORES" },
-                      { week: "W4", name: "Atendimento Vip", tag: "RELAÃ§Ãµes" }
+                      { week: "W4", name: "Atendimento Vip", tag: "RELAções" }
                     ].map((cell, idx) => (
                       <div key={idx} className="p-3 bg-zinc-950/80 border border-white/5 rounded-xl space-y-1.5 text-left relative overflow-hidden">
                         <span className="font-sans text-[6.5px] text-zinc-500 font-bold block">{cell.week} // {cell.tag}</span>
@@ -828,12 +828,12 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               }} />
 
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 mt-6">
-                <span className="font-mono text-[8px] text-zinc-600">PROJEÃ§Ãµes DE CONVERsÃ£o BASEADAS EM CAMPANHAS REALIZADAS TAG08 // 2026</span>
+                <span className="font-mono text-[8px] text-zinc-600">PROJEções DE CONVERsão BASEADAS EM CAMPANHAS REALIZADAS TAG08 // 2026</span>
                 <button 
                   onClick={() => onNavigate("/contato")}
                   className="text-xs font-mono text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
                 >
-                  Agendar SessÃ£o EstratÃ©gica <ArrowRight className="w-3.5 h-3.5" />
+                  Agendar Sessão Estratégica <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -861,7 +861,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans font-medium">
-                Sua marca nÃ£o precisa de futilidade e dancinhas coreografadas para atrair atenÃ§Ã£o. Produzimos narrativas em formato de tela vertical (Shorts e Reels) com boa retenÃ§Ã£o, roteiros sÃªnior e estÃ©tica sÃ³bria de autoridade. Passe o mouse sobre os cards para ver o loop e clique para abrir os bastidores e mÃ©tricas reais de cada peÃ§a de conteÃºdo.
+                Sua marca não precisa de futilidade e dancinhas coreografadas para atrair atenção. Produzimos narrativas em formato de tela vertical (Shorts e Reels) com boa retenção, roteiros sênior e estética sóbria de autoridade. Passe o mouse sobre os cards para ver o loop e clique para abrir os bastidores e métricas reais de cada peça de conteúdo.
               </p>
             </div>
           </div>
@@ -1113,10 +1113,10 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center gap-4">
                   <div className="flex-grow space-y-1 text-center sm:text-left">
                     <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-wider block font-bold">
-                      aÃ§Ã£o COMERCIAL IMEDIATA // DISPONÃVEL
+                      ação COMERCIAL IMEDIATA // DISPONÍVEL
                     </span>
                     <span className="text-zinc-400 text-[10px] leading-tight block">
-                      Solicite um diagnÃ³stico sÃªnior ou replicamos esse estilo de vÃ­deo para seu negÃ³cio.
+                      Solicite um diagnóstico sênior ou replicamos esse estilo de vídeo para seu negócio.
                     </span>
                   </div>
 
@@ -1126,7 +1126,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                     rel="noreferrer"
                     className="w-full sm:w-auto px-6 py-3 bg-brand-secondary hover:bg-brand-dark text-black text-[11px] font-sans font-bold uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-[0_12px_35px_rgba(var(--color-brand-secondary-rgb),0.15)] cursor-pointer"
                   >
-                    <span>replicar esta estratÃ©gia</span>
+                    <span>replicar esta estratégia</span>
                     <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
                   </a>
                 </div>
@@ -1192,10 +1192,10 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               </div>
               <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
                 TRANSFORME SEU FEED <br />
-                EM ATRaÃ§Ã£o ATIVA!
+                EM ATRação ATIVA!
               </h2>
               <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
-                ELEVE O NÃVEL DOS SEUS PERFIS COM PROCESSOS EDITORIAIS DE ELITE QUE EDUCAM SEU PÃšBLICO, CONVERSAM DIRETAMENTE COM DECISORES E MANTÃŠM SUA EMPRESA COMO MARCA CLASSE A NA MENTE DO MERCADO.
+                ELEVE O N�VEL DOS SEUS PERFIS COM PROCESSOS EDITORIAIS DE ELITE QUE EDUCAM SEU P�aBLICO, CONVERSAM DIRETAMENTE COM DECISORES E MANT�`M SUA EMPRESA COMO MARCA CLASSE A NA MENTE DO MERCADO.
               </p>
             </div>
 
@@ -1207,10 +1207,10 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 </div>
                 <div className="space-y-0.5">
                   <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
-                    ELEVaÃ§Ã£o DE PADRaO
+                    ELEVação DE PADRaO
                   </span>
                   <p className="text-white text-xs leading-snug font-sans font-semibold">
-                    Substitua o Canva amador por grades minimalistas e narrativas sÃ³brias de alto calibre, aumentando as conversas no Direct.
+                    Substitua o Canva amador por grades minimalistas e narrativas sóbrias de alto calibre, aumentando as conversas no Direct.
                   </p>
                 </div>
               </div>
@@ -1218,7 +1218,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               {/* DUAL CLIENT CONNECTION CHANNELS (BR & INT) */}
               <div className="space-y-3">
                 <a 
-                  href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20solicitar%20um%20diagnÃ³stico%20de%20posicionamento%20para%20minhas%20Redes%20Sociais%20com%20a%20TAG08")}
+                  href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20solicitar%20um%20diagnóstico%20de%20posicionamento%20para%20minhas%20Redes%20Sociais%20com%20a%20TAG08")}
                   target="_blank"
                   rel="noreferrer"
                   className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner"
@@ -1230,7 +1230,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                       </div>
                       <div className="flex flex-col text-left">
                         <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
-                          PROPRIETÃRIO DIRETO (WhatsApp)
+                          PROPRIETÁRIO DIRETO (WhatsApp)
                         </span>
                         <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                           +55 83 9.9886-8882
@@ -1278,7 +1278,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                   </span>
                 </div>
                 <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
-                  OPERaÃ§Ã£o ATIVA 100% online
+                  OPERação ATIVA 100% online
                 </span>
               </div>
             </div>
@@ -1296,7 +1296,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 px-2.5 py-0.5 rounded border border-brand-secondary/10 uppercase tracking-widest font-black">CONSULTA DIAGNaSTICA</span>
               <h3 className="font-display font-semibold text-xl sm:text-2xl text-white uppercase tracking-tight">Pronto para estruturar suas redes como canal de vendas?</h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans font-medium">
-                Converse com nossos estrategistas sÃªniores de canais corporativos e solicite uma sessÃ£o diagnÃ³stica de 15 minutos do feed e canal da sua empresa.
+                Converse com nossos estrategistas sêniores de canais corporativos e solicite uma sessão diagnóstica de 15 minutos do feed e canal da sua empresa.
               </p>
             </div>
             
@@ -1331,14 +1331,14 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                   PROTOCOLO DE REDES
                 </h2>
                 <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
-                  Esclareaa as principais dÃºvidas sobre como a TAG08 modela e gerencia seu cronograma editorial de mÃ­dias sociais de alto nÃ­vel.
+                  Esclareaa as principais dúvidas sobre como a TAG08 modela e gerencia seu cronograma editorial de mídias sociais de alto nível.
                 </p>
               </div>
 
               <div className="space-y-3 pt-4">
                 {([
                   { id: 0, title: "PLANEJAMENTO EDITORIAL" },
-                  { id: 1, title: "DIRETRIZ DE GRAVAÃ§Ãµes" },
+                  { id: 1, title: "DIRETRIZ DE GRAVAções" },
                   { id: 2, title: "COBERTURA DE PLATAFORMAS" },
                   { id: 3, title: "ONBOARDING INICIAL" }
                 ]).map((item) => (
@@ -1385,7 +1385,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
                   {([
                     "PLANEJAMENTO EDITORIAL",
-                    "DIRETRIZ DE GRAVAÃ§Ãµes",
+                    "DIRETRIZ DE GRAVAções",
                     "COBERTURA DE PLATAFORMAS",
                     "ONBOARDING INICIAL"
                   ])[activeFaq]}
@@ -1394,18 +1394,18 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
                   {([
                     "Como funciona o planejamento de postagens?",
-                    "VocÃªs que gravam os vÃ­deos das mÃ­dias?",
-                    "O conteÃºdo serve para qualquer rede social?",
+                    "Vocês que gravam os vídeos das mídias?",
+                    "O conteúdo serve para qualquer rede social?",
                     "Qual o tempo de transiaao operacional?"
                   ])[activeFaq]}
                 </h4>
                 
                 <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
                   {([
-                    "Planejamos e criamos 100% do conteÃºdo do seu feed com 15 a 30 dias de antecedÃªncia. Isso inclui roteiros de vÃ­deos de alta retenÃ§Ã£o, carrossÃ©is educativos sob medida e legendas persuasivas estruturadas por nossa equipe tÃ©cnica.",
-                    "NÃ³s somos responsÃ¡veis pela inteligÃªncia editorial total: escrevemos as pautas cirÃºrgicas, ganchos magnÃ©ticos e roteiros de fala detalhados passo a passo. Os vÃ­deos sÃ£o gravados por vocÃª ou seu representante, seguindo nosso manual estrito de posicionamento e enquadramento de cÃ¢mera.",
-                    "Nosso foco principal sÃ£o plataformas de alto alcance qualificado de negÃ³cios e conversÃ£o de leads, como Instagram e LinkedIn. Adaptamos a linguagem conforme a plataforma mantendo a integridade sÃ³bria e corporativa da marca.",
-                    "Nosso processo de implantaÃ§Ã£o completo dura atÃ© 7 dias Ãºteis de onboarding. Entramos no seu ecossistema, catalogamos seu tom de voz de especialista e liberamos o primeiro lote de cronogramas editoriais validados."
+                    "Planejamos e criamos 100% do conteúdo do seu feed com 15 a 30 dias de antecedência. Isso inclui roteiros de vídeos de alta retenção, carrosséis educativos sob medida e legendas persuasivas estruturadas por nossa equipe técnica.",
+                    "Nós somos responsáveis pela inteligência editorial total: escrevemos as pautas cirúrgicas, ganchos magnéticos e roteiros de fala detalhados passo a passo. Os vídeos são gravados por você ou seu representante, seguindo nosso manual estrito de posicionamento e enquadramento de câmera.",
+                    "Nosso foco principal são plataformas de alto alcance qualificado de negócios e conversão de leads, como Instagram e LinkedIn. Adaptamos a linguagem conforme a plataforma mantendo a integridade sóbria e corporativa da marca.",
+                    "Nosso processo de implantação completo dura até 7 dias úteis de onboarding. Entramos no seu ecossistema, catalogamos seu tom de voz de especialista e liberamos o primeiro lote de cronogramas editoriais validados."
                   ])[activeFaq]}
                 </p>
               </div>
@@ -1417,14 +1417,14 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                   <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">Como agimos de forma organizada?</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    Eliminamos posts batidos e cronogramas improvisados. Mantemos constÃ¢ncia e critÃ©rio.
+                    Eliminamos posts batidos e cronogramas improvisados. Mantemos constância e critério.
                   </p>
                 </div>
                 <button
                   onClick={() => handleLinkClick("/servicos")}
                   className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
                 >
-                  <span>Ver ServiÃ§os</span>
+                  <span>Ver Serviços</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
@@ -1432,13 +1432,13 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer desenhar uma estratÃ©gia sob medida?</h4>
+                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer desenhar uma estratégia sob medida?</h4>
                   <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
-                    Fale diretamente com os tomadores de decisÃ£o da TAG08 via WhatsApp para avaliar a viabilidade de alocaÃ§Ã£o de equipe.
+                    Fale diretamente com os tomadores de decisão da TAG08 via WhatsApp para avaliar a viabilidade de alocação de equipe.
                   </p>
                 </div>
                 <a
-                  href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20consultar%20viabilidade%20estratÃ©gica%20especializada%2520para%20minha%20marca!")}
+                  href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20consultar%20viabilidade%20estratégica%20especializada%2520para%20minha%20marca!")}
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-all"
@@ -1455,11 +1455,11 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
       {/* SECTION 5 - ACTION TRIGGER FOOTER */}
       <section className="px-4 sm:px-6 md:px-8 py-20 text-center space-y-6 max-w-4xl mx-auto">
         <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
-          CONVERSE COM O SEU PERFEITO PÃšBLICO <br />
+          CONVERSE COM O SEU PERFEITO P�aBLICO <br />
           <span className="text-brand">E TORNE-SE UMA REFERaNCIA INDISCUTaVEL.</span>
         </h2>
         <p className="text-zinc-400 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">
-          Garanta que seu canal de redes sociais pare de afastar clientes de alto ticket. Fale com nosso estrategista lÃ­der e alinhe seu plano de conteÃºdo sÃªnior hoje.
+          Garanta que seu canal de redes sociais pare de afastar clientes de alto ticket. Fale com nosso estrategista líder e alinhe seu plano de conteúdo sênior hoje.
         </p>
         <div className="pt-4">
           <button

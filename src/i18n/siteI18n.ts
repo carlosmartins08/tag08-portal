@@ -35,7 +35,7 @@ export const i18n = {
       navServices: "Soluções",
       navContact: "Contato",
       navTitleServices: "Nossas Especialidades",
-      navAccelerateTag: "ACELERAÇÃO MÁXIMA",
+      navAccelerateTag: "ACELERAÇ�O MÁXIMA",
       navAccelerateText: "Precisa de performance com velocidade?",
       navAccelerateSubtext: "Ativamos diagnósticos rápidos para marcas em fase de crescimento.",
       navAccelerateMetricA: "+150% de ROI médio",

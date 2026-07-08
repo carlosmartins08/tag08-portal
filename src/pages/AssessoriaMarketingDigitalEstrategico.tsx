@@ -23,41 +23,41 @@ interface Question {
 const auditQuestions: Question[] = [
   {
     id: 1,
-    text: "Qual ÃƒÂ© o maior gargalo comercial da sua marca no momento?",
+    text: "Qual Ò� o maior gargalo comercial da sua marca no momento?",
     options: [
-      { label: "A", value: 10, text: "NÃƒÂ£o geramos contatos regulares de potenciais clientes (orgÃƒÂ¢nico ou pago)" },
-      { label: "B", value: 20, text: "AtÃƒÂ© geramos leads, mas sÃƒÂ£o desqualificados, choram preÃƒÂ§o e travam no comercial" },
-      { label: "C", value: 15, text: "Nossa presenÃƒÂ§a digital ÃƒÂ© inexistente ou amadora frente aos nossos concorrentes" },
-      { label: "D", value: 25, text: "Falta de governanÃƒÂ§a: temos boas ideias mas falta equipe dedicada para executar" }
+      { label: "A", value: 10, text: "NÒ�o geramos contatos regulares de potenciais clientes (orgÒ�nico ou pago)" },
+      { label: "B", value: 20, text: "AtÒ� geramos leads, mas sÒ�o desqualificados, choram preÒ�o e travam no comercial" },
+      { label: "C", value: 15, text: "Nossa presenÒ�a digital Ò� inexistente ou amadora frente aos nossos concorrentes" },
+      { label: "D", value: 25, text: "Falta de governanÒ�a: temos boas ideias mas falta equipe dedicada para executar" }
     ]
   },
   {
     id: 2,
-    text: "Qual ÃƒÂ© o investimento mensal atual (ou planejado) em trÃƒÂ¡fego pago?",
+    text: "Qual Ò� o investimento mensal atual (ou planejado) em trÒ�fego pago?",
     options: [
-      { label: "A", value: 10, text: "NÃƒÂ£o investimos em anÃƒÂºncios (foco exclusivo em redes sociais orgÃƒÂ¢nicas)" },
-      { label: "B", value: 15, text: "Investimento inicial ou instÃƒÂ¡vel (atÃƒÂ© R$ 2.000 / mÃƒÂªs)" },
-      { label: "C", value: 25, text: "Investimento moderado (entre R$ 2.000 e R$ 10.000 / mÃƒÂªs)" },
-      { label: "D", value: 30, text: "Investimento agressivo com busca de escala (acima de R$ 10.000 / mÃƒÂªs)" }
+      { label: "A", value: 10, text: "NÒ�o investimos em anÒ�ncios (foco exclusivo em redes sociais orgÒ�nicas)" },
+      { label: "B", value: 15, text: "Investimento inicial ou instÒ�vel (atÒ� R$ 2.000 / mÒ�s)" },
+      { label: "C", value: 25, text: "Investimento moderado (entre R$ 2.000 e R$ 10.000 / mÒ�s)" },
+      { label: "D", value: 30, text: "Investimento agressivo com busca de escala (acima de R$ 10.000 / mÒ�s)" }
     ]
   },
   {
     id: 3,
-    text: "Como vocÃƒÂª define o ticket mÃƒÂ©dio da sua soluÃƒÂ§ÃƒÂ£o ou produto principal?",
+    text: "Como vocÒ� define o ticket mÒ�dio da sua soluÒ�Ò�o ou produto principal?",
     options: [
       { label: "A", value: 10, text: "Varejo ou baixo valor (Abaixo de R$ 500 por venda/assinatura)" },
-      { label: "B", value: 15, text: "MÃƒÂ©dio valor transacional (Entre R$ 500 e R$ 2.500)" },
-      { label: "C", value: 25, text: "High Ticket ou ServiÃƒÂ§o Premium (Entre R$ 2.500 e R$ 10.000)" },
+      { label: "B", value: 15, text: "MÒ�dio valor transacional (Entre R$ 500 e R$ 2.500)" },
+      { label: "C", value: 25, text: "High Ticket ou ServiÒ�o Premium (Entre R$ 2.500 e R$ 10.000)" },
       { label: "D", value: 30, text: "Corporativo, Enterprise ou B2B Complexo (Acima de R$ 10.000)" }
     ]
   },
   {
     id: 4,
-    text: "Quem dita a direÃƒÂ§ÃƒÂ£o tÃƒÂ¡tica e faz a gestÃƒÂ£o do seu marketing hoje?",
+    text: "Quem dita a direÒ�Ò�o tÒ�tica e faz a gestÒ�o do seu marketing hoje?",
     options: [
-      { label: "A", value: 10, text: "O prÃƒÂ³prio fundador / dono conduz quando tem tempo livre operacional" },
-      { label: "B", value: 15, text: "Contratamos freelancers ou agÃƒÂªncias, mas operam soltos, sem direcionamento sÃƒÂªnior" },
-      { label: "C", value: 20, text: "Temos um departamento interno jÃƒÂºnior ou intermediÃƒÂ¡rio sem governanÃƒÂ§a estrita" },
+      { label: "A", value: 10, text: "O prÒ�prio fundador / dono conduz quando tem tempo livre operacional" },
+      { label: "B", value: 15, text: "Contratamos freelancers ou agÒ�ncias, mas operam soltos, sem direcionamento sÒ�nior" },
+      { label: "C", value: 20, text: "Temos um departamento interno jÒ�nior ou intermediÒ�rio sem governanÒ�a estrita" },
       { label: "D", value: 25, text: "Contamos com um CMO estrategista liderando e acompanhando dados em tempo real" }
     ]
   }
@@ -103,44 +103,44 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
     const totalScore = calculateTotalScore();
     if (totalScore <= 45) {
       return {
-        level: "NÃƒÂ­vel PrimÃƒÂ¡rio (InstÃƒÂ¡vel)",
+        level: "NÒ�vel PrimÒ�rio (InstÒ�vel)",
         percentage: totalScore,
         color: "text-red-400 border-red-500/20 bg-red-500/5",
-        description: "Seu marketing estÃƒÂ¡ operando com alta dependÃƒÂªncia de aÃƒÂ§ÃƒÂµes esporÃƒÂ¡dicas e sem previsibilidade comercial. Falta um processo de atraÃƒÂ§ÃƒÂ£o regular e posicionamento visual refinado para parar de brigar por preÃƒÂ§o baixo.",
-        focus: "ConstruÃƒÂ§ÃƒÂ£o de Landing Pages de alta velocidade, definiÃƒÂ§ÃƒÂ£o de identidade verbal limpa e ativaÃƒÂ§ÃƒÂ£o de campanhas de trÃƒÂ¡fego de alta intenÃƒÂ§ÃƒÂ£o.",
-        recommendation: "NÃƒÂºcleo ACCELERA Ã¢â‚¬â€ TrÃƒÂ¡fego de Elite + LPs Premium"
+        description: "Seu marketing estÒ� operando com alta dependÒ�ncia de aÒ�Ò�es esporÒ�dicas e sem previsibilidade comercial. Falta um processo de atraÒ�Ò�o regular e posicionamento visual refinado para parar de brigar por preÒ�o baixo.",
+        focus: "ConstruÒ�Ò�o de Landing Pages de alta velocidade, definiÒ�Ò�o de identidade verbal limpa e ativaÒ�Ò�o de campanhas de trÒ�fego de alta intenÒ�Ò�o.",
+        recommendation: "NÒ�cleo ACCELERA ���⬝ TrÒ�fego de Elite + LPs Premium"
       };
     } else if (totalScore <= 75) {
       return {
-        level: "NÃƒÂ­vel IntermediÃƒÂ¡rio (RuÃƒÂ­do de Imagem)",
+        level: "NÒ�vel IntermediÒ�rio (RuÒ�do de Imagem)",
         percentage: totalScore,
         color: "text-brand border-brand/20 bg-brand/5",
-        description: "Seu negÃƒÂ³cio jÃƒÂ¡ roda anÃƒÂºncios ou posta conteÃƒÂºdos, porÃƒÂ©m hÃƒÂ¡ um desalinhamento sÃƒÂ©rio de imagem. Os leads chegam desinformados ou desqualificados de fato, gerando desperdÃƒÂ­cio e exaustÃƒÂ£o do seu comercial sÃƒÂªnior.",
-        focus: "Reposicionamento de Branding completo, revisÃƒÂ£o criativa e pautas de redes sociais sÃƒÂ³brias orientadas ÃƒÂ  alta retenÃƒÂ§ÃƒÂ£o e qualificaÃƒÂ§ÃƒÂ£o.",
-        recommendation: "NÃƒÂºcleo AUTHORITY Ã¢â‚¬â€ Branding SÃƒÂªnior + Redes Sociais EstratÃƒÂ©gicas"
+        description: "Seu negÒ�cio jÒ� roda anÒ�ncios ou posta conteÒ�dos, porÒ�m hÒ� um desalinhamento sÒ�rio de imagem. Os leads chegam desinformados ou desqualificados de fato, gerando desperdÒ�cio e exaustÒ�o do seu comercial sÒ�nior.",
+        focus: "Reposicionamento de Branding completo, revisÒ�o criativa e pautas de redes sociais sÒ�brias orientadas Ò� alta retenÒ�Ò�o e qualificaÒ�Ò�o.",
+        recommendation: "NÒ�cleo AUTHORITY ���⬝ Branding SÒ�nior + Redes Sociais EstratÒ�gicas"
       };
     } else {
       return {
-        level: "NÃƒÂ­vel AvanÃƒÂ§ado (Necessidade de GovernanÃƒÂ§a)",
+        level: "NÒ�vel AvanÒ�ado (Necessidade de GovernanÒ�a)",
         percentage: totalScore,
         color: "text-brand-secondary border-brand-secondary/20 bg-brand-secondary/5",
-        description: "Sua marca possui atraÃƒÂ§ÃƒÂ£o e ticket consistentes, mas carece de processos fechados e controle sob os canais. A execuÃƒÂ§ÃƒÂ£o tÃƒÂ©cnica varia e hÃƒÂ¡ vazamento de dados analÃƒÂ­ticos reais no funil corporativo.",
-        focus: "Process Intelligence, governanÃƒÂ§a semanal de mÃƒÂ©tricas de ROI/CAC via Business Intelligence e playbooks operacionais Notion/Wiki.",
-        recommendation: "NÃƒÂºcleo ENTERPRISE Ã¢â‚¬â€ InteligÃƒÂªncia de Processos + BI Centralizado"
+        description: "Sua marca possui atraÒ�Ò�o e ticket consistentes, mas carece de processos fechados e controle sob os canais. A execuÒ�Ò�o tÒ�cnica varia e hÒ� vazamento de dados analÒ�ticos reais no funil corporativo.",
+        focus: "Process Intelligence, governanÒ�a semanal de mÒ�tricas de ROI/CAC via Business Intelligence e playbooks operacionais Notion/Wiki.",
+        recommendation: "NÒ�cleo ENTERPRISE ���⬝ InteligÒ�ncia de Processos + BI Centralizado"
       };
     }
   };
 
   const getWhatsAppLink = () => {
     const diag = getDiagnosticOutput();
-    const message = `OlÃƒÂ¡ TAG08! Fiz o diagnÃƒÂ³stico estratÃƒÂ©gico inteligente de marketing no site e cheguei no seguinte setup:
+    const message = `OlÒ� TAG08! Fiz o diagnÒ�stico estratÒ�gico inteligente de marketing no site e cheguei no seguinte setup:
   
 - MATURIDADE DE MARKETING: ${diag.level} (${diag.percentage} pontos)
 - ANOMALIA PRINCIAPAL IDENTIFICADA: ${diag.description}
 - PLANO DE ASSESSORIA INDICADO: ${diag.recommendation}
 - FOCO RECOMENDADO: ${diag.focus}
 
-Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um estrategista sÃƒÂªnior para analisar este diagnÃƒÂ³stico em detalhes!`;
+Gostaria de agendar minha sessÒ�o de clareza gratuita de 30 minutos com um estrategista sÒ�nior para analisar este diagnÒ�stico em detalhes!`;
 
     return buildBrazilWhatsAppUrl(message);
   };
@@ -152,26 +152,26 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
 
   const faqCategories = [
     { id: 0, title: "MODELO DE ASSESSORIA" },
-    { id: 1, title: "DIREÃƒâ€¡ÃƒÆ’O VS. AGÃƒÅ NCIA" },
+    { id: 1, title: "DIREÒ⬡Ò�O VS. AGÒŠNCIA" },
     { id: 2, title: "EQUIPE INTERNA" },
     { id: 3, title: "ONBOARDING & PRAZOS" },
     { id: 4, title: "GARANTIA DE SLA" }
   ];
 
   const faqQuestions = [
-    "O que ÃƒÂ© a Assessoria de Marketing Digital EstratÃƒÂ©gico da TAG08?",
-    "Qual a diferenÃƒÂ§a de contratar a Assessoria da TAG08 vs. uma agÃƒÂªncia de marketing tradicional?",
+    "O que Ò� a Assessoria de Marketing Digital EstratÒ�gico da TAG08?",
+    "Qual a diferenÒ�a de contratar a Assessoria da TAG08 vs. uma agÒ�ncia de marketing tradicional?",
     "Preciso ter uma equipe interna de marketing instalada na minha empresa?",
     "Como funcionam o onboarding e a entrega dos primeiros resultados?",
-    "HÃƒÂ¡ alguma garantia contratual de regularidade e pontualidade?"
+    "HÒ� alguma garantia contratual de regularidade e pontualidade?"
   ];
 
   const faqAnswers = [
-    "Ãƒâ€° uma soluÃƒÂ§ÃƒÂ£o consultiva e executora que assume o papel de uma direÃƒÂ§ÃƒÂ£o sÃƒÂªnior externa para sua marca. NÃƒÂ³s desenhamos a estratÃƒÂ©gia, organizamos o branding, estruturamos as frentes web, otimizamos campanhas pagas e instalamos dashboards de Business Intelligence integrados ao seu CRM de forma contÃƒÂ­nua.",
-    "AgÃƒÂªncias tradicionais muitas vezes operam sem diagnÃƒÂ³stico estratÃƒÂ©gico ou metas claras de receita. A assessoria da TAG08 une inteligÃƒÂªncia de processos, sofisticaÃƒÂ§ÃƒÂ£o estÃƒÂ©tica e foco em indicadores ÃƒÂºteis para decisÃƒÂ£o. NÃƒÂ³s conduzimos do diagnÃƒÂ³stico ÃƒÂ  implantaÃƒÂ§ÃƒÂ£o com mÃƒÂ©todo e clareza.",
-    "NÃƒÂ£o. A assessoria da TAG08 opera de duas maneiras: podemos atuar como seu departamento terceirizado de marketing estratÃƒÂ©gico e visual, ou apoiar sua equipe interna por meio de treinamentos e auditorias sÃƒÂªniores.",
-    "Nosso fluxo de entrada inicia-se com uma ImersÃƒÂ£o Operacional (Fase de Process Intelligence) de atÃƒÂ© 15 dias, na qual mapeamos seu comprador, concorrentes e desvios de imagem. Depois disso, iniciamos as novas landing pages e a ativaÃƒÂ§ÃƒÂ£o de trÃƒÂ¡fego de forma progressiva, com acompanhamento dos primeiros resultados no primeiro ciclo operacional.",
-    "Sim. Trabalhamos com acordo de nÃƒÂ­vel de serviÃƒÂ§o (SLA) em contrato, com cronogramas definidos, acompanhamento claro e previsibilidade operacional. Quando hÃƒÂ¡ dependÃƒÂªncias externas, elas sÃƒÂ£o tratadas com transparÃƒÂªncia e comunicaÃƒÂ§ÃƒÂ£o antecipada."
+    "Ò⬰ uma soluÒ�Ò�o consultiva e executora que assume o papel de uma direÒ�Ò�o sÒ�nior externa para sua marca. NÒ�s desenhamos a estratÒ�gia, organizamos o branding, estruturamos as frentes web, otimizamos campanhas pagas e instalamos dashboards de Business Intelligence integrados ao seu CRM de forma contÒ�nua.",
+    "AgÒ�ncias tradicionais muitas vezes operam sem diagnÒ�stico estratÒ�gico ou metas claras de receita. A assessoria da TAG08 une inteligÒ�ncia de processos, sofisticaÒ�Ò�o estÒ�tica e foco em indicadores Ò�teis para decisÒ�o. NÒ�s conduzimos do diagnÒ�stico Ò� implantaÒ�Ò�o com mÒ�todo e clareza.",
+    "NÒ�o. A assessoria da TAG08 opera de duas maneiras: podemos atuar como seu departamento terceirizado de marketing estratÒ�gico e visual, ou apoiar sua equipe interna por meio de treinamentos e auditorias sÒ�niores.",
+    "Nosso fluxo de entrada inicia-se com uma ImersÒ�o Operacional (Fase de Process Intelligence) de atÒ� 15 dias, na qual mapeamos seu comprador, concorrentes e desvios de imagem. Depois disso, iniciamos as novas landing pages e a ativaÒ�Ò�o de trÒ�fego de forma progressiva, com acompanhamento dos primeiros resultados no primeiro ciclo operacional.",
+    "Sim. Trabalhamos com acordo de nÒ�vel de serviÒ�o (SLA) em contrato, com cronogramas definidos, acompanhamento claro e previsibilidade operacional. Quando hÒ� dependÒ�ncias externas, elas sÒ�o tratadas com transparÒ�ncia e comunicaÒ�Ò�o antecipada."
   ];
 
   return (
@@ -195,13 +195,13 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                 ASSESSORIA EM MARKETING // TAG08 CONSULTING
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
-                DireÃƒÂ§ÃƒÂ£o SÃƒÂªnior. <br />
+                DireÒ�Ò�o SÒ�nior. <br />
                 <span className="text-brand">O fim do marketing infantil e amador.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-[15px] leading-relaxed font-sans font-medium">
-                Sua empresa nÃƒÂ£o cresce com ideias rasas, posts automÃƒÂ¡ticos de agÃƒÂªncias convencionais ou verba de anÃƒÂºncios sem controle tÃƒÂ¡tico. Unimos direÃƒÂ§ÃƒÂ£o sÃƒÂªnior, ecossistema visual consistente, funis proprietÃƒÂ¡rios de conversÃƒÂ£o e dashboards reais para captar clientes qualificados.
+                Sua empresa nÒ�o cresce com ideias rasas, posts automÒ�ticos de agÒ�ncias convencionais ou verba de anÒ�ncios sem controle tÒ�tico. Unimos direÒ�Ò�o sÒ�nior, ecossistema visual consistente, funis proprietÒ�rios de conversÒ�o e dashboards reais para captar clientes qualificados.
               </p>
             </div>
           </div>
@@ -211,7 +211,7 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.35/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
               <img 
                 src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=1600"
-                alt="Assessoria de Marketing EstratÃƒÂ©gico Equipe TAG08"
+                alt="Assessoria de Marketing EstratÒ�gico Equipe TAG08"
                 className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
               />
@@ -224,7 +224,7 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                   href="#diagnostic-audit"
                   className="bg-brand-secondary text-black font-display font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.32)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
                 >
-                  <span>SOLICITAR DIAGNÃƒâ€œSTICO</span>
+                  <span>SOLICITAR DIAGNÒ�SSTICO</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
                 </a>
               </div>
@@ -248,19 +248,19 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-2 text-left border-t border-white/[0.04]">
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Consistente</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">DireÃƒÂ§ÃƒÂ£o SÃƒÂªnior ao seu Lado<br/>Com CritÃƒÂ©rio e Acompanhamento</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">DireÒ�Ò�o SÒ�nior ao seu Lado<br/>Com CritÒ�rio e Acompanhamento</span>
             </div>
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">+230%</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Retorno MÃƒÂ©dio AnalÃƒÂ­tico<br/>Sob OrÃƒÂ§amento de Meta Ads</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Retorno MÒ�dio AnalÒ�tico<br/>Sob OrÒ�amento de Meta Ads</span>
             </div>
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">BI Real</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">TransparÃƒÂªncia Integral em CRM<br/>Sem Planilhas Maquiadas</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">TransparÒ�ncia Integral em CRM<br/>Sem Planilhas Maquiadas</span>
             </div>
             <div className="space-y-1.5">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-brand">PadrÃƒÂ£o Ouro</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Acordo de SLA Estrito de<br/>Prazo e ExecuÃƒÂ§ÃƒÂ£o em PeÃƒÂ§as</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-brand">PadrÒ�o Ouro</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Acordo de SLA Estrito de<br/>Prazo e ExecuÒ�Ò�o em PeÒ�as</span>
             </div>
           </div>
 
@@ -275,13 +275,13 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
           
           <div className="text-left space-y-3 max-w-2xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-              ANÃƒÂLISE DE EQUIVALÃƒÅ NCIA COMERCIAL // CONFRONTE
+              ANÒ�LISE DE EQUIVALÒŠNCIA COMERCIAL // CONFRONTE
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
-              Por que a Assessoria TAG08 ÃƒÂ© a SoluÃƒÂ§ÃƒÂ£o Definitiva?
+              Por que a Assessoria TAG08 Ò� a SoluÒ�Ò�o Definitiva?
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Compare as abordagens convencionais de mercado com a sofisticaÃƒÂ§ÃƒÂ£o operacional da nossa equipe estratÃƒÂ©gica e conclua com critÃƒÂ©rio racional.
+              Compare as abordagens convencionais de mercado com a sofisticaÒ�Ò�o operacional da nossa equipe estratÒ�gica e conclua com critÒ�rio racional.
             </p>
           </div>
 
@@ -291,17 +291,17 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
               <div className="absolute top-0 left-0 right-0 h-[1px] bg-red-500/10" />
               <div className="flex items-center gap-2 text-zinc-500 font-mono text-[9px] uppercase tracking-widest">
                 <span className="w-1.5 h-1.5 rounded-full bg-red-400/70" />
-                <span>AgÃƒÂªncia / Freelancer Tradicional</span>
+                <span>AgÒ�ncia / Freelancer Tradicional</span>
               </div>
               <h3 className="font-display font-bold text-lg sm:text-xl text-white uppercase leading-none">O Modelo Ineficiente</h3>
               
               <ul className="space-y-4">
                 {[
-                  "Artistas genÃƒÂ©ricos entregando criativos do Canva idÃƒÂªnticos aos seus concorrentes.",
-                  "Foco puramente em postagens estÃƒÂ©ticas sem funis ou CRM de vendas integrado.",
-                  "AusÃƒÂªncia de relatÃƒÂ³rios reais de ROI ou relatÃƒÂ³rios mascarados com desculpas tÃƒÂ©cnicas.",
-                  "Atrasos reiterados de cronograma com desorganizaÃƒÂ§ÃƒÂ£o de pastas e documentos no Drive.",
-                  "InterlocuÃƒÂ§ÃƒÂ£o com estagiÃƒÂ¡rios juniores sob demanda sem senso real de negÃƒÂ³cio."
+                  "Artistas genÒ�ricos entregando criativos do Canva idÒ�nticos aos seus concorrentes.",
+                  "Foco puramente em postagens estÒ�ticas sem funis ou CRM de vendas integrado.",
+                  "AusÒ�ncia de relatÒ�rios reais de ROI ou relatÒ�rios mascarados com desculpas tÒ�cnicas.",
+                  "Atrasos reiterados de cronograma com desorganizaÒ�Ò�o de pastas e documentos no Drive.",
+                  "InterlocuÒ�Ò�o com estagiÒ�rios juniores sob demanda sem senso real de negÒ�cio."
                 ].map((item, idx) => (
                   <li key={idx} className="flex gap-3 text-zinc-500 text-xs sm:text-sm leading-relaxed">
                     <span className="text-red-400 font-bold font-sans">/ &times;</span>
@@ -316,17 +316,17 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
               <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-brand/20 via-brand/40 to-transparent" />
               <div className="flex items-center gap-2 text-brand font-mono text-[9px] uppercase tracking-widest font-bold">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                <span>Assessoria EstratÃƒÂ©gica TAG08</span>
+                <span>Assessoria EstratÒ�gica TAG08</span>
               </div>
-              <h3 className="font-display font-medium text-lg sm:text-xl text-brand-secondary uppercase leading-none">O PadrÃƒÂ£o SÃƒÂªnior Premium</h3>
+              <h3 className="font-display font-medium text-lg sm:text-xl text-brand-secondary uppercase leading-none">O PadrÒ�o SÒ�nior Premium</h3>
               
               <ul className="space-y-4">
                 {[
                   "Design e identidade sob medida, com tipografia, paletas e tom de voz refinados.",
-                  "Direcionamento completo unindo engenharia de cÃƒÂ³digo, criativos e fluxo comercial.",
-                  "MÃƒÂ©tricas reais e dashboards personalizados em Looker Studio atualizados em tempo real.",
+                  "Direcionamento completo unindo engenharia de cÒ�digo, criativos e fluxo comercial.",
+                  "MÒ�tricas reais e dashboards personalizados em Looker Studio atualizados em tempo real.",
                   "Acordo contratual de SLA de pontualidade: cronogramas entregues de forma antecipada.",
-                  "PresenÃƒÂ§a constante de um estrategista CMO sÃƒÂªnior na rotina da sua marca."
+                  "PresenÒ�a constante de um estrategista CMO sÒ�nior na rotina da sua marca."
                 ].map((item, idx) => (
                   <li key={idx} className="flex gap-3 text-white text-xs sm:text-sm leading-relaxed font-medium">
                     <span className="text-brand font-black font-semibold">&#10003;</span>
@@ -347,13 +347,13 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
         <div className="max-w-7xl mx-auto space-y-12 relative z-10">
           <div className="space-y-3 max-w-3xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-              PLANEJAMENTO DE CRESCIMENTO // SIMULADOR ESTRATÃƒâ€°GICO
+              PLANEJAMENTO DE CRESCIMENTO // SIMULADOR ESTRATÒ⬰GICO
             </span>
             <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
-              Simulador de AtivaÃƒÂ§ÃƒÂ£o de Sinergia de Canais (Growth Engine)
+              Simulador de AtivaÒ�Ò�o de Sinergia de Canais (Growth Engine)
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-              Crescer nÃƒÂ£o ÃƒÂ© sobre gastar mais em anÃƒÂºncios; ÃƒÂ© sobre sinergia de canais, inteligÃƒÂªncia de conversÃƒÂ£o e direÃƒÂ§ÃƒÂ£o de CMO. Ajuste os controles e adicione pilares de assessoria tÃƒÂ¡tica para projetar o faturamento potencial e a reduÃƒÂ§ÃƒÂ£o de Custo por Lead (CPL) da sua marca.
+              Crescer nÒ�o Ò� sobre gastar mais em anÒ�ncios; Ò� sobre sinergia de canais, inteligÒ�ncia de conversÒ�o e direÒ�Ò�o de CMO. Ajuste os controles e adicione pilares de assessoria tÒ�tica para projetar o faturamento potencial e a reduÒ�Ò�o de Custo por Lead (CPL) da sua marca.
             </p>
           </div>
 
@@ -362,14 +362,14 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
             <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-6">
                 <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-semibold block pb-3 border-b border-white/[0.05]">
-                  Configure sua OperaÃƒÂ§ÃƒÂ£o de Marketing:
+                  Configure sua OperaÒ�Ò�o de Marketing:
                 </span>
 
                 {/* Slider 1: Verba publicitaria */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">
-                      Verba mensal de trÃƒÂ¡fego:
+                      Verba mensal de trÒ�fego:
                     </label>
                     <span className="text-sm font-sans text-brand-secondary font-black bg-brand-secondary/10 px-2.5 py-0.5 rounded-lg border border-brand-secondary/20">
                       R$ <span id="adv-spend-val">5.000</span>
@@ -398,9 +398,9 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                   
                   <div className="space-y-2">
                     {[
-                      { id: "cmo", label: "Assessoria CMO & BI (-25% desperdÃƒÂ­cio)" },
-                      { id: "lp", label: "Landing Pages Ultra-velozes (1.5x conversÃƒÂ£o)" },
-                      { id: "branding", label: "Branding & Tom de Voz sÃƒÂªnior (+30% LTV)" }
+                      { id: "cmo", label: "Assessoria CMO & BI (-25% desperdÒ�cio)" },
+                      { id: "lp", label: "Landing Pages Ultra-velozes (1.5x conversÒ�o)" },
+                      { id: "branding", label: "Branding & Tom de Voz sÒ�nior (+30% LTV)" }
                     ].map((pilar) => {
                       return (
                         <label key={pilar.id} className="flex items-center gap-3 p-3 bg-white/[0.01] border border-white/[0.04] rounded-xl cursor-pointer hover:bg-white/[0.02]">
@@ -425,7 +425,7 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                   <span className="text-[10px] font-mono font-black uppercase tracking-wider">A Sinergia Multiplicadora</span>
                 </div>
                 <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                  Quando vocÃƒÂª ativa a assessoria de marketing estratÃƒÂ©gica, vocÃƒÂª nÃƒÂ£o apenas melhora as artes ou os anÃƒÂºncios, vocÃƒÂª ajusta a conversÃƒÂ£o das pÃƒÂ¡ginas de destino, direciona o criativo da equipe e elimina canais caros e ineficientes.
+                  Quando vocÒ� ativa a assessoria de marketing estratÒ�gica, vocÒ� nÒ�o apenas melhora as artes ou os anÒ�ncios, vocÒ� ajusta a conversÒ�o das pÒ�ginas de destino, direciona o criativo da equipe e elimina canais caros e ineficientes.
                 </p>
               </div>
             </div>
@@ -442,7 +442,7 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                 {/* Results Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
-                    <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Leads de Alto PadrÃƒÂ£o / MÃƒÂªs</span>
+                    <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Leads de Alto PadrÒ�o / MÒ�s</span>
                     <p id="ge-leads" className="text-3xl font-display font-black text-white">45</p>
                     <span className="text-[9px] text-zinc-400 block leading-tight font-sans">
                       Contatos qualificados de faturamento ativo.
@@ -453,7 +453,7 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                     <span className="font-mono text-[8px] text-brand-secondary/80 uppercase font-black block">Custo por Lead (CPL)</span>
                     <p id="ge-cpl" className="text-3xl font-display font-black text-brand-secondary">R$ 110</p>
                     <span className="text-[9px] text-zinc-400 block leading-tight font-sans">
-                      PreÃƒÂ§o mÃƒÂ©dio pago para atraÃƒÂ§ÃƒÂ£o de cada lead qualificado.
+                      PreÒ�o mÒ�dio pago para atraÒ�Ò�o de cada lead qualificado.
                     </span>
                   </div>
 
@@ -471,12 +471,12 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                   <span className="font-mono text-[9px] text-zinc-500 uppercase font-bold block">Faturamento Adicional Potencial Estimado</span>
                   
                   <div className="flex items-center justify-between border-b border-white/[0.05] pb-3 text-xs">
-                    <span className="text-zinc-400">Receita de Vendas Estimada / MÃƒÂªs:</span>
+                    <span className="text-zinc-400">Receita de Vendas Estimada / MÒ�s:</span>
                     <span id="ge-revenue" className="font-sans text-base font-black text-white">R$ 45.000</span>
                   </div>
 
                   <p className="text-[10px] text-zinc-500 font-sans">
-                    *CÃƒÂ¡lculos baseados em um ticket mÃƒÂ©dio de vendas de R$ 2.500 por lead convertido comercialmente e taxa de fechamento comercial de 20%.
+                    *CÒ�lculos baseados em um ticket mÒ�dio de vendas de R$ 2.500 por lead convertido comercialmente e taxa de fechamento comercial de 20%.
                   </p>
                 </div>
               </div>
@@ -529,7 +529,7 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
               }} />
 
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 mt-6">
-                <span className="font-mono text-[8px] text-zinc-600">PROJEÃƒâ€¡ÃƒÆ’O CALCULADA BASEADA NA MÃƒâ€°TRICA DE SERVIÃƒâ€¡OS TAG08 // 2026</span>
+                <span className="font-mono text-[8px] text-zinc-600">PROJEÒ⬡Ò�O CALCULADA BASEADA NA MÒ⬰TRICA DE SERVIÒ⬡OS TAG08 // 2026</span>
                 <button 
                   onClick={() => onNavigate("/contato")}
                   className="text-xs font-mono text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
@@ -553,10 +553,10 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
               PILARE OPERACIONAIS
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-white uppercase tracking-tighter leading-none">
-              Os Quatro Pilares do MÃƒÂ©todo de Assessoria TAG08
+              Os Quatro Pilares do MÒ�todo de Assessoria TAG08
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
-              Trabalhamos de forma contÃƒÂ­nua e integrada para cobrir todas as disciplinas tÃƒÂ¡ticas necessÃƒÂ¡rias para o seu crescimento saudÃƒÂ¡vel de fato.
+              Trabalhamos de forma contÒ�nua e integrada para cobrir todas as disciplinas tÒ�ticas necessÒ�rias para o seu crescimento saudÒ�vel de fato.
             </p>
           </div>
 
@@ -565,26 +565,26 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
               {
                 num: "01",
                 icon: Target,
-                title: "DiagnÃƒÂ³stico & InteligÃƒÂªncia",
-                desc: "Analisamos seus concorrentes diretos, definimos seu ICP (Ideal Customer Profile) e desenhamos o message-market fit ideal para atrair o pÃƒÂºblico sÃƒÂªnior."
+                title: "DiagnÒ�stico & InteligÒ�ncia",
+                desc: "Analisamos seus concorrentes diretos, definimos seu ICP (Ideal Customer Profile) e desenhamos o message-market fit ideal para atrair o pÒ�blico sÒ�nior."
               },
               {
                 num: "02",
                 icon: Zap,
                 title: "Design de Elite & LP",
-                desc: "Sua identidade, copys e landing pages esculpidas do absoluto zero. Uma presenÃƒÂ§a elegante que justifica seus preÃƒÂ§os de forma imediata."
+                desc: "Sua identidade, copys e landing pages esculpidas do absoluto zero. Uma presenÒ�a elegante que justifica seus preÒ�os de forma imediata."
               },
               {
                 num: "03",
                 icon: LineChart,
-                title: "TrÃƒÂ¡fego Pago de Elite",
-                desc: "Meta Ads, Google Search e LinkedIn Ads tÃƒÂ¡ticos. Sem verba jogada no lixo em campanhas amadoras: focamos puramente em quem quer pagar seu ticket."
+                title: "TrÒ�fego Pago de Elite",
+                desc: "Meta Ads, Google Search e LinkedIn Ads tÒ�ticos. Sem verba jogada no lixo em campanhas amadoras: focamos puramente em quem quer pagar seu ticket."
               },
               {
                 num: "04",
                 icon: Cpu,
                 title: "BI Centralizado & CRM",
-                desc: "RelatÃƒÂ³rios operacionais transparentes criados em Looker Studio. ConexÃƒÂ£o real com seu CRM comercial para auditar as mÃƒÂ©tricas de vendas."
+                desc: "RelatÒ�rios operacionais transparentes criados em Looker Studio. ConexÒ�o real com seu CRM comercial para auditar as mÒ�tricas de vendas."
               }
             ].map((pilar, idx) => {
               const PilarIcon = pilar.icon;
@@ -613,8 +613,8 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                   </div>
 
                   <div className="pt-4 border-t border-white/[0.04] text-[9px] font-mono text-zinc-500 uppercase tracking-widest relative z-10 flex justify-between">
-                    <span>MÃƒâ€œDULO DE ASSESSORIA</span>
-                    <span className="text-brand font-semibold select-none">MÃƒâ€°TODO_0{idx + 1}</span>
+                    <span>MÒ�SDULO DE ASSESSORIA</span>
+                    <span className="text-brand font-semibold select-none">MÒ⬰TODO_0{idx + 1}</span>
                   </div>
                 </div>
               );
@@ -633,14 +633,14 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 max-w-5xl">
             <div className="space-y-3">
               <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-                METODOLOGIA DE DIAGNÃƒâ€œSTICO // INTERATIVO
+                METODOLOGIA DE DIAGNÒ�SSTICO // INTERATIVO
               </span>
               <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white uppercase tracking-tighter">
-                FaÃƒÂ§a o seu <span className="text-brand">Simulador Inteligente</span> de DiagnÃƒÂ³stico Comercial
+                FaÒ�a o seu <span className="text-brand">Simulador Inteligente</span> de DiagnÒ�stico Comercial
               </h2>
             </div>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Descubra em segundos o ÃƒÂ­ndice real de maturidade do seu marketing, mapeie desvios graves de imagem e veja qual o nosso plano recomendado de assessoria.
+              Descubra em segundos o Ò�ndice real de maturidade do seu marketing, mapeie desvios graves de imagem e veja qual o nosso plano recomendado de assessoria.
             </p>
           </div>
 
@@ -710,7 +710,7 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
                         <span className="font-mono text-[9px] text-brand uppercase tracking-wider font-extrabold">
-                          DIAGNOSTICO TÃƒÂTICO FINALIZADO
+                          DIAGNOSTICO TÒ�TICO FINALIZADO
                         </span>
                       </div>
                       <span className="font-mono text-[9px] text-zinc-500">TAG08_DIAG_ENGINE</span>
@@ -723,7 +723,7 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                         <div className="space-y-6">
                           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-6 rounded-2xl border border-white/[0.06] bg-black/40">
                             <div className="text-center sm:text-left space-y-1.5 shrink-0">
-                              <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block font-bold">ÃƒÂNDICE DE MATURIDADE</span>
+                              <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block font-bold">Ò�NDICE DE MATURIDADE</span>
                               <h4 className="font-display font-black text-3xl text-white uppercase leading-none">{diag.level}</h4>
                               <p className="text-zinc-400 text-xs font-mono font-bold uppercase text-brand mt-1">{diag.recommendation}</p>
                             </div>
@@ -765,7 +765,7 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                               onClick={handleResetQuiz}
                               className="bg-white/5 hover:bg-white/[0.08] text-white hover:text-white border border-white/10 hover:border-white/20 text-xs font-mono font-bold uppercase tracking-widest py-4 px-6 rounded-xl text-center transition-all duration-300 cursor-pointer"
                             >
-                              REPETIR DIAGNÃƒâ€œSTICO
+                              REPETIR DIAGNÒ�SSTICO
                             </button>
                           </div>
                         </div>
@@ -821,7 +821,7 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                   SLA: 100% SECURE
                 </span>
                 <span className="font-mono text-[9px] text-white/60 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-black border border-white/5">
-                  SÃƒÅ NIOR EXECUTION
+                  SÒŠNIOR EXECUTION
                 </span>
               </div>
             </div>
@@ -839,11 +839,11 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                 </span>
               </div>
               <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
-                AGENDE SUA SESSÃƒÆ’O <br />
+                AGENDE SUA SESSÒ�O <br />
                 DE CLAREZA GRATUITA!
               </h2>
               <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
-                Em uma videoconferÃƒÂªncia privada e sem compromisso de 30 minutos, nosso especialista sÃƒÂªnior mapearÃƒÂ¡ o funil de atraÃƒÂ§ÃƒÂ£o da sua marca, resolverÃƒÂ¡ ruÃƒÂ­dos da sua identidade visual e desenharÃƒÂ¡ o plano recomendado.
+                Em uma videoconferÒ�ncia privada e sem compromisso de 30 minutos, nosso especialista sÒ�nior mapearÒ� o funil de atraÒ�Ò�o da sua marca, resolverÒ� ruÒ�dos da sua identidade visual e desenharÒ� o plano recomendado.
               </p>
             </div>
             <div className="bg-charcoal-900/98 backdrop-blur-3xl border border-white/[0.08] p-6 sm:p-7 rounded-[28px] shadow-[0_25px_60px_rgba(0,0,0,0.5)] space-y-6 max-w-md relative overflow-hidden text-left font-sans">
@@ -854,16 +854,16 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                 </div>
                 <div className="space-y-0.5">
                   <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
-                    SESSÃƒÆ’O EXCLUSIVA DEDICADA
+                    SESSÒ�O EXCLUSIVA DEDICADA
                   </span>
                   <p className="text-white text-xs leading-snug font-sans font-semibold">
-                    Saia com o diagnÃƒÂ³stico e aÃƒÂ§ÃƒÂµes tÃƒÂ¡ticas recomendadas em mÃƒÂ£os, de forma totalmente isenta e estruturada.
+                    Saia com o diagnÒ�stico e aÒ�Ò�es tÒ�ticas recomendadas em mÒ�os, de forma totalmente isenta e estruturada.
                   </p>
                 </div>
               </div>
               <div className="space-y-3 font-sans">
                 <a 
-                  href={buildBrazilWhatsAppUrl("OlÃƒÂ¡! Gostaria de agendar uma sessÃƒÂ£o de clareza gratuita para minha marca com um dos especialistas sÃƒÂªniores da TAG08.")}
+                  href={buildBrazilWhatsAppUrl("OlÒ�! Gostaria de agendar uma sessÒ�o de clareza gratuita para minha marca com um dos especialistas sÒ�niores da TAG08.")}
                   target="_blank"
                   rel="noreferrer"
                   className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner cursor-pointer"
@@ -893,7 +893,7 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-brand animate-pulse" />
                   <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest font-extrabold">
-                    AGÃƒÅ NCIA TAG08
+                    AGÒŠNCIA TAG08
                   </span>
                 </div>
                 <span className="font-mono text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/25 px-2 py-0.5 rounded uppercase leading-none">
@@ -916,18 +916,18 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
           <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.015)_1.2px,transparent_1.2px)] [background-size:24px_24px] pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
-            {/* Lado Esquerdo: NavegaÃƒÂ§ÃƒÂ£o de DÃƒÂºvidas */}
+            {/* Lado Esquerdo: NavegaÒ�Ò�o de DÒ�vidas */}
             <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
                   FAQ // ENCONTRE RESPOSTAS
                 </div>
                 <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
-                  DÃƒÅ¡VIDAS &amp; <br />
-                  SUA DECISÃƒÆ’O
+                  DÒšVIDAS &amp; <br />
+                  SUA DECISÒ�O
                 </h2>
                 <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
-                  EsclareÃƒÂ§a as principais dÃƒÂºvidas sobre como a TAG08 lidera, executa e garante a evoluÃƒÂ§ÃƒÂ£o estratÃƒÂ©gica e analÃƒÂ­tica do seu marketing digital sÃƒÂªnior.
+                  EsclareÒ�a as principais dÒ�vidas sobre como a TAG08 lidera, executa e garante a evoluÒ�Ò�o estratÒ�gica e analÒ�tica do seu marketing digital sÒ�nior.
                 </p>
               </div>
 
@@ -988,21 +988,21 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
               </div>
             </div>
 
-            {/* Lado Direito: Callouts adicionais sÃƒÂªnior */}
+            {/* Lado Direito: Callouts adicionais sÒ�nior */}
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
-                  <h4 className="text-white font-semibold text-sm leading-snug">Metodologia CientÃƒÂ­fica e Rigor Visual</h4>
+                  <h4 className="text-white font-semibold text-sm leading-snug">Metodologia CientÒ�fica e Rigor Visual</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    SubstituÃƒÂ­mos desculpas e cronogramas atrasados por governanÃƒÂ§a ativa, transparÃƒÂªncia de BI e consistÃƒÂªncia no posicionamento.
+                    SubstituÒ�mos desculpas e cronogramas atrasados por governanÒ�a ativa, transparÒ�ncia de BI e consistÒ�ncia no posicionamento.
                   </p>
                 </div>
                 <button
                   onClick={() => handleLinkClick("/servicos")}
                   className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
                 >
-                  <span>Ver Todos ServiÃƒÂ§os</span>
+                  <span>Ver Todos ServiÒ�os</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
@@ -1010,13 +1010,13 @@ Gostaria de agendar minha sessÃƒÂ£o de clareza gratuita de 30 minutos com um
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">CMO DIRETOR</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Precisa de AlocaÃƒÂ§ÃƒÂ£o de Equipe?</h4>
+                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Precisa de AlocaÒ�Ò�o de Equipe?</h4>
                   <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-sans">
-                    Converse com nossos diretores seniores em canal direto reservado e entenda a disponibilidade tÃƒÂ©cnica imediata para seu projeto.
+                    Converse com nossos diretores seniores em canal direto reservado e entenda a disponibilidade tÒ�cnica imediata para seu projeto.
                   </p>
                 </div>
                 <a
-                  href={buildBrazilWhatsAppUrl("OlÃƒÂ¡! Eu gostaria de saber mais sobre a assessoria de marketing estratÃƒÂ©gico da TAG08 e as modalidades de alocaÃƒÂ§ÃƒÂ£o de equipe disponÃƒÂ­veis.")}
+                  href={buildBrazilWhatsAppUrl("OlÒ�! Eu gostaria de saber mais sobre a assessoria de marketing estratÒ�gico da TAG08 e as modalidades de alocaÒ�Ò�o de equipe disponÒ�veis.")}
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center justify-between text-xs font-sans font-bold text-black border-t border-black/10 pt-2 cursor-pointer select-none"

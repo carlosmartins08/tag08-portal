@@ -27,36 +27,36 @@ export default function Sobre({ onNavigate }: SobreProps) {
   const TILES_HERO = [
     {
       name: "Carlos Eduardo",
-      role: "Fundador & Diretor de CriaÃ§Ã£o",
+      role: "Fundador & Diretor de Criação",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
-      tag: "ESTÃ‰TICA SOBREANA",
+      tag: "EST�0TICA SOBREANA",
       status: "ONLINE",
       badge: "FUNDADOR",
       linkedin: "https://www.linkedin.com/in/carlos-eduardo-tag08",
-      connections: "12k+ ConexÃµes",
-      focus: "Branding de Luxo & Design EstratÃ©gico"
+      connections: "12k+ Conexões",
+      focus: "Branding de Luxo & Design Estratégico"
     },
     {
       name: "Camila Martins",
-      role: "Copywriter & Roteiro SÃªnior",
+      role: "Copywriter & Roteiro Sênior",
       avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400",
-      tag: "TEXTO MAGNÃ‰TICO",
+      tag: "TEXTO MAGN�0TICO",
       status: "FOCO TOTAL",
-      badge: "RETENÃ‡ÃƒO SÃŠNIOR",
+      badge: "RETEN�!ÒO S�`NIOR",
       linkedin: "https://www.linkedin.com/in/camila-martins-tag08",
-      connections: "6.8k+ ConexÃµes",
+      connections: "6.8k+ Conexões",
       focus: "Storytelling de Elite & Posicionamento"
     },
     {
       name: "Danilo Aguiar",
-      role: "TrÃ¡fego CirÃºrgico & Analytics",
+      role: "Tráfego Cirúrgico & Analytics",
       avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400",
-      tag: "ALTA INTENÃ‡ÃƒO B2B",
+      tag: "ALTA INTEN�!ÒO B2B",
       status: "CAMPANHA ATIVA",
       badge: "ALFA INTEL",
       linkedin: "https://www.linkedin.com/in/danilo-aguiar-tag08",
-      connections: "8.5k+ ConexÃµes",
-      focus: "AtribuiÃ§Ã£o Google/Meta High-Ticket"
+      connections: "8.5k+ Conexões",
+      focus: "Atribuição Google/Meta High-Ticket"
     },
     {
       name: "Lucas Henrique",
@@ -66,7 +66,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       status: "ONLINE",
       badge: "ZERO TEMPLATES",
       linkedin: "https://www.linkedin.com/in/lucas-henrique-tag08",
-      connections: "5.2k+ ConexÃµes",
+      connections: "5.2k+ Conexões",
       focus: "Engenharia Web & Carregamento < 2s"
     }
   ];
@@ -116,35 +116,35 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
   const CORES_DIFERENCIAIS = [
     {
-      title: "Design SÃªnior Centrado na Autenticidade",
-      desc: "NÃ£o usamos bancos de imagens clichÃªs ou diagramaÃ§Ã£o amadora que desvalorizam o preÃ§o final do seu serviÃ§o.",
+      title: "Design Sênior Centrado na Autenticidade",
+      desc: "Não usamos bancos de imagens clichês ou diagramação amadora que desvalorizam o preço final do seu serviço.",
       gradientClass: "from-brand-secondary/10 to-transparent border-brand-secondary/15 hover:border-brand-secondary/35",
       iconColor: "text-brand-secondary",
-      badge: "ZERO CORES PADRÃƒO",
+      badge: "ZERO CORES PADRÒO",
       delay: 0.1
     },
     {
       title: "Performance Operacional Sob Demanda",
-      desc: "Canalizamos verba para funis segmentados com base em intenÃ§Ã£o de compra exata de diretores e tomadores de decisÃ£o.",
+      desc: "Canalizamos verba para funis segmentados com base em intenção de compra exata de diretores e tomadores de decisão.",
       gradientClass: "from-purple-500/10 to-transparent border-purple-500/15 hover:border-purple-500/35",
       iconColor: "text-[#a855f7]",
-      badge: "RETENÃ‡ÃƒO SÃŠNIOR",
+      badge: "RETEN�!ÒO S�`NIOR",
       delay: 0.2
     },
     {
-      title: "Autonomia de Fluxo Livre AssÃ­ncrono",
-      desc: "Todas as entregas sÃ£o organizadas no sistema proprietÃ¡rio da TAG08. Sem reuniÃµes longas de Zoom sem pauta definida.",
+      title: "Autonomia de Fluxo Livre Assíncrono",
+      desc: "Todas as entregas são organizadas no sistema proprietário da TAG08. Sem reuniões longas de Zoom sem pauta definida.",
       gradientClass: "from-blue-500/10 to-transparent border-blue-500/15 hover:border-blue-500/35",
       iconColor: "text-[#3b82f6]",
-      badge: "COMUNICAÃ‡ÃƒO PRÃTICA",
+      badge: "COMUNICA�!ÒO PR�TICA",
       delay: 0.3
     },
     {
-      title: "Soberania de PresenÃ§a Digital Corp",
-      desc: "Ajudamos pequenas e mÃ©dias marcas de destaque a se posicionarem visualmente como grandes lÃ­deres em seus setores.",
+      title: "Soberania de Presença Digital Corp",
+      desc: "Ajudamos pequenas e médias marcas de destaque a se posicionarem visualmente como grandes líderes em seus setores.",
       gradientClass: "from-emerald-500/10 to-transparent border-emerald-500/15 hover:border-emerald-500/35",
       iconColor: "text-[#10b981]",
-      badge: "CONVERSÃƒO DE PRESTÃGIO",
+      badge: "CONVERSÒO DE PREST�GIO",
       delay: 0.4
     }
   ];
@@ -153,28 +153,28 @@ export default function Sobre({ onNavigate }: SobreProps) {
     {
       id: 0,
       area: "DESIGN & CREATIVE BRANDS",
-      title: "Designer GrÃ¡fico / Visual SÃªnior",
-      tempo: "Remoto â€¢ ContrataÃ§Ã£o Recorrente",
-      desc: "EstruturaÃ§Ã£o de marcas ricas herÃ¡ldicas, e layouts premium de redes sociais com tipografia avanÃ§ada e senso estÃ©tico exigente.",
-      requirements: ["DomÃ­nio cirÃºrgico do Figma e Illustrator", "Apego extremo a espaÃ§amento, tracking e contrastes", "PortfÃ³lio com soluÃ§Ãµes reais corporativas de alto requinte"],
+      title: "Designer Gráfico / Visual Sênior",
+      tempo: "Remoto â€¢ Contratação Recorrente",
+      desc: "Estruturação de marcas ricas heráldicas, e layouts premium de redes sociais com tipografia avançada e senso estético exigente.",
+      requirements: ["Domínio cirúrgico do Figma e Illustrator", "Apego extremo a espaçamento, tracking e contrastes", "Portfólio com soluções reais corporativas de alto requinte"],
       color: "border-brand-secondary/20 shadow-brand-secondary/2"
     },
     {
       id: 1,
-      area: "GROWTH & ANALYTICS SÃŠNIOR",
+      area: "GROWTH & ANALYTICS S�`NIOR",
       title: "Head de Performance Google / Meta Ads",
-      tempo: "Remoto â€¢ ContrataÃ§Ã£o Imediata",
-      desc: "Gerenciamento estratÃ©gico de orÃ§amentos de alta intensidade de compra para marcas B2B, consultorias e saÃºde premium.",
-      requirements: ["Mais de 4 anos gerenciando contas reais exigentes", "Habilidade cirÃºrgica de traduzir tÃ¡ticas em ROI nos relatÃ³rios", "Foco em canais Meta Ads de alto tÃ­quete"],
+      tempo: "Remoto â€¢ Contratação Imediata",
+      desc: "Gerenciamento estratégico de orçamentos de alta intensidade de compra para marcas B2B, consultorias e saúde premium.",
+      requirements: ["Mais de 4 anos gerenciando contas reais exigentes", "Habilidade cirúrgica de traduzir táticas em ROI nos relatórios", "Foco em canais Meta Ads de alto tíquete"],
       color: "border-purple-500/20 shadow-purple-500/2"
     },
     {
       id: 2,
       area: "FRONT-END ARCHITECTURE",
-      title: "Dev React.js / Node.js SÃªnior",
+      title: "Dev React.js / Node.js Sênior",
       tempo: "Remoto â€¢ Banco de Talentos",
-      desc: "Transformar os protÃ³tipos de alta definiÃ§Ã£o do Figma em cÃ³digo sÃªnior, responsivo e ultra veloz sem construtores lentos.",
-      requirements: ["DomÃ­nio supremo de React, Vite, TS e Tailwind", "ApreÃ§o intransigente pelo pixel-perfect do designer", "ObssessÃ£o por otimizaÃ§Ã£o tÃ©cnica e Core Web Vitals"],
+      desc: "Transformar os protótipos de alta definição do Figma em código sênior, responsivo e ultra veloz sem construtores lentos.",
+      requirements: ["Domínio supremo de React, Vite, TS e Tailwind", "Apreço intransigente pelo pixel-perfect do designer", "Obssessão por otimização técnica e Core Web Vitals"],
       color: "border-blue-500/20 shadow-blue-500/2"
     }
   ];
@@ -195,16 +195,16 @@ export default function Sobre({ onNavigate }: SobreProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start font-bold">
-                SOBRE A TAG08 // ESTRATÃ‰GIA
+                SOBRE A TAG08 // ESTRAT�0GIA
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase">
                 Clareza para marcas que <br />
-                <span className="text-brand">querem crescer com propÃ³sito.</span>
+                <span className="text-brand">querem crescer com propósito.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
-                Adapte sua marca Ã  era da soberania digital e escale com presteza operacional. Nascemos para estruturar identidades visuais ricas, engenharia de trÃ¡fego B2B com alta intenÃ§Ã£o de compra e sistemas nativos sem construtores lentos.
+                Adapte sua marca à era da soberania digital e escale com presteza operacional. Nascemos para estruturar identidades visuais ricas, engenharia de tráfego B2B com alta intenção de compra e sistemas nativos sem construtores lentos.
               </p>
             </div>
           </div>
@@ -227,7 +227,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                 onClick={() => handleLinkClick("/contato")}
                 className="group bg-brand-secondary text-black font-mono font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
               >
-                <span>AGENDE UM DIAGNÃ“STICO</span>
+                <span>AGENDE UM DIAGN�STICO</span>
                 <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
               </button>
             </div>
@@ -250,11 +250,11 @@ export default function Sobre({ onNavigate }: SobreProps) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">94.8%</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Taxa de RetenÃ§Ã£o de<br/>Parcerias e LTV Ativo</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Taxa de Retenção de<br/>Parcerias e LTV Ativo</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">40+</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Marcas, ClÃ­nicas e<br/>ConsultÃ³rios Premium</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Marcas, Clínicas e<br/>Consultórios Premium</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">R$ 50M+</span>
@@ -262,16 +262,16 @@ export default function Sobre({ onNavigate }: SobreProps) {
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">100%</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Estrutura Nativa Puro<br/>CÃ³d. sem Construtores</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Estrutura Nativa Puro<br/>Cód. sem Construtores</span>
             </div>
           </div>
 
           {/* 4. Active Members profiles section seamlessly integrated into the team area */}
           <div className="pt-12 sm:pt-16 border-t border-white/[0.04] space-y-8 text-left font-sans">
             <div className="space-y-2">
-              <span className="font-mono text-[8px] text-brand tracking-widest block uppercase font-bold">CONSELHO E DIREÃ‡ÃƒO OPERACIONAL</span>
-              <h3 className="font-display font-black text-white text-xl sm:text-2xl uppercase tracking-tight">MENTES ATIVAS POR TRÃS DOS MÃ‰TODOS</h3>
-              <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-2xl font-medium">VocÃª conversa diretamente com os idealizadores do projeto nas pontas de direÃ§Ã£o, sem intermediÃ¡rios juniores ou burocrÃ¡ticos.</p>
+              <span className="font-mono text-[8px] text-brand tracking-widest block uppercase font-bold">CONSELHO E DIRE�!ÒO OPERACIONAL</span>
+              <h3 className="font-display font-black text-white text-xl sm:text-2xl uppercase tracking-tight">MENTES ATIVAS POR TR�S DOS M�0TODOS</h3>
+              <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-2xl font-medium">Você conversa diretamente com os idealizadores do projeto nas pontas de direção, sem intermediários juniores ou burocráticos.</p>
             </div>
 
             {/* Layout Split: Featured Founder on left, team grid on right */}
@@ -302,12 +302,12 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
                 <div className="relative z-10 space-y-4 mt-auto">
                   <div className="space-y-1">
-                    <span className="font-mono text-[8.5px] text-brand block uppercase font-bold">LIDERANÃ‡A & CONCEPÃ‡ÃƒO</span>
+                    <span className="font-mono text-[8.5px] text-brand block uppercase font-bold">LIDERAN�!A & CONCEP�!ÒO</span>
                     <h4 className="font-display font-black text-2xl sm:text-3xl text-white uppercase leading-none tracking-tight">{TILES_HERO[0].name}</h4>
                     <p className="text-zinc-300 text-xs font-sans font-medium">{TILES_HERO[0].role}</p>
                     <p className="text-brand-secondary text-[8.5px] font-mono uppercase tracking-wider pt-1">{TILES_HERO[0].connections} // {TILES_HERO[0].focus}</p>
                     <p className="text-zinc-400 text-xs leading-relaxed max-w-sm pt-2 italic">
-                    "Acreditamos que design consistente e engenharia de trÃ¡fego focada devem responder Ã s necessidades de solidez operacional das marcas de destaque."
+                    "Acreditamos que design consistente e engenharia de tráfego focada devem responder às necessidades de solidez operacional das marcas de destaque."
                     </p>
                   </div>
 
@@ -390,17 +390,17 @@ export default function Sobre({ onNavigate }: SobreProps) {
                     Acompanhe nosso ecossistema de perto no LinkedIn
                   </h4>
                   <p className="text-zinc-400 text-xs leading-relaxed max-w-2xl font-medium">
-                    Nossos diretores e o fundador publicam artigos tÃ©cnicos diÃ¡rios, playbooks de faturamento, manuais de sustentaÃ§Ã£o de processos e as evoluÃ§Ãµes estÃ©ticas do ecossistema TAG08. Conecte-se conosco para absorver conceitos estratÃ©gicos diretamente na sua rede.
+                    Nossos diretores e o fundador publicam artigos técnicos diários, playbooks de faturamento, manuais de sustentação de processos e as evoluções estéticas do ecossistema TAG08. Conecte-se conosco para absorver conceitos estratégicos diretamente na sua rede.
                   </p>
                 </div>
                 
                 <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end w-full">
                   <div className="bg-black/45 border border-white/5 rounded-2xl p-4 text-center sm:text-left lg:text-left flex-1">
                     <span className="block font-display font-black text-xl text-brand-secondary">32k+</span>
-                    <span className="block text-zinc-500 font-mono text-[8px] uppercase tracking-wider">ConexÃµes profissionais combinadas</span>
+                    <span className="block text-zinc-500 font-mono text-[8px] uppercase tracking-wider">Conexões profissionais combinadas</span>
                   </div>
                   <div className="bg-black/45 border border-white/5 rounded-2xl p-4 text-center sm:text-left lg:text-left flex-1">
-                    <span className="block font-display font-black text-xl text-white">DiÃ¡rio // Semanal</span>
+                    <span className="block font-display font-black text-xl text-white">Diário // Semanal</span>
                     <span className="block text-zinc-500 font-mono text-[8px] uppercase tracking-wider">Metodologias e insights ativos</span>
                   </div>
                 </div>
@@ -420,10 +420,10 @@ export default function Sobre({ onNavigate }: SobreProps) {
           {/* Logo Title Block */}
           <div className="text-center space-y-3">
             <span className="font-mono text-[9px] text-brand-secondary font-black uppercase tracking-widest bg-brand/5 border border-brand/10 px-3 py-1 rounded-full inline-block">
-              INTEGRAÃ‡ÃƒO ATIVA DE MERCADO
+              INTEGRA�!ÒO ATIVA DE MERCADO
             </span>
             <p className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">
-              CONFIADO POR MAIS DE 40+ EMPRESAS, MARCAS COMPACTAS E CONSULTÃ“RIOS DE PRESTÃGIO NACIONAL
+              CONFIADO POR MAIS DE 40+ EMPRESAS, MARCAS COMPACTAS E CONSULT�RIOS DE PREST�GIO NACIONAL
             </p>
 
             {/* Infinite Logo Marquee Carousel */}
@@ -483,7 +483,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
               DIFFERENTIAL TILES DE ALTO IMPACTO
             </h2>
             <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-2xl">
-              Nossa sistemÃ¡tica foi desenhada para superar as barreiras de ruÃ­do tradicionais das agÃªncias. Veja como eliminamos os maiores pontos de fricÃ§Ã£o modernos:
+              Nossa sistemática foi desenhada para superar as barreiras de ruído tradicionais das agências. Veja como eliminamos os maiores pontos de fricção modernos:
             </p>
           </div>
 
@@ -523,11 +523,11 @@ export default function Sobre({ onNavigate }: SobreProps) {
         </div>
       </section>
 
-      {/* NOVO BLOCO: O QUE ACREDITAMOS NA PRÃTICA (Valores vivos aplicados, cultura e parceria) */}
+      {/* NOVO BLOCO: O QUE ACREDITAMOS NA PRÁTICA (Valores vivos aplicados, cultura e parceria) */}
       <section className="px-4 sm:px-6 md:px-8 py-24 border-b border-white/[0.04] bg-zinc-950 text-left">
         <div className="max-w-7xl mx-auto space-y-24">
           
-          {/* O que acreditamos na prÃ¡tica - Bento Visual Comparison */}
+          {/* O que acreditamos na prática - Bento Visual Comparison */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
             {/* Left informational block */}
@@ -536,16 +536,16 @@ export default function Sobre({ onNavigate }: SobreProps) {
                 ALINHAMENTO OPERACIONAL DE ATITUDE
               </span>
               <h2 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase leading-tight tracking-tight">
-                Nossos Filtros de DecisÃ£o Operacional
+                Nossos Filtros de Decisão Operacional
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-md">
-                Evitamos discursos bonitos mas inÃ³cuos de missÃ£o e visÃ£o. Nossa operaÃ§Ã£o atua sob filtros tÃ©cnicos prÃ¡ticos de atitude e Ã©tica de faturamento para blindar seu investimento.
+                Evitamos discursos bonitos mas inócuos de missão e visão. Nossa operação atua sob filtros técnicos práticos de atitude e ética de faturamento para blindar seu investimento.
               </p>
 
               <div className="p-5 rounded-2xl bg-charcoal-900 border border-white/[0.03] space-y-2.5">
                 <span className="font-mono text-[8px] text-zinc-500 block uppercase">CONCEITO CENTRAL</span>
                 <p className="text-zinc-300 text-xs font-sans leading-relaxed">
-                  Tratamos o orÃ§amento de marketing com o mesmo rigor cirÃºrgico que um investidor trata sua carteira de Venture Capital: focado em blindagem, consistÃªncia e traÃ§Ã£o operacional sÃªnior.
+                  Tratamos o orçamento de marketing com o mesmo rigor cirúrgico que um investidor trata sua carteira de Venture Capital: focado em blindagem, consistência e tração operacional sênior.
                 </p>
               </div>
             </div>
@@ -554,33 +554,33 @@ export default function Sobre({ onNavigate }: SobreProps) {
             <div className="lg:col-span-7 space-y-4">
               {[
                 { 
-                  rule: "RecomendaÃ§Ã£o SaudÃ¡vel", 
-                  bad: "REJEITAMOS: Oferecer contrataÃ§Ãµes caras de equipes pesadas para quem precisa estruturar apenas manuais fundamentais.",
-                  clean: "ASSEGURAMOS: Indicamos apenas o remÃ©dio tÃ¡tico preciso para seu estÃ¡gio de vendas atual, protegendo seu caixa de desperdÃ­cio.",
+                  rule: "Recomendação Saudável", 
+                  bad: "REJEITAMOS: Oferecer contratações caras de equipes pesadas para quem precisa estruturar apenas manuais fundamentais.",
+                  clean: "ASSEGURAMOS: Indicamos apenas o remédio tático preciso para seu estágio de vendas atual, protegendo seu caixa de desperdício.",
                   icon: <Cpu className="w-4 h-4 text-brand" />
                 },
                 { 
                   rule: "Qualidade Autoral sobre Volume", 
-                  bad: "REJEITAMOS: Criar fluxos industriais de 30 posts repetitivos vazios para satisfazer mÃ©trica de vaidade no calendÃ¡rio.",
+                  bad: "REJEITAMOS: Criar fluxos industriais de 30 posts repetitivos vazios para satisfazer métrica de vaidade no calendário.",
                   clean: "ASSEGURAMOS: Desenvolvemos menor quantidade de postagens digitais, mas todas ancoradas em narrativas profundas e com design premium.",
                   icon: <Sparkles className="w-4 h-4 text-brand" />
                 },
                 { 
-                  rule: "VisÃ£o SistÃªmica", 
-                  bad: "REJEITAMOS: Entregar criativos isolados bonitos sem sincronia com os botÃµes de anÃºncios e pÃ¡gina de vendas.",
-                  clean: "ASSEGURAMOS: Integramos o design e a tecnologia. Cada arte, copy ou linha de cÃ³digo funciona para alimentar o funil comercial real.",
+                  rule: "Visão Sistêmica", 
+                  bad: "REJEITAMOS: Entregar criativos isolados bonitos sem sincronia com os botões de anúncios e página de vendas.",
+                  clean: "ASSEGURAMOS: Integramos o design e a tecnologia. Cada arte, copy ou linha de código funciona para alimentar o funil comercial real.",
                   icon: <Layers className="w-4 h-4 text-brand" />
                 },
                 { 
-                  rule: "SustentaÃ§Ã£o SÃ³lida", 
-                  bad: "REJEITAMOS: Prometer resultados mÃ¡gicos repentinos ou 'hacks secrets' de algoritmo na prÃ³xima semana.",
-                  clean: "ASSEGURAMOS: ConstruÃ­mos consistÃªncia. O crescimento robusto vem de playbooks diÃ¡rios constantes e inteligÃªncia sistÃªmica e refinada.",
+                  rule: "Sustentação Sólida", 
+                  bad: "REJEITAMOS: Prometer resultados mágicos repentinos ou 'hacks secrets' de algoritmo na próxima semana.",
+                  clean: "ASSEGURAMOS: Construímos consistência. O crescimento robusto vem de playbooks diários constantes e inteligência sistêmica e refinada.",
                   icon: <Activity className="w-4 h-4 text-brand" />
                 },
                 { 
                   rule: "Integridade Direta", 
-                  bad: "REJEITAMOS: Esconder atrasos dos colaboradores ou gargalos operacionais internos que atrapalham o faturamento do negÃ³cio.",
-                  clean: "ASSEGURAMOS: Emitimos alertas nÃ­tidos de performance. Se encontramos barreiras operacionais nos seus fluxos de atendimento, propomos correÃ§Ã£o imediata.",
+                  bad: "REJEITAMOS: Esconder atrasos dos colaboradores ou gargalos operacionais internos que atrapalham o faturamento do negócio.",
+                  clean: "ASSEGURAMOS: Emitimos alertas nítidos de performance. Se encontramos barreiras operacionais nos seus fluxos de atendimento, propomos correção imediata.",
                   icon: <Shield className="w-4 h-4 text-brand" />
                 }
               ].map((item, idx) => (
@@ -618,16 +618,16 @@ export default function Sobre({ onNavigate }: SobreProps) {
                   Como nossa cultura aparece na entrega
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-mono">
-                  A cultura interna da TAG08 dita as decisÃµes que tomamos quando ninguÃ©m estÃ¡ olhando. Convertemos pilares morais em entregas reais:
+                  A cultura interna da TAG08 dita as decisões que tomamos quando ninguém está olhando. Convertemos pilares morais em entregas reais:
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
-                  { title: "Clareza TÃ©cnica", desc: "Fornecemos diagnÃ³sticos nÃ­tidos semanais, detalhando erros em planilhas diretas e relatÃ³rios enxutos." },
-                  { title: "DireÃ§Ã£o EstratÃ©gica", desc: "NÃ£o fazemos tarefas soltas. Todas as aÃ§Ãµes seguem o seu roteiro macro de autoridade para o trimestre." },
-                  { title: "Senso de Responsabilidade", desc: "Seu prazo Ã© importante. Cumprimos horÃ¡rios com previsibilidade, executando as tarefas pontualmente." },
-                  { title: "EvoluÃ§Ã£o Sob MÃ©tricas", desc: "A cada fim de ciclo de marketing, lapidamos criativos e rotas de cÃ³digo com base nos testes reais de funil." }
+                  { title: "Clareza Técnica", desc: "Fornecemos diagnósticos nítidos semanais, detalhando erros em planilhas diretas e relatórios enxutos." },
+                  { title: "Direção Estratégica", desc: "Não fazemos tarefas soltas. Todas as ações seguem o seu roteiro macro de autoridade para o trimestre." },
+                  { title: "Senso de Responsabilidade", desc: "Seu prazo é importante. Cumprimos horários com previsibilidade, executando as tarefas pontualmente." },
+                  { title: "Evolução Sob Métricas", desc: "A cada fim de ciclo de marketing, lapidamos criativos e rotas de código com base nos testes reais de funil." }
                 ].map((item, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.01] border border-white/[0.03] space-y-1.5 hover:border-brand-secondary/10 transition-all">
                     <span className="font-sans text-[9px] text-brand-secondary font-bold">0{idx + 1}</span>
@@ -641,21 +641,21 @@ export default function Sobre({ onNavigate }: SobreProps) {
             {/* Nossa forma de parceria */}
             <div className="lg:col-span-6 space-y-8 bg-charcoal-900/40 p-8 rounded-3xl border border-white/[0.04]">
               <div className="space-y-2">
-                <span className="font-mono text-[9px] text-brand uppercase tracking-wider">MODO DE COOPERAÃ‡ÃƒO</span>
+                <span className="font-mono text-[9px] text-brand uppercase tracking-wider">MODO DE COOPERA�!ÒO</span>
                 <h3 className="font-display font-medium text-xl sm:text-2xl text-white uppercase tracking-tight">
                   Nossa forma de parceria integrada
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                  NÃ£o operamos como um fornecedor distante que aguarda tickets abertos. Atuamos como conselheiros engenheiros tÃ¡ticos do seu negÃ³cio:
+                  Não operamos como um fornecedor distante que aguarda tickets abertos. Atuamos como conselheiros engenheiros táticos do seu negócio:
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
-                  { title: "Desenho Conjunto", desc: "Sentamos periodicamente com fundadores e C-Levels definindo o melhor posicionamento de lideranÃ§a do segmento." },
-                  { title: "ExecuÃ§Ã£o TÃ©cnica SÃªnior", desc: "Codificamos de forma Ã¡gil, criamos projetos herÃ¡ldicos e escrevemos copys autorais sem recorrer a modelos padrÃ£o." },
-                  { title: "Acompanhamento Ativo", desc: "Monitoramos faturamento de anÃºncios e saÃºde de trÃ¡fego, garantindo que o seu fluxo de anÃºncios seja preservado." },
-                  { title: "Calibragem Descomplicada", desc: "Adaptamos campanhas institucionais e pautas a qualquer momento com respostas rÃ¡pidas e sem excesso de contratos." }
+                  { title: "Desenho Conjunto", desc: "Sentamos periodicamente com fundadores e C-Levels definindo o melhor posicionamento de liderança do segmento." },
+                  { title: "Execução Técnica Sênior", desc: "Codificamos de forma ágil, criamos projetos heráldicos e escrevemos copys autorais sem recorrer a modelos padrão." },
+                  { title: "Acompanhamento Ativo", desc: "Monitoramos faturamento de anúncios e saúde de tráfego, garantindo que o seu fluxo de anúncios seja preservado." },
+                  { title: "Calibragem Descomplicada", desc: "Adaptamos campanhas institucionais e pautas a qualquer momento com respostas rápidas e sem excesso de contratos." }
                 ].map((point, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-brand/[0.01] border border-brand/5 space-y-1.5 hover:border-brand/20 transition-all">
                     <span className="font-mono text-[9px] text-brand font-bold">FLOW_G{idx + 1}</span>
@@ -667,13 +667,13 @@ export default function Sobre({ onNavigate }: SobreProps) {
             </div>
           </div>
 
-          {/* CTA para SoluÃ§Ãµes - GLASS DESIGN */}
+          {/* CTA para Soluções - GLASS DESIGN */}
           <div className="p-8 sm:p-10 rounded-3xl bg-neutral-900/50 border border-white/[0.06] relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 text-left">
             <div className="absolute inset-0 bg-[radial-gradient(#ffffff03_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
             <div className="relative z-10 space-y-2">
-              <h4 className="text-white font-display font-semibold text-lg uppercase tracking-tight">Pronto para colocar ordem operacional sÃªnior?</h4>
+              <h4 className="text-white font-display font-semibold text-lg uppercase tracking-tight">Pronto para colocar ordem operacional sênior?</h4>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-xl leading-relaxed">
-                Explore a prateleira tÃ¡tica de soluÃ§Ãµes que a TAG08 desenhou cuidadosamente para consolidar marcas de referÃªncia nacional.
+                Explore a prateleira tática de soluções que a TAG08 desenhou cuidadosamente para consolidar marcas de referência nacional.
               </p>
             </div>
             <button
@@ -683,7 +683,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
               }}
               className="group relative px-6 py-3.5 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0 overflow-hidden shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:-translate-y-0.5 relative z-10"
             >
-              Conhecer CatÃ¡logo de SoluÃ§Ãµes
+              Conhecer Catálogo de Soluções
             </button>
           </div>
 
@@ -702,19 +702,19 @@ export default function Sobre({ onNavigate }: SobreProps) {
               </span>
               
               <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white uppercase leading-[0.88] tracking-tighter">
-                MAIS VALOR ESTÃ‰TICO. <br />
-                <span className="text-brand">MENOS ENROLAÃ‡ÃƒO.</span>
+                MAIS VALOR EST�0TICO. <br />
+                <span className="text-brand">MENOS ENROLA�!ÒO.</span>
               </h2>
               
               <div className="space-y-4 text-zinc-300 text-xs sm:text-[13.5px] leading-relaxed font-sans max-w-xl">
                 <p className="font-medium text-white text-sm sm:text-base leading-relaxed">
-                  NÃ£o acreditamos em hacks rasos, postagens genÃ©ricas de feeds ou design feito com pressa e preguiÃ§a intelectual.
+                  Não acreditamos em hacks rasos, postagens genéricas de feeds ou design feito com pressa e preguiça intelectual.
                 </p>
                 <p className="text-zinc-400">
-                  Nosso nÃºcleo existe para dar direÃ§Ã£o Ã s marcas que merecem ser notadas e pagas pelo que realmente valem. Fazemos isso aliando design herÃ¡ldico sofisticado desenvolvidos do zero no Figma, Ã  engenharia de captaÃ§Ã£o de leads sÃªniores.
+                  Nosso núcleo existe para dar direção às marcas que merecem ser notadas e pagas pelo que realmente valem. Fazemos isso aliando design heráldico sofisticado desenvolvidos do zero no Figma, à engenharia de captação de leads sêniores.
                 </p>
                 <p className="text-zinc-400">
-                  Do cÃ³digo nativo veloz atÃ© os roteiros cirÃºrgicos de retenÃ§Ã£o para o Instagram e YouTube â€“ cada detalhe da sua marca Ã© polido e defendido por pessoas experientes dedicadas a construir uma autoridade digital inquestionÃ¡vel.
+                  Do código nativo veloz até os roteiros cirúrgicos de retenção para o Instagram e YouTube â€“ cada detalhe da sua marca é polido e defendido por pessoas experientes dedicadas a construir uma autoridade digital inquestionável.
                 </p>
               </div>
 
@@ -722,11 +722,11 @@ export default function Sobre({ onNavigate }: SobreProps) {
               <div className="bg-charcoal-900 border border-white/5 p-4 rounded-xl space-y-2 max-w-md">
                 <div className="flex items-center gap-2 text-[10.5px] text-zinc-400 font-sans">
                   <Check className="w-3.5 h-3.5 text-brand" />
-                  <span>Soberania visual para produtos e serviÃ§os estratÃ©gicos</span>
+                  <span>Soberania visual para produtos e serviços estratégicos</span>
                 </div>
                 <div className="flex items-center gap-2 text-[10.5px] text-zinc-400 font-sans">
                   <Check className="w-3.5 h-3.5 text-brand" />
-                  <span>CÃ³digo responsivo, limpo e rÃ¡pido</span>
+                  <span>Código responsivo, limpo e rápido</span>
                 </div>
               </div>
             </div>
@@ -773,13 +773,13 @@ export default function Sobre({ onNavigate }: SobreProps) {
           
           {/* Section Header */}
           <div className="max-w-3xl text-left space-y-3">
-            <span className="font-mono text-xs text-brand uppercase tracking-widest block font-bold">RECRUTAMENTO SÃŠNIORES ATIVOS // RECRUIT_CORE</span>
+            <span className="font-mono text-xs text-brand uppercase tracking-widest block font-bold">RECRUTAMENTO S�`NIORES ATIVOS // RECRUIT_CORE</span>
             <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
-              PORTFÃ“LIOS OBSTINADOS <br />
+              PORTF�LIOS OBSTINADOS <br />
               &amp; ENGENHARIA DE DESIGN
             </h2>
             <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-2xl font-medium">
-              Repudiamos a mediocridade do mercado digital padrÃ£o. Se vocÃª valoriza design cirÃºrgico, performance analÃ­tica baseada em nÃºmeros e desenvolvimento nativo veloz, explore as vagas em foco contÃ­nuo abaixo e veja se hÃ¡ aderÃªncia:
+              Repudiamos a mediocridade do mercado digital padrão. Se você valoriza design cirúrgico, performance analítica baseada em números e desenvolvimento nativo veloz, explore as vagas em foco contínuo abaixo e veja se há aderência:
             </p>
           </div>
 
@@ -872,9 +872,9 @@ export default function Sobre({ onNavigate }: SobreProps) {
             <div className="absolute top-0 right-0 w-32 h-32 bg-brand/[0.015] rounded-full blur-2xl pointer-events-none" />
             
             <div className="space-y-1.5 max-w-xl">
-              <h4 className="text-white font-display font-black text-sm sm:text-base uppercase">NÃƒO ACHOU SUA VAGA DE PREFERÃŠNCIA?</h4>
+              <h4 className="text-white font-display font-black text-sm sm:text-base uppercase">NÒO ACHOU SUA VAGA DE PREFER�`NCIA?</h4>
               <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                Se vocÃª Ã© um programador de interface impecÃ¡vel, designer exigente com as prÃ³prias marcas ou roteirista experiente focados em presteza de retenÃ§Ã£o, nÃ³s queremos conhecer vocÃª para o banco contÃ­nuo da TAG08.
+                Se você é um programador de interface impecável, designer exigente com as próprias marcas ou roteirista experiente focados em presteza de retenção, nós queremos conhecer você para o banco contínuo da TAG08.
               </p>
             </div>
             
@@ -889,7 +889,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
               }}
               className="bg-brand-secondary hover:bg-brand-dark text-black font-mono font-black text-[10px] uppercase tracking-wider px-6 py-4 rounded-xl shadow-lg transition-all flex items-center gap-1.5 shrink-0 hover:scale-[1.02] cursor-pointer"
             >
-              <span>APLICAR PORTFÃ“LIO</span>
+              <span>APLICAR PORTF�LIO</span>
               <ArrowUpRight className="w-4 h-4 text-black stroke-[2.5]" />
             </button>
           </div>
@@ -902,16 +902,16 @@ export default function Sobre({ onNavigate }: SobreProps) {
         <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
           
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-secondary/10 border border-brand-secondary/30 text-brand font-black text-[9px] rounded-lg uppercase tracking-widest font-mono">
-            AGENDAMENTO SÃŠNIORES // SOLVÃŠNCIA
+            AGENDAMENTO S�`NIORES // SOLV�`NCIA
           </div>
           
           <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white uppercase tracking-tight max-w-2xl mx-auto leading-none">
             ESTABILIZAR VALOR DE MARCA <br />
-            Ã‰ UM TRABALHO DE ELITE.
+            �0 UM TRABALHO DE ELITE.
           </h2>
           
           <p className="text-zinc-300 text-xs sm:text-sm max-w-md mx-auto leading-relaxed font-sans">
-            Compreenda nossos diferenciais e marque seu onboarding hoje diretamente com nossos diretores seniores. Sem retÃ³ricas vazias.
+            Compreenda nossos diferenciais e marque seu onboarding hoje diretamente com nossos diretores seniores. Sem retóricas vazias.
           </p>
           
           <div className="pt-4">
@@ -919,7 +919,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
               onClick={() => handleLinkClick("/contato")}
               className="bg-brand hover:bg-brand-dark text-black font-mono font-black text-[10px] uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-300 shadow-[0_12px_45px_rgba(var(--color-brand-secondary-rgb),0.18)] flex items-center gap-1.5 mx-auto hover:scale-[1.02] cursor-pointer"
             >
-              <span>RESERVAR DIAGNÃ“STICO</span>
+              <span>RESERVAR DIAGN�STICO</span>
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
             </button>
           </div>
