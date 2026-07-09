@@ -15,7 +15,7 @@ Não fazer:
 - vender plano antes de diagnóstico;
 - aceitar prazo impossível para fechar contrato;
 - esconder o que não está incluso;
-- vender “fazemos tudo”;
+- vender fazemos tudo;
 - comparar a TAG08 por quantidade de peças;
 - ignorar energia operacional do cliente.
 

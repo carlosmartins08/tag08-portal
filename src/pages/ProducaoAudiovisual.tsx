@@ -22,10 +22,10 @@ const DELIVERABLES: Deliverable[] = [
   { id: "aftermovie", name: "Aftermovie do Evento", category: "event", desc: "Vídeo cinematográfico com os melhores momentos emocionais e técnicos." },
   { id: "reels", name: "Reels de Alto Impacto", category: "digital", desc: "Formatos rápidos (9:16) pensados para alcance qualificado e boa retenção." },
   { id: "cortes", name: "Cortes de Falas & Palestras", category: "digital", desc: "Falas impactantes editadas dinamicamente com legendas premium." },
-  { id: "depoimentos", name: "Depoimentos de Clientes (Social Proof)", category: "event", desc: "Entrevistas rápidas colhendo feedbacks espontâneos úteis para a prova social." },
+  { id: "depoimentos", name: "Depoimentos de Clientes (Social Proof)", category: "event", desc: "Entrevistas rápidas colhendo feedbacks espontï¿½neos úteis para a prova social." },
   { id: "institucional", name: "Vídeo Resumo Institucional", category: "inst", desc: "Apresentação executiva sóbria direcionada ao investidor corporativo." },
   { id: "teaser", name: "Teaser Pré/Pós Evento", category: "event", desc: "Gatilho de expectativa épico para ancorar as campanhas de marketing." },
-  { id: "stories", name: "Stories Dinâmicos em Tempo Real", category: "digital", desc: "Captação rápida para publicação em tempo de execução das atividades." },
+  { id: "stories", name: "Stories Dinâmicos em Tempo Real", category: "digital", desc: "Captação rï¿½pida para publicaï¿½ï¿½o em tempo de execuï¿½ï¿½o das atividades." },
   { id: "anuncios", name: "Variações para Tráfego Pago (Ads)", category: "ads", desc: "Criativos com ganchos fortes adaptados especificamente para conversão." },
   { id: "banco", name: "Banco de Imagens Exclusivo", category: "inst", desc: "Recortes em alta resolução de equipe, infraestrutura e processos de entrega." }
 ];
@@ -42,7 +42,7 @@ const FORMATOS: Formato[] = [
   {
     id: "essencial",
     name: "Conteúdo Essencial",
-    tag: "GRAVA�!�"ES PONTUAIS OU REDES",
+      tag: "GRAVAÇÕES PONTUAIS OU REDES",
     desc: "Perfeito para marcas pessoais, gravações pontuais de estúdio e bastidores internos das marcas.",
     features: [
       "Gravação sob demanda e rápida",
@@ -54,7 +54,7 @@ const FORMATOS: Formato[] = [
   {
     id: "cobertura",
     name: "Cobertura Estratégica",
-    tag: "EVENTOS E ATIVA�!�"ES",
+      tag: "EVENTOS E ATIVAÇÕES",
     desc: "Desenvolvido para eventos corporativos de médio e grande porte, palestras, ativações de patrocinadores e lançamentos.",
     features: [
       "Mapeamento tático do cronograma antes",
@@ -85,9 +85,9 @@ interface FAQCategory {
 const faqCategories: FAQCategory[] = [
   { id: 0, title: "ESCOPO & EXPERT" },
   { id: 1, title: "ENTREGAS E CORTES" },
-  { id: 2, title: "ROTEIRO E DIRE�!ÒO" },
+  { id: 2, title: "ROTEIRO E DIREÇÃO" },
   { id: 3, title: "DESLOCAMENTO BR" },
-  { id: 4, title: "FILMAGEM VS EDI�!ÒO" }
+  { id: 4, title: "FILMAGEM VS EDIÇÃO" }
 ];
 
 const faqQuestions = [
@@ -99,7 +99,7 @@ const faqQuestions = [
 ];
 
 const faqAnswers = [
-  "Nossa atuação é de ponta a ponta. Não somos simples operadores de câmera: desenhamos a estratégia de posicionamento, roteirizamos, dirigimos a gravação, realizamos a captação de áudio e vídeo em qualidade de cinema, tratamos cor, editamos cortes estáticos e dinâmicos de alta velocidade e estruturamos as legendas premium.",
+  "Nossa atuação ï¿½ de ponta a ponta. Não somos simples operadores de câmera: desenhamos a estratégia de posicionamento, roteirizamos, dirigimos a gravação, realizamos a captação de ï¿½udio e vídeo em qualidade de cinema, tratamos cor, editamos cortes estáticos e dinâmicos de alta velocidade e estruturamos as legendas premium.",
   "Totalmente inclusos dentro do planejamento estratégico. Criamos ganchos fortes nos primeiros 3 segundos do vídeo, aplicando quebras de padrão e legendas elegantes para boa retenção nas redes sociais, integradas à estética do seu branding.",
   "Sim. Antes de ligarmos qualquer equipamento de captação, construímos um cronograma tático integrado. Mapeamos os pontos focais obrigatórios do evento corporativo ou da produção de estúdio, preparamos roteiro técnico de perguntas para colher depoimentos isentos de dor e definimos as referências de corte.",
   "Atendemos em todo o território nacional. Nossas operações principais abrangem projetos com logística coordenada. Custos adicionais de transporte terrestre/aéreo, seguro de equipamentos e ajuda de custo de hospedagem e alimentação são acordados de forma transparente direto no escopo contratual.",
@@ -136,7 +136,7 @@ export default function ProducaoAudiovisual({ onNavigate }: ProducaoProps) {
 
     const message = `Olá TAG08! Configurei minha proposta técnica usando o simulador inteligente de produção audiovisual e cheguei no seguinte setup:
   
- - FORMATO DE CONTRATA�!ÒO: ${formatName}
+ - FORMATO DE CONTRATAï¿½!ï¿½O: ${formatName}
  - ENTREGÁVEIS DESEJADOS: ${deliverablesList}
 
 Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de produção audiovisual para viabilizar as diárias e o plano orçamentário.`;
@@ -171,12 +171,12 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
                 Não é só registrar. <br />
-                <span className="text-brand">�0 consolidar posicionamento.</span>
+                <span className="text-brand">ï¿½0 consolidar posicionamento.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-[15px] leading-relaxed font-sans font-medium">
-                Um evento, uma campanha ou uma gravação não deveriam acabar quando as câmeras são desligadas. A TAG08 transforma gravações comuns e coberturas de eventos em ativos estratégicos recorrentes de relacionamento, autoridade, conversão e reputação corporativa.
+                Um evento, uma campanha ou uma gravação não deveriam acabar quando as câmeras são desligadas. A TAG08 transforma gravações comuns e coberturas de eventos em ativos estratégicos recorrentes de relacionamento, autoridade, conversão e reputaï¿½ï¿½o corporativa.
               </p>
             </div>
           </div>
@@ -213,7 +213,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
 
                 <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8.5px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
                   <div className="w-1.5 h-1.5 rounded-full bg-brand animate-ping" />
-                  <span>RESOLU�!ÒO RED KODAK // ULTRA HD 8K</span>
+                  <span>RESOLUï¿½!ï¿½O RED KODAK // ULTRA HD 8K</span>
                 </div>
               </div>
             </div>
@@ -223,7 +223,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-2 text-left border-t border-white/[0.04]">
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Cinematográfico</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Câmeras e Lentes Premium<br/>Estética de Cinema</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Cï¿½meras e Lentes Premium<br/>Estética de Cinema</span>
             </div>
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">+400k</span>
@@ -251,7 +251,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 max-w-5xl">
             <div className="space-y-3">
               <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-                O DIAGN�STICO DO ERRO // ANOMALIAS DE MERCADO
+                O DIAGNï¿½STICO DO ERRO // ANOMALIAS DE MERCADO
               </span>
               <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white uppercase tracking-tighter">
                 O conteúdo existe, mas não rende?
@@ -317,7 +317,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
           
           <div className="max-w-2xl mx-auto space-y-3 text-center">
             <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-              MAPEAMENTO DE SOLICITANTES // DIAL�0TICA
+              MAPEAMENTO DE SOLICITANTES // DIALï¿½0TICA
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
               Para quem o Audiovisual de Elite é Obrigatório?
@@ -396,7 +396,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
           
           <div className="text-left space-y-3 max-w-2xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-              SERVI�!OS INTEGRADOS // AUDIOVISUAL COMPACT
+              SERVIï¿½!OS INTEGRADOS // AUDIOVISUAL COMPACT
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tighter">
               As Quatro Frentes de Atuação Sênior da TAG08
@@ -412,16 +412,16 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
                 num: "FRENTE 01",
                 title: "Captação & Conteúdo para Redes Sociais",
                 desc: "Produção contínua e planejada sob roteiro refinado para TikTok, Instagram Reels, LinkedIn e canais digitais modernos de negócios.",
-                list: ["Roteiro de quebra de padrão inicial", "Captação de alta nitidez com pós color-grading", "Cortes rápidos e dinâmicos", "Legendas de alto padrão", "Efeitos sonoros sutis e envolventes"]
+                list: ["Roteiro de quebra de padrão inicial", "Captação de alta nitidez com pï¿½s color-grading", "Cortes rï¿½pidos e dinâmicos", "Legendas de alto padrão", "Efeitos sonoros sutis e envolventes"]
               },
               {
                 num: "FRENTE 02",
                 title: "Cobertura de Eventos Corporativos",
                 desc: "Ancoragem completa de palestras, ativações de patrocinadores, summits e festas internas de marcas corporativas.",
-                list: ["Aftermovie cinematográfico", "Cortes rápidos editados no local", "Depoimentos de participantes colhidos com maestria", "Galeria organizada de fotos institucionais", "Stories dinâmicos sob demanda"]
+                list: ["Aftermovie cinematogrï¿½fico", "Cortes rï¿½pidos editados no local", "Depoimentos de participantes colhidos com maestria", "Galeria organizada de fotos institucionais", "Stories dinâmicos sob demanda"]
               },
               {
-                num: "FRENà¤¤à¥‡ 03",
+                num: "FRENà¤¤à¥⬡ 03",
                 title: "Vídeos Institucionais & Documentários de Marca",
                 desc: "Manifestos de negócio, histórias fundadoras e documentários de processos industriais ou de escritórios focados em autoridade.",
                 list: ["Vídeo institucional", "Manifesto de marca assinado por diretores", "Vídeos para recepção e showrooms", "Vídeo comercial para captação de sócios", "Apresentações com Motion Graphics"]
@@ -430,7 +430,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
                 num: "FRENTE 04",
                 title: "Campanhas Visuais & Lançamentos",
                 desc: "Vídeos estruturados de vendas para ancorar campanhas agressivas de tráfego pago, lançamentos de infoprodutos e novas linhas luxo.",
-                list: ["Vídeos em formato 16:9 e vertical 9:16", "Estrutura rápida para múltiplos anúncios (A/B)", "Roteiro orientado à ação imediata pós-clique", "Direção de câmera voltada à alta conversão", "CTA de alta densidade no desfecho"]
+                list: ["Vï¿½deos em formato 16:9 e vertical 9:16", "Estrutura rï¿½pida para múltiplos anúncios (A/B)", "Roteiro orientado ï¿½ aï¿½ï¿½o imediata pï¿½s-clique", "Direï¿½ï¿½o de câmera voltada ï¿½ alta conversão", "CTA de alta densidade no desfecho"]
               }
             ].map((frente, idx) => (
               <div 
@@ -494,7 +494,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
               
               {/* Formatos Buttons Selector */}
               <div className="space-y-4">
-                <span className="font-mono text-[9.5px] text-zinc-500 uppercase tracking-widest font-bold block">1. ESCOLHA O FORMATO DE CONTRATA�!ÒO</span>
+                <span className="font-mono text-[9.5px] text-zinc-500 uppercase tracking-widest font-bold block">1. ESCOLHA O FORMATO DE CONTRATAï¿½!ï¿½O</span>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {FORMATOS.map((f) => (
                     <button
@@ -650,7 +650,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
               A Cobertura Começa Antes e Continua Depois do Evento
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm mx-auto">
-              Nenhum profissional da TAG08 chega à captação apenas segurando uma câmera. Nosso método cobre o ciclo de vida completo de ponta a ponta.
+              Nenhum profissional da TAG08 chega ï¿½ captação apenas segurando uma câmera. Nosso mï¿½todo cobre o ciclo de vida completo de ponta a ponta.
             </p>
           </div>
 
@@ -674,12 +674,12 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
               },
               {
                 num: "02",
-                tag: "EXECU�!ÒO DE CAMPO",
+                tag: "EXECUï¿½ï¿½O DE CAMPO",
                 title: "O Durante: Captação de Alta Fidelidade",
                 color: "group-hover:border-brand-secondary/40 border-l border-r border-white/5",
                 list: [
                   "Presença de um diretor de narrativa em campo",
-                  "Captação em alta resolução (Câmeras FX Cinematográficas)",
+                  "Captação em alta resoluï¿½ï¿½o (Cï¿½meras FX Cinematogrï¿½ficas)",
                   "Colheita espontânea de depoimentos estruturados",
                   "Áudio profissional sem chiados ou ecos",
                   "Captura focada na experiência do participante"
@@ -687,7 +687,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
               },
               {
                 num: "03",
-                tag: "P�S-PRODU�!ÒO S�`NIOR",
+                tag: "Pï¿½S-PRODUï¿½!ï¿½O Sï¿½`NIOR",
                 title: "O Depois: Edição e Entrega Veloz",
                 color: "group-hover:border-brand/40",
                 list: [
@@ -748,7 +748,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
           
           <div className="text-left space-y-3 max-w-2xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-              TABELA DE INCLUSÒO T�0CNICA // RIGOR COMERCIAL
+              TABELA DE INCLUSÃO Tï¿½0CNICA // RIGOR COMERCIAL
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
               Clareza Estrita: O que está incluso no Escopo?
@@ -769,7 +769,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
                 
                 <div className="grid gap-4.5 pt-6 text-left">
                   {[
-                    { title: "Direção de captação dedicada", desc: "Acompanhamento no set com olhar contínuo sobre falas obrigatórias e ângulos." },
+                    { title: "Direï¿½ï¿½o de captação dedicada", desc: "Acompanhamento no set com olhar contï¿½nuo sobre falas obrigatï¿½rias e ï¿½ngulos." },
                     { title: "Roteiro e guia de cenas", desc: "Cronograma técnico planejado integrado ao time de marketing do contratante." },
                     { title: "SLA estrito de edição e finalização", desc: "Entrega programada em cronogramas transparentes de andamento." },
                     { title: "Trilha sonora licenciada inclusa", desc: "Músicas e efeitos sonoros isentos de royalties de direitos autorais." },
@@ -797,7 +797,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
               <div>
                 <div className="flex items-center gap-2 text-zinc-500 font-mono text-[9px] uppercase tracking-widest font-bold pb-4 border-b border-white/[0.04]">
                   <span className="w-1.5 h-1.5 rounded-full bg-zinc-650" />
-                  <span>OPCIONAIS DISPON�VEIS // CONTRATADOS ì PARTE</span>
+                  <span>OPCIONAIS DISPONï¿½VEIS // CONTRATADOS ï¿½ PARTE</span>
                 </div>
                 
                 <div className="grid gap-4.5 pt-6 text-left">
@@ -821,7 +821,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
                 </div>
               </div>
               <div className="pt-6 border-t border-white/[0.04] text-[9.5px] font-mono text-zinc-500 uppercase tracking-widest">
-                CONTROLE DE ALTERA�!�"ES E ADULTOS ADICIONAIS
+                CONTROLE DE ALTERAï¿½!ï¿½"ES E ADULTOS ADICIONAIS
               </div>
             </div>
           </div>
@@ -957,12 +957,12 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
                   <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
                 </div>
                 <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
-                  RESERVE SUA DI�RIA CONFORME CRONOGRAMA DE OPERA�!ÒO
+                  RESERVE SUA DIï¿½RIA CONFORME CRONOGRAMA DE OPERAï¿½!ï¿½O
                 </span>
               </div>
               <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
                 RESERVE O RIGOR <br />
-                DA SUA CAPTA�!ÒO!
+                DA SUA CAPTAï¿½!ï¿½O!
               </h2>
               <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
                 Em videoconferência privada rápida de 30 minutos, nosso diretor operacional de audiovisual analisará seu cronograma, validará focos de cenas obrigatórias e desenhará o playbook de tomadas completo.
@@ -1047,7 +1047,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
                   FAQ // ENCONTRE RESPOSTAS
                 </div>
                 <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
-                  D�aVIDAS &amp; <br />
+                  Dï¿½aVIDAS &amp; <br />
                   SUA DECISÒO
                 </h2>
                 <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
@@ -1116,7 +1116,7 @@ Gostaria de agendar minha sessão de clareza de 30 minutos com um diretor de pro
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PORTF�LIO &amp; MOCKUPS</span>
+                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PORTFï¿½LIO &amp; MOCKUPS</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">Rigor Técnico e Processos Sólidos</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     Substituímos gravações brutas sem sentido por roteiros táticos, cronograma de tomadas e entrega rápida em canais integrados.

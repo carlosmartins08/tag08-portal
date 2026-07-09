@@ -1,4 +1,4 @@
-﻿export type RouteKey =
+export type RouteKey =
   | "home"
   | "sobre"
   | "servicos"
@@ -46,7 +46,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "daily",
     priority: "1.0",
     title: "TAG08 | Marketing Estratégico, Posicionamento e Performance",
-    description: "Agência de marketing estratégico focada em posicionamento, estruturação de processos e performance. Transformamos presença digital de marcas que querem crescer com direção."
+    description:
+      "Agência de marketing estratégico focada em posicionamento, estruturação de processos e performance. Transformamos presença digital de marcas que querem crescer com direção."
   },
   {
     key: "sobre",
@@ -57,7 +58,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "weekly",
     priority: "0.8",
     title: "Sobre a TAG08 | Clareza e Estratégia para Marcas com Propósito",
-    description: "Conheça a TAG08. Trazemos clareza, direção e consistência para marcas comprometidas com seu próprio propósito de crescimento sustentável."
+    description:
+      "Conheça a TAG08. Trazemos clareza, direção e consistência para marcas comprometidas com seu próprio propósito de crescimento sustentável."
   },
   {
     key: "servicos",
@@ -68,7 +70,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "weekly",
     priority: "0.9",
     title: "Soluções e Serviços | TAG08 Marketing Estratégico",
-    description: "Descubra como transformar presença digital em posicionamento, estrutura e performance através de nossas soluções integradas.",
+    description:
+      "Descubra como transformar presença digital em posicionamento, estrutura e performance através de nossas soluções integradas.",
     isServicePage: true
   },
   {
@@ -81,7 +84,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "weekly",
     priority: "0.8",
     title: "Process Intelligence | Organização e Clareza para Crescer - TAG08",
-    description: "Transforme o caos operacional em clareza por meio de diagnóstico ativo, playbooks estruturados e inteligência de processos para dar escala à sua marca.",
+    description:
+      "Transforme o caos operacional em clareza por meio de diagnóstico ativo, playbooks estruturados e inteligência de processos para dar escala à sua marca.",
     isServicePage: true
   },
   {
@@ -94,7 +98,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "weekly",
     priority: "0.8",
     title: "Process Activation | Governança Operacional e Execução Real - TAG08",
-    description: "Ative, ensine e sustente seus processos operacionais com acompanhamento estratégico focado em execução real e performance consistente.",
+    description:
+      "Ative, ensine e sustente seus processos operacionais com acompanhamento estratégico focado em execução real e performance consistente.",
     isServicePage: true
   },
   {
@@ -107,7 +112,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "weekly",
     priority: "0.8",
     title: "Desenvolvimento Web | Sites que Posicionam, Explicam e Convertem - TAG08",
-    description: "Websites corporativos, portais institucionais leves e landing pages de conversão de alta performance moldados com design estratégico.",
+    description:
+      "Websites corporativos, portais institucionais leves e landing pages de conversão de alta performance moldados com design estratégico.",
     isServicePage: true
   },
   {
@@ -120,7 +126,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "weekly",
     priority: "0.8",
     title: "Branding e Identidade Visual | Comunique Valor de Marca - TAG08",
-    description: "Construção de marcas com clareza, posicionamento e identidade visual estratégica de valor para comunicar o real propósito com consistência.",
+    description:
+      "Construção de marcas com clareza, posicionamento e identidade visual estratégica de valor para comunicar o real propósito com consistência.",
     isServicePage: true
   },
   {
@@ -133,7 +140,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "weekly",
     priority: "0.8",
     title: "Gestão de Redes Sociais | Conteúdo, Estratégia e Posicionamento - TAG08",
-    description: "Desenvolvemos o posicionamento ideal para sua marca nas redes sociais com planejamento editorial estratégico e narrativas autorais que engajam e convertem.",
+    description:
+      "Desenvolvemos o posicionamento ideal para sua marca nas redes sociais com planejamento editorial estratégico e narrativas autorais que engajam e convertem.",
     isServicePage: true
   },
   {
@@ -145,7 +153,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "weekly",
     priority: "0.8",
     title: "Produção Audiovisual & Cobertura de Eventos Corporativos | TAG08",
-    description: "Não fazemos apenas registro bonito. Posicionamos sua marca com tomadas cinematográficas táticas, roteiros integrados e pós-produção ágil.",
+    description:
+      "Não fazemos apenas registro bonito. Posicionamos sua marca com tomadas cinematográficas táticas, roteiros integrados e pós-produção ágil.",
     isServicePage: true
   },
   {
@@ -157,7 +166,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "monthly",
     priority: "0.7",
     title: "Contato | Fale com a TAG08",
-    description: "Entenda o melhor caminho estratégico para o crescimento de sua marca com clareza, responsabilidade e evolução constante."
+    description:
+      "Entenda o melhor caminho estratégico para o crescimento de sua marca com clareza, responsabilidade e evolução constante."
   },
   {
     key: "trabalhe-conosco",
@@ -168,7 +178,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "monthly",
     priority: "0.6",
     title: "Trabalhe Conosco | Direção e Evolução Constante - TAG08",
-    description: "Faça parte de uma equipe que acredita em direção, responsabilidade e evolução constante. Candidate-se a nossas vagas em marketing e processos."
+    description:
+      "Faça parte de uma equipe que acredita em direção, responsabilidade e evolução constante. Candidate-se a nossas vagas em marketing e processos."
   },
   {
     key: "insights",
@@ -180,7 +191,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "daily",
     priority: "0.9",
     title: "Insights Estratégicos | TAG08",
-    description: "Insights originais de marketing estratégico, identidade de marca, desenvolvimento web de alta performance e otimização de processos operacionais."
+    description:
+      "Insights originais de marketing estratégico, identidade de marca, desenvolvimento web de alta performance e otimização de processos operacionais."
   },
   {
     key: "cliente-onboarding",
@@ -202,7 +214,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "weekly",
     priority: "0.7",
     title: "Sebraetec: Impulsionando Empreendedores | TAG08",
-    description: "Inove na sua empresa com o programa Sebraetec da TAG08. Identidade visual, canais e websites de alto padrão com até 70% de subsídio financeiro."
+    description:
+      "Inove na sua empresa com o programa Sebraetec da TAG08. Identidade visual, canais e websites de alto padrão com até 70% de subsídio financeiro."
   },
   {
     key: "programa-afiliados",
@@ -213,7 +226,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "monthly",
     priority: "0.6",
     title: "Programa de Afiliados: Indique e Ganhe Conexões | TAG08",
-    description: "Ganhe até 10% de repasses em comissões únicas ou recorrentes indicando clientes para websites, de luxo, branding e gestão de redes sociais na TAG08."
+    description:
+      "Ganhe até 10% de repasses em comissões únicas ou recorrentes indicando clientes para websites, de luxo, branding e gestão de redes sociais na TAG08."
   },
   {
     key: "hospedagem-manutencao-sites",
@@ -224,7 +238,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "monthly",
     priority: "0.7",
     title: "Hospedagem e Manutenção de Sites: Soluções Completas para o Sucesso Online - Agência TAG08",
-    description: "Descubra soluções inovadoras em hospedagem e manutenção de sites com a Agência TAG08. Expertise, segurança e suporte personalizado para elevar seu negócio no mundo digital."
+    description:
+      "Descubra soluções inovadoras em hospedagem e manutenção de sites com a Agência TAG08. Expertise, segurança e suporte personalizado para elevar seu negócio no mundo digital."
   },
   {
     key: "servicos-assessoria-marketing-digital-estrategico",
@@ -235,7 +250,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "weekly",
     priority: "0.8",
     title: "Assessoria de Marketing Digital Estratégico | TAG08",
-    description: "Eleve sua atração comercial com direção e performance sênior. Acesse o diagnóstico inteligente e mude o posicionamento do seu marketing digital.",
+    description:
+      "Eleve sua atração comercial com direção e performance sênior. Acesse o diagnóstico inteligente e mude o posicionamento do seu marketing digital.",
     isServicePage: true,
     aliases: ["/assessoria-marketing-digital-estrategico"]
   },
@@ -301,5 +317,3 @@ export const routeSitemapMeta = routeRegistry.filter((route) => route.includeInS
   title: route.title,
   description: route.description
 }));
-
-

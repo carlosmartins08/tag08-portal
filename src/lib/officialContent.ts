@@ -1,6 +1,6 @@
 import { TAG08_OFFICIAL_YOUTUBE_URL } from "../config/siteNetwork";
 
-export type OfficialContentSourceStatus = "live" | "fallback" | "disabled" | "error";
+export type OfficialContentSourceStatus = "live" | "fallback" | "partial" | "disabled" | "error";
 
 export type OfficialYouTubeVideo = {
   id: string;

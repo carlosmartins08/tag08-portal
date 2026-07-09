@@ -91,7 +91,7 @@ Resposta recomendada:
 
 > Resultado rápido pode acontecer em situações específicas, mas não é algo responsável de prometer. O que conseguimos construir com segurança é clareza, consistência, melhoria de percepção e um plano de crescimento mais sustentável.
 
-### “Outra pessoa faz mais barato.”
+### Outra pessoa faz mais barato.
 
 Resposta recomendada:
 

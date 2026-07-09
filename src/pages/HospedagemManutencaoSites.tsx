@@ -160,10 +160,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
     {
       id: "nuvem",
       title: "Hospedagem na Nuvem (Cloud)",
-      niche: "Startups, aplicações SaaS escaláveis, trafego dinâmico",
+      niche: "Startups, aplicações SaaS escalï¿½veis, trafego dinâmico",
       category: "corporativo",
       description: "Arquitetura distribuída entre múltiplos servidores no ecossistema global. Suas cargas de processamento flutuam dinamicamente para neutralizar e mitigar sobrecargas de acessos, com cobranças transparentes baseadas em uso real.",
-      specs: ["Auto-escalonamento Inteligente", "99.99% Uptime Provado", "Distribuição Multirregional", "Redundância Contínua"],
+      specs: ["Auto-escalonamento Inteligente", "99.99% Uptime Provado", "Distribuiï¿½ï¿½o Multirregional", "Redundï¿½ncia Contï¿½nua"],
       badge: "Suprema Elasticidade"
     },
     {
@@ -180,7 +180,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
       title: "E-Commerce de Luxo & Alta Escala",
       niche: "Lojas virtuais estruturadas, catalogos pesados, vendas ativas",
       category: "especializado",
-      description: "Suate integrada para garantir que nenhum carrinho de compras seja abandonado por lentidao técnica. Suporte nativo a múltiplos gateways de pagamentos criptografados, selos dinâmicos de segurança e barreira de proteção robusta.",
+      description: "Suate integrada para garantir que nenhum carrinho de compras seja abandonado por lentidao tï¿½cnica. Suporte nativo a múltiplos gateways de pagamentos criptografados, selos dinâmicos de segurança e barreira de proteção robusta.",
       specs: ["Certificação SSL Inclusão", "Segurança PCI Compliant", "Tempo de Resposta Acelerado", "Faturamento Seguro"],
       badge: "Foco Comercial"
     }
@@ -198,7 +198,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
     {
       id: 1,
       title: "Os Sentinelas de Fronteira",
-      label: "PROTOCOLOS DE SEGURAN�!A",
+      label: "PROTOCOLOS DE SEGURANÇA",
       description: "Nas portas da fortaleza digital, barramentos de firewalls de última geração e criptografia SSL/TLS atuam como vigilantes. Eles barram invasões indesejadas, blindam acessos indevidos e garantem transações criptografadas perfeitas em tempo real.",
       metric: "Redução de Riscos 100%"
     },
@@ -325,7 +325,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               A HARMONIA DO YIN &amp; YANG DA SUA PRESENaA DIGITIAL.
             </h2>
             <p className="text-zinc-400 text-sm sm:text-base leading-relaxed font-sans font-medium">
-              No vasto oceano digital da internet, seu site enfrenta tempestades mecânicas silenciosas todos os dias. Para garantir que ele resista com altivez soberana, aplicómos uma filosofia de equilabrio perfeito.
+              No vasto oceano digital da internet, seu site enfrenta tempestades mecï¿½nicas silenciosas todos os dias. Para garantir que ele resista com altivez soberana, aplicï¿½mos uma filosofia de equilabrio perfeito.
             </p>
             <p className="text-zinc-400 text-sm sm:text-base leading-relaxed font-sans font-medium">
               Não se trata apenas de depositar arquivos em uma maquina compartilhada genarica; trata-se de manter uma simbiose de vigilancia que zela pela integridade da infraestrutura fasica enquanto aprimora a inteligência lagica da aplicação.
@@ -374,7 +374,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               DILIGaNCIA SEM CONCESSaES
             </span>
             <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase tracking-tighter leading-none">
-              PROCESSOS CONT�NUOS DE PROTE�!ÒO &amp; OTIMIZA�!ÒO.
+              PROCESSOS CONTï¿½NUOS DE PROTEï¿½ï¿½O &amp; OTIMIZAï¿½ï¿½O.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans">
               Zelar pela saúde e alto dinamismo da sua presença virtual não é um esforço esporádico. Operamos em ciclos rígidos de auditorias periódicas para garantir que tudo opere em velocidade máxima e estabilidade cirúrgica.
@@ -1446,7 +1446,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                           "Atributo Expandido: Você turbinou o espaao em disco do plano basico. Se os portais comeaarem a crescer ou receber blogs com muitas fotos, migrar para o plano Intermediario otimiza o ganho por GB extra."
                         )}
                         {simPlan === "intermediario" && simSites <= 1 && (
-                          "Diagnastico Avanaado: Configuração corporativa equilibrada. Salido para portais comerciais que dependem de constância em SEO e carregamentos menores que 1.2 segundos."
+                          "Diagnastico Avanaado: Configuraï¿½ï¿½o corporativa equilibrada. Salido para portais comerciais que dependem de constância em SEO e carregamentos menores que 1.2 segundos."
                         )}
                         {simPlan === "intermediario" && simSites > 1 && (
                           "Aviso Multissite: Os recursos fasicos serao distribuados entre as marcas de forma equilibrada. Pra-ativo no gerenciamento simultaneo com proteção centralizada."
@@ -1867,9 +1867,9 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <p className="text-zinc-350 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
                     {([
                       "Sim, absolutamente! Fornecemos um serviço de migração expressa 100% integral e gratuito. Nossa equipe de especialistas técnicos cuida da transferência rigorosa do banco de dados, arquivos e chaves criptográficas para nossos servidores velozes, eliminando qualquer risco de indisponibilidade ou perda de faturamento durante o processo.",
-                      "Operamos com um cinturão de segurança robusto que combina firewalls dinâmicos ativos na camada CDN, monitoramento ininterrupto de tráfego contra DDoS, varreduras heurísticas de vírus e invasões de arquivos, além de backups semanais geo-distribuídos automáticos.",
+                      "Operamos com um cinturï¿½o de segurança robusto que combina firewalls dinâmicos ativos na camada CDN, monitoramento ininterrupto de tráfego contra DDoS, varreduras heurï¿½sticas de vï¿½rus e invasï¿½es de arquivos, alï¿½m de backups semanais geo-distribuï¿½dos automï¿½ticos.",
                       "Absolutamente não! Esse é o grande diferencial do nosso compromisso de zeladoria digital contínua: cuidamos da burocracia técnica, atualizações de servidores, otimização de caching e blindagem cibernética para que você possa focar em vender.",
-                      "Profundamente. Um servidor tecnicamente otimizado e atualizado entrega tempos de resposta inferiores a 0.5s, o que aumenta de forma orgânica as avaliações no ranking SEO do Google. Portais desatualizados ou sem cache tendem a sofrer gargalos de hardware crônicos."
+                      "Profundamente. Um servidor tecnicamente otimizado e atualizado entrega tempos de resposta inferiores a 0.5s, o que aumenta de forma orgânica as avaliações no ranking SEO do Google. Portais desatualizados ou sem cache tendem a sofrer gargalos de hardware crï¿½nicos."
                     ])[activeFaq]}
                   </p>
                 </div>

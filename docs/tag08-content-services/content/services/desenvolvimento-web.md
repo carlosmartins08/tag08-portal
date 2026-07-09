@@ -366,5 +366,5 @@ A avaliação inicial ajuda a entender se o melhor caminho é site, landing page
 
 - Não inserir preço nesta página sem decisão comercial final.
 - Conectar com Hospedagem e Manutenção, Process Intelligence e Gestão de Redes Sociais.
-- Evitar linguagem de “site barato”, “site em poucos dias” ou “template personalizado”.
+- Evitar linguagem de site barato, site em poucos dias ou template personalizado.
 - Dar destaque para arquitetura, conteúdo, experiência e função comercial.

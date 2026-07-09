@@ -4,16 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --configLoader runner --port=3000 --host=0.0.0.0",
+    "dev": "node .\\tools\\dev.mjs",
     "dev:backend": "tsx server/index.ts",
-    "build": "tsx generate-sitemap.ts && vite build --configLoader runner",
-    "preview": "vite preview --configLoader runner",
+    "build": ".\\tools\\build.cmd",
+    "preview": "node .\\tools\\preview.mjs",
     "dev:with-backend": "node tools/dev-with-backend.mjs",
     "clean": "node -e \"const fs=require('fs'); for (const target of ['dist', 'server.js']) fs.rmSync(target, { recursive: true, force: true });\"",
     "audit:colors": "node tools/audit-brand-colors.mjs",
     "audit:typography": "node tools/audit-typography.mjs",
     "lint": "tsc --noEmit",
-    "check": "npm run lint && npm run build"
+    "check": ".\\tools\\check.cmd"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

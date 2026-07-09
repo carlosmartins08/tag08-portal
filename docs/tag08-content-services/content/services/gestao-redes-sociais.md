@@ -371,7 +371,7 @@ A conversa inicial ajuda a identificar se sua marca precisa começar, consolidar
 
 # Observações de implementação
 
-- Evitar “pacote de posts” como linguagem principal.
+- Evitar pacote de posts como linguagem principal.
 - Não prometer viralização, crescimento instantâneo ou vendas garantidas.
 - Conectar com Produção Audiovisual, Branding, Assessoria Estratégica e Desenvolvimento Web.
 - Usar exemplos reais de conteúdo quando disponíveis.

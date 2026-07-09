@@ -22,7 +22,7 @@ O cliente ideal:
 
 O cliente não ideal:
 
-- quer apenas “um post”;
+- quer apenas um post;
 - busca preço baixo acima de valor;
 - vê marketing como custo;
 - quer viralizar sem construir;
@@ -144,7 +144,7 @@ Quando o lead diz:
 - “Preciso de alguém que pense comigo.”
 - “Minha comunicação não mostra o valor do meu negócio.”
 - “Já tentei redes sociais, mas ficou solto.”
-- “Quero crescer, mas preciso organizar antes.”
+- Quero crescer, mas preciso organizar antes.
 - “Sinto que minha marca não representa mais meu momento.”
 
 Provavelmente existe bom fit.

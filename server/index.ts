@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { createServer } from "node:http";
 import { ONBOARDING_PAYLOAD_VERSION, getFailureRate, getOnboardingMetrics, ingestOnboardingSubmission } from "./onboardingContract";
-import { getOfficialContentResponse } from "./officialContent";
+import { buildOfficialContentFallbackResponse, getOfficialContentResponse } from "./officialContent";
 
 const PORT = Number(process.env.ONBOARDING_PORT || 3001);
 
@@ -90,7 +90,7 @@ const server = createServer(async (req, res) => {
 
   if (req.method === "GET" && isOnboardingApiPath(url, "/api/official-content")) {
     const response = await getOfficialContentResponse();
-    setJson(res, response.ok ? 200 : 500, response);
+    setJson(res, 200, response.ok ? response : buildOfficialContentFallbackResponse());
     return;
   }
 

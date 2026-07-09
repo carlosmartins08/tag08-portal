@@ -32,20 +32,20 @@ const webProjects: WebProject[] = [
     id: "proj-medvinci",
     title: "MedVinci Oncology Group",
     category: "Portal Corporativo",
-    client: "MedVinci Onco & SaÃƒÂºde SÃƒÂªnior",
+    client: "MedVinci Onco & Saúde Sênior",
     year: "2026",
-    tagline: "ElevaÃƒÂ§ÃƒÂ£o clÃƒÂ­nica e autoridade digital inquestionÃƒÂ¡vel focado em tratamentos premium.",
-      description: "Um ecossistema digital sob medida para uma das principais clÃƒÂ­nicas oncolÃƒÂ³gicas do paÃƒÂ­s. Projetado para desmistificar procedimentos complexos de radioterapia e imunoterapia, direcionando o lead para atendimento particular de forma segura.",
+    tagline: "Elevação clínica e autoridade digital inquestionável focado em tratamentos premium.",
+      description: "Um ecossistema digital sob medida para uma das principais clínicas oncológicas do país. Projetado para desmistificar procedimentos complexos de radioterapia e imunoterapia, direcionando o lead para atendimento particular de forma segura.",
     strategy: {
-      challenge: "ClÃƒÂ­nicas oncolÃƒÂ³gicas enfrentam barreiras de frieza institucional e ansiedade do paciente. O site precisava passar acolhimento humano ao mesmo tempo que transmitia competÃƒÂªncia cientÃƒÂ­fica inabalÃƒÂ¡vel e alto status.",
-      solution: "EstruturaÃƒÂ§ÃƒÂ£o de um layout com tipografia moderna, fotografia premium tratada em tons de sÃƒÂ©pia corporativo e cinza sutil, e carregamento instantÃƒÂ¢neo via Next.js estÃƒÂ¡tico. Desenvolvemos uma ÃƒÂ¡rvore de decisÃƒÂµes baseada em sintomas para conduzir doadores e agendadores.",
-      result: "Aumento de 180% no agendamento de consultas de pacientes particulares por meio do canal digital primÃƒÂ¡rio de conversÃƒÂ£o nas primeiras 12 semanas pÃƒÂ³s-lanÃƒÂ§amento."
+      challenge: "Clínicas oncológicas enfrentam barreiras de frieza institucional e ansiedade do paciente. O site precisava passar acolhimento humano ao mesmo tempo que transmitia competência científica inabalável e alto status.",
+      solution: "Estruturação de um layout com tipografia moderna, fotografia premium tratada em tons de sépia corporativo e cinza sutil, e carregamento instantâneo via Next.js estático. Desenvolvemos uma árvore de decisões baseada em sintomas para conduzir doadores e agendadores.",
+      result: "Aumento de 180% no agendamento de consultas de pacientes particulares por meio do canal digital primário de conversão nas primeiras 12 semanas pós-lançamento."
     },
     technologies: ["React / Next.js", "Tailwind CSS", "Vercel Edge", "Framer Motion", "Google Maps Platform Integration"],
     metrics: [
       { label: "Tempo de Carregamento", value: "0.4s" },
       { label: "Nota Lighthouse API", value: "100/100" },
-      { label: "AtivaÃƒÂ§ÃƒÂ£o de Leads", value: "+42%" }
+      { label: "Ativação de Leads", value: "+42%" }
     ],
     screenshot: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1200",
   },
@@ -55,18 +55,18 @@ const webProjects: WebProject[] = [
     category: "Landing Page B2B",
     client: "Kronos Partners Trust",
     year: "2025",
-    tagline: "ValidaÃƒÂ§ÃƒÂ£o institucional sÃƒÂ³bria para captaÃƒÂ§ÃƒÂ£o de fortunas com investidores qualificados.",
-    description: "Landing page corporativa extremamente focada, desenhada para captar fundos de investimentos alternativos voltada a family offices e trusts familiares. O site rejeita designs genÃƒÂ©ricos de fintechs coloridas e abraÃƒÂ§a a sobriedade analÃƒÂ­tica de investidores seniores.",
+    tagline: "Validação institucional sóbria para captação de fortunas com investidores qualificados.",
+    description: "Landing page corporativa extremamente focada, desenhada para captar fundos de investimentos alternativos voltada a family offices e trusts familiares. O site rejeita designs genéricos de fintechs coloridas e abraça a sobriedade analítica de investidores seniores.",
     strategy: {
-      challenge: "Investidores senis e gestores de fortunas ignoram landing pages comuns de startups. O portfÃƒÂ³lio de ativos exigia um visual herÃƒÂ¡ldico de legado, com total seguranÃƒÂ§a de criptografia e seriedade herÃƒÂ¡ldica pura.",
-      solution: "Layout brutalista minimalista com tons monocromÃƒÂ¡ticos de ardÃƒÂ³sia, finas linhas pretas e brancas, micro-interaÃƒÂ§ÃƒÂµes analÃƒÂ­ticas realistas e um simulador de carteira estÃƒÂ¡tico ultrarrÃƒÂ¡pido rodando localmente no navegador.",
-      result: "AtivaÃƒÂ§ÃƒÂ£o de 34 leads institucionais qualificados adicionais nas primeiras 6 semanas de veiculaÃƒÂ§ÃƒÂ£o em canais exclusivos de trÃƒÂ¡fego, movimentando R$ 82M sob custÃƒÂ³dia corporativa."
+      challenge: "Investidores senis e gestores de fortunas ignoram landing pages comuns de startups. O portfólio de ativos exigia um visual heráldico de legado, com total segurança de criptografia e seriedade heráldica pura.",
+      solution: "Layout brutalista minimalista com tons monocromáticos de ardósia, finas linhas pretas e brancas, micro-interações analíticas realistas e um simulador de carteira estático ultrarrápido rodando localmente no navegador.",
+      result: "Ativação de 34 leads institucionais qualificados adicionais nas primeiras 6 semanas de veiculação em canais exclusivos de tráfego, movimentando R$ 82M sob custódia corporativa."
     },
     technologies: ["React / Vite SPA", "WebGL Matrix Background", "Tailwind CSS", "Docker Engine Deploy", "Resend API Integration"],
     metrics: [
-      { label: "CaptaÃƒÂ§ÃƒÂ£o Estimada", value: "R$ 82M" },
-      { label: "RetenÃƒÂ§ÃƒÂ£o na PÃƒÂ¡gina", value: "3m 45s" },
-      { label: "Taxa de RejeiÃƒÂ§ÃƒÂ£o", value: "12%" }
+      { label: "Captação Estimada", value: "R$ 82M" },
+      { label: "Retenção na Página", value: "3m 45s" },
+      { label: "Taxa de Rejeição", value: "12%" }
     ],
     screenshot: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
   },
@@ -76,38 +76,38 @@ const webProjects: WebProject[] = [
     category: "Web System",
     client: "AeroCargo S.A.",
     year: "2026",
-    tagline: "Painel de controle com rastreamento geoespacial em tempo real para cargas aÃƒÂ©reas exclusivas.",
-    description: "Desenvolvimento de interface em Single Page Application interconectada ÃƒÂ  API de aeronaves comerciais. O cockpit possibilita que os contratantes acompanhem a logÃƒÂ­stica fÃƒÂ­sica ativa em mapas ricos com total confidencialidade de mercadorias.",
+    tagline: "Painel de controle com rastreamento geoespacial em tempo real para cargas aéreas exclusivas.",
+    description: "Desenvolvimento de interface em Single Page Application interconectada à API de aeronaves comerciais. O cockpit possibilita que os contratantes acompanhem a logística física ativa em mapas ricos com total confidencialidade de mercadorias.",
     strategy: {
-      challenge: "Sistemas ERP tradicionais e portais de fretamento operam com softwares cinzas, obsoletos, ruidosos e lentos, gerando atrito operacional constante de coordenaÃƒÂ§ÃƒÂ£o presencial.",
-      solution: "CriaÃƒÂ§ÃƒÂ£o de um painel em modo dark integral e design com alto contraste, utilizando bibliotecas de renderizaÃƒÂ§ÃƒÂ£o vetorial rÃƒÂ¡pidas para plotagem de rotas e status de aeroportos em tempo real via canais web.",
-      result: "ReduÃƒÂ§ÃƒÂ£o de 40% no envio de e-mails manuais de suporte operacional e 100% de elogios no onboarding de clientes VIP."
+      challenge: "Sistemas ERP tradicionais e portais de fretamento operam com softwares cinzas, obsoletos, ruidosos e lentos, gerando atrito operacional constante de coordenação presencial.",
+      solution: "Criação de um painel em modo dark integral e design com alto contraste, utilizando bibliotecas de renderização vetorial rápidas para plotagem de rotas e status de aeroportos em tempo real via canais web.",
+      result: "Redução de 40% no envio de e-mails manuais de suporte operacional e 100% de elogios no onboarding de clientes VIP."
     },
     technologies: ["Vite / React Routing", "WebSockets Engine", "Mapbox GL JS Map", "Tailwind CSS grid", "Node.js API Microservices"],
     metrics: [
-      { label: "LatÃƒÂªncia de Dados", value: "<150ms" },
-      { label: "SeguranÃƒÂ§a de Fluxo", value: "End-to-End" },
-      { label: "ReduÃƒÂ§ÃƒÂ£o de Suporte", value: "40%" }
+      { label: "Latência de Dados", value: "<150ms" },
+      { label: "Segurança de Fluxo", value: "End-to-End" },
+      { label: "Redução de Suporte", value: "40%" }
     ],
     screenshot: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200",
   },
   {
     id: "proj-therastudio",
     title: "Thera Digital Health Hub",
-    category: "Portal MultipÃƒÂ¡ginas",
-    client: "ClÃƒÂ­nica Thera Integrada",
+    category: "Portal Multipáginas",
+    client: "Clínica Thera Integrada",
     year: "2025",
-    tagline: "PresenÃƒÂ§a digital delicada e sofisticada para clÃƒÂ­nica premium de bem-estar integrado.",
-    description: "O portal hospeda e centraliza frentes de atendimento como psicologia clÃƒÂ­nica sÃƒÂªnior, fisiatria preventiva e nutrologia esportiva de alto ticket. O design foca em transmitir uma experiÃƒÂªncia orgÃƒÂ¢nica de calma sensorial sofisticada.",
+    tagline: "Presença digital delicada e sofisticada para clínica premium de bem-estar integrado.",
+    description: "O portal hospeda e centraliza frentes de atendimento como psicologia clínica sênior, fisiatria preventiva e nutrologia esportiva de alto ticket. O design foca em transmitir uma experiência orgânica de calma sensorial sofisticada.",
     strategy: {
-      challenge: "Falta de coesÃƒÂ£o visual na apresentaÃƒÂ§ÃƒÂ£o de especialidades clÃƒÂ­nicas diferentes afastava potenciais pacientes que buscavam soluÃƒÂ§ÃƒÂµes holÃƒÂ­sticas sob o mesmo selo de excelÃƒÂªncia.",
-      solution: "Uso de tipografia serifada elegante, paletas de cores quentes e off-white refinadas, transiÃƒÂ§ÃƒÂµes de pÃƒÂ¡ginas extremamente fluidas via framer-motion e sistema de agendamento integrado via cal.com customizado.",
-      result: "CentralizaÃƒÂ§ÃƒÂ£o operacional perfeita de 3 especialidades em uma ÃƒÂºnica marca harmÃƒÂ´nica, elevando o tÃƒÂ­quete-mÃƒÂ©dio do paciente de R$ 350 para R$ 1.200 por consulta."
+      challenge: "Falta de coesão visual na apresentação de especialidades clínicas diferentes afastava potenciais pacientes que buscavam soluções holísticas sob o mesmo selo de excelência.",
+      solution: "Uso de tipografia serifada elegante, paletas de cores quentes e off-white refinadas, transições de páginas extremamente fluidas via framer-motion e sistema de agendamento integrado via cal.com customizado.",
+      result: "Centralização operacional perfeita de 3 especialidades em uma única marca harmônica, elevando o tíquete-médio do paciente de R$ 350 para R$ 1.200 por consulta."
     },
     technologies: ["React SPA", "Custom Headless API Gateway", "Tailwind CSS utility", "Motion API", "Cal.com Booking Engine API"],
     metrics: [
-      { label: "SessÃƒÂµes Agendadas", value: "+540" },
-      { label: "Tempo de PermanÃƒÂªncia", value: "4m 12s" },
+      { label: "Sessões Agendadas", value: "+540" },
+      { label: "Tempo de Permanência", value: "4m 12s" },
       { label: "Lighthouse Performance", value: "98/100" }
     ],
     screenshot: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1200",
@@ -146,7 +146,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
-                DIVISÃƒÆ’O DE ENGENHARIA DE ESTRUTURAS // TAG08
+                DIVISÃO DE ENGENHARIA DE ESTRUTURAS // TAG08
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display font-black">
                 Desenvolvimento web <br />
@@ -155,7 +155,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
-                Sistemas elegantes, de carregamento estÃƒÂ¡tico e estruturado ÃƒÂ  mÃƒÂ£o sem criadores pesados ou lentos. Unimos copy cirÃƒÂºrgica de alta conversÃƒÂ£o, design tÃƒÂ¡tico responsivo e cÃƒÂ³digo limpo para blindar a autoridade intelectual da sua marca e gerar novas captaÃƒÂ§ÃƒÂµes qualificadas de leads de forma diÃƒÂ¡ria.
+                Sistemas elegantes, de carregamento estático e estruturado à mão sem criadores pesados ou lentos. Unimos copy cirúrgica de alta conversão, design tático responsivo e código limpo para blindar a autoridade intelectual da sua marca e gerar novas captações qualificadas de leads de forma diária.
               </p>
             </div>
           </div>
@@ -165,7 +165,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
               <img 
                 src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1600"
-                alt="Engenharia Web EstÃƒÂ¡tica TAG08"
+                alt="Engenharia Web Estática TAG08"
                 className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
               />
@@ -203,11 +203,11 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">&lt; 1.5s</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Velocidade MÃƒÂ©dia Real de<br/>Carregamento de PÃƒÂ¡ginas</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Velocidade Média Real de<br/>Carregamento de Páginas</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">98% +</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">PontuaÃƒÂ§ÃƒÂ£o Lighthouse no<br/>Google Core Web Vitals</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Pontuação Lighthouse no<br/>Google Core Web Vitals</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Nativo</span>
@@ -215,7 +215,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">100%</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">SeguranÃƒÂ§a Contra InvasÃƒÂµes<br/>e Quedas de Servidor</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Segurança Contra Invasões<br/>e Quedas de Servidor</span>
             </div>
           </div>
 
@@ -226,30 +226,30 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       <section className="px-4 sm:px-6 md:px-8 py-20 border-b border-white/[0.04] bg-charcoal-950 text-left relative overflow-hidden">
         <div className="max-w-7xl mx-auto space-y-12">
           
-          {/* Comparativo: Site Bonito x Site EstratÃƒÂ©gico */}
+          {/* Comparativo: Site Bonito x Site Estratégico */}
           <div className="space-y-6">
             <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-              MÃƒâ€°TRICAS DE PERFORMANCE REAL // VISÃƒÆ’O DE ENGENHARIA
+              MÉTRICAS DE PERFORMANCE REAL // VISÃO DE ENGENHARIA
             </span>
             <h3 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tight">
-              Arquiteturas Amadoras vs. Engenharia Web SÃƒÂªnior
+              Arquiteturas Amadoras vs. Engenharia Web Sênior
             </h3>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-xl">
-              A maioria das agÃƒÂªncias utiliza temas WordPress lentos e repletos de plugins de seguranÃƒÂ§a frÃƒÂ¡gil. NÃƒÂ³s construÃƒÂ­mos aplicaÃƒÂ§ÃƒÂµes estÃƒÂ¡ticas sob demanda:
+              A maioria das agências utiliza temas WordPress lentos e repletos de plugins de segurança frágil. Nós construímos aplicações estáticas sob demanda:
             </p>
           </div>
 
           <div className="border border-white/[0.06] rounded-3xl overflow-hidden divide-y divide-white/[0.06] bg-neutral-900/10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 font-mono text-[9px] text-zinc-500 uppercase tracking-widest bg-white/[0.01]">
               <div>CONTRAPARTIDA INSTITUCIONAL (AMADOR)</div>
-              <div className="text-brand-secondary">ENGENHARIA INTEGRADA TAG08 (SÃƒÅ NIOR)</div>
+              <div className="text-brand-secondary">ENGENHARIA INTEGRADA TAG08 (SҊNIOR)</div>
             </div>
 
             {[
-              { bad: "Apresenta a marca de maneira genÃƒÂ©rica sem ganchos ou lÃƒÂ³gica rÃƒÂ­tmica comercial.", good: "Interpreta com inteligÃƒÂªncia as dores do seu cliente e conduz a tomada de aÃƒÂ§ÃƒÂ£o imediata." },
-              { bad: "Carregamento demorado em celulares 4G degradando o ranqueamento orgÃƒÂ¢nico do Google.", good: "ConstruÃƒÂ­do em cÃƒÂ³digo nativo de carregamento imediato (menor que 2 segundos)." },
-              { bad: "Depende de plugins complexos de terceiros propensos a contaminaÃƒÂ§ÃƒÂ£o ou desconfiguraÃƒÂ§ÃƒÂµes.", good: "Sistema estÃƒÂ¡tico blindado que elimina vulnerabilidades clÃƒÂ¡ssicas de seguranÃƒÂ§a." },
-              { bad: "BotÃƒÂµes de conversÃƒÂ£o e rotas de e-mail desalinhados com dezenas de desvios visuais.", good: "Estruturas refinadas de CTA focadas em conduzir leads fÃƒÂ¡ceis para o seu time comercial." }
+              { bad: "Apresenta a marca de maneira genérica sem ganchos ou lógica rítmica comercial.", good: "Interpreta com inteligência as dores do seu cliente e conduz a tomada de ação imediata." },
+              { bad: "Carregamento demorado em celulares 4G degradando o ranqueamento orgânico do Google.", good: "Construído em código nativo de carregamento imediato (menor que 2 segundos)." },
+              { bad: "Depende de plugins complexos de terceiros propensos a contaminação ou desconfigurações.", good: "Sistema estático blindado que elimina vulnerabilidades clássicas de segurança." },
+              { bad: "Botões de conversão e rotas de e-mail desalinhados com dezenas de desvios visuais.", good: "Estruturas refinadas de CTA focadas em conduzir leads fáceis para o seu time comercial." }
             ].map((row, rIdx) => (
               <div key={rIdx} className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 sm:p-7 text-xs sm:text-sm text-left">
                 <div className="text-zinc-400 font-sans flex gap-3">
@@ -272,9 +272,9 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-2 max-w-2xl">
             <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">FRENTES DE DESENVOLVIMENTO DE ELEVADA LINHA</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">SOLUÃƒâ€¡Ãƒâ€¢ES MODULARES DE TECNOLOGIA</h2>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">SOLUÇÕES MODULARES DE TECNOLOGIA</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              NÃƒÂ£o importamos temas genÃƒÂ©ricos. Nossos engenheiros constroem cada coluna de layout, carregamento de fontes e regras de SEO com o mÃƒÂ¡ximo de asseio editorial.
+              Não importamos temas genéricos. Nossos engenheiros constroem cada coluna de layout, carregamento de fontes e regras de SEO com o máximo de asseio editorial.
             </p>
           </div>
 
@@ -286,7 +286,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Portais Corporativos</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Portais corporativos integrando toda a narrativa, valores, setores e diferenciais corporativos de forma sÃƒÂ©ria e estruturada para encantar parceiros e consolidar faturamento institucional.
+                  Portais corporativos integrando toda a narrativa, valores, setores e diferenciais corporativos de forma séria e estruturada para encantar parceiros e consolidar faturamento institucional.
                 </p>
               </div>
             </div>
@@ -298,7 +298,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Landing Pages</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Interfaces especÃƒÂ­ficas de alta conversÃƒÂ£o. Alinhamos sua copy persuasiva com um design de ultra velocidade, preparando suas campanhas de trÃƒÂ¡fego pago B2B para o maior retorno tÃƒÂ¡tico.
+                  Interfaces específicas de alta conversão. Alinhamos sua copy persuasiva com um design de ultra velocidade, preparando suas campanhas de tráfego pago B2B para o maior retorno tático.
                 </p>
               </div>
             </div>
@@ -308,9 +308,9 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 <Smartphone className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Foco ClÃƒÂ­nico Focado</h4>
+                <h4 className="text-white font-display font-black text-sm uppercase">Foco Clínico Focado</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Estruturas focadas em expor tratamentos particulares complexos, cirurgias e infraestrutura mÃƒÂ©dica sem termos assustadores, aumentando radicalmente o desejo das agendadoras.
+                  Estruturas focadas em expor tratamentos particulares complexos, cirurgias e infraestrutura médica sem termos assustadores, aumentando radicalmente o desejo das agendadoras.
                 </p>
               </div>
             </div>
@@ -322,7 +322,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Sistemas Integrados</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  ConfiguraÃƒÂ§ÃƒÂ£o de formulÃƒÂ¡rios seguros contra spam, integraÃƒÂ§ÃƒÂµes nativas com CRMs (como RD Station, Active Campaign), APIs estritas de WhatsApp e rastreadores analÃƒÂ­ticos do Google Analytics de ponta.
+                  Configuração de formulários seguros contra spam, integrações nativas com CRMs (como RD Station, Active Campaign), APIs estritas de WhatsApp e rastreadores analíticos do Google Analytics de ponta.
                 </p>
               </div>
             </div>
@@ -334,53 +334,53 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       <section className="px-4 sm:px-6 md:px-8 py-16 border-b border-white/[0.04] bg-charcoal-900/10 text-left">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="space-y-2 max-w-2xl">
-            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">ENGENHARIA DIGNA DE ADMIRAÃƒâ€¡ÃƒÆ’O</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">O ATRIBUTO SUPERIOR DO NOSSO CÃƒâ€œDIGO</h2>
+            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">ENGENHARIA DIGNA DE ADMIRAÇÃO</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">O ATRIBUTO SUPERIOR DO NOSSO CÒDIGO</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              Eliminamos a poluiÃƒÂ§ÃƒÂ£o visual e o peso computacional de carregamentos arrastados comuns em agÃƒÂªncias tradicionais.
+              Eliminamos a poluição visual e o peso computacional de carregamentos arrastados comuns em agências tradicionais.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm uppercase">EstratÃƒÂ©gia Antes do CÃƒÂ³digo</h4>
+              <h4 className="text-white font-display font-black text-sm uppercase">Estratégia Antes do Código</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                Mapeamos as dÃƒÂºvidas e barreiras mentais do pÃƒÂºblico alvo antes de desenhar a primeira linha de layout, criando fluxos naturais de leitura instintiva.
+                Mapeamos as dúvidas e barreiras mentais do público alvo antes de desenhar a primeira linha de layout, criando fluxos naturais de leitura instintiva.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm uppercase">Copywriting SÃƒÂ©rias</h4>
+              <h4 className="text-white font-display font-black text-sm uppercase">Copywriting Sérias</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                Textos escritos exclusivamente por copywriters experientes com base em seu tom de voz de lÃƒÂ­der. Nada de textos falsos de Lorem Ipsum ou genÃƒÂ©ricos rasos.
+                Textos escritos exclusivamente por copywriters experientes com base em seu tom de voz de líder. Nada de textos falsos de Lorem Ipsum ou genéricos rasos.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
               <h4 className="text-white font-display font-black text-sm uppercase">Mobile First Verdadeiro</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                Mais de 85% dos cliques vÃƒÂªm de smartphones. Nossos botÃƒÂµes de aÃƒÂ§ÃƒÂ£o e parÃƒÂ¡grafos sÃƒÂ£o dimensionados perfeitamente para cliques fÃƒÂ¡ceis, sem microtextos embaÃƒÂ§ados.
+                Mais de 85% dos cliques vêm de smartphones. Nossos botões de ação e parágrafos são dimensionados perfeitamente para cliques fáceis, sem microtextos embaçados.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
               <h4 className="text-white font-display font-black text-sm uppercase">Performance Isolada</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                A TAG08 desenvolve sem plugins remotos caÃƒÂ³ticos que derrubam o site. CÃƒÂ³digo otimizado que reflete rapidez incomparÃƒÂ¡vel e mÃƒÂ¡xima seguranÃƒÂ§a.
+                A TAG08 desenvolve sem plugins remotos caóticos que derrubam o site. Código otimizado que reflete rapidez incomparável e máxima segurança.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm uppercase">SeguranÃƒÂ§a e Backup</h4>
+              <h4 className="text-white font-display font-black text-sm uppercase">Segurança e Backup</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                Hospedagem estÃƒÂ¡tica segura, imune a quedas de banco de dados ou ataques coordenados. ProteÃƒÂ§ÃƒÂ£o rÃƒÂ­gida do portal de informaÃƒÂ§ÃƒÂµes institucional da sua corporaÃƒÂ§ÃƒÂ£o.
+                Hospedagem estática segura, imune a quedas de banco de dados ou ataques coordenados. Proteção rígida do portal de informações institucional da sua corporação.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm uppercase">SEO TÃƒÂ©cnico Base</h4>
+              <h4 className="text-white font-display font-black text-sm uppercase">SEO Técnico Base</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                Tags estruturadas, metatitles inteligentes de pesquisa, indexaÃƒÂ§ÃƒÂ£o limpa no Google Search Console e sitemaps automatizados prÃƒÂ©-configurados instalados de imediato.
+                Tags estruturadas, metatitles inteligentes de pesquisa, indexação limpa no Google Search Console e sitemaps automatizados pré-configurados instalados de imediato.
               </p>
             </div>
           </div>
@@ -391,9 +391,9 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       <section className="px-4 sm:px-6 md:px-8 py-10 border-b border-white/[0.04] bg-charcoal-900/40 text-left">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 max-w-3xl">
-            <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">AUDITORIA E SUPORTE PÃƒâ€œS-IMPLANTAÃƒâ€¡ÃƒÆ’O</h4>
+            <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">AUDITORIA E SUPORTE PÓS-IMPLANTAÇÃO</h4>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed">
-              O projeto nÃƒÂ£o morre na publicaÃƒÂ§ÃƒÂ£o. Entregamos suporte tÃƒÂ©cnico garantido de 30 dias para pequenos ajustes de texto, calibragem fina do CRM, e validaÃƒÂ§ÃƒÂ£o plena do carregamento mÃƒÂ³vel em todas as operadoras nacionais.
+              O projeto não morre na publicação. Entregamos suporte técnico garantido de 30 dias para pequenos ajustes de texto, calibragem fina do CRM, e validação plena do carregamento móvel em todas as operadoras nacionais.
             </p>
           </div>
           <span className="font-mono text-[8.5px] text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
@@ -405,9 +405,9 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       {/* WEB DEV CLIENTS LOGO SOCIAL PROOF */}
       <MiniCases 
         onNavigate={onNavigate} 
-        title="Estruturas RÃƒÂ¡pidas de Alta ConversÃƒÂ£o"
-        subtitle="Empresas corporativas e startups inovadoras que confiam na engenharia limpa e nos tempos de carregamento imperceptÃƒÂ­veis da TAG08."
-        badge="ENGINEERING SOCIAL PROOF // PORTFÃƒâ€œLIO WEB"
+        title="Estruturas Rápidas de Alta Conversão"
+        subtitle="Empresas corporativas e startups inovadoras que confiam na engenharia limpa e nos tempos de carregamento imperceptíveis da TAG08."
+        badge="ENGINEERING SOCIAL PROOF // PORTFÒLIO WEB"
       />
 
       {/* SECTION - WORK SYSTEM (WhatsApp Neon Callout inspired by screenshot) */}
@@ -446,7 +446,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                   LATENCY: 12MS
                 </span>
                 <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
-                  SÃƒÅ NIOR SECURITY
+                  SҊNIOR SECURITY
                 </span>
               </div>
             </div>
@@ -464,11 +464,11 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 </span>
               </div>
               <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
-                APLICAÃƒâ€¡Ãƒâ€¢ES WEB <br />
+                APLICAÇÕES WEB <br />
                 QUE EXPLICAM E CONVERTEM!
               </h2>
               <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
-                CRIAMOS LANDING PAGES E PORTAIS CORPORATIVOS EM CÃƒâ€œDIGO NATIVO ESTÃƒÂTICO DE CARREGAMENTO IMEDIATO, CONECTADOS DIRETAMENTE AO SEU CRM E SEM AS FALHAS OU LENTIDÃƒÆ’O DO WORDPRESS.
+                CÓDIGO NATIVO ESTÁTICO DE CARREGAMENTO IMEDIATO, CONECTADOS DIRETAMENTE AO SEU CRM E SEM AS FALHAS OU LENTIDÃO DO WORDPRESS.
               </p>
             </div>
 
@@ -483,7 +483,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                     SISTEMA ISOLADO
                   </span>
                   <p className="text-white text-xs leading-snug font-sans font-semibold">
-                    Substitua templates pesados por aplicaÃƒÂ§ÃƒÂµes de velocidade intocÃƒÂ¡vel que geram seguranÃƒÂ§a irrestrita contra ataques de queda.
+                    Substitua templates pesados por aplicações de velocidade intocável que geram segurança irrestrita contra ataques de queda.
                   </p>
                 </div>
               </div>
@@ -491,7 +491,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               {/* DUAL CLIENT CONNECTION CHANNELS (BR & INT) */}
               <div className="space-y-3">
                 <a 
-                  href={buildBrazilWhatsAppUrl("OlÃƒÂ¡,%20gostaria%20de%20solicitar%20um%20projeto%20de%20Desenvolvimento%20Web%20com%20a%20TAG08")}
+                  href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20solicitar%20um%20projeto%20de%20Desenvolvimento%20Web%20com%20a%20TAG08")}
                   target="_blank"
                   rel="noreferrer"
                   className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner"
@@ -503,7 +503,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                       </div>
                       <div className="flex flex-col text-left">
                         <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
-                          PROPRIETÃƒÂRIO DIRETO (WhatsApp)
+                          PROPRIETҁRIO DIRETO (WhatsApp)
                         </span>
                         <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                           +55 83 9.9886-8882
@@ -547,11 +547,11 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-brand animate-pulse" />
                   <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest font-extrabold">
-                    AGÃƒÅ NCIA TAG08
+                    AGҊNCIA TAG08
                   </span>
                 </div>
                 <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
-                  OPERAÃƒâ€¡ÃƒÆ’O ATIVA 100% online
+                  OPERAÇÃO ATIVA 100% online
                 </span>
               </div>
             </div>
@@ -559,7 +559,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
         </div>
       </section>
 
-      {/* NOVO BLOCO: QUE TIPO DE SITE, SITE BONITO X SITE ESTRATÃƒâ€°GICO, OUTROS DETALHES, PÃƒâ€œS-ENTREGA */}
+      {/* NOVO BLOCO: QUE TIPO DE SITE, SITE BONITO X SITE ESTRATÒ⬰GICO, OUTROS DETALHES, PÒS-ENTREGA */}
       <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 text-left relative overflow-hidden">
         <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-brand/[0.015] rounded-full blur-[140px] pointer-events-none" />
         
@@ -569,23 +569,23 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           <div className="space-y-12">
             <div className="space-y-3 max-w-3xl">
               <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-                FERRAMENTA INTERATIVA // SIMULAÃƒâ€¡ÃƒÆ’O EM TEMPO REAL
+                FERRAMENTA INTERATIVA // SIMULAÇÃO EM TEMPO REAL
               </span>
               <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight leading-tight">
                 Simulador de Impacto Financeiro da Velocidade Web
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-                Descubra como cada milissegundo de lentidÃƒÂ£o afeta diretamente sua receita. Arraste os seletores abaixo e veja como a velocidade do seu site impacta a taxa de rejeiÃƒÂ§ÃƒÂ£o, geraÃƒÂ§ÃƒÂ£o de leads e desperdÃƒÂ­cio de trÃƒÂ¡fego pago.
+                Descubra como cada milissegundo de lentidão afeta diretamente sua receita. Arraste os seletores abaixo e veja como a velocidade do seu site impacta a taxa de rejeição, geração de leads e desperdício de tráfego pago.
               </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
               
-              {/* Controles de SimulaÃƒÂ§ÃƒÂ£o */}
+              {/* Controles de Simulação */}
               <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-8 text-left">
                 <div className="space-y-6">
                   <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block pb-3 border-b border-white/[0.05]">
-                    Configure sua OperaÃƒÂ§ÃƒÂ£o Atual:
+                    Configure sua Operação Atual:
                   </span>
 
                   {/* Slider 1: Velocidade do site */}
@@ -655,13 +655,13 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                       className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-brand-secondary"
                     />
                     <div className="flex items-center justify-between text-[9px] font-sans text-zinc-500">
-                      <span>0.4s (PadrÃƒÂ£o TAG08)</span>
-                      <span>3s (MÃƒÂ©dia WordPress)</span>
-                      <span>6.0s (CrÃƒÂ­tico)</span>
+                      <span>0.4s (Padrão TAG08)</span>
+                      <span>3s (Média WordPress)</span>
+                      <span>6.0s (Crítico)</span>
                     </div>
                   </div>
 
-                  {/* Slider 2: Verba de trÃƒÂ¡fego */}
+                  {/* Slider 2: Verba de tráfego */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">
@@ -712,10 +712,10 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] space-y-2">
                   <div className="flex items-center gap-2 text-brand-secondary">
                     <Sparkles className="w-4 h-4 shrink-0" />
-                    <span className="text-[10px] font-mono font-black uppercase tracking-wider">A Vantagem da Engenharia EstÃƒÂ¡tica</span>
+                    <span className="text-[10px] font-mono font-black uppercase tracking-wider">A Vantagem da Engenharia Estática</span>
                   </div>
                   <p className="text-[11px] text-zinc-400 leading-relaxed font-sans font-medium">
-                    Enquanto ferramentas de clique arrastado como WordPress / Elementor forÃƒÂ§am o navegador a processar dezenas de banco de dados por requisiÃƒÂ§ÃƒÂ£o, o cÃƒÂ³digo puro estruturado da TAG08 envia pacotes ultraleves jÃƒÂ¡ compilados de imediato para a tela.
+                    Enquanto ferramentas de clique arrastado como WordPress / Elementor forçam o navegador a processar dezenas de banco de dados por requisição, o código puro estruturado da TAG08 envia pacotes ultraleves já compilados de imediato para a tela.
                   </p>
                 </div>
               </div>
@@ -727,7 +727,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 <div className="space-y-6 w-full">
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold">
-                      MÃƒÂ©tricas e Perdas Operacionais Projetadas:
+                      Métricas e Perdas Operacionais Projetadas:
                     </span>
                     <div className="flex items-center gap-2.5">
                       <span className="text-[10px] font-sans text-zinc-400">Google Lighthouse Score:</span>
@@ -740,9 +740,9 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                   {/* Bento Grid de Resultados */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     
-                    {/* Item 1: Taxa de RejeiÃƒÂ§ÃƒÂ£o */}
+                    {/* Item 1: Taxa de Rejeição */}
                     <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1 relative">
-                      <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Taxa de RejeiÃƒÂ§ÃƒÂ£o (Bounce)</span>
+                      <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Taxa de Rejeição (Bounce)</span>
                       <p id="bounce-val" className="text-3xl font-display font-black text-white">41%</p>
                       <span className="text-[9px] text-zinc-400 block leading-tight font-sans">
                         Porcentagem de visitantes que abandonam sem interagir.
@@ -751,25 +751,25 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
 
                     {/* Item 2: Leads Estimados */}
                     <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1 relative">
-                      <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Leads Ativados / MÃƒÂªs</span>
+                      <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Leads Ativados / Mês</span>
                       <p id="leads-val" className="text-3xl font-display font-black text-brand">76</p>
                       <span className="text-[9px] text-zinc-400 block leading-tight font-sans">
-                        UsuÃƒÂ¡rios altamente propensos a agendar reuniÃƒÂµes comerciais.
+                        Usuários altamente propensos a agendar reuniões comerciais.
                       </span>
                     </div>
 
-                    {/* Item 3: DesperdÃƒÂ­cio de Verba */}
+                    {/* Item 3: Desperdício de Verba */}
                     <div className="p-5 rounded-2xl bg-rose-500/[0.02] border border-rose-500/10 space-y-1 relative">
-                      <span className="font-mono text-[8px] text-rose-500/80 uppercase font-black block">DesperdÃƒÂ­cio de TrÃƒÂ¡fego / MÃƒÂªs</span>
+                      <span className="font-mono text-[8px] text-rose-500/80 uppercase font-black block">Desperdício de Tráfego / Mês</span>
                       <p id="loss-val" className="text-2xl sm:text-3xl font-display font-black text-rose-500">R$ 1.640</p>
                       <span className="text-[9px] text-rose-400 block leading-tight font-sans">
-                        Capital de anÃƒÂºncios queimado por lentidÃƒÂ£o de carregamento.
+                        Capital de anúncios queimado por lentidão de carregamento.
                       </span>
                     </div>
 
                   </div>
 
-                  {/* GrÃƒÂ¡fico Comparativo de Carregamento */}
+                  {/* Gráfico Comparativo de Carregamento */}
                   <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-4 space-y-3 text-xs">
                     <span className="font-mono text-[9px] text-zinc-500 uppercase font-bold block">Comparativo de Velocidade TAG08 vs Outros</span>
                     
@@ -777,18 +777,18 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                       {/* Linha TAG08 */}
                       <div className="space-y-1">
                         <div className="flex items-center justify-between font-sans text-[10px]">
-                          <span className="text-brand font-black">TAG08 Static Engine (CÃƒÂ³digo Limpo)</span>
-                          <span className="text-brand-secondary">0.4s (InstantÃƒÂ¢neo)</span>
+                          <span className="text-brand font-black">TAG08 Static Engine (Código Limpo)</span>
+                          <span className="text-brand-secondary">0.4s (Instantâneo)</span>
                         </div>
                         <div className="w-full bg-zinc-900 h-2 rounded-full overflow-hidden">
                           <div className="bg-brand h-full rounded-full" style={{ width: "8%" }} />
                         </div>
                       </div>
 
-                      {/* Linha WordPress padrÃƒÂ£o */}
+                      {/* Linha WordPress padrão */}
                       <div className="space-y-1">
                         <div className="flex items-center justify-between font-sans text-[10px] text-zinc-400">
-                          <span>Site WordPress TÃƒÂ­pico (Elementor / Plugins)</span>
+                          <span>Site WordPress Típico (Elementor / Plugins)</span>
                           <span>3.5s (Atraso Significativo)</span>
                         </div>
                         <div className="w-full bg-zinc-900 h-2 rounded-full overflow-hidden">
@@ -799,8 +799,8 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                       {/* Linha Criador de Sites Drag&Drop */}
                       <div className="space-y-1">
                         <div className="flex items-center justify-between font-sans text-[10px] text-zinc-400">
-                          <span>Criadores GenÃƒÂ©ricos (Wix / Squarespace)</span>
-                          <span>5.2s (CrÃƒÂ­tico para TrÃƒÂ¡fego Pago)</span>
+                          <span>Criadores Genéricos (Wix / Squarespace)</span>
+                          <span>5.2s (Crítico para Tráfego Pago)</span>
                         </div>
                         <div className="w-full bg-zinc-900 h-2 rounded-full overflow-hidden">
                           <div className="bg-zinc-700 h-full rounded-full" style={{ width: "90%" }} />
@@ -816,7 +816,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                     onClick={() => handleLinkClick("/contato")}
                     className="text-xs font-mono text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
                   >
-                    Obter DiagnÃƒÂ³stico TÃƒÂ©cnico Gratuito <ArrowRight className="w-3.5 h-3.5" />
+                    Obter Diagnóstico Técnico Gratuito <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
@@ -824,28 +824,28 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             </div>
           </div>
 
-          {/* Que formato de presenÃƒÂ§a web sua empresa precisa? */}
+          {/* Que formato de presença web sua empresa precisa? */}
           <div className="space-y-12">
             <div className="space-y-3 max-w-3xl">
               <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-                DIRECIONAMENTO TÃƒâ€°CNICO // ARQUITETURA WEB
+                DIRECIONAMENTO TÒ⬰CNICO // ARQUITETURA WEB
               </span>
               <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight leading-tight">
-                Que formato de presenÃƒÂ§a web sua empresa precisa?
+                Que formato de presença web sua empresa precisa?
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-2xl">
-                Desenvolver um site sem propÃƒÂ³sito comercial vira apenas despesa de hospedagem. Escolha a arquitetura ideal recomendada pelos nossos engenheiros de software:
+                Desenvolver um site sem propósito comercial vira apenas despesa de hospedagem. Escolha a arquitetura ideal recomendada pelos nossos engenheiros de software:
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                { title: "Site Institucional", tag: "REPUTAÃƒâ€¡ÃƒÆ’O SÃƒÅ NIOR", desc: "Estruturas corporativas impecÃƒÂ¡veis voltadas para validar sua autoridade do mundo real, detalhando soluÃƒÂ§ÃƒÂµes e chancelando negociaÃƒÂ§ÃƒÂµes de alto ticket." },
-                { title: "Landing Page Comercial", tag: "ANÃƒÅ¡NCIOS & CONVERSÃƒÆ’O", desc: "PÃƒÂ¡ginas estÃƒÂ¡ticas extremamente velozes, otimizadas para receber trÃƒÂ¡fego de anÃƒÂºncios pagos e transformÃƒÂ¡-los em contatos reais." },
-                { title: "PÃƒÂ¡ginas de ServiÃƒÂ§o", tag: "EXPLICATIVAS DE VALOR", desc: "PÃƒÂ¡ginas dedicadas a explicar detalhadamente uma especialidade ou procedimento tÃƒÂ©cnico, conscientizando leads qualificados." },
-                { title: "PÃƒÂ¡ginas de Vendas (VSL)", tag: "CONVERSÃƒÆ’O INTEGRADA", desc: "Foco absoluto em conversÃƒÂµes com vÃƒÂ­deos embutidos e layouts adaptados para fechamento rÃƒÂ¡pido de checkout." },
-                { title: "Hub de Insights", tag: "SEO & TRÃƒÂFEGO ORGÃƒâ€šNICO", desc: "O hub ideal de conteÃƒÂºdos prontos para posicionar sua marca na primeira pÃƒÂ¡gina de buscas orgÃƒÂ¢nicas do Google." },
-                { title: "Portal Corporativo B2B", tag: "SISTEMAS SOB MEDIDA", desc: "PainÃƒÂ©is estruturados e bancos de dados integrados para times comerciais internos e transaÃƒÂ§ÃƒÂµes estruturadas." }
+                { title: "Site Institucional", tag: "REPUTAÇÃO SÊNIOR", desc: "Estruturas corporativas impecáveis voltadas para validar sua autoridade do mundo real, detalhando soluções e chancelando negociações de alto ticket." },
+                { title: "Landing Page Comercial", tag: "ANÚNCIOS & CONVERSÃO", desc: "Páginas estéticas extremamente velozes, otimizadas para receber tráfego de anúncios pagos e transformá-los em contatos reais." },
+                { title: "Páginas de Serviço", tag: "EXPLICATIVAS DE VALOR", desc: "Páginas dedicadas a explicar detalhadamente uma especialidade ou procedimento técnico, conscientizando leads qualificados." },
+                { title: "Páginas de Vendas (VSL)", tag: "CONVERSÃO INTEGRADA", desc: "Foco absoluto em conversões com vídeos embutidos e layouts adaptados para fechamento rápido de checkout." },
+                { title: "Hub de Insights", tag: "SEO & TRÁFEGO ORGÂNICO", desc: "O hub ideal de conteúdos página de buscas orgânicas do Google." },
+                { title: "Portal Corporativo B2B", tag: "SISTEMAS SOB MEDIDA", desc: "Painéis estruturados e bancos de dados integrados para times comerciais internos e transações estruturadas." }
               ].map((site, sIdx) => (
                 <div key={sIdx} className="p-7 bg-neutral-900/40 border border-white/[0.04] rounded-3xl flex flex-col justify-between hover:border-brand-secondary/15 hover:bg-white/[0.01] transition-all duration-300 min-h-[190px]">
                   <div className="space-y-3">
@@ -859,7 +859,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                     <p className="text-zinc-400 text-xs leading-relaxed font-sans">{site.desc}</p>
                   </div>
                   <div className="pt-3 font-mono text-[9px] text-zinc-600 uppercase tracking-widest border-t border-white/[0.03] mt-4">
-                    COMPUTAÃƒâ€¡ÃƒÆ’O SÃƒÅ NIOR TAG08
+                    COMPUTAÇÃO SÊNIOR TAG08
                   </div>
                 </div>
               ))}
@@ -868,21 +868,21 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
 
 
 
-          {/* SEÃƒâ€¡ÃƒÆ’O PORTFÃƒâ€œLIO WEB PREMIUM */}
+          {/* SEÇÃO PORTFÓLIO WEB PREMIUM */}
           <div className="space-y-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
               <div className="lg:col-span-7 space-y-3">
                 <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-                  CÃƒâ€œDIGO SOB MEDIDA // DESIGN AUTORAL
+                  CÒDIGO SOB MEDIDA // DESIGN AUTORAL
                 </span>
                 <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white uppercase leading-tight tracking-tighter">
-                  PORTFÃƒâ€œLIO WEB EXCLUSIVO <br />
+                  PORTFÒLIO WEB EXCLUSIVO <br />
                   <span className="text-brand-secondary">E CASOS DE SUCESSO COGNITIVO.</span>
                 </h2>
               </div>
               <div className="lg:col-span-5">
                 <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed font-medium">
-                  NÃƒÂ£o criamos apenas sites; esculpimos joias digitais de alto escalÃƒÂ£o para marcas que se recusam a ser comuns. Cada linha de cÃƒÂ³digo ÃƒÂ© otimizada para velocidade cirÃƒÂºrgica, conversÃƒÂµes e uma experiÃƒÂªncia visual de alto status internacional. Filtre abaixo e clique para detalhar.
+                  Não criamos apenas sites; esculpimos joias digitais de alto escalão para marcas que se recusam a ser comuns. Cada linha de código é otimizada para velocidade cirúrgica, conversões e uma experiência visual de alto status internacional. Filtre abaixo e clique para detalhar.
                 </p>
               </div>
             </div>
@@ -940,7 +940,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 bg-black/45 backdrop-blur-xs">
                         <span className="px-5 py-2.5 rounded-full bg-brand-secondary text-black font-mono font-black text-[10px] uppercase tracking-widest shadow-xl flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                           <Eye className="w-4 h-4 text-black stroke-[3]" />
-                          <span>ver anÃƒÂ¡lises</span>
+                          <span>ver análises</span>
                         </span>
                       </div>
                     </div>
@@ -1040,7 +1040,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                           DIRETRIZ DE ENGENHARIA DE SOFTWARE // TAG08
                         </span>
                         <h3 className="font-display font-black text-xl text-white uppercase tracking-tight leading-none">
-                          ESTUDO DE CASO TÃƒÂTICO
+                          ESTUDO DE CASO TҁTICO
                         </h3>
                       </div>
                       
@@ -1077,7 +1077,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                       <div className="space-y-4 pt-2">
                         <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/5 space-y-1">
                           <span className="font-mono text-[8px] text-brand-secondary font-black uppercase tracking-wider block">
-                            01. O DESAFIO DE NEGÃƒâ€œCIO
+                            01. O DESAFIO DE NEGÒCIO
                           </span>
                           <p className="text-zinc-300 text-xs font-sans leading-relaxed">
                             {selectedProject.strategy.challenge}
@@ -1086,7 +1086,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
 
                         <div className="p-4 rounded-2xl bg-brand-secondary/[0.01] border border-brand-secondary/10 space-y-1">
                           <span className="font-mono text-[8px] text-brand-secondary font-black uppercase tracking-wider block">
-                            02. A SOLUÃƒâ€¡ÃƒÆ’O TÃƒâ€°CNICA E DESIGN SOBERANO
+                            02. A SOLUÇÃO TÉCNICA E DESIGN SOBERANO
                           </span>
                           <p className="text-zinc-300 text-xs font-sans leading-relaxed">
                             {selectedProject.strategy.solution}
@@ -1095,7 +1095,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
 
                         <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/5 space-y-1">
                           <span className="font-mono text-[8px] text-brand-secondary font-black uppercase tracking-wider block">
-                            03. MÃƒÂXIMO IMPACTO & RESULTADOS OBTIDOS
+                            03. MҁXIMO IMPACTO & RESULTADOS OBTIDOS
                           </span>
                           <p className="text-zinc-300 text-xs font-sans leading-relaxed">
                             {selectedProject.strategy.result}
@@ -1136,15 +1136,15 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                     <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center gap-4">
                       <div className="flex-grow space-y-1 text-center sm:text-left">
                         <span className="font-mono text-[8.5px] text-brand-secondary uppercase tracking-wider block font-bold">
-                          ORÃƒâ€¡AMENTO SOB DESIGN SÃƒÅ NIOR
+                          ORÇAMENTO SOB DESIGN SÊNIOR
                         </span>
                         <span className="text-zinc-400 text-[10px] leading-tight block">
-                          Precisa de um ecossistema digital similar com esse nÃƒÂ­vel de entrega? Converse com nosso arquiteto de software.
+                          Precisa de um ecossistema digital similar com esse nível de entrega? Converse com nosso arquiteto de software.
                         </span>
                       </div>
 
                       <a
-                        href={buildBrazilWhatsAppUrl(`OlÃƒÂ¡%20TAG08!%20Estava%20visualizando%20o%20caso%20de%20sucesso%20do%20projeto%20"${encodeURIComponent(selectedProject.title)}"%20e%20gostaria%20de%20solicitar%20um%20diagnÃƒÂ³stico%20estratÃƒÂ©gico%20de%20design%20e%20desenvolvimento%20web%20para%20minha%20empresa.`)}
+                        href={buildBrazilWhatsAppUrl(`Olá%20TAG08!%20Estava%20visualizando%20o%20caso%20de%20sucesso%20do%20projeto%20"${encodeURIComponent(selectedProject.title)}"%20e%20gostaria%20de%20solicitar%20um%20diagnóstico%20estratégico%20de%20design%20e%20desenvolvimento%20web%20para%20minha%20empresa.`)}
                         target="_blank"
                         rel="noreferrer"
                         className="w-full sm:w-auto px-6 py-3 bg-brand-secondary hover:bg-brand-dark text-black text-[11px] font-sans font-bold uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-[0_12px_35px_rgba(var(--color-brand-secondary-rgb),0.15)] cursor-pointer animate-pulse"
@@ -1161,24 +1161,24 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           </AnimatePresence>
 
 
-          {/* O que estÃƒÂ¡ incluso & PrÃƒÂ©-requisitos */}
+          {/* O que está incluso & Pré-requisitos */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-12 border-t border-white/[0.04]">
-            {/* O que estÃƒÂ¡ incluso */}
+            {/* O que está incluso */}
             <div className="space-y-6">
               <div className="space-y-2">
                 <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black uppercase inline-block">ATIVOS DO PROJETO</span>
-                <h3 className="font-display font-semibold text-xl sm:text-2xl text-white uppercase tracking-tight">O que estÃƒÂ¡ integrado no escopo</h3>
+                <h3 className="font-display font-semibold text-xl sm:text-2xl text-white uppercase tracking-tight">O que está integrado no escopo</h3>
               </div>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                Escrevemos cÃƒÂ³digos otimizados sob padrÃƒÂµes estritos de arquitetura de software, sem usar construtores visuais lentos ou templates de prateleira:
+                Escrevemos códigos otimizados sob padrões estritos de arquitetura de software, sem usar construtores visuais lentos ou templates de prateleira:
               </p>
               <div className="grid gap-3 pt-2">
                 {[
-                  { name: "Arquitetura da InformaÃƒÂ§ÃƒÂ£o", desc: "Mapeamento minucioso do fluxo de cliques do visitante para garantir navegaÃƒÂ§ÃƒÂ£o instintiva." },
-                  { name: "Copy Persuasiva do NegÃƒÂ³cio", desc: "Textos redigidos do zero de acordo com o vocabulÃƒÂ¡rio clÃƒÂ­nico ou corporativo de autoridade." },
-                  { name: "Interfaces Totalmente Responsivas", desc: "Testes rigorosos de responsividade em todas as escalas e proporÃƒÂ§ÃƒÂµes de telas de dispositivos mÃƒÂ³veis." },
-                  { name: "Sistemas em CÃƒÂ³digo Limpo", desc: "OtimizaÃƒÂ§ÃƒÂµes severas para alcanÃƒÂ§ar a nota mÃƒÂ¡xima de rapidez tÃƒÂ©cnica (Google Lighthouse)." },
-                  { name: "Encaminhamento AutomÃƒÂ¡tico de Leads", desc: "ConexÃƒÂµes seguras para enviar cadastros diretamente para seu CRM ou WhatsApp comercial." }
+                  { name: "Arquitetura da Informação", desc: "Mapeamento minucioso do fluxo de cliques do visitante para garantir navegação instintiva." },
+                  { name: "Copy Persuasiva do Negócio", desc: "Textos redigidos do zero de acordo com o vocabulário clínico ou corporativo de autoridade." },
+                  { name: "Interfaces Totalmente Responsivas", desc: "Testes rigorosos de responsividade em todas as escalas e proporções de telas de dispositivos móveis." },
+                  { name: "Sistemas em Código Limpo", desc: "Otimizações severas para alcançar a nota máxima de rapidez técnica (Google Lighthouse)." },
+                  { name: "Encaminhamento Automático de Leads", desc: "Conexões seguras para enviar cadastros diretamente para seu CRM ou WhatsApp comercial." }
                 ].map((item, idx) => (
                   <div key={idx} className="p-4 rounded-2xl bg-neutral-900/40 border border-white/[0.04] space-y-1">
                     <h4 className="text-white text-xs sm:text-sm font-display font-medium uppercase tracking-tight flex items-center gap-2">
@@ -1190,22 +1190,22 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               </div>
             </div>
 
-            {/* PrÃƒÂ©-requisitos tÃƒÂ©cnicos */}
+            {/* Pré-requisitos técnicos */}
             <div className="space-y-6">
               <div className="space-y-2">
                 <span className="font-mono text-[9px] text-zinc-500 font-bold uppercase inline-block">ALINHAMENTO OPERACIONAL</span>
-                <h3 className="font-display font-semibold text-xl sm:text-2xl text-white uppercase tracking-tight">Os prÃƒÂ©-requisitos essenciais</h3>
+                <h3 className="font-display font-semibold text-xl sm:text-2xl text-white uppercase tracking-tight">Os pré-requisitos essenciais</h3>
               </div>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                Para darmos vazÃƒÂ£o tÃƒÂ¡tica e garantirmos o prazo estipulado de entrega, certifique-se de dispor desse alinhamento inicial:
+                Para darmos vazão tática e garantirmos o prazo estipulado de entrega, certifique-se de dispor desse alinhamento inicial:
               </p>
               <div className="grid gap-3 pt-2">
                 {[
-                  { title: "DomÃƒÂ­nio Registrado", desc: "EndereÃƒÂ§o corporativo prÃƒÂ³prio (ex: suaempresa.com.br). Fornecemos auxÃƒÂ­lio tÃƒÂ©cnico caso necessite registrar do zero." },
-                  { title: "ServiÃƒÂ§o de Hospedagem Segura", desc: "Servidores em nuvem de alta estabilidade onde instalamos as soluÃƒÂ§ÃƒÂµes e fazemos as publicaÃƒÂ§ÃƒÂµes." },
-                  { title: "Identidade Visual Definida", desc: "Tipografia, logotipo oficial e paleta de cores primÃƒÂ¡rias. Se necessÃƒÂ¡rio, conte com nossa divisÃƒÂ£o de Branding." },
-                  { title: "Insumos ClÃƒÂ­nicos e Corporativos", desc: "Fotos de excelente qualidade tÃƒÂ©cnica para dar autenticidade e humanidade ÃƒÂ s pÃƒÂ¡ginas." },
-                  { title: "Acessos TÃƒÂ©cnicos de Provedores", desc: "Credenciais de DNS necessÃƒÂ¡rias para interligarmos registros visando a publicaÃƒÂ§ÃƒÂ£o final do site." }
+                  { title: "Domínio Registrado", desc: "Endereço corporativo próprio (ex: suaempresa.com.br). Fornecemos auxílio técnico caso necessite registrar do zero." },
+                  { title: "Serviço de Hospedagem Segura", desc: "Servidores em nuvem de alta estabilidade onde instalamos as soluções e fazemos as publicações." },
+                  { title: "Identidade Visual Definida", desc: "Tipografia, logotipo oficial e paleta de cores primárias. Se necessário, conte com nossa divisão de Branding." },
+                  { title: "Conteúdo Base", desc: "Técnica para dar autenticidade e humanidade às páginas." },
+                  { title: "Acessos Técnicos de Provedores", desc: "Credenciais de DNS necessárias para interligarmos registros visando a publicação final do site." }
                 ].map((point, idx) => (
                   <div key={idx} className="p-4 rounded-2xl bg-charcoal-900 border border-white/[0.03] space-y-1">
                     <h4 className="text-brand-secondary text-xs font-display font-bold uppercase tracking-tight">{point.title}</h4>
@@ -1216,24 +1216,24 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             </div>
           </div>
 
-          {/* SeÃƒÂ§ÃƒÂ£o PÃƒÂ³s-entrega - LEGADO WEB BANNER */}
+          {/* Seção Pós-entrega - LEGADO WEB BANNER */}
           <div className="p-7 sm:p-9 rounded-3xl bg-neutral-900/30 border border-white/[0.05] space-y-6 relative overflow-hidden text-left">
             <div className="absolute inset-0 bg-[radial-gradient(#ffffff01_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
             
             <div className="space-y-2 relative z-10">
               <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black block">LEGADO WEB // SOBERANIA DIGITAL</span>
-              <h3 className="text-white font-display font-medium text-xl uppercase">Acompanhamento TÃƒÂ©cnico PÃƒÂ³s-Entrega e SeguranÃƒÂ§a Ativa</h3>
+              <h3 className="text-white font-display font-medium text-xl uppercase">Acompanhamento Técnico Pós-Entrega e Segurança Ativa</h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
-                O tÃƒÂ©rmino da codificaÃƒÂ§ÃƒÂ£o ÃƒÂ© apenas a primeira etapa de um ecossistema digital estÃƒÂ¡vel. Nosso acordo tÃƒÂ©cnico corporativo protege e atualiza sua aplicaÃƒÂ§ÃƒÂ£o para que sua operaÃƒÂ§ÃƒÂ£o nunca sofra interrupÃƒÂ§ÃƒÂµes:
+                O término da codificação é apenas a primeira etapa de um ecossistema digital estável. Nosso acordo técnico corporativo protege e atualiza sua aplicação para que sua operação nunca sofra interrupções:
               </p>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-2 relative z-10">
               {[
-                { title: "Suporte Imediato", desc: "Atendimento prioritÃƒÂ¡rio de plantÃƒÂ£o tÃƒÂ©cnico para correÃƒÂ§ÃƒÂµes imediatas de bugs ocorridos." },
-                { title: "Monitoramento Ativo", desc: "MonitoraÃƒÂ§ÃƒÂ£o contÃƒÂ­nua da velocidade e nota de performance visual em celulares." },
-                { title: "Hospedagem Gerenciada", desc: "Infraestrutura de nuvem, certificado SSL ativo e backups de seguranÃƒÂ§a periÃƒÂ³dicos." },
-                { title: "EvoluÃƒÂ§ÃƒÂµes Planificadas", desc: "Criamos novas landing pages e ajustamos blocos operacionais de textos sob demanda." }
+                { title: "Suporte Imediato", desc: "Atendimento prioritário de plantão técnico para correções imediatas de bugs ocorridos." },
+                { title: "Monitoramento Ativo", desc: "Monitoração contínua da velocidade e nota de performance visual em celulares." },
+                { title: "Hospedagem Gerenciada", desc: "Infraestrutura de nuvem, certificado SSL ativo e backups de segurança periódicos." },
+                { title: "Evoluções Planificadas", desc: "Criamos novas landing pages e ajustamos blocos operacionais de textos sob demanda." }
               ].map((item, idx) => (
                 <div key={idx} className="space-y-1.5 p-4 rounded-2xl bg-zinc-950/40 border border-white/[0.03]">
                   <h4 className="text-white text-xs font-display font-bold uppercase tracking-tight">{item.title}</h4>
@@ -1243,15 +1243,15 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             </div>
           </div>
 
-          {/* CTA para AnÃƒÂ¡lise Web - PREMIUM CONVERSION */}
+          {/* CTA para Análise Web - PREMIUM CONVERSION */}
           <div className="p-8 sm:p-10 rounded-3xl bg-neutral-900/50 border border-white/[0.06] relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8 text-left font-sans">
             <div className="absolute inset-0 bg-[radial-gradient(#ffffff02_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
             
             <div className="relative z-10 space-y-2 max-w-2xl">
               <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 px-2.5 py-0.5 rounded border border-brand-secondary/10 uppercase tracking-widest font-black">AUDITORIA DE PERFORMANCE</span>
-              <h3 className="font-display font-semibold text-xl sm:text-2xl text-white uppercase tracking-tight">O site da sua empresa estÃƒÂ¡ engasgando ou perdendo dinheiro?</h3>
+              <h3 className="font-display font-semibold text-xl sm:text-2xl text-white uppercase tracking-tight">O site da sua empresa está engasgando ou perdendo dinheiro?</h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-semibold">
-                Analisamos e identificamos os gargalos de rapidez do seu portal de forma totalmente gratuita. Converse com nossa divisÃƒÂ£o de engenharia de software e solicite uma avaliaÃƒÂ§ÃƒÂ£o.
+                Analisamos e identificamos os gargalos de rapidez do seu portal de forma totalmente gratuita. Converse com nossa divisão de engenharia de software e solicite uma avaliação.
               </p>
             </div>
             
@@ -1283,17 +1283,17 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                   FAQ // ENCONTRE RESPOSTAS
                 </div>
                 <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
-                  DÃƒÅ¡VIDAS &amp; <br />
+                  DҚVIDAS &amp; <br />
                   DESENVOLVIMENTO
                 </h2>
                 <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
-                  EsclareÃƒÂ§a as principais dÃƒÂºvidas sobre nossa divisÃƒÂ£o tÃƒÂ©cnica de engenharia web focada em alta performance e design estÃƒÂ¡tico.
+                  Esclareça as principais dúvidas sobre nossa divisão técnica de engenharia web focada em alta performance e design estático.
                 </p>
               </div>
 
               <div className="space-y-3 pt-4">
                 {([
-                  { id: 0, title: "CMS VS CÃƒâ€œDIGO NATIVO" },
+                  { id: 0, title: "CMS VS CÒDIGO NATIVO" },
                   { id: 1, title: "DIRETRIZ DE COPYWRITING" },
                   { id: 2, title: "COMPATIBILIDADE MOBILE" },
                   { id: 3, title: "SISTEMAS E RASTREAMENTO" }
@@ -1340,7 +1340,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left">
                 <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
                   {([
-                    "CMS VS CÃƒâ€œDIGO NATIVO",
+                    "CMS VS CÒDIGO NATIVO",
                     "DIRETRIZ DE COPYWRITING",
                     "COMPATIBILIDADE MOBILE",
                     "SISTEMAS E RASTREAMENTO"
@@ -1349,19 +1349,19 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 
                 <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
                   {([
-                    "O site ÃƒÂ© feito em WordPress ou Elementor?",
-                    "Quem farÃƒÂ¡ os textos das pÃƒÂ¡ginas de destino?",
+                    "O site é feito em WordPress ou Elementor?",
+                    "Quem fará os textos das páginas de destino?",
                     "O site se adapta a smartphones?",
-                    "VocÃƒÂªs cuidam dos rastreamentos e tags?"
+                    "Vocês cuidam dos rastreamentos e tags?"
                   ])[activeFaq]}
                 </h4>
                 
                 <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
                   {([
-                    "NÃƒÂ£o. Nossos sites sÃƒÂ£o inteiramente desenvolvidos em cÃƒÂ³digo limpo estÃƒÂ¡tico nativo utilizando ferramentas modernas de alta performance (como React, Tailwind CSS e Vite). Isso confere imunidade total a invasÃƒÂµes, quedas, falhas de plugins e velocidade de carregamento insuperÃƒÂ¡vel.",
-                    "Nossa prÃƒÂ³pria equipe de copywriting escreve todos os tÃƒÂ­tulos de impacto, narrativas de autoridade e chamadas de aÃƒÂ§ÃƒÂ£o baseando-se em estudo prÃƒÂ©vio do seu comportamento de vendas, eliminando clichÃƒÂªs de autoajuda ou textos irrelevantes.",
-                    "Sim. Seguimos o princÃƒÂ­pio estrito de Mobile First. Mais de 85% do pÃƒÂºblico de anÃƒÂºncios chega por celulares, por isso, cada componente, formulÃƒÂ¡rio e fluxo de clique ÃƒÂ© dimensionado perfeitamente para dedÃƒÂµes e telas verticais de toque.",
-                    "Sim. Integramos APIs seguras de WhatsApp, formulÃƒÂ¡rios dinÃƒÂ¢micos com proteÃƒÂ§ÃƒÂ£o anti-spam e configuramos tags fundamentais do Google Tag Manager, pixels do Meta Ads, e indexaÃƒÂ§ÃƒÂµes limpas nas plataformas do Google Search Console."
+                    "Não. Nossos sites são inteiramente desenvolvidos em código limpo estático nativo utilizando ferramentas modernas de alta performance (como React, Tailwind CSS e Vite). Isso confere imunidade total a invasões, quedas, falhas de plugins e velocidade de carregamento insuperável.",
+                    "Nossa própria equipe de copywriting escreve todos os títulos de impacto, narrativas de autoridade e chamadas de ação baseando-se em estudo prévio do seu comportamento de vendas, eliminando clichês de autoajuda ou textos irrelevantes.",
+                    "Sim. Seguimos o princípio estrito de Mobile First. Mais de 85% do público de anúncios chega por celulares, por isso, cada componente, formulário e fluxo de clique é dimensionado perfeitamente para dedões e telas verticais de toque.",
+                    "Sim. Integramos APIs seguras de WhatsApp, formulários dinâmicos com proteção anti-spam e configuramos tags fundamentais do Google Tag Manager, pixels do Meta Ads, e indexações limpas nas plataformas do Google Search Console."
                   ])[activeFaq]}
                 </p>
               </div>
@@ -1373,14 +1373,14 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                   <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">Como agimos de forma organizada?</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    Eliminamos lentidÃƒÂ£o excessiva e falha tÃƒÂ©cnica crÃƒÂ´nica. Garantimos mÃƒÂ¡xima performance Google.
+                    Eliminamos lentidão excessiva e falha técnica crônica. Garantimos máxima performance Google.
                   </p>
                 </div>
                 <button
                   onClick={() => handleLinkClick("/servicos")}
                   className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
                 >
-                  <span>Ver ServiÃƒÂ§os</span>
+                  <span>Ver Serviços</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
@@ -1388,13 +1388,13 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer desenhar uma estratÃƒÂ©gia sob medida?</h4>
+                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer desenhar uma estratégia sob medida?</h4>
                   <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
-                    Fale diretamente com os tomadores de decisÃƒÂ£o da TAG08 via WhatsApp para avaliar a viabilidade de alocaÃƒÂ§ÃƒÂ£o de equipe.
+                    Fale diretamente com os tomadores de decisão da TAG08 via WhatsApp para avaliar a viabilidade de alocação de equipe.
                   </p>
                 </div>
                 <a
-                  href={buildBrazilWhatsAppUrl("OlÃƒÂ¡,%20gostaria%20de%20consultar%20viabilidade%20estratÃƒÂ©gica%20especializada%2520para%20minha%20marca!")}
+                  href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20consultar%20viabilidade%20estratégica%20especializada%2520para%20minha%20marca!")}
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-all"
@@ -1411,11 +1411,11 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       {/* SECTION 6 - ACTION TRIGGER FOOTER */}
       <section className="px-4 sm:px-6 md:px-8 py-20 text-center space-y-6 max-w-4xl mx-auto">
         <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
-          COLOQUE SEU ENDEREÃƒâ€¡O DIGITAL <br />
-          <span className="text-brand">Ãƒâ‚¬ ALTURA DO SEU PRESTÃƒÂGIO COMERCIAL.</span>
+          COLOQUE SEU ENDEREçO DIGITAL <br />
+          <span className="text-brand">ELEVE A ALTURA DO SEU PRESTÍGIO COMERCIAL.</span>
         </h2>
         <p className="text-zinc-400 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">
-          Evite continuar perdendo orÃƒÂ§amentos em telas que demoram sÃƒÂ©culos para carregar no 4G. Fale agora mesmo com nosso engenheiro lÃƒÂ­der de projetos.
+          Evite continuar perdendo orçamentos em telas que demoram séculos para carregar no 4G. Fale agora mesmo com nosso engenheiro líder de projetos.
         </p>
         <div className="pt-4">
           <button

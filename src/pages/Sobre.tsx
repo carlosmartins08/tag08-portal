@@ -29,7 +29,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       name: "Carlos Eduardo",
       role: "Fundador & Diretor de Criação",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
-      tag: "EST�0TICA SOBREANA",
+      tag: "ESTÉTICA SOBERANA",
       status: "ONLINE",
       badge: "FUNDADOR",
       linkedin: "https://www.linkedin.com/in/carlos-eduardo-tag08",
@@ -40,9 +40,9 @@ export default function Sobre({ onNavigate }: SobreProps) {
       name: "Camila Martins",
       role: "Copywriter & Roteiro Sênior",
       avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400",
-      tag: "TEXTO MAGN�0TICO",
+      tag: "TEXTO MAGNÉTICO",
       status: "FOCO TOTAL",
-      badge: "RETEN�!ÒO S�`NIOR",
+      badge: "RETENÇÃO SÊNIOR",
       linkedin: "https://www.linkedin.com/in/camila-martins-tag08",
       connections: "6.8k+ Conexões",
       focus: "Storytelling de Elite & Posicionamento"
@@ -51,7 +51,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       name: "Danilo Aguiar",
       role: "Tráfego Cirúrgico & Analytics",
       avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400",
-      tag: "ALTA INTEN�!ÒO B2B",
+      tag: "ALTA INTENÇÃO B2B",
       status: "CAMPANHA ATIVA",
       badge: "ALFA INTEL",
       linkedin: "https://www.linkedin.com/in/danilo-aguiar-tag08",
@@ -128,7 +128,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       desc: "Canalizamos verba para funis segmentados com base em intenção de compra exata de diretores e tomadores de decisão.",
       gradientClass: "from-purple-500/10 to-transparent border-purple-500/15 hover:border-purple-500/35",
       iconColor: "text-[#a855f7]",
-      badge: "RETEN�!ÒO S�`NIOR",
+      badge: "RETENÇÃO SÊNIOR",
       delay: 0.2
     },
     {
@@ -136,7 +136,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       desc: "Todas as entregas são organizadas no sistema proprietário da TAG08. Sem reuniões longas de Zoom sem pauta definida.",
       gradientClass: "from-blue-500/10 to-transparent border-blue-500/15 hover:border-blue-500/35",
       iconColor: "text-[#3b82f6]",
-      badge: "COMUNICA�!ÒO PR�TICA",
+      badge: "COMUNICAï¿½!ï¿½O PRï¿½TICA",
       delay: 0.3
     },
     {
@@ -144,7 +144,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       desc: "Ajudamos pequenas e médias marcas de destaque a se posicionarem visualmente como grandes líderes em seus setores.",
       gradientClass: "from-emerald-500/10 to-transparent border-emerald-500/15 hover:border-emerald-500/35",
       iconColor: "text-[#10b981]",
-      badge: "CONVERSÒO DE PREST�GIO",
+      badge: "CONVERSÃO DE PRESTÍGIO",
       delay: 0.4
     }
   ];
@@ -154,16 +154,16 @@ export default function Sobre({ onNavigate }: SobreProps) {
       id: 0,
       area: "DESIGN & CREATIVE BRANDS",
       title: "Designer Gráfico / Visual Sênior",
-      tempo: "Remoto â€¢ Contratação Recorrente",
+      tempo: "Remoto ⬢ Contratação Recorrente",
       desc: "Estruturação de marcas ricas heráldicas, e layouts premium de redes sociais com tipografia avançada e senso estético exigente.",
       requirements: ["Domínio cirúrgico do Figma e Illustrator", "Apego extremo a espaçamento, tracking e contrastes", "Portfólio com soluções reais corporativas de alto requinte"],
       color: "border-brand-secondary/20 shadow-brand-secondary/2"
     },
     {
       id: 1,
-      area: "GROWTH & ANALYTICS S�`NIOR",
+      area: "GROWTH & ANALYTICS Sï¿½`NIOR",
       title: "Head de Performance Google / Meta Ads",
-      tempo: "Remoto â€¢ Contratação Imediata",
+      tempo: "Remoto ⬢ Contratação Imediata",
       desc: "Gerenciamento estratégico de orçamentos de alta intensidade de compra para marcas B2B, consultorias e saúde premium.",
       requirements: ["Mais de 4 anos gerenciando contas reais exigentes", "Habilidade cirúrgica de traduzir táticas em ROI nos relatórios", "Foco em canais Meta Ads de alto tíquete"],
       color: "border-purple-500/20 shadow-purple-500/2"
@@ -172,7 +172,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       id: 2,
       area: "FRONT-END ARCHITECTURE",
       title: "Dev React.js / Node.js Sênior",
-      tempo: "Remoto â€¢ Banco de Talentos",
+      tempo: "Remoto ⬢ Banco de Talentos",
       desc: "Transformar os protótipos de alta definição do Figma em código sênior, responsivo e ultra veloz sem construtores lentos.",
       requirements: ["Domínio supremo de React, Vite, TS e Tailwind", "Apreço intransigente pelo pixel-perfect do designer", "Obssessão por otimização técnica e Core Web Vitals"],
       color: "border-blue-500/20 shadow-blue-500/2"
@@ -195,7 +195,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start font-bold">
-                SOBRE A TAG08 // ESTRAT�0GIA
+                SOBRE A TAG08 // ESTRATÉGIA
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase">
                 Clareza para marcas que <br />
@@ -227,7 +227,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                 onClick={() => handleLinkClick("/contato")}
                 className="group bg-brand-secondary text-black font-mono font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
               >
-                <span>AGENDE UM DIAGN�STICO</span>
+                <span>AGENDE UM DIAGNÓSTICO</span>
                 <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
               </button>
             </div>
@@ -269,8 +269,8 @@ export default function Sobre({ onNavigate }: SobreProps) {
           {/* 4. Active Members profiles section seamlessly integrated into the team area */}
           <div className="pt-12 sm:pt-16 border-t border-white/[0.04] space-y-8 text-left font-sans">
             <div className="space-y-2">
-              <span className="font-mono text-[8px] text-brand tracking-widest block uppercase font-bold">CONSELHO E DIRE�!ÒO OPERACIONAL</span>
-              <h3 className="font-display font-black text-white text-xl sm:text-2xl uppercase tracking-tight">MENTES ATIVAS POR TR�S DOS M�0TODOS</h3>
+              <span className="font-mono text-[8px] text-brand tracking-widest block uppercase font-bold">CONSELHO E DIREÇÃO OPERACIONAL</span>
+              <h3 className="font-display font-black text-white text-xl sm:text-2xl uppercase tracking-tight">MENTES ATIVAS POR TRÁS DOS MÉTODOS</h3>
               <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-2xl font-medium">Você conversa diretamente com os idealizadores do projeto nas pontas de direção, sem intermediários juniores ou burocráticos.</p>
             </div>
 
@@ -302,7 +302,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
                 <div className="relative z-10 space-y-4 mt-auto">
                   <div className="space-y-1">
-                    <span className="font-mono text-[8.5px] text-brand block uppercase font-bold">LIDERAN�!A & CONCEP�!ÒO</span>
+                    <span className="font-mono text-[8.5px] text-brand block uppercase font-bold">LIDERANï¿½!A & CONCEPï¿½!ï¿½O</span>
                     <h4 className="font-display font-black text-2xl sm:text-3xl text-white uppercase leading-none tracking-tight">{TILES_HERO[0].name}</h4>
                     <p className="text-zinc-300 text-xs font-sans font-medium">{TILES_HERO[0].role}</p>
                     <p className="text-brand-secondary text-[8.5px] font-mono uppercase tracking-wider pt-1">{TILES_HERO[0].connections} // {TILES_HERO[0].focus}</p>
@@ -357,7 +357,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                         <span className="font-mono text-[8px] text-brand block uppercase font-bold">{member.tag}</span>
                         <h4 className="font-display font-black text-white text-base sm:text-lg uppercase leading-none tracking-tight">{member.name}</h4>
                         <p className="text-zinc-350 text-xs font-sans font-medium leading-tight">{member.role}</p>
-                        <p className="text-brand-secondary text-[7.5px] font-sans uppercase tracking-wider pb-1">{member.connections} â€¢ {member.focus}</p>
+                        <p className="text-brand-secondary text-[7.5px] font-sans uppercase tracking-wider pb-1">{member.connections} ⬢ {member.focus}</p>
                       </div>
 
                       <a 
@@ -420,10 +420,10 @@ export default function Sobre({ onNavigate }: SobreProps) {
           {/* Logo Title Block */}
           <div className="text-center space-y-3">
             <span className="font-mono text-[9px] text-brand-secondary font-black uppercase tracking-widest bg-brand/5 border border-brand/10 px-3 py-1 rounded-full inline-block">
-              INTEGRA�!ÒO ATIVA DE MERCADO
+              INTEGRAï¿½!ï¿½O ATIVA DE MERCADO
             </span>
             <p className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">
-              CONFIADO POR MAIS DE 40+ EMPRESAS, MARCAS COMPACTAS E CONSULT�RIOS DE PREST�GIO NACIONAL
+              CONFIADO POR MAIS DE 40+ EMPRESAS, MARCAS COMPACTAS E CONSULTï¿½RIOS DE PRESTÍGIO NACIONAL
             </p>
 
             {/* Infinite Logo Marquee Carousel */}
@@ -641,7 +641,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
             {/* Nossa forma de parceria */}
             <div className="lg:col-span-6 space-y-8 bg-charcoal-900/40 p-8 rounded-3xl border border-white/[0.04]">
               <div className="space-y-2">
-                <span className="font-mono text-[9px] text-brand uppercase tracking-wider">MODO DE COOPERA�!ÒO</span>
+                <span className="font-mono text-[9px] text-brand uppercase tracking-wider">MODO DE COOPERAï¿½!ï¿½O</span>
                 <h3 className="font-display font-medium text-xl sm:text-2xl text-white uppercase tracking-tight">
                   Nossa forma de parceria integrada
                 </h3>
@@ -702,8 +702,8 @@ export default function Sobre({ onNavigate }: SobreProps) {
               </span>
               
               <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white uppercase leading-[0.88] tracking-tighter">
-                MAIS VALOR EST�0TICO. <br />
-                <span className="text-brand">MENOS ENROLA�!ÒO.</span>
+                MAIS VALOR ESTï¿½0TICO. <br />
+                <span className="text-brand">MENOS ENROLAï¿½!ï¿½O.</span>
               </h2>
               
               <div className="space-y-4 text-zinc-300 text-xs sm:text-[13.5px] leading-relaxed font-sans max-w-xl">
@@ -714,7 +714,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                   Nosso núcleo existe para dar direção às marcas que merecem ser notadas e pagas pelo que realmente valem. Fazemos isso aliando design heráldico sofisticado desenvolvidos do zero no Figma, à engenharia de captação de leads sêniores.
                 </p>
                 <p className="text-zinc-400">
-                  Do código nativo veloz até os roteiros cirúrgicos de retenção para o Instagram e YouTube â€“ cada detalhe da sua marca é polido e defendido por pessoas experientes dedicadas a construir uma autoridade digital inquestionável.
+                  Do código nativo veloz até os roteiros cirúrgicos de retenção para o Instagram e YouTube – cada detalhe da sua marca é polido e defendido por pessoas experientes dedicadas a construir uma autoridade digital inquestionável.
                 </p>
               </div>
 
@@ -773,13 +773,13 @@ export default function Sobre({ onNavigate }: SobreProps) {
           
           {/* Section Header */}
           <div className="max-w-3xl text-left space-y-3">
-            <span className="font-mono text-xs text-brand uppercase tracking-widest block font-bold">RECRUTAMENTO S�`NIORES ATIVOS // RECRUIT_CORE</span>
+            <span className="font-mono text-xs text-brand uppercase tracking-widest block font-bold">RECRUTAMENTO SÊNIORES ATIVOS // RECRUIT_CORE</span>
             <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
-              PORTF�LIOS OBSTINADOS <br />
+              PORTFÓLIOS OBSTINADOS <br />
               &amp; ENGENHARIA DE DESIGN
             </h2>
             <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-2xl font-medium">
-              Repudiamos a mediocridade do mercado digital padrão. Se você valoriza design cirúrgico, performance analítica baseada em números e desenvolvimento nativo veloz, explore as vagas em foco contínuo abaixo e veja se há aderência:
+              Repudiamos a mediocridade do mercado digital padrão e veja se há aderência:
             </p>
           </div>
 
@@ -872,7 +872,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
             <div className="absolute top-0 right-0 w-32 h-32 bg-brand/[0.015] rounded-full blur-2xl pointer-events-none" />
             
             <div className="space-y-1.5 max-w-xl">
-              <h4 className="text-white font-display font-black text-sm sm:text-base uppercase">NÒO ACHOU SUA VAGA DE PREFER�`NCIA?</h4>
+              <h4 className="text-white font-display font-black text-sm sm:text-base uppercase">NÃO ACHOU SUA VAGA DE PREFERÊNCIA?</h4>
               <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                 Se você é um programador de interface impecável, designer exigente com as próprias marcas ou roteirista experiente focados em presteza de retenção, nós queremos conhecer você para o banco contínuo da TAG08.
               </p>
@@ -889,7 +889,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
               }}
               className="bg-brand-secondary hover:bg-brand-dark text-black font-mono font-black text-[10px] uppercase tracking-wider px-6 py-4 rounded-xl shadow-lg transition-all flex items-center gap-1.5 shrink-0 hover:scale-[1.02] cursor-pointer"
             >
-              <span>APLICAR PORTF�LIO</span>
+              <span>APLICAR PORTFÓLIO</span>
               <ArrowUpRight className="w-4 h-4 text-black stroke-[2.5]" />
             </button>
           </div>
@@ -902,12 +902,12 @@ export default function Sobre({ onNavigate }: SobreProps) {
         <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
           
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-secondary/10 border border-brand-secondary/30 text-brand font-black text-[9px] rounded-lg uppercase tracking-widest font-mono">
-            AGENDAMENTO S�`NIORES // SOLV�`NCIA
+            AGENDAMENTO SÊNIORES // SOLVÊNCIA
           </div>
           
           <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white uppercase tracking-tight max-w-2xl mx-auto leading-none">
             ESTABILIZAR VALOR DE MARCA <br />
-            �0 UM TRABALHO DE ELITE.
+            ï¿½É UM TRABALHO DE ELITE.
           </h2>
           
           <p className="text-zinc-300 text-xs sm:text-sm max-w-md mx-auto leading-relaxed font-sans">
@@ -919,7 +919,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
               onClick={() => handleLinkClick("/contato")}
               className="bg-brand hover:bg-brand-dark text-black font-mono font-black text-[10px] uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-300 shadow-[0_12px_45px_rgba(var(--color-brand-secondary-rgb),0.18)] flex items-center gap-1.5 mx-auto hover:scale-[1.02] cursor-pointer"
             >
-              <span>RESERVAR DIAGN�STICO</span>
+              <span>RESERVAR DIAGNÓSTICO</span>
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
             </button>
           </div>

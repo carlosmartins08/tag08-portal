@@ -154,7 +154,7 @@ Responder este checklist não garante aprovação. Ele apenas ajuda a identifica
 ## Observações de implementação
 - Se houver integração com formulário, transformar o checklist em perguntas objetivas.
 - Não publicar percentuais fixos sem confirmação.
-- Incluir campo “cidade/estado” para direcionamento correto.
+- Incluir campo cidade/estado para direcionamento correto.
 
 ---
 

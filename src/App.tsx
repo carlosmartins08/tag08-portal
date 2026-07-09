@@ -1,8 +1,9 @@
-﻿import { Suspense, lazy, useState, useEffect, useRef } from "react";
+import { Suspense, lazy, useState, useEffect, useRef } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import Breadcrumbs from "./components/Breadcrumbs";
+import ErrorBoundary from "./components/ErrorBoundary";
 import Lenis from "lenis";
 import { CASE_STUDIES } from "./data";
 
@@ -556,9 +557,11 @@ export default function App() {
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
           >
-            <Suspense fallback={<PageLoadingFallback />}>
-              {renderActivePage()}
-            </Suspense>
+            <ErrorBoundary key={currentPage} boundaryName={`route:${currentPage}`}>
+              <Suspense fallback={<PageLoadingFallback />}>
+                {renderActivePage()}
+              </Suspense>
+            </ErrorBoundary>
           </motion.div>
         </AnimatePresence>
       </main>

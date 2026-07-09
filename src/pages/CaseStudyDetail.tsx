@@ -173,7 +173,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-brand-secondary" />
                   <h3 className="font-sans text-[11px] uppercase tracking-wider text-brand-secondary font-black">
-                    A ESTRATÉGIA ADOTADA (SOLUÇÃO)
+                    A ESTRATï¿½GIA ADOTADA (SOLUÇÃO)
                   </h3>
                 </div>
                 <p className="text-zinc-350 text-xs sm:text-sm leading-relaxed font-sans font-normal">

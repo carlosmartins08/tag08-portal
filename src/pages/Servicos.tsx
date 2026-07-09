@@ -24,7 +24,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
   const handleCopyDomainScope = (domain: any) => {
     const scopeLines = domain.subservices.map((sub: any) => `- ${sub.name}: ${sub.desc}`).join("\n");
-    const textToCopy = `TAG08 - Escopo de Atendimento: ${domain.title}\n${domain.description}\n\nEntregÃƒ¡veis:\n${scopeLines}\n\nPara mais informaÃƒ§Ãƒµes, fale com a nossa equipe em tag08.com.br`;
+    const textToCopy = `TAG08 - Escopo de Atendimento: ${domain.title}\n${domain.description}\n\nEntregáveis:\n${scopeLines}\n\nPara mais informações, fale com a nossa equipe em tag08.com.br`;
     navigator.clipboard.writeText(textToCopy).then(() => {
       setCopiedDomainSlug(domain.slug);
       setTimeout(() => {
@@ -38,36 +38,36 @@ export default function Servicos({ onNavigate }: ServicosProps) {
   const SERVICE_DOMAINS = [
     {
       num: "01",
-      title: "Assessoria de Marketing EstratÃƒ©gico",
+      title: "Assessoria de Marketing Estratégico",
       slug: "advisory",
       icon: Award,
-      tags: ["CMO Externo", "Auditorias Semanais", "DiagnÃƒ³stico Inteligente", "Full Scale Strategy"],
+      tags: ["CMO Externo", "Auditorias Semanais", "Diagnóstico Inteligente", "Full Scale Strategy"],
       image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=1200",
       subservices: [
-        { name: "DireÃƒ§Ãƒ£o CMO Dedicado", desc: "Acompanhamento de ponta a ponta com um estrategista sÃƒªnior ditando seu crescimento." },
-        { name: "Simulador de DiagnÃƒ³stico", desc: "Varredura contÃƒ­nua contra ruÃƒ­dos de imagem e vazamentos do funil comercial." },
-        { name: "Garantia Estrita de SLA", desc: "Controle executivo absoluto sob prazos de postagem e relatÃƒ³rios." },
-        { name: "Business Intelligence Looker", desc: "TransparÃƒªncia total sob o seu investimento em tempo real integrado direto ao seu CRM." },
-        { name: "PresenÃƒ§a EstÃƒ©tica Premium", desc: "Escrita de altÃƒ­ssica convicÃƒ§Ãƒ£o e landing pages rÃƒ¡pidas em cÃƒ³digo nativo." }
+        { name: "Direção CMO Dedicado", desc: "Acompanhamento de ponta a ponta com um estrategista sênior ditando seu crescimento." },
+        { name: "Simulador de Diagnóstico", desc: "Varredura contínua contra ruídos de imagem e vazamentos do funil comercial." },
+        { name: "Garantia Estrita de SLA", desc: "Controle executivo absoluto sob prazos de postagem e relatórios." },
+        { name: "Business Intelligence Looker", desc: "Transparência total sob o seu investimento em tempo real integrado direto ao seu CRM." },
+        { name: "Presença Estética Premium", desc: "Escrita de altíssica convicção e landing pages rápidas em código nativo." }
       ],
-      description: "Nossa soluÃƒ§Ãƒ£o executiva sÃƒªnior unificada. Tenha nossa direÃƒ§Ãƒ£o estratÃƒ©gica, engenharia tÃƒ¡tica e equipe criativa engajadas em sua marca sob o controle de um estrategista dedicado.",
+      description: "Nossa solução executiva sênior unificada. Tenha nossa direção estratégica, engenharia tática e equipe criativa engajadas em sua marca sob o controle de um estrategista dedicado.",
       ctaPage: "/servicos/assessoria-marketing-digital-estrategico"
     },
     {
       num: "02",
-      title: "PresenÃƒ§a Digital & ConteÃƒºdo",
+      title: "Presença Digital & Conteúdo",
       slug: "presence",
       icon: Share2,
-      tags: ["Redes Sociais B2B", "ProduÃƒ§Ãƒ£o Audiovisual", "Copywriting de Elite", "DireÃƒ§Ãƒ£o de Arte SÃƒ³bria"],
+      tags: ["Redes Sociais B2B", "Produção Audiovisual", "Copywriting de Elite", "Direção de Arte Sóbria"],
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
       subservices: [
-        { name: "GestÃƒ£o de Redes Sociais", desc: "Posicionamento regular no Instagram, LinkedIn e mÃƒ­dias principais." },
-        { name: "Planejamento de ConteÃƒºdo", desc: "Pautas autorais, estudos de mercado e calendÃƒ¡rios estruturados." },
-        { name: "ProduÃƒ§Ãƒ£o Audiovisual", desc: "PÃƒ³s-produÃƒ§Ãƒ£o avanÃƒ§ada e roteiros de Reels, TikTok e Shorts." },
-        { name: "Copywriting de ConversÃƒ£o", desc: "Escrita persuasiva e conceitual para despertar convicÃƒ§Ãƒ£o." },
-        { name: "PublicaÃƒ§Ãƒ£o e Monitoramento", desc: "Agendamento tÃƒ¡tico e respostas consultivas a comentÃƒ¡rios." }
+        { name: "Gestão de Redes Sociais", desc: "Posicionamento regular no Instagram, LinkedIn e mídias principais." },
+        { name: "Planejamento de Conteúdo", desc: "Pautas autorais, estudos de mercado e calendários estruturados." },
+        { name: "Produção Audiovisual", desc: "Pós-produção avançada e roteiros de Reels, TikTok e Shorts." },
+        { name: "Copywriting de Conversão", desc: "Escrita persuasiva e conceitual para despertar convicção." },
+        { name: "Publicação e Monitoramento", desc: "Agendamento tático e respostas consultivas a comentários." }
       ],
-      description: "ConstruÃƒ§Ãƒ£o de rotina digital consistente, eliminando o amadorismo e trazendo autoridade inquestionÃƒ¡vel para seu perfil institucional.",
+      description: "Construção de rotina digital consistente, eliminando o amadorismo e trazendo autoridade inquestionável para seu perfil institucional.",
       ctaPage: "/servicos/gestao-de-redes-sociais"
     },
     {
@@ -75,32 +75,32 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       title: "Marca & Posicionamento",
       slug: "branding",
       icon: Sparkles,
-      tags: ["Relational Branding", "Identidades Visuais", "Arquitetura LinguÃƒ­stica", "Storytelling"],
+      tags: ["Relational Branding", "Identidades Visuais", "Arquitetura Linguística", "Storytelling"],
       image: "https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?auto=format&fit=crop&q=80&w=1200",
       subservices: [
-        { name: "Branding Conceitual", desc: "Arquitetura linguÃƒ­stica e posicionamento perante concorrentes." },
-        { name: "Identidade Visual EstratÃƒ©gica", desc: "Design completo de logotipos, manuais tipogrÃƒ¡ficos e paletas sÃƒ³brias." },
-        { name: "Linha Editorial Personalizada", desc: "Tom de voz, jargÃƒµes profissionais recomendados e territÃƒ³rios de comunicaÃƒ§Ãƒ£o." },
-        { name: "Narrativa de Marca Coporal", desc: "Storytelling institucional, manifestos de lideranÃƒ§a e comunicados." },
-        { name: "Campanhas Institucionais", desc: "Design de lanÃƒ§amentos de produtos e ritos corporativos de valor." }
+        { name: "Branding Conceitual", desc: "Arquitetura linguística e posicionamento perante concorrentes." },
+        { name: "Identidade Visual Estratégica", desc: "Design completo de logotipos, manuais tipográficos e paletas sóbrias." },
+        { name: "Linha Editorial Personalizada", desc: "Tom de voz, jargões profissionais recomendados e territórios de comunicação." },
+        { name: "Narrativa de Marca Coporal", desc: "Storytelling institucional, manifestos de liderança e comunicados." },
+        { name: "Campanhas Institucionais", desc: "Design de lançamentos de produtos e ritos corporativos de valor." }
       ],
-      description: "Desenvolvimento de marcas refinadas que comunicam lideranÃƒ§a de mercado e justificam investimentos de alto ticket antes mesmo do contato comercial.",
+      description: "Desenvolvimento de marcas refinadas que comunicam liderança de mercado e justificam investimentos de alto ticket antes mesmo do contato comercial.",
       ctaPage: "/servicos/branding-identidade"
     },
     {
       num: "04",
-      title: "Performance & TrÃƒ¡fego Pago",
+      title: "Performance & Tráfego Pago",
       slug: "performance",
       icon: ShieldCheck,
-      tags: ["Meta Ads SÃƒªnior", "Google Search", "LinkedIn Ads B2B", "Analytics Transparente"],
+      tags: ["Meta Ads Sênior", "Google Search", "LinkedIn Ads B2B", "Analytics Transparente"],
       image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=1200",
       subservices: [
-        { name: "TrÃƒ¡fego Pago Otimizado", desc: "AlocaÃƒ§Ãƒ£o cirÃƒºrgica de verbas publicitÃƒ¡rias nas plataformas de alta intenÃƒ§Ãƒ£o." },
-        { name: "Design de Landing Pages", desc: "Interfaces dinÃƒ¢micas especÃƒ­ficas preparadas cientificamente para conversÃƒ£o." },
-        { name: "Campanhas de Leads Qualificados", desc: "Funil integrado de atraÃƒ§Ãƒ£o desenhado para o pÃƒºblico de alto poder aquisitivo." },
-        { name: "RelatÃƒ³rios de Dados em Tempo Real", desc: "Dashboards analÃƒ­ticos detalhados com transparÃƒªncia integral de mÃƒ©tricas." }
+        { name: "Tráfego Pago Otimizado", desc: "Alocação cirúrgica de verbas publicitárias nas plataformas de alta intenção." },
+        { name: "Design de Landing Pages", desc: "Interfaces dinâmicas específicas preparadas cientificamente para conversão." },
+        { name: "Campanhas de Leads Qualificados", desc: "Funil integrado de atração desenhado para o público de alto poder aquisitivo." },
+        { name: "Relatórios de Dados em Tempo Real", desc: "Dashboards analíticos detalhados com transparência integral de métricas." }
       ],
-      description: "AceleraÃƒ§Ãƒ£o controlada de leads qualificados. AlocaÃƒ§Ãƒ£o inteligente de orÃƒ§amento onde de fato reside seu comprador ideal.",
+      description: "Aceleração controlada de leads qualificados. Alocação inteligente de orçamento onde de fato reside seu comprador ideal.",
       ctaPage: "/contato"
     },
     {
@@ -108,47 +108,47 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       title: "Estruturas Digitais & Web",
       slug: "web",
       icon: Settings2,
-      tags: ["Engenharia Web", "EstÃƒ©tica Minimalista", "OtimizaÃƒ§Ãƒ£o de SEO", "Carregamento InstantÃƒ¢neo"],
+      tags: ["Engenharia Web", "Estética Minimalista", "Otimização de SEO", "Carregamento Instantâneo"],
       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200",
       subservices: [
-        { name: "Desenvolvimento de Portais", desc: "Sistemas corporativos nativos, rÃƒ¡pidos, codificados do zero absolute sem gargalos." },
-        { name: "Landing Pages Institucionais", desc: "PÃƒ¡ginas estÃƒ©ticas de alta velocidade otimizadas para captaÃƒ§Ãƒ£o B2B rÃƒ¡pida." },
-        { name: "UI/UX Premium Design", desc: "Estudos de usabilidade tÃƒ¡tica para ampliaÃƒ§Ãƒ£o de conversÃƒ£o e cadastros." },
-        { name: "IntegraÃƒ§Ãƒ£o Segura de Dados", desc: "ConexÃƒµes seguras com CRMs, APIs do WhatsApp e sistemas legados de dados." }
+        { name: "Desenvolvimento de Portais", desc: "Sistemas corporativos nativos, rápidos, codificados do zero absolute sem gargalos." },
+        { name: "Landing Pages Institucionais", desc: "Páginas estéticas de alta velocidade otimizadas para captação B2B rápida." },
+        { name: "UI/UX Premium Design", desc: "Estudos de usabilidade tática para ampliação de conversão e cadastros." },
+        { name: "Integração Segura de Dados", desc: "Conexões seguras com CRMs, APIs do WhatsApp e sistemas legados de dados." }
       ],
-      description: "Sistemas e portais de tecnologia avanÃƒ§ada com carregamento abaixo de 2 segundos que blindam sua presenÃƒ§a digital e convertem contatos.",
+      description: "Sistemas e portais de tecnologia avançada com carregamento abaixo de 2 segundos que blindam sua presença digital e convertem contatos.",
       ctaPage: "/servicos/desenvolvimento-web"
     },
     {
       num: "06",
-      title: "Processos, Mapeamentos & OrganizaÃƒ§Ãƒ£o",
+      title: "Processos, Mapeamentos & Organização",
       slug: "processes",
       icon: Cpu,
       tags: ["Process Intelligence", "Process Activation", "Playbooks Notion / Wiki", "Auditoria de Rotinas"],
       image: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=1200",
       subservices: [
-        { name: "Process Intelligence", desc: "Assessoria diagnÃƒ³stica operacional, mapeamento de atividades e gargalos." },
-        { name: "Process Activation", desc: "Ensino ativo aplicado diretamente Ãƒ  sua equipe para fixaÃƒ§Ãƒ£o de rotinas." },
-        { name: "Playbooks Operacionais SÃƒ³lidos", desc: "Wikis internas organizadas e estruturadas escritas em linguagem simples." },
-        { name: "GovernanÃƒ§a de ExecuÃƒ§Ãƒ£o", desc: "Auditoria semanal presencial ou remota dos fluxogramas para evitar retrocessos." }
+        { name: "Process Intelligence", desc: "Assessoria diagnóstica operacional, mapeamento de atividades e gargalos." },
+        { name: "Process Activation", desc: "Ensino ativo aplicado diretamente à sua equipe para fixação de rotinas." },
+        { name: "Playbooks Operacionais Sólidos", desc: "Wikis internas organizadas e estruturadas escritas em linguagem simples." },
+        { name: "Governança de Execução", desc: "Auditoria semanal presencial ou remota dos fluxogramas para evitar retrocessos." }
       ],
-      description: "Substitua o estresse e apagamento de incÃƒªndios diÃƒ¡rios por fluxos autÃƒ´nomos. Processos construÃƒ­dos para operarem de forma independente.",
+      description: "Substitua o estresse e apagamento de incêndios diários por fluxos autônomos. Processos construídos para operarem de forma independente.",
       ctaPage: "/servicos/process-intelligence"
     },
     {
       num: "07",
-      title: "ProduÃƒ§Ãƒ£o Audiovisual & Cobertura",
+      title: "Produção Audiovisual & Cobertura",
       slug: "audiovisual",
       icon: Video,
-      tags: ["Audiovisual SÃƒªnior", "Aftermovies de Elite", "DireÃƒ§Ãƒ£o Narrativa", "Cortes de Alta RetenÃƒ§Ãƒ£o"],
+      tags: ["Audiovisual Sênior", "Aftermovies de Elite", "Direção Narrativa", "Cortes de Alta Retenção"],
       image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1200",
       subservices: [
-        { name: "Cobertura de Eventos", desc: "Registro estratÃƒ©gico, depoimentos isentos de dor e aftermovie sob medida." },
-        { name: "Cortes RÃƒ¡pidos (9:16)", desc: "FormataÃƒ§Ãƒ£o 9:16 (Reels/TikTok) com legendas premium dinÃƒ¢micas." },
-        { name: "VÃƒ­deos Institucionais", desc: "Manifestos de posicionamento e apresentaÃƒ§Ãƒµes executivas elegantes." },
-        { name: "RoteirizaÃƒ§Ãƒ£o TÃƒ©cnica", desc: "Mapeamento tÃƒ¡tico do tom de voz e marcaÃƒ§Ãƒ£o de cenas antes das gravaÃƒ§Ãƒµes." }
+        { name: "Cobertura de Eventos", desc: "Registro estratégico, depoimentos isentos de dor e aftermovie sob medida." },
+        { name: "Cortes Rápidos (9:16)", desc: "Formatação 9:16 (Reels/TikTok) com legendas premium dinâmicas." },
+        { name: "Vídeos Institucionais", desc: "Manifestos de posicionamento e apresentações executivas elegantes." },
+        { name: "Roteirização Técnica", desc: "Mapeamento tático do tom de voz e marcação de cenas antes das gravações." }
       ],
-      description: "Transformamos momentos, bastidores, eventos e histÃƒ³rias de marca em conteÃƒºdos estratÃƒ©gicos para redes sociais, captaÃƒ§Ãƒ£o, autoridade b2b e reputaÃƒ§Ãƒ£o.",
+      description: "Transformamos momentos, bastidores, eventos e histórias de marca em conteúdos estratégicos para redes sociais, captação, autoridade b2b e reputação.",
       ctaPage: "/servicos/producao-audiovisual"
     }
   ];
@@ -174,19 +174,19 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             {/* Left side text column */}
             <div className="lg:col-span-7 space-y-6 text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
-                DIREÃƒâ€¡ÃƒÆ’O INTEGRAL // TAG08
+                DIREÇÃO INTEGRAL // TAG08
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase">
-                DireÃƒ§Ãƒ£o de marca, <br />
-                conteÃƒºdo e operaÃƒ§Ãƒ£o.
+                Direção de marca, <br />
+                conteúdo e operação.
               </h1>
               <p className="text-zinc-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl">
-                EstratÃƒ©gia, design e execuÃƒ§Ãƒ£o para reduzir ruÃƒ­do, organizar a comunicaÃƒ§Ãƒ£o e aumentar a confianÃƒ§a na decisÃƒ£o.
+                Estratégia, design e execução para reduzir ruído, organizar a comunicação e aumentar a confiança na decisão.
               </p>
 
               {/* Grid tags of our premium expertise mimicking user-uploaded wireframes */}
               <div className="flex flex-wrap gap-2 pt-2">
-                {["Social Media", "Branding", "Engenharia Web", "TrÃƒ¡fego SÃƒªnior", "Processos"].map((tag, idx) => (
+                {["Social Media", "Branding", "Engenharia Web", "Tráfego Sênior", "Processos"].map((tag, idx) => (
                   <span 
                     key={idx} 
                     className="font-mono text-[9px] tracking-wider uppercase px-3 py-1.5 border border-white/5 rounded-full bg-white/[0.02] text-zinc-300 hover:border-brand/40 hover:text-brand transition-colors cursor-default"
@@ -208,7 +208,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   <div className="flex items-center justify-between border-b border-white/[0.04] pb-4">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-                      <span className="font-mono text-[9px] uppercase tracking-widest text-brand-secondary">DESEMPENHO DO NÃƒÅ¡CLEO</span>
+                      <span className="font-mono text-[9px] uppercase tracking-widest text-brand-secondary">DESEMPENHO DO NҚCLEO</span>
                     </div>
                     <span className="font-mono text-[9px] text-zinc-600">TAG08_BOARD</span>
                   </div>
@@ -218,7 +218,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                     <div className="flex items-baseline justify-between">
                       <div>
                         <h4 className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">NPS CORPORATIVO</h4>
-                        <p className="text-zinc-300 text-xs mt-0.5">SessÃƒµes de alinhamento e auditoria</p>
+                        <p className="text-zinc-300 text-xs mt-0.5">Sessões de alinhamento e auditoria</p>
                       </div>
                       <span className="font-display font-black text-3xl text-white">98.4%</span>
                     </div>
@@ -226,8 +226,8 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                     {/* Stat Item 2 */}
                     <div className="flex items-baseline justify-between border-t border-white/[0.04] pt-4">
                       <div>
-                        <h4 className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">AceleraÃƒ§Ãƒ£o de TrÃƒ¡fego</h4>
-                        <p className="text-zinc-300 text-xs mt-0.5">Retorno mÃƒ©dio sob investimento</p>
+                        <h4 className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">Aceleração de Tráfego</h4>
+                        <p className="text-zinc-300 text-xs mt-0.5">Retorno médio sob investimento</p>
                       </div>
                       <span className="font-display font-black text-3xl text-brand-secondary">+3.2x</span>
                     </div>
@@ -235,8 +235,8 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                     {/* Stat Item 3 */}
                     <div className="flex items-baseline justify-between border-t border-white/[0.04] pt-4">
                       <div>
-                        <h4 className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">Velocidade de CÃƒ³digo</h4>
-                        <p className="text-zinc-300 text-xs mt-0.5">MÃƒ©dia de carregamento de pÃƒ¡ginas</p>
+                        <h4 className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">Velocidade de Código</h4>
+                        <p className="text-zinc-300 text-xs mt-0.5">Média de carregamento de páginas</p>
                       </div>
                       <span className="font-display font-black text-3xl text-brand">&lt;1.8s</span>
                     </div>
@@ -248,8 +248,8 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                       <Award className="w-4.5 h-4.5" />
                     </div>
                     <div>
-                      <h5 className="font-mono text-[9px] font-bold text-white uppercase tracking-wider leading-none">MÃƒ©tricas Comprovadas</h5>
-                      <p className="text-zinc-400 text-[9.5px] mt-1 leading-relaxed">Infraestruturas e estratÃƒ©gias validadas em campo operacional pelas principais divisÃƒµes corporativas.</p>
+                      <h5 className="font-mono text-[9px] font-bold text-white uppercase tracking-wider leading-none">Métricas Comprovadas</h5>
+                      <p className="text-zinc-400 text-[9.5px] mt-1 leading-relaxed">Infraestruturas e estratégias validadas em campo operacional pelas principais divisões corporativas.</p>
                     </div>
                   </div>
                 </div>
@@ -265,22 +265,22 @@ export default function Servicos({ onNavigate }: ServicosProps) {
          =========================================*/}
       <div className="py-5 border-y border-white/[0.04] bg-charcoal-900/40 relative z-20 overflow-hidden select-none">
         <div className="animate-marquee whitespace-nowrap flex items-center gap-12 text-xs font-mono font-bold uppercase tracking-widest text-zinc-400">
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PRESENÃƒâ€¡A DIGITAL INTELIGENTE</span>
+          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PRESENÒ⬡A DIGITAL INTELIGENTE</span>
           <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> ENGENHARIA WEB INSTANTNEA</span>
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> CONTROL OPERATIONAL SYSTEMS</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> DIRECIONAMENTO CONCEITUAL SÃƒâ€œBRIO</span>
+          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> DIRECIONAMENTO CONCEITUAL SÒBRIO</span>
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PROCESS INTELLIGENCE ASSESSMENT</span>
           <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> METAS ADS B2B DE ELITE</span>
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> BRANDING CONCEITUAL SÃƒÅ NIOR</span>
+          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> BRANDING CONCEITUAL SҊNIOR</span>
           
           {/* Repeat once more to secure contiguous slide chain */}
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PRESENÃƒâ€¡A DIGITAL INTELIGENTE</span>
+          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PRESENÒ⬡A DIGITAL INTELIGENTE</span>
           <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> ENGENHARIA WEB INSTANTNEA</span>
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> CONTROL OPERATIONAL SYSTEMS</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> DIRECIONAMENTO CONCEITUAL SÃƒâ€œBRIO</span>
+          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> DIRECIONAMENTO CONCEITUAL SÒBRIO</span>
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PROCESS INTELLIGENCE ASSESSMENT</span>
           <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> METAS ADS B2B DE ELITE</span>
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> BRANDING CONCEITUAL SÃƒÅ NIOR</span>
+          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> BRANDING CONCEITUAL SҊNIOR</span>
         </div>
       </div>
 
@@ -296,11 +296,11 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 DIAGNOSTICADOR DE AJUSTE COMERCIAL // METODOLOGIA
               </span>
               <h3 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
-                Qual Ãƒ© a barreira operacional ou de imagem que trava sua marca hoje?
+                Qual é a barreira operacional ou de imagem que trava sua marca hoje?
               </h3>
             </div>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm md:pb-1">
-              Fomos a campo catalogar os piores gargalos de corporaÃƒ§Ãƒµes B2B e definimos respostas corretivas imediatas operadas pelos nossos especialistas.
+              Fomos a campo catalogar os piores gargalos de corporações B2B e definimos respostas corretivas imediatas operadas pelos nossos especialistas.
             </p>
           </div>
 
@@ -312,34 +312,34 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             {/* Table layout header */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4 p-5 font-mono text-[9px] text-zinc-500 uppercase tracking-widest bg-charcoal-900/60 font-semibold relative z-10 select-none">
               <div className="md:col-span-6">SINTOMA / SINAL DE ANOMALIA</div>
-              <div className="md:col-span-4">PRESCRIÃƒâ€¡ÃƒÆ’O CORRETIVA TAG08</div>
+              <div className="md:col-span-4">PRESCRIÇÃO CORRETIVA TAG08</div>
               <div className="md:col-span-2 text-right hidden md:block">PROTOCOLO</div>
             </div>
 
             {/* Matrix Row Blocks */}
             {[
               {
-                problem: "Falta de discernimento editorial. Nossa marca produz conteÃƒºdo instÃƒ¡vel, parecendo amadora perto de concorrentes menores.",
-                solution: "GestÃƒ£o Corporativa de Redes Sociais",
+                problem: "Falta de discernimento editorial. Nossa marca produz conteúdo instável, parecendo amadora perto de concorrentes menores.",
+                solution: "Gestão Corporativa de Redes Sociais",
                 slug: "/servicos/gestao-de-redes-sociais"
               },
               {
-                problem: "Marca visual antiquada ou desconectada do real prestÃƒ­gio e robustez offline que colhemos ao longo dos anos.",
+                problem: "Marca visual antiquada ou desconectada do real prestígio e robustez offline que colhemos ao longo dos anos.",
                 solution: "Branding & Identidades Conceituais",
                 slug: "/servicos/branding-identidade"
               },
               {
                 problem: "Site lento, defasado, que trava em celulares corporativos e falha em registrar leads no CRM de forma integrada.",
-                solution: "Desenvolvimento & Engenharia Web SÃƒªnior",
+                solution: "Desenvolvimento & Engenharia Web Sênior",
                 slug: "/servicos/desenvolvimento-web"
               },
               {
-                problem: "Processos retidos unicamente na mente da diretoria. A equipe trabalha de forma caÃƒ³tica quando o fundador se ausenta.",
+                problem: "Processos retidos unicamente na mente da diretoria. A equipe trabalha de forma caótica quando o fundador se ausenta.",
                 solution: "Process Intelligence (Mapeamento)",
                 slug: "/servicos/process-intelligence"
               },
               {
-                problem: "Manuais existem no drive, mas ninguÃƒ©m os consulta. O time opera em desajuste reiterado e ignora os playbooks.",
+                problem: "Manuais existem no drive, mas ninguém os consulta. O time opera em desajuste reiterado e ignora os playbooks.",
                 solution: "Process Activation (Auditoria de Rotinas)",
                 slug: "/servicos/process-activation"
               }
@@ -384,13 +384,13 @@ export default function Servicos({ onNavigate }: ServicosProps) {
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-semibold bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-              LINHA DE PRODUÃƒâ€¡ÃƒÆ’O INTEGRAL
+              LINHA DE PRODUÇÃO INTEGRAL
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-white uppercase tracking-tighter leading-none">
-              Nossos NÃƒºcleos de AtuaÃƒ§Ãƒ£o Especializados
+              Nossos Núcleos de Atuação Especializados
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-lg mx-auto">
-              SoluÃƒ§Ãƒµes executivas sofisticadas desenhadas para redefinir o tom de voz corporativo, automatizar fluxos operacionais e acelerar a captaÃƒ§Ãƒ£o de clientes.
+              Soluções executivas sofisticadas desenhadas para redefinir o tom de voz corporativo, automatizar fluxos operacionais e acelerar a captação de clientes.
             </p>
           </div>
 
@@ -411,7 +411,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                       {domain.num}.
                     </span>
                     <div className="flex items-center gap-1.5 font-mono text-[8px] text-zinc-500 uppercase tracking-widest">
-                      <span>NÃƒÅ¡CLEO INSTALADO // {domain.slug}</span>
+                      <span>NҚCLEO INSTALADO // {domain.slug}</span>
                       <div className="w-1.5 h-1.5 rounded-full bg-brand-secondary/40" />
                     </div>
                   </div>
@@ -531,13 +531,13 @@ export default function Servicos({ onNavigate }: ServicosProps) {
           
           <div className="space-y-3 text-left max-w-2xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-              ALTA SINERGIA // INTEGRAÃƒâ€¡ÃƒÆ’O DE ATIVOS
+              ALTA SINERGIA // INTEGRAï¿½ï¿½O DE ATIVOS
             </span>
             <h3 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tighter leading-none">
-              Arquitetura de Sinergia de SoluÃƒ§Ãƒµes
+              Arquitetura de Sinergia de Soluções
             </h3>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              MÃƒ³dulos isolados funcionam, mas Ãƒ© na intersecÃƒ§Ãƒ£o dos nossos nÃƒºcleos que reside o verdadeiro destravamento comercial do seu negÃƒ³cio. Veja como associamos nossas forÃƒ§as:
+              Módulos isolados funcionam, mas é na intersecção dos nossos núcleos que reside o verdadeiro destravamento comercial do seu negócio. Veja como associamos nossas forças:
             </p>
           </div>
 
@@ -547,19 +547,19 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 title: "Engenharia Sutil e Identidade",
                 action: "DESIGN COESIVO",
                 tagline: "Desenvolvimento + Branding",
-                desc: "Sua identidade refinada, manifestos e tom de voz B2B sÃƒªnior codificados sob medida, gerando carregamento em menos de 2 segundos."
+                desc: "Sua identidade refinada, manifestos e tom de voz B2B sênior codificados sob medida, gerando carregamento em menos de 2 segundos."
               },
               {
-                title: "ConteÃƒºdo Qualificado e Escala",
-                action: "CAPTAÃƒâ€¡ÃƒÆ’O ELEVADA",
-                tagline: "Redes Sociais + TrÃƒ¡fego",
-                desc: "Roteiros de alta persuasÃƒ£o de Reels e campanhas estruturadas focando em captar contatos que possuem alta renda e interesse real de compra."
+                title: "Conteúdo Qualificado e Escala",
+                action: "CAPTAï¿½ï¿½O ELEVADA",
+                tagline: "Redes Sociais + Tráfego",
+                desc: "Roteiros de alta persuasão de Reels e campanhas estruturadas focando em captar contatos que possuem alta renda e interesse real de compra."
               },
               {
-                title: "Mapeamento EstÃƒ¡vel e GovernanÃƒ§a",
+                title: "Mapeamento Estável e Governança",
                 action: "BLINDAGEM OPERACIONAL",
-                tagline: "Process Intelligence + OrganizaÃƒ§Ãƒ£o",
-                desc: "Playbooks ricos no Notion integrados Ãƒ  nossa cobranÃƒ§a tÃƒ¡tica diÃƒ¡ria, reduzindo o desgaste da alta gestÃƒ£o e criando liberdade."
+                tagline: "Process Intelligence + Organização",
+                desc: "Playbooks ricos no Notion integrados à nossa cobrança tática diária, reduzindo o desgaste da alta gestão e criando liberdade."
               }
             ].map((item, idx) => (
               <div 
@@ -584,7 +584,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 </div>
 
                 <div className="pt-4 border-t border-white/[0.04] flex items-center justify-between text-[9px] font-sans text-zinc-500 relative z-10">
-                  <span>MÃƒâ€œDULO DE INTEGRAÃƒâ€¡ÃƒÆ’O</span>
+                  <span>Mï¿½DULO DE INTEGRAï¿½ï¿½O</span>
                   <span className="text-brand-secondary font-semibold">{item.tagline}</span>
                 </div>
               </div>
@@ -633,7 +633,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   LATENCY: 12MS
                 </span>
                 <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
-                  SÃƒÅ NIOR SECURITY
+                  SҊNIOR SECURITY
                 </span>
               </div>
             </div>
@@ -651,11 +651,11 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 </span>
               </div>
               <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
-                NÃƒÅ¡CLEOS INTEGRADOS <br />
+                NҚCLEOS INTEGRADOS <br />
                 EM PERFEITA SINERGIA!
               </h2>
               <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase font-bold">
-                CONECTAMOS TODAS AS NOSSAS DISCIPLINAS OPERACIONAIS EM UMA SÃƒâ€œ ENGRENAGEM DE CRESCIMENTO ATIVO, MULTIPLICANDO A AUTORIDADE DA SUA MARCA ENQUANTO BLINDAMOS SEU FUNIL DE VENDAS.
+                CONECTAMOS TODAS AS NOSSAS DISCIPLINAS OPERACIONAIS EM UMA SÒ ENGRENAGEM DE CRESCIMENTO ATIVO, MULTIPLICANDO A AUTORIDADE DA SUA MARCA ENQUANTO BLINDAMOS SEU FUNIL DE VENDAS.
               </p>
             </div>
 
@@ -670,7 +670,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                     SINERGIA TOTAL DE ATIVOS
                   </span>
                   <p className="text-white text-xs leading-snug font-sans font-semibold">
-                    Alinhe Branding, Design, TrÃƒ¡fego e Engenharia Web sob uma Ãƒºnica direÃƒ§Ãƒ£o executiva sÃƒªnior, reduzindo ruÃƒ­do tÃƒ©cnico.
+                    Alinhe Branding, Design, Tráfego e Engenharia Web sob uma única direção executiva sênior, reduzindo ruído técnico.
                   </p>
                 </div>
               </div>
@@ -678,7 +678,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
               {/* DUAL CLIENT CONNECTION CHANNELS (BR & INT) */}
               <div className="space-y-3 font-sans">
                 <a 
-                  href={buildBrazilWhatsAppUrl("OlÃƒ¡,%20gostaria%20de%20solicitar%20um%20diagnÃƒ³stico%20de%20sinergia%20de%20serviÃƒ§os%20com%20a%20TAG08")}
+                  href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20solicitar%20um%20diagnóstico%20de%20sinergia%20de%20serviços%20com%20a%20TAG08")}
                   target="_blank"
                   rel="noreferrer"
                   className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner cursor-pointer"
@@ -739,7 +739,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   </span>
                 </div>
                 <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
-                  OPERAÃƒâ€¡ÃƒÆ’O ATIVA
+                  OPERAÇÃO ATIVA
                 </span>
               </div>
             </div>
@@ -762,18 +762,18 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   FAQ // ENCONTRE RESPOSTAS
                 </div>
                 <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
-                  DÃƒÅ¡VIDAS &amp; <br />
-                  SINERGIA DE SERVIÃƒâ€¡OS
+                  DҚVIDAS &amp; <br />
+                  SINERGIA DE SERVIÒ⬡OS
                 </h2>
                 <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
-                  EsclareÃƒ§a as principais dÃƒºvidas sobre como a TAG08 gerencia mÃƒºltiplos nÃƒºcleos de entrega simultÃƒ¢neos em prol do crescimento da sua marca.
+                  Esclareï¿½a as principais dï¿½vidas sobre como a TAG08 gerencia múltiplos nï¿½cleos de entrega simultï¿½neos em prol do crescimento da sua marca.
                 </p>
               </div>
 
               <div className="space-y-3 pt-4">
                 {([
                   { id: 0, title: "ECOSSISTEMA" },
-                  { id: 1, title: "MÃƒâ€œDULOS" },
+                  { id: 1, title: "MÒDULOS" },
                   { id: 2, title: "ALINHAMENTO" },
                   { id: 3, title: "PRAZO" }
                 ]).map((item) => (
@@ -821,7 +821,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
                   {([
                     "ECOSSISTEMA",
-                    "MÃƒâ€œDULOS",
+                    "MÒDULOS",
                     "ALINHAMENTO",
                     "PRAZO"
                   ])[activeFaq]}
@@ -829,7 +829,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                 <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
                   {([
-                    "Como os serviÃƒ§os se conectam?",
+                    "Como os serviços se conectam?",
                     "Preciso contratar tudo de uma vez?",
                     "Como funciona o alinhamento?",
                     "Quando vejo os primeiros ativos?"
@@ -838,10 +838,10 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                 <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
                   {([
-                    "Branding, redes, web e processos operam sob a mesma direÃƒ§Ãƒ£o.",
-                    "NÃƒ£o. VocÃƒª pode comeÃƒ§ar pelo que trava mais seu crescimento.",
-                    "Centralizamos a comunicaÃƒ§Ãƒ£o para reduzir ruÃƒ­do e acelerar decisÃƒ£o.",
-                    "ApÃƒ³s o onboarding, os primeiros ativos entram em produÃƒ§Ãƒ£o."
+                    "Branding, redes, web e processos operam sob a mesma direção.",
+                    "Não. Você pode começar pelo que trava mais seu crescimento.",
+                    "Centralizamos a comunicação para reduzir ruído e acelerar decisão.",
+                    "Após o onboarding, os primeiros ativos entram em produção."
                   ])[activeFaq]}
                 </p>
               </div>
@@ -854,7 +854,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA</span>
                   <h4 className="text-white font-semibold text-sm leading-snug font-display">Como agimos de forma organizada?</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    Eliminamos ruÃƒ­do e priorizamos clareza, foco e execuÃƒ§Ãƒ£o.
+                    Eliminamos ruído e priorizamos clareza, foco e execução.
                   </p>
                 </div>
                 <button
@@ -869,13 +869,13 @@ export default function Servicos({ onNavigate }: ServicosProps) {
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer uma estratÃƒ©gia sob medida?</h4>
+                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer uma estratégia sob medida?</h4>
                   <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
-                    Fale com a TAG08 via WhatsApp e avalie o prÃƒ³ximo passo com clareza.
+                    Fale com a TAG08 via WhatsApp e avalie o próximo passo com clareza.
                   </p>
                 </div>
                 <a
-                  href={buildBrazilWhatsAppUrl("OlÃƒ¡,%20gostaria%20de%20consultar%20viabilidade%20estratÃƒ©gica%20especializada%20para%20minha%20marca!")}
+                  href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20consultar%20viabilidade%20estratégica%20especializada%20para%20minha%20marca!")}
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-all"
@@ -898,10 +898,10 @@ export default function Servicos({ onNavigate }: ServicosProps) {
           
           <div className="space-y-2">
             <h3 className="font-display font-medium text-xl sm:text-2xl text-white uppercase tracking-tight leading-none">
-              NÃƒ£o sabe por onde comeÃƒ§ar?
+              Não sabe por onde começar?
             </h3>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Agende um diagnÃƒ³stico curto e receba direÃƒ§Ãƒ£o clara para o prÃƒ³ximo passo.
+              Agende um diagnóstico curto e receba direção clara para o próximo passo.
             </p>
           </div>
           
@@ -909,7 +909,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             onClick={() => handleLinkClick("/contato")}
             className="bg-brand-secondary hover:bg-brand hover:scale-105 duration-300 text-black font-black text-xs font-sans px-7 py-4 rounded-xl transition-all shrink-0 shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.15)] cursor-pointer"
           >
-            AGENDAR DIAGNÃƒâ€œSTICO
+            AGENDAR DIAGNÒSTICO
           </button>
         </div>
       </section>

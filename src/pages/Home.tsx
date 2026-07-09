@@ -22,24 +22,24 @@ const CLIENT_CASES = [
     name: "Alan Rocha",
     handle: "@alanrochap",
     categoryTags: ["DESIGN", "SOCIAL MEDIA", "BRANDING"],
-    tagline: "A ÃšNICA REAÃ‡ÃƒO FOI PENSAR:",
+    tagline: "A ÚNICA REAÇÃO FOI PENSAR:",
     quote: "Parece que fui dirigida por alguém que me conhece de verdade. Que entende meu estilo, minha energia e o que quero mostrar.",
     avatar: clientAlanRocha,
     backgroundImg: moodyClientPortrait,
     colors: ["var(--color-brand)", "#111111"],
-    caseName: "CASE DE POSICIONAMENTO â€” 2025"
+    caseName: "CASE DE POSICIONAMENTO — 2025"
   },
   {
     id: "le-visage",
     name: "Clínica Le Visage",
     handle: "@clinicalevisage",
-    categoryTags: ["ESTÃ‰TICA", "LUXURY SPA", "IDENTIDADE"],
-    tagline: "SOPRO DE SOFISTICAÃ‡ÃƒO E ARTE:",
+    categoryTags: ["ESTÉTICA", "LUXURY SPA", "IDENTIDADE"],
+    tagline: "SOPRO DE SOFISTICAÇÃO E ARTE:",
     quote: "A TAG08 capturou o refinamento dermoestético com absoluto primor. Nosso novo visual personifica o acolhimento elegante e o requinte que nossos pacientes exigem.",
     avatar: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=200",
     backgroundImg: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=1200",
     colors: ["var(--color-brand)", "#111111"],
-    caseName: "ESTÃ‰TICA DE LUXO â€” 2024"
+    caseName: "ESTÉTICA DE LUXO — 2024"
   },
   {
     id: "luciana-gadelha",
@@ -51,43 +51,43 @@ const CLIENT_CASES = [
     avatar: "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=200",
     backgroundImg: "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=1200",
     colors: ["var(--color-brand)", "#111111"],
-    caseName: "ODONTOLOGIA HIGH-END â€” 2024"
+    caseName: "ODONTOLOGIA HIGH-END — 2024"
   },
   {
     id: "doctor-play",
     name: "Doctor Play",
     handle: "@doctorplay.br",
     categoryTags: ["MEDTECH", "STREAMING", "SISTEMA"],
-    tagline: "CONTEÃšDO MÃ‰DICO REVOLUCIONADO:",
+    tagline: "CONTEÚDO MÉDICO REVOLUCIONADO:",
     quote: "Unimos entretenimento do streaming de alta qualidade com educação técnica em saúde. O design e posicionamento que a equipe estruturou nos destaca hoje como uma plataforma inovadora de extrema confiança.",
     avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200",
     backgroundImg: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1200",
     colors: ["var(--color-brand)", "#111111"],
-    caseName: "PLATAFORMA STREAM â€” 2025"
+    caseName: "PLATAFORMA STREAM — 2025"
   },
   {
     id: "legal-lab",
     name: "Legal Lab",
     handle: "@legallab.law",
     categoryTags: ["LAW TECH", "CORPORATIVO", "MINIMALISMO"],
-    tagline: "DIREITO & INOVAÃ‡ÃƒO PRECISA:",
+    tagline: "DIREITO & INOVAÇÃO PRECISA:",
     quote: "Unindo a seriedade jurídica ao design de precisão digital hexagonal. Uma transição visual impecável que reposicionou nossa marca perante grandes corporações.",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
     backgroundImg: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&q=80&w=1200",
     colors: ["var(--color-brand)", "#111111"],
-    caseName: "LAW TECH CONCEITO â€” 2025"
+    caseName: "LAW TECH CONCEITO — 2025"
   },
   {
     id: "squalis",
     name: "Squalis Educação",
     handle: "@squaliseducacao",
     categoryTags: ["ACADEMIA", "PROCESSOS", "TECNOLOGIA"],
-    tagline: "PERFORMANCE DE SINALIZAÃ‡ÃƒO:",
+    tagline: "PERFORMANCE DE SINALIZAÇÃO:",
     quote: "O redesenho integral do ecossistema Squalis facilitou não apenas as vendas nos canais de captação de alunos, mas elevou incrivelmente o valor de mercado percebido pelos tomadores de decisão.",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200",
     backgroundImg: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1200",
     colors: ["var(--color-brand)", "#111111"],
-    caseName: "ACADEMIA CORPORATIVA â€” 2024"
+    caseName: "ACADEMIA CORPORATIVA — 2024"
   }
 ];
 
@@ -103,7 +103,7 @@ const YOUTUBE_VIDEOS = [
     embedCode: "612U4R57M70", // A generic video presentation code, we also support direct channel handle redirect
     videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
     views: "12.4K visualizações",
-    tagline: "DIREÃ‡ÃƒO INTUITIVA & COESÃƒO VISUAL"
+    tagline: "DIREÇÃO INTUITIVA & COESÃO VISUAL"
   },
   {
     id: "branding-blueprint",
@@ -116,7 +116,7 @@ const YOUTUBE_VIDEOS = [
     embedCode: "612U4R57M70",
     videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
     views: "8.9K visualizações",
-    tagline: "SOPRO DE SOFISTICAÃ‡ÃƒO E ARTE"
+    tagline: "SOPRO DE SOFISTICAÇÃO E ARTE"
   },
   {
     id: "trafego-pago-saboroso",
@@ -124,12 +124,12 @@ const YOUTUBE_VIDEOS = [
     description: "A matemática cirúrgica dos anúncios corporativos. Saiba como segmentar com alta intenção de compra e evitar desperdícios com campanhas genéricas ou superficiais.",
     duration: "15:10",
     date: "03 Mai, 2026",
-    category: "MARKETING SÃŠNIOR",
+    category: "MARKETING SÊNIOR",
     thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
     embedCode: "612U4R57M70",
     videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
     views: "14.2K visualizações",
-    tagline: "MÁXIMA EFICIÃŠNCIA OPERACIONAL"
+    tagline: "MÁXIMA EFICIÊNCIA OPERACIONAL"
   },
   {
     id: "sistemas-operacionais-digitais",
@@ -142,7 +142,7 @@ const YOUTUBE_VIDEOS = [
     embedCode: "612U4R57M70",
     videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
     views: "7.5K visualizações",
-    tagline: "COMUNICAÃ‡ÃƒO CONCRETA ASSÍNCRONA"
+    tagline: "COMUNICAÇÃO CONCRETA ASSÍNCRONA"
   }
 ];
 
@@ -150,7 +150,7 @@ const SERVICOS_TILES = [
   {
     id: "redes-sociais",
     title: "Gestão de Redes",
-    subtitle: "CONTEÃšDO & INSTAGRAM",
+    subtitle: "CONTEÚDO & INSTAGRAM",
     desc: "Planejamento editorial de alto nível, redação, roteiros e publicação consistente.",
     bgClass: "bg-charcoal-900",
     textClass: "text-white",
@@ -225,7 +225,7 @@ const SERVICOS_TILES = [
   {
     id: "copywriting",
     title: "Copywriting Estratégico",
-    subtitle: "COMUNICAÃ‡ÃƒO DIRECIONADA",
+    subtitle: "COMUNICAÇÃO DIRECIONADA",
     desc: "Roteiros e textos focados em extrair a personalidade exata do seu negócio.",
     bgClass: "bg-charcoal-900",
     textClass: "text-white",
@@ -276,12 +276,12 @@ const PORTFOLIO_SERVICES_DATA = [
   {
     id: "redes-sociais",
     title: "Gestão de Redes",
-    subtitle: "CONTEÃšDO & INSTAGRAM",
+    subtitle: "CONTEÚDO & INSTAGRAM",
     shortDesc: "Planejamento de alto nível e consistência refinada.",
     longDesc: "Alinhamos cada carrossel, roteiro de vídeo e imagem estática para construir uma percepção de grife que gera desejo imediato na sua audiência de alta renda.",
     metricLabel: "CRESCIMENTO",
     metricValue: "+83%",
-    chartLabel: "CONVERSÃƒO DE LEAD",
+    chartLabel: "CONVERSÃO DE LEAD",
     chartSubtitle: "Filtros de conteúdo e tráfego pago integrados para eliminar curiosos da sua base.",
     bgImage: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=1200",
     wavePath: "M10,48 C30,48 50,20 70,36 C90,52 110,8 130,28 C150,48 170,12 190,4",
@@ -300,7 +300,7 @@ const PORTFOLIO_SERVICES_DATA = [
     subtitle: "REELS, PODCASTS, SHORTS",
     shortDesc: "Roteirização magnética e pós-produção integrada.",
     longDesc: "Captação com lentes cinematográficas, tratamento acústico impecável e edição dinâmica com ritmo cirúrgico para elevar a retenção acima do patamar comum.",
-    metricLabel: "RETENÃ‡ÃƒO DE REELS",
+    metricLabel: "RETENÇÃO DE REELS",
     metricValue: "68.4%",
     chartLabel: "TEMPO ASSISTIDO",
     chartSubtitle: "Análise quantitativa de retenção média das mídias verticais de vídeo curto.",
@@ -359,12 +359,12 @@ const PORTFOLIO_SERVICES_DATA = [
   {
     id: "copywriting",
     title: "Copywriting Estratégico",
-    subtitle: "COMUNICAÃ‡ÃƒO DIRECIONADA",
+    subtitle: "COMUNICAÇÃO DIRECIONADA",
     shortDesc: "Roteiros e textos que eliminam clichês comerciais.",
     longDesc: "Lapidamos legendas, páginas e argumentos de vendas com redação persuasiva polida, refinando e vestindo sua comunicação corporativa com elegância intelectual.",
     metricLabel: "CLIQUE TAXA (CTR)",
     metricValue: "+14.2%",
-    chartLabel: "RETENÃ‡ÃƒO DO LEITOR",
+    chartLabel: "RETENÇÃO DO LEITOR",
     chartSubtitle: "Roteiros construídos com estrutura hipnótica que eliminam mensagens robóticas.",
     bgImage: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=1200",
     wavePath: "M10,35 C40,45 60,10 90,30 C120,45 150,15 190,10",
@@ -461,7 +461,7 @@ const GMB_REVIEWS = [
     time: "há 1 mês",
     tagline: "O diagnóstico gratuito me revelou mais do que consultorias caras do setor.",
     text: "O diagnóstico gratuito deles foi melhor do que muitas consultorias pagas que já contratamos. Eles mostram os furos exatos na estrutura de branding e oferecem um plano claro. Implementamos tudo e o resultado veio rápido.",
-    category: "DIAGNÃ“STICO"
+    category: "DIAGNÓSTICO"
   },
   {
     name: "Leonardo Castilho",
@@ -520,13 +520,13 @@ const DIAGNOSTIQUER_PHASES = {
     symptoms: [
       {
         id: "solutions",
-        label: "CAOS DE OPERAÃ‡ÃƒO",
+        label: "CAOS DE OPERAÇÃO",
         desc: "Equipe ou agência atual opera no improviso tático, dependendo de reuniões pesadas e alinhamentos diários urgentes.",
         symptom: "Ausência de documentação ou playbooks faz sua liderança atuar como apagadora de incêndio."
       },
       {
         id: "scale",
-        label: "FALTA DE MÃ‰TODO",
+        label: "FALTA DE MÉTODO",
         desc: "Há faturamento e tração inicial, porém falta previsibilidade e governança de processos para garantir constância na entrega sênior.",
         symptom: "O ecossistema depende excessivamente de figuras específicas e sofre com gargalos recorrentes."
       }
@@ -573,7 +573,7 @@ function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
                 {item.client}
               </span>
               <p className="font-sans text-[10px] text-zinc-600 max-w-[190px] leading-tight line-clamp-2">
-                {item.category} // DIAGNÃ“STICO ATIVO
+                {item.category} // DIAGNÓSTICO ATIVO
               </p>
             </div>
           </div>
@@ -652,8 +652,8 @@ export default function Home({ onNavigate }: HomeProps) {
     googleBusiness: "fallback"
   });
 
-  const YOUTUBE_VIDEOS = youtubeVideos;
-  const GMB_REVIEWS = gmbReviews;
+  const visibleYoutubeVideos = youtubeVideos;
+  const visibleGmbReviews = gmbReviews;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -717,7 +717,7 @@ export default function Home({ onNavigate }: HomeProps) {
   useEffect(() => {
     if (isHoveringGmb) return;
     const interval = setInterval(() => {
-      setActiveReview((prev) => (prev + 1) % GMB_REVIEWS.length);
+      setActiveReview((prev) => (prev + 1) % visibleGmbReviews.length);
     }, 8500);
     return () => clearInterval(interval);
   }, [isHoveringGmb]);
@@ -754,7 +754,7 @@ export default function Home({ onNavigate }: HomeProps) {
   };
 
   const tagCategories = [
-    { name: "ESTRATÃ‰GIA", style: "filled-neon" },
+    { name: "ESTRATÉGIA", style: "filled-neon" },
     { name: "BRANDING", style: "outline" },
     { name: "TRÁFEGO PAGO", style: "outline" },
     { name: "DEV WEB", style: "filled-white" },
@@ -821,7 +821,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       <span className="w-1.5 h-1.5 rounded-full bg-brand animate-ping" />
                     </span>
                     <span className="font-mono text-[9px] text-black font-bold uppercase tracking-wider">
-                      MÃ‰TODO DIAGNÃ“STICO ATIVO
+                      MÉTODO DIAGNÓSTICO ATIVO
                     </span>
                   </div>
                   
@@ -839,7 +839,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
                 <div className="w-full bg-black/10 rounded-xl py-3 px-4 flex items-center justify-between group-hover:bg-black group-hover:text-brand transition-all duration-300">
                   <span className="font-mono text-[10px] font-extrabold tracking-wider uppercase">
-                    COMEÃ‡AR DIAGNÃ“STICO AGORA â€” Ã‰ GRÁTIS
+                    COMEÇAR DIAGNÓSTICO AGORA — É GRÁTIS
                   </span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </div>
@@ -909,7 +909,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 </div>
                 
                 <p className="text-black/60 font-mono text-[9px] uppercase tracking-wide font-bold">
-                  DEDICAÃ‡ÃƒO MÁXIMA & EXCELÃŠNCIA SÃŠNIOR
+                  DEDICAÇÃO MÁXIMA & EXCELÊNCIA SÊNIOR
                 </p>
               </div>
 
@@ -994,7 +994,7 @@ export default function Home({ onNavigate }: HomeProps) {
             </Suspense>
           </motion.div>
 
-          {/* CTA INTERMEDIÁRIO APÃ“S O DIAGNÃ“STICO */}
+          {/* CTA INTERMEDIÁRIO APÓS O DIAGNÓSTICO */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1011,7 +1011,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-brand animate-pulse" />
                   <span className="font-mono text-[9px] uppercase tracking-widest text-brand font-black bg-brand/5 border border-brand/10 px-2 py-0.5 rounded">
-                    SESSÃƒO DIAGNÃ“STICA EXCLUSIVA
+                    SESSÃO DIAGNÓSTICA EXCLUSIVA
                   </span>
                 </div>
                 <h3 className="font-display font-medium text-xl sm:text-2xl text-white leading-tight uppercase">
@@ -1093,7 +1093,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   {/* Left sub-column: Card M-01 & Card M-03 */}
                   <div className="flex flex-col gap-6">
                     
-                    {/* Card M-01: PRESENÃ‡A DIGITAL */}
+                    {/* Card M-01: PRESENÇA DIGITAL */}
                     <div 
                       onClick={() => {
                         onNavigate("/servicos/gestao-de-redes-sociais");
@@ -1104,7 +1104,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       <div>
                         <div className="flex items-center justify-between w-full">
                           <span className="font-mono text-[8px] text-brand uppercase tracking-widest bg-brand/5 border border-brand/10 px-2.5 py-0.5 rounded font-black">
-                            M-01 // PRESENÃ‡A DIGITAL
+                            M-01 // PRESENÇA DIGITAL
                           </span>
                           <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-brand transition-colors" />
                         </div>
@@ -1124,7 +1124,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       </div>
                     </div>
 
-                    {/* Card M-03: EVOLUÃ‡ÃƒO DE MARCA */}
+                    {/* Card M-03: EVOLUÇÃO DE MARCA */}
                     <div 
                       onClick={() => {
                         onNavigate("/servicos/branding-identidade");
@@ -1134,7 +1134,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-mono text-[8.5px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/15 px-2 py-0.5 rounded tracking-widest font-bold">M-03</span>
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-semibold">EVOLUÃ‡ÃƒO DE MARCA</span>
+                        <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-semibold">EVOLUÇÃO DE MARCA</span>
                       </div>
                       
                       <div>
@@ -1187,7 +1187,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 {/* Split Row Top: Card M-05 & Card M-06 / Diagnóstico */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   
-                  {/* Card M-05: INTELIGÃŠNCIA OPERACIONAL (Tall Dark Card) */}
+                  {/* Card M-05: INTELIGÊNCIA OPERACIONAL (Tall Dark Card) */}
                   <div 
                     onClick={() => {
                       onNavigate("/servicos/process-intelligence");
@@ -1200,7 +1200,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     <div>
                       <div className="flex items-center justify-between w-full">
                         <span className="font-mono text-[9px] font-black uppercase tracking-widest text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-3 py-1 rounded-full block w-fit">
-                          M-05 // INTELIGÃŠNCIA OPERACIONAL
+                          M-05 // INTELIGÊNCIA OPERACIONAL
                         </span>
                         <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-brand transition-colors" />
                       </div>
@@ -1218,7 +1218,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   {/* Right Sub-column of Split: Card M-06 & Diagnostics */}
                   <div className="flex flex-col gap-6">
                     
-                    {/* Card M-06: GOVERNANÃ‡A & AUDITORIA */}
+                    {/* Card M-06: GOVERNANÇA & AUDITORIA */}
                     <div 
                       onClick={() => {
                         onNavigate("/servicos/process-activation");
@@ -1228,7 +1228,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-semibold">M-06</span>
-                        <span className="font-mono text-[8.5px] text-zinc-500 tracking-widest font-black">GOVERNANÃ‡A &amp; AUDITORIA</span>
+                        <span className="font-mono text-[8.5px] text-zinc-500 tracking-widest font-black">GOVERNANÇA &amp; AUDITORIA</span>
                       </div>
                       
                       <div>
@@ -1304,7 +1304,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* INDEPENDENT SECTION 2.1: DIAGNÃ“STICO // SINAL CORRUPTO */}
+      {/* INDEPENDENT SECTION 2.1: DIAGNÓSTICO // SINAL CORRUPTO */}
       <section id="diagnostico" className="py-28 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
         {/* Subtle grid decor */}
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff01_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none" />
@@ -1316,7 +1316,7 @@ export default function Home({ onNavigate }: HomeProps) {
           {/* Section Introduction */}
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <span className="font-mono text-[9px] tracking-widest text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/15 px-3 py-1 rounded-full uppercase font-bold inline-block">
-              DIAGNÃ“STICO // SINAL CORRUPTO
+              DIAGNÓSTICO // SINAL CORRUPTO
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tight leading-none">
               Sinais de refluxo e arrasto operacional
@@ -1412,7 +1412,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     {/* Tactics Pills inside the column */}
                     <div className="mt-6 space-y-2 relative z-20">
                       <span className="text-[8px] font-mono text-zinc-600 uppercase tracking-widest block font-bold">
-                        PÍLULAS DE ATUAÃ‡ÃƒO:
+                        PÍLULAS DE ATUAÇÃO:
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {phase.pills.map((p) => {
@@ -1525,7 +1525,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       
                       <div className="space-y-4">
                         <span className="font-mono text-[8.5px] text-zinc-500 font-bold tracking-widest uppercase block border-b border-white/[0.03] pb-2">
-                          DIAGNÃ“STICO DETALHADO DOS SINTOMAS TÁTICOS ATIVOS
+                          DIAGNÓSTICO DETALHADO DOS SINTOMAS TÁTICOS ATIVOS
                         </span>
 
                         {/* Responsive grid of cards for each symptom in this phase */}
@@ -1564,7 +1564,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
                                 {/* Consequences quote */}
                                 <div className="pt-3 border-t border-white/[0.02] space-y-1.5">
-                                  <span className="font-sans text-[7.5px] text-zinc-500 uppercase tracking-widest block">GRAVIDADE / CONSEQUÃŠNCIA OPERACIONAL</span>
+                                  <span className="font-sans text-[7.5px] text-zinc-500 uppercase tracking-widest block">GRAVIDADE / CONSEQUÊNCIA OPERACIONAL</span>
                                   <p className={`text-[10px] font-sans leading-relaxed italic border-l-2 pl-2.5 py-0.5 rounded ${
                                     isThisSymptomActive 
                                       ? "bg-red-950/10 border-red-500/35 text-red-300" 
@@ -1615,7 +1615,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* INDEPENDENT SECTION 2.2: SUTILEZA OPERACIONAL // DIREÃ‡ÃƒO SÃŠNIOR */}
+      {/* INDEPENDENT SECTION 2.2: SUTILEZA OPERACIONAL // DIREÇÃO SÊNIOR */}
       <section id="metodologia" className="py-28 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
         {/* Glow corner decors */}
         <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-brand-secondary/[0.01] rounded-full blur-[140px] pointer-events-none" />
@@ -1626,7 +1626,7 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="max-w-3xl text-left space-y-4">
             <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary" />
-              SUTILEZA OPERACIONAL // PROTOCOLOS SÃŠNIOR
+              SUTILEZA OPERACIONAL // PROTOCOLOS SÊNIOR
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tight leading-tight">
               Nossa Metodologia Consultiva de Recomendação
@@ -1750,7 +1750,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   }}
                   className="bg-black text-white hover:bg-black/90 text-[10px] font-semibold px-4 py-2 font-mono uppercase rounded-xl transition-all flex items-center gap-2 group/btn shadow-md"
                 >
-                  Assegurar Minha Escala <span className="group-hover/btn:translate-x-1 transition-transform">ââ€ â€™</span>
+                  Assegurar Minha Escala <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
                 </button>
               </div>
             </motion.div>
@@ -1775,7 +1775,7 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
 
               <div className="pt-6 border-t border-brand-secondary/10 mt-8 flex items-center justify-between w-full text-zinc-500 font-mono text-[9px] uppercase tracking-wider">
-                <span>04 // PRESCRIÃ‡ÃƒO</span>
+                <span>04 // PRESCRIÇÃO</span>
                 <ArrowLeft className="w-4 h-4 text-brand-secondary hidden lg:block" />
                 <ArrowDown className="w-4 h-4 text-brand-secondary lg:hidden" />
               </div>
@@ -1797,7 +1797,7 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="max-w-3xl text-left space-y-4 mb-16">
             <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary" />
-              DIFERENCIAIS DE OPERAÃ‡ÃƒO
+              DIFERENCIAIS DE OPERAÇÃO
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient leading-tight uppercase">
               Por que grandes líderes e marcas de excelência escolhem crescer conosco?
@@ -1822,7 +1822,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   <div className="w-9 h-9 rounded-full bg-white/[0.03] border border-white/[0.08] text-brand-secondary flex items-center justify-center">
                     <Star className="w-4 h-4 fill-current text-brand" />
                   </div>
-                  <span className="font-mono text-[9px] text-brand-secondary tracking-wider uppercase font-bold opacity-60">SÃŠNIOR</span>
+                  <span className="font-mono text-[9px] text-brand-secondary tracking-wider uppercase font-bold opacity-60">SÊNIOR</span>
                 </div>
                 <div className="mt-4 space-y-1">
                   <h4 className="font-display font-black text-xs sm:text-sm text-white uppercase tracking-tight">Consórcio de Diretores</h4>
@@ -1863,7 +1863,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
                     <span className="font-display font-black text-3xl text-black tracking-tighter block leading-none">4 PILARES</span>
-                    <p className="text-black font-display font-bold text-[10px] uppercase tracking-wider">ESTRATÃ‰GIA INTEGRADA</p>
+                    <p className="text-black font-display font-bold text-[10px] uppercase tracking-wider">ESTRATÉGIA INTEGRADA</p>
                     <p className="text-black/60 text-[9.5px] leading-snug font-medium">Copy, Ads, WebDev e Design perfeitamente sem costuras.</p>
                   </div>
                 </div>
@@ -1903,7 +1903,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   <span className="font-mono text-[9px] text-brand-secondary tracking-widest uppercase font-extrabold bg-brand-secondary/10 px-2.5 py-1 rounded-full">
                     Estúdio Operacional
                   </span>
-                  <span className="text-zinc-500 font-mono text-[8px]">SÃƒO PAULO / BR</span>
+                  <span className="text-zinc-500 font-mono text-[8px]">SÃO PAULO / BR</span>
                 </div>
 
                 {/* HERO DIGITAL ".T" CENTERING */}
@@ -1917,7 +1917,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   </span>
                   
                   <span className="text-white font-mono text-[10px] tracking-widest font-black uppercase mt-4">
-                    TAG08 CONSÃ“RCIO
+                    TAG08 CONSÓRCIO
                   </span>
                 </div>
 
@@ -2040,7 +2040,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* SECTION 4 - PORTFÃ“LIO DE SOLUÃ‡Ã•ES DE EXCELÃŠNCIA (BENTO GRID EDITORIAL DE ALTA NAVEGABILIDADE) */}
+      {/* SECTION 4 - PORTFÓLIO DE SOLUÇÕES DE EXCELÊNCIA (BENTO GRID EDITORIAL DE ALTA NAVEGABILIDADE) */}
       <section id="servicos-principais" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         
         {/* Ambient background decoration */}
@@ -2086,7 +2086,7 @@ export default function Home({ onNavigate }: HomeProps) {
             <div className="relative z-10 pt-10 pb-8 flex flex-col xl:flex-row xl:items-end justify-between gap-6">
               <div className="text-left space-y-2 max-w-3xl">
                 <p className="font-mono text-[10px] text-zinc-500 tracking-widest uppercase font-extrabold block">
-                  PORTFÃ“LIO DE SOLUÃ‡Ã•ES DE EXCELÃŠNCIA
+                  PORTFÓLIO DE SOLUÇÕES DE EXCELÊNCIA
                 </p>
                 <h2 className="font-display font-black text-4xl sm:text-7xl lg:text-[76px] leading-[0.85] tracking-tighter text-black uppercase">
                   DIGITAL MARKETING <br />
@@ -2233,7 +2233,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* SECTION 4.5 - RESULTADOS E CASES (MÃ‰TODOS COM RESULTADO COMPROVADOS NA PRÁTICA) */}
+      {/* SECTION 4.5 - RESULTADOS E CASES (MÉTODOS COM RESULTADO COMPROVADOS NA PRÁTICA) */}
       <section id="resultados-cases" className="py-24 px-6 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
         {/* Ambient background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[120px] pointer-events-none" />
@@ -2341,13 +2341,13 @@ export default function Home({ onNavigate }: HomeProps) {
 
               {/* Massive Bold Heading mirroring reference design */}
               <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.95] tracking-tighter uppercase">
-                ESTRATÃ‰GIA EDITORIAL <br />
+                ESTRATÉGIA EDITORIAL <br />
                 &amp; MÍDIAS TÁTICAS!
               </h2>
 
               {/* Description Paragraph with high contrast block typeface layout */}
               <p className="text-black/85 text-[11px] sm:text-xs max-w-2xl leading-relaxed font-sans font-extrabold uppercase">
-                VISTA SUA MARCA COM A SOBERANIA VISUAL E MENTAL QUE SÃ“ PROFISSIONAIS DE ALTO PRESTÍGIO COMPREENDEM. ESCOLHA SEU ESCALONAMENTO DE PRESENÃ‡A DIRETA DIGITAL.
+                VISTA SUA MARCA COM A SOBERANIA VISUAL E MENTAL QUE SÓ PROFISSIONAIS DE ALTO PRESTÍGIO COMPREENDEM. ESCOLHA SEU ESCALONAMENTO DE PRESENÇA DIRETA DIGITAL.
               </p>
             </div>
 
@@ -2436,7 +2436,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 </div>
                 <div className="space-y-0.5">
                   <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
-                    {selectedEditorialPlan === "base" ? "RECOMENDAÃ‡ÃƒO OPERACIONAL" : "ALOCAÃ‡ÃƒO DE DIRETOR"}
+                    {selectedEditorialPlan === "base" ? "RECOMENDAÇÃO OPERACIONAL" : "ALOCAÇÃO DE DIRETOR"}
                   </span>
                   <p className="text-white text-xs leading-snug font-sans font-semibold">
                     {selectedEditorialPlan === "base" 
@@ -2452,7 +2452,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   href={buildBrazilWhatsAppUrl(`Olá,%20gostaria%20de%20solicitar%20comunicação%20de%20diretor%20para%20o%2520Plano%2520${selectedEditorialPlan.toUpperCase()}%2520da%2520TAG08!`)}
                   target="_blank"
                   rel="noreferrer"
-                  onClick={() => handleOutboundClick("WhatsApp", buildBrazilWhatsAppUrl(`OlÃƒ¡,%20gostaria%20de%20solicitar%20comunicaÃƒ§Ãƒ£o%20de%20diretor%20para%20o%2520Plano%2520${selectedEditorialPlan.toUpperCase()}%2520da%2520TAG08!`), "home-editorial-plan-br")}
+                  onClick={() => handleOutboundClick("WhatsApp", buildBrazilWhatsAppUrl(`Olá,%20gostaria%20de%20solicitar%20comunicação%20de%20diretor%20para%20o%2520Plano%2520${selectedEditorialPlan.toUpperCase()}%2520da%2520TAG08!`), "home-editorial-plan-br")}
                   className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner"
                 >
                   <div className="flex items-center justify-between">
@@ -2508,11 +2508,11 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-brand animate-pulse" />
                   <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest font-extrabold">
-                    AGÃŠNCIA TAG08
+                    AGÊNCIA TAG08
                   </span>
                 </div>
                 <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
-                  OPERAÃ‡ÃƒO E CO-PILOTO 100% ATIVOS
+                  OPERAÇÃO E CO-PILOTO 100% ATIVOS
                 </span>
               </div>
 
@@ -2597,7 +2597,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* SECTION 6.5 - PRODUÃ‡Ã•ES RECENTES NO YOUTUBE (REDESENHADOS COESOS INSPIRADOS NAS REFERÃŠNCIAS VISUAIS DE CARROSSEL E RETRATO EDITORIAL) */}
+      {/* SECTION 6.5 - PRODUÇÕES RECENTES NO YOUTUBE (REDESENHADOS COESOS INSPIRADOS NAS REFERÊNCIAS VISUAIS DE CARROSSEL E RETRATO EDITORIAL) */}
       <section id="videos-recentes" className="py-24 px-4 sm:px-6 md:px-8 bg-black border-b border-white/[0.04] relative overflow-hidden">
         {/* Subtle decorative grid overlay and luminous auras */}
         <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.01)_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
@@ -2609,12 +2609,12 @@ export default function Home({ onNavigate }: HomeProps) {
           {/* Section Header with top badge and clean typography */}
           <div className="max-w-3xl text-left space-y-4 mb-16">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
-              CONTEÃšDO DE ALTA RETENÃ‡ÃƒO // YOUTUBE CHANNEL
+              CONTEÚDO DE ALTA RETENÇÃO // YOUTUBE CHANNEL
             </div>
             
             <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white leading-[0.9] tracking-tighter uppercase">
-              ÃšLTIMAS PRODUÃ‡Ã•ES <br />
-              &amp; ENGENHARIA DE CONVERSÃƒO
+              ÚLTIMAS PRODUÇÕES <br />
+              &amp; ENGENHARIA DE CONVERSÃO
             </h2>
             
             <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-2xl">
@@ -2633,8 +2633,8 @@ export default function Home({ onNavigate }: HomeProps) {
                 {isPlayingVideo ? (
                   <div className="absolute inset-0 z-30 h-full w-full bg-black">
                     <iframe 
-                      src={`https://www.youtube.com/embed/${YOUTUBE_VIDEOS[activeVideoIndex].embedCode}?autoplay=1`} 
-                      title={YOUTUBE_VIDEOS[activeVideoIndex].title} 
+                      src={`https://www.youtube.com/embed/${visibleYoutubeVideos[activeVideoIndex].embedCode}?autoplay=1`} 
+                      title={visibleYoutubeVideos[activeVideoIndex].title} 
                       className="w-full h-full border-0 absolute inset-0 rounded-[28px] sm:rounded-[36px]" 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                       allowFullScreen
@@ -2654,8 +2654,8 @@ export default function Home({ onNavigate }: HomeProps) {
                     {/* Background Visual Backdrop with custom vignette */}
                     <div className="absolute inset-0 z-0 pointer-events-none select-none">
                       <img 
-                        src={YOUTUBE_VIDEOS[activeVideoIndex].thumbnail} 
-                        alt={YOUTUBE_VIDEOS[activeVideoIndex].title} 
+                        src={visibleYoutubeVideos[activeVideoIndex].thumbnail} 
+                        alt={visibleYoutubeVideos[activeVideoIndex].title} 
                         className="w-full h-full object-cover opacity-75 group-hover:scale-[1.02] transition-transform duration-[1200ms] ease-out brightness-[0.7] contrast-[1.05] grayscale-[15%]"
                         referrerPolicy="no-referrer"
                       />
@@ -2689,7 +2689,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
                       {/* Video Stats/Views label or menu points mimicking Ref 1 */}
                       <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/10 border border-brand-secondary/30 px-3 py-1.5 rounded-full uppercase font-black tracking-widest shadow-sm">
-                        {YOUTUBE_VIDEOS[activeVideoIndex].views}
+                        {visibleYoutubeVideos[activeVideoIndex].views}
                       </span>
                     </div>
 
@@ -2713,20 +2713,20 @@ export default function Home({ onNavigate }: HomeProps) {
                     <div className="relative z-10 space-y-3 pt-6 border-b border-white/[0.04] pb-4">
                       <div className="flex items-center gap-2">
                         <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black">
-                          {YOUTUBE_VIDEOS[activeVideoIndex].category}
+                          {visibleYoutubeVideos[activeVideoIndex].category}
                         </span>
                         <span className="text-white/20 text-xs">//</span>
                         <span className="font-mono text-[9px] text-zinc-400 font-bold uppercase tracking-wider">
-                          DURAÃ‡ÃƒO: {YOUTUBE_VIDEOS[activeVideoIndex].duration} MIN
+                          DURAÇÃO: {visibleYoutubeVideos[activeVideoIndex].duration} MIN
                         </span>
                       </div>
                       
                       <h3 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tighter uppercase leading-none">
-                        {YOUTUBE_VIDEOS[activeVideoIndex].title}
+                        {visibleYoutubeVideos[activeVideoIndex].title}
                       </h3>
                       
                       <p className="text-zinc-300 text-xs sm:text-[13px] font-sans leading-relaxed max-w-2xl font-medium">
-                        {YOUTUBE_VIDEOS[activeVideoIndex].description}
+                        {visibleYoutubeVideos[activeVideoIndex].description}
                       </p>
                     </div>
 
@@ -2737,7 +2737,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       </span>
                       <div className="flex items-center gap-1.5 font-mono text-[8.5px] text-brand-secondary font-black bg-white/[0.02] border border-white/5 py-1 px-3 rounded-lg uppercase">
                         <span>#</span>
-                        <span>{YOUTUBE_VIDEOS[activeVideoIndex].tagline}</span>
+                        <span>{visibleYoutubeVideos[activeVideoIndex].tagline}</span>
                       </div>
                     </div>
                   </>
@@ -2764,7 +2764,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
                 {/* Vertical list of episodes mimicking Ref 2 sidebar cards style */}
                 <div className="space-y-3 max-h-[380px] overflow-y-auto pr-1">
-                  {YOUTUBE_VIDEOS.map((item, idx) => {
+                  {visibleYoutubeVideos.map((item, idx) => {
                     const isActive = idx === activeVideoIndex;
                     return (
                       <button
@@ -2799,7 +2799,7 @@ export default function Home({ onNavigate }: HomeProps) {
                           <div className="space-y-0.5">
                             <div className="flex items-center justify-between">
                               <span className={`font-sans text-[8px] font-bold ${isActive ? "text-black/60" : "text-brand"}`}>
-                                EPISÃ“DIO {String(idx + 1).padStart(2, '0')}
+                                EPISÓDIO {String(idx + 1).padStart(2, '0')}
                               </span>
                               <span className={`font-sans text-[8px] ${isActive ? "text-black/60" : "text-zinc-500"}`}>
                                 {item.date}
@@ -2944,7 +2944,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 A TAG08 nasceu para reconectar marcas e profissionais ao verdadeiro valor de se posicionar no digital. Em um mercado cheio de ruídos, fórmulas prontas e excesso de informação, ajudamos negócios a encontrar clareza, construir presença com propósito e crescer com mais consistência.
               </p>
               <p className="text-zinc-400">
-                Somos um ecossistema estratégico que une pensamento, processo e performance. Aqui, conteúdo não é arte solta na rede. Ã‰ parte de uma construção maior.
+                Somos um ecossistema estratégico que une pensamento, processo e performance. Aqui, conteúdo não é arte solta na rede. É parte de uma construção maior.
               </p>
             </div>
             <div className="pt-2">
@@ -2959,7 +2959,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* PORTFÃ“LIO DE TESTEMUNHOS & CASOS DE CLIENTES (UNIFICADO - O CLIENTE DICTA A REVOLUÃ‡ÃƒO) */}
+      {/* PORTFÓLIO DE TESTEMUNHOS & CASOS DE CLIENTES (UNIFICADO - O CLIENTE DICTA A REVOLUÇÃO) */}
       <section id="portfolio-marcas" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         
         {/* Editorial magazine background grid lines */}
@@ -2988,7 +2988,7 @@ export default function Home({ onNavigate }: HomeProps) {
               </span>
               <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter uppercase">
                 O CLIENTE DICTA <br />
-                A REVOLUÃ‡ÃƒO_
+                A REVOLUÇÃO_
               </h2>
             </div>
 
@@ -3090,11 +3090,11 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
                   <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-extrabold">
-                    MÁXIMA RETENÃ‡ÃƒO VISUAL
+                    MÁXIMA RETENÇÃO VISUAL
                   </span>
                 </div>
                 <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/5 border border-brand/10 px-1.5 rounded">
-                  DIREÃ‡ÃƒO DE FLUXO TOTAL
+                  DIREÇÃO DE FLUXO TOTAL
                 </span>
               </div>
             </div>
@@ -3185,7 +3185,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
                     <div className="bg-charcoal-950/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl relative shadow-2xl">
                       <p className="text-white text-sm sm:text-base font-sans font-medium tracking-tight leading-relaxed italic block">
-                        â€œ{CLIENT_CASES[activeSlide].quote}â€
+                        “{CLIENT_CASES[activeSlide].quote}”
                       </p>
                     </div>
                   </div>
@@ -3264,7 +3264,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   </div>
                 </div>
                 <p className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest mt-1 font-bold">
-                  Google Avaliações â€¢ 5.0 baseada em 48 avaliações
+                  Google Avaliações ⬢ 5.0 baseada em 48 avaliações
                 </p>
               </div>
             </div>
@@ -3286,7 +3286,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 transition={{ type: "spring", stiffness: 140, damping: 22 }}
                 className="flex flex-row lg:flex-col gap-4 absolute left-4 sm:left-6 lg:left-0 lg:top-0 h-[140px] sm:h-[160px] lg:h-auto items-center lg:items-center w-max lg:w-full py-2"
               >
-                {GMB_REVIEWS.map((rev, index) => {
+                {visibleGmbReviews.map((rev, index) => {
                   const isActive = index === activeReview;
                   return (
                     <div
@@ -3329,18 +3329,18 @@ export default function Home({ onNavigate }: HomeProps) {
                 >
                   {/* Absolute giant background quote marks mimicking the image mockup exactly */}
                   <span className="font-serif text-[180px] sm:text-[230px] text-brand-secondary/[0.03] absolute right-6 sm:right-10 -top-8 sm:-top-12 leading-none select-none pointer-events-none font-black italic">
-                    â€œ
+                    “
                   </span>
 
                   <div className="space-y-6 relative z-10 flex-1 flex flex-col justify-center">
                     {/* High-impact tagline summary in elegant sentence case as shown in the mockup */}
                     <h3 className="font-display font-medium text-lg sm:text-2xl lg:text-[28px] text-white leading-normal tracking-tight max-w-[95%]">
-                      {GMB_REVIEWS[activeReview].tagline}
+                      {visibleGmbReviews[activeReview].tagline}
                     </h3>
 
                     {/* Supporting comprehensive details text (the body of the review) */}
                     <p className="text-zinc-400 text-xs sm:text-sm md:text-[15px] leading-relaxed font-sans font-normal">
-                      {GMB_REVIEWS[activeReview].text}
+                      {visibleGmbReviews[activeReview].text}
                     </p>
                   </div>
 
@@ -3349,17 +3349,17 @@ export default function Home({ onNavigate }: HomeProps) {
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
                         <img
-                          src={GMB_REVIEWS[activeReview].avatar}
-                          alt={GMB_REVIEWS[activeReview].name}
+                          src={visibleGmbReviews[activeReview].avatar}
+                          alt={visibleGmbReviews[activeReview].name}
                           className="w-10 h-10 rounded-full object-cover border-2 border-brand-secondary"
                           referrerPolicy="no-referrer"
                         />
                         <div className="text-left font-sans">
                           <h4 className="text-white font-display font-semibold text-sm">
-                            {GMB_REVIEWS[activeReview].name}
+                            {visibleGmbReviews[activeReview].name}
                           </h4>
                           <p className="text-zinc-500 font-sans text-xs mt-0.5">
-                            {GMB_REVIEWS[activeReview].role} â€¢ {GMB_REVIEWS[activeReview].time}
+                            {visibleGmbReviews[activeReview].role} ⬢ {visibleGmbReviews[activeReview].time}
                           </p>
                         </div>
                       </div>
@@ -3372,7 +3372,7 @@ export default function Home({ onNavigate }: HomeProps) {
                           ))}
                         </div>
                         <span className="font-sans text-[7.5px] uppercase tracking-widest text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded">
-                          {GMB_REVIEWS[activeReview].category} // GOOGLE VERIFIED
+                          {visibleGmbReviews[activeReview].category} // GOOGLE VERIFIED
                         </span>
                       </div>
                     </div>
@@ -3406,7 +3406,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* SECTION 9 - SEGURANÃ‡A OPERACIONAL & DESIGNS HIGH-END (MATCHING USER REFERENCE DESIGN) */}
+      {/* SECTION 9 - SEGURANÇA OPERACIONAL & DESIGNS HIGH-END (MATCHING USER REFERENCE DESIGN) */}
       <section id="prova" className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
         {/* Luminous Container mimicking the uploaded design mockup */}
         <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(var(--color-brand-rgb),0.18)] select-none">
@@ -3451,7 +3451,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   LATENCY: 12MS
                 </span>
                 <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
-                  SÃŠNIOR SECURITY
+                  SÊNIOR SECURITY
                 </span>
               </div>
             </div>
@@ -3473,7 +3473,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
               {/* Massive Bold Heading mirroring reference */}
               <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase">
-                DIREÃ‡ÃƒO CLARA <br />
+                DIREÇÃO CLARA <br />
                 COM IMPACTO REAL
               </h2>
 
@@ -3495,7 +3495,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 </div>
                 <div className="space-y-0.5">
                   <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
-                    PADRÃƒO SÃŠNIOR
+                    PADRÃO SÊNIOR
                   </span>
                   <p className="text-white text-xs leading-snug font-sans font-semibold">
                     Entregas consistentes, úteis e coerentes com a marca.
@@ -3509,7 +3509,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20solicitar%20um%20diagnóstico%20de%20posicionamento%20com%20a%20TAG08")}
               target="_blank"
               rel="noreferrer"
-              onClick={() => handleOutboundClick("WhatsApp", buildBrazilWhatsAppUrl("OlÃƒ¡,%20gostaria%20de%20solicitar%20um%20diagnÃƒ³stico%20de%20posicionamento%20com%20a%20TAG08"), "home-diagnosis-br")}
+              onClick={() => handleOutboundClick("WhatsApp", buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20solicitar%20um%20diagnóstico%20de%20posicionamento%20com%20a%20TAG08"), "home-diagnosis-br")}
               className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner"
                 >
                   <div className="flex items-center justify-between">
@@ -3569,7 +3569,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   </span>
                 </div>
                 <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
-                  OPERAÃ‡ÃƒO ATIVA
+                  OPERAÇÃO ATIVA
                 </span>
               </div>
 
@@ -3603,8 +3603,8 @@ export default function Home({ onNavigate }: HomeProps) {
                 
                 {/* Section titles */}
                 <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
-                  DÃšVIDAS &amp; <br />
-                  DECISÃƒO OPERACIONAL
+                  DÚVIDAS &amp; <br />
+                  DECISÃO OPERACIONAL
                 </h2>
                 
                 <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
@@ -3618,7 +3618,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   { id: 0, title: "ONBOARDING & SETUP" },
                   { id: 1, title: "PROPRIEDADE INTELECTUAL" },
                   { id: 2, title: "FIDELIDADE E MULTAS" },
-                  { id: 3, title: "RITUAL DE MÃ‰TRICAS" }
+                  { id: 3, title: "RITUAL DE MÉTRICAS" }
                 ]).map((item) => (
                   <button
                     key={item.id}
@@ -3689,7 +3689,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   {([
                     "Nossa implantação dura até 7 dias úteis. Iniciamos com um onboarding cirúrgico para registrar as diretrizes do tom de voz e diretrizes de autoridade corporativa, planejando as pautas estéticas e organizando os marcos editoriais dos primeiros 15 dias sem atritos.",
                     "Todos os direitos de autoria de fotos orientadas, roteiros de alta retenção, modelos de design refinados e arquivos finais editáveis do Figma pertencem inteiramente à sua empresa de forma limpa e transparente.",
-                    "Nossos contratos operam sob flexibilidade intelectual. Não impomos fidelidades longas ou taxas de quebra abusivas â€” confiamos na constância das métricas corporativas. Exigimos apenas aviso prévio convencional de 30 dias por questões de agendamento de pauta.",
+                    "Nossos contratos operam sob flexibilidade intelectual. Não impomos fidelidades longas ou taxas de quebra abusivas  confiamos na constância das métricas corporativas. Exigimos apenas aviso prévio convencional de 30 dias por questões de agendamento de pauta.",
                     "Disponibilizamos relatórios mensais claros contendo tráfego com alta intenção e métricas de prestígio. Paralelamente, mantemos reuniões recorrentes e mantemos um grupo de WhatsApp exclusivo ativo de prioridade máxima para discussões cotidianas."
                   ])[activeFaq]}
                 </p>
@@ -3729,7 +3729,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20consultar%20viabilidade%20estratégica%20especializada%20para%20minha%20marca!")}
                   target="_blank"
                   rel="noreferrer"
-                  onClick={() => handleOutboundClick("WhatsApp", buildBrazilWhatsAppUrl("OlÃƒ¡,%20gostaria%20de%20consultar%20viabilidade%20estratÃƒ©gica%20especializada%20para%20minha%20marca!"), "home-offer-whatsapp")}
+                  onClick={() => handleOutboundClick("WhatsApp", buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20consultar%20viabilidade%20estratégica%20especializada%20para%20minha%20marca!"), "home-offer-whatsapp")}
                   className="group flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-all"
                 >
                   <span>Conversar Agora</span>

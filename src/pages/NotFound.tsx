@@ -19,7 +19,6 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
 
   return (
     <div className="w-full bg-[#070709] text-white font-sans min-h-screen pt-32 pb-24 relative overflow-hidden select-none flex items-center justify-center">
-      {/* Premium ambient decorative grids and blurred background overlays */}
       <div className="absolute top-[10%] left-[-15%] w-[600px] h-[600px] bg-brand-secondary/[0.012] rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-[10%] right-[-15%] w-[600px] h-[600px] bg-brand-secondary/[0.008] rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.002)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.002)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none opacity-40" />
@@ -27,8 +26,6 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10 w-full">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
-          
-          {/* Left Block: Massive Immersive Error Code Graphics */}
           <div className="md:col-span-5 flex flex-col justify-center items-center md:items-start space-y-4">
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
@@ -58,7 +55,6 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
             </div>
           </div>
 
-          {/* Right Block: Content & Navigation Guidance Grid */}
           <div className="md:col-span-7 space-y-8 text-left">
             <div className="space-y-3.5">
               <span className="font-mono text-[10px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-3 py-1 rounded w-max block">
@@ -72,10 +68,7 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
               </p>
             </div>
 
-            {/* Premium Interactive Bento-Navigation Options */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              
-              {/* Option 1: Back to home page */}
               <motion.button
                 onClick={handleBackToHome}
                 whileHover={{ scale: 1.01, y: -2 }}
@@ -96,7 +89,6 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
                 </div>
               </motion.button>
 
-              {/* Option 2: Explore professional solutions */}
               <motion.button
                 onClick={handleNavigateToServices}
                 whileHover={{ scale: 1.01, y: -2 }}
@@ -116,10 +108,8 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
                   </p>
                 </div>
               </motion.button>
-
             </div>
 
-            {/* Sênior direct contact link bar */}
             <div className="bg-brand-secondary text-black rounded-2xl p-5 flex flex-col sm:flex-row items-center sm:justify-between gap-4 shadow-xl">
               <div className="flex gap-3.5 items-center text-left">
                 <div className="w-9 h-9 rounded-full bg-black flex items-center justify-center text-brand-secondary shrink-0">
@@ -145,9 +135,7 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
                 <ArrowUpRight className="w-3.5 h-3.5 text-brand-secondary" />
               </a>
             </div>
-
           </div>
-
         </div>
       </div>
     </div>

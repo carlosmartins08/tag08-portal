@@ -75,8 +75,12 @@ type ContentSourceResult<T> = {
   status: OfficialContentSourceStatus;
 };
 
+type LiveOfficialYouTubeVideo = Omit<OfficialYouTubeVideo, "source"> & { source: "live" };
+type LiveOfficialGoogleReview = Omit<OfficialGoogleReview, "source"> & { source: "live" };
+
 const CACHE_TTL_MS = 10 * 60 * 1000;
 const officialContentCache = new Map<string, { expiresAt: number; response: OfficialContentApiResponse }>();
+const OFFICIAL_CONTENT_REQUEST_TIMEOUT_MS = 4_000;
 
 const YOUTUBE_API_KEY = (process.env.YOUTUBE_API_KEY || process.env.VITE_YOUTUBE_API_KEY || "").trim();
 const YOUTUBE_CHANNEL_HANDLE = (process.env.YOUTUBE_CHANNEL_HANDLE || TAG08_OFFICIAL_YOUTUBE_HANDLE).trim();
@@ -86,6 +90,8 @@ const GOOGLE_BUSINESS_ACCESS_TOKEN = (process.env.GOOGLE_BUSINESS_ACCESS_TOKEN |
 const GOOGLE_BUSINESS_REFRESH_TOKEN = (process.env.GOOGLE_BUSINESS_REFRESH_TOKEN || "").trim();
 const GOOGLE_BUSINESS_CLIENT_ID = (process.env.GOOGLE_BUSINESS_CLIENT_ID || "").trim();
 const GOOGLE_BUSINESS_CLIENT_SECRET = (process.env.GOOGLE_BUSINESS_CLIENT_SECRET || "").trim();
+const LIVE_OFFICIAL_CONTENT_ENABLED =
+  process.env.NODE_ENV === "production" && Boolean(YOUTUBE_API_KEY || GOOGLE_BUSINESS_LOCATION_NAME);
 
 const getCachedResponse = (cacheKey: string) => {
   const cached = officialContentCache.get(cacheKey);
@@ -108,8 +114,22 @@ const setCachedResponse = (cacheKey: string, response: OfficialContentApiRespons
   });
 };
 
+const fetchWithTimeout = async (url: string, init?: RequestInit, timeoutMs = OFFICIAL_CONTENT_REQUEST_TIMEOUT_MS) => {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, {
+      ...init,
+      signal: controller.signal
+    });
+  } finally {
+    clearTimeout(timeoutId);
+  }
+};
+
 const fetchJson = async <T>(url: string, init?: RequestInit): Promise<T> => {
-  const response = await fetch(url, init);
+  const response = await fetchWithTimeout(url, init);
   if (!response.ok) {
     throw new Error(`Request failed: ${response.status} ${response.statusText}`);
   }
@@ -221,7 +241,7 @@ const fetchYouTubeLiveVideos = async (): Promise<ContentSourceResult<OfficialYou
         source: "live" as const
       };
     })
-    .filter((item): item is OfficialYouTubeVideo => Boolean(item))
+    .filter((item): item is LiveOfficialYouTubeVideo => Boolean(item))
     .slice(0, 4);
 
   return {
@@ -239,7 +259,7 @@ const getGoogleAccessToken = async (): Promise<string | null> => {
     return null;
   }
 
-  const response = await fetch("https://oauth2.googleapis.com/token", {
+  const response = await fetchWithTimeout("https://oauth2.googleapis.com/token", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
@@ -305,7 +325,7 @@ const fetchGoogleBusinessReviews = async (): Promise<ContentSourceResult<Officia
         source: "live" as const
       };
     })
-    .filter((review): review is OfficialGoogleReview => Boolean(review))
+    .filter((review): review is LiveOfficialGoogleReview => Boolean(review))
     .slice(0, 6);
 
   return {
@@ -315,6 +335,10 @@ const fetchGoogleBusinessReviews = async (): Promise<ContentSourceResult<Officia
 };
 
 export const buildOfficialContentSnapshot = async (): Promise<OfficialContentApiResponse> => {
+  if (!LIVE_OFFICIAL_CONTENT_ENABLED) {
+    return buildOfficialContentFallbackResponse();
+  }
+
   const cacheKey = "official-content";
   const cached = getCachedResponse(cacheKey);
   if (cached) {
@@ -381,7 +405,8 @@ export const getOfficialContentResponse = async (): Promise<OfficialContentApiRe
   try {
     return await buildOfficialContentSnapshot();
   } catch (error) {
-    return buildOfficialContentErrorResponse(error);
+    console.error("[official-content]", error);
+    return buildOfficialContentFallbackResponse();
   }
 };
 

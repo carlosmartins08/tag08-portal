@@ -144,8 +144,8 @@ const translations: Record<Language, Record<string, string>> = {
     pass_desc: "Não solicitamos ou aceitamos qualquer senha por este formulário. Suas credenciais estão preservadas.",
     
     // Sidebar Summary Box
-    sidebar_title: "RESUMO DE CONSOLIDA�!ÒO",
-    sidebar_org: "ORGANIZA�!ÒO",
+    sidebar_title: "RESUMO DE CONSOLIDAÇÃO",
+    sidebar_org: "ORGANIZAÇÃO",
     sidebar_rep: "RESPONSÁVEL",
     sidebar_moment: "MOMENTO SELECIONADO",
     sidebar_scope: "ESCOPO CONTRATADO",
@@ -213,7 +213,7 @@ const translations: Record<Language, Record<string, string>> = {
     escopo_placeholder_custom: "Ex: Assessoria em automações de CRMs específicos",
     
     // Step 5: Briefing
-    briefing_module_title: "M�DULO CUSTOMIZADO ATIVO",
+    briefing_module_title: "MÓDULO CUSTOMIZADO ATIVO",
     briefing_module_desc: "Sua empresa contratou {services}. Responda abaixo os detalhes operacionais que ditou nossa produção técnica:",
     briefing_not_selected_desc: "Descreva brevemente detalhes, metas ou escopo contratado para as divisões assinaladas:",
     briefing_not_selected_placeholder: "Informe aqui metas de tráfego, detalhes do ecossistema audiovisual ou observações específicas do seu projeto.",
@@ -231,7 +231,7 @@ const translations: Record<Language, Record<string, string>> = {
     materiais_label_commercial: "Apresentação Comercial / Pitch Deck",
     
     // Step 7: Expectativas
-    expectativas_title: "DIRE�!ÒO E EXPECTATIVAS DE SUCESSO na TAG08",
+    expectativas_title: "DIREÇÃO E EXPECTATIVAS DE SUCESSO na TAG08",
     expectativas_subtitle: "Por que você buscou a TAG08 neste exato momento corporativo?",
     expectativas_desc: "Compreender os pontos sensíveis da sua marca nos blinda contra falhas e acelera a transição de seus novos canais.",
     expectativas_placeholder_1: "Ex: Sentimos que nossa comunicação atual nos faz parecer menores do que realmente somos...",
@@ -243,11 +243,11 @@ const translations: Record<Language, Record<string, string>> = {
     expectativas_placeholder_good_result: "Ex: Um posicionamento institucional sólido que atraia leads corporativos qualificados...",
     expectativas_label_urgency: "Qual é a sua principal urgência operacional ou comercial no momento?",
     expectativas_placeholder_urgency: "Ex: Redesenhar nosso site institucional que está obsoleto...",
-    expectativas_label_not_err: "O que n�s NÒO podemos errar de jeito nenhum na sua comunica��o institucional ou de processos? *",
+    expectativas_label_not_err: "O que nós NÃO podemos errar de jeito nenhum na sua comunicação institucional ou de processos? *",
     expectativas_placeholder_not_err: "Ex: Linguagem informal demais, ou alterar a paleta de cores original da marca...",
     
     // Step 8: Consentimento
-    consent_title: "TERMOS DE CONSENTIMENTO & SEGURAN�!A",
+    consent_title: "TERMOS DE CONSENTIMENTO & SEGURANÇA",
     consent_subtitle: "Autorização para upload estratégico operacional de diretrizes",
     consent_desc: "Leia e marque as caixas abaixo para fins operacionais imediatos de kick-off.",
     consent_opt1: "Declaro que todas as informações corporativas prestadas são íntegras e verdadeiras.",
@@ -493,7 +493,7 @@ const translations: Record<Language, Record<string, string>> = {
     pass_desc: "Não solicitamos ni aceptamos ningún tipo de contraseña a través de este formulario. Sus credenciales están totalmente preservadas.",
     
     // Sidebar Summary Box
-    sidebar_title: "RESUMEN DE CONSOLIDACI�N",
+    sidebar_title: "RESUMEN DE CONSOLIDACIÓN",
     sidebar_org: "EMPRESA / PROYECTO",
     sidebar_rep: "RESPONSABLE",
     sidebar_moment: "DESAFO SELECCIONADO",
@@ -562,7 +562,7 @@ const translations: Record<Language, Record<string, string>> = {
     escopo_placeholder_custom: "ej. Asesoría en automatizaciones de CRMs y API de ventas",
     
     // Step 5: Briefing
-    briefing_module_title: "M�DULO SELECCIONADO ACTIVO",
+    briefing_module_title: "MÓDULO SELECCIONADO ACTIVO",
     briefing_module_desc: "Su empresa ha contratado {services}. Responda por favor las preguntas tácticas a continuación:",
     briefing_not_selected_desc: "Describa brevemente los detalles, requerimientos o alcance del servicio personalizado contratado:",
     briefing_not_selected_placeholder: "Indique aqu sus objetivos comerciales, particularidades del ecosistema audiovisual o notas estratégicas.",
@@ -580,7 +580,7 @@ const translations: Record<Language, Record<string, string>> = {
     materiais_label_commercial: "Presentaciones de Ventas / Pitch Deck",
     
     // Step 7: Expectativas
-    expectativas_title: "PERSPECTIVAS OPERACIONALES & METAS DE �0XITO",
+    expectativas_title: "PERSPECTIVAS OPERACIONALES & METAS DE ÉXITO",
     expectativas_subtitle: "¿Por qué recurrió a TAG08 en este momento particular?",
     expectativas_desc: "Mapear los dolores de su organización protege nuestras entregas técnicas y acelera la definición de canales de comunicación.",
     expectativas_placeholder_1: "ej. Sentimos que nuestra comunicación actual nos hace lucir más pequeños de lo que realmente somos...",
@@ -604,7 +604,7 @@ const translations: Record<Language, Record<string, string>> = {
     consent_opt3: "Confirmo que no he proporcionado ninguna credencial directa de acceso ni contraseñas en este flujo.",
     
     // Step 9: Finalizado (WhatsApp)
-    finalized_badge: "ONBOARDING ENVIADO CON �0XITO",
+    finalized_badge: "ONBOARDING ENVIADO CON ÉXITO",
     finalized_title: "Integración Operativa en proceso!",
     finalized_desc_1: "Sus directrices operativas han sido integradas en nuestro sistema de forma exitosa y se encuentran en nuestra cola de revisión técnica por los equipos creativo y de ingeniería.",
     finalized_desc_2: "Para acelerar la programación de su sesión de arranque (kickoff) y confirmar el recibimiento técnico con el director del proyecto, haga clic a continuación para notificarnos via WhatsApp.",
@@ -2162,7 +2162,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                                 {opt.label}
                               </p>
                               <div className="flex items-center justify-between pt-2 border-t border-white/[0.02] text-[9px] font-sans text-zinc-500">
-                                <span>{preferredLanguage === "en" ? "OPTION CODE" : preferredLanguage === "es" ? "OPCI�N C�D" : "OP�!ÒO COD"} {idx+1}</span>
+                                <span>{preferredLanguage === "en" ? "OPTION CODE" : preferredLanguage === "es" ? "OPCIÓN CÓD" : "OPÇÃO COD"} {idx+1}</span>
                                 {businessMoment === opt.value && <span className="text-brand-secondary font-extrabold font-sans">{preferredLanguage === "en" ? "SELECTED" : preferredLanguage === "es" ? "SELECCIONADO" : "SELECIONADO"}</span>}
                               </div>
                             </div>
@@ -2297,7 +2297,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                   {currentStep === 5 && (
                     <div className="space-y-6 py-2 overflow-y-auto max-h-[500px] pr-2">
                       <div className="space-y-2 bg-neutral-950 p-4 rounded-xl border border-white/[0.03] mb-4">
-                        <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black uppercase inline-block">M�DULO CUSTOMIZADO ATIVO</span>
+                        <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black uppercase inline-block">MÓDULO CUSTOMIZADO ATIVO</span>
                         <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                           Sua empresa contratou <strong>{selectedServices.join(", ")}</strong>. Responda abaixo os detalhes operacionais que ditou nossa produção técnica:
                         </p>
@@ -2389,7 +2389,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                           <div className="space-y-2 font-sans">
                             <label className="text-xs text-zinc-400">Quais atributos comportamentais e conceitos visuais a marca deve transmitir?</label>
-                            <textarea value={brDesiredAttributes} onChange={(e) => setBrDesiredAttributes(e.target.value)} rows={2} placeholder="Elegância discreta, sobriedade, robustez clínica e minimalismo sofisticado" className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-xs text-white resize-none" />
+                            <textarea value={brDesiredAttributes} onChange={(e) => setBrDesiredAttributes(e.target.value)} rows={2} placeholder="Elegï¿½ncia discreta, sobriedade, robustez clínica e minimalismo sofisticado" className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-xs text-white resize-none" />
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
@@ -2703,7 +2703,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                     </div>
                   )}
 
-                  {/* STEP 7: EXPECTATIVAS PARA PR�XIMOS 90 DIAS */}
+                   {/* STEP 7: EXPECTATIVAS PARA PRÓXIMOS 90 DIAS */}
                   {currentStep === 7 && (
                     <div className="space-y-6 py-2 overflow-y-auto max-h-[500px] pr-2 font-sans">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2826,7 +2826,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* Onboarding automatic system checks */}
                       <div className="p-5 rounded-2xl bg-neutral-950 border border-white/[0.03] space-y-4 text-left">
                         <span className="font-mono text-[9px] text-brand-secondary uppercase font-black block">
-                          {preferredLanguage === "en" ? "RECEIPT CHECKLIST // SYSTEM INDICATORS" : preferredLanguage === "es" ? "LISTA DE RECEPCI�N // INDICADORES DEL SISTEMA" : "CHECKLIST DE RECEBIMENTO // SINALIZADORES SIST�`MICOS"}
+                          {preferredLanguage === "en" ? "RECEIPT CHECKLIST // SYSTEM INDICATORS" : preferredLanguage === "es" ? "LISTA DE RECEPCIÓN // INDICADORES DEL SISTEMA" : "CHECKLIST DE RECEBIMENTO // SINALIZADORES SISTÊMICOS"}
                         </span>
                         
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

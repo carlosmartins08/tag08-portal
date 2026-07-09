@@ -82,7 +82,7 @@ const shortsData: PlayableShort[] = [
     thumbnail: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=600",
     behindTheScenes: "Acompanhamento dinâmico discreto de palestrantes e executivos de ponta em painéis. Produzimos captações que evidenciam o network, o palco e o prestígio público da marca sem atrapalhar a dinâmica do evento.",
     strategy: "Criação de montagens dinâmicas enviadas e publicadas nas redes sociais da empresa apenas 40 minutos após a fala final. O contraste de agilidade com design limpo passa uma sensação de controle inabalável.",
-    successMetric: "Onboarding qualificado de participantes em tempo real com aumento vertiginoso de networking orgânico pós-painel.",
+    successMetric: "Onboarding qualificado de participantes em tempo real com aumento vertiginoso de networking orgânico pï¿½s-painel.",
     metrics: {
       reach: "28.1K",
       saves: "193",
@@ -556,7 +556,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               {[
                 { title: "Alcance Qualificado", desc: "Quantas contas executivas e tomadores de decisão visualizam sua marca no LinkedIn e Instagram mensalmente." },
                 { title: "Métricas de Retenção", desc: "Mapeamos se os carrosséis e vídeos são realmente lidos por completo ou abandonados antes do CTA." },
-                { title: "Aderência Direta", desc: "Monitoramos o volume real de novos links acessados ou directs que chegam ao comercial provindos espontâneamente." },
+                { title: "Aderï¿½ncia Direta", desc: "Monitoramos o volume real de novos links acessados ou directs que chegam ao comercial provindos espontâneamente." },
                 { title: "Calibração Contínua", desc: "Ajustamos os ganchos baseando-nos nos dados do período anterior para elevar a conversão sistêmica." }
               ].map((item, iIdx) => (
                 <div key={iIdx} className="p-5 rounded-2xl bg-charcoal-900/60 border border-white/[0.03] space-y-1.5 text-left hover:border-brand/10 transition-colors">
@@ -614,7 +614,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               Simulador de Alcance Organico e Funil Social
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-              O alcance orgânico sênior é um jogo de regularidade editorial e distribuição de alta qualidade técnica. Ajuste a frequência de postagens semanais e descubra o impacto cumulativo projetado no LinkedIn e Instagram para a sua marca B2B ou Perfil Médico.
+              O alcance orgânico sênior é um jogo de regularidade editorial e distribuição de alta qualidade tï¿½cnica. Ajuste a frequï¿½ncia de postagens semanais e descubra o impacto cumulativo projetado no LinkedIn e Instagram para a sua marca B2B ou Perfil Mï¿½dico.
             </p>
           </div>
 
@@ -1195,7 +1195,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 EM ATRação ATIVA!
               </h2>
               <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
-                ELEVE O N�VEL DOS SEUS PERFIS COM PROCESSOS EDITORIAIS DE ELITE QUE EDUCAM SEU P�aBLICO, CONVERSAM DIRETAMENTE COM DECISORES E MANT�`M SUA EMPRESA COMO MARCA CLASSE A NA MENTE DO MERCADO.
+                ELEVE O NÍVEL DOS SEUS PERFIS COM PROCESSOS EDITORIAIS DE ELITE QUE EDUCAM SEU PÚBLICO, CONVERSAM DIRETAMENTE COM DECISORES E MANTÉM SUA EMPRESA COMO MARCA CLASSE A NA MENTE DO MERCADO.
               </p>
             </div>
 
@@ -1403,7 +1403,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
                   {([
                     "Planejamos e criamos 100% do conteúdo do seu feed com 15 a 30 dias de antecedência. Isso inclui roteiros de vídeos de alta retenção, carrosséis educativos sob medida e legendas persuasivas estruturadas por nossa equipe técnica.",
-                    "Nós somos responsáveis pela inteligência editorial total: escrevemos as pautas cirúrgicas, ganchos magnéticos e roteiros de fala detalhados passo a passo. Os vídeos são gravados por você ou seu representante, seguindo nosso manual estrito de posicionamento e enquadramento de câmera.",
+                    "Nós somos responsáveis pela inteligï¿½ncia editorial total: escrevemos as pautas cirúrgicas, ganchos magnï¿½ticos e roteiros de fala detalhados passo a passo. Os vídeos são gravados por você ou seu representante, seguindo nosso manual estrito de posicionamento e enquadramento de câmera.",
                     "Nosso foco principal são plataformas de alto alcance qualificado de negócios e conversão de leads, como Instagram e LinkedIn. Adaptamos a linguagem conforme a plataforma mantendo a integridade sóbria e corporativa da marca.",
                     "Nosso processo de implantação completo dura até 7 dias úteis de onboarding. Entramos no seu ecossistema, catalogamos seu tom de voz de especialista e liberamos o primeiro lote de cronogramas editoriais validados."
                   ])[activeFaq]}
@@ -1417,7 +1417,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                   <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">Como agimos de forma organizada?</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    Eliminamos posts batidos e cronogramas improvisados. Mantemos constância e critério.
+                    Eliminamos posts batidos e cronogramas improvisados. Mantemos constância e critï¿½rio.
                   </p>
                 </div>
                 <button
@@ -1455,7 +1455,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
       {/* SECTION 5 - ACTION TRIGGER FOOTER */}
       <section className="px-4 sm:px-6 md:px-8 py-20 text-center space-y-6 max-w-4xl mx-auto">
         <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
-          CONVERSE COM O SEU PERFEITO P�aBLICO <br />
+          CONVERSE COM O SEU PERFEITO PÚBLICO <br />
           <span className="text-brand">E TORNE-SE UMA REFERaNCIA INDISCUTaVEL.</span>
         </h2>
         <p className="text-zinc-400 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">

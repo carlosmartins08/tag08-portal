@@ -1,4 +1,4 @@
-﻿# Plano de desenvolvimento ponta a ponta TAG08
+# Plano de desenvolvimento ponta a ponta TAG08
 
 ## Fase 1 (semana 1-2) - Fundação operacional
 - Endpoint real `/api/onboarding` com contrato versionado e resposta padrão.

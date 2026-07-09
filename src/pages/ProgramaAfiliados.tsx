@@ -37,23 +37,23 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
   const faqs = [
     {
       q: "Quem pode se cadastrar no Programa de Afiliados?",
-      a: "Qualquer pessoa fÃ­sica ou jurÃ­dica que possua relacionamento comercial com outras empresas. Ideal para freelancers, consultores de marketing, agÃªncias de publicidade complementares, designers, gestores de trÃ¡fego, contadores ou simplesmente parceiros que confiam e indicam o trabalho da TAG08."
+      a: "Qualquer pessoa física ou jurídica que possua relacionamento comercial com outras empresas. Ideal para freelancers, consultores de marketing, agências de publicidade complementares, designers, gestores de tráfego, contadores ou simplesmente parceiros que confiam e indicam o trabalho da TAG08."
     },
     {
-      q: "Qual Ã© o valor da comissÃ£o oferecida?",
-      a: "Fornecemos 10% de comissÃ£o sobre o valor lÃ­quido fechado do contrato. Para projetos de escopo fixo (Branding, Desenvolvimento Web, Desenvolvimento de Sistemas), a comissÃ£o Ã© paga de forma Ãºnica sobre os marcos liquidados. Para contratos recorrentes (como GestÃ£o de Redes Sociais Mensal), vocÃª recebe 10% todo mÃªs recorrente enquanto o cliente permanecer ativo na agÃªncia (atÃ© o limite contratual de 12 meses)."
+      q: "Qual é o valor da comissão oferecida?",
+      a: "Fornecemos 10% de comissão sobre o valor líquido fechado do contrato. Para projetos de escopo fixo (Branding, Desenvolvimento Web, Desenvolvimento de Sistemas), a comissão é paga de forma única sobre os marcos liquidados. Para contratos recorrentes (como Gestão de Redes Sociais Mensal), você recebe 10% todo mês recorrente enquanto o cliente permanecer ativo na agência (até o limite contratual de 12 meses)."
     },
     {
       q: "Como indico um novo cliente e garanto meu comissionamento?",
-      a: "O fluxo Ã© extremamente seguro: apÃ³s se cadastrar no programa, vocÃª terÃ¡ um canal direto com nosso gerente de contas. Cada indicaÃ§Ã£o Ã© registrada em nossa planilha de oportunidades vinculada ao seu nome/CNPJ. Quando a proposta comercial Ã© enviada ao lead indicado, vocÃª recebe uma notificaÃ§Ã£o instantÃ¢nea para acompanhar o progresso."
+      a: "O fluxo ï¿½ extremamente seguro: após se cadastrar no programa, você teré um canal direto com nosso gerente de contas. Cada indicaï¿½ï¿½o ï¿½ registrada em nossa planilha de oportunidades vinculada ao seu nome/CNPJ. Quando a proposta comercial ï¿½ enviada ao lead indicado, você recebe uma notificaï¿½ï¿½o instantï¿½nea para acompanhar o progresso."
     },
     {
-      q: "Qual Ã© o prazo e a forma de pagamento da comissÃ£o?",
-      a: "Os pagamentos sÃ£o liberados e transferidos via PIX em atÃ© 5 dias Ãºteis apÃ³s a compensaÃ§Ã£o efetiva do pagamento do cliente (sejam parcelas mensais ou pagamentos integrais das etapas do projeto)."
+      q: "Qual é o prazo e a forma de pagamento da comissão?",
+      a: "Os pagamentos são liberados e transferidos via PIX em até 5 dias úteis após a compensação efetiva do pagamento do cliente (sejam parcelas mensais ou pagamentos integrais das etapas do projeto)."
     },
     {
       q: "Eu preciso fechar a venda com o cliente indicado?",
-      a: "NÃ£o! O seu Ãºnico papel Ã© fazer a ponte inicial e introduzir o contato qualificado com real interesse em nossos serviÃ§os. Toda a apresentaÃ§Ã£o de portfÃ³lio, formulaÃ§Ã£o da proposta comercial tÃ©cnica, reuniÃµes de fechamento e negociaÃ§Ãµes de valores ficam a cargo de nossa equipe de vendas."
+      a: "Não! O seu único papel é fazer a ponte inicial e introduzir o contato qualificado com real interesse em nossos serviços. Toda a apresentação de portfólio, formulação da proposta comercial técnica, reuniões de fechamento e negociações de valores ficam a cargo de nossa equipe de vendas."
     }
   ];
 
@@ -77,12 +77,12 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
                 INDIQUE CLIENTES, <br />
-                <span className="text-brand-secondary">FATURE COMISSÃ•ES DE ELITE RECORRENTES.</span>
+                <span className="text-brand-secondary">FATURE COMISSÕES DE ELITE RECORRENTES.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
-                Monetize suas conexÃµes comerciais recomendando as melhores soluÃ§Ãµes de Branding, Desenvolvimento Web e GestÃ£o de MÃ­dias do mercado. No Programa de Parceiros da TAG08, vocÃª recebe atÃ© 10% de ganho sob projetos completos ou de forma recorrente em suporte mensal.
+                Monetize suas conexões comerciais recomendando as melhores soluções de Branding, Desenvolvimento Web e Gestão de Mídias do mercado. No Programa de Parceiros da TAG08, você recebe até 10% de ganho sob projetos completos ou de forma recorrente em suporte mensal.
               </p>
             </div>
           </div>
@@ -101,12 +101,12 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
 
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(45px)" }}>
                 <a
-                  href={buildBrazilWhatsAppUrl("OlÃ¡,%20gostaria%20de%20me%20cadastrar%20no%20Programa%20de%20Afiliados%20da%20TAG08%20para%20fazer%20indicaÃ§Ãµes!")}
+                  href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20me%20cadastrar%20no%20Programa%20de%20Afiliados%20da%20TAG08%20para%20fazer%20indicações!")}
                   target="_blank"
                   rel="noreferrer"
                   className="group bg-brand-secondary text-black font-mono font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
                 >
-                  <span>CADASTRAR MINHA INDICAÃ‡ÃƒO</span>
+                  <span>CADASTRAR MINHA INDICAï¿½ï¿½O</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
                 </a>
               </div>
@@ -114,8 +114,8 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
               {/* Absolutes tags in corners */}
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
-                  <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-bold">ALTA PERFORMANCE E TRANSPARÃŠNCIA</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">ComissÃµes Pagas via Pix sem ComplicaÃ§Ã£o</h4>
+                  <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-bold">ALTA PERFORMANCE E TRANSPARÊNCIA</span>
+                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Comissões Pagas via Pix sem Complicação</h4>
                 </div>
 
                 <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
@@ -130,19 +130,19 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">10%</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Percentual lÃ­quido fixo<br/>de comissÃ£o por indicaÃ§Ã£o fechada</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Percentual líquido fixo<br/>de comissão por indicação fechada</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Recorrente</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">ComissÃ£o mensal sobre<br/>serviÃ§os recorrentes fechados</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Comissão mensal sobre<br/>serviços recorrentes fechados</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">PIX Imediato</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Dinheiro em conta em atÃ©<br/>5 dias Ãºteis do pagamento do cliente</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Dinheiro em conta em até<br/>5 dias úteis do pagamento do cliente</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">R$ 0,00</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Custo de adesÃ£o ou taxas<br/>Totalmente gratuito para parceiros</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Custo de adesão ou taxas<br/>Totalmente gratuito para parceiros</span>
             </div>
           </div>
 
@@ -158,9 +158,9 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
             <span className="font-mono text-[10px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
               SIMULADOR DE GANHOS // RECEITAS POTENCIAIS
             </span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">Simule suas ComissÃµes Estimadas</h2>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">Simule suas Comissões Estimadas</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              Ajuste a quantidade projetada de indicaÃ§Ãµes anuais ou mensais fechadas em cada pilar e visualize os ganhos que esperam por vocÃª como parceiro oficial.
+              Ajuste a quantidade projetada de indicações anuais ou mensais fechadas em cada pilar e visualize os ganhos que esperam por você como parceiro oficial.
             </p>
           </div>
 
@@ -183,8 +183,8 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
                   className="w-full accent-brand-secondary cursor-pointer bg-charcoal-950 h-2 rounded-lg"
                 />
                 <div className="flex justify-between text-[10px] text-zinc-500 font-sans">
-                  <span>MÃ©dia do Projeto: R$ 3.500,00</span>
-                  <span>ComissÃ£o por projeto: R$ 350,00</span>
+                  <span>Média do Projeto: R$ 3.500,00</span>
+                  <span>Comissão por projeto: R$ 350,00</span>
                 </div>
               </div>
 
@@ -203,15 +203,15 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
                   className="w-full accent-brand-secondary cursor-pointer bg-charcoal-950 h-2 rounded-lg"
                 />
                 <div className="flex justify-between text-[10px] text-zinc-500 font-sans">
-                  <span>MÃ©dia do Projeto: R$ 5.500,00</span>
-                  <span>ComissÃ£o por projeto: R$ 550,00</span>
+                  <span>Média do Projeto: R$ 5.500,00</span>
+                  <span>Comissão por projeto: R$ 550,00</span>
                 </div>
               </div>
 
               {/* Redes Sociais Support Control */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center text-xs sm:text-sm font-sans text-zinc-300">
-                  <span className="flex items-center gap-1.5 font-bold uppercase"><TrendingUp className="w-4 h-4 text-brand" /> GestÃ£o de Redes Sociais (Mensal)</span>
+                  <span className="flex items-center gap-1.5 font-bold uppercase"><TrendingUp className="w-4 h-4 text-brand" /> Gestão de Redes Sociais (Mensal)</span>
                   <span className="text-brand-secondary font-black">{numRedesSociais} {numRedesSociais === 1 ? "contrato" : "contratos"}</span>
                 </div>
                 <input 
@@ -223,8 +223,8 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
                   className="w-full accent-brand-secondary cursor-pointer bg-charcoal-950 h-2 rounded-lg"
                 />
                 <div className="flex justify-between text-[10px] text-zinc-500 font-sans">
-                  <span>MÃ©dia Mensal: R$ 2.200,00</span>
-                  <span>ComissÃ£o Mensal Recorrente: R$ 220,00 por cliente</span>
+                  <span>Média Mensal: R$ 2.200,00</span>
+                  <span>Comissão Mensal Recorrente: R$ 220,00 por cliente</span>
                 </div>
               </div>
 
@@ -237,21 +237,21 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
               <div className="space-y-6">
                 <div>
                   <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold leading-normal">RESUMO DE SEUS MARCOS POTENCIAIS</span>
-                  <h3 className="font-display font-black text-2xl text-white uppercase tracking-tight leading-none mt-1">Ganhos de IndicaÃ§Ã£o</h3>
+                  <h3 className="font-display font-black text-2xl text-white uppercase tracking-tight leading-none mt-1">Ganhos de Indicação</h3>
                 </div>
 
                 <div className="space-y-4 pt-4 border-t border-white/[0.04]">
                   <div>
-                    <span className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest leading-none">Projetos Pontuais (Fechamento Ãšnico):</span>
+                    <span className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest leading-none">Projetos Pontuais (Fechamento Único):</span>
                     <span className="block font-display font-black text-2xl sm:text-3xl text-white mt-1">
                       R$ {totalOneTime.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                     </span>
                   </div>
 
                   <div>
-                    <span className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest leading-none">ComissÃ£o Recorrente (Mensal):</span>
+                    <span className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest leading-none">Comissão Recorrente (Mensal):</span>
                     <span className="block font-display font-black text-2xl sm:text-3xl text-brand-secondary mt-1">
-                      R$ {totalRecurring.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}/mÃªs
+                      R$ {totalRecurring.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}/mês
                     </span>
                   </div>
                 </div>
@@ -259,16 +259,16 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
 
               <div className="pt-8 space-y-4">
                 <p className="text-zinc-500 text-[10.5px] leading-relaxed font-sans font-medium">
-                  *Valores estimados com base no ticket mÃ©dio habitual de nossos serviÃ§os de branding e desenvolvimento web. Ganhos reais variam proporcionalmente ao orÃ§amento final fechado.
+                  *Valores estimados com base no ticket médio habitual de nossos serviços de branding e desenvolvimento web. Ganhos reais variam proporcionalmente ao orçamento final fechado.
                 </p>
 
                 <a
-                  href={buildBrazilWhatsAppUrl(`OlÃ¡,%20fiz%20uma%20simulaÃ§Ã£o%20no%20site%20da%20TAG08!%20Gostaria%20de%20indicar%20oportunidades%20para%20Branding%20(${numBranding}%20proj),%20Sites%20(${numWebsites}%20proj)%20e%20Redes%20Sociais%20(${numRedesSociais}%20mensais).`)}
+                  href={buildBrazilWhatsAppUrl(`Olá,%20fiz%20uma%20simulação%20no%20site%20da%20TAG08!%20Gostaria%20de%20indicar%20oportunidades%20para%20Branding%20(${numBranding}%20proj),%20Sites%20(${numWebsites}%20proj)%20e%20Redes%20Sociais%20(${numRedesSociais}%20mensais).`)}
                   target="_blank"
                   rel="noreferrer"
                   className="group w-full bg-brand-secondary text-black font-mono font-black text-[10px] uppercase tracking-widest py-3.5 px-6 rounded-full shadow-[0_15px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] flex items-center justify-center gap-1.5 hover:scale-102 duration-300 transition-all cursor-pointer select-none text-center"
                 >
-                  <span>GARANTIR MINHAS INDICAÃ‡Ã•ES</span>
+                  <span>GARANTIR MINHAS INDICAÇÕES</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </a>
               </div>
@@ -284,7 +284,7 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
             <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">VANTAGENS COMPETITIVAS</span>
             <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">Vantagens de ser Parceiro TAG08</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              Oferecemos muito mais do que apenas repasses financeiros. NÃ³s cuidamos do fechamento e garantimos a integridade do portfÃ³lio.
+              Oferecemos muito mais do que apenas repasses financeiros. Nós cuidamos do fechamento e garantimos a integridade do portfólio.
             </p>
           </div>
 
@@ -293,9 +293,9 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
               <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
                 <Percent className="w-5 h-5 text-brand" />
               </div>
-              <h4 className="text-white font-display font-bold text-sm uppercase">ComissÃ£o Real de 10%</h4>
+              <h4 className="text-white font-display font-bold text-sm uppercase">Comissão Real de 10%</h4>
               <p className="text-zinc-400 text-xs leading-relaxed font-sans font-medium">
-                Diferente de outros programas de agÃªncias que oferecem comissÃµes simbÃ³licas ou descontos em crÃ©ditos de serviÃ§os, nÃ³s pagamos 10% do valor integral lÃ­quido do contrato fechado direto na sua conta bancÃ¡ria.
+                Diferente de outros programas de agências que oferecem comissões simbólicas ou descontos em créditos de serviços, nós pagamos 10% do valor integral líquido do contrato fechado direto na sua conta bancária.
               </p>
             </div>
 
@@ -303,9 +303,9 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
               <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
                 <TrendingUp className="w-5 h-5 text-brand-secondary" />
               </div>
-              <h4 className="text-white font-display font-bold text-sm uppercase">RecorrÃªncia Mensal Real</h4>
+              <h4 className="text-white font-display font-bold text-sm uppercase">Recorrência Mensal Real</h4>
               <p className="text-zinc-400 text-xs leading-relaxed font-sans font-medium">
-                Indique contratos contÃ­nuos de marketing ou design mensal e tenha participaÃ§Ãµes garantidas de recebimento contÃ­nuo. Sua indicaÃ§Ã£o se converte em renda passiva automÃ¡tica e regular por atÃ© 12 meses.
+                Indique contratos contínuos de marketing ou design mensal e tenha participações garantidas de recebimento contínuo. Sua indicação se converte em renda passiva automática e regular por até 12 meses.
               </p>
             </div>
 
@@ -313,9 +313,9 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
               <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
                 <Shield className="w-5 h-5 text-brand" />
               </div>
-              <h4 className="text-white font-display font-bold text-sm uppercase">ExcelÃªncia de PortfÃ³lio</h4>
+              <h4 className="text-white font-display font-bold text-sm uppercase">Excelência de Portfólio</h4>
               <p className="text-zinc-400 text-xs leading-relaxed font-sans font-medium">
-                Pode indicar com total orgulho e confianÃ§a. A TAG08 Ã© reconhecida pela pontualidade de entregas, design consistente e cÃ³digo leve, pensado para boa experiÃªncia e manutenÃ§Ã£o.
+                Pode indicar com total orgulho e confiança. A TAG08 é reconhecida pela pontualidade de entregas, design consistente e código leve, pensado para boa experiência e manutenção.
               </p>
             </div>
           </div>
@@ -329,18 +329,18 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
             <span className="font-mono text-[10px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
               FLUXOGRAMA OPERACIONAL // PASSO A PASSO
             </span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">O Fluxo da sua Renda com IndicaÃ§Ãµes</h2>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">O Fluxo da sua Renda com Indicações</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              Da simples introduÃ§Ã£o atÃ© o repasse do pix de comissÃ£o, mapeamos todo o percurso de forma totalmente Ã¡gil e sem percalÃ§os.
+              Da simples introdução até o repasse do pix de comissão, mapeamos todo o percurso de forma totalmente ágil e sem percalços.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
-              { num: "01", term: "CADASTRO & REGISTRO", desc: "Entre em contato conosco para registrar os dados bÃ¡sicos ou envie o contato da indicaÃ§Ã£o diretamente ao nosso gerente de contas parceiras." },
-              { num: "02", term: "ABORDAGEM COMERCIAL", desc: "Nossa equipe sÃªnior assume as negociaÃ§Ãµes comerciais, elabora a proposta e faz a apresentaÃ§Ã£o profissional do portfÃ³lio." },
-              { num: "03", term: "CONTRATO ASSINADO", desc: "A venda Ã© concluÃ­da de forma oficial com garantia jurÃ­dica. Notificamos vocÃª instantaneamente da assinatura real do projeto." },
-              { num: "04", term: "RECEBIMENTO NO PIX", desc: "A cada pagamento ou mensalidade compensada enviada pelo cliente Ã  agÃªncia, realizamos o repasse dos 10% em sua conta informada." }
+              { num: "01", term: "CADASTRO & REGISTRO", desc: "Entre em contato conosco para registrar os dados básicos ou envie o contato da indicação diretamente ao nosso gerente de contas parceiras." },
+              { num: "02", term: "ABORDAGEM COMERCIAL", desc: "Nossa equipe sênior assume as negociações comerciais, elabora a proposta e faz a apresentação profissional do portfólio." },
+              { num: "03", term: "CONTRATO ASSINADO", desc: "A venda é concluída de forma oficial com garantia jurídica. Notificamos você instantaneamente da assinatura real do projeto." },
+              { num: "04", term: "RECEBIMENTO NO PIX", desc: "A cada pagamento ou mensalidade compensada enviada pelo cliente ï¿½ agï¿½ncia, realizamos o repasse dos 10% em sua conta informada." }
             ].map((step, sIdx) => (
               <div key={sIdx} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-2xl space-y-4 flex flex-col justify-between relative hover:border-brand/20 transition-all duration-300">
                 <span className="font-display font-black text-3xl text-brand-secondary">{step.num}</span>
@@ -358,9 +358,9 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
       <section className="px-4 sm:px-6 md:px-8 py-24 select-none max-w-4xl mx-auto space-y-12 text-left">
         <div className="text-center space-y-2">
           <HelpCircle className="w-8 h-8 text-brand mx-auto" />
-          <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">DÃšVIDAS FREQUENTES SOBRE O PROGRAMA</h2>
+          <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">DÚVIDAS FREQUENTES SOBRE O PROGRAMA</h2>
           <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-            Confira detalhes operacionais e tire todas as suas dÃºvidas sobre o andamento e compensaÃ§Ã£o dos afiliados.
+            Confira detalhes operacionais e tire todas as suas dúvidas sobre o andamento e compensação dos afiliados.
           </p>
         </div>
 
@@ -377,7 +377,7 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
               >
                 <span>{faq.q}</span>
                 <span className="text-brand font-sans text-lg shrink-0 ml-4 font-bold">
-                  {activeFaq === fIdx ? "âˆ’" : "ï¼‹"}
+                  {activeFaq === fIdx ? "ï¿½ï¿½" : "ï¿½9"}
                 </span>
               </button>
               
@@ -405,17 +405,17 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
           </h2>
           
           <p className="text-zinc-400 text-xs sm:text-sm font-medium max-w-2xl mx-auto z-10 leading-relaxed">
-            Seja um parceiro de crescimento de outros empreendedores oferecendo uma de nossas soluÃ§Ãµes de engenharia, cÃ³digo, mÃ­dias e marca com padrÃ£o profissional. Registre sua primeira oportunidade agora mesmo.
+            Seja um parceiro de crescimento de outros empreendedores oferecendo uma de nossas soluções de engenharia, código, mídias e marca com padrão profissional. Registre sua primeira oportunidade agora mesmo.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 z-10 relative">
             <a
-              href={buildBrazilWhatsAppUrl("OlÃ¡,%20acabei%20de%20acessar%20sua%20pÃ¡gina%20de%20afiliados%20e%20gostaria%20de%20deixar%20minha%20primeira%20indicaÃ§Ã£o%20de%20cliente!")}
+              href={buildBrazilWhatsAppUrl("Olá,%20acabei%20de%20acessar%20sua%20página%20de%20afiliados%20e%20gostaria%20de%20deixar%20minha%20primeira%20indicação%20de%20cliente!")}
               target="_blank"
               rel="noreferrer"
               className="group bg-brand-secondary text-black font-mono font-black text-[10px] uppercase tracking-widest py-4 px-10 rounded-full shadow-[0_20px_50px_rgba(var(--color-brand-secondary-rgb),0.3)] hover:scale-102 transition-all flex items-center gap-2 cursor-pointer"
             >
-              <span>REALIZAR MINHA PRIMEIRA INDICAÃ‡ÃƒO</span>
+              <span>REALIZAR MINHA PRIMEIRA INDICAï¿½ï¿½O</span>
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
             </a>
           </div>

@@ -27,6 +27,16 @@ Empresa de estratégia, posicionamento e crescimento digital que entrega direç�
 4. Processo antes de improviso.
 5. Preservar margem e sustentabilidade.
 
+## Camada de agentes e skills
+
+- A orquestracao de agentes e skills do projeto segue `docs/AGENTOS_BRIDGE.md`.
+- A escolha do agente principal segue `docs/AGENT_ROUTER.md`.
+- O AgentOS externo e a biblioteca de skills ficam em:
+  - `C:\Users\leobe\Documents\Aplicacao_vibe code_CarlosHenrique\.ai-agents`
+  - `C:\Users\leobe\Documents\Aplicacao_vibe code_CarlosHenrique\skills`
+- O projeto consome esses recursos como leitura e referencia, nao como copia paralela.
+- Se uma missao tocar mais de uma camada, o agente deve recuperar contexto antes de executar.
+
 ## O que a TAG08 vende de verdade
 - Direção (o que fazer, por que, para quem e com qual prioridade).
 - Clareza (mensagem, decisão, comunicação e operação).
@@ -41,9 +51,9 @@ Empresa de estratégia, posicionamento e crescimento digital que entrega direç�
 
 ## Frases de base para produto/comercial
 - “Você não precisa fazer tudo. Precisa fazer com direção.”
-- “Antes de falar de plano, precisamos entender seu momento.”
+- Antes de falar de plano, precisamos entender seu momento.
 - “Não basta produzir. Precisa organizar e sustentar.”
-- “Crescer sem estrutura vira desgaste.”
+- Crescer sem estrutura vira desgaste.
 
 ## Personas de entrada (guia de qualificação)
 - Sofia: especialista desorganizada.
@@ -68,7 +78,7 @@ Empresa de estratégia, posicionamento e crescimento digital que entrega direç�
 ## Anti-padrões críticos
 - Vender “post” como solução principal.
 - Promessa de resultado rápido como âncora.
-- “Fazemos tudo” sem escopo.
+- Fazemos tudo sem escopo.
 - Iniciar operação sem briefing, contrato, pagamento ou canais claros.
 - Aceitar urgência criada como prioridade sem critério.
 

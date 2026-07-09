@@ -1,31 +1,32 @@
-﻿# Matriz de decisão TAG08 - implantação
+# Matriz de decisao TAG08 - implantacao
 
-Atualizado: `2026-07-03`
-Próxima revisão sugerida: `2026-08-01`
+Atualizado: `2026-07-09`
+Proxima revisao sugerida: `2026-08-01`
 
 ## Objetivo
 
-Consolidar decisões técnicas para manter estabilidade, previsibilidade e velocidade de evolução no plano de implantação ponta a ponta.
+Consolidar decisoes tecnicas para manter estabilidade, previsibilidade e velocidade de evolucao no plano de implantacao ponta a ponta.
 
-| Tópico | Opções avaliadas | Decisão | Risco | Mitigação |
+| Topico | Opcoes avaliadas | Decisao | Risco | Mitigacao |
 | --- | --- | --- | --- | --- |
-| Contrato do onboarding | API externa dedicada x endpoint próprio mínimo | **Endpoint próprio em `server/index.ts` com fallback local** | Médio | Manter integração externa só em fase futura usando o mesmo contrato |
-| Validação de envio | Validar só no cliente x validar também no backend | **Validação mínima no backend com normalização** | Baixo/médio | Ajuste em `server/onboardingContract.ts` com retorno padronizado |
-| Fila de erro de rede | Perder envio x manter local e reprocessar | **`localStorage` com `maxRetries`, `maxAgeDays` e janela de sincronização** | Baixo | Script de operação orientado em `docs/ONBOARDING_OPERATIONS_PLAYBOOK.md` |
-| Rotas e SEO | Rotas soltas em múltiplos locais x registro único | **`routeRegistry` como fonte canônica** | Baixo | `src/App.tsx`, `generate-sitemap.ts` e docs sincronizados |
-| Texto/idioma | Strings estáticas quebradas x centralizar por idioma | **Idiomas ativos: PT-BR (default), EN, ES** | Médio | Revisão de strings visíveis e checklist de QA |
-| Controle de liberação | Deploy sem checklist x pré-check de release | **Checklist curto em `.ai-agents` + validações de risco** | Médio | `docs/CHANGELOG.md` e revisão obrigatória com owner |
-| SEO entre domínios | LPs em subdomínios com canonicals/links inconsistentes | **Documento padrão em `.ai-agents/05-crossdomain-seo-hub.md` + revisão mensal dos blocos de ecossistema** | Baixo | Validação em `docs/ROUTES.md` e runbook de release |
+| Contrato do onboarding | API externa dedicada x endpoint proprio minimo | **Endpoint proprio em `server/index.ts` com fallback local** | Medio | Manter integracao externa so em fase futura usando o mesmo contrato |
+| Validacao de envio | Validar so no cliente x validar tambem no backend | **Validacao minima no backend com normalizacao** | Baixo/medio | Ajuste em `server/onboardingContract.ts` com retorno padronizado |
+| Fila de erro de rede | Perder envio x manter local e reprocessar | **`localStorage` com `maxRetries`, `maxAgeDays` e janela de sincronizacao** | Baixo | Script de operacao orientado em `docs/ONBOARDING_OPERATIONS_PLAYBOOK.md` |
+| Rotas e SEO | Rotas soltas em multiplos locais x registro unico | **`routeRegistry` como fonte canonica** | Baixo | `src/App.tsx`, `generate-sitemap.ts` e docs sincronizados |
+| Texto/idioma | Strings estaticas quebradas x centralizar por idioma | **Idiomas ativos: PT-BR (default), EN, ES** | Medio | Revisao de strings visiveis e checklist de QA |
+| Orquestracao de agentes e skills | Cada agente improvisa x contrato de missao com registry e catalogo | **`docs/AGENT_ROUTER.md` + `docs/AGENTOS_BRIDGE.md` + `C:\Users\leobe\Documents\Aplicacao_vibe code_CarlosHenrique\.ai-agents` + `C:\Users\leobe\Documents\Aplicacao_vibe code_CarlosHenrique\skills\CATALOGO.md`** | Baixo | Revisar quando mudar papel, cobertura ou prioridade de skill |
+| Controle de liberacao | Deploy sem checklist x pre-check de release | **Checklist curto em `docs/AGENTOS_BRIDGE.md` + validacoes de risco** | Medio | `docs/CHANGELOG.md` e revisao obrigatoria com owner |
+| SEO entre dominios | LPs em subdominios com canonicals/links inconsistentes | **Documento padrao em `docs/AGENTOS_BRIDGE.md` + revisao mensal dos blocos de ecossistema** | Baixo | Validacao em `docs/ROUTES.md` e runbook de release |
 
-## Dono da decisão
+## Dono da decisao
 
-- Operação: produto
-- Execução técnica: engenharia
-- Conteúdo/SEO: marketing
+- Operacao: produto
+- Execucao tecnica: engenharia
+- Conteudo/SEO: marketing
 
-## Critério de aceitação mínima
+## Criterio de aceitacao minima
 
-- Não perder submissões locais após reload
+- Nao perder submissoes locais apos reload
 - Metas de status da API e fila rastreadas
-- Toda rota indexável no registry e sitemap
-- Sem regressão de idioma visível em fluxos críticos
+- Toda rota indexavel no registry e sitemap
+- Sem regressao de idioma visivel em fluxos criticos

@@ -287,11 +287,11 @@ A TAG08 trabalha com diagnóstico antes de proposta, então a ideia não é te e
 
 ## O que evitar
 
-- “A TAG08 vai fazer sua empresa vender muito.”
+- A TAG08 vai fazer sua empresa vender muito.
 - “Tenho um pacote barato para você.”
 - “É só postar que resolve.”
-- “Consigo desconto se fechar hoje.”
-- “Isso vai viralizar.”
+- Consigo desconto se fechar hoje.
+- Isso vai viralizar.
 
 ## Observação
 O parceiro precisa preservar o posicionamento da TAG08 desde a primeira conversa.

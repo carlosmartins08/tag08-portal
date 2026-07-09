@@ -19,24 +19,24 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
 
   const faqs = [
     {
-      q: "O que ÃƒÂ© o Programa SEBRAETEC?",
-      a: "O SEBRAETEC ÃƒÂ© um programa nacional do SEBRAE que visa facilitar o acesso de micro e pequenas empresas ÃƒÂ  inovaÃƒÂ§ÃƒÂ£o e tecnologia. Ele conecta sua empresa a prestadores de serviÃƒÂ§os tecnolÃƒÂ³gicos registrados, como a TAG08, e subsidia atÃƒÂ© 70% ou 80% do valor total do projeto."
+      q: "O que é o Programa SEBRAETEC?",
+      a: "O SEBRAETEC é um programa nacional do SEBRAE que visa facilitar o acesso de micro e pequenas empresas à inovação e tecnologia. Ele conecta sua empresa a prestadores de serviços tecnolï¿½gicos registrados, como a TAG08, e subsidia atï¿½ 70% ou 80% do valor total do projeto."
     },
     {
-      q: "Quem pode se beneficiar do subsÃƒÂ­dio?",
-      a: "Podem participar Microempreendedores Individuais (MEI), Microempresas (ME) e Empresas de Pequeno Porte (EPP) com faturamento anual de atÃƒÂ© R$ 4,8 milhÃƒÂµes e inscriÃƒÂ§ÃƒÂ£o estadual/municipal regular."
+      q: "Quem pode se beneficiar do subsídio?",
+      a: "Podem participar Microempreendedores Individuais (MEI), Microempresas (ME) e Empresas de Pequeno Porte (EPP) com faturamento anual de até R$ 4,8 milhões e inscrição estadual/municipal regular."
     },
     {
-      q: "Quais serviÃƒÂ§os da TAG08 podem receber o subsÃƒÂ­dio SEBRAETEC?",
-      a: "Os principais serviÃƒÂ§os cobertos incluem Design de Identidade Visual (Branding Completo), Desenvolvimento de Websites Institucionais, Landing Pages de ConversÃƒÂ£o, E-commerces EstratÃƒÂ©gicos, Design de Embalagens e DiagnÃƒÂ³sticos de OtimizaÃƒÂ§ÃƒÂ£o de Processos Digitais."
+      q: "Quais serviços da TAG08 podem receber o subsídio SEBRAETEC?",
+      a: "Os principais serviços cobertos incluem Design de Identidade Visual (Branding Completo), Desenvolvimento de Websites Institucionais, Landing Pages de Conversão, E-commerces Estratégicos, Design de Embalagens e Diagnósticos de Otimização de Processos Digitais."
     },
     {
-      q: "Como funciona o fluxo de aprovaÃƒÂ§ÃƒÂ£o?",
-      a: "O fluxo ÃƒÂ© simples: realizamos uma reuniÃƒÂ£o inicial para entender suas necessidades, formulamos a proposta tÃƒÂ©cnica seguindo as diretrizes do Sebraetec, e encaminhamos ao Sebrae regional. Uma vez aprovado pelo Sebrae, o projeto inicia e vocÃƒÂª paga apenas a contrapartida subsidiada de 20% a 30%."
+      q: "Como funciona o fluxo de aprovação?",
+      a: "O fluxo é simples: realizamos uma reunião inicial para entender suas necessidades, formulamos a proposta técnica seguindo as diretrizes do Sebraetec, e encaminhamos ao Sebrae regional. Uma vez aprovado pelo Sebrae, o projeto inicia e você paga apenas a contrapartida subsidiada de 20% a 30%."
     },
     {
-      q: "A TAG08 ajuda no processo de solicitaÃƒÂ§ÃƒÂ£o ao Sebrae?",
-      a: "Sim, oferecemos suporte consultivo completo e auxiliamos na estruturaÃƒÂ§ÃƒÂ£o tÃƒÂ©cnica da proposta e no envio dos documentos ao gestor responsÃƒÂ¡vel do Sebrae para acelerar a liberaÃƒÂ§ÃƒÂ£o do seu projeto."
+      q: "A TAG08 ajuda no processo de solicitação ao Sebrae?",
+      a: "Sim, oferecemos suporte consultivo completo e auxiliamos na estruturação técnica da proposta e no envio dos documentos ao gestor responsável do Sebrae para acelerar a liberação do seu projeto."
     }
   ];
 
@@ -56,16 +56,16 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
-                PARCERIAS E INOVAÃƒâ€¡ÃƒÆ’O SUBSIDIADA // SEBRAETEC
+                PARCERIAS E INOVAÇÃO SUBSIDIADA // SEBRAETEC
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
                 SEBRAETEC + TAG08 <br />
-                <span className="text-brand-secondary">InovaÃƒÂ§ÃƒÂ£o ao seu alcance com atÃƒÂ© 70% de subsÃƒÂ­dio.</span>
+                <span className="text-brand-secondary">Inovação ao seu alcance com até 70% de subsídio.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
-                Sua empresa pode modernizar a presenÃƒÂ§a digital, reformular o branding e otimizar processos investindo apenas uma fraÃƒÂ§ÃƒÂ£o do custo real. AtravÃƒÂ©s do programa SEBRAETEC, o SEBRAE apoia micro e pequenos negÃƒÂ³cios financiando o desenvolvimento tecnolÃƒÂ³gico executado pela equipe de alta performance da TAG08.
+                Sua empresa pode modernizar a presença digital, reformular o branding e otimizar processos investindo apenas uma fração do custo real. Através do programa SEBRAETEC, o SEBRAE apoia micro e pequenos negócios financiando o desenvolvimento tecnológico executado pela equipe de alta performance da TAG08.
               </p>
             </div>
           </div>
@@ -75,7 +75,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
               <img 
                 src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=1600"
-                alt="Empreendedorismo e inovaÃƒÂ§ÃƒÂ£o subsidiada Sebraetec"
+                alt="Empreendedorismo e inovação subsidiada Sebraetec"
                 className="w-full h-full object-cover grayscale brightness-40 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
               />
@@ -84,7 +84,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
 
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(45px)" }}>
                 <a
-                  href={buildBrazilWhatsAppUrl("OlÃƒÂ¡,%20gostaria%20de%20saber%20como%20utilizar%20o%20subsÃƒÂ­dio%20do%20SEBRAETEC%20com%20a%20TAG08!")}
+                  href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20saber%20como%20utilizar%20o%20subsídio%20do%20SEBRAETEC%20com%20a%20TAG08!")}
                   target="_blank"
                   rel="noreferrer"
                   className="group bg-brand-secondary text-black font-mono font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
@@ -98,7 +98,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
                   <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-bold">TAG08 HUB INTEGRADO</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">InovaÃƒÂ§ÃƒÂ£o TecnolÃƒÂ³gica com DireÃƒÂ§ÃƒÂ£o</h4>
+                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Inovação Tecnológica com Direção</h4>
                 </div>
 
                 <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
@@ -112,20 +112,20 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
           {/* Stats Bar */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-white">AtÃƒÂ© 70%</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-white">Até 70%</span>
               <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Fundo Perdido subsidiado<br/>pelo SEBRAE para sua marca</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">20% a 30%</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Sua contrapartida real<br/>para implementar inovaÃƒÂ§ÃƒÂ£o</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Sua contrapartida real<br/>para implementar inovação</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">MEIs e PMEs</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">PÃƒÂºblico-alvo oficial<br/>habilitado para o subsÃƒÂ­dio</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Público-alvo oficial<br/>habilitado para o subsídio</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Completo</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Branding, Web, Identidade<br/>e OtimizaÃƒÂ§ÃƒÂ£o de Processos</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Branding, Web, Identidade<br/>e Otimização de Processos</span>
             </div>
           </div>
 
@@ -140,28 +140,28 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-24">
               <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-                VIABILIZAÃƒâ€¡ÃƒÆ’O // BENEFÃƒÂCIOS REAIS
+                VIABILIZAÇÃO // BENEFï¿½CIOS REAIS
               </span>
               <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
                 Por que usar o Sebraetec em seu projeto?
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                O maior obstÃƒÂ¡culo para muitas pequenas empresas investirem em sua transformaÃƒÂ§ÃƒÂ£o digital e posicionamento estÃƒÂ©tico de ponta ÃƒÂ© o orÃƒÂ§amento inicial de capitais circulantes. O SEBRAETEC elimina essa barreira de forma oficial e segura:
+                O maior obstáculo para muitas pequenas empresas investirem em sua transformação digital e posicionamento estético de ponta é o orçamento inicial de capitais circulantes. O SEBRAETEC elimina essa barreira de forma oficial e segura:
               </p>
               
               <div className="p-5 rounded-2xl bg-brand-secondary/[0.01] border border-brand-secondary/5 text-xs text-zinc-400 font-sans">
                 <span className="text-brand-secondary font-black uppercase block mb-1">IMPACTO FINANCEIRO:</span>
-                Um projeto de prestÃƒÂ­gio que custaria, por exemplo, R$ 10.000,00 reais passa a exigir um investimento real de cerca de R$ 3.000,00 do empreendedor, com o Sebrae pagando os R$ 7.000,00 restantes direto.
+                Um projeto de prestígio que custaria, por exemplo, R$ 10.000,00 reais passa a exigir um investimento real de cerca de R$ 3.000,00 do empreendedor, com o Sebrae pagando os R$ 7.000,00 restantes direto.
               </div>
             </div>
 
             <div className="lg:col-span-7 space-y-4">
               {[
-                "Acesso a metodologias sÃƒÂªniores de branding e desenvolvimento web de preÃƒÂ§o elevado com custo radicalmente minorado.",
-                "Processo formalizado, auditado e com garantias absolutas de entrega fiscalmente limpa decretadas pelo prÃƒÂ³prio SEBRAE.",
-                "Garantia de que vocÃƒÂª estarÃƒÂ¡ trabalhando com uma empresa devidamente credenciada e homologada por critÃƒÂ©rios rigorosos.",
+                "Acesso a metodologias sêniores de branding e desenvolvimento web de preço elevado com custo radicalmente minorado.",
+                "Processo formalizado, auditado e com garantias absolutas de entrega fiscalmente limpa decretadas pelo próprio SEBRAE.",
+                "Garantia de que você estará trabalhando com uma empresa devidamente credenciada e homologada por critérios rigorosos.",
                 "Retorno sobre investimento imediato, permitindo reverter os recursos economizados para campanhas de marketing ou estoque comercial.",
-                "Aumento visÃƒÂ­vel da competitividade da sua marca no mercado digital perante grandes concorrentes com orÃƒÂ§amento superior."
+                "Aumento visível da competitividade da sua marca no mercado digital perante grandes concorrentes com orçamento superior."
               ].map((benefit, idx) => (
                 <div key={idx} className="flex gap-4 items-start p-4 rounded-2xl bg-charcoal-900 border border-white/[0.03] hover:border-white/[0.06] transition-all">
                   <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-secondary shrink-0 shadow-[0_0_8px_var(--color-brand-secondary)]" />
@@ -176,10 +176,10 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
             <div className="lg:col-span-4 space-y-4">
               <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block font-bold">REQUISITOS OPERACIONAIS</span>
               <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase leading-none tracking-tight">
-                SUA MARCA ESTÃƒÂ APTA <span className="text-brand">AO SUBSÃƒÂDIO SEBRAETEC?</span>
+                SUA MARCA ESTҁ APTA <span className="text-brand">AO SUBSҍDIO SEBRAETEC?</span>
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-                Verifique os critÃƒÂ©rios bÃƒÂ¡sicos estabelecidos para faturamento e documentaÃƒÂ§ÃƒÂ£o exigidos para protocolar seu projeto.
+                Verifique os critérios básicos estabelecidos para faturamento e documentação exigidos para protocolar seu projeto.
               </p>
             </div>
 
@@ -188,31 +188,31 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
                 <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">01 // PORTE DA EMPRESA</span>
                 <h4 className="text-white font-display font-bold text-sm uppercase">Faturamento Regularizado</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Sua empresa precisa estar classificada como MEI, ME (Microempresa) ou EPP (Empresa de Pequeno Porte). Produtores rurais formalizados com inscriÃƒÂ§ÃƒÂ£o de produtor ativo tambÃƒÂ©m podem solicitar.
+                  Sua empresa precisa estar classificada como MEI, ME (Microempresa) ou EPP (Empresa de Pequeno Porte). Produtores rurais formalizados com inscrição de produtor ativo também podem solicitar.
                 </p>
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">02 // DOCUMENTAÃƒâ€¡ÃƒÆ’O BÃƒÂSICA</span>
-                <h4 className="text-white font-display font-bold text-sm uppercase">ProntidÃƒÂ£o Cadastral</h4>
+                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">02 // DOCUMENTAÇÃO Bï¿½SICA</span>
+                <h4 className="text-white font-display font-bold text-sm uppercase">Prontidão Cadastral</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Ãƒâ€° preciso apresentar cartÃƒÂ£o CNPJ, cÃƒÂ³pia do contrato social ou CCMEI (no caso de MEI), e certidÃƒÂ£o negativa de dÃƒÂ©bitos (CND) federais atualizada de forma regular junto aos ÃƒÂ³rgÃƒÂ£os de uniÃƒÂ£o.
+                  É preciso apresentar cartão CNPJ, cópia do contrato social ou CCMEI (no caso de MEI), e certidão negativa de débitos (CND) federais atualizada de forma regular junto aos órgãos de união.
                 </p>
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">03 // LIMITE DO SUBSÃƒÂDIO</span>
-                <h4 className="text-white font-display font-bold text-sm uppercase">CotaÃƒÂ§ÃƒÂµes por CNPJ</h4>
+                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">03 // LIMITE DO SUBSҍDIO</span>
+                <h4 className="text-white font-display font-bold text-sm uppercase">Cotações por CNPJ</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Cada CNPJ possui um limite financeiro anual subsidiado (variÃƒÂ¡vel por regiÃƒÂ£o). Ãƒâ€° possÃƒÂ­vel acumular e sequenciar diferentes projetos, como Branding primeiro e depois Desenvolvimento Web.
+                  Cada CNPJ possui um limite financeiro anual subsidiado (variï¿½vel por regiï¿½o). ï¿½0 possï¿½vel acumular e sequenciar diferentes projetos, como Branding primeiro e depois Desenvolvimento Web.
                 </p>
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
                 <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">04 // APOIO COOPERATIVO</span>
-                <h4 className="text-white font-display font-bold text-sm uppercase">Suporte de Equipe TÃƒÂ©cnico</h4>
+                <h4 className="text-white font-display font-bold text-sm uppercase">Suporte de Equipe Técnico</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Todo o trÃƒÂ¢mite, preenchimento das solicitaÃƒÂ§ÃƒÂµes burocrÃƒÂ¡ticas e validaÃƒÂ§ÃƒÂµes tÃƒÂ©cnicas com os gestores credenciados do SEBRAE sÃƒÂ£o acompanhados lado a lado pelas equipes estratÃƒÂ©gicas da TAG08.
+                  Todo o trï¿½mite, preenchimento das solicitações burocrï¿½ticas e validações tï¿½cnicas com os gestores credenciados do SEBRAE são acompanhados lado a lado pelas equipes estratï¿½gicas da TAG08.
                 </p>
               </div>
             </div>
@@ -224,10 +224,10 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
       <section className="px-4 sm:px-6 md:px-8 py-24 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-16">
           <div className="text-left space-y-2 max-w-2xl">
-            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">DIVERSIDADE EM SERVIÃƒâ€¡OS CREDENCIADOS</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">O que vocÃƒÂª pode criar com a TAG08 via SEBRAETEC</h2>
+            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">DIVERSIDADE EM SERVIçOS CREDENCIADOS</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">O que você pode criar com a TAG08 via SEBRAETEC</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              Utilize o subsÃƒÂ­dio financeiro do SEBRAE para acessar as maiores linhas de inovaÃƒÂ§ÃƒÂ£o digital e visual disponÃƒÂ­veis no mercado moderno.
+              Utilize o subsídio financeiro do SEBRAE para acessar as maiores linhas de inovação digital e visual disponíveis no mercado moderno.
             </p>
           </div>
 
@@ -239,7 +239,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-bold text-sm uppercase">Branding &amp; Marca Visual</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  CriaÃƒÂ§ÃƒÂ£o de logotipo vetorial profissional, reformulaÃƒÂ§ÃƒÂ£o de manual de identidade, escolha unificada de cores institucionais, diagramaÃƒÂ§ÃƒÂ£o de propostas comerciais de luxo e papelaria digital completa.
+                  Criação de logotipo vetorial profissional, reformulação de manual de identidade, escolha unificada de cores institucionais, diagramação de propostas comerciais de luxo e papelaria digital completa.
                 </p>
               </div>
             </div>
@@ -249,9 +249,9 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
                 <Sparkles className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-bold text-sm uppercase">Embalagem &amp; Design RÃƒÂ³tulo</h4>
+                <h4 className="text-white font-display font-bold text-sm uppercase">Embalagem &amp; Design Rótulo</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  CriaÃƒÂ§ÃƒÂ£o tÃƒÂ©cnica tridimensional e conceitual de embalagens, rÃƒÂ³tulos comerciais, caixas de entrega exclusivas e fitas adesivas estÃƒÂ©ticas para e-commerces que precisam reter a valorizaÃƒÂ§ÃƒÂ£o do cliente.
+                  Criação técnica tridimensional e conceitual de embalagens, rótulos comerciais, caixas de entrega exclusivas e fitas adesivas estéticas para e-commerces que precisam reter a valorização do cliente.
                 </p>
               </div>
             </div>
@@ -263,7 +263,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-bold text-sm uppercase">Websites &amp; Landing Pages</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Desenvolvimento sob medida de sites corporativos de alta performance, landing pages otimizadas de captura de leads estruturadas sem templates repetitivos de mercado e com cÃƒÂ³digo leve.
+                  Desenvolvimento sob medida de sites corporativos de alta performance, landing pages otimizadas de captura de leads estruturadas sem templates repetitivos de mercado e com código leve.
                 </p>
               </div>
             </div>
@@ -275,7 +275,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-bold text-sm uppercase">E-commerces &amp; Sistemas</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Lojas virtuais elegantes integradas de ponta a ponta com gateways de pagamento seguros, sistemas consultivos de catÃƒÂ¡logos interativos estruturados e integraÃƒÂ§ÃƒÂµes automatizadas ERP de controle comercial.
+                  Lojas virtuais elegantes integradas de ponta a ponta com gateways de pagamento seguros, sistemas consultivos de catálogos interativos estruturados e integrações automatizadas ERP de controle comercial.
                 </p>
               </div>
             </div>
@@ -292,17 +292,17 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
             </span>
             <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">Como solicitar seu projeto subsidiado passo-a-passo</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              Um fluxo rigorosamente estruturado que reduz a burocracia das solicitaÃƒÂ§ÃƒÂµes do cliente e acelera a formalidade do termo final.
+              Um fluxo rigorosamente estruturado que reduz a burocracia das solicitações do cliente e acelera a formalidade do termo final.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
             {[
-              { num: "01", term: "DIAGNÃƒâ€œSTICO INICIAL", desc: "ReuniÃƒÂ£o de alinhamento com a TAG08 para definir o escopo tecnolÃƒÂ³gico ideal para o momento da sua empresa." },
-              { num: "02", term: "PROPOSTA TÃƒâ€°CNICA", desc: "Elaboramos todo o material de projeto, escopo e justificativas em conformidade com as normas do Sebraetec." },
-              { num: "03", term: "ENVIO & ANÃƒÂLISE", desc: "Submetemos o projeto ao SEBRAE para anÃƒÂ¡lise e emissÃƒÂ£o do termo de concessÃƒÂ£o com liberaÃƒÂ§ÃƒÂ£o do subsÃƒÂ­dio." },
-              { num: "04", term: "EXECUÃƒâ€¡ÃƒÆ’O DE ELITE", desc: "Com a anuÃƒÂªncia oficial, iniciamos o projeto. Entregamos toda a maturidade de design e web da nossa equipe." },
-              { num: "05", term: "HOMOLOGAÃƒâ€¡ÃƒÆ’O", desc: "VocÃƒÂª recebe o projeto finalizado, pronto e validado em faturamento ativo. O SEBRAE quita a parcela subsidiada." }
+              { num: "01", term: "DIAGNÓSTICO INICIAL", desc: "Reunião de alinhamento com a TAG08 para definir o escopo tecnológico ideal para o momento da sua empresa." },
+              { num: "02", term: "PROPOSTA TÒ⬰CNICA", desc: "Elaboramos todo o material de projeto, escopo e justificativas em conformidade com as normas do Sebraetec." },
+              { num: "03", term: "ENVIO & ANï¿½LISE", desc: "Submetemos o projeto ao SEBRAE para anï¿½lise e emissão do termo de concessão com liberaï¿½ï¿½o do subsï¿½dio." },
+              { num: "04", term: "EXECUï¿½ï¿½O DE ELITE", desc: "Com a anuï¿½ncia oficial, iniciamos o projeto. Entregamos toda a maturidade de design e web da nossa equipe." },
+              { num: "05", term: "HOMOLOGAï¿½ï¿½O", desc: "Vocï¿½ recebe o projeto finalizado, pronto e validado em faturamento ativo. O SEBRAE quita a parcela subsidiada." }
             ].map((step, sIdx) => (
               <div key={sIdx} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-2xl space-y-4 flex flex-col justify-between relative hover:border-brand/20 transition-all duration-300">
                 <span className="font-display font-black text-3xl text-brand-secondary">{step.num}</span>
@@ -316,12 +316,12 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
             <a
-              href={buildBrazilWhatsAppUrl("OlÃƒÂ¡,%20gostaria%20de%20solicitar%20um%20diagnÃƒÂ³stico%20tÃƒÂ©cnico%20para%20o%20SEBRAETEC!")}
+              href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20solicitar%20um%20diagnóstico%20técnico%20para%20o%20SEBRAETEC!")}
               target="_blank"
               rel="noreferrer"
               className="group bg-brand-secondary text-black font-mono font-black text-[10px] uppercase tracking-widest py-3.5 px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:scale-102 transition-all flex items-center gap-2 cursor-pointer"
             >
-              <span>INICIAR DIAGNÃƒâ€œSTICO SUBSIDIADO</span>
+              <span>INICIAR DIAGNÒSTICO SUBSIDIADO</span>
               <ArrowRight className="w-4 h-4" />
             </a>
             <button
@@ -339,9 +339,9 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
       <section className="px-4 sm:px-6 md:px-8 py-24 select-none max-w-4xl mx-auto space-y-12 text-left">
         <div className="text-center space-y-2">
           <HelpCircle className="w-8 h-8 text-brand mx-auto" />
-          <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">DÃƒÅ¡VIDAS FREQUENTES SOBRE SEBRAETEC</h2>
+          <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">DҚVIDAS FREQUENTES SOBRE SEBRAETEC</h2>
           <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-            Entenda de forma clara e objetiva os principais limites de atuaÃƒÂ§ÃƒÂ£o e solicitaÃƒÂ§ÃƒÂ£o do subsÃƒÂ­dio.
+            Entenda de forma clara e objetiva os principais limites de atuação e solicitação do subsídio.
           </p>
         </div>
 
@@ -358,7 +358,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
               >
                 <span>{faq.q}</span>
                 <span className="text-brand font-sans text-lg shrink-0 ml-4 font-bold">
-                  {activeFaq === fIdx ? "Ã¢Ë†â€™" : "Ã¯Â¼â€¹"}
+                  {activeFaq === fIdx ? "ï¿½ï¿½ " : "ï¿½9"}
                 </span>
               </button>
               
@@ -378,20 +378,20 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
           <div className="absolute top-[-50%] left-[-20%] w-[450px] h-[450px] bg-brand/10 blur-[130px] rounded-full pointer-events-none" />
           
           <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/10 border border-brand-secondary/20 px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block z-10">
-            SOLICITE CONEXÃƒÆ’O COM CONSULTOR ESPECIALISTA
+            SOLICITE CONEXÒO COM CONSULTOR ESPECIALISTA
           </span>
           
           <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white uppercase tracking-tighter leading-tight max-w-3xl mx-auto z-10">
-            PRONTO PARA ACELERAR COM <span className="text-brand-secondary">DIREÃƒâ€¡ÃƒÆ’O E ATÃƒâ€° 70% DE DESCONTO?</span>
+            PRONTO PARA ACELERAR COM <span className="text-brand-secondary">DIREÇÃO E ATï¿½0 70% DE DESCONTO?</span>
           </h2>
           
           <p className="text-zinc-400 text-xs sm:text-sm font-medium max-w-2xl mx-auto z-10 leading-relaxed">
-            Nossos consultores credenciados estÃƒÂ£o ÃƒÂ  disposiÃƒÂ§ÃƒÂ£o de sua marca para dar prioridade e celeridade ao seu diagnÃƒÂ³stico cadastral. Pague menos, modernize mais e capte o real potencial comercial do seu CNPJ.
+            Nossos consultores credenciados estï¿½o ï¿½ disposiï¿½ï¿½o de sua marca para dar prioridade e celeridade ao seu diagnóstico cadastral. Pague menos, modernize mais e capte o real potencial comercial do seu CNPJ.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 z-10 relative">
             <a
-              href={buildBrazilWhatsAppUrl("OlÃƒÂ¡,%20acabei%20de%20acessar%20a%20pÃƒÂ¡gina%20do%20SEBRAETEC%20e%20gostaria%20de%20verificar%20a%20viabilidade%20do%20meu%20CNPJ%20para%20receber%20o%20subsÃƒÂ­dio!")}
+              href={buildBrazilWhatsAppUrl("Olá,%20acabei%20de%20acessar%20a%20página%20do%20SEBRAETEC%20e%20gostaria%20de%20verificar%20a%20viabilidade%20do%20meu%20CNPJ%20para%20receber%20o%20subsídio!")}
               target="_blank"
               rel="noreferrer"
               className="group bg-brand-secondary text-black font-mono font-black text-[10px] uppercase tracking-widest py-4 px-10 rounded-full shadow-[0_20px_50px_rgba(var(--color-brand-secondary-rgb),0.3)] hover:scale-102 transition-all flex items-center gap-2 cursor-pointer"

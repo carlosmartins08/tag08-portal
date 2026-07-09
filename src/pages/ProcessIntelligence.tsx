@@ -35,7 +35,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
-                DIVIsÃ£o DE PROCESSOS E ESTRUTURAS // TAG08
+                DIVIsão DE PROCESSOS E ESTRUTURAS // TAG08
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
                 Process Intelligence <br />
@@ -44,7 +44,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
-                Sua empresa atende bem, mas sofre com fricÃ§Ã£o ou desorganizaÃ§Ã£o interna? Mapeamos, diagnosticamos e estruturamos todos os seus departamentos em wikis organizadas e fluxos tÃ¡ticos claros para que seu negÃ³cio ganhe autonomia de crescimento contÃ­nuo.
+                Sua empresa atende bem, mas sofre com fricção ou desorganização interna? Mapeamos, diagnosticamos e estruturamos todos os seus departamentos em wikis organizadas e fluxos táticos claros para que seu negócio ganhe autonomia de crescimento contínuo.
               </p>
             </div>
           </div>
@@ -77,7 +77,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
                   <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-bold">TAG08 DIAGNOSTIC CONSOLE</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Mapeamento TÃ©cnico de Fluxo de ProduÃ§Ã£o</h4>
+                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Mapeamento Técnico de Fluxo de Produção</h4>
                 </div>
 
                 <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
@@ -96,11 +96,11 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">-50%</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Reduaao em Atividades e<br/>ReuniÃµes Caaticas Secundarias</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Reduaao em Atividades e<br/>Reuniões Caaticas Secundarias</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Wiki</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">CentralizaÃ§Ã£o das Senhas,<br/>Materiais e Diretrizes de Equipe</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Centralização das Senhas,<br/>Materiais e Diretrizes de Equipe</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">3x</span>
@@ -125,7 +125,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 Sinais invisaveis de "Caos Organizado" na sua empresa
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-                Muitas lideranÃ§as acreditam que a empresa estÃ¡ funcionando bem apenas porque faturam, ignorando a enorme queima de margem invisÃ­vel gerada pelo improviso tÃ¡tico:
+                Muitas lideranças acreditam que a empresa está funcionando bem apenas porque faturam, ignorando a enorme queima de margem invisível gerada pelo improviso tático:
               </p>
             </div>
 
@@ -133,10 +133,10 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
 
             <div className="lg:col-span-6 space-y-4">
               {[
-                { title: "Buscas e Rastreamento Lentos", desc: "Sua equipe perde mais de 20 minutos todos os dias para localizar um arquivo simples, contrato, senha ou instruÃ§Ã£o bÃ¡sica." },
-                { title: "Onboarding Demorado e Doloroso", desc: "Treinar um novo contratado exige longas reuniÃµes manuais guiadas pelos gestores, queimando tempo de lideranÃ§a sÃªnior." },
-                { title: "DependÃªncia Severa de Pessoas-Chave", desc: "Se um funcionÃ¡rio central sÃªnior adoece ou pede demissÃ£o, uma parte inteira da sua operaÃ§Ã£o simplesmente colapsa ou para." },
-                { title: "RefaÃ§Ã£o Constantemente Ativa", desc: "A mesma tarefa precisa ser refeita mÃºltiplas vezes porque os critÃ©rios de qualidade e padrÃµes nunca foram formalizados." }
+                { title: "Buscas e Rastreamento Lentos", desc: "Sua equipe perde mais de 20 minutos todos os dias para localizar um arquivo simples, contrato, senha ou instrução básica." },
+                { title: "Onboarding Demorado e Doloroso", desc: "Treinar um novo contratado exige longas reuniões manuais guiadas pelos gestores, queimando tempo de liderança sênior." },
+                { title: "Dependência Severa de Pessoas-Chave", desc: "Se um funcionário central sênior adoece ou pede demissão, uma parte inteira da sua operação simplesmente colapsa ou para." },
+                { title: "Refação Constantemente Ativa", desc: "A mesma tarefa precisa ser refeita múltiplas vezes porque os critérios de qualidade e padrões nunca foram formalizados." }
               ].map((item, idx) => (
                 <div key={idx} className="p-4 rounded-xl bg-charcoal-900 border border-white/[0.04] space-y-1">
                   <h4 className="text-white text-xs sm:text-sm font-display font-medium uppercase tracking-tight flex items-center gap-2">
@@ -157,7 +157,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
             <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">ATIVOS TANGaVEIS ENTREGUES DE IMEDIATO</span>
             <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">O QUE ENTREGAMOS NA NOSSA ASSESSORIA</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              NÃ£o fazemos relatÃ³rios tearicos de 300 pÃ¡ginas que ninguam la. Entregamos ativos de processos prontos para rodar na rotina pratica do seu negÃ³cio.
+              Não fazemos relatórios tearicos de 300 páginas que ninguam la. Entregamos ativos de processos prontos para rodar na rotina pratica do seu negócio.
             </p>
           </div>
 
@@ -169,7 +169,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Diagnastico Amplo</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Auditoria de ferramentas, entrevistas em detalhes com os colaboradores atuais, mensuraÃ§Ã£o estruturada dos pontos cegos e desperdacio de retrabalho corporativo por falta de precedancia.
+                  Auditoria de ferramentas, entrevistas em detalhes com os colaboradores atuais, mensuração estruturada dos pontos cegos e desperdacio de retrabalho corporativo por falta de precedancia.
                 </p>
               </div>
             </div>
@@ -181,7 +181,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Mapeamento de Fluxos</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  OrganizaÃ§Ã£o dos organogramas de setores de forma visual no Miro ou Figma. Deixamos transparente o exato fluxo de cada tarefa no comita de decisaes de rotina.
+                  Organização dos organogramas de setores de forma visual no Miro ou Figma. Deixamos transparente o exato fluxo de cada tarefa no comita de decisaes de rotina.
                 </p>
               </div>
             </div>
@@ -191,9 +191,9 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 <FileText className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Playbooks PrÃ¡ticos</h4>
+                <h4 className="text-white font-display font-black text-sm uppercase">Playbooks Práticos</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Manuais operacionais escritos por departamento (Onboarding, Comercial, Entrega, Suporte) em linguagem extremamente compreensÃ­vel para treinamento Ã¡gil.
+                  Manuais operacionais escritos por departamento (Onboarding, Comercial, Entrega, Suporte) em linguagem extremamente compreensível para treinamento ágil.
                 </p>
               </div>
             </div>
@@ -205,7 +205,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Base No Notion</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  ConstruÃ§Ã£o de uma wiki corporativa integrada unificando senhas seguras, manuais em vÃ­deo, contatos crÃ­ticos e links recorrentes para a equipe consultar rÃ¡pido sem perguntar em e-mails.
+                  Construção de uma wiki corporativa integrada unificando senhas seguras, manuais em vídeo, contatos críticos e links recorrentes para a equipe consultar rápido sem perguntar em e-mails.
                 </p>
               </div>
             </div>
@@ -220,7 +220,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
             <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">INTEGRIDADE DE CONSTRUaaO DE ATIVOS</span>
             <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">COMO DESENHAMOS SEUS PROCESSOS</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              Nossa intervenaao tÃ©cnica a estruturada em blocos seguros sem causar paralisaÃ§Ãµes operacionais no seu faturamento diario.
+              Nossa intervenaao técnica a estruturada em blocos seguros sem causar paralisações operacionais no seu faturamento diario.
             </p>
           </div>
 
@@ -229,7 +229,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               <span className="font-sans text-brand text-xs font-black">FASE A // DIAGNaSTICO PROFUNDO</span>
               <h4 className="text-white font-display font-black text-base uppercase leading-none">Mergulho no Cotidiano</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                Analise direta do ecossistema de produtividade, gargalos tÃ©cnicos e vazamento produtivo por parte da equipe atual atravÃ©s de entrevistas e alocaÃ§Ã£o de tempo real de tarefas.
+                Analise direta do ecossistema de produtividade, gargalos técnicos e vazamento produtivo por parte da equipe atual através de entrevistas e alocação de tempo real de tarefas.
               </p>
             </div>
 
@@ -237,12 +237,12 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               <span className="font-sans text-brand text-xs font-black">FASE B // REDESENHO DE FLUXOS</span>
               <h4 className="text-white font-display font-black text-base uppercase leading-none">A Engenharia do Workflow</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                Organizamos organogramas e precedancias visuais claras, extinguindo redundancias ou esperas longas de validaÃ§Ã£o que paralisam o cronograma de entrega B2B das suas divisaes.
+                Organizamos organogramas e precedancias visuais claras, extinguindo redundancias ou esperas longas de validação que paralisam o cronograma de entrega B2B das suas divisaes.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-4">
-              <span className="font-sans text-brand text-xs font-black">FASE C // ENTREGA E CENTRALIZaÃ§Ã£o</span>
+              <span className="font-sans text-brand text-xs font-black">FASE C // ENTREGA E CENTRALIZação</span>
               <h4 className="text-white font-display font-black text-base uppercase leading-none">Os Playbooks e Wikis Ativos</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
                 Montagem e refinamento no Notion ou Wiki prapria contendo senhas organizadas, canais, contatos e os playbooks escritos especificamente em linguagem acessavel e legavel de usar.
@@ -265,7 +265,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               Calculadora de Desperdacio Operacional e ROI de Processos
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-              Trabalho manual repetitivo drena o foco da sua equipe de vendas e operaÃ§Ãµes. Estime abaixo o tempo perdido com preenchimento manual de planilhas, alertas de CRM ausentes e repetiaao de dados, e descubra o custo financeiro invisÃ­vel anual que sua holding ou operaÃ§Ã£o esta absorvendo de forma passiva.
+              Trabalho manual repetitivo drena o foco da sua equipe de vendas e operações. Estime abaixo o tempo perdido com preenchimento manual de planilhas, alertas de CRM ausentes e repetiaao de dados, e descubra o custo financeiro invisível anual que sua holding ou operação esta absorvendo de forma passiva.
             </p>
           </div>
 
@@ -274,7 +274,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
             <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-6">
                 <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block pb-3 border-b border-white/[0.05]">
-                  Mapeamento da sua OperaÃ§Ã£o:
+                  Mapeamento da sua Operação:
                 </span>
 
                 {/* Slider 1: Colaboradores */}
@@ -365,7 +365,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                   <span className="text-[10px] font-mono font-black uppercase tracking-wider">A Gargula do Trabalho Invisavel</span>
                 </div>
                 <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                  Quando um funcionÃ¡rio gasta 2 horas copiando dados de um site para o CRM, gerando PDFs manuais ou formatando propostas de forma desestruturada, o faturamento da empresa perde falado comercial ativo por falta de foco.
+                  Quando um funcionário gasta 2 horas copiando dados de um site para o CRM, gerando PDFs manuais ou formatando propostas de forma desestruturada, o faturamento da empresa perde falado comercial ativo por falta de foco.
                 </p>
               </div>
             </div>
@@ -413,7 +413,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-zinc-400">
                     <div className="space-y-1 bg-white/[0.01] p-3 rounded-xl border border-white/[0.02]">
                       <div className="flex items-center justify-between text-[10px] font-sans">
-                        <span className="text-white font-bold">1. AtualizaÃ§Ã£o Manual de CRM</span>
+                        <span className="text-white font-bold">1. Atualização Manual de CRM</span>
                         <span>35% do desperdacio</span>
                       </div>
                       <p className="text-[9.5px] leading-tight text-zinc-500">Equipe digitando e colando nomes de leads e telefones de planilhas.</p>
@@ -421,7 +421,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
 
                     <div className="space-y-1 bg-white/[0.01] p-3 rounded-xl border border-white/[0.02]">
                       <div className="flex items-center justify-between text-[10px] font-sans">
-                        <span className="text-white font-bold">2. CriaÃ§Ã£o de PDFs e Contratos</span>
+                        <span className="text-white font-bold">2. Criação de PDFs e Contratos</span>
                         <span>25% do desperdacio</span>
                       </div>
                       <p className="text-[9.5px] leading-tight text-zinc-500">Escrever contratos copiando dados antigos no Word um por um.</p>
@@ -432,7 +432,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                         <span className="text-white font-bold">3. Avisos & Follow-ups Soltos</span>
                         <span>20% do desperdacio</span>
                       </div>
-                      <p className="text-[9.5px] leading-tight text-zinc-500">Esquecer de cobrar propostas por falta de lembretes integrados e automÃ¡ticos.</p>
+                      <p className="text-[9.5px] leading-tight text-zinc-500">Esquecer de cobrar propostas por falta de lembretes integrados e automáticos.</p>
                     </div>
 
                     <div className="space-y-1 bg-white/[0.01] p-3 rounded-xl border border-white/[0.02]">
@@ -510,7 +510,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           <div className="space-y-1 max-w-3xl">
             <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">AUTONOMIA OPERACIONAL E GOVERNANaA DE VERDADE</h4>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed">
-              O objetivo final a fazer com que sua empresa ganhe autonomia real, permitindo que a equipe execute as entregas sob o mesmo nÃ­vel rigoroso de qualidade sem que os fundadores precisem ficar vigiando ou ditando cada passo das tarefas.
+              O objetivo final a fazer com que sua empresa ganhe autonomia real, permitindo que a equipe execute as entregas sob o mesmo nível rigoroso de qualidade sem que os fundadores precisem ficar vigiando ou ditando cada passo das tarefas.
             </p>
           </div>
           <span className="font-mono text-[8.5px] text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
@@ -522,9 +522,9 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
       {/* OPERATIONS / PROCESSES CLIENTS LOGO SOCIAL PROOF */}
       <MiniCases 
         onNavigate={onNavigate} 
-        title="EficiÃªncia Operacional Homologada"
-        subtitle="Empresas de escala que reduziram retrabalho e liberaram os fundadores do caos diÃ¡rio com a inteligÃªncia de processos da TAG08."
-        badge="OPERATIONAL PROOF // PROCESSOS SÃBIOS"
+        title="Eficiência Operacional Homologada"
+        subtitle="Empresas de escala que reduziram retrabalho e liberaram os fundadores do caos diário com a inteligência de processos da TAG08."
+        badge="OPERATIONAL PROOF // PROCESSOS SÁBIOS"
       />
 
       {/* SECTION - WORK SYSTEM (WhatsApp Neon Callout inspired by screenshot) */}
@@ -585,7 +585,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 E PROTOCOLOS SaRIOS!
               </h2>
               <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
-                ACABE COM A DESORGANIZaÃ§Ã£o DE informaÃ§Ãµes E EQUIPE. DOCUMENTAMOS PLAYBOOKS CIRaRGICOS, REDESENHAMOS WORKFLOWS NO NOTION E LIBERAMOS SUA EMPRESA DA DEPENDaNCIA DE PESSOAS-CHAVE.
+                ACABE COM A DESORGANIZação DE informações E EQUIPE. DOCUMENTAMOS PLAYBOOKS CIRaRGICOS, REDESENHAMOS WORKFLOWS NO NOTION E LIBERAMOS SUA EMPRESA DA DEPENDaNCIA DE PESSOAS-CHAVE.
               </p>
             </div>
 
@@ -608,7 +608,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               {/* DUAL CLIENT CONNECTION CHANNELS (BR & INT) */}
               <div className="space-y-3">
                 <a 
-                  href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20solicitar%20um%20diagnÃ³stico%20de%20Process%20Intelligence%20com%20a%20TAG08")}
+                  href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20solicitar%20um%20diagnóstico%20de%20Process%20Intelligence%20com%20a%20TAG08")}
                   target="_blank"
                   rel="noreferrer"
                   className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner"
@@ -668,7 +668,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                   </span>
                 </div>
                 <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
-                  OPERaÃ§Ã£o ATIVA 100% online
+                  OPERação ATIVA 100% online
                 </span>
               </div>
             </div>
@@ -692,16 +692,16 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 Os pilares operacionais que auditamos e desenhamos
               </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-                NÃ£o fazemos modelagens teÃ³ricas abstratas. Desenhamos fluxos tÃ¡ticos funcionais em todas as frentes cruciais do seu modelo corporativo:
+                Não fazemos modelagens teóricas abstratas. Desenhamos fluxos táticos funcionais em todas as frentes cruciais do seu modelo corporativo:
               </p>
             </div>
 
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { title: "Funil Comercial & Vendas B2B", desc: "Passo a passo exato do lead recebido, qualificaÃ§Ã£o interna, roteiros de demonstraÃ§Ã£o e transiÃ§Ã£o de fechamento." },
-                { title: "Onboarding de Novos Clientes", desc: "Disparo automÃ¡tico de boas-vindas, coleta segura de briefings e configuraÃ§Ã£o de canais contratuais." },
-                { title: "ExecuÃ§Ã£o & Entrega TÃ©cnica", desc: "Cadeia de produÃ§Ã£o, limites de escopo e fluxos internos de controle de qualidade para evitar perdas de margem." },
-                { title: "Administrativo & Financeiro", desc: "Rotinas semanais de faturamento corporativo, cobranÃ§as automÃ¡ticas de inadimplÃªncia e conciliaÃ§Ãµes." }
+                { title: "Funil Comercial & Vendas B2B", desc: "Passo a passo exato do lead recebido, qualificação interna, roteiros de demonstração e transição de fechamento." },
+                { title: "Onboarding de Novos Clientes", desc: "Disparo automático de boas-vindas, coleta segura de briefings e configuração de canais contratuais." },
+                { title: "Execução & Entrega Técnica", desc: "Cadeia de produção, limites de escopo e fluxos internos de controle de qualidade para evitar perdas de margem." },
+                { title: "Administrativo & Financeiro", desc: "Rotinas semanais de faturamento corporativo, cobranças automáticas de inadimplência e conciliações." }
               ].map((area, aIdx) => (
                 <div key={aIdx} className="p-5 rounded-2xl bg-charcoal-900 border border-white/[0.04] space-y-1.5">
                   <h4 className="text-white font-display font-bold uppercase tracking-tight text-xs sm:text-sm text-brand">{area.title}</h4>
@@ -711,25 +711,25 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
             </div>
           </div>
 
-          {/* O que precisamos de vocÃª (Insumo do Cliente) */}
+          {/* O que precisamos de você (Insumo do Cliente) */}
           <div className="space-y-8 pt-10 border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-                ALIANÃ‡A DE TRABALHO // REQUISITOS DE CONTA
+                ALIANÇA DE TRABALHO // REQUISITOS DE CONTA
               </span>
               <h3 className="font-display font-medium text-2xl text-white">
-                O insumo necessÃ¡rio de sua marca no projeto de InteligÃªncia
+                O insumo necessário de sua marca no projeto de Inteligência
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-2xl">
-                Nossa entrega metodolÃ³gica Ã© sÃªnior, mas depende de entrevistas estratÃ©gicas bÃ¡sicas com sua lideranÃ§a para catalogar os processos existentes:
+                Nossa entrega metodológica é sênior, mas depende de entrevistas estratégicas básicas com sua liderança para catalogar os processos existentes:
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {[
                 { step: "A", title: "Entrevistas Gravadas de 40 min", desc: "Conversamos individualmente com cada gestor para colher as rotinas reais executadas nos bastidores." },
-                { step: "B", title: "Acesso a Manuais Existentes", desc: "Analisamos blocos de anotaÃ§Ãµes antigos, mensagens ou diretrizes informais soltas para consolidaÃ§Ã£o estrita." },
-                { step: "C", title: "GravaÃ§Ãµes Piloto de Tela (Loom)", desc: "Seus operadores gravam tarefas complexas em vÃ­deo curto para podermos estruturar o passo a passo com precisÃ£o." }
+                { step: "B", title: "Acesso a Manuais Existentes", desc: "Analisamos blocos de anotações antigos, mensagens ou diretrizes informais soltas para consolidação estrita." },
+                { step: "C", title: "Gravações Piloto de Tela (Loom)", desc: "Seus operadores gravam tarefas complexas em vídeo curto para podermos estruturar o passo a passo com precisão." }
               ].map((ins, idx) => (
                 <div key={idx} className="p-6 rounded-2xl bg-[#0c0c0e] border border-white/[0.04] space-y-3 relative overflow-hidden">
                   <div className="absolute top-2 right-4 font-sans font-black text-white/5 text-4xl">{ins.step}</div>
@@ -750,7 +750,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 O que de fato fica na sua empresa apas nossa modelagem?
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-                Nas nÃ£o entregamos relatÃ³rios frios de consultoria tradicional que viram poeira digital em pastas do Google Drive. Entregamos ativos de processos reais:
+                Nas não entregamos relatórios frios de consultoria tradicional que viram poeira digital em pastas do Google Drive. Entregamos ativos de processos reais:
               </p>
             </div>
 
@@ -758,8 +758,8 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               {[
                 { title: "Wikis Centrais de Processos", desc: "Seu portal de processos unificado e limpo em plataformas como Notion ou similar, ordenado por departamentos." },
                 { title: "Tutoriais Rapidos em Vadeo", desc: "Vadeos curtos anexos gravados explicativos de cada tarefa de sistema para que novos contratados executem sem davidas." },
-                { title: "DiagramaÃ§Ã£o de Fluxos Visuais", desc: "Mapas mentais geomatricos que descrevem visualmente quem faz o qua e qual o gatilho de cada decisÃ£o." },
-                { title: "Checklists Operacionais de Rotina", desc: "Listagem diaria para guiar os operadores, deixando as obrigaÃ§Ãµes absolutamente claras no inacio de cada manha." }
+                { title: "Diagramação de Fluxos Visuais", desc: "Mapas mentais geomatricos que descrevem visualmente quem faz o qua e qual o gatilho de cada decisão." },
+                { title: "Checklists Operacionais de Rotina", desc: "Listagem diaria para guiar os operadores, deixando as obrigações absolutamente claras no inacio de cada manha." }
               ].map((item, idx) => (
                 <div key={idx} className="p-4 rounded-xl bg-white/[0.01] border border-white/[0.03] space-y-1">
                   <h4 className="text-white font-display font-bold uppercase tracking-tight text-xs sm:text-sm">{item.title}</h4>
@@ -774,7 +774,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
             <div className="space-y-1.5">
               <h3 className="font-display font-semibold text-lg text-white">Praximo Passo: Implantar com Maestria</h3>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-xl leading-relaxed">
-                Se os processos forem mapeados mas sua equipe nÃ£o os seguir, o caos continuara. Conheaa nossa divisÃ£o complementar de ativaÃ§Ã£o e auditoria para garantir a adoÃ§Ã£o.
+                Se os processos forem mapeados mas sua equipe não os seguir, o caos continuara. Conheaa nossa divisão complementar de ativação e auditoria para garantir a adoção.
               </p>
             </div>
             <button
@@ -809,7 +809,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                   INTELIGaNCIA
                 </h2>
                 <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
-                  EsclareÃ§a as principais dÃºvidas sobre nossa auditoria e mapeamento de inteligÃªncia estrutural para sua equipe tÃ¡tica.
+                  Esclareça as principais dúvidas sobre nossa auditoria e mapeamento de inteligência estrutural para sua equipe tática.
                 </p>
               </div>
 
@@ -874,16 +874,16 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                     "Como a feita a auditoria operacional inicial?",
                     "O que a entregue no final do projeto?",
                     "Minha equipe participara do redesenho?",
-                    "Qual o tempo de esforÃ§o exigido de nossa empresa?"
+                    "Qual o tempo de esforço exigido de nossa empresa?"
                   ])[activeFaq]}
                 </h4>
                 
                 <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
                   {([
-                    "Realizamos um mergulho assistido por meio de entrevistas sigilosas focadas e inspeÃ§Ãµes cotidianas junto aos responsÃ¡veis de setores da sua empresa, identificando redundÃ¢ncias, vazamento de energia e ruÃ­dos internos de comunicaÃ§Ã£o.",
-                    "Entregamos uma Wiki Corporativa personalizada e organizada de forma integrada (geralmente estruturada no Notion ou central da empresa) contendo todos os organogramas interativos de faturamento e manuais prÃ¡ticos de playbooks escritos.",
-                    "Sim. Conduzimos reuniÃµes curtas direcionadas com os colaboradores-chave para garantir que os workflows redesenhados condigam plenamente com a realidade operacional, assegurando mÃ¡xima eficÃ¡cia de onboarding da equipe futura.",
-                    "Muito enxuto. O projeto Ã© projetado para desonerar a agenda dos sÃ³cios. Exigimos apenas breves reuniÃµes cirÃºrgicas de onboarding e validaÃ§Ãµes rÃ¡pidas semanais de progresso dos playbooks."
+                    "Realizamos um mergulho assistido por meio de entrevistas sigilosas focadas e inspeï¿½ï¿½es cotidianas junto aos responsáveis de setores da sua empresa, identificando redundï¿½ncias, vazamento de energia e ruídos internos de comunicação.",
+                    "Entregamos uma Wiki Corporativa personalizada e organizada de forma integrada (geralmente estruturada no Notion ou central da empresa) contendo todos os organogramas interativos de faturamento e manuais práticos de playbooks escritos.",
+                    "Sim. Conduzimos reuniões curtas direcionadas com os colaboradores-chave para garantir que os workflows redesenhados condigam plenamente com a realidade operacional, assegurando máxima eficácia de onboarding da equipe futura.",
+                    "Muito enxuto. O projeto é projetado para desonerar a agenda dos sócios. Exigimos apenas breves reuniões cirúrgicas de onboarding e validações rápidas semanais de progresso dos playbooks."
                   ])[activeFaq]}
                 </p>
               </div>
@@ -895,14 +895,14 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                   <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">Como agimos de forma organizada?</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    Eliminamos redundancias de tarefas e ruÃ­dos diarios internos. Blindamos suas decisaes comerciais.
+                    Eliminamos redundancias de tarefas e ruídos diarios internos. Blindamos suas decisaes comerciais.
                   </p>
                 </div>
                 <button
                   onClick={() => handleLinkClick("/servicos")}
                   className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
                 >
-                  <span>Ver ServiÃ§os</span>
+                  <span>Ver Serviços</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
@@ -910,13 +910,13 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer desenhar uma estratÃ©gia sob medida?</h4>
+                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer desenhar uma estratégia sob medida?</h4>
                   <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
-                    Fale diretamente com os tomadores de decisÃ£o da TAG08 via WhatsApp para avaliar a viabilidade de alocaÃ§Ã£o de equipe.
+                    Fale diretamente com os tomadores de decisão da TAG08 via WhatsApp para avaliar a viabilidade de alocação de equipe.
                   </p>
                 </div>
                 <a
-                  href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20consultar%20viabilidade%20estratÃ©gica%20especializada%2520para%20minha%20marca!")}
+                  href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20consultar%20viabilidade%20estratégica%20especializada%2520para%20minha%20marca!")}
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-all"
@@ -933,11 +933,11 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
       {/* SECTION 6 - ACTION TRIGGER FOOTER */}
       <section className="px-4 sm:px-6 md:px-8 py-20 text-center space-y-6 max-w-4xl mx-auto">
         <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
-          CONSTRUA UMA ESTRUTURA AUTÃ”NOMA <br />
-          <span className="text-brand">QUE OPERA CUMPRINDO PROTOCOLOS SÃBIOS.</span>
+          CONSTRUA UMA ESTRUTURA AUTï¿½NOMA <br />
+          <span className="text-brand">QUE OPERA CUMPRINDO PROTOCOLOS SÁBIOS.</span>
         </h2>
         <p className="text-zinc-400 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">
-          Chega de viver escravizado por dezenas de mensagens caÃ³ticas no WhatsApp da equipe. Fale conosco agora e agende sua auditoria diagnÃ³stica operacional.
+          Chega de viver escravizado por dezenas de mensagens caóticas no WhatsApp da equipe. Fale conosco agora e agende sua auditoria diagnóstica operacional.
         </p>
         <div className="pt-4">
           <button

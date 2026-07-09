@@ -7,6 +7,7 @@
 ## Base estrategica institucional
 
 - A direcao de produto, copy, ofertas e onboarding deve seguir `docs/TAG08_KNOWLEDGE_SYSTEM.md`.
+- A orquestracao de agentes e skills segue `docs/AGENTOS_BRIDGE.md`.
 - Arquitetura de texto, oferta e relacionamento deve preservar diagnostico, escopo claro e relacao de longo prazo.
 - Evitar promessas de entrega rapida, promessas absolutas de resultado e discurso de "fazemos qualquer coisa".
 
@@ -43,7 +44,7 @@
 - Cada LP aponta canonical para seu proprio dominio.
 - Rodapes e blocos devem linkar apenas propriedades ativas e reais.
 - `rel="alternate"` segue a linguagem atual com `x-default`.
-- Documentacao de governanca em `docs/ROUTES.md` e `.ai-agents/05-crossdomain-seo-hub.md`.
+- Documentacao de governanca em `docs/ROUTES.md` e `docs/AGENTOS_BRIDGE.md`.
 
 ## Camada de contrato e ingestao
 
@@ -85,8 +86,9 @@
 - Qualquer ajuste de tom, posicionamento ou proposta comercial fora desse sistema exige revisao explicita.
 - A camada visual segue `docs/DESIGN-SYSTEM-GOVERNANCE.md`.
 - A camada tipografica segue `docs/TYPOGRAPHY-GOVERNANCE.md`.
+- A camada de agentes segue `docs/AGENTOS_BRIDGE.md` e os registros externos em `C:\Users\leobe\Documents\Aplicacao_vibe code_CarlosHenrique\.ai-agents`.
 
 ## Revisao
 
-- Atualizacao: `2026-07-08`
+- Atualizacao: `2026-07-09`
 - Proxima revisao: `2026-08-01` ou troca de contrato

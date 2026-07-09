@@ -163,7 +163,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
             </div>
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">04 // EVAPORA�!ÒO SILENCIOSA DO M�0TODO</span>
+              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">04 // EVAPORAï¿½ï¿½O SILENCIOSA DO Mï¿½TODO</span>
               <h4 className="text-white font-display font-black text-sm uppercase">A nova cultura evapora gradualmente</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
                 A euforia das primeiras duas semanas de playbooks passa, e o time lentamente retorna ao caos e às conversas sem rumo por falta de fiscalização séria recorrente. Proteja seu investimento.
@@ -192,7 +192,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Implantação Imediata</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Organizamos ritos práticos de introdução por meio de checklists dinâmicos no dia a dia do colaborador, vinculando as wikis aos cards de tarefas reais de forma rápida.
+                  Organizamos ritos prï¿½ticos de introduï¿½ï¿½o por meio de checklists dinâmicos no dia a dia do colaborador, vinculando as wikis aos cards de tarefas reais de forma rï¿½pida.
                 </p>
               </div>
             </div>
@@ -228,7 +228,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Ajustes Incrementais</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  A rotina pratica esbarra em atritos inevitaveis. Customizamos e polimos as regras e os playbooks de forma orgânica de acordo com o crescimento real das suas divisaes táticas.
+                  A rotina pratica esbarra em atritos inevitaveis. Customizamos e polimos as regras e os playbooks de forma orgânica de acordo com o crescimento real das suas divisaes tï¿½ticas.
                 </p>
               </div>
             </div>
@@ -310,7 +310,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
         <div className="max-w-7xl mx-auto space-y-12 relative z-10">
           <div className="space-y-3 max-w-3xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-              METODOLOGIA ATIVA // ROADMAP DE EXECU�!ÒO
+              METODOLOGIA ATIVA // ROADMAP DE EXECUï¿½ï¿½O
             </span>
             <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
               Simulador de Maturidade Operacional e Cronograma
@@ -389,7 +389,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                   {[
                     { step: "FASE 1", title: "Mapeamento e Diagnóstico Clínico", desc: "Entrevistas individuais com o time, catalogação de gargalos de tempo e desenho do mapa de processos inicial.", badge: "W1 - W2" },
                     { step: "FASE 2", title: "Escrita de Playbooks e Criação de Wikis", desc: "Estruturação das wikis de ferramentas, senhas de equipe, roteiros de onboarding e criação de playbooks visuais e intuitivos.", badge: "W2 - W3" },
-                    { step: "FASE 3", title: "Automação Operacional e Treinamentos", desc: "Sessões dinâmicas de handoff com toda a equipe, ajustes ao vivo nos sistemas, gravação de vídeos curtos explicativos de 3 minutos.", badge: "W3 - W4" },
+                    { step: "FASE 3", title: "Automaï¿½ï¿½o Operacional e Treinamentos", desc: "Sessï¿½es dinâmicas de handoff com toda a equipe, ajustes ao vivo nos sistemas, gravação de vídeos curtos explicativos de 3 minutos.", badge: "W3 - W4" },
                     { step: "FASE 4", title: "Auditoria Ativa e Garantia de Adoção", desc: "Reuniões semanais de auditoria para verificar a disciplina das planilhas, CRM e n8n, refinando processos conforme o uso prático.", badge: "W4" }
                   ].map((phase, idx) => (
                     <div key={idx} className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04] flex items-start gap-4 hover:border-brand/20 transition-all">
@@ -449,7 +449,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                         if (b1) b1.innerText = "Semana 2";
 
                         if (t2) t2.innerText = "Sessões Ativas e Treinamentos Curtos";
-                        if (d2) d2.innerText = "Sessões dinâmicas de handoff com toda a equipe, gravação de vídeos curtos explicativos de 3 minutos para fixação.";
+                        if (d2) d2.innerText = "Sessï¿½es dinâmicas de handoff com toda a equipe, gravação de vídeos curtos explicativos de 3 minutos para fixaï¿½ï¿½o.";
                         if (b2) b2.innerText = "Semana 3";
 
                         if (t3) t3.innerText = "Auditoria de Disciplina e Adesão";
@@ -725,13 +725,13 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           <div className="space-y-8 pt-10 border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-                SISTEMA SEMANAL DE CRITaRIOS
+                SISTEMA SEMANAL DE CRITÉRIOS
               </span>
               <h3 className="font-display font-medium text-2xl text-white">
                 O funcionamento prático do nosso Ciclo Mensal e Semanal
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-2xl">
-                A adesão aos manuais do seu negócio ocorre por insistência e constância analítica. Nosso time executa um cronograma estável e repetitivo nos bastidores:
+                A adesão aos manuais do seu negï¿½cio ocorre por insistï¿½ncia e constância analï¿½tica. Nosso time executa um cronograma estï¿½vel e repetitivo nos bastidores:
               </p>
             </div>
 
@@ -793,7 +793,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           {/* Quando Contratar */}
           <div className="p-6 sm:p-8 rounded-3xl bg-charcoal-900 border border-white/[0.05] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-10 border-t border-white/[0.04]">
             <div className="lg:col-span-8 space-y-2">
-              <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-black block">CRIT�0RIO DE ESCOLHA OPERACIONAL</span>
+              <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-black block">CRITÉRIO DE ESCOLHA OPERACIONAL</span>
               <h4 className="text-white font-display font-medium text-lg uppercase">Quando contratar nossa ativação sênior?</h4>
               <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                 Se sua empresa já ultrapassou o faturamento bruto anual de R$ 300k, possui mais de 4 pessoas na operação, mas você sente que, como fundador, continua preso no operacional de microgerenciamento de tarefas básicas e cobranças redundantes todos os dias, a TAG08 Activation é o encaixe operacional perfeito para a libertação estratégica de seu tempo de negócios.
@@ -918,7 +918,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
                   {([
                     "Não. O Process Activation exige a conclusão prévia do Process Intelligence. Não implantamos manuais sem os playbooks e as wikis estarem estruturados e organizados sob nossa aprovação de calibre técnico.",
-                    "Promovemos workshops dinâmicos assistidos voltados ao uso correto das ferramentas, criamos rotinas com checklists visuais de tarefas diárias e conectamos as bases de senhas diretas à mesa de trabalho produtiva de cada colaborador.",
+                    "Promovemos workshops dinâmicos assistidos voltados ao uso correto das ferramentas, criamos rotinas com checklists visuais de tarefas diárias e conectamos as bases de senhas diretas ï¿½ mesa de trabalho produtiva de cada colaborador.",
                     "Nossa assessoria sênior realiza vistorias periódicas de conformidade diretamente nos painéis digitais, quantifica a adesão operacional da equipe e auxilia individualmente colaboradores que demonstrem gargalos de ritmo ou aprendizagem.",
                     "O programa dura em média até 30 dias de acompanhamento diário ativo, garantindo polimentos finos de playbooks diante de fricções do mundo real e gerando a consolidação final da autonomia do seu negócio."
                   ])[activeFaq]}

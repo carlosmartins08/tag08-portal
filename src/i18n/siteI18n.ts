@@ -1,4 +1,4 @@
-﻿export type UiLanguage = "pt" | "en" | "es";
+export type UiLanguage = "pt" | "en" | "es";
 
 export const LANGUAGE_OPTIONS: Array<{ code: UiLanguage; label: string; native: string }> = [
   { code: "pt", label: "PT-BR", native: "Portugues (Brasil)" },
@@ -35,7 +35,7 @@ export const i18n = {
       navServices: "Soluções",
       navContact: "Contato",
       navTitleServices: "Nossas Especialidades",
-      navAccelerateTag: "ACELERAÇ�O MÁXIMA",
+      navAccelerateTag: "ACELERAÇÃO MÁXIMA",
       navAccelerateText: "Precisa de performance com velocidade?",
       navAccelerateSubtext: "Ativamos diagnósticos rápidos para marcas em fase de crescimento.",
       navAccelerateMetricA: "+150% de ROI médio",

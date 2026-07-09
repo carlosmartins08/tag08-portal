@@ -1,4 +1,4 @@
-﻿export const SITE_LANGUAGES = ["pt", "en", "es"] as const;
+export const SITE_LANGUAGES = ["pt", "en", "es"] as const;
 export type SiteLanguage = (typeof SITE_LANGUAGES)[number];
 
 export const PRIMARY_SITE_DOMAIN = "https://tag08.com.br";
