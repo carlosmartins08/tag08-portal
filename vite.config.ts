@@ -17,6 +17,8 @@ const localOfficialContentFallback = {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const onboardingPort = Number(env.ONBOARDING_PORT || DEFAULT_BACKEND_PORT);
+  const frontendPort = Number(env.FRONTEND_PORT || FRONTEND_PORT);
+  const previewPort = Number(env.PREVIEW_PORT || 4173);
   const disableHmr = env.DISABLE_HMR === "true";
 
   return {
@@ -52,8 +54,8 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: "0.0.0.0",
-      port: FRONTEND_PORT,
-      strictPort: true,
+      port: frontendPort,
+      strictPort: false,
       hmr: disableHmr ? false : undefined,
       proxy: {
         "/api": {
@@ -64,8 +66,8 @@ export default defineConfig(({ mode }) => {
     },
     preview: {
       host: "0.0.0.0",
-      port: 4173,
-      strictPort: true
+      port: previewPort,
+      strictPort: false
     },
     build: {
       sourcemap: false,

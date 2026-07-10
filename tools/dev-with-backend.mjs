@@ -4,7 +4,12 @@ const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
 
 const processes = [
   { name: "backend", command: npmCommand, args: ["run", "dev:backend"] },
-  { name: "frontend", command: npmCommand, args: ["run", "dev"] }
+  {
+    name: "frontend",
+    command: npmCommand,
+    args: ["run", "dev"],
+    env: { FRONTEND_PORT: "3002" }
+  }
 ];
 
 let shuttingDown = false;
@@ -24,7 +29,8 @@ const stopAll = (signal = "SIGTERM") => {
 for (const processConfig of processes) {
   const child = spawn(processConfig.command, processConfig.args, {
     stdio: "inherit",
-    shell: false
+    shell: false,
+    env: processConfig.env ? { ...process.env, ...processConfig.env } : process.env
   });
 
   children.push(child);

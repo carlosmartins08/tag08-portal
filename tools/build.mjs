@@ -2,17 +2,22 @@ import { spawnSync } from "node:child_process";
 import { join } from "node:path";
 
 const projectRoot = process.cwd();
-const esbuildBinary = join(projectRoot, "node_modules", "@esbuild", "win32-x64", "esbuild.exe");
+const tscBinary = join(projectRoot, "node_modules", "typescript", "bin", "tsc");
+const runViteScript = join(projectRoot, "tools", "run-vite.mjs");
 
-const powershellScript = [
-  `$env:ESBUILD_BINARY_PATH = '${esbuildBinary.replace(/'/g, "''")}'`,
-  `Set-Location -LiteralPath '${projectRoot.replace(/'/g, "''")}'`,
-  `node .\\generate-sitemap.js`,
-  `node .\\node_modules\\vite\\bin\\vite.js build --configLoader native`
-].join("; ");
+const lintResult = spawnSync(process.execPath, [tscBinary, "--noEmit"], {
+  stdio: "inherit",
+});
 
-const encodedCommand = Buffer.from(powershellScript, "utf16le").toString("base64");
-const buildResult = spawnSync("powershell.exe", ["-NoProfile", "-ExecutionPolicy", "Bypass", "-EncodedCommand", encodedCommand], {
+if (lintResult.error) {
+  throw lintResult.error;
+}
+
+if (lintResult.status !== 0) {
+  process.exit(lintResult.status ?? 1);
+}
+
+const buildResult = spawnSync(process.execPath, [runViteScript, "build"], {
   stdio: "inherit",
   env: process.env,
   cwd: projectRoot

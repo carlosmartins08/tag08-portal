@@ -105,9 +105,9 @@ if (mode === "build") {
   runNodeScript(join(process.cwd(), "generate-sitemap.js"));
   runNodeScript(viteBin, ["build", "--configLoader", "native"]);
 } else if (mode === "dev") {
-  runVite(["--configLoader", "native", "--port=3000", "--strictPort", "--host=0.0.0.0"]);
+  runVite(["--configLoader", "native", `--port=${process.env.FRONTEND_PORT || 3000}`, "--host=0.0.0.0"]);
 } else if (mode === "preview") {
-  runVite(["preview", "--configLoader", "native", "--strictPort"]);
+  runVite(["preview", "--configLoader", "native", `--port=${process.env.PREVIEW_PORT || 4173}`]);
 } else {
   console.error(`Modo desconhecido: ${mode}`);
   process.exit(1);

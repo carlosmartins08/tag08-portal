@@ -1,7 +1,4 @@
 $ErrorActionPreference = "Stop"
 
-node .\node_modules\typescript\bin\tsc --noEmit
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\build.ps1
+node .\tools\check.mjs
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

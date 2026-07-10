@@ -2,13 +2,14 @@ import { prepareEsbuildRuntime } from "./esbuild-runtime.mjs";
 
 prepareEsbuildRuntime();
 
+const frontendPort = Number(process.env.FRONTEND_PORT || 3000);
 const { createServer } = await import("vite");
 const server = await createServer({
   configLoader: "native",
   server: {
     host: "0.0.0.0",
-    port: 3000,
-    strictPort: true
+    port: frontendPort,
+    strictPort: false
   }
 });
 
