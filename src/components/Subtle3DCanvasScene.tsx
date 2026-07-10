@@ -1,3 +1,5 @@
+import { useReducedMotion } from "motion/react";
+
 interface Subtle3DCanvasSceneProps {
   className?: string;
   intensity?: number;
@@ -6,20 +8,25 @@ interface Subtle3DCanvasSceneProps {
 const ORBIT_DOTS = Array.from({ length: 12 }, (_, index) => index);
 
 export default function Subtle3DCanvasScene({ className = "", intensity = 1 }: Subtle3DCanvasSceneProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const spinStyle = prefersReducedMotion ? { animation: "none" } : undefined;
+  const orbitOpacity = prefersReducedMotion ? 0.12 : Math.min(1, 0.22 + intensity * 0.14);
+  const coreOpacity = prefersReducedMotion ? 0.55 : Math.min(1, 0.72 + intensity * 0.06);
+
   return (
     <div className={`absolute inset-0 pointer-events-none overflow-hidden select-none z-0 ${className}`}>
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(circle at 60% 50%, rgba(var(--color-brand-secondary-rgb),0.09), transparent 28%), radial-gradient(circle at 40% 52%, rgba(255,255,255,0.05), transparent 36%)",
-          opacity: Math.min(1, 0.35 + intensity * 0.18)
+            "radial-gradient(circle at 60% 50%, rgba(var(--color-brand-secondary-rgb),0.08), transparent 30%), radial-gradient(circle at 40% 52%, rgba(255,255,255,0.04), transparent 38%)",
+          opacity: orbitOpacity
         }}
       />
 
-      <div className="absolute inset-[8%] rounded-full border border-white/5 animate-[spin_36s_linear_infinite]" />
-      <div className="absolute inset-[15%] rounded-full border border-brand/15 border-dashed animate-[spin_54s_linear_infinite_reverse]" />
-      <div className="absolute inset-[24%] rounded-full border border-white/5 animate-[spin_72s_linear_infinite]" />
+      <div className="absolute inset-[8%] rounded-full border border-white/5 animate-[spin_36s_linear_infinite]" style={spinStyle} />
+      <div className="absolute inset-[15%] rounded-full border border-brand/15 border-dashed animate-[spin_54s_linear_infinite_reverse]" style={spinStyle} />
+      <div className="absolute inset-[24%] rounded-full border border-white/5 animate-[spin_72s_linear_infinite]" style={spinStyle} />
 
       <svg
         viewBox="0 0 200 200"
@@ -69,8 +76,8 @@ export default function Subtle3DCanvasScene({ className = "", intensity = 1 }: S
                 width: `${size}px`,
                 height: `${size}px`,
                 transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(-${offset}rem)`,
-                animation: `spin ${duration}s linear infinite`,
-                opacity: 0.28 + depth * 0.1
+                animation: prefersReducedMotion ? "none" : `spin ${duration}s linear infinite`,
+                opacity: prefersReducedMotion ? 0.12 + depth * 0.03 : 0.22 + depth * 0.08
               }}
             />
           );
@@ -81,12 +88,12 @@ export default function Subtle3DCanvasScene({ className = "", intensity = 1 }: S
         className="absolute left-1/2 top-1/2 h-[42%] w-[42%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand/15 bg-[radial-gradient(circle,rgba(17,17,17,0.92),rgba(4,4,4,0.72)_72%,transparent_100%)] shadow-[0_0_80px_rgba(var(--color-brand-secondary-rgb),0.08)]"
         style={{
           backdropFilter: "blur(4px)",
-          opacity: Math.min(1, 0.78 + intensity * 0.08)
+          opacity: coreOpacity
         }}
       />
 
       <div className="absolute left-1/2 top-1/2 flex h-[24%] w-[24%] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/70 shadow-[0_0_50px_rgba(0,0,0,0.45)]">
-        <div className="h-2.5 w-2.5 rounded-full bg-brand animate-pulse" />
+        <div className="h-2.5 w-2.5 rounded-full bg-brand animate-pulse" style={prefersReducedMotion ? { animation: "none" } : undefined} />
       </div>
     </div>
   );

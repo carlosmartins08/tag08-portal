@@ -476,59 +476,53 @@ const GMB_REVIEWS = [
 
 const DIAGNOSTIQUER_PHASES = {
   discovery: {
-    title: "Discovery // Alinhamento Estético & Posicionamento",
+    title: "Discovery",
     badge: "FASE 01",
-    desc: "Identificamos desvios invisíveis no posicionamento institucional e na construção da sua marca frente ao seu público premium.",
-    rating: "Risco de Posicionamento: Crítico (82%)",
+    desc: "Entendimento do momento atual da marca, seus canais, sua comunicação, sua operação e os principais sinais de desalinhamento. Aqui a TAG08 identifica o que está travando clareza, consistência e tomada de decisão.",
+    rating: "Sinal de Desalinhamento: Crítico (82%)",
     ratingWidth: "82%",
     symptoms: [
       {
-        id: "idea",
-        label: "RUÍDO EDITORIAL",
-        desc: "Você produz conteúdos frequentes no digital, mas eles não traduzem a senioridade e robustez técnica real do negócio.",
-        symptom: "A narrativa atrai curiosos em vez de diretores e clientes corporativos de alto padrão."
+        id: "content_focus",
+        label: "CONTEÚDO SEM DIREÇÃO",
+        desc: "A marca até publica, mas os conteúdos não constroem uma percepção clara nem conduzem o público para uma decisão.",
+        symptom: "A comunicação existe, mas não organiza percepção nem gera próximo passo."
       },
       {
-        id: "brand_friction",
-        label: "CONTRASTE VISUAL AMADOR",
-        desc: "Sua marca offline é consagrada e fatura alto, mas a presença digital parece menor, desatualizada ou genérica.",
-        symptom: "Design desatualizado gera fricção comercial e exige esforço humano triplo para fechar vendas."
+        id: "urgency",
+        label: "URGÊNCIA CONSTANTE",
+        desc: "Tudo parece prioridade, mas poucas demandas têm critério, responsável, prazo real ou impacto estratégico definido.",
+        symptom: "O ritmo acelera sem filtro e multiplica ruído, retrabalho e desgaste."
       }
     ]
   },
   analysis: {
-    title: "Analysis // Identificação de Fugas e Conversão",
+    title: "Analysis",
     badge: "FASE 02",
-    desc: "Auditamos rigorosamente a experiência do usuário e a velocidade dos pontos de contato digitais para estancar o desperdício analítico.",
-    rating: "Vazamento de Capital: Alto (65%)",
+    desc: "Leitura dos gargalos encontrados para separar sintomas aparentes de causas reais. Nem todo problema de marketing se resolve com mais conteúdo. Às vezes, falta posicionamento, processo ou prioridade.",
+    rating: "Leitura de Gargalos: Alto (65%)",
     ratingWidth: "65%",
     symptoms: [
       {
-        id: "bottlenecks",
-        label: "FUNIL SITES LENTOS & COMPLEXOS",
-        desc: "Seu site principal é lento, com navegação confusa ou falhas crônicas de UX que dispersam visitas de anúncios pagos.",
-        symptom: "Perda imediata de ROI das campanhas patrocinadas antes mesmo do lead acionar o comercial."
+        id: "decisions",
+        label: "DECISÕES SOLTAS",
+        desc: "Mudanças acontecem por pressão, gosto pessoal ou ansiedade, sem registro e sem conexão com o plano.",
+        symptom: "A falta de critério faz cada ajuste reabrir o trabalho em vez de consolidá-lo."
       }
     ]
   },
   design: {
-    title: "Design & Delivery // Operações e Constância",
+    title: "Delivery",
     badge: "FASE 03",
-    desc: "Mapeamos e otimizamos as rotinas de processos para garantir que o crescimento comercial seja amparado por uma fundação sólida.",
-    rating: "Desgaste de Operação: Muito Alto (78%)",
+    desc: "Recomendação do caminho mais coerente para o momento da marca, com prioridades, próximos passos e limites claros. A entrega não é uma promessa pronta. É uma direção estruturada para decidir melhor.",
+    rating: "Operação Sob Pressão: Muito Alto (78%)",
     ratingWidth: "78%",
     symptoms: [
       {
-        id: "solutions",
-        label: "CAOS DE OPERAÇÃO",
-        desc: "Equipe ou agência atual opera no improviso tático, dependendo de reuniões pesadas e alinhamentos diários urgentes.",
-        symptom: "Ausência de documentação ou playbooks faz sua liderança atuar como apagadora de incêndio."
-      },
-      {
-        id: "scale",
-        label: "FALTA DE MÉTODO",
-        desc: "Há faturamento e tração inicial, porém falta previsibilidade e governança de processos para garantir constância na entrega sênior.",
-        symptom: "O ecossistema depende excessivamente de figuras específicas e sofre com gargalos recorrentes."
+        id: "overloaded",
+        label: "OPERAÇÃO SOBRECARREGADA",
+        desc: "A equipe entrega no esforço, mas o fluxo depende de poucas pessoas, muita memória e pouca previsibilidade.",
+        symptom: "Quando a operação depende de poucas mãos, o crescimento vira cansaço recorrente."
       }
     ]
   }
@@ -755,14 +749,14 @@ export default function Home({ onNavigate }: HomeProps) {
 
   const tagCategories = [
     { name: "ESTRATÉGIA", style: "filled-neon" },
-    { name: "BRANDING", style: "outline" },
-    { name: "TRÁFEGO PAGO", style: "outline" },
-    { name: "DEV WEB", style: "filled-white" },
-    { name: "COPYWRITING", style: "outline" },
+    { name: "POSICIONAMENTO", style: "outline" },
+    { name: "CONTEÚDO", style: "outline" },
     { name: "REDES SOCIAIS", style: "filled-white" },
-    { name: "DESIGN PREMIUM", style: "outline" },
-    { name: "PROCESSOS DE ELITE", style: "outline" },
-    { name: "MARKETING 365", style: "filled-neon" },
+    { name: "AUDIOVISUAL", style: "outline" },
+    { name: "DESENVOLVIMENTO WEB", style: "filled-white" },
+    { name: "BRANDING", style: "outline" },
+    { name: "PROCESSOS", style: "outline" },
+    { name: "OPERAÇÃO", style: "filled-neon" },
   ];
 
   return (
@@ -782,7 +776,7 @@ export default function Home({ onNavigate }: HomeProps) {
           {/* MASSIVE TITANIC TYPOGRAPHY BACKPLANE LAYER - LAYERED BEHIND CYBORG BUT IN FRONT OF LIGHT CONTAINER (Z-10) */}
           <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none select-none z-10 overflow-hidden mix-blend-overlay">
             <span className="font-display font-black text-[15vw] leading-none text-white tracking-tighter uppercase whitespace-nowrap block select-none">
-              TAG08 AGENCY
+              PRESENÇA COM DIREÇÃO
             </span>
           </div>
 
@@ -797,16 +791,16 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/5 border border-black/10">
                   <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
                   <span className="font-mono text-[9px] tracking-widest uppercase font-bold text-black/70">
-                    Aceleração de Negócios e Presença
+                    Estratégia, conteúdo, tecnologia e processos
                   </span>
                 </div>
                 
                 <h1 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-black leading-[1.0] tracking-tighter uppercase">
-                  Agência de marketing estratégico para marcas que querem crescer com direção.
+                  Presença digital com direção para negócios que querem crescer sem improviso.
                 </h1>
                 
                 <p className="text-black/75 text-xs sm:text-sm max-w-sm leading-relaxed font-sans font-medium">
-                  Construímos estrutura corporativa, identidade requintada e inteligência de tráfego de ponta a ponta. Deixe o improviso de lado.
+                  A TAG08 ajuda empresas, profissionais e marcas a organizarem posicionamento, comunicação, conteúdo, tecnologia e operação para construir uma presença digital mais clara, consistente e estratégica.
                 </p>
               </div>
 
@@ -818,11 +812,11 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand animate-ping" />
-                    </span>
-                    <span className="font-mono text-[9px] text-black font-bold uppercase tracking-wider">
-                      MÉTODO DIAGNÓSTICO ATIVO
-                    </span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand animate-ping" />
+                  </span>
+                  <span className="font-mono text-[9px] text-black font-bold uppercase tracking-wider">
+                      DIAGNÓSTICO ANTES DA EXECUÇÃO
+                  </span>
                   </div>
                   
                   {/* Dynamic waveform visual bars inside widget */}
@@ -839,7 +833,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
                 <div className="w-full bg-black/10 rounded-xl py-3 px-4 flex items-center justify-between group-hover:bg-black group-hover:text-brand transition-all duration-300">
                   <span className="font-mono text-[10px] font-extrabold tracking-wider uppercase">
-                    COMEÇAR DIAGNÓSTICO AGORA — É GRÁTIS
+                    QUERO ENTENDER MEU MELHOR CAMINHO
                   </span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </div>
@@ -904,19 +898,19 @@ export default function Home({ onNavigate }: HomeProps) {
                     <img className="w-7 h-7 rounded-full border-2 border-brand object-cover shadow-sm" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=120" />
                   </div>
                   <span className="font-sans font-extrabold text-sm text-black leading-tight">
-                    +150 Clientes
+                    Método, clareza e execução responsável
                   </span>
                 </div>
                 
                 <p className="text-black/60 font-mono text-[9px] uppercase tracking-wide font-bold">
-                  DEDICAÇÃO MÁXIMA & EXCELÊNCIA SÊNIOR
+                  DIREÇÃO PARA CONSTRUIR. ESTRUTURA PARA CRESCER.
                 </p>
               </div>
 
               {/* Categorical tag widgets styled exactly like punk-rock and disco buttons in reference panel */}
               <div className="space-y-3">
                 <div className="font-mono text-[9px] text-black/60 uppercase tracking-widest font-extrabold block lg:text-right">
-                  NOSSAS DISCIPLINAS OPERACIONAIS:
+                  O QUE ORGANIZAMOS:
                 </div>
                 
                 <div className="flex flex-wrap lg:justify-end gap-1.5 max-w-sm lg:ml-auto">
@@ -960,13 +954,13 @@ export default function Home({ onNavigate }: HomeProps) {
             className="text-center max-w-3xl mx-auto space-y-4 mb-16"
           >
             <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold">
-              O Diagnóstico da Realidade
+              O diagnóstico da realidade
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient">
-              Presença sem propósito é só barulho.
+              O problema nem sempre é falta de marketing. Muitas vezes é falta de direção.
             </h2>
             <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
-              Muitas marcas estão produzindo conteúdo, criando campanhas e tentando aparecer no digital sem uma direção clara. O resultado é esforço disperso, comunicação inconsistente e pouca percepção de valor.
+              Muitas empresas postam, anunciam, fazem vídeos, criam sites e tentam aparecer mais. Mas, quando não existe clareza de posicionamento, consistência de comunicação e estrutura mínima de operação, o digital vira um conjunto de ações soltas.
             </p>
           </motion.div>
 
@@ -1015,10 +1009,10 @@ export default function Home({ onNavigate }: HomeProps) {
                   </span>
                 </div>
                 <h3 className="font-display font-medium text-xl sm:text-2xl text-white leading-tight uppercase">
-                  Quer entender onde sua marca está travando de verdade?
+                  A questão não é fazer mais. É fazer com direção.
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-                  Realizamos uma análise profunda e confidencial do seu ecossistema digital e dos fluxos do seu negócio para decodificar gargalos reais antes de falar em soluções.
+                  A TAG08 entra para organizar esse caminho: entender o momento, identificar gargalos, definir prioridades e transformar presença digital em um ativo real para a marca.
                 </p>
               </div>
 
@@ -1041,13 +1035,13 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="mt-32 space-y-12 text-left animate-fade-in">
             <div className="space-y-4 max-w-3xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand/10 bg-brand/5 font-mono text-[10px] uppercase tracking-widest text-brand-secondary font-black">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary" /> DIRECIONAMENTO // MATURIDADE
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary" /> Diagnóstico por momento
               </div>
               <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient uppercase tracking-tight leading-none">
-                Em qual momento a sua marca se encontra hoje?
+                Em qual momento sua marca está hoje?
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
-                Nossos métodos são aplicados de acordo com o tamanho, faturamento e desafios estratégicos da sua empresa. Sem diagnósticos genéricos, identifique seu momento operacional imediato e conecte-se ao protocolo certo:
+                A solução certa depende da fase, da maturidade e da estrutura disponível para sustentar o crescimento. Antes de indicar qualquer serviço, a TAG08 entende o momento da marca e organiza o caminho mais coerente.
               </p>
             </div>
 
@@ -1071,18 +1065,18 @@ export default function Home({ onNavigate }: HomeProps) {
                     className="w-full h-full object-cover grayscale opacity-35 group-hover:grayscale-0 group-hover:scale-102 group-hover:opacity-50 transition-all duration-700"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-6 text-left">
-                    <div className="flex items-center justify-between w-full">
-                      <span className="font-mono text-[8px] font-black tracking-widest text-brand uppercase bg-brand/5 border border-brand/10 px-2.5 py-0.5 rounded">
-                        M-02 // BRANDING ATIVO
-                      </span>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-6 text-left">
+                      <div className="flex items-center justify-between w-full">
+                        <span className="font-mono text-[8px] font-black tracking-widest text-brand uppercase bg-brand/5 border border-brand/10 px-2.5 py-0.5 rounded">
+                          M-02 // BRANDING ATIVO
+                        </span>
                       <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-brand transition-colors" />
                     </div>
                     <h3 className="font-display font-bold text-lg text-white uppercase tracking-tight mt-1.5 group-hover:text-brand transition-colors">
-                      Preciso alinhar meu posicionamento
+                      Começando com pouca clareza
                     </h3>
                     <p className="text-zinc-400 text-[11px] font-sans max-w-md mt-1 leading-relaxed">
-                      Meus canais estão desalinhados, amadores ou sem uma linha editorial corporativa que demonstre nossa real grandeza.
+                      Você sabe que precisa aparecer melhor, mas ainda não tem linha visual, rotina de conteúdo ou direção de comunicação.
                     </p>
                   </div>
                 </div>
@@ -1103,16 +1097,16 @@ export default function Home({ onNavigate }: HomeProps) {
                     >
                       <div>
                         <div className="flex items-center justify-between w-full">
-                          <span className="font-mono text-[8px] text-brand uppercase tracking-widest bg-brand/5 border border-brand/10 px-2.5 py-0.5 rounded font-black">
-                            M-01 // PRESENÇA DIGITAL
-                          </span>
+                        <span className="font-mono text-[8px] text-brand uppercase tracking-widest bg-brand/5 border border-brand/10 px-2.5 py-0.5 rounded font-black">
+                          M-01 // PRESENÇA DIGITAL
+                        </span>
                           <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-brand transition-colors" />
                         </div>
                         <h4 className="text-white font-display font-semibold text-xs sm:text-sm uppercase leading-tight group-hover:text-brand transition-colors mt-2">
-                          Estou começando no digital
+                          Já existe, mas comunica de forma irregular
                         </h4>
                         <p className="text-zinc-400 text-[10px] font-sans leading-normal mt-1.5">
-                          Preciso estruturar uma presença consistente e autoral preliminar para me posicionar como uma referência séria.
+                          Sua empresa já vende, tem público e entrega valor, mas a presença digital não mostra isso com consistência.
                         </p>
                       </div>
                       
@@ -1139,10 +1133,10 @@ export default function Home({ onNavigate }: HomeProps) {
                       
                       <div>
                         <h4 className="text-white font-display font-semibold text-xs sm:text-sm uppercase leading-tight group-hover:text-brand transition-colors">
-                          Busco Rebranding Profundo
+                          Precisa crescer com mais autoridade
                         </h4>
                         <p className="text-zinc-400 text-[10px] font-sans leading-relaxed mt-1.5">
-                          Queremos uma evolução sofisticada da marca que reflita a sobriedade e refinamento do nosso faturamento offline.
+                          Sua marca quer fortalecer percepção, gravar mais vídeos, aparecer melhor e transformar conhecimento em conteúdo estratégico.
                         </p>
                       </div>
                     </div>
@@ -1208,9 +1202,9 @@ export default function Home({ onNavigate }: HomeProps) {
                     </div>
 
                     <div className="space-y-2 relative z-10">
-                      <h4 className="font-display font-extrabold text-white text-sm uppercase tracking-tight group-hover:text-brand transition-colors">Sinto um teto de escala interna</h4>
+                      <h4 className="font-display font-extrabold text-white text-sm uppercase tracking-tight group-hover:text-brand transition-colors">Cresceu, mas a operação ficou pesada</h4>
                       <p className="text-zinc-400 text-[11px] font-sans leading-relaxed">
-                        A empresa faturou mais, mas a liderança vive presa apagando incêndio e as rotinas estão na cabeça das pessoas.
+                        As demandas aumentaram, a equipe depende de poucas pessoas e decisões importantes ainda acontecem no improviso.
                       </p>
                     </div>
                   </div>
@@ -1255,9 +1249,9 @@ export default function Home({ onNavigate }: HomeProps) {
                       </div>
                       
                       <div>
-                        <h4 className="font-display font-extrabold text-xs uppercase tracking-tight leading-none text-black">Acessar Nosso Formulário</h4>
+                        <h4 className="font-display font-extrabold text-xs uppercase tracking-tight leading-none text-black">QUERO IDENTIFICAR MEU MOMENTO</h4>
                         <p className="text-zinc-600 text-[9.5px] font-sans leading-relaxed mt-1.5">
-                          Fale com o nosso estrategista sênior para descobrir o nível exato de escala do seu ecossistema.
+                          Fale com o nosso estrategista sênior para descobrir a fase certa para sua marca.
                         </p>
                       </div>
                     </div>
@@ -1304,7 +1298,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* INDEPENDENT SECTION 2.1: DIAGNÓSTICO // SINAL CORRUPTO */}
+      {/* INDEPENDENT SECTION 2.1: SINAIS DE DESALINHAMENTO */}
       <section id="diagnostico" className="py-28 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
         {/* Subtle grid decor */}
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff01_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none" />
@@ -1316,14 +1310,13 @@ export default function Home({ onNavigate }: HomeProps) {
           {/* Section Introduction */}
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <span className="font-mono text-[9px] tracking-widest text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/15 px-3 py-1 rounded-full uppercase font-bold inline-block">
-              DIAGNÓSTICO // SINAL CORRUPTO
+              Sinais de desalinhamento
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tight leading-none">
-              Sinais de refluxo e arrasto operacional
+              Sinais de desgaste quando o digital cresce sem estrutura.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl mx-auto leading-relaxed">
-              Identifique gargalos estruturais ocultos que provocam diluição de marca e escape silencioso de orçamento. 
-              <strong> Passe o mouse ou clique nas Fases do Fluxo ou nas Pílulas Táticas</strong> abaixo para radiografar os sintomas comerciais e visualizar o diagnóstico em tempo real no painel de auditoria.
+              Quando a presença digital cresce sem clareza, alguns sintomas começam a aparecer: decisões soltas, urgências constantes, conteúdo sem direção, retrabalho e dificuldade de transformar esforço em percepção real de valor. A TAG08 usa essa leitura para separar o que é problema de comunicação, o que é problema de posicionamento e o que é problema de operação. Sem esse diagnóstico, qualquer execução corre o risco de apenas acelerar a desorganização.
             </p>
           </div>
 
@@ -1339,10 +1332,10 @@ export default function Home({ onNavigate }: HomeProps) {
                   step: "01",
                   title: "Discovery", 
                   badge: "Aproximação",
-                  desc: "Alinhamento & Posicionamento",
+                  desc: "Entendimento do momento atual da marca, seus canais, sua comunicação, sua operação e os principais sinais de desalinhamento.",
                   pills: [
-                    { id: "idea", label: "Idea // Posicionamento" },
-                    { id: "brand_friction", label: "Análise do Negócio" }
+                    { id: "idea", label: "Clareza de contexto" },
+                    { id: "brand_friction", label: "Sinais de desalinhamento" }
                   ]
                 },
                 { 
@@ -1350,9 +1343,9 @@ export default function Home({ onNavigate }: HomeProps) {
                   step: "02",
                   title: "Analysis", 
                   badge: "Triagem",
-                  desc: "Fugas & Conversão Digital",
+                  desc: "Leitura dos gargalos encontrados para separar sintomas aparentes de causas reais.",
                   pills: [
-                    { id: "bottlenecks", label: "Isolamento de Gargalos" }
+                    { id: "bottlenecks", label: "Causa real" }
                   ]
                 },
                 { 
@@ -1360,10 +1353,10 @@ export default function Home({ onNavigate }: HomeProps) {
                   step: "03",
                   title: "Delivery", 
                   badge: "Blindagem",
-                  desc: "Processos & Entrega Sênior",
+                  desc: "Recomendação do caminho mais coerente para o momento da marca, com prioridades, próximos passos e limites claros.",
                   pills: [
-                    { id: "solutions", label: "Desenho de Soluções" },
-                    { id: "scale", label: "Operação & Escala" }
+                    { id: "solutions", label: "Prioridades" },
+                    { id: "scale", label: "Próximos passos" }
                   ]
                 }
               ].map((phase, pIdx) => {
@@ -1502,7 +1495,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       {/* Severity Metrics indicator */}
                       <div className="space-y-3 pt-6 border-t border-white/[0.03] mt-2">
                         <div className="flex justify-between items-center text-[10px] font-sans">
-                          <span className="text-zinc-500 uppercase tracking-widest">ARRASTO OPERACIONAL RATING</span>
+                          <span className="text-zinc-500 uppercase tracking-widest">SINAL DE DESALINHAMENTO</span>
                           <span className="text-brand-secondary font-semibold">{currentPhaseInfo.rating}</span>
                         </div>
                         
@@ -1515,7 +1508,7 @@ export default function Home({ onNavigate }: HomeProps) {
                           />
                         </div>
                         <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-tight">
-                          O arrasto compromete a conversão silenciosa de orçamentos digitais.
+                          Quando o digital cresce sem estrutura, o esforço aumenta mais rápido que a clareza.
                         </p>
                       </div>
                     </div>
@@ -1600,7 +1593,7 @@ export default function Home({ onNavigate }: HomeProps) {
                           }}
                           className="text-xs text-brand-secondary hover:text-white font-sans font-bold flex items-center gap-1.5 group transition-colors cursor-pointer self-end"
                         >
-                          Solicitar Auditoria Gratuita <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform animate-pulse" />
+                          SOLICITAR DIAGNÓSTICO INICIAL <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform animate-pulse" />
                         </button>
                       </div>
 
@@ -1626,35 +1619,35 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="max-w-3xl text-left space-y-4">
             <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary" />
-              SUTILEZA OPERACIONAL // PROTOCOLOS SÊNIOR
+              Método TAG08
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tight leading-tight">
-              Nossa Metodologia Consultiva de Recomendação
+              Como a TAG08 recomenda o caminho certo.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
-              A TAG08 não comercializa pacotes engessados de serviços. Nós somos assessores dedicados de marcas sérias e operamos seguindo um fluxo circular tático e blindado de decisões corporativas:
+              A TAG08 não começa oferecendo um pacote. Primeiro entendemos o momento da marca, os gargalos atuais, a maturidade digital e a capacidade de execução. Só depois indicamos o caminho mais coerente.
             </p>
           </div>
 
           {/* Premium Curved Bento Flow precisely replicating Reference 1 Layout! */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative items-stretch">
             
-            {/* Step 01: Entrevistas de Diagnóstico */}
+            {/* Step 01: Entendimento do contexto */}
             <motion.div 
               whileHover={{ y: -3, scale: 1.01 }}
               className="bg-[#121214] border border-white/[0.05] p-8 sm:p-10 rounded-[28px] min-h-[220px] flex flex-col justify-between text-left group transition-all duration-300 relative overflow-hidden"
             >
               <div className="flex items-center justify-between w-full">
                 <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black bg-white/[0.03] border border-white/10 px-2 py-0.5 rounded">PROTOCOLO 01</span>
-                <span className="font-mono text-brand-secondary text-[10px] uppercase font-black tracking-widest">Aproximação</span>
+                <span className="font-mono text-brand-secondary text-[10px] uppercase font-black tracking-widest">Escuta e contexto</span>
               </div>
               
               <div className="space-y-2 mt-8">
                 <h3 className="font-display font-bold text-base sm:text-lg text-white uppercase tracking-tight">
-                  Entrevistas de Diagnóstico
+                  Entendimento do contexto
                 </h3>
                 <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans font-medium">
-                  Coletamos dados corporativos reais de faturamento atual, metas executivas gerais e robustez estrutural física antes de propor qualquer escopo de trabalho.
+                  Mapeamos o negócio, os objetivos, os canais atuais, as dificuldades e o que já foi tentado antes de propor qualquer solução.
                 </p>
               </div>
 
@@ -1664,22 +1657,22 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
             </motion.div>
 
-            {/* Step 02: Análise de Gargalos Clínicos */}
+            {/* Step 02: Leitura dos gargalos */}
             <motion.div 
               whileHover={{ y: -3, scale: 1.01 }}
               className="bg-[#121214] border border-white/[0.05] p-8 sm:p-10 rounded-[28px] min-h-[220px] flex flex-col justify-between text-left group transition-all duration-300 relative overflow-hidden"
             >
               <div className="flex items-center justify-between w-full">
                 <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black bg-white/[0.03] border border-white/10 px-2 py-0.5 rounded">PROTOCOLO 02</span>
-                <span className="font-mono text-brand-secondary text-[10px] uppercase font-black tracking-widest">Exame Clínico</span>
+                <span className="font-mono text-brand-secondary text-[10px] uppercase font-black tracking-widest">Análise estratégica</span>
               </div>
               
               <div className="space-y-2 mt-8">
                 <h3 className="font-display font-bold text-base sm:text-lg text-white uppercase tracking-tight">
-                  Análise de Gargalos Clínicos
+                  Leitura dos gargalos
                 </h3>
                 <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans font-medium">
-                  Mapeamos exatamente qual barreira de entrada impede sua marca de acelerar (seja identidade defasada, anúncios frios ou vazamentos de funil).
+                  Separamos sintomas aparentes de causas reais para entender se o problema está na comunicação, no posicionamento, na operação ou na estrutura digital.
                 </p>
               </div>
 
@@ -1689,22 +1682,22 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
             </motion.div>
 
-            {/* Step 03: Priorização do Essencial (With top-right curved border mimicking Reference 1 card!) */}
+            {/* Step 03: Priorização do caminho (With top-right curved border mimicking Reference 1 card!) */}
             <motion.div 
               whileHover={{ y: -3, scale: 1.01 }}
               className="bg-[#121214] border border-white/[0.05] p-8 sm:p-10 rounded-[28px] rounded-tr-[90px] min-h-[220px] flex flex-col justify-between text-left group transition-all duration-300 relative overflow-hidden"
             >
               <div className="flex items-center justify-between w-full">
                 <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black bg-white/[0.03] border border-white/10 px-2 py-0.5 rounded">PROTOCOLO 03</span>
-                <span className="font-mono text-brand-secondary text-[10px] uppercase font-black tracking-widest">Triagem</span>
+                <span className="font-mono text-brand-secondary text-[10px] uppercase font-black tracking-widest">Decisão com critério</span>
               </div>
               
               <div className="space-y-2 mt-8 max-w-[85%]">
                 <h3 className="font-display font-bold text-base sm:text-lg text-white uppercase tracking-tight">
-                  Priorização do Essencial
+                  Priorização do caminho
                 </h3>
                 <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans font-medium">
-                  Se os seus bastidores operacionais estão confusos, priorizamos organizar a fundação e processos de vendas antes de inflacionar seu orçamento de anúncios de escala.
+                  Organizamos o que precisa ser feito primeiro, o que pode esperar e o que não faz sentido para o momento atual da marca.
                 </p>
               </div>
 
@@ -1724,20 +1717,20 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="absolute inset-0 bg-gradient-to-tr from-white/15 via-transparent to-transparent pointer-events-none" />
               <div className="flex items-center justify-between w-full">
                 <span className="font-mono text-[9px] text-black/60 uppercase tracking-widest font-black bg-black/5 border border-black/10 px-2.5 py-0.5 rounded">DESTINO FINAL 05</span>
-                <span className="font-mono font-black text-black text-xs uppercase bg-black/5 border border-black/10 px-3 py-1 rounded-full">Sua Marca Blindada</span>
+                <span className="font-mono font-black text-black text-xs uppercase bg-black/5 border border-black/10 px-3 py-1 rounded-full">Crescimento com estrutura</span>
               </div>
               
               <div className="space-y-2 mt-8 max-w-[90%]">
                 <h3 className="font-display font-black text-xl sm:text-2xl text-black uppercase tracking-tight leading-none">
-                  Sustentação, Auditoria & Escala Máxima
+                  Direção, execução e melhoria contínua
                 </h3>
                 <p className="text-black/80 text-xs sm:text-[13px] leading-relaxed font-sans font-semibold">
-                  Garantimos a execução contínua com reuniões sistemáticas táticas de acompanhamento, garantindo que seu ecossistema adote cada rotina de forma perene e sem recaídas operacionais.
+                  Depois da recomendação, a TAG08 organiza o escopo, conduz a execução, acompanha aprendizados e ajusta o caminho com responsabilidade.
                 </p>
               </div>
 
               <div className="pt-6 border-t border-black/[0.08] mt-8 flex items-center justify-between w-full text-black/60 font-mono text-[9.5px] uppercase tracking-widest">
-                <span>05 // RESULTADO BLINDADO E CONTÍNUO</span>
+                <span>05 // EVOLUÇÃO CONTÍNUA</span>
                 <button
                   onClick={() => {
                     const target = document.getElementById("contato");
@@ -1750,27 +1743,27 @@ export default function Home({ onNavigate }: HomeProps) {
                   }}
                   className="bg-black text-white hover:bg-black/90 text-[10px] font-semibold px-4 py-2 font-mono uppercase rounded-xl transition-all flex items-center gap-2 group/btn shadow-md"
                 >
-                  Assegurar Minha Escala <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
+                  SOLICITAR DIAGNÓSTICO <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
                 </button>
               </div>
             </motion.div>
 
-            {/* Step 04: Recomendação Cirúrgica (with bottom-right curved border mimicking Reference 1 card!) */}
+            {/* Step 04: Recomendação responsável (with bottom-right curved border mimicking Reference 1 card!) */}
             <motion.div 
               whileHover={{ y: -3, scale: 1.01 }}
               className="bg-[#121214] border border-white/[0.05] p-8 sm:p-10 rounded-[28px] rounded-br-[90px] min-h-[220px] flex flex-col justify-between text-left group transition-all duration-300 relative overflow-hidden"
             >
               <div className="flex items-center justify-between w-full">
                 <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black bg-white/[0.03] border border-white/10 px-2 py-0.5 rounded">PROTOCOLO 04</span>
-                <span className="font-mono text-brand-secondary text-[10px] uppercase font-black tracking-widest">Desenho Tático</span>
+                <span className="font-mono text-brand-secondary text-[10px] uppercase font-black tracking-widest">Próximo passo claro</span>
               </div>
               
               <div className="space-y-2 mt-8 max-w-[85%]">
                 <h3 className="font-display font-bold text-base sm:text-lg text-white uppercase tracking-tight">
-                  Recomendação Cirúrgica
+                  Recomendação responsável
                 </h3>
                 <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans font-medium">
-                  Nossa diretoria sênior elabora o roteiro personalizado de ações, integrando design moderno, anúncios cirúrgicos e refinamentos em perfeita concordância.
+                  A recomendação final não busca empurrar o serviço mais caro ou mais completo. Ela busca indicar o caminho que faz sentido para o momento, o orçamento, a operação e a expectativa.
                 </p>
               </div>
 
@@ -1797,13 +1790,13 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="max-w-3xl text-left space-y-4 mb-16">
             <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary" />
-              DIFERENCIAIS DE OPERAÇÃO
+              Por que escolher a TAG08
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient leading-tight uppercase">
-              Por que grandes líderes e marcas de excelência escolhem crescer conosco?
+              Por que marcas em evolução escolhem a TAG08.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-2xl">
-              Nossa operação de crescimento desenha, executa e gerencia sua presença digital sob demanda. Sem pacotes genéricos, sem fricção burocrática, com foco comercial consistente.
+              Porque a TAG08 não entra apenas para executar demandas soltas. Entramos para entender o contexto, organizar prioridades, proteger a coerência da marca e transformar estratégia em entrega possível.
             </p>
           </div>
 
@@ -1819,15 +1812,15 @@ export default function Home({ onNavigate }: HomeProps) {
                 className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-6 rounded-[28px] text-left flex flex-col justify-between min-h-[140px] group transition-all duration-300"
               >
                 <div className="flex items-start justify-between">
-                  <div className="w-9 h-9 rounded-full bg-white/[0.03] border border-white/[0.08] text-brand-secondary flex items-center justify-center">
+                <div className="w-9 h-9 rounded-full bg-white/[0.03] border border-white/[0.08] text-brand-secondary flex items-center justify-center">
                     <Star className="w-4 h-4 fill-current text-brand" />
                   </div>
-                  <span className="font-mono text-[9px] text-brand-secondary tracking-wider uppercase font-bold opacity-60">SÊNIOR</span>
+                  <span className="font-mono text-[9px] text-brand-secondary tracking-wider uppercase font-bold opacity-60">ESCUTA</span>
                 </div>
                 <div className="mt-4 space-y-1">
-                  <h4 className="font-display font-black text-xs sm:text-sm text-white uppercase tracking-tight">Consórcio de Diretores</h4>
+                  <h4 className="font-display font-black text-xs sm:text-sm text-white uppercase tracking-tight">Diagnóstico antes da execução</h4>
                   <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed">
-                    Operações geridas diretamente por líderes experientes com mais de 10 anos de mercado real.
+                    Antes de produzir, entendemos o momento da marca, os objetivos, os gargalos e a estrutura disponível para sustentar o trabalho.
                   </p>
                 </div>
               </motion.div>
@@ -1838,15 +1831,15 @@ export default function Home({ onNavigate }: HomeProps) {
                 className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-6 rounded-[28px] text-left flex flex-col justify-between min-h-[140px] group transition-all duration-300"
               >
                 <div className="flex items-start justify-between">
-                  <div className="w-9 h-9 rounded-full bg-white/[0.03] border border-white/[0.08] text-white flex items-center justify-center">
+                <div className="w-9 h-9 rounded-full bg-white/[0.03] border border-white/[0.08] text-white flex items-center justify-center">
                     <Plus className="w-4 h-4 text-white font-black" />
                   </div>
-                  <span className="font-mono text-[9px] text-zinc-500 tracking-wider uppercase font-bold">SOB DEMANDA</span>
+                  <span className="font-mono text-[9px] text-zinc-500 tracking-wider uppercase font-bold">ENTREGA</span>
                 </div>
                 <div className="mt-4 space-y-1">
-                  <h4 className="font-display font-black text-xs sm:text-sm text-white uppercase tracking-tight">Atuação Estruturada</h4>
+                  <h4 className="font-display font-black text-xs sm:text-sm text-white uppercase tracking-tight">Estratégia com entrega</h4>
                   <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed">
-                    Sem engessamento. Planejamento flexível desenhado em perfeita simbiose com seus objetivos corporativos.
+                    A TAG08 não fica apenas no discurso estratégico. Organizamos direção, escopo, conteúdo, design, tecnologia e operação para tirar o plano do papel.
                   </p>
                 </div>
               </motion.div>
@@ -1859,12 +1852,12 @@ export default function Home({ onNavigate }: HomeProps) {
                   <div className="absolute top-[-20px] right-[-20px] w-16 h-16 bg-white/20 rounded-full blur-xl pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
                     <span className="font-mono text-[8px] font-black uppercase text-black/60 bg-black/5 px-2 py-0.5 rounded border border-black/5">01 // UNIFICADO</span>
-                    <span className="font-sans text-[9px] font-bold text-black/70">STRATEGY</span>
+                    <span className="font-sans text-[9px] font-bold text-black/70">MÉTODO</span>
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
-                    <span className="font-display font-black text-3xl text-black tracking-tighter block leading-none">4 PILARES</span>
+                    <span className="font-display font-black text-3xl text-black tracking-tighter block leading-none">QUATRO FRENTES</span>
                     <p className="text-black font-display font-bold text-[10px] uppercase tracking-wider">ESTRATÉGIA INTEGRADA</p>
-                    <p className="text-black/60 text-[9.5px] leading-snug font-medium">Copy, Ads, WebDev e Design perfeitamente sem costuras.</p>
+                    <p className="text-black/60 text-[9.5px] leading-snug font-medium">Conteúdo, design, tecnologia e operação trabalhando no mesmo sentido.</p>
                   </div>
                 </div>
 
@@ -1876,9 +1869,9 @@ export default function Home({ onNavigate }: HomeProps) {
                     <Zap className="w-3 h-3 text-brand-secondary" />
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
-                    <span className="font-display font-black text-3xl text-white tracking-tighter block leading-none">C-LEVEL</span>
-                    <p className="text-white font-display font-bold text-[10px] uppercase tracking-wider">AUTORIDADE REAL</p>
-                    <p className="text-zinc-500 text-[9.5px] leading-snug font-medium">Geração de tração intelectual de alto ticket estruturado.</p>
+                    <span className="font-display font-black text-3xl text-white tracking-tighter block leading-none">CLAREZA</span>
+                    <p className="text-white font-display font-bold text-[10px] uppercase tracking-wider">ESCOLHAS MELHORES</p>
+                    <p className="text-zinc-500 text-[9.5px] leading-snug font-medium">Cada entrega respeita contexto, escopo e capacidade real da operação.</p>
                   </div>
                 </div>
 
@@ -1923,9 +1916,9 @@ export default function Home({ onNavigate }: HomeProps) {
 
                 {/* Bottom detailed description */}
                 <div className="relative z-10 pt-4 border-t border-white/5 space-y-2">
-                  <h3 className="text-white font-display font-bold text-xs uppercase tracking-wider">Centro de Inteligência Premium</h3>
+                  <h3 className="text-white font-display font-bold text-xs uppercase tracking-wider">Centro de método</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed">
-                    Nossa equipe aplica inteligência autoral com engenharia de processos, consolidando o posicionamento mais elegante para o seu funil de vendas.
+                    Nossa equipe conecta contexto, prioridade e entrega para que a decisão não fique solta depois da reunião.
                   </p>
                 </div>
               </motion.div>
@@ -1993,13 +1986,13 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[140px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute top-0 right-0 w-16 h-16 bg-white/[0.01] rounded-full blur-md group-hover:bg-brand-secondary/[0.01] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-sans text-[7px] font-black uppercase text-brand-secondary bg-brand-secondary/5 px-1.5 py-0.5 rounded">BUDGETS</span>
+                    <span className="font-sans text-[7px] font-black uppercase text-brand-secondary bg-brand-secondary/5 px-1.5 py-0.5 rounded">PROVA</span>
                     <TrendingUp className="w-3.5 h-3.5 text-zinc-500" />
                   </div>
                   <div className="mt-3 relative z-10 text-left">
-                    <span className="font-display font-black text-2xl sm:text-3xl text-white tracking-tighter leading-none block">R$ 50M+</span>
-                    <p className="text-white font-display font-bold text-[9.5px] uppercase tracking-wider mt-0.5">Gerenciados</p>
-                    <p className="text-zinc-500 text-[9px] leading-snug">Em canais pagos de tráfego de alta conversão.</p>
+                    <span className="font-display font-black text-2xl sm:text-3xl text-white tracking-tighter leading-none block">CLAREZA</span>
+                    <p className="text-white font-display font-bold text-[9.5px] uppercase tracking-wider mt-0.5">NO DIAGNÓSTICO</p>
+                    <p className="text-zinc-500 text-[9px] leading-snug">A confiança não vem de promessa pronta. Vem de clareza no diagnóstico, coerência na estratégia e responsabilidade na execução.</p>
                   </div>
                 </div>
 
@@ -2007,7 +2000,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[140px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute bottom-[-20px] right-[-20px] w-20 h-20 bg-brand/[0.015] rounded-full blur-xl group-hover:bg-brand-secondary/[0.03] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-sans text-[7px] font-black uppercase text-zinc-400 bg-white/5 px-1.5 py-0.5 rounded">LTV RATIO</span>
+                    <span className="font-sans text-[7px] font-black uppercase text-zinc-400 bg-white/5 px-1.5 py-0.5 rounded">CONTINUIDADE</span>
                     <div className="flex -space-x-1.5">
                       <img className="w-4 h-4 rounded-full ring-1 ring-black object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=50" />
                       <img className="w-4 h-4 rounded-full ring-1 ring-black object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=50" />
@@ -2015,9 +2008,9 @@ export default function Home({ onNavigate }: HomeProps) {
                     </div>
                   </div>
                   <div className="mt-3 relative z-10 text-left">
-                    <span className="font-display font-black text-2xl sm:text-3xl text-brand-secondary tracking-tighter leading-none block">+98%</span>
-                    <p className="text-white font-display font-bold text-[9.5px] uppercase tracking-wider mt-0.5">Fidelidade</p>
-                    <p className="text-zinc-500 text-[9px] leading-snug">Taxa de renovação e sustentação de contratos.</p>
+                    <span className="font-display font-black text-2xl sm:text-3xl text-brand-secondary tracking-tighter leading-none block">MÉTODO</span>
+                    <p className="text-white font-display font-bold text-[9.5px] uppercase tracking-wider mt-0.5">COERÊNCIA</p>
+                    <p className="text-zinc-500 text-[9px] leading-snug">Confiança se constrói com clareza, método e entrega coerente.</p>
                   </div>
                 </div>
 
@@ -2033,7 +2026,7 @@ export default function Home({ onNavigate }: HomeProps) {
               onClick={() => handleLinkClick("/contato")}
               className="text-white/60 hover:text-brand-secondary font-mono text-[10px] sm:text-xs font-black uppercase tracking-widest inline-flex items-center gap-2 group transition-colors cursor-pointer"
             >
-              Iniciar Análise do Modelo de Diagnóstico do Seu Negócio &rarr;
+              FALAR COM A TAG08 &rarr;
             </button>
           </div>
 

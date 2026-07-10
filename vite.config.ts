@@ -1,5 +1,7 @@
 import { fileURLToPath, URL } from "node:url";
 import { defineConfig, loadEnv } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
 const FRONTEND_PORT = 3000;
 const DEFAULT_BACKEND_PORT = 3001;
@@ -23,6 +25,8 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
+      react(),
+      tailwindcss(),
       {
         name: "tag08-local-official-content-fallback",
         configureServer(server) {

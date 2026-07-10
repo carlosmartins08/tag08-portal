@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useReducedMotion } from "motion/react";
 
 interface ThreeDimensionalTiltProps {
   children: React.ReactNode;
@@ -11,13 +12,14 @@ interface ThreeDimensionalTiltProps {
 export default function ThreeDimensionalTilt({
   children,
   className = "",
-  maxRotate = 10,
-  perspective = 1200,
-  scale = 1.02,
+  maxRotate = 6,
+  perspective = 1400,
+  scale = 1.015,
 }: ThreeDimensionalTiltProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
   const [style, setStyle] = useState<React.CSSProperties>({
-    transform: "perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)",
+    transform: `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`,
     transition: "transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease",
   });
   const [glareStyle, setGlareStyle] = useState<React.CSSProperties>({
@@ -27,6 +29,8 @@ export default function ThreeDimensionalTilt({
   });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (prefersReducedMotion) return;
+
     const el = containerRef.current;
     if (!el) return;
 
@@ -66,6 +70,20 @@ export default function ThreeDimensionalTilt({
   };
 
   const handleMouseLeave = () => {
+    if (prefersReducedMotion) {
+      setStyle({
+        transform: "none",
+        transition: "none",
+        boxShadow: "none",
+      });
+      setGlareStyle({
+        background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, transparent 80%)",
+        opacity: 0,
+        transition: "none",
+      });
+      return;
+    }
+
     setStyle({
       transform: `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`,
       transition: "transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.6s ease",
@@ -79,6 +97,21 @@ export default function ThreeDimensionalTilt({
     });
   };
 
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setStyle({
+        transform: "none",
+        transition: "none",
+        boxShadow: "none",
+      });
+      setGlareStyle({
+        background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, transparent 80%)",
+        opacity: 0,
+        transition: "none",
+      });
+    }
+  }, [prefersReducedMotion]);
+
   return (
     <div
       ref={containerRef}
@@ -88,6 +121,7 @@ export default function ThreeDimensionalTilt({
       style={{
         ...style,
         transformStyle: "preserve-3d",
+        willChange: prefersReducedMotion ? "auto" : "transform",
       }}
     >
       {/* Glare Reflection overlay */}
