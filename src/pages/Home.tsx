@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ArrowUpRight, Check, CheckCircle2, TrendingUp, Cpu, Sparkles, Award, Shield, UserCheck, Play, HelpCircle, ArrowRight, MessageSquare, Activity, X, Wifi, Plus, Star, Layers, Zap, ArrowDown, ArrowLeft } from "lucide-react";
-import { SERVICES, PLANS, CASE_STUDIES } from "../data";
-import { CaseStudy } from "../types";
+import { SERVICES, PLANS } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_YOUTUBE_URL, buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../config/siteNetwork";
 import type { OfficialContentApiResponse } from "../lib/officialContent";
@@ -94,55 +93,55 @@ const CLIENT_CASES = [
 const YOUTUBE_VIDEOS = [
   {
     id: "posicionamento-alto-nivel",
-    title: "O Posicionamento de Presença Digital de Alto Nível",
-    description: "Análise sênior sobre como diretores e marcas conceitadas estruturam sua autoridade visual e tom de voz no ecossistema digital sem os clichês das agências tradicionais.",
+    title: "Conteúdo institucional",
+    description: "Vídeos que apresentam a marca, sua história, seus diferenciais e sua forma de gerar valor.",
     duration: "12:45",
     date: "28 Mai, 2026",
-    category: "BRANDING",
+    category: "INSTITUCIONAL",
     thumbnail: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200",
     embedCode: "612U4R57M70", // A generic video presentation code, we also support direct channel handle redirect
     videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
-    views: "12.4K visualizações",
-    tagline: "DIREÇÃO INTUITIVA & COESÃO VISUAL"
+    views: "PORTFÓLIO 01",
+    tagline: "NARRATIVA CLARA"
   },
   {
     id: "branding-blueprint",
-    title: "Branding Blueprint: Criando uma Identidade Soberana",
-    description: "Por trás das cortinas do laboratório estético da TAG08. Como desenvolver contrastes, fontes com alma e diagramações sêniores que transmitem autoridade imediata.",
+    title: "Cobertura de eventos",
+    description: "Registro estratégico de momentos, bastidores, falas e experiências para ampliar o valor do evento depois que ele acontece.",
     duration: "18:20",
     date: "14 Mai, 2026",
-    category: "DESIGN SYSTEM",
+    category: "EVENTOS",
     thumbnail: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=1200",
     embedCode: "612U4R57M70",
     videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
-    views: "8.9K visualizações",
-    tagline: "SOPRO DE SOFISTICAÇÃO E ARTE"
+    views: "PORTFÓLIO 02",
+    tagline: "BASTIDORES COM FUNÇÃO"
   },
   {
     id: "trafego-pago-saboroso",
-    title: "Como Estruturar Captação e Anúncios Sem Queimar Orçamento",
-    description: "A matemática cirúrgica dos anúncios corporativos. Saiba como segmentar com alta intenção de compra e evitar desperdícios com campanhas genéricas ou superficiais.",
+    title: "Conteúdo para especialistas",
+    description: "Captação e edição de falas, aulas, entrevistas e conteúdos de autoridade com linguagem clara e presença profissional.",
     duration: "15:10",
     date: "03 Mai, 2026",
-    category: "MARKETING SÊNIOR",
+    category: "ESPECIALISTAS",
     thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
     embedCode: "612U4R57M70",
     videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
-    views: "14.2K visualizações",
-    tagline: "MÁXIMA EFICIÊNCIA OPERACIONAL"
+    views: "PORTFÓLIO 03",
+    tagline: "AUTORIDADE EM CENA"
   },
   {
     id: "sistemas-operacionais-digitais",
-    title: "Sistemas Operacionais Digitais: O Fim das Planilhas de Feedback",
-    description: "Demonstração prática de como organizamos e orquestramos a produção de conteúdo com velocidade e sem conversas caóticas por e-mail ou WhatsApp corporativo irrelevantes.",
+    title: "Materiais para redes sociais",
+    description: "Cortes, reels, vídeos curtos e formatos recorrentes alinhados à linha editorial e ao posicionamento da marca.",
     duration: "09:55",
     date: "21 Abr, 2026",
-    category: "FLUXO EXECUTIVO",
+    category: "REDES SOCIAIS",
     thumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200",
     embedCode: "612U4R57M70",
     videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
-    views: "7.5K visualizações",
-    tagline: "COMUNICAÇÃO CONCRETA ASSÍNCRONA"
+    views: "PORTFÓLIO 04",
+    tagline: "LINHA EDITORIAL"
   }
 ];
 
@@ -150,8 +149,12 @@ const SERVICOS_TILES = [
   {
     id: "redes-sociais",
     title: "Gestão de Redes",
-    subtitle: "CONTEÚDO & INSTAGRAM",
-    desc: "Planejamento editorial de alto nível, redação, roteiros e publicação consistente.",
+    subtitle: "CONTEÚDO & PRESENÇA",
+    desc: "Planejamento editorial com redação, roteiros e publicação consistente.",
+    metricLabel: "CLAREZA",
+    metricValue: "Direção",
+    chartLabel: "CONSTRUÇÃO DE PRESENÇA",
+    chartSubtitle: "Organiza conteúdo e distribuição para dar mais coerência à presença digital.",
     bgClass: "bg-charcoal-900",
     textClass: "text-white",
     icon: (
@@ -169,7 +172,11 @@ const SERVICOS_TILES = [
     id: "podcasts-audiovisual",
     title: "Audiovisual & Podcasts",
     subtitle: "REELS, PODCASTS, SHORTS",
-    desc: "Roteirização magnética, direção de cena, captação e pós-produção integrada.",
+    desc: "Roteirização, direção de cena, captação e pós-produção integrada.",
+    metricLabel: "CONSISTÊNCIA",
+    metricValue: "Presença",
+    chartLabel: "TEMPO EM TELA",
+    chartSubtitle: "Orienta cortes e formatos recorrentes com base na narrativa da marca.",
     bgClass: "bg-charcoal-900",
     textClass: "text-white",
     icon: (
@@ -184,9 +191,13 @@ const SERVICOS_TILES = [
   },
   {
     id: "branding",
-    title: "Branding & ID Luxo",
-    subtitle: "MARCA AUTORAL HIGH-END",
-    desc: "Posicionamento estético refinado, paletas magnéticas e manuais indestrutíveis.",
+    title: "Branding & Identidade",
+    subtitle: "MARCA AUTORAL",
+    desc: "Posicionamento estético, paletas e manuais de expressão de marca.",
+    metricLabel: "PERCEPÇÃO",
+    metricValue: "Coerência",
+    chartLabel: "VALOR PERCEBIDO",
+    chartSubtitle: "Direção visual e verbal para reforçar a leitura da marca.",
     bgClass: "bg-charcoal-900",
     textClass: "text-white",
     icon: (
@@ -198,9 +209,13 @@ const SERVICOS_TILES = [
   },
   {
     id: "trafego-pago",
-    title: "Tráfego & Escala",
+    title: "Tráfego & Aquisição",
     subtitle: "META ADS, GOOGLE, LINKEDIN",
-    desc: "Anúncios cirúrgicos para captar público qualificado e acelerar os seus canais.",
+    desc: "Anúncios para alcançar públicos mais alinhados à oferta.",
+    metricLabel: "MÉTODO APLICADO",
+    metricValue: "Estrutura",
+    chartLabel: "LEADS QUALIFICADOS",
+    chartSubtitle: "Segmentação e otimização contínua para organizar a entrada de contatos.",
     bgClass: "bg-charcoal-900",
     textClass: "text-white",
     icon: (
@@ -226,7 +241,11 @@ const SERVICOS_TILES = [
     id: "copywriting",
     title: "Copywriting Estratégico",
     subtitle: "COMUNICAÇÃO DIRECIONADA",
-    desc: "Roteiros e textos focados em extrair a personalidade exata do seu negócio.",
+    desc: "Roteiros e textos focados em extrair a personalidade do seu negócio.",
+    metricLabel: "CONTEÚDO",
+    metricValue: "Com direção",
+    chartLabel: "RETENÇÃO DA LEITURA",
+    chartSubtitle: "Estrutura textual que favorece compreensão e continuidade.",
     bgClass: "bg-charcoal-900",
     textClass: "text-white",
     icon: (
@@ -244,7 +263,11 @@ const SERVICOS_TILES = [
     id: "desenvolvimento-web",
     title: "Desenvolvimento Web",
     subtitle: "INSTITUCIONAIS & LANDING PAGES",
-    desc: "Portais ultrarrápidos codificados à mão, limpos, que convertem acessos em vendas.",
+    desc: "Portais limpos, responsivos e codificados à mão.",
+    metricLabel: "EXECUÇÃO",
+    metricValue: "Com critério",
+    chartLabel: "VELOCIDADE DE ACESSO",
+    chartSubtitle: "Arquitetura pensada para navegação clara em desktop e mobile.",
     bgClass: "bg-charcoal-900",
     textClass: "text-white",
     icon: (
@@ -259,8 +282,12 @@ const SERVICOS_TILES = [
   {
     id: "process-intelligence",
     title: "Process Intelligence",
-    subtitle: "ELIMINAR CAOS OPERACIONAL",
+    subtitle: "ROTINA E PREVISIBILIDADE",
     desc: "Playbooks, centrais de conhecimento corporativas e modelagem de processos.",
+    metricLabel: "CONTINUIDADE",
+    metricValue: "Organizada",
+    chartLabel: "TEMPO DE RESPOSTA",
+    chartSubtitle: "Organização de fluxo para reduzir retrabalho e improviso.",
     bgClass: "bg-charcoal-900",
     textClass: "text-white",
     icon: (
@@ -276,13 +303,13 @@ const PORTFOLIO_SERVICES_DATA = [
   {
     id: "redes-sociais",
     title: "Gestão de Redes",
-    subtitle: "CONTEÚDO & INSTAGRAM",
-    shortDesc: "Planejamento de alto nível e consistência refinada.",
-    longDesc: "Alinhamos cada carrossel, roteiro de vídeo e imagem estática para construir uma percepção de grife que gera desejo imediato na sua audiência de alta renda.",
-    metricLabel: "CRESCIMENTO",
-    metricValue: "+83%",
-    chartLabel: "CONVERSÃO DE LEAD",
-    chartSubtitle: "Filtros de conteúdo e tráfego pago integrados para eliminar curiosos da sua base.",
+    subtitle: "CONTEÚDO & PRESENÇA",
+    shortDesc: "Planejamento editorial com ritmo e consistência.",
+    longDesc: "Organizamos pautas, formatos e publicações para sustentar uma presença digital clara e coerente.",
+    metricLabel: "CLAREZA",
+    metricValue: "Direção",
+    chartLabel: "CONSTRUÇÃO DE PRESENÇA",
+    chartSubtitle: "Conteúdo alinhado a um plano editorial que ajuda a manter a comunicação consistente.",
     bgImage: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=1200",
     wavePath: "M10,48 C30,48 50,20 70,36 C90,52 110,8 130,28 C150,48 170,12 190,4",
     slug: "/servicos",
@@ -298,12 +325,12 @@ const PORTFOLIO_SERVICES_DATA = [
     id: "podcasts-audiovisual",
     title: "Audiovisual & Podcasts",
     subtitle: "REELS, PODCASTS, SHORTS",
-    shortDesc: "Roteirização magnética e pós-produção integrada.",
-    longDesc: "Captação com lentes cinematográficas, tratamento acústico impecável e edição dinâmica com ritmo cirúrgico para elevar a retenção acima do patamar comum.",
-    metricLabel: "RETENÇÃO DE REELS",
-    metricValue: "68.4%",
-    chartLabel: "TEMPO ASSISTIDO",
-    chartSubtitle: "Análise quantitativa de retenção média das mídias verticais de vídeo curto.",
+    shortDesc: "Roteirização e pós-produção integradas.",
+    longDesc: "Captação, direção e edição para transformar fala, presença e bastidores em materiais úteis para a marca.",
+    metricLabel: "CONSISTÊNCIA",
+    metricValue: "Presença",
+    chartLabel: "TEMPO EM TELA",
+    chartSubtitle: "Formatos pensados para sustentar a narrativa em vídeo com clareza.",
     bgImage: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&q=80&w=1200",
     wavePath: "M10,40 C30,10 50,45 70,15 C90,35 110,5 130,30 C150,10 170,40 190,15",
     slug: "/servicos",
@@ -316,14 +343,14 @@ const PORTFOLIO_SERVICES_DATA = [
   },
   {
     id: "branding",
-    title: "Branding & ID Luxo",
-    subtitle: "MARCA AUTORAL HIGH-END",
-    shortDesc: "Posicionamento estético e paletas magnéticas.",
-    longDesc: "Desenhamos logotipos clássicos sob medida, tipografia com curadoria artística fina e manuais completos de expressão de marca e tom de voz unificado corporativo.",
-    metricLabel: "BRAND EQUITY",
-    metricValue: "CLASSE A",
+    title: "Branding & Identidade",
+    subtitle: "MARCA AUTORAL",
+    shortDesc: "Posicionamento visual e verbal coerente.",
+    longDesc: "Desenvolvemos identidade, tom e sistema visual para alinhar percepção e contexto de marca.",
+    metricLabel: "PERCEPÇÃO",
+    metricValue: "Coerência",
     chartLabel: "VALOR PERCEBIDO",
-    chartSubtitle: "Geração de atração de clientes qualificados dispostos a investir sem objeção.",
+    chartSubtitle: "Direção visual e verbal para reforçar a leitura da marca.",
     bgImage: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&q=80&w=1200",
     wavePath: "M10,45 L40,15 L70,35 L100,5 L130,25 L160,10 L190,5",
     slug: "/servicos/branding-identidade",
@@ -337,14 +364,14 @@ const PORTFOLIO_SERVICES_DATA = [
   },
   {
     id: "trafego-pago",
-    title: "Tráfego & Escala",
-    subtitle: "META ADS, GOOGLE, LINKEDIN",
-    shortDesc: "Anúncios cirúrgicos para captar público qualificado.",
-    longDesc: "Distribuição inteligente das suas pautas estratégicas direcionadas especificamente a médicos, empresários e decisores da sua região comercial.",
-    metricLabel: "ROI RETORNO",
-    metricValue: "5.4x",
-    chartLabel: "CUSTO POR LEAD (CPL)",
-    chartSubtitle: "Processo contínuo de otimização de lances para maior eficiência por real investido.",
+    title: "Tráfego & Aquisição",
+    subtitle: "MÍDIA PAGA",
+    shortDesc: "Anúncios para alcançar públicos mais alinhados.",
+    longDesc: "Estruturamos campanhas com segmentação, criativos e acompanhamento para apoiar a entrada de contatos.",
+    metricLabel: "MÉTODO APLICADO",
+    metricValue: "Estrutura",
+    chartLabel: "ENTRADA DE CONTATOS",
+    chartSubtitle: "Ajustes contínuos para organizar a captação sem depender de promessas exageradas.",
     bgImage: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=1200",
     wavePath: "M10,50 L40,40 L70,30 L100,20 L130,15 L160,8 L190,2",
     slug: "/servicos",
@@ -360,12 +387,12 @@ const PORTFOLIO_SERVICES_DATA = [
     id: "copywriting",
     title: "Copywriting Estratégico",
     subtitle: "COMUNICAÇÃO DIRECIONADA",
-    shortDesc: "Roteiros e textos que eliminam clichês comerciais.",
-    longDesc: "Lapidamos legendas, páginas e argumentos de vendas com redação persuasiva polida, refinando e vestindo sua comunicação corporativa com elegância intelectual.",
-    metricLabel: "CLIQUE TAXA (CTR)",
-    metricValue: "+14.2%",
-    chartLabel: "RETENÇÃO DO LEITOR",
-    chartSubtitle: "Roteiros construídos com estrutura hipnótica que eliminam mensagens robóticas.",
+    shortDesc: "Textos que deixam a mensagem mais clara.",
+    longDesc: "Redigimos legendas, páginas e argumentos para comunicar com precisão e menos ruído.",
+    metricLabel: "CONTEÚDO",
+    metricValue: "Com direção",
+    chartLabel: "RETENÇÃO DA LEITURA",
+    chartSubtitle: "Estrutura textual que favorece compreensão e continuidade.",
     bgImage: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=1200",
     wavePath: "M10,35 C40,45 60,10 90,30 C120,45 150,15 190,10",
     slug: "/servicos",
@@ -378,13 +405,13 @@ const PORTFOLIO_SERVICES_DATA = [
   {
     id: "desenvolvimento-web",
     title: "Desenvolvimento Web",
-    subtitle: "INSTITUCIONAIS & LANDING PAGES",
-    shortDesc: "Portais ultrarrápidos codificados à mão.",
-    longDesc: "Desenvolvemos códigos limpos, responsivos com performance exemplar de Lighthouse 100% para evitar qualquer atrito de carregamento em anúncios.",
-    metricLabel: "PERFORMANCE SCORE",
-    metricValue: "100",
-    chartLabel: "VELOCIDADE CARREGAMENTO",
-    chartSubtitle: "Servidores globais sob medida garantindo carregamento ultrarrápido em celulares.",
+    subtitle: "CANAL PRÓPRIO",
+    shortDesc: "Portais responsivos codificados à mão.",
+    longDesc: "Criamos sites e landing pages com estrutura limpa, acessível e pensada para navegação clara.",
+    metricLabel: "EXECUÇÃO",
+    metricValue: "Com critério",
+    chartLabel: "VELOCIDADE DE ACESSO",
+    chartSubtitle: "Arquitetura pensada para navegação clara em desktop e mobile.",
     bgImage: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=1200",
     wavePath: "M10,48 L50,48 L90,12 L130,12 L170,12 L190,12",
     slug: "/servicos/desenvolvimento-web",
@@ -399,13 +426,13 @@ const PORTFOLIO_SERVICES_DATA = [
   {
     id: "process-intelligence",
     title: "Process Intelligence",
-    subtitle: "ELIMINAR CAOS OPERACIONAL",
-    shortDesc: "Playbooks, centrais de conhecimento corporativas.",
-    longDesc: "Auditoria analítica operacional completa dos seus fluxos cotidianos e documentação completa em um Hub de Conhecimento centralizado para acelerar on-boarding de equipe.",
-    metricLabel: "EFICÁCIA OPERACIONAL",
-    metricValue: "+45%",
+    subtitle: "ROTINA E PREVISIBILIDADE",
+    shortDesc: "Fluxos, playbooks e rotinas com mais clareza.",
+    longDesc: "Organizamos fluxos, responsabilidades e documentação para reduzir improviso e retrabalho.",
+    metricLabel: "CONTINUIDADE",
+    metricValue: "Organizada",
     chartLabel: "TEMPO DE RESPOSTA",
-    chartSubtitle: "Modelagem visual completa reduzindo drasticamente gargalos de comunicação.",
+    chartSubtitle: "Fluxos desenhados para facilitar a circulação de informação.",
     bgImage: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=1200",
     wavePath: "M10,8 L40,25 L70,15 L100,35 L130,25 L160,45 L190,48",
     slug: "/servicos/process-intelligence",
@@ -420,11 +447,11 @@ const PORTFOLIO_SERVICES_DATA = [
 const GMB_REVIEWS = [
   {
     name: "Dra. Roberta Chaves",
-    role: "Clínica de Odontologia de Alta Performance",
+    role: "Clínica de Odontologia",
     avatar: "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=200",
     time: "há 2 semanas",
-    tagline: "Nosso posicionamento e site finalmente transmitem tratamento de grife.",
-    text: "Fizemos o reposicionamento estético da nossa clínica e o novo site premium com a lindeza analítica da TAG08. Estou impactada com a precisão do design. Nosso volume de pacientes particulares de alto padrão aumentou muito porque finalmente nossa comunicação condiz com o nosso tratamento.",
+    tagline: "Clareza no posicionamento",
+    text: "Fizemos o reposicionamento estético da nossa clínica e o novo site estruturado com a TAG08. Estou impactada com a precisão do design. Nosso volume de pacientes particulares de alto padrão aumentou muito porque finalmente nossa comunicação condiz com o nosso tratamento.",
     category: "BRANDING ATIVO"
   },
   {
@@ -432,7 +459,7 @@ const GMB_REVIEWS = [
     role: "CEO, Azevedo Asset",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
     time: "há 1 mês",
-    tagline: "Desenhamos um hub operacional dinâmico focado em performance sem ruído.",
+    tagline: "Acompanhamento do processo",
     text: "Trabalho impecável de Process Intelligence. Eles auditaram nossa estrutura e desenharam um hub assíncrono que acabou com a bagunça no WhatsApp. O time hoje sabe exatamente o que fazer com playbooks dinâmicos. Economia gigantesca de tempo de gerência.",
     category: "PROCESSES"
   },
@@ -441,7 +468,7 @@ const GMB_REVIEWS = [
     role: "Sócia Fundadora, Le Visage Spa",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
     time: "há 3 semanas",
-    tagline: "Fugimos dos padrões genéricos e clichês de agências comuns do mercado.",
+    tagline: "Coerência entre promessa e entrega",
     text: "A assessoria de redes sociais e conteúdo da TAG08 é magnífica. Eles planejam os carrosséis e roteiros de reels com foco em elegância e sofisticação, fugindo daquilo que as agências comuns entregam. Elevou nossa marca no mercado de luxo local.",
     category: "REDES SOCIAIS"
   },
@@ -450,8 +477,8 @@ const GMB_REVIEWS = [
     role: "Diretor Clínico, Mendes Odontologia",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200",
     time: "há 2 meses",
-    tagline: "Tráfego de escala sênior trazendo leads qualificados prontos para fechar.",
-    text: "O tráfego de escala deles é muito bem estruturado. Já passei por três assessorias que apenas queimavam verba trazendo curiosos. Na TAG08 eles organizam filtros funcionais nos criativos e nos trazem leads mais qualificados para conversar sobre tratamentos.",
+    tagline: "Direção comercial mais clara",
+    text: "O tráfego deles é muito bem estruturado. Já passei por três assessorias que apenas queimavam verba trazendo curiosos. Na TAG08 eles organizam filtros funcionais nos criativos e nos trazem leads mais qualificados para conversar sobre tratamentos.",
     category: "TRÁFEGO ADS"
   },
   {
@@ -459,8 +486,8 @@ const GMB_REVIEWS = [
     role: "Diretora de Marketing, Grupo BN",
     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200",
     time: "há 1 mês",
-    tagline: "O diagnóstico gratuito me revelou mais do que consultorias caras do setor.",
-    text: "O diagnóstico gratuito deles foi melhor do que muitas consultorias pagas que já contratamos. Eles mostram os furos exatos na estrutura de branding e oferecem um plano claro. Implementamos tudo e o resultado veio rápido.",
+    tagline: "Diagnóstico com mais clareza",
+    text: "O diagnóstico inicial deles foi melhor do que muitas consultorias pagas que já contratamos. Eles mostram os furos exatos na estrutura de branding e oferecem um plano claro. Implementamos tudo e o caminho ficou mais claro.",
     category: "DIAGNÓSTICO"
   },
   {
@@ -468,9 +495,9 @@ const GMB_REVIEWS = [
     role: "Fundador, Castilho Advocacia",
     avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=200",
     time: "há 3 meses",
-    tagline: "Nossos canais abrindo instantaneamente e transmitindo postura de grife.",
-    text: "Desenvolver nosso ecossistema web com códigos nativos pela TAG08 foi o divisor de águas da nossa captação corporativa. O site abre instantaneamente no celular do cliente e passa uma postura de grife jurídica inabalável.",
-    category: "DEV WEB PREMIUM"
+    tagline: "Estrutura digital mais consistente",
+    text: "Desenvolver nosso ecossistema web com códigos nativos pela TAG08 foi importante para a nossa captação corporativa. O site abre no celular do cliente e passa uma postura consistente para o escritório.",
+    category: "DEV WEB"
   }
 ];
 
@@ -479,8 +506,8 @@ const DIAGNOSTIQUER_PHASES = {
     title: "Discovery",
     badge: "FASE 01",
     desc: "Entendimento do momento atual da marca, seus canais, sua comunicação, sua operação e os principais sinais de desalinhamento. Aqui a TAG08 identifica o que está travando clareza, consistência e tomada de decisão.",
-    rating: "Sinal de Desalinhamento: Crítico (82%)",
-    ratingWidth: "82%",
+    rating: "Clareza",
+    ratingWidth: 72,
     symptoms: [
       {
         id: "content_focus",
@@ -499,9 +526,9 @@ const DIAGNOSTIQUER_PHASES = {
   analysis: {
     title: "Analysis",
     badge: "FASE 02",
-    desc: "Leitura dos gargalos encontrados para separar sintomas aparentes de causas reais. Nem todo problema de marketing se resolve com mais conteúdo. Às vezes, falta posicionamento, processo ou prioridade.",
-    rating: "Leitura de Gargalos: Alto (65%)",
-    ratingWidth: "65%",
+    desc: "Leitura dos gargalos encontrados para separar sintomas aparentes de causas reais. Nem todo problema de marketing se resolve com mais conteúdo.",
+    rating: "Critério",
+    ratingWidth: 58,
     symptoms: [
       {
         id: "decisions",
@@ -515,8 +542,8 @@ const DIAGNOSTIQUER_PHASES = {
     title: "Delivery",
     badge: "FASE 03",
     desc: "Recomendação do caminho mais coerente para o momento da marca, com prioridades, próximos passos e limites claros. A entrega não é uma promessa pronta. É uma direção estruturada para decidir melhor.",
-    rating: "Operação Sob Pressão: Muito Alto (78%)",
-    ratingWidth: "78%",
+    rating: "Direção",
+    ratingWidth: 68,
     symptoms: [
       {
         id: "overloaded",
@@ -530,12 +557,25 @@ const DIAGNOSTIQUER_PHASES = {
 
 interface CaseStudyCardProps {
   key?: string;
-  item: CaseStudy;
+  item: {
+    id: string;
+    title: string;
+    image: string;
+    category?: string;
+    client?: string;
+    metric?: string;
+    metricLabel?: string;
+    challenge?: string;
+    proofTitle?: string;
+    proofDescription?: string;
+    proofMode?: boolean;
+  };
   onClick: () => void;
 }
 
 function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
   const [imgError, setImgError] = useState(false);
+  const proofMode = Boolean(item.proofMode);
 
   let CardIcon = Sparkles;
   if (item.id.includes("saas")) {
@@ -564,15 +604,15 @@ function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
                 <CardIcon className="w-5 h-5 text-zinc-500 stroke-[1.2]" />
               </div>
               <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-semibold">
-                {item.client}
+                {proofMode ? "Método em prática" : item.client}
               </span>
               <p className="font-sans text-[10px] text-zinc-600 max-w-[190px] leading-tight line-clamp-2">
-                {item.category} // DIAGNÓSTICO ATIVO
+                {proofMode ? (item.proofDescription ?? item.challenge ?? "") : `${item.category} // DIAGNÓSTICO ATIVO`}
               </p>
             </div>
           </div>
         ) : (
-          <img
+            <img
             src={item.image}
             alt=""
             onError={() => setImgError(true)}
@@ -581,16 +621,24 @@ function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
           />
         )}
         
-        {/* Floating category tag top-left */}
-        <span className="absolute top-4 left-4 z-20 bg-black/75 backdrop-blur-sm border border-white/[0.08] px-3 py-1 text-[9px] font-mono text-zinc-300 uppercase tracking-wider rounded-full">
-          {item.category}
-        </span>
+        {proofMode ? (
+          <span className="absolute top-4 left-4 z-20 bg-black/75 backdrop-blur-sm border border-white/[0.08] px-3 py-1 text-[9px] font-mono text-zinc-300 uppercase tracking-wider rounded-full">
+            Método em prática
+          </span>
+        ) : (
+          <>
+            {/* Floating category tag top-left */}
+            <span className="absolute top-4 left-4 z-20 bg-black/75 backdrop-blur-sm border border-white/[0.08] px-3 py-1 text-[9px] font-mono text-zinc-300 uppercase tracking-wider rounded-full">
+              {item.category}
+            </span>
 
-        {/* Highly polished metric banner top-right */}
-        <div className="absolute top-4 right-4 z-20 bg-brand text-black font-display font-black px-3 py-1 text-xs rounded-full shadow-lg flex items-center gap-1">
-          <TrendingUp className="w-3 h-3" />
-          {item.metric}
-        </div>
+            {/* Highly polished metric banner top-right */}
+            <div className="absolute top-4 right-4 z-20 bg-brand text-black font-display font-black px-3 py-1 text-xs rounded-full shadow-lg flex items-center gap-1">
+              <TrendingUp className="w-3 h-3" />
+              {item.metric}
+            </div>
+          </>
+        )}
 
         {/* Overlapping circular icon bottom-left */}
         <div className="absolute -bottom-3 left-5 w-11 h-11 rounded-full bg-brand text-black shadow-lg flex items-center justify-center z-20 transform transition-transform group-hover:scale-110 duration-300">
@@ -602,18 +650,18 @@ function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
       <div className="pt-6 px-1 flex-1 flex flex-col justify-between text-left">
         <div className="space-y-2">
           <span className="font-mono text-[9px] text-brand tracking-widest uppercase font-black block">
-            {item.client}
+            {proofMode ? "MÉTODO APLICADO" : item.client}
           </span>
           <h3 className="font-display font-semibold text-base sm:text-lg text-white leading-snug group-hover:text-brand transition-colors">
-            {item.title}
+            {proofMode ? item.proofTitle ?? item.title : item.title}
           </h3>
           <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans line-clamp-3">
-            {item.challenge}
+            {proofMode ? item.proofDescription ?? item.challenge : item.challenge}
           </p>
         </div>
 
         <div className="pt-6 mt-4 border-t border-white/[0.03] flex items-center gap-1.5 text-xs text-brand font-mono uppercase tracking-widest font-extrabold group-hover:underline">
-          <span>Ver Detalhes do Case</span>
+          <span>{proofMode ? "Solicitar Estudo de Caso" : "Ver Detalhes do Case"}</span>
           <ArrowUpRight className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
         </div>
       </div>
@@ -649,6 +697,82 @@ export default function Home({ onNavigate }: HomeProps) {
   const visibleYoutubeVideos = youtubeVideos;
   const visibleGmbReviews = gmbReviews;
 
+  const PROOF_CASES_DATA = [
+    {
+      id: "case-clinica-alphaville",
+      title: "Reposicionamento com mais clareza comercial",
+      proofDescription: "Organização de mensagem, percepção de valor e presença digital para uma marca que precisava comunicar melhor o que já entregava.",
+      image: "https://images.unsplash.com/photo-1579684389782-64d84b5e901a?auto=format&fit=crop&q=80&w=600",
+      proofMode: true
+    },
+    {
+      id: "case-saas-process",
+      title: "Presença digital com estrutura de canais",
+      proofDescription: "Construção de uma base mais coerente entre comunicação, conteúdo, site e pontos de contato para apoiar o processo comercial.",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
+      proofMode: true
+    },
+    {
+      id: "case-branding-advocacia",
+      title: "Identidade e comunicação para serviço especializado",
+      proofDescription: "Alinhamento visual, linguagem e narrativa para uma marca que precisava transmitir mais clareza, confiança e profissionalismo.",
+      image: "https://images.unsplash.com/photo-1505664194779-8bebcb35da44?auto=format&fit=crop&q=80&w=600",
+      proofMode: true
+    }
+  ];
+
+  const MAPA_SOLUCOES_DATA = [
+    {
+      id: "estrategia-posicionamento",
+      title: "Estratégia e posicionamento",
+      subtitle: "Clareza antes da execução",
+      desc: "Para marcas que precisam entender melhor seu público, reorganizar sua mensagem e comunicar com mais clareza o valor que já possuem.",
+      slug: "/servicos/assessoria-marketing-digital-estrategico"
+    },
+    {
+      id: "conteudo-redes-sociais",
+      title: "Conteúdo e redes sociais",
+      subtitle: "Presença com linha editorial",
+      desc: "Para negócios que precisam sair da postagem solta e construir presença com frequência, narrativa, intenção comercial e consistência.",
+      slug: "/servicos/gestao-de-redes-sociais"
+    },
+    {
+      id: "producao-audiovisual",
+      title: "Produção audiovisual",
+      subtitle: "Imagem, fala e bastidores com intenção",
+      desc: "Para empresas, especialistas e eventos que precisam transformar vídeo, presença e bastidores em conteúdo com valor de marca.",
+      slug: "/servicos/producao-audiovisual"
+    },
+    {
+      id: "branding-identidade",
+      title: "Branding e identidade",
+      subtitle: "Percepção visual mais coerente",
+      desc: "Para marcas que precisam alinhar identidade visual, tom, estética e percepção ao momento atual do negócio.",
+      slug: "/servicos/branding-identidade"
+    },
+    {
+      id: "desenvolvimento-web",
+      title: "Desenvolvimento web",
+      subtitle: "Canal próprio para apresentar e converter",
+      desc: "Para marcas que precisam de site, landing page, catálogo ou estrutura digital própria para gerar credibilidade e apoiar o comercial.",
+      slug: "/servicos/desenvolvimento-web"
+    },
+    {
+      id: "processos-operacao",
+      title: "Processos e operação",
+      subtitle: "Menos improviso, mais previsibilidade",
+      desc: "Para empresas que cresceram no esforço e agora precisam organizar rotina, responsabilidades, fluxo e tomada de decisão.",
+      slug: "/servicos/process-intelligence"
+    },
+    {
+      id: "hospedagem-manutencao",
+      title: "Hospedagem e manutenção",
+      subtitle: "Continuidade depois da entrega",
+      desc: "Para negócios que precisam manter seus sites ativos, seguros, atualizados e acompanhados depois da publicação.",
+      slug: "/hospedagem-manutencao-sites"
+    }
+  ];
+
   useEffect(() => {
     const controller = new AbortController();
 
@@ -670,11 +794,11 @@ export default function Home({ onNavigate }: HomeProps) {
           return;
         }
 
-        if (Array.isArray(data.youtubeVideos) && data.youtubeVideos.length > 0) {
+        if (data.sources?.youtube === "live" && Array.isArray(data.youtubeVideos) && data.youtubeVideos.length > 0) {
           setYoutubeVideos(data.youtubeVideos);
         }
 
-        if (Array.isArray(data.gmbReviews) && data.gmbReviews.length > 0) {
+        if (data.sources?.googleBusiness === "live" && Array.isArray(data.gmbReviews) && data.gmbReviews.length > 0) {
           setGmbReviews(data.gmbReviews);
         }
 
@@ -773,13 +897,6 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="absolute right-[10%] top-[10%] w-[320px] h-[320px] bg-black/10 rounded-full blur-[80px] pointer-events-none" />
           <div className="absolute left-[5%] bottom-[15%] w-[250px] h-[250px] bg-brand-secondary/20 rounded-full blur-[60px] pointer-events-none" />
 
-          {/* MASSIVE TITANIC TYPOGRAPHY BACKPLANE LAYER - LAYERED BEHIND CYBORG BUT IN FRONT OF LIGHT CONTAINER (Z-10) */}
-          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none select-none z-10 overflow-hidden mix-blend-overlay">
-            <span className="font-display font-black text-[15vw] leading-none text-white tracking-tighter uppercase whitespace-nowrap block select-none">
-              PRESENÇA COM DIREÇÃO
-            </span>
-          </div>
-
           {/* CORE GRAPHICAL CONTENT & CONTROLS GRID */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center relative z-20 w-full my-auto">
             
@@ -815,7 +932,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     <span className="w-1.5 h-1.5 rounded-full bg-brand animate-ping" />
                   </span>
                   <span className="font-mono text-[9px] text-black font-bold uppercase tracking-wider">
-                      DIAGNÓSTICO ANTES DA EXECUÇÃO
+                      Diagnóstico antes da execução
                   </span>
                   </div>
                   
@@ -849,7 +966,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 onMouseLeave={handleMouseLeave}
               >
                 {/* Subtle Interactive 3D Canvas rendering a rotating icosahedron and floating particles */}
-                <Subtle3DCanvas intensity={1.5} className="absolute inset-0 z-20 scale-125" />
+                <Subtle3DCanvas intensity={1.2} className="absolute inset-0 z-20 scale-95" />
 
                 {/* Dynamic backlight that responds as the pointer tilts the perspective */}
                 <div 
@@ -871,13 +988,13 @@ export default function Home({ onNavigate }: HomeProps) {
                   transition={{ type: "spring", stiffness: 150, damping: 25 }}
                   className="relative z-30 flex items-center justify-center pointer-events-none select-none"
                 >
-                  <img 
-                    src={heroCyberMannequin} 
-                    alt="TAG08 Cyborg Assistant" 
-                    className="h-[360px] sm:h-[450px] lg:h-[480px] w-auto object-contain drop-shadow-[0_25px_60px_rgba(0,0,0,0.65)]"
-                  />
+                    <img
+                      src={heroCyberMannequin}
+                      alt="TAG08 Cyborg Assistant"
+                      className="h-[320px] sm:h-[400px] lg:h-[420px] w-auto object-contain drop-shadow-[0_25px_60px_rgba(0,0,0,0.65)]"
+                    />
 
-                  {/* Elegant floating neon wireframe telemetry indicator to accentuate high-end design */}
+                  {/* Subtle telemetry indicator */}
                   <div className="absolute inset-x-0 -bottom-8 flex justify-between px-4 font-mono text-[8px] text-black/45 tracking-widest uppercase">
                     <span>Z-POS: +{Math.round(scrollY * 0.28)}PX</span>
                     <span>TILT: {Math.round(mousePos.y * -25)}°</span>
@@ -889,18 +1006,11 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* RIGHT COLUMN: BRAND SOCIAL AUDIENCE AND BUSINESS AREA CATEGORY CAPSULES (ROCK PILLS LOOKALIKES) */}
             <div className="lg:col-span-3 flex flex-col justify-between space-y-8 text-left lg:text-right order-3 z-20">
               
-              {/* Trust profiles banner floating */}
+              {/* Trust banner */}
               <div className="space-y-2 flex flex-col lg:items-end">
-                <div className="flex items-center gap-2">
-                  <div className="flex -space-x-2">
-                    <img className="w-7 h-7 rounded-full border-2 border-brand object-cover shadow-sm" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120" />
-                    <img className="w-7 h-7 rounded-full border-2 border-brand object-cover shadow-sm" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120" />
-                    <img className="w-7 h-7 rounded-full border-2 border-brand object-cover shadow-sm" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=120" />
-                  </div>
-                  <span className="font-sans font-extrabold text-sm text-black leading-tight">
-                    Método, clareza e execução responsável
-                  </span>
-                </div>
+                <span className="font-sans font-extrabold text-sm text-black leading-tight max-w-[180px] lg:text-right">
+                  Método, clareza e execução responsável
+                </span>
                 
                 <p className="text-black/60 font-mono text-[9px] uppercase tracking-wide font-bold">
                   DIREÇÃO PARA CONSTRUIR. ESTRUTURA PARA CRESCER.
@@ -1025,7 +1135,7 @@ export default function Home({ onNavigate }: HomeProps) {
               >
                 <div className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full skew-x-12 group-hover:translate-x-full transition-transform duration-1000 ease-out" />
                 <span className="relative z-10 flex items-center gap-2">
-                  Solicitar Análise Gratuita <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  Entender meu momento <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
             </div>
@@ -1156,7 +1266,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     <div>
                       <div className="flex items-center justify-between w-full">
                         <span className="font-mono text-[9px] font-black uppercase tracking-widest bg-black/10 border border-black/10 px-3 py-1 rounded-full block w-fit">
-                          M-04 // DEV WEB PREMIUM
+                          M-04 // DESENVOLVIMENTO WEB ESTRATÉGICO
                         </span>
                         <ArrowUpRight className="w-4 h-4 text-black/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </div>
@@ -1343,7 +1453,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   step: "02",
                   title: "Analysis", 
                   badge: "Triagem",
-                  desc: "Leitura dos gargalos encontrados para separar sintomas aparentes de causas reais.",
+                  desc: "Leitura dos gargalos encontrados para separar sintomas aparentes de causas reais. Nem todo problema de marketing se resolve com mais conteúdo.",
                   pills: [
                     { id: "bottlenecks", label: "Causa real" }
                   ]
@@ -1609,7 +1719,7 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* INDEPENDENT SECTION 2.2: SUTILEZA OPERACIONAL // DIREÇÃO SÊNIOR */}
-      <section id="metodologia" className="py-28 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
+      <section id="metodologia-preview" className="py-28 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
         {/* Glow corner decors */}
         <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-brand-secondary/[0.01] rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-white/[0.01] rounded-full blur-[140px] pointer-events-none" />
@@ -1619,35 +1729,33 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="max-w-3xl text-left space-y-4">
             <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary" />
-              Método TAG08
+              Da análise à execução
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tight leading-tight">
-              Como a TAG08 recomenda o caminho certo.
+              Depois do diagnóstico, a execução precisa de método.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
-              A TAG08 não começa oferecendo um pacote. Primeiro entendemos o momento da marca, os gargalos atuais, a maturidade digital e a capacidade de execução. Só depois indicamos o caminho mais coerente.
+              A TAG08 organiza o caminho antes de produzir: entende o cenário, define prioridades, estrutura entregas, acompanha a ativação e ajusta o que precisa evoluir.
             </p>
           </div>
 
-          {/* Premium Curved Bento Flow precisely replicating Reference 1 Layout! */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative items-stretch">
-            
-            {/* Step 01: Entendimento do contexto */}
+
             <motion.div 
               whileHover={{ y: -3, scale: 1.01 }}
               className="bg-[#121214] border border-white/[0.05] p-8 sm:p-10 rounded-[28px] min-h-[220px] flex flex-col justify-between text-left group transition-all duration-300 relative overflow-hidden"
             >
               <div className="flex items-center justify-between w-full">
                 <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black bg-white/[0.03] border border-white/10 px-2 py-0.5 rounded">PROTOCOLO 01</span>
-                <span className="font-mono text-brand-secondary text-[10px] uppercase font-black tracking-widest">Escuta e contexto</span>
+                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-bold">Diagnóstico</span>
               </div>
               
               <div className="space-y-2 mt-8">
                 <h3 className="font-display font-bold text-base sm:text-lg text-white uppercase tracking-tight">
-                  Entendimento do contexto
+                  Diagnóstico
                 </h3>
                 <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans font-medium">
-                  Mapeamos o negócio, os objetivos, os canais atuais, as dificuldades e o que já foi tentado antes de propor qualquer solução.
+                  Entendemos o momento da marca, seus canais, gargalos, objetivos e capacidade real de execução.
                 </p>
               </div>
 
@@ -1657,22 +1765,21 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
             </motion.div>
 
-            {/* Step 02: Leitura dos gargalos */}
             <motion.div 
               whileHover={{ y: -3, scale: 1.01 }}
               className="bg-[#121214] border border-white/[0.05] p-8 sm:p-10 rounded-[28px] min-h-[220px] flex flex-col justify-between text-left group transition-all duration-300 relative overflow-hidden"
             >
               <div className="flex items-center justify-between w-full">
                 <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black bg-white/[0.03] border border-white/10 px-2 py-0.5 rounded">PROTOCOLO 02</span>
-                <span className="font-mono text-brand-secondary text-[10px] uppercase font-black tracking-widest">Análise estratégica</span>
+                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-bold">Estratégia</span>
               </div>
               
               <div className="space-y-2 mt-8">
                 <h3 className="font-display font-bold text-base sm:text-lg text-white uppercase tracking-tight">
-                  Leitura dos gargalos
+                  Estratégia
                 </h3>
                 <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans font-medium">
-                  Separamos sintomas aparentes de causas reais para entender se o problema está na comunicação, no posicionamento, na operação ou na estrutura digital.
+                  Definimos prioridades, mensagens, escopo e direção para que a execução tenha critério.
                 </p>
               </div>
 
@@ -1682,22 +1789,21 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
             </motion.div>
 
-            {/* Step 03: Priorização do caminho (With top-right curved border mimicking Reference 1 card!) */}
             <motion.div 
               whileHover={{ y: -3, scale: 1.01 }}
               className="bg-[#121214] border border-white/[0.05] p-8 sm:p-10 rounded-[28px] rounded-tr-[90px] min-h-[220px] flex flex-col justify-between text-left group transition-all duration-300 relative overflow-hidden"
             >
               <div className="flex items-center justify-between w-full">
                 <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black bg-white/[0.03] border border-white/10 px-2 py-0.5 rounded">PROTOCOLO 03</span>
-                <span className="font-mono text-brand-secondary text-[10px] uppercase font-black tracking-widest">Decisão com critério</span>
+                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-bold">Produção</span>
               </div>
               
               <div className="space-y-2 mt-8 max-w-[85%]">
                 <h3 className="font-display font-bold text-base sm:text-lg text-white uppercase tracking-tight">
-                  Priorização do caminho
+                  Produção
                 </h3>
                 <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans font-medium">
-                  Organizamos o que precisa ser feito primeiro, o que pode esperar e o que não faz sentido para o momento atual da marca.
+                  Transformamos a direção aprovada em conteúdo, design, site, campanhas, processos ou materiais aplicáveis.
                 </p>
               </div>
 
@@ -1717,20 +1823,20 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="absolute inset-0 bg-gradient-to-tr from-white/15 via-transparent to-transparent pointer-events-none" />
               <div className="flex items-center justify-between w-full">
                 <span className="font-mono text-[9px] text-black/60 uppercase tracking-widest font-black bg-black/5 border border-black/10 px-2.5 py-0.5 rounded">DESTINO FINAL 05</span>
-                <span className="font-mono font-black text-black text-xs uppercase bg-black/5 border border-black/10 px-3 py-1 rounded-full">Crescimento com estrutura</span>
+                Ativação acompanhada
               </div>
               
               <div className="space-y-2 mt-8 max-w-[90%]">
                 <h3 className="font-display font-black text-xl sm:text-2xl text-black uppercase tracking-tight leading-none">
-                  Direção, execução e melhoria contínua
+                  Ativação
                 </h3>
                 <p className="text-black/80 text-xs sm:text-[13px] leading-relaxed font-sans font-semibold">
-                  Depois da recomendação, a TAG08 organiza o escopo, conduz a execução, acompanha aprendizados e ajusta o caminho com responsabilidade.
+                  Colocamos as entregas em uso, acompanhando ajustes necessários e pontos de atenção.
                 </p>
               </div>
 
               <div className="pt-6 border-t border-black/[0.08] mt-8 flex items-center justify-between w-full text-black/60 font-mono text-[9.5px] uppercase tracking-widest">
-                <span>05 // EVOLUÇÃO CONTÍNUA</span>
+                05 // EVOLUÇÃO
                 <button
                   onClick={() => {
                     const target = document.getElementById("contato");
@@ -1743,7 +1849,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   }}
                   className="bg-black text-white hover:bg-black/90 text-[10px] font-semibold px-4 py-2 font-mono uppercase rounded-xl transition-all flex items-center gap-2 group/btn shadow-md"
                 >
-                  SOLICITAR DIAGNÓSTICO <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
+                  FALAR COM A TAG08 <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
                 </button>
               </div>
             </motion.div>
@@ -1768,7 +1874,7 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
 
               <div className="pt-6 border-t border-brand-secondary/10 mt-8 flex items-center justify-between w-full text-zinc-500 font-mono text-[9px] uppercase tracking-wider">
-                <span>04 // PRESCRIÇÃO</span>
+                <span>04 // EVOLUÇÃO</span>
                 <ArrowLeft className="w-4 h-4 text-brand-secondary hidden lg:block" />
                 <ArrowDown className="w-4 h-4 text-brand-secondary lg:hidden" />
               </div>
@@ -2034,6 +2140,60 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* SECTION 4 - PORTFÓLIO DE SOLUÇÕES DE EXCELÊNCIA (BENTO GRID EDITORIAL DE ALTA NAVEGABILIDADE) */}
+      {/*
+      const MAPA_SOLUCOES_DATA = [
+        {
+          id: "estrategia-posicionamento",
+          title: "Estratégia e posicionamento",
+          subtitle: "Clareza antes da execução",
+          desc: "Para marcas que precisam entender melhor seu público, reorganizar sua mensagem e comunicar com mais clareza o valor que já possuem.",
+          slug: "/servicos/assessoria-marketing-digital-estrategico"
+        },
+        {
+          id: "conteudo-redes-sociais",
+          title: "Conteúdo e redes sociais",
+          subtitle: "Presença com linha editorial",
+          desc: "Para negócios que precisam sair da postagem solta e construir presença com frequência, narrativa, intenção comercial e consistência.",
+          slug: "/servicos/gestao-de-redes-sociais"
+        },
+        {
+          id: "producao-audiovisual",
+          title: "Produção audiovisual",
+          subtitle: "Imagem, fala e bastidores com intenção",
+          desc: "Para empresas, especialistas e eventos que precisam transformar vídeo, presença e bastidores em conteúdo com valor de marca.",
+          slug: "/servicos/producao-audiovisual"
+        },
+        {
+          id: "branding-identidade",
+          title: "Branding e identidade",
+          subtitle: "Percepção visual mais coerente",
+          desc: "Para marcas que precisam alinhar identidade visual, tom, estética e percepção ao momento atual do negócio.",
+          slug: "/servicos/branding-identidade"
+        },
+        {
+          id: "desenvolvimento-web",
+          title: "Desenvolvimento web",
+          subtitle: "Canal próprio para apresentar e converter",
+          desc: "Para marcas que precisam de site, landing page, catálogo ou estrutura digital própria para gerar credibilidade e apoiar o comercial.",
+          slug: "/servicos/desenvolvimento-web"
+        },
+        {
+          id: "processos-operacao",
+          title: "Processos e operação",
+          subtitle: "Menos improviso, mais previsibilidade",
+          desc: "Para empresas que cresceram no esforço e agora precisam organizar rotina, responsabilidades, fluxo e tomada de decisão.",
+          slug: "/servicos/process-intelligence"
+        },
+        {
+          id: "hospedagem-manutencao",
+          title: "Hospedagem e manutenção",
+          subtitle: "Continuidade depois da entrega",
+          desc: "Para negócios que precisam manter seus sites ativos, seguros, atualizados e acompanhados depois da publicação.",
+          slug: "/hospedagem-manutencao-sites"
+        }
+      ];
+
+      */}
       <section id="servicos-principais" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         
         {/* Ambient background decoration */}
@@ -2073,94 +2233,44 @@ export default function Home({ onNavigate }: HomeProps) {
 
               {/* Navigation items removed to enhance experience as requested */}
               <div className="hidden sm:block w-12" />
-            </div>
-
-            {/* GIANT EDITORIAL HEADLINE BLOCK */}
+            </div>            {/* GIANT EDITORIAL HEADLINE BLOCK */}
             <div className="relative z-10 pt-10 pb-8 flex flex-col xl:flex-row xl:items-end justify-between gap-6">
               <div className="text-left space-y-2 max-w-3xl">
                 <p className="font-mono text-[10px] text-zinc-500 tracking-widest uppercase font-extrabold block">
-                  PORTFÓLIO DE SOLUÇÕES DE EXCELÊNCIA
+                  Mapa de soluções
                 </p>
-                <h2 className="font-display font-black text-4xl sm:text-7xl lg:text-[76px] leading-[0.85] tracking-tighter text-black uppercase">
-                  DIGITAL MARKETING <br />
-                  SERVICES
+                <h2 className="font-display font-black text-4xl sm:text-7xl lg:text-[76px] leading-[0.85] tracking-tighter text-black">
+                  Soluções para cada momento da sua marca.
                 </h2>
               </div>
               <p className="text-zinc-600 text-xs sm:text-sm font-sans font-medium tracking-tight leading-relaxed max-w-sm text-left xl:text-right xl:pb-2">
-                Nossas soluções integram marca, design, conteúdo e engenharia operacional para consolidar o posicionamento premium que sua empresa merece no mercado.
+                A TAG08 não começa oferecendo um pacote pronto. Primeiro entendemos o momento do negócio. Depois indicamos a estrutura mais adequada para organizar presença, posicionamento, conteúdo, tecnologia ou operação.
               </p>
             </div>
 
-            {/* STUNNING BENTO GRID OF ALL 7 ELITE SOLUTIONS */}
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8 my-6">
-              {PORTFOLIO_SERVICES_DATA.map((service, index) => {
-                // Determine styling based on index to create a breathtaking editorial Bento structure
-                let gridClass = "";
-                let cardBg = "";
-                let textColor = "";
-                let taglineColor = "";
-                let isDark = false;
-                
-                if (index === 0) {
-                  // Gestão de Redes: Big, premium light card
-                  gridClass = "lg:col-span-8";
-                  cardBg = "bg-zinc-50 border border-black/10";
-                  textColor = "text-black";
-                  taglineColor = "text-zinc-500 hover:text-black hover:underline";
-                  isDark = false;
-                } else if (index === 1) {
-                  // Audiovisual: Dark luxury card
-                  gridClass = "lg:col-span-4";
-                  cardBg = "bg-zinc-900 border border-white/5 shadow-md";
-                  textColor = "text-white";
-                  taglineColor = "text-brand-secondary hover:underline";
-                  isDark = true;
-                } else if (index === 2) {
-                  // Branding: Dark editorial card
-                  gridClass = "lg:col-span-4";
-                  cardBg = "bg-black border border-white/10 shadow-md";
-                  textColor = "text-white";
-                  taglineColor = "text-zinc-400 hover:text-white hover:underline";
-                  isDark = true;
-                } else if (index === 3) {
-                  // Tráfego: Big, premium white card
-                  gridClass = "lg:col-span-8";
-                  cardBg = "bg-white border border-black/15 shadow-sm";
-                  textColor = "text-black";
-                  taglineColor = "text-zinc-600 hover:text-black hover:underline";
-                  isDark = false;
-                } else if (index === 4) {
-                  // Copywriting: Medium card
-                  gridClass = "lg:col-span-4";
-                  cardBg = "bg-zinc-50 border border-black/5";
-                  textColor = "text-black";
-                  taglineColor = "text-zinc-500 hover:text-black hover:underline";
-                  isDark = false;
-                } else if (index === 5) {
-                  // Dev Web: Medium card
-                  gridClass = "lg:col-span-4";
-                  cardBg = "bg-neutral-100 border border-black/10";
-                  textColor = "text-black";
-                  taglineColor = "text-zinc-500 hover:text-black hover:underline";
-                  isDark = false;
-                } else {
-                  // Process Intelligence: Special glow card
-                  gridClass = "lg:col-span-4";
-                  cardBg = "bg-brand-secondary/10 border border-brand-secondary/20";
-                  textColor = "text-black";
-                  taglineColor = "text-zinc-700 hover:text-black hover:underline font-bold";
-                  isDark = false;
-                }
+              {MAPA_SOLUCOES_DATA.map((service, index) => {
+                const wideCard = index === 0 || index === 4;
+                const darkCard = index === 2 || index === 5;
+                const accentCard = index === 6;
+                const gridClass = wideCard ? "lg:col-span-6" : "lg:col-span-4";
+                const cardBg = darkCard
+                  ? "bg-zinc-900 border border-white/5 shadow-md"
+                  : accentCard
+                    ? "bg-brand-secondary/10 border border-brand-secondary/20"
+                    : "bg-zinc-50 border border-black/10";
+                const textColor = darkCard ? "text-white" : "text-black";
+                const subColor = darkCard ? "text-zinc-300" : "text-zinc-600";
+                const labelColor = darkCard ? "text-brand-secondary" : accentCard ? "text-zinc-700" : "text-zinc-500";
 
                 return (
                   <motion.div
                     key={service.id}
                     whileHover={{ y: -4, scale: 1.01 }}
                     transition={{ duration: 0.3 }}
-                    className={`${gridClass} ${cardBg} ${textColor} rounded-[32px] p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[350px] shadow-sm`}
+                    className={`${gridClass} ${cardBg} ${textColor} rounded-[32px] p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[280px] shadow-sm`}
                   >
-                    {/* Design Grid overlay simulating print matrix for light cards */}
-                    {!isDark && (
+                    {!darkCard && (
                       <div className="absolute inset-0 grid grid-cols-3 h-full opacity-[0.015] pointer-events-none">
                         <div className="border-r border-black h-full" />
                         <div className="border-r border-black h-full" />
@@ -2170,54 +2280,49 @@ export default function Home({ onNavigate }: HomeProps) {
 
                     <div className="space-y-4 relative z-10">
                       <div className="flex items-center justify-between border-b pb-3 border-current/10">
-                        <span className="font-mono text-[9px] tracking-widest uppercase font-bold opacity-60">
-                          COMPONENTE OPERACIONAL
+                        <span className={`font-mono text-[9px] tracking-widest uppercase font-bold ${labelColor}`}>
+                          Momento {String(index + 1).padStart(2, "0")}
                         </span>
-                        <button 
-                          onClick={() => handleLinkClick(service.slug)}
-                          className={`font-mono text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 cursor-pointer ${taglineColor}`}
-                        >
-                          {service.subtitle} 
-                        </button>
+                        <span className="font-mono text-[9px] uppercase tracking-widest opacity-60">
+                          {service.subtitle}
+                        </span>
                       </div>
 
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2.5">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${isDark ? 'bg-white/10 text-white' : 'bg-black/5 text-black'}`}>
-                            {service.icon}
-                          </div>
-                          <h3 className="font-display font-black text-xl sm:text-2xl uppercase leading-none tracking-tight">
-                            {service.title}
-                          </h3>
-                        </div>
-                        <p className={`text-xs sm:text-sm font-sans leading-relaxed ${isDark ? 'text-zinc-300' : 'text-zinc-600'}`}>
-                          {service.longDesc}
+                      <div className="space-y-3">
+                        <h3 className="font-display font-black text-xl sm:text-2xl leading-none tracking-tight">
+                          {service.title}
+                        </h3>
+                        <p className={`text-xs sm:text-sm font-sans leading-relaxed ${subColor}`}>
+                          {service.desc}
                         </p>
                       </div>
                     </div>
 
-                    {/* Bottom metric & mini graph */}
-                    <div className="pt-6 border-t border-current/10 mt-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4 relative z-10 w-full">
-                      <div className="flex flex-col">
-                        <span className="font-mono text-[9px] uppercase tracking-widest opacity-50">
-                          {service.metricLabel}
-                        </span>
-                        <span className="text-2xl sm:text-3xl font-display font-black tracking-tight mt-1">
-                          {service.metricValue}
-                        </span>
-                      </div>
-
-                      {/* Spark wave pattern lines */}
-                      <div className="w-28 h-10 opacity-70 shrink-0 select-none">
-                        <svg viewBox="0 0 200 60" className={`w-full h-full stroke-current ${isDark ? 'text-brand-secondary' : 'text-black'}`} fill="none" strokeWidth="3" strokeLinecap="round">
-                          <path d={service.wavePath} />
-                          <circle cx="190" cy="12" r="5" className="fill-current" />
-                        </svg>
+                    <div className="pt-6 border-t border-current/10 mt-6 relative z-10 w-full flex items-center justify-between gap-4">
+                      <button
+                        onClick={() => handleLinkClick(service.slug)}
+                        className={`font-mono text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 cursor-pointer hover:underline ${darkCard ? "text-white" : "text-black"}`}
+                      >
+                        Ver solução
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                      <div className={`text-[10px] font-mono uppercase tracking-widest ${labelColor}`}>
+                        {String(index + 1).padStart(2, "0")}
                       </div>
                     </div>
                   </motion.div>
                 );
               })}
+            </div>
+
+            <div className="relative z-10 flex justify-start mt-2">
+              <button
+                onClick={() => handleLinkClick("/servicos")}
+                className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-black text-white px-5 py-3 text-[10px] font-mono font-black tracking-widest uppercase hover:bg-zinc-800 transition-colors"
+              >
+                CONHECER SOLUÇÕES
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
 
             <div className="h-4" />
@@ -2237,17 +2342,17 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 text-left">
             <div className="space-y-2">
               <span className="font-mono text-[10px] text-brand-secondary uppercase tracking-widest font-black block">
-                Nossos Resultados de Crescimento
+                Método em prática
               </span>
               <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient uppercase tracking-tight leading-none">
-                Nossos Cases e Resultados de Sucesso
+                Projetos que mostram direção aplicada.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
-                Provamos nossa competência gerando crescimento extraordinário, previsibilidade de vendas e autoridade inquestionável para marcas de alto padrão.
+                A TAG08 atua para organizar posicionamento, comunicação, conteúdo, tecnologia e processos conforme o momento de cada marca. Mais do que prometer resultado, nosso foco é estruturar caminhos mais claros, coerentes e sustentáveis.
               </p>
             </div>
             <button
-              onClick={() => handleLinkClick("/servicos")}
+              onClick={() => handleLinkClick("/contato")}
               className="text-xs font-mono text-brand-secondary hover:underline font-bold flex items-center justify-start md:justify-end gap-1.5 shrink-0 uppercase tracking-widest cursor-pointer"
             >
               Solicitar Estudo de Caso <ArrowRight className="w-3.5 h-3.5" />
@@ -2255,7 +2360,7 @@ export default function Home({ onNavigate }: HomeProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {CASE_STUDIES.map((item) => (
+            {PROOF_CASES_DATA.map((item) => (
               <CaseStudyCard
                 key={item.id}
                 item={item}
@@ -2290,29 +2395,29 @@ export default function Home({ onNavigate }: HomeProps) {
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
                 <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
-                  EDITORIAL LAB
+                  CONTEÚDO COM DIREÇÃO
                 </span>
                 <span className="font-mono text-[9px] text-white/40 tracking-wider">
-                  INSTA_TACTICAL
+                  PRESENÇA EDITORIAL
                 </span>
               </div>
 
               {/* Watermark text overlays */}
               <div className="space-y-1.5 opacity-30 select-none">
                 <div className="font-display font-extrabold text-[1.8rem] text-white/40 tracking-widest leading-none uppercase select-none">
-                  pautas_curadas
+                  temas_curados
                 </div>
                 <div className="font-display font-extrabold text-[1.5rem] text-white/20 tracking-widest leading-none uppercase select-none pl-6">
-                  estética_instagram
+                  narrativa_visual
                 </div>
               </div>
 
               <div className="flex justify-between items-end">
                 <span className="font-mono text-[9px] text-white/40 tracking-wider">
-                  CONSISTENCY: 100%
+                  FREQUÊNCIA POSSÍVEL
                 </span>
                 <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
-                  PRESTÍGIO MÁXIMO
+                  ALINHAMENTO EDITORIAL
                 </span>
               </div>
             </div>
@@ -2328,19 +2433,18 @@ export default function Home({ onNavigate }: HomeProps) {
                   <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
                 </div>
                 <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
-                  CONFIRA PROTOCOLOS DE MÍDIA EXECUTIVA
+                  Conteúdo com direção
                 </span>
               </div>
 
               {/* Massive Bold Heading mirroring reference design */}
               <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.95] tracking-tighter uppercase">
-                ESTRATÉGIA EDITORIAL <br />
-                &amp; MÍDIAS TÁTICAS!
+                Conteúdo que organiza narrativa, presença e relacionamento.
               </h2>
 
               {/* Description Paragraph with high contrast block typeface layout */}
               <p className="text-black/85 text-[11px] sm:text-xs max-w-2xl leading-relaxed font-sans font-extrabold uppercase">
-                VISTA SUA MARCA COM A SOBERANIA VISUAL E MENTAL QUE SÓ PROFISSIONAIS DE ALTO PRESTÍGIO COMPREENDEM. ESCOLHA SEU ESCALONAMENTO DE PRESENÇA DIRETA DIGITAL.
+                A TAG08 estrutura pautas, formatos e linhas editoriais para que a marca deixe de publicar por obrigação e passe a comunicar com intenção, consistência e clareza comercial.
               </p>
             </div>
 
@@ -2361,7 +2465,7 @@ export default function Home({ onNavigate }: HomeProps) {
                         : "text-zinc-400 hover:text-white"
                     }`}
                   >
-                    {plan === "start" ? "01 START" : plan === "base" ? "02 RECOMENDADO" : "03 PERFORMANCE"}
+                    {plan === "start" ? "01. Diagnóstico" : plan === "base" ? "02. Linha editorial" : "03. Consistência"}
                   </button>
                 ))}
               </div>
@@ -2373,40 +2477,35 @@ export default function Home({ onNavigate }: HomeProps) {
                     {selectedEditorialPlan === "start" ? "01" : selectedEditorialPlan === "base" ? "02" : "03"}
                   </span>
                   <span className="font-mono text-[9.5px] font-black uppercase text-brand tracking-widest bg-brand/10 border border-brand/20 px-2 py-0.5 rounded">
-                    {selectedEditorialPlan === "start" ? "PLANO START" : selectedEditorialPlan === "base" ? "PLANO BASE (MÁXIMO FEED)" : "PLANO PERFORMANCE"}
+                    {selectedEditorialPlan === "start" ? "DIAGNÓSTICO" : selectedEditorialPlan === "base" ? "LINHA EDITORIAL" : "CONSISTÊNCIA"}
                   </span>
                 </div>
 
                 <p className="text-zinc-200 text-xs leading-relaxed font-sans font-semibold">
                   {selectedEditorialPlan === "start" 
-                    ? "Eliminação rápida do amadorismo institucional para profissionais estruturarem autoridade inicial." 
+                    ? "Antes de publicar, a TAG08 identifica temas, formatos e prioridades para que a comunicação nasça com direção." 
                     : selectedEditorialPlan === "base"
-                    ? "O verdadeiro padrão de excelência corporativo. Conteúdo impecável, carrosséis de alto impacto e monitoramento."
-                    : "Storytelling ultra magnético com 12 roteiros cirúrgicos de vídeo curto e pós-produção integrada nível cinema."}
+                    ? "A linha editorial traduz o posicionamento da marca em pautas, frequência e formatos que ajudam o público a entender valor e contexto."
+                    : "Consistência é sustentar a narrativa com ritmo possível, reaproveitamento e intenção comercial ao longo do tempo."}
                 </p>
 
                 {/* Styled compact tags of the main deliverables */}
                 <div className="flex flex-wrap gap-1.5 pt-1.5">
                   {(selectedEditorialPlan === "start" ? [
-                    "8 Pautas Curadas",
-                    "Design Sênior",
-                    "Redação SEO",
-                    "Suporte no Grupo",
-                    "Legendas Magnéticas"
+                    "clareza de temas",
+                    "frequência possível",
+                    "narrativa de marca"
                   ] : selectedEditorialPlan === "base" ? [
-                    "12 Pautas Exclusivas",
-                    "Modelagem de Carrossel",
-                    "Identidade Coesa",
-                    "SEO de Alta Busca",
-                    "Agendamento Automático",
-                    "Reunião de Alinhamento"
+                    "intenção comercial",
+                    "reaproveitamento de conteúdo",
+                    "alinhamento com o posicionamento"
                   ] : [
-                    "12 Roteiros Cinematográficos",
-                    "Storytelling Sob Medida",
-                    "Modelagem de Retenção",
-                    "Edição com Lentes Pro",
-                    "Até 8 Artes de Apoio",
-                    "Análise de Engajamento"
+                    "clareza de temas",
+                    "frequência possível",
+                    "narrativa de marca",
+                    "intenção comercial",
+                    "reaproveitamento de conteúdo",
+                    "alinhamento com o posicionamento"
                   ]).map((tag, idx) => (
                     <span 
                       key={idx} 
@@ -2422,20 +2521,18 @@ export default function Home({ onNavigate }: HomeProps) {
                 </div>
               </div>
 
-              {/* Connection Button Indicator exactly matching the referenced model */}
+              {/* CTA */}
               <div className="flex gap-4 items-start border-t border-white/[0.05] pt-4 select-none">
                 <div className="w-10 h-10 rounded-full bg-brand flex items-center justify-center text-black shrink-0 shadow-lg shadow-brand/10 hover:scale-105 transition-transform duration-200">
                   <ArrowRight className="w-5 h-5 rotate-[-45deg] stroke-[2.5]" />
                 </div>
                 <div className="space-y-0.5">
                   <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
-                    {selectedEditorialPlan === "base" ? "RECOMENDAÇÃO OPERACIONAL" : "ALOCAÇÃO DE DIRETOR"}
+                    ORGANIZAR MINHA LINHA EDITORIAL
                   </span>
-                  <p className="text-white text-xs leading-snug font-sans font-semibold">
-                    {selectedEditorialPlan === "base" 
-                      ? "Eleve a maturidade intelectual da sua marca com o protocolo mais assinado das clínicas de luxo." 
-                      : "Trabalho contínuo conduzido por estrategistas em design heráldico e estética sênior."}
-                  </p>
+                  <a href="/contato" className="text-white text-xs leading-snug font-sans font-semibold hover:underline">
+                    Falar com a TAG08 para estruturar temas, formatos e frequência possível para sua marca.
+                  </a>
                 </div>
               </div>
 
@@ -2455,7 +2552,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       </div>
                       <div className="flex flex-col text-left">
                         <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
-                          PROPRIETÁRIO DIRETO (WhatsApp)
+                          WhatsApp Brasil
                         </span>
                         <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                           +55 83 9.9886-8882
@@ -2482,7 +2579,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       </div>
                       <div className="flex flex-col text-left">
                         <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
-                          INTERNATIONAL DIRECT (WhatsApp)
+                          WhatsApp internacional
                         </span>
                         <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand-secondary transition-colors mt-0.5">
                           +56 9 9793 7611
@@ -2501,11 +2598,11 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-brand animate-pulse" />
                   <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest font-extrabold">
-                    AGÊNCIA TAG08
+                    TAG08
                   </span>
                 </div>
                 <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
-                  OPERAÇÃO E CO-PILOTO 100% ATIVOS
+                  PROCESSO EDITORIAL ATIVO
                 </span>
               </div>
 
@@ -2521,13 +2618,13 @@ export default function Home({ onNavigate }: HomeProps) {
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto space-y-4 mb-20">
             <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold">
-              Nosso Método
+              Da análise à execução
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient">
-              Nosso método começa antes da execução.
+              Depois do diagnóstico, a execução precisa de método.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Não vendemos mágica ou atalhos fáceis. Entregamos consistência fundamentada em metodologia em cinco fases complementares e orientadas ao crescimento sustentável.
+              A TAG08 organiza o caminho antes de produzir: entende o cenário, define prioridades, estrutura entregas, acompanha a ativação e ajusta o que precisa evoluir.
             </p>
           </div>
 
@@ -2536,61 +2633,61 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Step 1 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">Passo 01</div>
+              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">01 // DIAGNÓSTICO</div>
               <h4 className="font-display font-semibold text-white">Diagnóstico</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Entendemos profundamente qual o momento ideal da sua marca, os canais digitais atuais, os orçamentos e as principais brechas comerciais.
+                Entendemos o momento da marca, seus canais, gargalos, objetivos e capacidade real de execução.
               </p>
             </div>
 
             {/* Step 2 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">Passo 02</div>
+              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">02 // ESTRATÉGIA</div>
               <h4 className="font-display font-semibold text-white">Estratégia</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Definimos o seu novo posicionamento, os canais mais promissores, a matriz de pautas autorais e os objetivos de marketing.
+                Definimos prioridades, mensagens, escopo e direção para que a execução tenha critério.
               </p>
             </div>
 
             {/* Step 3 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">Passo 03</div>
+              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">03 // PRODUÇÃO</div>
               <h4 className="font-display font-semibold text-white">Produção</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Desenhamos artes, escrevemos roteiros, desenvolvemos códigos limpos e produzimos campanhas com foco em gerar a melhor experiência possível.
+                Transformamos a direção aprovada em conteúdo, design, site, campanhas, processos ou materiais aplicáveis.
               </p>
             </div>
 
             {/* Step 4 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">Passo 04</div>
+              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">04 // ATIVAÇÃO</div>
               <h4 className="font-display font-semibold text-white">Ativação</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Campanhas ganham mídias, publicamos conteúdos autorais de acordo com cronograma, ou instalamos os playbooks operacionais da empresa.
+                Colocamos as entregas em uso, acompanhando ajustes necessários e pontos de atenção.
               </p>
             </div>
 
             {/* Step 5 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">Passo 05</div>
+              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">05 // EVOLUÇÃO</div>
               <h4 className="font-display font-semibold text-white">Evolução</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Avaliamos métricas de engajamento, analisamos dados no CRM das suas conversões e otimizamos a estratégia mensalmente.
+                Revisamos aprendizados, identificamos melhorias e organizamos próximos passos com responsabilidade.
               </p>
             </div>
           </div>
 
           <div className="mt-16 text-center border-t border-white/[0.04] pt-8 font-sans text-xs text-zinc-500">
-            &ldquo;Não vendemos mágica. Entregamos processo com resultado.&rdquo;
+            Não existe execução consistente sem direção clara.
           </div>
         </div>
       </section>
 
-      {/* SECTION 6.5 - PRODUÇÕES RECENTES NO YOUTUBE (REDESENHADOS COESOS INSPIRADOS NAS REFERÊNCIAS VISUAIS DE CARROSSEL E RETRATO EDITORIAL) */}
+      {/* SECTION 6.5 - PRODUÇÃO AUDIOVISUAL */}
       <section id="videos-recentes" className="py-24 px-4 sm:px-6 md:px-8 bg-black border-b border-white/[0.04] relative overflow-hidden">
         {/* Subtle decorative grid overlay and luminous auras */}
         <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.01)_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
@@ -2602,16 +2699,16 @@ export default function Home({ onNavigate }: HomeProps) {
           {/* Section Header with top badge and clean typography */}
           <div className="max-w-3xl text-left space-y-4 mb-16">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
-              CONTEÚDO DE ALTA RETENÇÃO // YOUTUBE CHANNEL
+              Produção audiovisual
             </div>
             
             <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white leading-[0.9] tracking-tighter uppercase">
-              ÚLTIMAS PRODUÇÕES <br />
-              &amp; ENGENHARIA DE CONVERSÃO
+              Vídeos, bastidores e narrativas
+              com intenção de marca.
             </h2>
             
             <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-2xl">
-              Nossos vídeos mostram a aplicação prática de design sênior, branding soberano e estratégias de captação que realizamos para marcas de destaque. Selecione abaixo e assista diretamente do player incorporado.
+              A TAG08 produz conteúdos audiovisuais para marcas, especialistas e eventos que precisam transformar presença, fala, ambiente e bastidores em materiais com clareza, estética e função estratégica.
             </p>
           </div>
 
@@ -2676,7 +2773,7 @@ export default function Home({ onNavigate }: HomeProps) {
                           <Star className="w-3 h-3 fill-black text-black" />
                         </div>
                         <span className="font-mono text-[9px] text-white/95 uppercase tracking-widest font-black">
-                          TAG08 COMMUNITY
+                          TAG08 AUDIOVISUAL
                         </span>
                       </div>
 
@@ -2698,7 +2795,7 @@ export default function Home({ onNavigate }: HomeProps) {
                         <Play className="w-7 h-7 sm:w-9 sm:h-9 text-black fill-current translate-x-0.5 ml-0.5" />
                       </button>
                       <span className="font-mono text-[9.5px] text-zinc-300 uppercase tracking-widest font-black mt-3 transition-colors group-hover:text-brand">
-                        REPRODUZIR AGORA
+                        ASSISTIR
                       </span>
                     </div>
 
@@ -2726,7 +2823,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     {/* LOWER ACCURACY WATERMARKS (Meticulously structured) */}
                     <div className="relative z-10 flex items-center justify-between pt-1">
                       <span className="font-mono text-[8px] text-white/30 uppercase tracking-widest">
-                        SYS // REC_WORK_SESSION_2026
+                        PORTFÓLIO // TAG08
                       </span>
                       <div className="flex items-center gap-1.5 font-mono text-[8.5px] text-brand-secondary font-black bg-white/[0.02] border border-white/5 py-1 px-3 rounded-lg uppercase">
                         <span>#</span>
@@ -2747,8 +2844,8 @@ export default function Home({ onNavigate }: HomeProps) {
                 {/* Sidebar Title */}
                 <div className="flex items-center justify-between border-b border-white/[0.06] pb-4 mb-2">
                   <div className="flex flex-col text-left">
-                    <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-bold">PLAYLIST EXECUTIVA</span>
-                    <span className="font-display font-black text-lg text-white uppercase tracking-tight mt-1">LATEST EPISODES</span>
+                    <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-bold">PORTFÓLIO AUDIOVISUAL</span>
+                    <span className="font-display font-black text-lg text-white uppercase tracking-tight mt-1">FORMATOS</span>
                   </div>
                   
                   {/* Subtle record badge */}
@@ -2816,30 +2913,25 @@ export default function Home({ onNavigate }: HomeProps) {
                 </div>
               </div>
 
-              {/* Bottom Subscribe Action Box directly to YouTube channel */}
+              {/* Bottom CTA Box for audiovisual services */}
               <div className="bg-[#121215] border border-white/5 rounded-2xl p-4 flex flex-col space-y-3 relative overflow-hidden text-left">
                 <div className="absolute top-0 right-0 w-16 h-16 bg-red-600/[0.03] rounded-full blur-xl pointer-events-none" />
                 
                 <div className="space-y-1">
-                  <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest block font-bold">YOUTUBE COMUNIDADE // {contentSources.youtube === "live" ? "SINCRONIZADO" : "FALLBACK"}</span>
-                  <h4 className="text-white font-semibold text-xs leading-tight">Gostaria de ver pautas sêniores diárias?</h4>
+                  <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest block font-bold">PORTFÓLIO AUDIOVISUAL // {contentSources.youtube === "live" ? "CURADORIA ATIVA" : "CURADORIA INTERNA"}</span>
+                  <h4 className="text-white font-semibold text-xs leading-tight">Quer conhecer a produção audiovisual da TAG08?</h4>
                   <p className="text-zinc-400 text-[11px] leading-relaxed">
-                    Inscreva-se no canal para receber insights práticos e destrinchar posicionamentos corporativos.
+                    Veja como a TAG08 organiza imagem, fala e bastidores em entregas com clareza, estética e função de marca.
                   </p>
                 </div>
                 
                 <a
-                  href={TAG08_OFFICIAL_YOUTUBE_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => handleOutboundClick("YouTube", TAG08_OFFICIAL_YOUTUBE_URL, "home-youtube")}
+                  href="/servicos/producao-audiovisual"
+                  onClick={(e) => { e.preventDefault(); handleLinkClick("/servicos/producao-audiovisual"); }}
                   className="group w-full flex items-center justify-between bg-red-600 hover:bg-red-700 text-white font-mono font-black text-[9.5px] uppercase tracking-wider py-3 px-4 rounded-xl shadow-lg transition-all text-center cursor-pointer select-none"
                 >
                   <span className="flex items-center gap-1.5">
-                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current tracking-normal">
-                      <path d="M23.498 6.163c-.272-1.022-1.074-1.826-2.097-2.099C19.558 3.5 12 3.5 12 3.5s-7.558 0-9.401.564c-1.023.273-1.825 1.077-2.097 2.099C0 8.01 0 12 0 12s0 3.99.564 5.837c.272 1.022 1.074 1.826 2.097 2.099C4.442 20.5 12 20.5 12 20.5s7.558 0 9.401-.564c1.023-.273 1.825-1.077 2.097-2.099C24 15.99 24 12 24 12s0-3.99-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                    </svg>
-                    Inscrever-se no canal
+                    CONHECER PRODUÇÃO AUDIOVISUAL
                   </span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-white transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
@@ -2857,13 +2949,13 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-5 text-left space-y-4">
               <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold">
-                Nossas Vantagens
+                Diferenciais TAG08
               </span>
               <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient leading-tight">
                 O que torna a TAG08 diferente?
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-                Não somos apenas mais uma agência criativa barulhenta enviando layouts coloridos sem utilidade comercial. Pensamos como empresários e estruturamos com foco sênior.
+                A TAG08 conecta estratégia, comunicação, design, tecnologia e processos para que a presença digital da marca tenha direção, consistência e capacidade real de sustentação.
               </p>
             </div>
 
@@ -2871,9 +2963,9 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="bg-charcoal-900/60 p-6 rounded-xl border border-white/[0.05] flex gap-4">
                 <div className="text-brand font-sans text-sm font-bold">01</div>
                 <div>
-                  <h4 className="text-base font-semibold text-white">Estratégia antes da estética</h4>
+                  <h4 className="text-base font-semibold text-white">Diagnóstico antes da demanda</h4>
                   <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-relaxed">
-                    Design bonito importa muito, mas direção comercial importa infinitamente mais. Toda publicação, código ou texto precisa possuir uma função bem delimitada.
+                    Antes de executar, entendemos o momento da marca, o problema real e o que precisa ser priorizado.
                   </p>
                 </div>
               </div>
@@ -2881,9 +2973,9 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="bg-charcoal-900/60 p-6 rounded-xl border border-white/[0.05] flex gap-4">
                 <div className="text-brand font-sans text-sm font-bold">02</div>
                 <div>
-                  <h4 className="text-base font-semibold text-white">Dados sem perder o humano</h4>
+                  <h4 className="text-base font-semibold text-white">Estratégia que vira entrega</h4>
                   <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-relaxed">
-                    Analisamos dados com profundidade científica, porém compreendemos e respeitamos a cultura organizacional, a maturidade de entrega e os tempos do nosso parceiro.
+                    A direção não fica só no plano. Ela se desdobra em conteúdo, identidade, site, campanhas, processos ou materiais concretos.
                   </p>
                 </div>
               </div>
@@ -2891,9 +2983,9 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="bg-charcoal-900/60 p-6 rounded-xl border border-white/[0.05] flex gap-4">
                 <div className="text-brand font-sans text-sm font-bold">03</div>
                 <div>
-                  <h4 className="text-base font-semibold text-white">Execução com método</h4>
+                  <h4 className="text-base font-semibold text-white">Visão multidisciplinar</h4>
                   <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-relaxed">
-                    Operamos através de cronogramas integrados, prazos previsíveis de recebimento, matrizes de aprovação transparentes e suporte ágil.
+                    Unimos posicionamento, narrativa, estética, tecnologia e operação para evitar soluções soltas.
                   </p>
                 </div>
               </div>
@@ -2901,9 +2993,9 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="bg-charcoal-900/60 p-6 rounded-xl border border-white/[0.05] flex gap-4">
                 <div className="text-brand font-sans text-sm font-bold">04</div>
                 <div>
-                  <h4 className="text-base font-semibold text-white">Visão realmente multidisciplinar</h4>
+                  <h4 className="text-base font-semibold text-white">Execução com responsabilidade</h4>
                   <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-relaxed">
-                    Conectamos habilidades de marketing estratégico, design visual requintado, redação autoral, tecnologia web e engenharia de processos em uma única assessoria.
+                    Trabalhamos com escopo, critério, revisão e melhoria contínua, sem prometer atalhos ou resultados artificiais.
                   </p>
                 </div>
               </div>
@@ -2927,17 +3019,17 @@ export default function Home({ onNavigate }: HomeProps) {
 
           <div className="lg:col-span-6 text-left space-y-6">
             <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold">
-              Institucional
+              Sobre a TAG08
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient">
-              Uma agência para novos tempos.
+              Direção para construir. Estrutura para crescer.
             </h2>
             <div className="text-zinc-300 text-sm sm:text-base space-y-4 leading-relaxed font-sans">
               <p>
-                A TAG08 nasceu para reconectar marcas e profissionais ao verdadeiro valor de se posicionar no digital. Em um mercado cheio de ruídos, fórmulas prontas e excesso de informação, ajudamos negócios a encontrar clareza, construir presença com propósito e crescer com mais consistência.
+                A TAG08 conecta estratégia, comunicação, design, tecnologia e processos para ajudar marcas a saírem do improviso e construírem uma presença digital mais clara, consistente e responsável.
               </p>
               <p className="text-zinc-400">
-                Somos um ecossistema estratégico que une pensamento, processo e performance. Aqui, conteúdo não é arte solta na rede. É parte de uma construção maior.
+                Nosso trabalho começa pelo entendimento do momento da marca e avança para soluções que organizam posicionamento, conteúdo, canais, sistemas e operação.
               </p>
             </div>
             <div className="pt-2">
@@ -2945,7 +3037,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 onClick={() => handleLinkClick("/sobre")}
                 className="bg-brand text-black font-semibold text-xs font-sans px-6 py-3.5 rounded-lg hover:bg-brand-dark transition-all duration-200"
               >
-                Conheça Nossa História
+                CONHECER A TAG08
               </button>
             </div>
           </div>
@@ -2987,21 +3079,20 @@ export default function Home({ onNavigate }: HomeProps) {
 
             {/* Direct Pinterest Board elegant linking */}
             <a 
-              href="https://br.pinterest.com/agencia_tag08/identidade-visual/"
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => handleOutboundClick("Pinterest", "https://br.pinterest.com/agencia_tag08/identidade-visual/", "home-pinterest")}
+              href="/contato"
+              onClick={(e) => {
+                e.preventDefault();
+                handleLinkClick("/contato");
+              }}
               className="inline-flex items-center gap-4 bg-charcoal-900 hover:bg-white/[0.04] border border-white/10 px-5 py-3 rounded-2xl transition-all duration-300 self-start md:self-end group shrink-0 shadow-lg hover:border-brand/35"
             >
               <div className="w-10 h-10 rounded-full bg-[#bd081c]/10 flex items-center justify-center text-[#bd081c] group-hover:bg-[#bd081c] group-hover:text-white transition-all shadow-md">
-                <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.08 3.16 9.4 7.63 11.13-.1-.95-.2-2.4.04-3.43.22-.93 1.4-5.93 1.4-5.93s-.36-.72-.36-1.77c0-1.66.96-2.9 2.17-2.9 1.02 0 1.51.77 1.51 1.68 0 1.03-.65 2.56-.99 3.98-.28 1.18.6 2.15 1.76 2.15 2.11 0 3.73-2.22 3.73-5.43 0-2.84-2.04-4.83-4.96-4.83-3.38 0-5.37 2.54-5.37 5.16 0 1.02.4 2.12.89 2.72.1.12.11.23.08.35-.1.38-.3.1.25-.4l-.08-.34c-.11-.47-.79-3.23-.79-3.49 0-.28-.1-.52-.33-.65-1.57-.92-2.53-3.04-2.53-4.9 0-3.98 2.9-7.64 8.35-7.64 4.38 0 7.8 3.13 7.8 7.3 0 4.36-2.75 7.87-6.57 7.87-1.28 0-2.49-.67-2.9-1.45 0 0-.64 2.43-.79 3.03-.29 1.1-.85 2.22-1.32 2.99 1.12.35 2.3.54 3.52.54 6.63 0 12-5.37 12-12S18.63 0 12 0z"/>
-                </svg>
+                <ArrowRight className="w-5 h-5 fill-current" />
               </div>
               <div className="flex flex-col text-left font-sans">
-                <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-bold">Portfólio Original</span>
+                <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-bold">Contato direto</span>
                 <span className="text-white text-xs font-semibold group-hover:text-brand transition-colors flex items-center gap-1.5 font-sans">
-                  CONCEITOS NO PINTEREST <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  FALAR COM A TAG08 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </span>
               </div>
             </a>
@@ -3227,15 +3318,15 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 border-b border-white/[0.05] pb-8">
             <div className="space-y-4 text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand/10 bg-brand/5 font-mono text-[9px] uppercase tracking-widest text-brand-secondary font-black">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary animate-pulse" /> CREDIBILIDADE // SOCIAL PROOF
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary animate-pulse" /> Confiança construída na prática
               </div>
               
               <h2 className="font-display font-black text-3xl sm:text-4xl text-gradient uppercase leading-none tracking-tighter">
-                Quem decide confia: 5.0 estrelas no Google My Business
+                Experiências acompanhadas com clareza
               </h2>
               
               <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl">
-                Nossos clientes avaliam a TAG08 com nota máxima. Depoimentos de marcas e profissionais reais que consolidaram direção estratégica, processos blindados e marketing de alta conversão.
+                Quando o trabalho tem diagnóstico, clareza e acompanhamento, o cliente entende melhor o caminho, participa das decisões e percebe mais coerência entre estratégia e entrega.
               </p>
             </div>
             
@@ -3249,7 +3340,7 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
               <div>
                 <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className="font-display font-black text-2xl text-white tracking-tight leading-none">5.0</span>
+                  <span className="font-display font-black text-2xl text-white tracking-tight leading-none">AVALIAÇÕES</span>
                   <div className="flex gap-0.5">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-3.5 h-3.5 fill-brand-secondary text-brand-secondary" />
@@ -3257,7 +3348,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   </div>
                 </div>
                 <p className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest mt-1 font-bold">
-                  Google Avaliações ⬢ 5.0 baseada em 48 avaliações
+                  Avaliações ajudam a registrar percepções, mas a confiança se sustenta no acompanhamento, na clareza e na coerência da entrega.
                 </p>
               </div>
             </div>
@@ -3381,17 +3472,18 @@ export default function Home({ onNavigate }: HomeProps) {
             <div className="flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-[#34A853] animate-pulse shrink-0" />
               <p className="text-xs text-zinc-300 font-sans">
-                Nossa reputação é 100% transparente. {contentSources.googleBusiness === "live" ? "As avaliações estão sincronizadas com o perfil oficial." : "Se o sync ainda não estiver ativo, a seção usa curadoria editorial."}
+                Avaliações ajudam a registrar percepções, mas a confiança se sustenta no acompanhamento, na clareza e na coerência da entrega.
               </p>
             </div>
             <a
-              href={TAG08_OFFICIAL_CONTACT.googleBusinessUrl}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => handleOutboundClick("Google Meu Negócio", TAG08_OFFICIAL_CONTACT.googleBusinessUrl, "home-gmb-business-profile")}
+              href="/contato"
+              onClick={(e) => {
+                e.preventDefault();
+                handleLinkClick("/contato");
+              }}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-[10px] text-white font-mono font-bold uppercase tracking-widest py-2.5 px-5 rounded-xl transition-all duration-300 shrink-0 cursor-pointer"
             >
-              <span>ABRIR PERFIL NO GOOGLE</span>
+              <span>FALAR COM A TAG08</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
           </div>
@@ -3422,7 +3514,7 @@ export default function Home({ onNavigate }: HomeProps) {
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
                 <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
-                  OPERATIONAL CORE
+                  Núcleo operacional
                 </span>
                 <span className="font-mono text-[9px] text-white/40 tracking-wider">
                   TAG08.v3
@@ -3435,7 +3527,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   design_tag08
                 </div>
                 <div className="font-display font-extrabold text-[1.5rem] text-white/20 tracking-widest leading-none uppercase select-none pl-6">
-                  estratégia360_
+                  direção_tag08_
                 </div>
               </div>
 
@@ -3460,19 +3552,19 @@ export default function Home({ onNavigate }: HomeProps) {
                   <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
                 </div>
                 <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
-                  SISTEMA DE TRABALHO
+                  Próximo passo com clareza
                 </span>
               </div>
 
-              {/* Massive Bold Heading mirroring reference */}
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase">
-                DIREÇÃO CLARA <br />
-                COM IMPACTO REAL
-              </h2>
+                {/* Massive Bold Heading mirroring reference */}
+                <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase">
+                Antes de avançar, <br />
+                entenda o que sua marca realmente precisa.
+                </h2>
 
-              {/* Description Paragraph with high contrast block typeface layout */}
+                {/* Description Paragraph with high contrast block typeface layout */}
               <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
-                Posicionamento, clareza e execução para uma marca que precisa vender com mais direção.
+                A TAG08 ajuda a organizar prioridades, identificar gargalos e indicar um caminho coerente antes de transformar qualquer demanda em execução.
               </p>
             </div>
 
@@ -3487,22 +3579,20 @@ export default function Home({ onNavigate }: HomeProps) {
                   <ArrowUpRight className="w-5 h-5 rotate-45 stroke-[2.5]" />
                 </div>
                 <div className="space-y-0.5">
-                  <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
-                    PADRÃO SÊNIOR
-                  </span>
-                  <p className="text-white text-xs leading-snug font-sans font-semibold">
+                    <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
+                    Método aplicado
+                    </span>
+                    <p className="text-white text-xs leading-snug font-sans font-semibold">
                     Entregas consistentes, úteis e coerentes com a marca.
-                  </p>
+                    </p>
+                  </div>
                 </div>
-              </div>
 
               {/* DUAL CLIENT CONNECTION CHANNELS (BR & INT) */}
               <div className="space-y-3">
                 <a 
-                  href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20solicitar%20um%20diagnóstico%20de%20posicionamento%20com%20a%20TAG08")}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => handleOutboundClick("WhatsApp", buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20solicitar%20um%20diagnóstico%20de%20posicionamento%20com%20a%20TAG08"), "home-diagnosis-br")}
+                  href="/contato"
+              onClick={(e) => { e.preventDefault(); handleLinkClick("/contato"); }}
               className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner"
                 >
                   <div className="flex items-center justify-between">
@@ -3520,16 +3610,14 @@ export default function Home({ onNavigate }: HomeProps) {
                       </div>
                     </div>
                     <span className="text-[10px] text-brand font-mono font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
-                      CONECTAR
+                      FALAR COM A TAG08
                     </span>
                   </div>
                 </a>
 
                 <a 
-                  href={buildInternationalWhatsAppUrl("Hello,%20I%20would%2520like%2520to%2520schedule%2520a%2520private%2520systems%2520and%2520marketing%2520positioning%2520diagnosis%2520from%2520TAG08")}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => handleOutboundClick("WhatsApp", buildInternationalWhatsAppUrl("Hello,%20I%20would%2520like%2520to%2520schedule%2520a%2520private%2520systems%2520and%2520marketing%2520positioning%2520diagnosis%2520from%2520TAG08"), "home-diagnosis-int")}
+                  href="/contato"
+              onClick={(e) => { e.preventDefault(); handleLinkClick("/contato"); }}
               className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner"
                 >
                   <div className="flex items-center justify-between">
@@ -3547,7 +3635,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       </div>
                     </div>
                     <span className="text-[10px] text-brand-secondary font-mono font-bold uppercase tracking-wider bg-brand-secondary/10 py-1 px-2.5 rounded-lg group-hover:bg-brand-secondary group-hover:text-black transition-all">
-                      CONECTAR
+                      FALAR COM A TAG08
                     </span>
                   </div>
                 </a>
@@ -3590,28 +3678,29 @@ export default function Home({ onNavigate }: HomeProps) {
             <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-4">
                 {/* Visual upper badge */}
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
-                  FAQ
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+                  Dúvidas antes do próximo passo
                 </div>
                 
                 {/* Section titles */}
                 <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
-                  DÚVIDAS &amp; <br />
-                  DECISÃO OPERACIONAL
+                  Antes de escolher uma solução, <br />
+                  entenda o caminho.
                 </h2>
                 
                 <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
-                  Entenda como a TAG08 organiza design, conteúdo e operação para reduzir ruído e acelerar decisão.
+                  Reunimos respostas para ajudar você a entender como a TAG08 trabalha, quando faz sentido iniciar um projeto e por que o diagnóstico vem antes da proposta.
                 </p>
               </div>
 
               {/* Vertical list of Accordion Triggers */}
               <div className="space-y-3 pt-4">
                 {([
-                  { id: 0, title: "ONBOARDING & SETUP" },
-                  { id: 1, title: "PROPRIEDADE INTELECTUAL" },
-                  { id: 2, title: "FIDELIDADE E MULTAS" },
-                  { id: 3, title: "RITUAL DE MÉTRICAS" }
+                  { id: 0, title: "A TAG08 é uma agência de marketing?" },
+                  { id: 1, title: "Preciso saber exatamente qual serviço contratar?" },
+                  { id: 2, title: "A TAG08 trabalha com pacotes prontos?" },
+                  { id: 3, title: "Quanto tempo leva para começar?" },
+                  { id: 4, title: "A TAG08 promete resultado?" }
                 ]).map((item) => (
                   <button
                     key={item.id}
@@ -3662,28 +3751,31 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left">
                 <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
                   {([
-                    "ONBOARDING & SETUP",
-                    "PROPRIEDADE INTELECTUAL",
-                    "FIDELIDADE E PRAZOS",
-                    "discussões e prestação de contas"
+                    "ENTENDIMENTO",
+                    "DIAGNÓSTICO",
+                    "ESCOPO",
+                    "TEMPO DE INÍCIO",
+                    "EXPECTATIVA"
                   ])[activeFaq]}
                 </span>
                 
                 <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
                   {([
-                    "Como funciona a transição inicial de pauta?",
-                    "A titularidade das peças criadas pertence a quem?",
-                    "A parceria conta com período obrigatório ou multa?",
-                    "Como ocorrem as discussões operacionais diárias?"
+                    "A TAG08 é uma agência de marketing?",
+                    "Preciso saber exatamente qual serviço contratar?",
+                    "A TAG08 trabalha com pacotes prontos?",
+                    "Quanto tempo leva para começar?",
+                    "A TAG08 promete resultado?"
                   ])[activeFaq]}
                 </h4>
                 
                 <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
                   {([
-                    "Nossa implantação dura até 7 dias úteis. Iniciamos com um onboarding cirúrgico para registrar as diretrizes do tom de voz e diretrizes de autoridade corporativa, planejando as pautas estéticas e organizando os marcos editoriais dos primeiros 15 dias sem atritos.",
-                    "Todos os direitos de autoria de fotos orientadas, roteiros de alta retenção, modelos de design refinados e arquivos finais editáveis do Figma pertencem inteiramente à sua empresa de forma limpa e transparente.",
-                    "Nossos contratos operam sob flexibilidade intelectual. Não impomos fidelidades longas ou taxas de quebra abusivas  confiamos na constância das métricas corporativas. Exigimos apenas aviso prévio convencional de 30 dias por questões de agendamento de pauta.",
-                    "Disponibilizamos relatórios mensais claros contendo tráfego com alta intenção e métricas de prestígio. Paralelamente, mantemos reuniões recorrentes e mantemos um grupo de WhatsApp exclusivo ativo de prioridade máxima para discussões cotidianas."
+                    "A TAG08 atua com estratégia, comunicação, design, tecnologia e processos. Em alguns casos executamos entregas típicas de marketing, mas o trabalho começa pelo entendimento do momento da marca e pela definição do caminho mais coerente.",
+                    "Não. O primeiro passo é entender o momento da sua marca. A partir do diagnóstico, indicamos se faz mais sentido começar por posicionamento, conteúdo, site, identidade, audiovisual, processos ou outra frente.",
+                    "Temos soluções estruturadas, mas a recomendação depende do contexto, da maturidade, da urgência e da capacidade de execução da marca. O objetivo é evitar escopo errado e expectativa desalinhada.",
+                    "Depende do tipo de projeto e da disponibilidade de informações. Antes de iniciar a execução, alinhamos diagnóstico, prioridades, escopo, responsáveis e próximos passos.",
+                    "Não prometemos resultado artificial ou crescimento instantâneo. Trabalhamos para construir clareza, consistência, direção e melhoria contínua com responsabilidade."
                   ])[activeFaq]}
                 </p>
               </div>
@@ -3694,17 +3786,17 @@ export default function Home({ onNavigate }: HomeProps) {
               {/* Card 1: Dark gray background elegant option panel */}
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
-                  <h4 className="text-white font-semibold text-sm leading-snug">Como agimos de forma organizada?</h4>
+                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">COMO A TAG08 TRABALHA</span>
+                  <h4 className="text-white font-semibold text-sm leading-snug">Diagnóstico antes da proposta.</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    Eliminamos planilhas confusas e ruídos de agências convencionais. Conduzimos reuniões enxutas e focadas.
+                    Organizamos entendimento, prioridades e escopo antes de iniciar qualquer entrega.
                   </p>
                 </div>
                 <button
                   onClick={() => handleLinkClick("/servicos")}
                   className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
                 >
-                  <span>Ver Serviços</span>
+                  <span>VER SOLUÇÕES</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
@@ -3712,20 +3804,21 @@ export default function Home({ onNavigate }: HomeProps) {
               {/* Card 2: Bright Neon / Brand color block */}
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer desenhar uma estratégia sob medida?</h4>
+                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">PRÓXIMO PASSO</span>
+                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Vamos entender o melhor caminho para a sua marca?</h4>
                   <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
-                    Fale diretamente com os tomadores de decisão da TAG08 via WhatsApp para avaliar a viabilidade de alocação de equipe.
+                    Antes de propor qualquer solução, a TAG08 entende seu momento, seus desafios e suas prioridades para indicar um caminho mais claro e responsável.
                   </p>
                 </div>
                 <a
-                  href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20consultar%20viabilidade%20estratégica%20especializada%20para%20minha%20marca!")}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => handleOutboundClick("WhatsApp", buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20consultar%20viabilidade%20estratégica%20especializada%20para%20minha%20marca!"), "home-offer-whatsapp")}
+                  href="/contato"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLinkClick("/contato");
+                  }}
                   className="group flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-all"
                 >
-                  <span>Conversar Agora</span>
+                  <span>QUERO ENTENDER MEU MELHOR CAMINHO</span>
                   <ArrowUpRight className="w-4 h-4 text-black stroke-[2.5]" />
                 </a>
               </div>

@@ -23,41 +23,41 @@ interface Question {
 const auditQuestions: Question[] = [
   {
     id: 1,
-    text: "Qual é o maior gargalo comercial da sua marca no momento?",
+    text: "Qual Ã© o maior gargalo comercial da sua marca no momento?",
     options: [
-      { label: "A", value: 10, text: "Não geramos contatos regulares de potenciais clientes (orgânico ou pago)" },
-      { label: "B", value: 20, text: "Até geramos leads, mas são desqualificados, choram preço e travam no comercial" },
-      { label: "C", value: 15, text: "Nossa presença digital é inexistente ou amadora frente aos nossos concorrentes" },
-      { label: "D", value: 25, text: "Falta de governança: temos boas ideias mas falta equipe dedicada para executar" }
+      { label: "A", value: 10, text: "NÃ£o geramos contatos regulares de potenciais clientes (orgÃ¢nico ou pago)" },
+      { label: "B", value: 20, text: "AtÃ© geramos leads, mas sÃ£o desqualificados, choram preÃ§o e travam no comercial" },
+      { label: "C", value: 15, text: "Nossa presenÃ§a digital Ã© inexistente ou amadora frente aos nossos concorrentes" },
+      { label: "D", value: 25, text: "Falta de governanÃ§a: temos boas ideias mas falta equipe dedicada para executar" }
     ]
   },
   {
     id: 2,
-    text: "Qual é o investimento mensal atual (ou planejado) em tráfego pago?",
+    text: "Qual Ã© o investimento mensal atual (ou planejado) em trÃ¡fego pago?",
     options: [
-      { label: "A", value: 10, text: "Não investimos em anúncios (foco exclusivo em redes sociais orgânicas)" },
-      { label: "B", value: 15, text: "Investimento inicial ou instável (até R$ 2.000 / mês)" },
-      { label: "C", value: 25, text: "Investimento moderado (entre R$ 2.000 e R$ 10.000 / mês)" },
-      { label: "D", value: 30, text: "Investimento agressivo com busca de escala (acima de R$ 10.000 / mês)" }
+      { label: "A", value: 10, text: "NÃ£o investimos em anÃºncios (foco exclusivo em redes sociais orgÃ¢nicas)" },
+      { label: "B", value: 15, text: "Investimento inicial ou instÃ¡vel (atÃ© R$ 2.000 / mÃªs)" },
+      { label: "C", value: 25, text: "Investimento moderado (entre R$ 2.000 e R$ 10.000 / mÃªs)" },
+      { label: "D", value: 30, text: "Investimento em canais sem prioridade clara (acima de R$ 10.000 / mÃªs)" }
     ]
   },
   {
     id: 3,
-    text: "Como você define o ticket médio da sua solução ou produto principal?",
+    text: "Como vocÃª define o ticket mÃ©dio da sua soluÃ§Ã£o ou produto principal?",
     options: [
       { label: "A", value: 10, text: "Varejo ou baixo valor (Abaixo de R$ 500 por venda/assinatura)" },
-      { label: "B", value: 15, text: "Médio valor transacional (Entre R$ 500 e R$ 2.500)" },
-      { label: "C", value: 25, text: "High Ticket ou Serviço Premium (Entre R$ 2.500 e R$ 10.000)" },
+      { label: "B", value: 15, text: "MÃ©dio valor transacional (Entre R$ 500 e R$ 2.500)" },
+      { label: "C", value: 25, text: "ServiÃ§o especializado ou venda consultiva (Entre R$ 2.500 e R$ 10.000)" },
       { label: "D", value: 30, text: "Corporativo, Enterprise ou B2B Complexo (Acima de R$ 10.000)" }
     ]
   },
   {
     id: 4,
-    text: "Quem dita a direção tática e faz a gestão do seu marketing hoje?",
+    text: "Quem dita a direÃ§Ã£o tÃ¡tica e faz a gestÃ£o do seu marketing hoje?",
     options: [
-      { label: "A", value: 10, text: "O próprio fundador / dono conduz quando tem tempo livre operacional" },
-      { label: "B", value: 15, text: "Contratamos freelancers ou agências, mas operam soltos, sem direcionamento sênior" },
-      { label: "C", value: 20, text: "Temos um departamento interno júnior ou intermediário sem governança estrita" },
+      { label: "A", value: 10, text: "O prÃ³prio fundador / dono conduz quando tem tempo livre operacional" },
+      { label: "B", value: 15, text: "Contratamos freelancers ou agÃªncias, mas operam soltos, sem direÃ§Ã£o clara" },
+      { label: "C", value: 20, text: "Temos um departamento interno jÃºnior ou intermediÃ¡rio sem governanÃ§a estrita" },
       { label: "D", value: 25, text: "Contamos com um CMO estrategista liderando e acompanhando dados em tempo real" }
     ]
   }
@@ -101,48 +101,43 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
 
   const getDiagnosticOutput = () => {
     const totalScore = calculateTotalScore();
-    if (totalScore <= 45) {
+    if (totalScore <= 35) {
       return {
-        level: "Nível Primário (Instável)",
+        level: "Baixa clareza",
         percentage: totalScore,
         color: "text-red-400 border-red-500/20 bg-red-500/5",
-        description: "Seu marketing está operando com alta dependência de ações esporádicas e sem previsibilidade comercial. Falta um processo de atração regular e posicionamento visual refinado para parar de brigar por preço baixo.",
-        focus: "Construção de Landing Pages de alta velocidade, definição de identidade verbal limpa e ativação de campanhas de tráfego de alta intenção.",
-        recommendation: "Núcleo ACCELERA ⬝? Tráfego de Elite + LPs Premium"
+        description: "A marca ainda depende muito de ações isoladas e de decisões pouco organizadas. Falta uma base mais clara de posicionamento, mensagem e próximos passos.",
+        focus: "O primeiro foco costuma ser clareza estratégica e alinhamento de comunicação.",
+        recommendation: "A prioridade agora é estruturar a base antes de ampliar a execução."
       };
-    } else if (totalScore <= 75) {
+    } else if (totalScore <= 60) {
       return {
-        level: "Nível Intermediário (Ruído de Imagem)",
+        level: "Clareza em construção",
         percentage: totalScore,
         color: "text-brand border-brand/20 bg-brand/5",
-        description: "Seu negócio já roda anúncios ou posta conteúdos, porém há um desalinhamento sério de imagem. Os leads chegam desinformados ou desqualificados de fato, gerando desperdício e exaustão do seu comercial sênior.",
-        focus: "Reposicionamento de Branding completo, revisão criativa e pautas de redes sociais sóbrias orientadas à alta retenção e qualificação.",
-        recommendation: "Núcleo AUTHORITY ⬝? Branding Sênior + Redes Sociais Estratégicas"
+        description: "Já existe movimento, mas a comunicação ainda pode ficar mais coerente entre canais, conteúdos e materiais comerciais.",
+        focus: "Ajuste de mensagem, consistência e estrutura de canais.",
+        recommendation: "Vale organizar prioridades antes de ampliar qualquer frente."
+      };
+    } else if (totalScore <= 85) {
+      return {
+        level: "Boa direção",
+        percentage: totalScore,
+        color: "text-brand-secondary border-brand-secondary/20 bg-brand-secondary/5",
+        description: "A marca já tem um caminho mais consistente, mas ainda pode ganhar clareza na sustentação da rotina e na priorização das frentes.",
+        focus: "Foco em acompanhamento, revisão e continuidade do que já foi estruturado.",
+        recommendation: "O próximo passo é consolidar método e manter a execução responsável."
       };
     } else {
       return {
-        level: "Nível Avançado (Necessidade de Governança)",
+        level: "Pronta para avançar",
         percentage: totalScore,
         color: "text-brand-secondary border-brand-secondary/20 bg-brand-secondary/5",
-        description: "Sua marca possui atração e ticket consistentes, mas carece de processos fechados e controle sob os canais. A execução técnica varia e há vazamento de dados analíticos reais no funil corporativo.",
-        focus: "Process Intelligence, governança semanal de métricas de ROI/CAC via Business Intelligence e playbooks operacionais Notion/Wiki.",
-        recommendation: "Núcleo ENTERPRISE ⬝? Inteligência de Processos + BI Centralizado"
+        description: "Existe base suficiente para seguir com mais segurança, desde que a execução continue sendo acompanhada com critério.",
+        focus: "Prioridade em consistência, ajustes e continuidade.",
+        recommendation: "A leitura não substitui uma análise completa, mas ajuda a identificar se o próximo passo deve ser clareza, estrutura, conteúdo, canal ou operação."
       };
     }
-  };
-
-  const getWhatsAppLink = () => {
-    const diag = getDiagnosticOutput();
-    const message = `Olá TAG08! Fiz o diagnóstico estratégico inteligente de marketing no site e cheguei no seguinte setup:
-  
-- MATURIDADE DE MARKETING: ${diag.level} (${diag.percentage} pontos)
-- ANOMALIA PRINCIAPAL IDENTIFICADA: ${diag.description}
-- PLANO DE ASSESSORIA INDICADO: ${diag.recommendation}
-- FOCO RECOMENDADO: ${diag.focus}
-
-Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estrategista sênior para analisar este diagnóstico em detalhes!`;
-
-    return buildBrazilWhatsAppUrl(message);
   };
 
   const handleLinkClick = (page: string) => {
@@ -151,27 +146,27 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
   };
 
   const faqCategories = [
-    { id: 0, title: "MODELO DE ASSESSORIA" },
-    { id: 1, title: "DIREÇÃO VS. AGÊNCIA" },
-    { id: 2, title: "EQUIPE INTERNA" },
-    { id: 3, title: "ONBOARDING & PRAZOS" },
-    { id: 4, title: "GARANTIA DE SLA" }
+    { id: 0, title: "O QUE É" },
+    { id: 1, title: "ESCOPO" },
+    { id: 2, title: "QUANDO FAZ SENTIDO" },
+    { id: 3, title: "EQUIPE INTERNA" },
+    { id: 4, title: "CLAREZA E PRÓXIMO PASSO" }
   ];
 
   const faqQuestions = [
-    "O que é a Assessoria de Marketing Digital Estratégico da TAG08?",
-    "Qual a diferença de contratar a Assessoria da TAG08 vs. uma agência de marketing tradicional?",
-    "Preciso ter uma equipe interna de marketing instalada na minha empresa?",
-    "Como funcionam o onboarding e a entrega dos primeiros resultados?",
-    "Há alguma garantia contratual de regularidade e pontualidade?"
+    "O que é a Assessoria de Marketing Estratégico da TAG08?",
+    "A assessoria inclui execução de marketing?",
+    "Quando faz sentido contratar assessoria?",
+    "A assessoria substitui uma equipe interna?",
+    "A TAG08 faz promessas com a assessoria?"
   ];
 
   const faqAnswers = [
-    "É uma solução consultiva e executora que assume o papel de uma direção sênior externa para sua marca. Nós desenhamos a estratégia, organizamos o branding, estruturamos as frentes web, otimizamos campanhas pagas e instalamos dashboards de Business Intelligence integrados ao seu CRM de forma contínua.",
-    "Agências tradicionais muitas vezes operam sem diagnóstico estratégico ou metas claras de receita. A assessoria da TAG08 une inteligência de processos, sofisticação estética e foco em indicadores úteis para decisão. Nós conduzimos do diagnóstico à implantação com método e clareza.",
-    "Não. A assessoria da TAG08 opera de duas maneiras: podemos atuar como seu departamento terceirizado de marketing estratégico e visual, ou apoiar sua equipe interna por meio de treinamentos e auditorias sêniores.",
-    "Nosso fluxo de entrada inicia-se com uma Imersão Operacional (Fase de Process Intelligence) de até 15 dias, na qual mapeamos seu comprador, concorrentes e desvios de imagem. Depois disso, iniciamos as novas landing pages e a ativação de tráfego de forma progressiva, com acompanhamento dos primeiros resultados no primeiro ciclo operacional.",
-    "Sim. Trabalhamos com acordo de nível de serviço (SLA) em contrato, com cronogramas definidos, acompanhamento claro e previsibilidade operacional. Quando há dependências externas, elas são tratadas com transparência e comunicação antecipada."
+    "É um acompanhamento para organizar posicionamento, prioridades, comunicação, canais e próximos passos antes da execução. O foco é ajudar a marca a decidir melhor e evitar ações soltas.",
+    "Depende do escopo. Em alguns casos a assessoria orienta decisões e organiza o plano. Em outros, pode se conectar com serviços de conteúdo, branding, audiovisual, web ou processos.",
+    "Quando a marca sente que está fazendo muitas ações, mas ainda falta clareza sobre mensagem, público, canais, prioridades ou direção comercial.",
+    "Não necessariamente. A TAG08 pode apoiar a tomada de decisão, orientar prioridades e ajudar a equipe interna ou parceiros externos a trabalharem com mais clareza.",
+    "Não prometemos crescimento instantâneo, retorno financeiro ou ganho artificial. A assessoria busca construir clareza, critério, consistência e melhoria contínua com responsabilidade."
   ];
 
   return (
@@ -184,124 +179,36 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
       <Subtle3DCanvas intensity={1.4} className="absolute right-[-10%] top-[4%] w-[490px] h-[490px] opacity-[0.38] mix-blend-screen hidden lg:block" />
 
       {/*=========================================
-          HERO SECTION: EXECUTIVE SYSTEM
-         =========================================*/}
-      <section className="px-6 md:px-8 py-12 md:py-20 border-b border-white/[0.04]">
-        <div className="max-w-7xl mx-auto space-y-12 md:space-y-16">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-baseline text-left">
-            <div className="lg:col-span-7 space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
-                ASSESSORIA EM MARKETING // TAG08 CONSULTING
-              </div>
-              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
-                Direção Sênior. <br />
-                <span className="text-brand">O fim do marketing infantil e amador.</span>
-              </h1>
-            </div>
-            <div className="lg:col-span-5">
-              <p className="text-zinc-400 text-xs sm:text-sm md:text-[15px] leading-relaxed font-sans font-medium">
-                Sua empresa não cresce com ideias rasas, posts automáticos de agências convencionais ou verba de anúncios sem controle tático. Unimos direção sênior, ecossistema visual consistente, funis proprietários de conversão e dashboards reais para captar clientes qualificados.
-              </p>
-            </div>
-          </div>
-
-          {/* Panoramic High-Status Hero banner with responsive absolute badges */}
-          <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px]">
-            <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.35/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
-              <img 
-                src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=1600"
-                alt="Assessoria de Marketing Estratégico Equipe TAG08"
-                className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent pointer-events-none" />
-
-              {/* Floating Primary Action button */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(50px)" }}>
-                <a
-                  href="#diagnostic-audit"
-                  className="bg-brand-secondary text-black font-display font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.32)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
-                >
-                  <span>SOLICITAR DIAGNÓSTICO</span>
-                  <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-                </a>
-              </div>
-
-              {/* Absolute Corner details */}
-              <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
-                <div className="space-y-1">
-                  <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-semibold">TAG08 STRATEGIC ENGINE</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Processos, Identidade Visual Premium e Engenharia Comercial</h4>
-                </div>
-
-                <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
-                  <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                  <span>PREMIUM CORE STATUS // ONLINE</span>
-                </div>
-              </div>
-            </div>
-          </ThreeDimensionalTilt>
-
-          {/* Core Metrics Row */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-2 text-left border-t border-white/[0.04]">
-            <div className="space-y-1.5">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-white">Consistente</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Direção Sênior ao seu Lado<br/>Com Critério e Acompanhamento</span>
-            </div>
-            <div className="space-y-1.5">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">+230%</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Retorno Médio Analítico<br/>Sob Orçamento de Meta Ads</span>
-            </div>
-            <div className="space-y-1.5">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-white">BI Real</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Transparência Integral em CRM<br/>Sem Planilhas Maquiadas</span>
-            </div>
-            <div className="space-y-1.5">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Padrão Ouro</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Acordo de SLA Estrito de<br/>Prazo e Execução em Peças</span>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/*=========================================
           COMPARISON MATRIX
          =========================================*/}
       <section className="px-6 md:px-8 py-20 bg-charcoal-900/15 border-b border-white/[0.04] text-left relative z-10">
         <div className="max-w-7xl mx-auto space-y-12">
-          
           <div className="text-left space-y-3 max-w-2xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-              ANÝ?LISE DE EQUIVALÊNCIA COMERCIAL // CONFRONTE
+              COMPARAÇÃO ESTRATÉGICA
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
-              Por que a Assessoria TAG08 é a Solução Definitiva?
+              A diferença entre executar ações soltas e trabalhar com direção.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Compare as abordagens convencionais de mercado com a sofisticação operacional da nossa equipe estratégica e conclua com critério racional.
+              A assessoria existe para ajudar a marca a entender prioridades, organizar decisões e reduzir desperdício de esforço antes de transformar ideias em ações de marketing.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Left Box: Traditional agency */}
             <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-6 sm:p-8 space-y-6 relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-[1px] bg-red-500/10" />
               <div className="flex items-center gap-2 text-zinc-500 font-mono text-[9px] uppercase tracking-widest">
                 <span className="w-1.5 h-1.5 rounded-full bg-red-400/70" />
-                <span>Agência / Freelancer Tradicional</span>
+                <span>Execução sem direção</span>
               </div>
-              <h3 className="font-display font-bold text-lg sm:text-xl text-white uppercase leading-none">O Modelo Ineficiente</h3>
-              
+              <h3 className="font-display font-bold text-lg sm:text-xl text-white uppercase leading-none">Quando tudo começa pela urgência</h3>
+
               <ul className="space-y-4">
                 {[
-                  "Artistas genéricos entregando criativos do Canva idênticos aos seus concorrentes.",
-                  "Foco puramente em postagens estéticas sem funis ou CRM de vendas integrado.",
-                  "Ausência de relatórios reais de ROI ou relatórios mascarados com desculpas técnicas.",
-                  "Atrasos reiterados de cronograma com desorganização de pastas e documentos no Drive.",
-                  "Interlocução com estagiários juniores sob demanda sem senso real de negócio."
+                  "Ações são feitas por urgência, gosto pessoal ou tentativa isolada, sem clareza de prioridade, mensagem ou continuidade.",
+                  "A entrega tende a ganhar mais coerência quando existe clareza sobre prioridades, canais, mensagem e capacidade real de execução.",
+                  "O esforço se espalha em várias frentes sem um critério claro de foco e sequência."
                 ].map((item, idx) => (
                   <li key={idx} className="flex gap-3 text-zinc-500 text-xs sm:text-sm leading-relaxed">
                     <span className="text-red-400 font-bold font-sans">/ &times;</span>
@@ -311,22 +218,19 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
               </ul>
             </div>
 
-            {/* Right Box: TAG08 Advisory */}
             <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 transition-colors duration-300 rounded-2xl p-6 sm:p-8 space-y-6 relative overflow-hidden shadow-xl">
               <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-brand/20 via-brand/40 to-transparent" />
               <div className="flex items-center gap-2 text-brand font-mono text-[9px] uppercase tracking-widest font-bold">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                <span>Assessoria Estratégica TAG08</span>
+                <span>Assessoria com direção</span>
               </div>
-              <h3 className="font-display font-medium text-lg sm:text-xl text-brand-secondary uppercase leading-none">O Padrão Sênior Premium</h3>
-              
+              <h3 className="font-display font-medium text-lg sm:text-xl text-brand-secondary uppercase leading-none">Quando a decisão parte de diagnóstico</h3>
+
               <ul className="space-y-4">
                 {[
-                  "Design e identidade sob medida, com tipografia, paletas e tom de voz refinados.",
-                  "Direcionamento completo unindo engenharia de código, criativos e fluxo comercial.",
-                  "Métricas reais e dashboards personalizados em Looker Studio atualizados em tempo real.",
-                  "Acordo contratual de SLA de pontualidade: cronogramas entregues de forma antecipada.",
-                  "Presença constante de um estrategista CMO sênior na rotina da sua marca."
+                  "As decisões partem de diagnóstico, critérios, prioridades e um plano possível de executar com responsabilidade.",
+                  "A assessoria ajuda a organizar comunicação, canais e próximos passos antes de ampliar a produção.",
+                  "O objetivo é reduzir improviso, desalinhamento e retrabalho para que a execução tenha mais consistência."
                 ].map((item, idx) => (
                   <li key={idx} className="flex gap-3 text-white text-xs sm:text-sm leading-relaxed font-medium">
                     <span className="text-brand font-black font-semibold">&#10003;</span>
@@ -339,7 +243,6 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
 
         </div>
       </section>
-
       {/* INTERACTIVE INNOVATION: SIMULADOR DE SINERGIA DE CANAIS */}
       <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-neutral-950 text-left relative overflow-hidden">
         <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-brand/[0.015] rounded-full blur-[140px] pointer-events-none" />
@@ -347,32 +250,30 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
         <div className="max-w-7xl mx-auto space-y-12 relative z-10">
           <div className="space-y-3 max-w-3xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-              PLANEJAMENTO DE CRESCIMENTO // SIMULADOR ESTRATÉGICO
+              LEITURA DE PRIORIDADES
             </span>
             <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
-              Simulador de Ativação de Sinergia de Canais (Growth Engine)
+              Antes de combinar canais, entenda o que precisa ser priorizado.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-              Crescer não é sobre gastar mais em anúncios; é sobre sinergia de canais, inteligência de conversão e direção de CMO. Ajuste os controles e adicione pilares de assessoria tática para projetar o faturamento potencial e a redução de Custo por Lead (CPL) da sua marca.
+              Nem toda marca precisa ativar todos os canais ao mesmo tempo. A assessoria ajuda a identificar quais frentes fazem sentido agora, quais podem esperar e quais dependem de estrutura antes da execução.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* Controls */}
             <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-6">
                 <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-semibold block pb-3 border-b border-white/[0.05]">
-                  Configure sua Operação de Marketing:
+                  MAPA DE PRIORIDADES DE MARKETING
                 </span>
 
-                {/* Slider 1: Verba publicitaria */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">
-                      Verba mensal de tráfego:
+                      Leitura inicial:
                     </label>
                     <span className="text-sm font-sans text-brand-secondary font-black bg-brand-secondary/10 px-2.5 py-0.5 rounded-lg border border-brand-secondary/20">
-                      R$ <span id="adv-spend-val">5.000</span>
+                      Contexto
                     </span>
                   </div>
                   <input 
@@ -382,33 +283,31 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
                     max="50000" 
                     step="1000" 
                     defaultValue="5000"
-                    onChange={() => (window as any)._updateGrowthEngine && (window as any)._updateGrowthEngine()}
                     className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-brand-secondary"
                   />
                   <div className="flex items-center justify-between text-[9px] font-sans text-zinc-500">
-                    <span>R$ 2.000</span>
-                    <span>R$ 25.000</span>
-                    <span>R$ 50.000+</span>
+                    <span>Estrutura</span>
+                    <span>Direção</span>
+                    <span>Prioridade</span>
                   </div>
                 </div>
 
-                {/* Checklist de Sinergias */}
                 <div className="space-y-3 pt-3 border-t border-white/[0.05]">
-                  <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-bold block">ATIVAR PILARES DE ASSESSORIA TAG08:</span>
+                  <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-bold block">FRENTES AVALIADAS:</span>
                   
                   <div className="space-y-2">
                     {[
-                      { id: "cmo", label: "Assessoria CMO & BI (-25% desperdício)" },
-                      { id: "lp", label: "Landing Pages Ultra-velozes (1.5x conversão)" },
-                      { id: "branding", label: "Branding & Tom de Voz sênior (+30% LTV)" }
+                      { id: "positioning", label: "Posicionamento e mensagem" },
+                      { id: "content", label: "Conteúdo e relacionamento" },
+                      { id: "channels", label: "Canais e conversão" },
+                      { id: "operations", label: "Operação e acompanhamento" }
                     ].map((pilar) => {
                       return (
                         <label key={pilar.id} className="flex items-center gap-3 p-3 bg-white/[0.01] border border-white/[0.04] rounded-xl cursor-pointer hover:bg-white/[0.02]">
                           <input 
                             type="checkbox" 
                             id={`chk-${pilar.id}`}
-                            defaultChecked={pilar.id === "cmo"}
-                            onChange={() => (window as any)._updateGrowthEngine && (window as any)._updateGrowthEngine()}
+                            defaultChecked={pilar.id === "positioning"}
                             className="rounded border-zinc-700 bg-zinc-900 text-brand focus:ring-brand"
                           />
                           <span className="text-xs text-zinc-300 font-sans font-medium">{pilar.label}</span>
@@ -422,126 +321,65 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
               <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] space-y-2">
                 <div className="flex items-center gap-2 text-brand">
                   <Sparkles className="w-4 h-4 shrink-0" />
-                  <span className="text-[10px] font-mono font-black uppercase tracking-wider">A Sinergia Multiplicadora</span>
+                  <span className="text-[10px] font-mono font-black uppercase tracking-wider">LEITURA INICIAL</span>
                 </div>
                 <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                  Quando você ativa a assessoria de marketing estratégica, você não apenas melhora as artes ou os anúncios, você ajusta a conversão das páginas de destino, direciona o criativo da equipe e elimina canais caros e ineficientes.
+                  O melhor caminho depende do equilíbrio entre clareza, estrutura e capacidade de execução.
                 </p>
               </div>
             </div>
 
-            {/* Results Panel */}
             <div className="lg:col-span-7 bg-[#09090b] border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
 
               <div className="space-y-6 w-full">
                 <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block">
-                  Resultados Estimados com Sinergia Ativa:
+                  Leitura qualitativa das frentes:
                 </span>
 
-                {/* Results Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
-                    <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Leads de Alto Padrão / Mês</span>
-                    <p id="ge-leads" className="text-3xl font-display font-black text-white">45</p>
-                    <span className="text-[9px] text-zinc-400 block leading-tight font-sans">
-                      Contatos qualificados de faturamento ativo.
-                    </span>
+                    <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Posicionamento e mensagem</span>
+                    <p className="text-white text-sm font-medium leading-relaxed">Quando a marca ainda precisa deixar mais claro o que faz, para quem faz e por que deve ser escolhida.</p>
                   </div>
 
                   <div className="p-5 rounded-2xl bg-brand-secondary/[0.02] border border-brand-secondary/10 space-y-1">
-                    <span className="font-mono text-[8px] text-brand-secondary/80 uppercase font-black block">Custo por Lead (CPL)</span>
-                    <p id="ge-cpl" className="text-3xl font-display font-black text-brand-secondary">R$ 110</p>
-                    <span className="text-[9px] text-zinc-400 block leading-tight font-sans">
-                      Preço médio pago para atração de cada lead qualificado.
-                    </span>
+                    <span className="font-mono text-[8px] text-brand-secondary/80 uppercase font-black block">Conteúdo e relacionamento</span>
+                    <p className="text-zinc-300 text-sm leading-relaxed">Quando a presença digital precisa de frequência, linha editorial e conexão com o público certo.</p>
                   </div>
 
                   <div className="p-5 rounded-2xl bg-emerald-500/[0.02] border border-emerald-500/10 space-y-1">
-                    <span className="font-mono text-[8px] text-emerald-500/80 uppercase font-black block">Retorno Projetado (ROAS)</span>
-                    <p id="ge-roas" className="text-3xl font-display font-black text-emerald-500">4.5x</p>
-                    <span className="text-[9px] text-zinc-400 block leading-tight font-sans">
-                      Multiplicador estimado de retorno sobre o investimento.
-                    </span>
+                    <span className="font-mono text-[8px] text-emerald-500/80 uppercase font-black block">Canais e conversão</span>
+                    <p className="text-zinc-300 text-sm leading-relaxed">Quando site, landing page, WhatsApp, redes sociais ou materiais comerciais precisam trabalhar de forma mais integrada.</p>
+                  </div>
+
+                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
+                    <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Operação e acompanhamento</span>
+                    <p className="text-zinc-300 text-sm leading-relaxed">Quando a execução depende de processo, responsáveis, revisão e melhoria contínua.</p>
                   </div>
                 </div>
 
-                {/* Summary bar chart */}
                 <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-5 space-y-4">
-                  <span className="font-mono text-[9px] text-zinc-500 uppercase font-bold block">Faturamento Adicional Potencial Estimado</span>
-                  
-                  <div className="flex items-center justify-between border-b border-white/[0.05] pb-3 text-xs">
-                    <span className="text-zinc-400">Receita de Vendas Estimada / Mês:</span>
-                    <span id="ge-revenue" className="font-sans text-base font-black text-white">R$ 45.000</span>
-                  </div>
-
-                  <p className="text-[10px] text-zinc-500 font-sans">
-                    *Cálculos baseados em um ticket médio de vendas de R$ 2.500 por lead convertido comercialmente e taxa de fechamento comercial de 20%.
+                  <span className="font-mono text-[9px] text-zinc-500 uppercase font-bold block">Leitura inicial</span>
+                  <p className="text-zinc-300 text-sm leading-relaxed">
+                    Leitura inicial: o melhor caminho depende do equilíbrio entre clareza, estrutura e capacidade de execução.
                   </p>
                 </div>
               </div>
 
-              {/* JS Logic */}
-              <script dangerouslySetInnerHTML={{
-                __html: `
-                  (function() {
-                    window._updateGrowthEngine = function() {
-                      const spendEl = document.getElementById("adv-spend");
-                      const spend = spendEl ? parseInt(spendEl.value) : 5000;
-
-                      const spendText = document.getElementById("adv-spend-val");
-                      if (spendText) spendText.innerText = spend.toLocaleString("pt-BR");
-
-                      // Checkboxes
-                      const hasCmo = document.getElementById("chk-cmo")?.checked || false;
-                      const hasLp = document.getElementById("chk-lp")?.checked || false;
-                      const hasBrand = document.getElementById("chk-branding")?.checked || false;
-
-                      // Formulas
-                      let wasteSavings = hasCmo ? 0.75 : 1.0;
-                      let convMultiplier = hasLp ? 1.5 : 1.0;
-                      let ticketBoost = hasBrand ? 1.3 : 1.0;
-
-                      // Base lead cost starts at R$ 200
-                      let baseCpl = 200 * wasteSavings;
-                      // Conversion multiplier drops CPL further
-                      let finalCpl = Math.max(35, Math.round(baseCpl / (convMultiplier * (hasBrand ? 1.1 : 1.0))));
-
-                      const leads = Math.round(spend / finalCpl);
-                      const roas = parseFloat((4.5 * (hasCmo ? 1.2 : 1.0) * convMultiplier * ticketBoost).toFixed(1));
-                      const revenue = Math.round(leads * 0.2 * (2500 * ticketBoost));
-
-                      const lEl = document.getElementById("ge-leads");
-                      const cEl = document.getElementById("ge-cpl");
-                      const rEl = document.getElementById("ge-roas");
-                      const revEl = document.getElementById("ge-revenue");
-
-                      if (lEl) lEl.innerText = leads.toLocaleString("pt-BR");
-                      if (cEl) cEl.innerText = "R$ " + finalCpl.toLocaleString("pt-BR");
-                      if (rEl) rEl.innerText = roas.toFixed(1) + "x";
-                      if (revEl) revEl.innerText = "R$ " + revenue.toLocaleString("pt-BR");
-                    };
-                    setTimeout(() => {
-                      window._updateGrowthEngine && window._updateGrowthEngine();
-                    }, 500);
-                  })();
-                `
-              }} />
-
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 mt-6">
-                <span className="font-mono text-[8px] text-zinc-600">PROJEÇÃO CALCULADA BASEADA NA MÉTRICA DE SERVIÇOS TAG08 // 2026</span>
+                <span className="font-mono text-[8px] text-zinc-600">MAPA ORIENTADO POR PRIORIDADES // TAG08</span>
                 <button 
                   onClick={() => onNavigate("/contato")}
                   className="text-xs font-mono text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
                 >
-                  Desenhar Meu Planejamento <ArrowRight className="w-3.5 h-3.5" />
+                  SOLICITAR LEITURA ESTRATÉGICA <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
           </div>
         </div>
       </section>
-
       {/*=========================================
           THE 4 STRATEGIC MARKETING PILLARS
          =========================================*/}
@@ -550,13 +388,13 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-semibold bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-              PILARE OPERACIONAIS
+              MÉTODO DA ASSESSORIA
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-white uppercase tracking-tighter leading-none">
-              Os Quatro Pilares do Método de Assessoria TAG08
+              Quatro frentes para transformar dúvida em direção.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
-              Trabalhamos de forma contínua e integrada para cobrir todas as disciplinas táticas necessárias para o seu crescimento saudável de fato.
+              A assessoria organiza o que a marca precisa entender, decidir, planejar e acompanhar antes de transformar marketing em execução.
             </p>
           </div>
 
@@ -565,26 +403,26 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
               {
                 num: "01",
                 icon: Target,
-                title: "Diagnóstico & Inteligência",
-                desc: "Analisamos seus concorrentes diretos, definimos seu ICP (Ideal Customer Profile) e desenhamos o message-market fit ideal para atrair o público sênior."
+                title: "Diagnóstico do momento",
+                desc: "Entendemos contexto, objetivos, gargalos, canais atuais e limitações reais antes de recomendar qualquer ação."
               },
               {
                 num: "02",
                 icon: Zap,
-                title: "Design de Elite & LP",
-                desc: "Sua identidade, copys e landing pages esculpidas do absoluto zero. Uma presença elegante que justifica seus preços de forma imediata."
+                title: "Posicionamento e mensagem",
+                desc: "Organizamos como a marca deve se apresentar, quais mensagens precisam ser fortalecidas e o que precisa ficar mais claro para o público."
               },
               {
                 num: "03",
                 icon: LineChart,
-                title: "Tráfego Pago de Elite",
-                desc: "Meta Ads, Google Search e LinkedIn Ads táticos. Sem verba jogada no lixo em campanhas amadoras: focamos puramente em quem quer pagar seu ticket."
+                title: "Plano de prioridades",
+                desc: "Definimos o que vem primeiro, o que pode esperar e quais frentes fazem sentido para o momento atual do negócio."
               },
               {
                 num: "04",
                 icon: Cpu,
-                title: "BI Centralizado & CRM",
-                desc: "Relatórios operacionais transparentes criados em Looker Studio. Conexão real com seu CRM comercial para auditar as métricas de vendas."
+                title: "Acompanhamento da execução",
+                desc: "Apoiamos a leitura do processo, os ajustes necessários e a continuidade das decisões para evitar ações soltas."
               }
             ].map((pilar, idx) => {
               const PilarIcon = pilar.icon;
@@ -613,8 +451,8 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
                   </div>
 
                   <div className="pt-4 border-t border-white/[0.04] text-[9px] font-mono text-zinc-500 uppercase tracking-widest relative z-10 flex justify-between">
-                    <span>MÓDULO DE ASSESSORIA</span>
-                    <span className="text-brand font-semibold select-none">MÉTODO_0{idx + 1}</span>
+                    <span>MÃ“DULO DE ASSESSORIA</span>
+                    <span className="text-brand font-semibold select-none">MÃ‰TODO_0{idx + 1}</span>
                   </div>
                 </div>
               );
@@ -633,14 +471,14 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 max-w-5xl">
             <div className="space-y-3">
               <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-                METODOLOGIA DE DIAGNÓSTICO // INTERATIVO
+                LEITURA DE MATURIDADE
               </span>
               <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white uppercase tracking-tighter">
-                Faça o seu <span className="text-brand">Simulador Inteligente</span> de Diagnóstico Comercial
+                Sua marca tem clareza suficiente para executar?
               </h2>
             </div>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Descubra em segundos o índice real de maturidade do seu marketing, mapeie desvios graves de imagem e veja qual o nosso plano recomendado de assessoria.
+              Este diagnóstico inicial ajuda a perceber se a marca já tem direção, mensagem, canais e estrutura suficientes para avançar com mais segurança.
             </p>
           </div>
 
@@ -662,7 +500,7 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
                     {/* Header info */}
                     <div className="flex justify-between items-center border-b border-white/[0.04] pb-4">
                       <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-wider font-extrabold">
-                        AUDITORIA INTELIGENTE DE ALTA PERFORMANCE
+                        LEITURA INICIAL DE MATURIDADE
                       </span>
                       <span className="font-sans text-xs text-zinc-500">
                         {currentQuestionIdx + 1} / {auditQuestions.length}
@@ -710,7 +548,7 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
                         <span className="font-mono text-[9px] text-brand uppercase tracking-wider font-extrabold">
-                          DIAGNOSTICO TÝ?TICO FINALIZADO
+                          LEITURA INICIAL CONCLUÍDA
                         </span>
                       </div>
                       <span className="font-mono text-[9px] text-zinc-500">TAG08_DIAG_ENGINE</span>
@@ -723,23 +561,23 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
                         <div className="space-y-6">
                           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-6 rounded-2xl border border-white/[0.06] bg-black/40">
                             <div className="text-center sm:text-left space-y-1.5 shrink-0">
-                              <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block font-bold">Ý?NDICE DE MATURIDADE</span>
-                              <h4 className="font-display font-black text-3xl text-white uppercase leading-none">{diag.level}</h4>
+                              <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block font-bold">LEITURA ATUAL</span>
+                              <h4 className={`font-display font-black text-3xl uppercase leading-none ${diag.color}`}>{diag.level}</h4>
                               <p className="text-zinc-400 text-xs font-mono font-bold uppercase text-brand mt-1">{diag.recommendation}</p>
                             </div>
                             <div className="relative flex items-center justify-center w-24 h-24 rounded-full bg-charcoal-950 border border-white/5 shadow-inner">
                               <div className="absolute inset-1.5 rounded-full border border-dashed border-white/10 animate-spin-slow" />
-                              <span className="font-display font-black text-2xl text-white text-brand-gradient">{diag.percentage}%</span>
+                              <span className="font-display font-black text-[13px] sm:text-sm text-white text-center leading-tight px-2">{diag.level}</span>
                             </div>
                           </div>
 
                           <div className="space-y-4 text-zinc-300 text-xs sm:text-sm font-sans leading-relaxed text-left bg-white/[0.01] border border-white/[0.03] p-5 sm:p-6 rounded-xl">
                             <div>
-                              <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black block mb-1">Mapeamento de Desvios</span>
+                              <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black block mb-1">Leituras observadas</span>
                               <p className="text-zinc-300 font-medium">{diag.description}</p>
                             </div>
                             <div className="pt-4 border-t border-white/[0.04]">
-                              <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black block mb-1.5">Foco Operacional Imediato Recomendado</span>
+                              <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black block mb-1.5">Próximo foco</span>
                               <div className="flex gap-2.5 items-start">
                                 <div className="mt-0.5 p-1 rounded bg-brand-secondary/10 border border-brand-secondary/20 text-brand-secondary">
                                   <Sparkles className="w-3.5 h-3.5" />
@@ -751,21 +589,20 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
 
                           {/* Action tools */}
                           <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <a
-                              href={getWhatsAppLink()}
-                              target="_blank"
-                              rel="noreferrer"
+                            <button
+                              type="button"
+                              onClick={() => onNavigate("/contato")}
                               className="bg-brand-secondary hover:bg-brand hover:shadow-[0_10px_35px_rgba(var(--color-brand-secondary-rgb),0.25)] text-black text-xs font-mono font-black uppercase tracking-widest py-4 px-6 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] md:col-span-1"
                             >
                               <MessageSquare className="w-4 h-4 text-black" />
-                              <span>CHAMAR NO WHATSAPP</span>
-                            </a>
+                              <span>SOLICITAR DIAGNÓSTICO COMPLETO</span>
+                            </button>
                             <button
                               type="button"
                               onClick={handleResetQuiz}
                               className="bg-white/5 hover:bg-white/[0.08] text-white hover:text-white border border-white/10 hover:border-white/20 text-xs font-mono font-bold uppercase tracking-widest py-4 px-6 rounded-xl text-center transition-all duration-300 cursor-pointer"
                             >
-                              REPETIR DIAGNÓSTICO
+                              REPETIR DIAGNÃ“STICO
                             </button>
                           </div>
                         </div>
@@ -784,246 +621,178 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
       <MiniCases onNavigate={onNavigate} />
 
       {/*=========================================
-          BOTTOM CTA CARD (WHATSAPP NEON CALLOUT)
+          CTA FINAL + FAQ
          =========================================*/}
-      <section className="py-20 px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(var(--color-brand-rgb),0.18)] select-none">
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.08)_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-15 pointer-events-none" />
-
-          {/* Left Block: Image portrait */}
-          <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[460px] lg:min-h-[500px]">
-            <div className="absolute inset-0 bg-black/15 rounded-[24px] overflow-hidden" />
-            <img 
-              src="https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=800" 
-              alt="TAG08 Marketing Directors Support" 
-              className="absolute inset-0 w-full h-full object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[10%] hover:scale-105 duration-500 transition-all"
-              referrerPolicy="no-referrer"
-            />
-            <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
-              <div className="flex justify-between items-start">
-                <span className="font-mono text-[9px] text-white/60 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-black border border-white/5">
-                  MARKETING EXECUTIVE
-                </span>
-                <span className="font-mono text-[9px] text-white/50 tracking-wider font-extrabold">
-                  CMO_ADVISORY
-                </span>
-              </div>
-              <div className="space-y-1.5 opacity-25 select-none">
-                <div className="font-display font-extrabold text-[1.8rem] text-white/50 tracking-widest leading-none uppercase select-none">
-                  marketing_cmo
-                </div>
-                <div className="font-display font-extrabold text-[1.5rem] text-white/30 tracking-widest leading-none uppercase select-none pl-6">
-                  strategic_core_
-                </div>
-              </div>
-              <div className="flex justify-between items-end">
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
-                  SLA: 100% SECURE
-                </span>
-                <span className="font-mono text-[9px] text-white/60 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-black border border-white/5">
-                  SÊNIOR EXECUTION
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Block: Content & CTAs */}
-          <div className="lg:col-span-7 flex flex-col justify-between space-y-8 text-left h-full relative z-10 lg:pl-4">
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 text-black font-semibold">
-                <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
-                  <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
-                </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
-                  CONECTE SEU COMERCIAL A UM FLUXO SEGURO
-                </span>
-              </div>
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
-                AGENDE SUA SESSÃO <br />
-                DE CLAREZA GRATUITA!
-              </h2>
-              <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
-                Em uma videoconferência privada e sem compromisso de 30 minutos, nosso especialista sênior mapeará o funil de atração da sua marca, resolverá ruídos da sua identidade visual e desenhará o plano recomendado.
-              </p>
-            </div>
-            <div className="bg-charcoal-900/98 backdrop-blur-3xl border border-white/[0.08] p-6 sm:p-7 rounded-[28px] shadow-[0_25px_60px_rgba(0,0,0,0.5)] space-y-6 max-w-md relative overflow-hidden text-left font-sans">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
-              <div className="flex gap-4 items-start select-none">
-                <div className="w-10 h-10 rounded-full bg-brand flex items-center justify-center text-black shrink-0 shadow-lg shadow-brand/10 hover:scale-105 transition-all">
-                  <ArrowUpRight className="w-5 h-5 rotate-45 stroke-[2.5] text-black" />
-                </div>
-                <div className="space-y-0.5">
-                  <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
-                    SESSÃO EXCLUSIVA DEDICADA
+      <section className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto space-y-8">
+          <div className="rounded-[32px] sm:rounded-[40px] border border-white/[0.06] bg-black/45 overflow-hidden shadow-2xl">
+            <div className="grid grid-cols-1 lg:grid-cols-12">
+              <div className="lg:col-span-5 min-h-[320px] sm:min-h-[380px] relative overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=1200"
+                  alt="TAG08 assessoria"
+                  className="absolute inset-0 w-full h-full object-cover brightness-[0.48] contrast-[1.05]"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-black/35 to-black/75" />
+                <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between">
+                  <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-black/35 px-3 py-1 text-[9px] font-mono font-bold uppercase tracking-widest text-white/70">
+                    Pr&oacute;ximo passo
                   </span>
-                  <p className="text-white text-xs leading-snug font-sans font-semibold">
-                    Saia com o diagnóstico e ações táticas recomendadas em mãos, de forma totalmente isenta e estruturada.
-                  </p>
-                </div>
-              </div>
-              <div className="space-y-3 font-sans">
-                <a 
-                  href={buildBrazilWhatsAppUrl("Olá! Gostaria de agendar uma sessão de clareza gratuita para minha marca com um dos especialistas sêniores da TAG08.")}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner cursor-pointer"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-full bg-brand/10 flex items-center justify-center text-brand shrink-0 group-hover:bg-brand group-hover:text-black transition-all">
-                        <span className="text-[9px] font-mono font-black tracking-tight text-brand group-hover:text-black">BR</span>
-                      </div>
-                      <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
-                          FALAR CONOSCO DIRETAMENTE (WhatsApp)
-                        </span>
-                        <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
-                          +55 83 9.9886-8882
-                        </span>
-                      </div>
+                  <div className="space-y-3 max-w-sm">
+                    <p className="text-white/70 text-xs sm:text-sm leading-relaxed">
+                      A assessoria faz sentido quando a marca precisa entender melhor o que priorizar antes de executar.
+                    </p>
+                    <div className="flex flex-wrap gap-2 text-[9px] font-mono uppercase tracking-widest text-white/55">
+                      <span className="rounded-full border border-white/10 bg-black/25 px-2 py-1">Clareza</span>
+                      <span className="rounded-full border border-white/10 bg-black/25 px-2 py-1">Dire&ccedil;&atilde;o</span>
+                      <span className="rounded-full border border-white/10 bg-black/25 px-2 py-1">Prioridade</span>
                     </div>
-                    <span className="text-[10px] text-brand font-mono font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
-                      CONECTAR
-                    </span>
                   </div>
-                </a>
+                </div>
               </div>
 
-              <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 text-xs font-sans select-none">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-brand animate-pulse" />
-                  <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest font-extrabold">
-                    AGÊNCIA TAG08
+              <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between gap-6 bg-white text-black">
+                <div className="space-y-4 max-w-2xl">
+                  <span className="inline-flex items-center rounded-full border border-black/10 bg-black/[0.03] px-3 py-1 text-[9px] font-mono font-bold uppercase tracking-widest text-black/60">
+                    Próximo passo
                   </span>
+                  <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black leading-[0.92] tracking-tighter uppercase">
+                    Vamos entender se a assessoria faz sentido para sua marca?
+                  </h2>
+                  <p className="text-black/75 text-sm sm:text-[15px] leading-relaxed max-w-xl">
+                    Antes de propor qualquer plano, a TAG08 entende seu momento, seus gargalos e suas prioridades para indicar se a assessoria estratégica &eacute; o caminho mais coerente agora.
+                  </p>
                 </div>
-                <span className="font-mono text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/25 px-2 py-0.5 rounded uppercase leading-none">
-                  VIVA_CORE
-                </span>
+
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <a
+                    href={buildBrazilWhatsAppUrl("Olá TAG08! Gostaria de conversar sobre assessoria de marketing estratégico para entender se faz sentido para a minha marca.")}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-black text-white px-5 py-3 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest transition-transform hover:-translate-y-0.5"
+                  >
+                    <span>FALAR COM A TAG08</span>
+                    <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                  <button
+                    onClick={() => handleLinkClick("/servicos")}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-black/[0.03] px-5 py-3 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest text-black transition-colors hover:bg-black/[0.06]"
+                  >
+                    <span>VER OUTRAS SOLUÇÕES</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
-        </div>
-      </section>
-
-      {/*=========================================
-          FAQ SECTION (Premium 12-Column Layout)
-         =========================================*/}
-      <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand/[0.015] rounded-full blur-[160px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[40px] bg-charcoal-950 border border-white/[0.04] p-6 sm:p-10 lg:p-14 relative overflow-hidden shadow-2xl">
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.015)_1.2px,transparent_1.2px)] [background-size:24px_24px] pointer-events-none" />
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
-            {/* Lado Esquerdo: Navegação de Dúvidas */}
-            <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
-              <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
-                  FAQ // ENCONTRE RESPOSTAS
+          <div className="rounded-[32px] sm:rounded-[40px] bg-charcoal-950 border border-white/[0.05] p-6 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.02)_1.2px,transparent_1.2px)] [background-size:24px_24px] pointer-events-none" />
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
+              <div className="lg:col-span-4 flex flex-col justify-between space-y-8 text-left">
+                <div className="space-y-4">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+                    D&Uacute;VIDAS SOBRE ASSESSORIA
+                  </div>
+                  <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
+                    Antes de contratar, entenda como a assessoria funciona.
+                  </h2>
+                  <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
+                    A assessoria existe para ajudar a marca a decidir melhor antes de executar. As respostas abaixo ajudam a entender quando esse caminho faz sentido e o que esperar do processo.
+                  </p>
                 </div>
-                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
-                  DÚVIDAS &amp; <br />
-                  SUA DECISÃO
-                </h2>
-                <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
-                  Esclareça as principais dúvidas sobre como a TAG08 lidera, executa e garante a evolução estratégica e analítica do seu marketing digital sênior.
-                </p>
-              </div>
 
-              <div className="space-y-3 pt-4">
-                {faqCategories.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveFaq(item.id)}
-                    className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all text-left group cursor-pointer ${
-                      activeFaq === item.id
-                        ? "bg-brand text-black border-brand shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.12)]"
-                        : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
-                    }`}
-                  >
-                    <span className="font-mono text-xs font-black uppercase tracking-wider flex items-center gap-3">
-                      <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
-                        {String(item.id + 1).padStart(2, '0')}.
+                <div className="space-y-3 pt-4">
+                  {faqCategories.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveFaq(item.id)}
+                      className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all text-left group cursor-pointer ${
+                        activeFaq === item.id
+                          ? "bg-brand text-black border-brand shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.12)]"
+                          : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
+                      }`}
+                    >
+                      <span className="font-mono text-xs font-black uppercase tracking-wider flex items-center gap-3">
+                        <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
+                          {String(item.id + 1).padStart(2, "0")}.
+                        </span>
+                        {item.title}
                       </span>
-                      {item.title}
-                    </span>
-                    <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
-                      activeFaq === item.id ? "text-black rotate-[-45deg] stroke-[2.5]" : "text-zinc-500"
-                    }`} />
+                      <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${activeFaq === item.id ? "text-black rotate-[-45deg] stroke-[2.5]" : "text-zinc-500"}`} />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
+                <img
+                  src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800"
+                  alt="TAG08 Assessoria"
+                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
+                />
+                <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
+                  <svg viewBox="0 0 100 100" className="w-full h-full text-brand fill-none stroke-current" strokeWidth="0.75" strokeLinecap="round">
+                    <path d="M15,80 C40,40 20,10 60,35 C80,50 30,90 85,15" strokeDasharray="2,2" />
+                    <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
+                  </svg>
+                </div>
+                <div className="absolute top-6 left-6 z-10 pointer-events-none font-mono text-[8px] text-white/20 uppercase tracking-widest leading-none">
+                  TAG08 // ASSESSORIA
+                </div>
+
+                <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left font-sans">
+                  <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
+                    {faqCategories[activeFaq].title}
+                  </span>
+
+                  <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
+                    {faqQuestions[activeFaq]}
+                  </h4>
+
+                  <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
+                    {faqAnswers[activeFaq]}
+                  </p>
+                </div>
+              </div>
+
+              <div className="lg:col-span-4 flex flex-col justify-between gap-4">
+                <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
+                  <div className="space-y-2">
+                    <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
+                    <h4 className="text-white font-semibold text-sm leading-snug">Dire&ccedil;&atilde;o antes da execu&ccedil;&atilde;o</h4>
+                    <p className="text-zinc-400 text-xs leading-relaxed font-sans">
+                      A assessoria organiza entendimento, prioridades e escopo antes de qualquer entrega.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => handleLinkClick("/servicos")}
+                    className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
+                  >
+                    <span>VER OUTRAS SOLUÇÕES</span>
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                   </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Lado Central: Imagem + Resposta */}
-            <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
-              <img
-                src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800"
-                alt="TAG08 Assessoria"
-                className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
-              />
-              <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
-                <svg viewBox="0 0 100 100" className="w-full h-full text-brand fill-none stroke-current" strokeWidth="0.75" strokeLinecap="round">
-                  <path d="M15,80 C40,40 20,10 60,35 C80,50 30,90 85,15" strokeDasharray="2,2" />
-                  <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
-                </svg>
-              </div>
-              <div className="absolute top-6 left-6 z-10 pointer-events-none font-mono text-[8px] text-white/20 uppercase tracking-widest leading-none">
-                SYS // CMO_ADVISORY
-              </div>
-
-              <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left font-sans">
-                <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
-                  {faqCategories[activeFaq].title}
-                </span>
-                
-                <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
-                  {faqQuestions[activeFaq]}
-                </h4>
-                
-                <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
-                  {faqAnswers[activeFaq]}
-                </p>
-              </div>
-            </div>
-
-            {/* Lado Direito: Callouts adicionais sênior */}
-            <div className="lg:col-span-3 flex flex-col justify-between gap-4">
-              <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
-                <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
-                  <h4 className="text-white font-semibold text-sm leading-snug">Metodologia Científica e Rigor Visual</h4>
-                  <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    Substituímos desculpas e cronogramas atrasados por governança ativa, transparência de BI e consistência no posicionamento.
-                  </p>
                 </div>
-                <button
-                  onClick={() => handleLinkClick("/servicos")}
-                  className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
-                >
-                  <span>Ver Todos Serviços</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                </button>
-              </div>
 
-              <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
-                <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">CMO DIRETOR</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Precisa de Alocação de Equipe?</h4>
-                  <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-sans">
-                    Converse com nossos diretores seniores em canal direto reservado e entenda a disponibilidade técnica imediata para seu projeto.
-                  </p>
+                <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
+                  <div className="space-y-2">
+                    <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">CONTATO DIRETO</span>
+                    <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Falar com a TAG08</h4>
+                    <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-sans">
+                      Se fizer sentido, o próximo passo &eacute; conversar sobre contexto, escopo e prioridade.
+                    </p>
+                  </div>
+                  <a
+                    href={buildBrazilWhatsAppUrl("Olá TAG08! Gostaria de entender se a assessoria estratégica faz sentido para a minha marca.")}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group flex items-center justify-between text-xs font-sans font-bold text-black border-t border-black/10 pt-2 cursor-pointer select-none"
+                  >
+                    <span>FALAR COM A TAG08</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  </a>
                 </div>
-                <a
-                  href={buildBrazilWhatsAppUrl("Olá! Eu gostaria de saber mais sobre a assessoria de marketing estratégico da TAG08 e as modalidades de alocação de equipe disponíveis.")}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group flex items-center justify-between text-xs font-sans font-bold text-black border-t border-black/10 pt-2 cursor-pointer select-none"
-                >
-                  <span>MENSAGEM PRIVADA</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                </a>
               </div>
             </div>
           </div>
@@ -1033,3 +802,5 @@ Gostaria de agendar minha sessão de clareza gratuita de 30 minutos com um estra
     </div>
   );
 }
+
+

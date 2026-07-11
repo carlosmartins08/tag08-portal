@@ -144,62 +144,58 @@ export const formatIsoDuration = (duration: string) => {
 export const FALLBACK_YOUTUBE_VIDEOS: OfficialYouTubeVideo[] = [
   {
     id: "posicionamento-alto-nivel",
-    title: "O Posicionamento de Presença Digital de Alto Nível",
-    description:
-      "Análise sênior sobre como diretores e marcas conceituadas estruturam sua autoridade visual e tom de voz no ecossistema digital sem os clichês das agências tradicionais.",
+    title: "Conte?do institucional",
+    description: "V?deos que apresentam a marca, sua hist?ria, seus diferenciais e sua forma de gerar valor.",
     duration: "12:45",
     date: "28 Mai, 2026",
-    category: "BRANDING",
+    category: "INSTITUCIONAL",
     thumbnail: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200",
     embedCode: "612U4R57M70",
     videoUrl: DEFAULT_YOUTUBE_VIDEO_URL,
-    views: "12.4K visualizações",
-    tagline: "DIREÇÃO INTUITIVA & COESÃO VISUAL",
+    views: "PORTF?LIO 01",
+    tagline: "NARRATIVA CLARA",
     source: "fallback"
   },
   {
     id: "branding-blueprint",
-    title: "Branding Blueprint: Criando uma Identidade Soberana",
-    description:
-      "Por trás das cortinas do laboratório estético da TAG08. Como desenvolver contrastes, fontes com alma e diagramações sêniores que transmitem autoridade imediata.",
+    title: "Cobertura de eventos",
+    description: "Registro estrat?gico de momentos, bastidores, falas e experi?ncias para ampliar o valor do evento depois que ele acontece.",
     duration: "18:20",
     date: "14 Mai, 2026",
-    category: "DESIGN SYSTEM",
+    category: "EVENTOS",
     thumbnail: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=1200",
     embedCode: "612U4R57M70",
     videoUrl: DEFAULT_YOUTUBE_VIDEO_URL,
-    views: "8.9K visualizações",
-    tagline: "SOPRO DE SOFISTICAÇÃO E ARTE",
+    views: "PORTF?LIO 02",
+    tagline: "BASTIDORES COM FUN??O",
     source: "fallback"
   },
   {
     id: "trafego-pago-saboroso",
-    title: "Como Estruturar Captação e Anúncios Sem Queimar Orçamento",
-    description:
-      "A matemática cirúrgica dos anúncios corporativos. Saiba como segmentar com alta intenção de compra e evitar desperdícios com campanhas genéricas ou superficiais.",
+    title: "Conte?do para especialistas",
+    description: "Capta??o e edi??o de falas, aulas, entrevistas e conte?dos de autoridade com linguagem clara e presen?a profissional.",
     duration: "15:10",
     date: "03 Mai, 2026",
-    category: "MARKETING SÊNIOR",
+    category: "ESPECIALISTAS",
     thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
     embedCode: "612U4R57M70",
     videoUrl: DEFAULT_YOUTUBE_VIDEO_URL,
-    views: "14.2K visualizações",
-    tagline: "MÁXIMA EFICIÊNCIA OPERACIONAL",
+    views: "PORTF?LIO 03",
+    tagline: "AUTORIDADE EM CENA",
     source: "fallback"
   },
   {
     id: "sistemas-operacionais-digitais",
-    title: "Sistemas Operacionais Digitais: O Fim das Planilhas de Feedback",
-    description:
-      "Demonstração prática de como organizamos e orquestramos a produção de conteúdo com velocidade e sem conversas caóticas por e-mail ou WhatsApp corporativo irrelevantes.",
+    title: "Materiais para redes sociais",
+    description: "Cortes, reels, v?deos curtos e formatos recorrentes alinhados ? linha editorial e ao posicionamento da marca.",
     duration: "09:55",
     date: "21 Abr, 2026",
-    category: "FLUXO EXECUTIVO",
+    category: "REDES SOCIAIS",
     thumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200",
     embedCode: "612U4R57M70",
     videoUrl: DEFAULT_YOUTUBE_VIDEO_URL,
-    views: "7.5K visualizações",
-    tagline: "COMUNICAÇÃO CONCRETA ASSÍNCRONA",
+    views: "PORTF?LIO 04",
+    tagline: "LINHA EDITORIAL",
     source: "fallback"
   }
 ];
@@ -207,12 +203,12 @@ export const FALLBACK_YOUTUBE_VIDEOS: OfficialYouTubeVideo[] = [
 export const FALLBACK_GMB_REVIEWS: OfficialGoogleReview[] = [
   {
     name: "Dra. Roberta Chaves",
-    role: "Clínica de Odontologia de Alta Performance",
+    role: "Cl?nica de Odontologia",
     avatar: "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=200",
-    time: "há 2 semanas",
-    tagline: "Nosso posicionamento e site finalmente transmitem tratamento de grife.",
+    time: "h? 2 semanas",
+    tagline: "Clareza no posicionamento",
     text:
-      "Fizemos o reposicionamento estético da nossa clínica e o novo site premium com a lindeza analítica da TAG08. Estou impactada com a precisão do design. Nosso volume de pacientes particulares de alto padrão aumentou muito porque finalmente nossa comunicação condiz com o nosso tratamento.",
+      "Fizemos o reposicionamento est?tico da nossa cl?nica e o novo site estruturado com a TAG08. Estou impactada com a precis?o do design. Nosso volume de pacientes particulares de alto padr?o aumentou muito porque finalmente nossa comunica??o condiz com o nosso tratamento.",
     category: "BRANDING ATIVO",
     source: "fallback"
   },
@@ -220,55 +216,55 @@ export const FALLBACK_GMB_REVIEWS: OfficialGoogleReview[] = [
     name: "Marcus Azevedo",
     role: "CEO, Azevedo Asset",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
-    time: "há 1 mês",
-    tagline: "Desenhamos um hub operacional dinâmico focado em performance sem ruído.",
+    time: "h? 1 m?s",
+    tagline: "Acompanhamento do processo",
     text:
-      "Trabalho impecável de Process Intelligence. Eles auditaram nossa estrutura e desenharam um hub assíncrono que acabou com a bagunça no WhatsApp. O time hoje sabe exatamente o que fazer com playbooks dinâmicos. Economia gigantesca de tempo de gerência.",
+      "Trabalho impec?vel de Process Intelligence. Eles auditaram nossa estrutura e desenharam um hub ass?ncrono que acabou com a bagun?a no WhatsApp. O time hoje sabe exatamente o que fazer com playbooks din?micos. Economia gigantesca de tempo de ger?ncia.",
     category: "PROCESSES",
     source: "fallback"
   },
   {
     name: "Juliana Reis",
-    role: "Sócia Fundadora, Le Visage Spa",
+    role: "S?cia Fundadora, Le Visage Spa",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
-    time: "há 3 semanas",
-    tagline: "Fugimos dos padrões genéricos e clichês de agências comuns do mercado.",
+    time: "h? 3 semanas",
+    tagline: "Coer?ncia entre promessa e entrega",
     text:
-      "A assessoria de redes sociais e conteúdo da TAG08 é magnífica. Eles planejam os carrosséis e roteiros de reels com foco em elegância e sofisticação, fugindo daquilo que as agências comuns entregam. Elevou nossa marca no mercado de luxo local.",
+      "A assessoria de redes sociais e conte?do da TAG08 ? magn?fica. Eles planejam os carross?is e roteiros de reels com foco em eleg?ncia e sofistica??o, fugindo daquilo que as ag?ncias comuns entregam. Elevou nossa marca no mercado de luxo local.",
     category: "REDES SOCIAIS",
     source: "fallback"
   },
   {
     name: "Dr. Arthur Mendes",
-    role: "Diretor Clínico, Mendes Odontologia",
+    role: "Diretor Cl?nico, Mendes Odontologia",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200",
-    time: "há 2 meses",
-    tagline: "Tráfego de escala sênior trazendo leads qualificados prontos para fechar.",
+    time: "h? 2 meses",
+    tagline: "Dire??o comercial mais clara",
     text:
-      "O tráfego de escala deles é muito bem estruturado. Já passei por três assessorias que apenas queimavam verba trazendo curiosos. Na TAG08 eles organizam filtros funcionais nos criativos e nos trazem leads mais qualificados para conversar sobre tratamentos.",
-    category: "TRÁFEGO ADS",
+      "O tr?fego deles ? muito bem estruturado. J? passei por tr?s assessorias que apenas queimavam verba trazendo curiosos. Na TAG08 eles organizam filtros funcionais nos criativos e nos trazem leads mais qualificados para conversar sobre tratamentos.",
+    category: "TR?FEGO ADS",
     source: "fallback"
   },
   {
     name: "Beatriz Nogueira",
     role: "Diretora de Marketing, Grupo BN",
     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200",
-    time: "há 1 mês",
-    tagline: "O diagnóstico gratuito me revelou mais do que consultorias caras do setor.",
+    time: "h? 1 m?s",
+    tagline: "Diagn?stico com mais clareza",
     text:
-      "O diagnóstico gratuito deles foi melhor do que muitas consultorias pagas que já contratamos. Eles mostram os furos exatos na estrutura de branding e oferecem um plano claro. Implementamos tudo e o resultado veio rápido.",
-    category: "DIAGNÓSTICO",
+      "O diagn?stico inicial deles foi melhor do que muitas consultorias pagas que j? contratamos. Eles mostram os furos exatos na estrutura de branding e oferecem um plano claro. Implementamos tudo e o caminho ficou mais claro.",
+    category: "DIAGN?STICO",
     source: "fallback"
   },
   {
     name: "Leonardo Castilho",
     role: "Fundador, Castilho Advocacia",
     avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=200",
-    time: "há 3 meses",
-    tagline: "Nossos canais abrindo instantaneamente e transmitindo postura de grife.",
+    time: "h? 3 meses",
+    tagline: "Estrutura digital mais consistente",
     text:
-      "Desenvolver nosso ecossistema web com códigos nativos pela TAG08 foi o divisor de águas da nossa captação corporativa. O site abre instantaneamente no celular do cliente e passa uma postura de grife jurídica inabalável.",
-    category: "DEV WEB PREMIUM",
+      "Desenvolver nosso ecossistema web com c?digos nativos pela TAG08 foi importante para a nossa capta??o corporativa. O site abre no celular do cliente e passa uma postura consistente para o escrit?rio.",
+    category: "DEV WEB",
     source: "fallback"
   }
 ];
