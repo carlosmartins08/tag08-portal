@@ -56,7 +56,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
   
   // Custom Pinterest Item inputs
   const [newTitle, setNewTitle] = useState("");
-  const [newCategory, setNewCategory] = useState("Identidade Visual");
+  const [newCategory, setNewCategory] = useState("Identidade autoral");
   const [newDescription, setNewDescription] = useState("");
   const [newPinterestUrl, setNewPinterestUrl] = useState("");
   const [newImageUrl, setNewImageUrl] = useState("");
@@ -98,66 +98,66 @@ export default function Branding({ onNavigate }: BrandingProps) {
       {
         id: "pin-aura-derm",
         title: "Aura Clínica de Dermatologia",
-        category: "Clínicas & High-Ticket",
-        description: "Estudo tipográfico e heráldica minimalista para medicina integrativa com acabamento premium. Foco em paleta off-white, dourada e cinza ardósia.",
+        category: "Identidade para saúde",
+        description: "Sistema visual para uma clínica que precisava comunicar cuidado, clareza e consistência em seus pontos de contato.",
         imageUrl: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=650",
         pinterestUrl: "https://br.pinterest.com/pin/433401532892978001/",
         likesCount: 142,
-        challenge: "Substituir a abordagem ambulatorial tradicional de uma clínica médica por um conceito premium focado em bem-estar estético de alto padrão e acolhimento personalizado.",
-        solution: "Desenvolvemos um monograma circular unindo as letras A e U na proporção áurea, utilizando espaçamentos nobres e uma comunicação visual ultra clean e luminosa.",
+        challenge: "Alinhar atendimento, materiais e presença digital à percepção que a clínica já entregava.",
+        solution: "Criamos um sistema visual com paleta suave, monograma circular e aplicações pensadas para materiais institucionais e digitais.",
         colors: ["#FDFBF7", "#D4AF37", "#2D3748"],
         colorNames: ["Off-White Crème", "Dourado Matte", "Ardósia Escuro"],
         typography: "Playfair Display & Inter Modern",
-        achievement: "+160% de valorização média de consulta e exames no 1ú semestre.",
-        deliverables: ["Marca Gráfica & Selo Autoral", "Papelaria Texturizada Fine-Paper", "Diretrizes Ambientais da Clínica", "Design Guide Grid para Redes Sociais"]
+        achievement: "Aplicação mais coerente em materiais e presença digital.",
+        deliverables: ["Identidade gráfica e selo de marca", "Papelaria institucional", "Diretrizes para materiais digitais", "Sistema visual para redes sociais"]
       },
       {
         id: "pin-lex-cooper",
         title: "Lex Cooper Advogados",
-        category: "Escritórios de Advocacia",
-        description: "Rebranding completo com monograma simétrico sênior e papelaria física em relevo seco e hot stamping cobre para banca corporativa.",
+        category: "Identidade institucional",
+        description: "Rebranding para um escritório que precisava transmitir seriedade, organização e coerência em materiais físicos e digitais.",
         imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&q=80&w=650",
         pinterestUrl: "https://br.pinterest.com/pin/433401532892978002/",
         likesCount: 98,
-        challenge: "Transmitir solidez secular, sofisticação e agressividade jurídica inteligente para atrair fusões e aquisições e grandes corporações internacionais.",
-        solution: "Engenharia de marcas sênior: um monograma geométrico simétrico com ancoragem de escudo sutil. Uso de papelaria tátil em relevo seco e acabamentos metalizados texturizados.",
+        challenge: "Organizar apresentação, papelaria e presença institucional para comunicar solidez com mais clareza.",
+        solution: "Desenvolvemos um monograma simétrico, elementos de apoio e materiais consistentes para canais físicos e digitais.",
         colors: ["#0C1017", "#B87333", "#E2E8F0"],
         colorNames: ["Preto Imperial", "Cobre Acetinado", "Branco de Alabastro"],
         typography: "Cinzel Serif & JetBrains Mono Technology",
-        achievement: "Reposicionamento bem-sucedido resultando no fechamento de 4 novos contratos corporativos de grande porte.",
-        deliverables: ["Monograma Institucional Regulado", "Estudo Geral de Heráldica", "Papelaria de Prestígio (Hot Stamping)", "Template Corporativo Unificado"]
+        achievement: "Comunicação mais consistente entre apresentação, papelaria e contato comercial.",
+        deliverables: ["Monograma institucional", "Sistema de apoio visual", "Papelaria e apresentações", "Guia de aplicações"]
       },
       {
         id: "pin-vortex-tech",
         title: "Vortex Tech Partners",
-        category: "SaaS & Tech Enterprise",
-        description: "Manual de diretrizes visuais unificadas sob grid de alta precisão geométrica. Cores frias intercaladas com neon tático estrutural.",
+        category: "Branding para tecnologia",
+        description: "Direção visual para um SaaS que precisava diferenciar a marca com leitura clara e arquitetura de interface.",
         imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=650",
         pinterestUrl: "https://br.pinterest.com/pin/433401532892978003/",
         likesCount: 187,
-        challenge: "Diferenciar um SaaS corporativo em um oceano azul de logotipos azuis e tipografias genéricas e arredondadas.",
-        solution: "Contraste absoluto com uma semiótica geométrica de alta tecnologia baseada na velocidade do fluxo e espirais estruturadas (Vortex). Sistema de neon ativo sob ardósia.",
+        challenge: "Diferenciar o produto em um mercado saturado com uma identidade visual mais legível.",
+        solution: "Estruturamos uma identidade visual geométrica com aplicações para produto, interface e comunicação de lançamento.",
         colors: ["#020205", "var(--color-brand)", "#00F0FF"],
         colorNames: ["Preto Absoluto", "Limão Químico TAG08", "Ciano Fluorescente"],
         typography: "Space Grotesk & Fira Code Tech",
-        achievement: "+80% de engajamento no lançamento comercial e grande diferenciação em pitches de VC.",
-        deliverables: ["Logotipo Responsivo Flexível", "Biblioteca de Componentes SVG", "UI Style Kit de Design Líquido", "Motion Brand Guideline"]
+        achievement: "Maior clareza entre marca, produto e comunicação de lançamento.",
+        deliverables: ["Logotipo responsivo", "Biblioteca de componentes", "Style guide para interface", "Manual de motion"]
       },
       {
         id: "pin-emporio-sg",
         title: "Empório Saint Germain",
-        category: "Varejo & Premium Brand",
-        description: "Direção estética sênior aplicada a embalagens de vidro pintadas sob silk, sacolas em papel artesanal e tipografia com respiro clássico.",
+        category: "Branding para varejo",
+        description: "Direção estética para uma marca que precisava comunicar origem, cuidado e continuidade em embalagens e materiais de apoio.",
         imageUrl: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=650",
         pinterestUrl: "https://br.pinterest.com/pin/433401532892978004/",
         likesCount: 214,
-        challenge: "Lançar uma nova linha gourmet artesanal de vinhos, azeites e massas premium importadas que precisava comunicar instantaneamente sua tradição europeia refinada.",
-        solution: "Tipografia italiana com respiros generosos e ilustrações sob traço de caneta bico de pena, integradas a selos heráldicos impressos em relevo de cera tátil.",
+        challenge: "Estruturar embalagens e materiais para traduzir origem, cuidado e valor de marca.",
+        solution: "Criamos uma direção visual para rótulos, embalagens e materiais de ponto de venda com coerência entre aplicação e percepção.",
         colors: ["#1C1616", "#C5A880", "#FFFDF9"],
         colorNames: ["Café Expresso", "Ouro Champanhe", "Gesso Natural"],
         typography: "Cormorant Handdrawn & Inter Light",
-        achievement: "Esgotamento do primeiro lote de importação em apenas 22 dias de relançamento de prateleira.",
-        deliverables: ["Identidade de Rótulos de Garrafas", "Selo Heráldico de Origem", "Sacolas e Embalagens em Papel Kraft Fino", "Book de Campanha de Lançamento"]
+        achievement: "Presença mais organizada em embalagem e ponto de venda.",
+        deliverables: ["Identidade de rótulos", "Sistema para embalagens", "Materiais de apoio", "Guia de aplicação"]
       }
     ];
 
@@ -198,18 +198,18 @@ export default function Branding({ onNavigate }: BrandingProps) {
       id: "custom-" + Date.now(),
       title: newTitle,
       category: newCategory,
-      description: newDescription || "Projeto de marca autoral com identidade visual refinada integrada ao acervo de design estratégico da TAG08.",
+      description: newDescription || "Projeto de branding com identidade visual estruturada para uso em pontos de contato digitais e físicos.",
       imageUrl: finalImg,
       pinterestUrl: newPinterestUrl,
       isCustom: true,
       likesCount: Math.floor(Math.random() * 15) + 1,
-      challenge: "Posicionar a marca de forma distinta em seu nicho através de um design autêntico sob medida, transmitindo valor sênior.",
-      solution: "Construção de uma heráldica geométrica exclusiva com tipologia moderna e respiros nobres estruturando harmonia e peso estético.",
+      challenge: "Organizar a percepção da marca com mais clareza e consistência.",
+      solution: "Estrutura visual pensada para unir linguagem, sistema e aplicações reais.",
       colors: ["#16161D", "var(--color-brand)", "#FFFFFF"],
       colorNames: ["Cinza Escuro", "Limão Químico TAG08", "Branco Puro"],
       typography: "Space Grotesk & Inter UI",
-      achievement: "Elevação imediata do padrão estético digital e manual de diretrizes visuais homologado.",
-      deliverables: ["Marca e Vetoriais Regulados", "Paleta de Cores e Tipografias", "Mockups Conceituais", "Diretrizes de Mídia"]
+      achievement: "Aplicação da identidade com mais coerência entre canais e materiais.",
+      deliverables: ["Diretrizes visuais", "Aplicações digitais", "Peças de marca", "Guia de uso"]
     };
 
     const updated = [newWork, ...pinterestWorks];
@@ -275,16 +275,16 @@ export default function Branding({ onNavigate }: BrandingProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
-                DIVISÃO DE VEREDICTO DE MARCA // TAG08
+                BRANDING E IDENTIDADE // TAG08
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
-                Branding e identidade visual <br />
-                <span className="text-brand">para marcas que precisam comunicar valor.</span>
+                Identidade visual com direção <br />
+                <span className="text-brand">para marcas que precisam comunicar melhor seu valor.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
-                Construímos ecossistemas visuais sóbrios, memoráveis e totalmente integrados à altura da maturidade do seu faturamento real. Elevamos a percepção estética da sua marca para capturar o respeito instantâneo de clientes que pagam mais caro.
+                A TAG08 estrutura identidade, linguagem visual, percepção e materiais de marca para negócios que precisam sair da aparência improvisada e construir uma presença mais clara, coerente e reconhecível.
               </p>
             </div>
           </div>
@@ -308,7 +308,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                   onClick={() => handleLinkClick("/contato")}
                   className="group bg-brand-secondary text-black font-display font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
                 >
-                  <span>REPROJETAR MINHA MARCA</span>
+                  <span>ORGANIZAR MINHA IDENTIDADE</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
                 </button>
               </div>
@@ -317,12 +317,12 @@ export default function Branding({ onNavigate }: BrandingProps) {
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
                   <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-semibold">TAG08 VISUAL HUB</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Matrizes de Alto Calibre e Diferenciação</h4>
+                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Identidade com coerência</h4>
                 </div>
 
                 <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
                   <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                  <span>BRAND_CORE // ENGAGED</span>
+                  <span>IDENTIDADE // EM USO</span>
                 </div>
               </div>
             </div>
@@ -331,58 +331,56 @@ export default function Branding({ onNavigate }: BrandingProps) {
           {/* 3. High status core statistics row matching screenshot layout */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-white">100%</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Arquivos Vetorizados<br/>Completos em Alta Definação</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-white">Clareza visual</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Elementos visuais organizados<br/>para sustentar percepção coerente</span>
             </div>
             <div className="space-y-2">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">2.5x</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Mais Autoridade e<br/>Percepção de Valor Imediata</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Coerência</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Marca alinhada entre canais,<br/>materiais e pontos de contato</span>
             </div>
             <div className="space-y-2">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-white">Sóbrio</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Paletas Estritamente<br/>Elegantes e Atemporais</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-white">Reconhecimento</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Sistema visual mais fácil de<br/>lembrar e repetir</span>
             </div>
             <div className="space-y-2">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-brand">30 Dias</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Prazo Médio Estrito de<br/>Estoque de Criação Core</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Direção de marca</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Identidade pensada para apoiar<br/>decisão e comunicação</span>
             </div>
           </div>
 
         </div>
       </section>
 
-      {/* SECTION 2 - DIAGNOSTIC & PERSPECTIVE SHIFT (AUDITORIA INTERAL E DOR) */}
+      {/* SECTION 2 - DIAGNOSTIC & PERSPECTIVE SHIFT */}
       <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 text-left relative overflow-hidden">
         <div className="absolute top-[30%] left-[-10%] w-[500px] h-[500px] bg-brand-secondary/[0.01] rounded-full blur-[120px] pointer-events-none" />
-        
+
         <div className="max-w-7xl mx-auto space-y-28 relative z-10">
-          
-          {/* Sinais de que sua marca precisa de branding - CLINICAL DIAGNOSTIC CARD */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-24">
               <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-                AUDITORIA INTERNA // POSICIONAMENTO
+                SINAIS DE DESALINHAMENTO VISUAL
               </span>
               <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
-                Instabilidades Atuais de Autoridade
+                Quando a identidade visual já não sustenta o valor da marca.
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                Se os seus canais transmitem incoerência técnica ou falta de capricho, seus clientes tentarão forçar barganhas constantes por falta de diferenciação soberana. Verifique se o seu posicionamento é frágil:
+                Muitas marcas entregam valor, mas ainda comunicam de forma visualmente inconsistente. O problema nem sempre é falta de design; muitas vezes é falta de direção, critério e coerência entre identidade, linguagem e pontos de contato.
               </p>
-              
+
               <div className="p-5 rounded-2xl bg-brand-secondary/[0.01] border border-brand-secondary/5 text-xs text-zinc-400 font-sans">
                 <span className="text-brand-secondary font-black uppercase block mb-1">CONSEQUÊNCIA DIRETA:</span>
-                Sem uniformidade nos criativos, cada arte ou PDF gerado parece ter sido concebido por uma empresa de menor autoridade.
+                Quando o visual não sustenta a percepção, a marca precisa explicar demais o que deveria comunicar com clareza.
               </div>
             </div>
 
             <div className="lg:col-span-7 space-y-4">
               {[
-                "Sua marca atual não transmite a sofisticação ou a real magnitude física offline da sua entrega comercial.",
-                "Cada material, proposta comercial ou rede do ecossistema carrega paletas distintas e layouts desestruturados.",
-                "Seus clientes costumam tentar comparar seus preços de forma direta por sentirem falta de um valor majestoso.",
-                "Seu time de vendas opera em timidez intelectual por não possuir um tom verbal ou direcionador claro.",
-                "A identidade que sustenta seu posicionamento atual está defasada e já não condiz com seu faturamento real."
+                "Visual improvisado: peças, apresentações, posts e materiais parecem ter sido criados em momentos diferentes, sem uma lógica visual comum.",
+                "Percepção abaixo da entrega: a marca entrega bem, mas sua aparência ainda não transmite a clareza, o cuidado e a confiança que o negócio precisa comunicar.",
+                "Identidade sem sistema: cores, fontes, elementos, imagens e aplicações não seguem critérios claros, dificultando reconhecimento e consistência.",
+                "Materiais desalinhados: propostas, redes sociais, site, apresentações e documentos comerciais não parecem pertencer à mesma marca.",
+                "Design sem posicionamento: a estética existe, mas não está conectada ao público, à mensagem, à estratégia e ao momento atual do negócio."
               ].map((signal, sIdx) => (
                 <div key={sIdx} className="flex gap-4 items-start p-4 rounded-2xl bg-charcoal-900 border border-white/[0.03] hover:border-white/[0.06] transition-all">
                   <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-secondary shrink-0 shadow-[0_0_8px_var(--color-brand-secondary)]" />
@@ -392,25 +390,24 @@ export default function Branding({ onNavigate }: BrandingProps) {
             </div>
           </div>
 
-          {/* Logo Não é Branding - ASYMMETRIC GRID INTERACTIVES */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-baseline pt-12 border-t border-white/[0.04]">
             <div className="lg:col-span-4 space-y-4">
               <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-                DESMISTIFICAÇÃO // VALOR PERCEBIDO
+                IDENTIDADE SEM SISTEMA
               </span>
               <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight leading-tight">
-                Logotipo é apenas a ponta do iceberg visual
+                Logo sozinho não resolve percepção.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-                Muitas empresas contratam designers amadores focadas puramente em símbolos baratos, ignorando que o posicionamento e os canais de fidelização constituem o verdadeiro faturamento de marcas sênior:
+                Identidade precisa de regras para cor, tipografia, imagens, composição e materiais. Sem isso, cada ponto de contato acaba falando uma linguagem diferente.
               </p>
             </div>
 
             <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-5">
               {[
-                { title: "O Logotipo Identifica", focus: "SIGNATURA", desc: "A assinatura vetorial minimalista. Serve unicamente para que seus clientes o identifiquem em faturas e mídias." },
-                { title: "A Identidade Organiza", focus: "HARMONIZAÇÃO", desc: "Regula o ecossistema estático: paletas rítmicas de cores, regras de layout e fontes sêniores unificadas de expressão." },
-                { title: "O Branding Constrói", focus: "SOBERANIA", desc: "O manual intelectual estratégico invisível. Guia o tom de voz sênior, a copy autoral de líder e impõe preço premium." }
+                { title: "O logotipo identifica", focus: "SIGNATURA", desc: "A assinatura visual serve para reconhecimento. Sozinha, ela não organiza a percepção da marca." },
+                { title: "A identidade organiza", focus: "COERÊNCIA", desc: "Regras visuais reduzem ruído entre canais, materiais e formatos de comunicação." },
+                { title: "O branding direciona", focus: "MÉTODO", desc: "O sistema visual conecta aparência, mensagem e contexto para sustentar uma marca mais clara." }
               ].map((item, idx) => (
                 <div key={idx} className="p-6 rounded-3xl bg-neutral-900/40 border border-white/[0.04] space-y-4 hover:border-brand-secondary/15 hover:bg-white/[0.01] transition-all duration-300">
                   <div className="flex items-center justify-between border-b border-white/[0.03] pb-3 text-[9px] font-sans text-zinc-500">
@@ -426,48 +423,47 @@ export default function Branding({ onNavigate }: BrandingProps) {
             </div>
           </div>
 
-          {/* Maturidade Estética - QUANDO INVESTIR IN DESIGN */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start pt-12 border-t border-white/[0.04]">
             <div className="lg:col-span-4 space-y-4">
-              <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block font-bold">MATURIDADE ESTÉTICA</span>
+              <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block font-bold">MATURIDADE DA MARCA</span>
               <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase leading-none tracking-tight">
-                SISTEMAS VISUAIS SÃO <span className="text-brand">ACELERADORES DE VALOR.</span>
+                SISTEMAS VISUAIS SUSTENTAM CONSISTÊNCIA.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-                Descubra os pontos cruciais onde a comunicação amadora da sua marca está vazando lucros silenciosos no ambiente digital.
+                Veja onde a comunicação visual costuma perder clareza, coesão e reconhecimento ao longo da jornada da marca.
               </p>
             </div>
 
             <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">01 // MARCA COM INCOMPATIBILIDADE</span>
-                <h4 className="text-white font-display font-black text-sm uppercase">O offline fatura, mas o online afasta</h4>
+                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">01 // COERÊNCIA FRÁGIL</span>
+                <h4 className="text-white font-display font-black text-sm uppercase">Visual difícil de repetir</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Seu serviço prestado no mundo real é impecável e de ticket relevante, mas o design das suas páginas de captura passa pressa e amadorismo. Harmonizamos essa coerência de imediato.
+                  Quando cada peça parece vir de uma referência diferente, a marca perde unidade e a percepção fica instável.
                 </p>
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">02 // ESCAPE DO COMMODITY</span>
-                <h4 className="text-white font-display font-black text-sm uppercase">Fuga da mesmice visual saturada</h4>
+                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">02 // MATERIAIS DESALINHADOS</span>
+                <h4 className="text-white font-display font-black text-sm uppercase">A presença não fala a mesma língua</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Evite bancos de vetores clichês, logos prontos e paletas infantis coloridas demais. Fornecemos estruturas discretas, táticas e com tipografia imponente focada em peso corporativo.
+                  Propostas, site, redes e apresentações precisam transmitir a mesma marca, não versões concorrentes dela.
                 </p>
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">03 // BLINDAGEM DE CONTRATO</span>
-                <h4 className="text-white font-display font-black text-sm uppercase">Prestígio cognitivo imediato</h4>
+                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">03 // PERCEPÇÃO ABAIXO DA ENTREGA</span>
+                <h4 className="text-white font-display font-black text-sm uppercase">A aparência não acompanha o valor entregue</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Sua marca corporativa atua como o primeiro argumento silencioso. Reduza objeções de preços altos surpreendendo o visitante desde o primeiro pixel visível de contato.
+                  Quando a identidade visual fica aquém da entrega, a marca precisa justificar demais algo que deveria ser percebido com naturalidade.
                 </p>
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">04 // PADRÃO UNIFICADO MÚLTIPLO</span>
-                <h4 className="text-white font-display font-black text-sm uppercase">Escalonamento com segurança de equipe</h4>
+                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">04 // DIREÇÃO DE MARCA</span>
+                <h4 className="text-white font-display font-black text-sm uppercase">A identidade precisa de critério</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  A equipe comercial, os fornecedores e as gráficas de impressão passam a operar sob as mesmas regras exatas detalhadas no Manual Visual da TAG08, sem ruído.
+                  Direção visual não é enfeite. É o que ajuda a marca a manter consistência, clareza e reconhecimento ao longo do tempo.
                 </p>
               </div>
             </div>
@@ -475,50 +471,50 @@ export default function Branding({ onNavigate }: BrandingProps) {
         </div>
       </section>
 
-      {/* SECTION 3 - DELIVERABLES (The "What" with Clean Features Grid) */}
+      {/* SECTION 3 - DELIVERABLES */}
       <section className="px-4 sm:px-6 md:px-8 py-16 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-2 max-w-2xl">
-            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">ENTREGҁVEIS DE ALTO IMPACTO CORPORATIVO</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">ATIVADE OPERACIONAL DE CRIAï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ O VISUAL</h2>
+            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">O QUE ORGANIZAMOS</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">Identidade não é só logo. É um sistema para sustentar percepção.</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              Não entregamos apenas um arquivo solto de logo. Entregamos uma arquitetura de marca de ponta a ponta pronta para performar nos maiores níveis do mercado.
+              A TAG08 estrutura elementos visuais, linguagem, aplicações e materiais para que a marca consiga se apresentar com mais clareza, consistência e reconhecimento nos seus principais pontos de contato.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 text-left">
+            <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
+              <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
+                <Search className="w-5 h-5 text-brand" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-white font-display font-black text-sm uppercase">Diagnóstico visual</h4>
+                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                  Leitura do momento da marca, dos materiais existentes, dos pontos de contato e dos sinais de desalinhamento visual.
+                </p>
+              </div>
+            </div>
+
             <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
               <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
                 <Compass className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Identidade Corporativa</h4>
+                <h4 className="text-white font-display font-black text-sm uppercase">Direção de identidade</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Logotipos modernos corporativos, símbolos geométricos discretos e a icônica combinação da paleta sóbria (preto absoluto, ardósia e neon tático) com tipografias exclusivas de alto calibre.
+                  Definição de caminhos visuais, referências, tom estético e critérios para orientar a construção da identidade.
                 </p>
               </div>
             </div>
 
             <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
               <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-brand" />
+                <Palette className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Manual de Diretrizes</h4>
+                <h4 className="text-white font-display font-black text-sm uppercase">Sistema visual</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Guia estrutural cirurgicamente detalhado que ensina seus parceiros internos, agências e subcontratados de marketing a aplicarem as diretrizes de design sem alterar as proporções ou desorganizar a comunicação.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
-              <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
-                <BookOpen className="w-5 h-5 text-brand" />
-              </div>
-              <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Tom de Voz &amp; Copys</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Matrizes verbais orientadas ï¿½ maturidade da imagem empresarial. Definimos as exatas palavras recomendadas, jargï¿½es estratégicos e narrativas proprietï¿½rias de storytelling para blindar o status da sua empresa.
+                  Organização de cores, tipografia, elementos gráficos, imagens, hierarquia e aplicações para dar consistência à marca.
                 </p>
               </div>
             </div>
@@ -528,9 +524,21 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 <Layers className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Aplicações Reais</h4>
+                <h4 className="text-white font-display font-black text-sm uppercase">Aplicações da marca</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Mapeamento de templates institucionais prontos, papelarias digitais refinadas de envio corporativo, apresentações de proposta comercial elegantíssimas e assinaturas eletroneves unificadas de e-mail.
+                  Desenvolvimento de materiais para redes sociais, apresentações, propostas, papelaria, site ou outros pontos de contato relevantes.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
+              <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 text-brand" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-white font-display font-black text-sm uppercase">Guia de uso</h4>
+                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                  Registro das principais regras e orientações para que a identidade possa ser aplicada com mais clareza e continuidade.
                 </p>
               </div>
             </div>
@@ -542,13 +550,16 @@ export default function Branding({ onNavigate }: BrandingProps) {
       <section className="px-4 sm:px-6 md:px-8 py-10 border-b border-white/[0.04] bg-charcoal-900/40 text-left">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 max-w-3xl">
-            <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">ARQUIVOS ORIGINAIS VETORIZADOS INDEPENDENTES</h4>
+            <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+              CRITÉRIOS DE CONFIANÇA
+            </span>
+            <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">O que sustenta uma identidade mais consistente.</h4>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed">
-              Sem burocracias. Após a validação mútua, compartilhamos pastas na nuvem permanentes em nossa infraestrutura contendo todos os arquivos editáveis nativos (SVG, EPS, PDF Vetorizado e Adobe Illustrator original) para uso irrestrito da sua marca de ponta a ponta.
+              Uma identidade visual funciona melhor quando existe direção, sistema, aplicação e continuidade. O objetivo não é parecer maior do que a marca é, mas comunicar melhor o valor que ela já entrega.
             </p>
           </div>
           <span className="font-mono text-[8.5px] text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
-            NATIVE BRAND VERDICT // TAG08
+            DIREÇÃO VISUAL // TAG08
           </span>
         </div>
       </section>
@@ -556,49 +567,49 @@ export default function Branding({ onNavigate }: BrandingProps) {
       {/* BRANDING CLIENTS LOGO SOCIAL PROOF */}
       <MiniCases 
         onNavigate={onNavigate} 
-        title="Posicionamento e Identidade Consolidada"
-        subtitle="Instituições, escritórios e clínicas médicas que confiam na direção de arte sóbria da TAG08."
-        badge="BRANDING PROOF // IDENTIDADES DE ALTO PRESTҍGIO"
+        title="Projetos que mostram identidade com direção."
+        subtitle="A prova de um projeto de identidade não está no status visual, mas na coerência entre marca, linguagem, aplicação e percepção."
+        badge="MÉTODO EM PRÁTICA"
       />
 
       {/* PINTEREST SHOWCASE SECTION */}
       <section id="pinterest-brand-showcase" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-neutral-950/40 relative overflow-hidden text-left">
-        {/* Ambient shadow gradient */}
         <div className="absolute top-[30%] right-[-10%] w-[500px] h-[500px] bg-brand-secondary/[0.015] rounded-full blur-[130px] pointer-events-none" />
-        
+
         <div className="max-w-7xl mx-auto space-y-12 relative z-10">
-          
-          {/* Section Header */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end border-b border-white/[0.04] pb-8">
             <div className={`${isAdmin ? "lg:col-span-8" : "lg:col-span-12"} space-y-3`}>
-              <span 
+              <span
                 onClick={handleBadgeClick}
                 className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block cursor-help select-none active:scale-95 transition-transform"
-                title="ï¿½rea restrita de gestï¿½o. Clique 5 vezes para habilitar recursos ocultos."
+                title="Área restrita de gestão. Clique 5 vezes para habilitar recursos ocultos."
               >
-                {isAdmin ? "PORTFï¿½ï¿½ï¿½ï¿½ï¿½LIO IMERSIVO // PAINEL RESTRITO DE GESTï¿½ï¿½ O (ATIVADO) ï¿½ï¿½&ï¿½ï¿½ï¿½~ï¿½ï¿½ï¿½ï¿½" : "PORTFï¿½ï¿½ï¿½ï¿½ï¿½LIO IMERSIVO // PINTEREST HUB"}
+                {isAdmin ? "PORTFÓLIO VISUAL // GESTÃO" : "PORTFÓLIO VISUAL // PINTEREST HUB"}
               </span>
               <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase tracking-tight leading-none">
-                Estilo &amp; Identidades Autorais
+                Aplicações que mostram a identidade em uso.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans font-medium max-w-2xl leading-relaxed">
-                Nossas marcas usam o <span className="text-brand">br.pinterest.com</span> de forma estratégica para armazenar o acervo de heráldica, tipologia e conceito definitivo em alta definição. Navegue no portfólio coletivo abaixo e acesse as pranchas originais.
+                O portfólio visual reúne referências, aplicações e projetos de identidade para mostrar como a marca pode ganhar mais coerência nos seus pontos de contato.
+              </p>
+              <p className="text-zinc-500 text-xs sm:text-sm font-sans leading-relaxed max-w-2xl">
+                Mais do que uma vitrine estética, o acervo ajuda a visualizar como direção, sistema visual e aplicação constroem uma presença mais consistente.
               </p>
             </div>
-            
+
             {isAdmin && (
               <div className="lg:col-span-4 flex justify-start lg:justify-end">
                 <button
                   onClick={() => setFormOpen(!formOpen)}
                   className={`group flex items-center gap-2 p-3 rounded-xl font-mono text-[10px] uppercase tracking-widest font-semibold transition-all border ${
-                    formOpen 
-                      ? "bg-rose-500/10 text-rose-400 border-rose-500/20" 
+                    formOpen
+                      ? "bg-rose-500/10 text-rose-400 border-rose-500/20"
                       : "bg-brand-secondary/10 text-brand-secondary border-brand-secondary/20 hover:bg-brand-secondary hover:text-black hover:shadow-[0_4px_20px_rgba(var(--color-brand-secondary-rgb),0.15)]"
                   }`}
                 >
                   {formOpen ? (
                     <>
-                      <span>FECHAR PAINEL GESTï¿½ï¿½ O</span>
+                      <span>FECHAR PAINEL DE GESTÃO</span>
                     </>
                   ) : (
                     <>
@@ -611,7 +622,6 @@ export default function Branding({ onNavigate }: BrandingProps) {
             )}
           </div>
 
-          {/* Collapsable Creator Panel */}
           <AnimatePresence>
             {formOpen && (
               <motion.div
@@ -623,21 +633,21 @@ export default function Branding({ onNavigate }: BrandingProps) {
               >
                 <div className="p-6 sm:p-8 bg-charcoal-900 border border-white/[0.08] rounded-3xl space-y-6 relative">
                   <div className="absolute top-4 right-4 font-mono text-[8px] text-zinc-600">SYS // PIN_LINK_STRATEGY</div>
-                  
+
                   <div className="space-y-1">
                     <h3 className="text-white font-display font-bold text-sm uppercase flex items-center gap-2">
                       <Link2 className="w-4 h-4 text-brand" />
-                      Adicionar Nova Marca Criativa (Hyperlink Pinterest)
+                      Adicionar nova marca ao portfólio visual
                     </h3>
                     <p className="text-zinc-400 text-xs font-sans">
-                      Insira o título da marca, selecione o setor e forneça o link ativo do Pinterest correspondente para que ele seja incorporado dinamicamente ao portfólio.
+                      Insira o título da marca, selecione o setor e forneça o link ativo do Pinterest correspondente para que ele seja incorporado ao portfólio.
                     </p>
                   </div>
 
                   <form onSubmit={handleAddPinterestWork} className="grid grid-cols-1 md:grid-cols-12 gap-5">
                     <div className="md:col-span-4 space-y-1">
-                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Título da Marca / Cliente</label>
-                      <input 
+                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Título da marca / cliente</label>
+                      <input
                         type="text"
                         required
                         placeholder="Ex: Arctica Concept"
@@ -648,24 +658,24 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     </div>
 
                     <div className="md:col-span-4 space-y-1">
-                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Setor / Categoria de Marca</label>
-                      <select 
+                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Setor / categoria de marca</label>
+                      <select
                         value={newCategory}
                         onChange={(e) => setNewCategory(e.target.value)}
                         className="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand font-medium tracking-wide transition-all"
                       >
-                        <option value="Clínicas & High-Ticket">Clínicas &amp; High-Ticket</option>
-                        <option value="Escritórios de Advocacia">Escritórios de Advocacia</option>
-                        <option value="SaaS &amp; Tech Enterprise">SaaS &amp; Tech Enterprise</option>
-                        <option value="Varejo &amp; Premium Brand">Varejo &amp; Premium Brand</option>
-                        <option value="Identidade Autoral">Identidade Autoral</option>
-                        <option value="Rebranding Estúdio">Rebranding Estúdio</option>
+                        <option value="Identidade para saúde">Identidade para saúde</option>
+                        <option value="Identidade institucional">Identidade institucional</option>
+                        <option value="Branding para tecnologia">Branding para tecnologia</option>
+                        <option value="Branding para varejo">Branding para varejo</option>
+                        <option value="Identidade autoral">Identidade autoral</option>
+                        <option value="Rebranding estúdio">Rebranding estúdio</option>
                       </select>
                     </div>
 
                     <div className="md:col-span-4 space-y-1">
-                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Pinterest Link (Hyperlink de Origem)</label>
-                      <input 
+                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Pinterest link de origem</label>
+                      <input
                         type="url"
                         required
                         placeholder="Ex: https://br.pinterest.com/pin/..."
@@ -676,10 +686,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     </div>
 
                     <div className="md:col-span-8 space-y-1">
-                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Descrição Curta Conceitual</label>
-                      <input 
+                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Descrição curta conceitual</label>
+                      <input
                         type="text"
-                        placeholder="Descreva brevemente a heráldica, a harmonia e o posicionamento estético da marca..."
+                        placeholder="Descreva brevemente a direção visual e a aplicação da identidade..."
                         value={newDescription}
                         onChange={(e) => setNewDescription(e.target.value)}
                         className="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand font-medium tracking-wide placeholder-zinc-700 transition-all"
@@ -687,8 +697,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     </div>
 
                     <div className="md:col-span-4 space-y-1">
-                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Link da Imagem de Capa (Opcional)</label>
-                      <input 
+                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Link da imagem de capa (opcional)</label>
+                      <input
                         type="url"
                         placeholder="Vazio para gerar capa estética minimalista"
                         value={newImageUrl}
@@ -707,25 +717,24 @@ export default function Branding({ onNavigate }: BrandingProps) {
                         className="bg-brand-secondary hover:bg-brand-dark text-black font-mono font-black text-[10px] uppercase tracking-widest py-3 px-6 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-lg"
                       >
                         <CheckCircle className="w-3.5 h-3.5" />
-                        <span>Publicar e Incorporar no Feed</span>
+                        <span>Publicar e incorporar no feed</span>
                       </button>
                     </div>
                   </form>
 
                   {additionSuccess && (
-                     <div className="p-3.5 bg-brand/10 border border-brand/20 text-brand rounded-xl text-xs font-sans flex items-center gap-2">
-                       <CheckCircle className="w-4 h-4 animate-bounce" />
-                       <span>A marca foi adicionada com sucesso e estruturada no feed de hiperlinks abaixo!</span>
-                     </div>
+                    <div className="p-3.5 bg-brand/10 border border-brand/20 text-brand rounded-xl text-xs font-sans flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 animate-bounce" />
+                      <span>A marca foi adicionada ao portfólio e organizada no feed abaixo.</span>
+                    </div>
                   )}
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Filtering Tabs Row */}
           <div className="flex flex-wrap items-center gap-2 border-b border-white/[0.03] pb-4">
-            <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest block font-bold mr-3">FILTRAR PORTFï¿½ï¿½ï¿½ï¿½ï¿½LIO:</span>
+            <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest block font-bold mr-3">FILTRAR PORTFÓLIO:</span>
             {["todos", ...Array.from(new Set(pinterestWorks.map(item => item.category)))].map((cat) => (
               <button
                 key={cat}
@@ -736,19 +745,18 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
                 }`}
               >
-                {cat === "todos" ? "Visualizar Todas" : cat}
+                {cat === "todos" ? "Visualizar todas" : cat}
               </button>
             ))}
           </div>
 
-          {/* Pinterest Fluid Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <AnimatePresence mode="popLayout">
               {pinterestWorks
                 .filter(item => filterCategory === "todos" || item.category === filterCategory)
                 .map((work) => {
                   const isItemLiked = !!likedItems[work.id];
-                  
+
                   return (
                     <motion.div
                       key={work.id}
@@ -760,24 +768,20 @@ export default function Branding({ onNavigate }: BrandingProps) {
                       onClick={() => setSelectedWork(work)}
                       className="bg-charcoal-900 border border-white/[0.06] hover:border-brand/40 duration-300 rounded-3xl overflow-hidden flex flex-col justify-between group shadow-xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] transition-all cursor-pointer"
                     >
-                      {/* Image Frame with hover scale */}
                       <div className="relative aspect-[4/3] bg-zinc-950 overflow-hidden border-b border-white/[0.04]">
-                        <img 
-                          src={work.imageUrl} 
-                          alt={work.title} 
+                        <img
+                          src={work.imageUrl}
+                          alt={work.title}
                           className="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform"
                           referrerPolicy="no-referrer"
                         />
-                        {/* Elegant overlay masks */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-black/30 opacity-70 group-hover:opacity-60 transition-opacity pointer-events-none" />
-                        
-                        {/* Upper indicators */}
+
                         <div className="absolute top-4 left-4 right-4 flex justify-between items-center" onClick={(e) => e.stopPropagation()}>
                           <span className="font-mono text-[8px] bg-black/60 backdrop-blur-md text-zinc-300 font-bold tracking-widest uppercase py-1 px-2.5 rounded-md border border-white/5 shadow-sm">
                             {work.category}
                           </span>
-                          
-                          {/* Favorite/Engagement Heart */}
+
                           <button
                             onClick={(e) => {
                               e.preventDefault();
@@ -785,8 +789,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
                               handleLikeItem(work.id);
                             }}
                             className={`w-7 h-7 rounded-lg flex items-center justify-center backdrop-blur-md transition-all shadow-sm ${
-                              isItemLiked 
-                                ? "bg-red-500/20 text-red-400 border border-red-500/35" 
+                              isItemLiked
+                                ? "bg-red-500/20 text-red-400 border border-red-500/35"
                                 : "bg-black/60 border border-white/10 text-zinc-400 hover:text-white"
                             }`}
                           >
@@ -794,7 +798,6 @@ export default function Branding({ onNavigate }: BrandingProps) {
                           </button>
                         </div>
 
-                        {/* Floating interaction overlay on image center */}
                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                           <button
                             onClick={(e) => {
@@ -804,22 +807,20 @@ export default function Branding({ onNavigate }: BrandingProps) {
                             }}
                             className="bg-brand-secondary hover:bg-white text-black font-mono text-[9px] uppercase tracking-widest font-black py-2.5 px-4 rounded-xl flex items-center gap-1.5 scale-90 group-hover:scale-100 transition-all duration-300 shadow-[0_4px_15px_rgba(var(--color-brand-secondary-rgb),0.3)]"
                           >
-                            <span>Apreciar Conceito</span>
+                            <span>Ver referência no Pinterest</span>
                             <ArrowUpRight className="w-3.5 h-3.5" />
                           </button>
                         </div>
-                        
-                        {/* Bottom technical index bar */}
+
                         <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-zinc-500 font-sans text-[7px] tracking-wider select-none pointer-events-none">
                           <span>CONCEPT_CASE_TAG08</span>
                           <span className="text-zinc-400 flex items-center gap-1">
                             <Heart className="w-2 h-2 text-red-500" />
-                            {work.likesCount || 0}
+                            Aplicação visual
                           </span>
                         </div>
                       </div>
 
-                      {/* Card Information */}
                       <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                         <div className="space-y-1.5">
                           <h4 className="text-white font-display font-black text-sm uppercase group-hover:text-brand transition-colors text-left truncate">
@@ -830,13 +831,12 @@ export default function Branding({ onNavigate }: BrandingProps) {
                           </p>
                         </div>
 
-                        {/* Card bottom direct actions */}
                         <div className="pt-3 border-t border-white/[0.04] flex items-center justify-between" onClick={(e) => e.stopPropagation()}>
-                          <button 
+                          <button
                             onClick={() => setSelectedWork(work)}
                             className="text-[10px] font-sans text-zinc-400 hover:text-brand flex items-center gap-1 group-hover:translate-x-0.5 transition-all text-left cursor-pointer"
                           >
-                            <span>Apresentação Visual</span>
+                            <span>Aplicação da identidade</span>
                             <ArrowUpRight className="w-3.5 h-3.5 text-brand-secondary" />
                           </button>
 
@@ -857,7 +857,6 @@ export default function Branding({ onNavigate }: BrandingProps) {
             </AnimatePresence>
           </div>
 
-          {/* Pinterest Integration Tips banner */}
           {isAdmin && (
             <div className="p-6 bg-charcoal-900 border border-white/[0.06] rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3 text-left">
@@ -865,27 +864,24 @@ export default function Branding({ onNavigate }: BrandingProps) {
                   <Bookmark className="w-4 h-4 text-red-500" />
                 </div>
                 <div>
-                  <h5 className="text-white text-xs font-mono font-bold uppercase">Integração do Hub de Criatividade TAG08</h5>
-                  <p className="text-zinc-400 text-[11px]">Você pode organizar todas as referências criando pins dedicados em seu Pinterest empresarial e carregando-os diretamente aqui neste espaço.</p>
+                  <h5 className="text-white text-xs font-mono font-bold uppercase">Integração do portfólio visual TAG08</h5>
+                  <p className="text-zinc-400 text-[11px]">O Pinterest segue como acervo visual oficial para referências de identidade e aplicação.</p>
                 </div>
               </div>
-              <a 
-              href="https://br.pinterest.com" 
-              target="_blank" 
-              rel="noreferrer" 
-              onClick={() => handleOutboundClick("Pinterest", "https://br.pinterest.com", "branding-pinterest")}
-              className="text-[10px] font-mono font-bold text-red-500 uppercase tracking-widest hover:underline bg-red-500/5 px-3.5 py-2 rounded-xl border border-red-500/10"
+              <a
+                href="https://br.pinterest.com"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => handleOutboundClick("Pinterest", "https://br.pinterest.com", "branding-pinterest")}
+                className="text-[10px] font-mono font-bold text-red-500 uppercase tracking-widest hover:underline bg-red-500/5 px-3.5 py-2 rounded-xl border border-red-500/10"
               >
-                Ir para o br.pinterest.com
+                Ver portfólio visual
               </a>
             </div>
           )}
 
-
-
         </div>
       </section>
-
       {/* SECTION - WORK SYSTEM (WhatsApp Neon Callout inspired by screenshot) */}
       <section className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
         <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(var(--color-brand-rgb),0.18)] select-none">
@@ -1489,7 +1485,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-[8px] bg-white/[0.04] text-zinc-400 font-bold tracking-widest uppercase py-1 px-2.5 rounded-md border border-white/5 select-none">
-                      STUDIO // CASE SYSTEM
+                      PORTFÓLIO VISUAL // TAG08
                     </span>
                     
                     {/* Favorite Heart for interactive feedback */}
@@ -1512,7 +1508,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                       >
                         <Heart className={`w-3.5 h-3.5 ${likedItems[selectedWork.id] ? "fill-red-400" : ""}`} />
                       </button>
-                      <span>{selectedWork.likesCount || 0} CO-SIGNERS</span>
+                      <span>REFERÊNCIA VISUAL</span>
                     </div>
                   </div>
 
@@ -1530,14 +1526,14 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
                 {/* Bottom outbound anchor to validation source pin */}
                 <div className="pt-6 mt-6 md:mt-0 border-t border-white/[0.04]">
-                  <a 
+                    <a 
                     href={selectedWork.pinterestUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="w-full bg-red-600 hover:bg-red-700 text-white font-mono text-[9px] uppercase tracking-widest font-black py-3 px-4 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-[0_4px_15px_rgba(220,38,38,0.25)] hover:scale-[1.01]"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
-                    <span>Ver Quadro de Inspiração Original</span>
+                    <span>Ver referência no Pinterest</span>
                   </a>
                 </div>
               </div>
@@ -1578,10 +1574,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     <div className="space-y-1.5 text-left bg-white/[0.01] border border-white/[0.03] p-4 rounded-xl">
                       <h4 className="font-mono text-[10px] text-zinc-400 uppercase tracking-widest font-extrabold flex items-center gap-2">
                         <Briefcase className="w-3.5 h-3.5 text-brand" />
-                        O Desafio Estratégico
+                        Contexto da marca
                       </h4>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
-                        {selectedWork.challenge || "Posicionar e consolidar a marca esteticamente em seu respectivo ecossistema, gerando identificabilidade instantï¿½nea sênior perante clientes de alto prestígio."}
+                        {selectedWork.challenge || "A marca precisava alinhar seus pontos de contato para comunicar com mais clareza, coerência e continuidade."}
                       </p>
                     </div>
 
@@ -1589,10 +1585,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     <div className="space-y-1.5 text-left bg-white/[0.01] border border-white/[0.03] p-4 rounded-xl">
                       <h4 className="font-mono text-[10px] text-zinc-400 uppercase tracking-widest font-extrabold flex items-center gap-2">
                         <Sparkles className="w-3.5 h-3.5 text-brand" />
-                        Direção de Marca &amp; Conceito
+                        Direção visual
                       </h4>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
-                        {selectedWork.solution || "Desenvolvemos heráldica refinada com grids precisos e sistemas cromáticos elegantes que comunicam seriedade, sobriedade e maturidade corporativa."}
+                        {selectedWork.solution || "Organizamos elementos visuais, linguagem e aplicação para sustentar uma percepção mais coerente da marca."}
                       </p>
                     </div>
 
@@ -1629,7 +1625,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                       <div className="space-y-2 bg-white/[0.01] border border-white/[0.03] p-4 rounded-xl text-left flex flex-col justify-center">
                         <h4 className="font-mono text-[10px] text-zinc-400 uppercase tracking-widest font-extrabold flex items-center gap-2">
                           <Type className="w-3.5 h-3.5 text-brand" />
-                          Arquitetura Tipográfica
+                          Tipografia aplicada
                         </h4>
                         <p className="text-brand font-display font-black text-[13px] uppercase tracking-wide pt-0.5">
                           {selectedWork.typography || "Space Grotesk & Inter Modern"}
@@ -1641,19 +1637,19 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     {/* Success / Metric Indicators */}
                     <div className="bg-brand/[0.03] border border-brand-secondary/15 p-4 rounded-xl text-left space-y-1">
                       <span className="font-mono text-[9px] bg-brand-secondary/10 text-brand-secondary uppercase tracking-widest font-black px-2.5 py-0.5 rounded border border-brand-secondary/10 inline-block">
-                        INDICADOR SUCESSO COLETIVO
+                        CRITÉRIO VISUAL
                       </span>
                       <p className="text-zinc-200 text-[11px] font-sans font-medium flex items-center gap-1.5 pt-1">
                         <TrendingUp className="w-4 h-4 text-brand shrink-0" />
-                        {selectedWork.achievement || "Elevação substancial no índice de memorabilidade digital e percepção estética consolidada."}
+                        {selectedWork.achievement || "Mais coerência entre marca, linguagem e aplicação."}
                       </p>
                     </div>
 
                     {/* Deliverables lists */}
                     <div className="text-left space-y-2">
-                      <h5 className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-extrabold">Entregáveis Fine-Art:</h5>
+                      <h5 className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-extrabold">Aplicações da marca:</h5>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                        {(selectedWork.deliverables || ["Logotipo Vetorial Vetado", "Manual de Identidade Geral", "Diretrizes de Ambientação", "Assets Digitais Integrados"]).map((deliv, idx) => (
+                        {(selectedWork.deliverables || ["Diretrizes visuais", "Aplicações digitais", "Peças de marca", "Guia de uso"]).map((deliv, idx) => (
                           <div key={idx} className="flex items-center gap-2 text-[10.5px] text-zinc-400 font-sans font-medium">
                             <CheckCircle className="w-3.5 h-3.5 text-brand shrink-0 stroke-[2.5]" />
                             <span>{deliv}</span>
@@ -1665,17 +1661,17 @@ export default function Branding({ onNavigate }: BrandingProps) {
                   </div>
                 </div>
 
-                {/* Massive premium WhatsApp CTA */}
+                {/* WhatsApp CTA for portfolio contact */}
                 <div className="pt-6 mt-8 border-t border-white/[0.04] flex flex-col sm:flex-row items-center gap-4">
                   
                   <a 
-                    href={buildBrazilWhatsAppUrl(`Ol%C3%A1%20TAG08!%20Estava%20analisando%20o%20portf%C3%B3lio%20de%20Branding%20e%20fiquei%20impressionado%20com%20o%20case%20da%20marca%20"${encodeURIComponent(selectedWork.title)}".%20Gostaria%20de%20solicitar%20um%20diagn%C3%B3stico%20de%20branding%20premium%20para%20o%20meu%20neg%C3%B3cio!`)}
+                    href={buildBrazilWhatsAppUrl(`Ol%C3%A1%20TAG08!%20Estava%20analisando%20o%20portf%C3%B3lio%20de%20Branding%20e%20gostaria%20de%20entender%20como%20a%20TAG08%20pode%20organizar%20a%20identidade%20da%20minha%20marca%20a%20partir%20deste%20case%20"${encodeURIComponent(selectedWork.title)}".`)}
                     target="_blank"
                     rel="noreferrer"
-                    onClick={() => handleOutboundClick("WhatsApp", buildBrazilWhatsAppUrl(`Ol%C3%A1%20TAG08!%20Estava%20analisando%20o%20portf%C3%B3lio%20de%20Branding%20e%20fiquei%20impressionado%20com%20o%20case%20da%20marca%20"${encodeURIComponent(selectedWork.title)}".%20Gostaria%20de%20solicitar%20um%20diagn%C3%B3stico%20de%20branding%20premium%20para%20o%20meu%20neg%C3%B3cio!`), "branding-work-case-br")}
+                    onClick={() => handleOutboundClick("WhatsApp", buildBrazilWhatsAppUrl(`Ol%C3%A1%20TAG08!%20Estava%20analisando%20o%20portf%C3%B3lio%20de%20Branding%20e%20gostaria%20de%20entender%20como%20a%20TAG08%20pode%20organizar%20a%20identidade%20da%20minha%20marca%20a%20partir%20deste%20case%20"${encodeURIComponent(selectedWork.title)}".`), "branding-work-case-br")}
                     className="w-full sm:flex-1 bg-brand hover:bg-brand-dark text-black font-mono text-[10px] uppercase tracking-widest font-black py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all shadow-[0_4px_22px_rgba(var(--color-brand-secondary-rgb),0.2)] hover:scale-[1.01] hover:shadow-[0_4px_30px_rgba(var(--color-brand-secondary-rgb),0.3)] cursor-pointer text-center"
                   >
-                    <span>Solicitar Diagnóstico como este case</span>
+                    <span>Organizar minha identidade</span>
                     <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
                   </a>
 
@@ -1683,7 +1679,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     onClick={() => setSelectedWork(null)}
                     className="w-full sm:w-auto font-mono text-[9px] uppercase tracking-wider text-zinc-500 hover:text-white border border-white/5 py-4 px-6 rounded-xl cursor-pointer"
                   >
-                    Fechar Painel
+                    Fechar modal
                   </button>
 
                 </div>

@@ -500,16 +500,16 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 Nosso Ciclo Mensal SistemÃƒÂ¡tico
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
-                Seguimos um ritmo de planejamento consistente para manter sua grade de canais digitais organizada, previsÃƒÂ­vel e sem dependÃƒÂªncia de ÃƒÂºltima hora:
+                Seguimos um ritmo de planejamento consistente para manter sua grade de canais digitais organizada, clara e sem depender de urgência de última hora:
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {[
-                { title: "Briefing & DireÃƒÂ§ÃƒÂ£o", desc: "Alinhamos os seus gatilhos comerciais de ofertas e compromissos do perÃƒÂ­odo para mapear os temas do mÃƒÂªs." },
-                { title: "Desenho e Roteiros", desc: "ConstruÃƒÂ­mos as falas e os carrossÃƒÂ©is no Notion para revisÃƒÂ£o estrutural." },
-                { title: "Refinamento Visual", desc: "Criamos as artes estÃƒÂ¡ticas limpas exclusivas adequadas ao tom premium e liberamos para validaÃƒÂ§ÃƒÂ£o pÃƒÂºblica." },
-                { title: "AutomaÃƒÂ§ÃƒÂ£o e AnÃƒÂ¡lise", desc: "Agendamos as postagens oficiais e extraÃƒÂ­mos mÃƒÂ©tricas e insights reais no tÃƒÂ©rmino de cada ciclo." }
+                { title: "Linha editorial", desc: "Definimos temas, mensagens e prioridades para orientar a produção ao longo do mês." },
+                { title: "Formatos e roteiros", desc: "Estruturamos falas, carrosséis e recortes para manter consistência entre conteúdo e posicionamento." },
+                { title: "Ajustes de identidade", desc: "Aplicamos identidade, hierarquia visual e consistência para que os conteúdos comuniquem a mesma marca." },
+                { title: "Acompanhamento contínuo", desc: "Revisamos a rotina e os aprendizados para ajustar temas, formatos e frequência quando necessário." }
               ].map((step, sIdx) => (
                 <div key={sIdx} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-2xl text-left space-y-4 hover:border-brand/10 transition-all duration-300">
                   <div className="font-sans text-[10px] font-black text-brand-secondary bg-brand-secondary/5 w-8 h-8 rounded-lg flex items-center justify-center border border-brand-secondary/10 shadow-[0_4px_10px_rgba(var(--color-brand-secondary-rgb),0.05)]">
@@ -531,19 +531,19 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 CULTURE OF METRICS MENSAL
               </span>
               <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
-                Monitoramos o seu Crescimento de Forma AnalÃƒÂ­tica
+                Acompanhamos a presença para melhorar a consistência editorial
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                NÃƒÂ£o publicamos criativos por publicar. Acompanhamos indicadores cruciais para depurar o funil comercial e calibrar os desvios editoriais a cada ciclo renovado:
+                A leitura do trabalho serve para ajustar temas, formatos, frequência e pontos de melhoria sem transformar redes sociais em promessa de resultado.
               </p>
             </div>
 
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { title: "Alcance Qualificado", desc: "Quantas contas executivas e tomadores de decisÃƒÂ£o visualizam sua marca no LinkedIn e Instagram mensalmente." },
-                { title: "MÃƒÂ©tricas de RetenÃƒÂ§ÃƒÂ£o", desc: "Mapeamos se os carrossÃƒÂ©is e vÃƒÂ­deos sÃƒÂ£o realmente lidos por completo ou abandonados antes do CTA." },
-                { title: "AderÃƒÂ¯Ã‚Â¿Ã‚Â½ncia Direta", desc: "Monitoramos o volume real de novos links acessados ou directs que chegam ao comercial provindos espontÃƒÂ¢neamente." },
-                { title: "CalibraÃƒÂ§ÃƒÂ£o ContÃƒÂ­nua", desc: "Ajustamos os ganchos baseando-nos nos dados do perÃƒÂ­odo anterior para elevar a conversÃƒÂ£o sistÃƒÂªmica." }
+                { title: "Presença mais coerente", desc: "O foco é tornar a comunicação mais clara, reconhecível e conectada ao posicionamento da marca." },
+                { title: "Leitura de conteúdo", desc: "Observamos se os formatos ajudam a sustentar a narrativa ou apenas ocupam espaço." },
+                { title: "Aproximação do público", desc: "Acompanhamos se os recortes e as falas facilitam compreensão, confiança e próximo passo." },
+                { title: "Ajuste contínuo", desc: "Usamos os aprendizados do ciclo para refinar temas, frequência e linguagem editorial." }
               ].map((item, iIdx) => (
                 <div key={iIdx} className="p-5 rounded-2xl bg-charcoal-900/60 border border-white/[0.03] space-y-1.5 text-left hover:border-brand/10 transition-colors">
                   <div className="w-2 h-2 rounded-full bg-brand-secondary" />
@@ -1816,18 +1816,18 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
       {/* SECTION 5 - ACTION TRIGGER FOOTER */}
       <section className="px-4 sm:px-6 md:px-8 py-20 text-center space-y-6 max-w-4xl mx-auto">
         <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
-          CONVERSE COM O SEU PERFEITO PÃƒÅ¡BLICO <br />
-          <span className="text-brand">E TORNE-SE UMA REFERaNCIA INDISCUTaVEL.</span>
+          Organize uma presença mais clara nas redes. <br />
+          <span className="text-brand">A TAG08 ajuda a estruturar linha editorial, frequência, formatos e revisão para publicar com mais critério.</span>
         </h2>
         <p className="text-zinc-400 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">
-          Garanta que seu canal de redes sociais pare de afastar clientes de alto ticket. Fale com nosso estrategista lÃƒÂ­der e alinhe seu plano de conteÃƒÂºdo sÃƒÂªnior hoje.
+          A TAG08 ajuda a organizar linha editorial, frequência, formatos e revisão para que sua marca publique com mais critério e consistência.
         </p>
         <div className="pt-4">
           <button
             onClick={() => handleLinkClick("/contato")}
             className="group bg-brand text-black font-mono font-black text-[10px] uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
           >
-            <span>DISPARAR ESTRATaGIA EDITORIAL SaNIOR</span>
+            <span>ORGANIZAR MINHA PRESENÇA</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
           </button>
         </div>
