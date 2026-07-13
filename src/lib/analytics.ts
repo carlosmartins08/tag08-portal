@@ -115,7 +115,6 @@ export const trackPageView = (params: {
   route_key?: string;
   page_group?: string;
   is_service_page?: boolean;
-  theme?: string;
 }) => {
   if (!hasGoogleAnalytics()) {
     return;
@@ -147,7 +146,6 @@ export const trackPageView = (params: {
     route_key: params.route_key,
     page_group: params.page_group,
     is_service_page: params.is_service_page,
-    theme: params.theme,
     device_category: getDeviceCategory()
   });
 };
