@@ -3,6 +3,7 @@ import { Check, Cpu, Code2, Smartphone, LineChart, ShieldCheck, ArrowUpRight, Ar
 import { motion, AnimatePresence } from "motion/react";
 import ThreeDimensionalTilt from "../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../components/Subtle3DCanvas";
+import ServiceInsightsBridge from "../components/ServiceInsightsBridge";
 import MiniCases from "../components/MiniCases";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../config/siteNetwork";
 
@@ -497,6 +498,11 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           </span>
         </div>
       </section>
+
+      <ServiceInsightsBridge
+        servicePath="/servicos/desenvolvimento-web"
+        onNavigate={onNavigate}
+      />
 
       {/* WEB DEV CLIENTS LOGO SOCIAL PROOF */}
       <MiniCases 

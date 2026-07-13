@@ -160,7 +160,7 @@ export default function App() {
       }
       
       const isCaseDetail = path.startsWith("/casos/");
-      if (isCaseDetail) {
+      if (isCaseDetail && getRouteByPath(path)) {
         setCurrentPage(path);
         return;
       }
@@ -214,17 +214,13 @@ export default function App() {
     const routeCopy = copy.seo.byPath[currentPage];
     let title = routeCopy?.title || copy.seo.default.title;
     let desc = routeCopy?.description || copy.seo.default.description;
+    const isCaseDetail = route?.routeCategory === "case-study";
+    const caseId = isCaseDetail ? currentPage.replace("/casos/", "") : "";
+    const selectedCase = caseId ? CASE_STUDIES.find((cs) => cs.id === caseId) : undefined;
 
-    if (currentPage.startsWith("/casos/")) {
-      const caseId = currentPage.replace("/casos/", "");
-      const selectedCase = CASE_STUDIES.find((cs) => cs.id === caseId);
-      if (selectedCase) {
+    if (selectedCase) {
         title = `${selectedCase.client} | ${language === "pt" ? "Case de Sucesso" : language === "en" ? "Success Case" : "Caso de Éxito"} - TAG08`;
         desc = `${language === "en" ? "Result analysis from the success story of" : language === "es" ? "Análisis de resultados del caso de éxito de" : "Análise de resultados do case de sucesso da empresa"} ${selectedCase.client}: ${selectedCase.title}.`;
-      } else {
-        title = copy.seo.byPath["/404"].title;
-        desc = copy.seo.byPath["/404"].description;
-      }
     } else if (!route) {
       title = copy.seo.byPath["/404"].title;
       desc = copy.seo.byPath["/404"].description;
@@ -245,9 +241,9 @@ export default function App() {
       page_title: title,
       page_referrer: typeof document !== "undefined" ? document.referrer || undefined : undefined,
       language,
-      route_type: currentPage.startsWith("/casos/") ? "case-study" : route?.routeCategory ?? "aux",
+      route_type: route?.routeCategory ?? "aux",
       route_key: route?.key,
-      page_group: currentPage.startsWith("/casos/") ? "case-study" : route?.routeCategory ?? "aux",
+      page_group: route?.routeCategory ?? "aux",
       is_service_page: Boolean(route?.isServicePage),
       theme
     });
@@ -260,6 +256,15 @@ export default function App() {
       document.head.appendChild(metaDesc);
     }
     metaDesc.setAttribute("content", desc);
+
+    const robotsContent = route?.indexable === false ? "noindex,follow" : "index,follow";
+    let robotsMeta = document.querySelector('meta[name="robots"]');
+    if (!robotsMeta) {
+      robotsMeta = document.createElement("meta");
+      robotsMeta.setAttribute("name", "robots");
+      document.head.appendChild(robotsMeta);
+    }
+    robotsMeta.setAttribute("content", robotsContent);
 
     // Canonical link helper
     let canonicalLink = document.querySelector('link[rel="canonical"]');
@@ -362,7 +367,7 @@ export default function App() {
 
     // Dynamic Breadcrumb Schema Integration for Service Pages
     let breadcrumbScript = document.getElementById("schema-breadcrumb");
-    if (currentPage.startsWith("/servicos/") || currentPage === "/servicos") {
+    if (currentPage.startsWith("/servicos/") || currentPage === "/servicos" || selectedCase) {
       if (!breadcrumbScript) {
         breadcrumbScript = document.createElement("script");
         breadcrumbScript.setAttribute("id", "schema-breadcrumb");
@@ -391,6 +396,21 @@ export default function App() {
           "name": copy.header.navServices,
           "item": `${SITE_DOMAIN}/servicos`
         });
+      } else if (selectedCase) {
+        breadcrumbItems.push(
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": copy.breadcrumbs.case,
+            "item": SITE_DOMAIN
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": selectedCase.client,
+            "item": canonicalUrl
+          }
+        );
       } else {
         breadcrumbItems.push(
           {
@@ -431,7 +451,7 @@ export default function App() {
 
     const route = getRouteByPath(currentPage);
     const effectivePath = route ? currentPage : "/404";
-    const routeType = currentPage.startsWith("/casos/") ? "case-study" : route?.routeCategory ?? "aux";
+    const routeType = route?.routeCategory ?? "aux";
     const thresholds = [25, 50, 75, 90];
 
     const trackCurrentScrollDepth = () => {
@@ -481,7 +501,8 @@ export default function App() {
 
   // Page switcher
   const renderActivePage = () => {
-    if (currentPage.startsWith("/casos/")) {
+    const activeRoute = getRouteByPath(currentPage);
+    if (activeRoute?.routeCategory === "case-study") {
       const caseId = currentPage.replace("/casos/", "");
       return <CaseStudyDetail caseId={caseId} onNavigate={handleNavigate} />;
     }
@@ -575,7 +596,7 @@ export default function App() {
       />
 
       {/* Interactive WhatsApp Helper */}
-      <WhatsAppButton language={language} />
+      <WhatsAppButton language={language} currentPage={currentPage} />
     </div>
   );
 }

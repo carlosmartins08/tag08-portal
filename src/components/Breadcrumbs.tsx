@@ -1,5 +1,7 @@
 import { ChevronRight, Home, ArrowLeft, ArrowRight, Layers } from "lucide-react";
 import { motion } from "motion/react";
+import { CASE_STUDIES } from "../data";
+import { getRouteByPath } from "../config/routeRegistry";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
 
 interface BreadcrumbsProps {
@@ -24,14 +26,16 @@ export default function Breadcrumbs({ currentPage, onNavigate, language }: Bread
   const copy = i18n[language].breadcrumbs;
   const pathMap = copy.paths;
   const services = (copy.servicePages || []) as ServiceBreadcrumb[];
+  const isCaseStudyPage = getRouteByPath(currentPage)?.routeCategory === "case-study";
 
   const getBreadcrumbs = () => {
     const list: Breadcrumb[] = [];
     list.push({ label: copy.home, path: "/" });
 
-    if (currentPage.startsWith("/casos/")) {
+    if (isCaseStudyPage) {
       const caseId = currentPage.replace("/casos/", "");
-      const clientName = caseId
+      const selectedCase = CASE_STUDIES.find((caseStudy) => caseStudy.id === caseId);
+      const clientName = selectedCase?.client || caseId
         .split("-")
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
@@ -149,7 +153,7 @@ export default function Breadcrumbs({ currentPage, onNavigate, language }: Bread
           </div>
         )}
 
-        {currentPage.startsWith("/casos/") && (
+        {isCaseStudyPage && (
           <button
             onClick={() => onNavigate("/")}
             className="text-xs flex items-center gap-1 text-zinc-400 hover:text-brand cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"

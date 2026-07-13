@@ -83,10 +83,8 @@ function generateSitemap() {
   console.log("Generating XML sitemap dynamically based on existing routes...");
 
   const routeRegistry = loadTsModule("src/config/routeRegistry.ts");
-  const data = loadTsModule("src/data.ts");
 
   const routeSitemapMeta = routeRegistry.routeSitemapMeta || [];
-  const caseStudies = Array.isArray(data.CASE_STUDIES) ? data.CASE_STUDIES : [];
 
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
@@ -100,18 +98,6 @@ function generateSitemap() {
     xml += `    <lastmod>${currentDate}</lastmod>\n`;
     xml += `    <changefreq>${entry.changefreq}</changefreq>\n`;
     xml += `    <priority>${entry.priority}</priority>\n`;
-    xml += "  </url>\n";
-  });
-
-  caseStudies.forEach((caseStudy) => {
-    const casePath = `/casos/${caseStudy.id}`;
-    if (seenPaths.has(casePath)) return;
-    seenPaths.add(casePath);
-    xml += "  <url>\n";
-    xml += `    <loc>${DOMAIN}${casePath}</loc>\n`;
-    xml += `    <lastmod>${currentDate}</lastmod>\n`;
-    xml += "    <changefreq>weekly</changefreq>\n";
-    xml += "    <priority>0.8</priority>\n";
     xml += "  </url>\n";
   });
 

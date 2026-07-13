@@ -25,6 +25,7 @@ export default function Header({ currentPage, onNavigate, theme, setTheme, langu
     { id: 0, label: copy.navHome, path: "/" },
     { id: 1, label: copy.navAbout, path: "/sobre" },
     { id: 2, label: copy.navServices, path: "/servicos", isDropdown: true },
+    { id: 3, label: copy.navInsights, path: "/insights" },
   ];
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);

@@ -48,7 +48,7 @@ type FooterCopy = {
 const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
   pt: {
     brandStatement: "Agência Estratégica",
-    brandQuote: "Posicionamento com propósito. Estratégia com performance.",
+    brandQuote: "Posicionamento com propósito. Estratégia com direção.",
     badge: "Atendimento Nacional",
     servicesTitle: "SOLUÇÕES",
     programsTitle: "PROGRAMAS",
@@ -68,14 +68,13 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
     programLinks: [
       { label: "Sebraetec", path: "/sebraetec-impulsionando-empreendedores" },
       { label: "Programa de Afiliados", path: "/programa-afiliados" },
-      { label: "Onboarding de Clientes", path: "/cliente/onboarding" },
-      { label: "Trabalhe Conosco", path: "/trabalhe-conosco" },
     ],
     institutionLinks: [
       { label: "Início", path: "/" },
       { label: "Sobre Nós", path: "/sobre" },
       { label: "Soluções Integradas", path: "/servicos" },
       { label: "Insights Estratégicos", path: "/insights" },
+      { label: "Trabalhe Conosco", path: "/trabalhe-conosco" },
       { label: "Contato", path: "/contato" },
       { label: "Política de Privacidade", action: "privacy" },
       { label: "Termos de Uso", action: "terms" },
@@ -102,7 +101,7 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
   },
   en: {
     brandStatement: "Strategic Agency",
-    brandQuote: "Positioning with purpose. Strategy with performance.",
+    brandQuote: "Positioning with purpose. Strategy with direction.",
     badge: "Global Support",
     servicesTitle: "SERVICES",
     programsTitle: "PROGRAMS",
@@ -122,14 +121,13 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
     programLinks: [
       { label: "Sebraetec", path: "/sebraetec-impulsionando-empreendedores" },
       { label: "Affiliate Program", path: "/programa-afiliados" },
-      { label: "Client Onboarding", path: "/cliente/onboarding" },
-      { label: "Careers", path: "/trabalhe-conosco" },
     ],
     institutionLinks: [
       { label: "Home", path: "/" },
       { label: "About Us", path: "/sobre" },
       { label: "Integrated Services", path: "/servicos" },
       { label: "Insights Estratégicos", path: "/insights" },
+      { label: "Careers", path: "/trabalhe-conosco" },
       { label: "Contact", path: "/contato" },
       { label: "Privacy Policy", action: "privacy" },
       { label: "Termos de Uso", action: "terms" },
@@ -156,7 +154,7 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
   },
   es: {
     brandStatement: "Agência Estratégica",
-    brandQuote: "Posicionamiento con propósito. Estrategia con rendimiento.",
+    brandQuote: "Posicionamiento con propósito. Estrategia con dirección.",
     badge: "Atención Nacional",
     servicesTitle: "SERVICIOS",
     programsTitle: "PROGRAMAS",
@@ -176,14 +174,13 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
     programLinks: [
       { label: "Sebraetec", path: "/sebraetec-impulsionando-empreendedores" },
       { label: "Programa de Afiliados", path: "/programa-afiliados" },
-      { label: "Onboarding de Clientes", path: "/cliente/onboarding" },
-      { label: "Trabaja con nosotros", path: "/trabalhe-conosco" },
     ],
     institutionLinks: [
       { label: "Inicio", path: "/" },
       { label: "Sobre Nosotros", path: "/sobre" },
       { label: "Servicios Integrados", path: "/servicos" },
       { label: "Insights Estratégicos", path: "/insights" },
+      { label: "Trabaja con nosotros", path: "/trabalhe-conosco" },
       { label: "Contacto", path: "/contato" },
       { label: "Política de Privacidad", action: "privacy" },
       { label: "Términos de Uso", action: "terms" },

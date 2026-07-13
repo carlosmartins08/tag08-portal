@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowUpRight, BookOpen, Calendar, Filter, Sparkles, User } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { BLOG_POSTS } from "../data";
-import { BlogPost } from "../types";
+import { BLOG_POSTS, type EditorialBlogPost } from "../data";
 
 interface InsightsProps {
   onNavigate: (page: string) => void;
@@ -11,7 +10,7 @@ interface InsightsProps {
 const CATEGORIES = ["Todos", "Estratégia", "Branding", "Performance", "Processos", "Web"];
 
 export default function Insights({ onNavigate }: InsightsProps) {
-  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [selectedPost, setSelectedPost] = useState<EditorialBlogPost | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
 
   useEffect(() => {
@@ -27,16 +26,16 @@ export default function Insights({ onNavigate }: InsightsProps) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const renderInsightCta = (post: BlogPost) => (
+  const renderInsightCta = (post: EditorialBlogPost) => (
     <div className="rounded-2xl border border-brand/20 bg-brand/5 p-6 space-y-3">
       <p className="text-brand font-mono text-[10px] uppercase tracking-widest">Próximo passo recomendado</p>
-      <h3 className="text-white font-semibold text-lg">{post.serviceNote}</h3>
+      <h3 className="text-white font-semibold text-lg">{post.relatedObjection ?? post.serviceNote}</h3>
       <div className="flex flex-wrap items-center gap-2">
         <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider text-zinc-300">
-          {post.serviceTitle}
+          {post.relatedServiceTitle ?? post.serviceTitle}
         </span>
         <button
-          onClick={() => handleLinkClick(post.servicePath)}
+          onClick={() => handleLinkClick(post.relatedServicePath ?? post.servicePath)}
           className="inline-flex items-center gap-2 bg-brand text-black hover:bg-brand-dark transition-all duration-300 px-4 py-2.5 rounded-lg font-mono font-bold text-xs uppercase tracking-wider"
         >
           Ver serviço
@@ -128,7 +127,7 @@ export default function Insights({ onNavigate }: InsightsProps) {
                       <div className="flex items-center gap-3 text-zinc-500 font-mono text-[10px] uppercase tracking-wide">
                         <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {post.date}</span>
                         <span>•</span>
-                        <span className="flex items-center gap-1"><BookOpen className="w-3 h-3" /> {post.readTime}</span>
+                        <span className="flex items-center gap-1"><BookOpen className="w-3 h-3" /> {post.readingTime ?? post.readTime}</span>
                       </div>
                       <h3 className="text-white font-semibold text-lg hover:text-brand transition-colors duration-200 line-clamp-2">
                         {post.title}
@@ -186,7 +185,7 @@ export default function Insights({ onNavigate }: InsightsProps) {
               <div className="flex flex-wrap gap-4 items-center text-zinc-500 font-mono text-xs uppercase tracking-wider border-b border-white/[0.04] pb-4">
                 <span className="flex items-center gap-1.5 text-zinc-400"><Calendar className="w-4 h-4 text-brand" /> {selectedPost.date}</span>
                 <span>•</span>
-                <span className="flex items-center gap-1.5 text-zinc-400"><BookOpen className="w-4 h-4 text-brand" /> {selectedPost.readTime}</span>
+                <span className="flex items-center gap-1.5 text-zinc-400"><BookOpen className="w-4 h-4 text-brand" /> {selectedPost.readingTime ?? selectedPost.readTime}</span>
                 <span>•</span>
                 <span className="flex items-center gap-1.5 text-zinc-400"><User className="w-4 h-4 text-brand" /> {selectedPost.author}</span>
               </div>
@@ -226,6 +225,64 @@ export default function Insights({ onNavigate }: InsightsProps) {
                 );
               })}
             </div>
+
+            <section className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-6 space-y-4">
+              <p className="text-brand font-mono text-[10px] uppercase tracking-widest">Direção Estratégica</p>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-1">Problema</p>
+                  <p className="text-zinc-200 text-sm leading-relaxed">{selectedPost.strategicSynthesis.problem}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-1">Tese</p>
+                  <p className="text-zinc-200 text-sm leading-relaxed">{selectedPost.strategicSynthesis.thesis}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-1">Risco</p>
+                  <p className="text-zinc-200 text-sm leading-relaxed">{selectedPost.strategicSynthesis.risk}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-1">Próximo passo</p>
+                  <p className="text-zinc-200 text-sm leading-relaxed">{selectedPost.strategicSynthesis.nextStep}</p>
+                </div>
+              </div>
+            </section>
+
+            {selectedPost.faq?.length ? (
+              <section className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-6 space-y-4">
+                <p className="text-brand font-mono text-[10px] uppercase tracking-widest">FAQ do artigo</p>
+                <div className="space-y-4">
+                  {selectedPost.faq.map((item) => (
+                    <div key={item.question} className="space-y-2 border-b border-white/[0.05] pb-4 last:border-b-0 last:pb-0">
+                      <h3 className="text-white font-semibold text-base leading-snug">{item.question}</h3>
+                      <p className="text-zinc-300 text-sm leading-relaxed">{item.answer}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+
+            {selectedPost.relatedInsights?.length ? (
+              <section className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-6 space-y-4">
+                <p className="text-brand font-mono text-[10px] uppercase tracking-widest">Insights relacionados</p>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {selectedPost.relatedInsights
+                    .map((relatedKey) => BLOG_POSTS.find((candidate) => candidate.slug === relatedKey || candidate.id === relatedKey))
+                    .filter((candidate): candidate is EditorialBlogPost => Boolean(candidate))
+                    .map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => setSelectedPost(item)}
+                        className="rounded-xl border border-white/[0.05] bg-black/20 p-4 text-left hover:border-brand/20 transition-colors"
+                      >
+                        <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-500">{item.category}</p>
+                        <h3 className="text-white font-semibold text-sm mt-1 leading-snug">{item.title}</h3>
+                        <p className="text-zinc-400 text-xs mt-2 leading-relaxed line-clamp-2">{item.excerpt}</p>
+                      </button>
+                    ))}
+                </div>
+              </section>
+            ) : null}
 
             {renderInsightCta(selectedPost)}
 

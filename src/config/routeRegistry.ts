@@ -1,3 +1,5 @@
+import { CASE_STUDIES } from "../data";
+
 export type RouteKey =
   | "home"
   | "sobre"
@@ -12,13 +14,14 @@ export type RouteKey =
   | "contato"
   | "trabalhe-conosco"
   | "insights"
+  | "case-study-detail"
   | "cliente-onboarding"
   | "sebraetec-impulsionando-empreendedores"
   | "programa-afiliados"
   | "hospedagem-manutencao-sites"
   | "not-found";
 
-export type RouteCategory = "page" | "service" | "tooling" | "aux";
+export type RouteCategory = "page" | "service" | "tooling" | "aux" | "case-study";
 
 export type RouteChangeFreq = "daily" | "weekly" | "monthly";
 
@@ -26,6 +29,7 @@ export interface RouteDefinition {
   key: RouteKey;
   canonicalPath: string;
   aliases?: string[];
+  pathPattern?: string;
   routeCategory: RouteCategory;
   indexable: boolean;
   includeInSitemap: boolean;
@@ -34,6 +38,7 @@ export interface RouteDefinition {
   title: string;
   description: string;
   isServicePage?: boolean;
+  dynamic?: boolean;
 }
 
 export const routeRegistry: RouteDefinition[] = [
@@ -195,11 +200,24 @@ export const routeRegistry: RouteDefinition[] = [
       "Insights originais de marketing estratégico, identidade de marca, desenvolvimento web de alta performance e otimização de processos operacionais."
   },
   {
+    key: "case-study-detail",
+    canonicalPath: "/casos/:id",
+    pathPattern: "/casos/:id",
+    routeCategory: "case-study",
+    indexable: true,
+    includeInSitemap: true,
+    changefreq: "weekly",
+    priority: "0.8",
+    title: "Cases de Sucesso | TAG08",
+    description: "Estudos de caso publicados pela TAG08 com contexto, direcao e resultados operacionais.",
+    dynamic: true
+  },
+  {
     key: "cliente-onboarding",
     canonicalPath: "/cliente/onboarding",
     routeCategory: "tooling",
-    indexable: true,
-    includeInSitemap: true,
+    indexable: false,
+    includeInSitemap: false,
     changefreq: "monthly",
     priority: "0.4",
     title: "Assistente de Onboarding | TAG08",
@@ -269,6 +287,7 @@ export const routeRegistry: RouteDefinition[] = [
 ];
 
 const legacyAliases: Record<string, string> = {};
+const caseStudyPaths = new Set(CASE_STUDIES.map((caseStudy) => `/casos/${caseStudy.id}`));
 
 routeRegistry.forEach((route) => {
   route.aliases?.forEach((alias) => {
@@ -302,18 +321,79 @@ export const canonicalizeRoute = (inputPath: string): string => {
   return exact ? exact.canonicalPath : aliasNormalized;
 };
 
-export const getRouteByPath = (path: string): RouteDefinition | undefined => {
-  return routeRegistry.find((route) => route.canonicalPath === path);
+const matchesDynamicRoute = (path: string, route: RouteDefinition): boolean => {
+  if (!route.dynamic || !route.pathPattern) {
+    return false;
+  }
+
+  if (route.pathPattern === "/casos/:id") {
+    return caseStudyPaths.has(path);
+  }
+
+  const patternSegments = normalizePath(route.pathPattern).split("/").filter(Boolean);
+  const pathSegments = normalizePath(path).split("/").filter(Boolean);
+
+  if (patternSegments.length !== pathSegments.length) {
+    return false;
+  }
+
+  return patternSegments.every((segment, index) => segment.startsWith(":") || segment === pathSegments[index]);
 };
 
-export const publicRoutePaths = routeRegistry.filter((route) => route.indexable).map((route) => route.canonicalPath);
+export const getRouteByPath = (path: string): RouteDefinition | undefined => {
+  const normalizedPath = normalizePath(path);
+  const exact = routeRegistry.find((route) => route.canonicalPath === normalizedPath);
+  if (exact) {
+    return exact;
+  }
 
-export const indexedRoutePaths = routeRegistry.filter((route) => route.includeInSitemap).map((route) => route.canonicalPath);
+  return routeRegistry.find((route) => matchesDynamicRoute(normalizedPath, route));
+};
 
-export const routeSitemapMeta = routeRegistry.filter((route) => route.includeInSitemap).map((route) => ({
-  path: route.canonicalPath,
-  changefreq: route.changefreq,
-  priority: route.priority,
-  title: route.title,
-  description: route.description
-}));
+export const publicRoutePaths = routeRegistry.flatMap((route) => {
+  if (!route.indexable) {
+    return [];
+  }
+
+  if (route.dynamic && route.pathPattern === "/casos/:id") {
+    return Array.from(caseStudyPaths);
+  }
+
+  return [route.canonicalPath];
+});
+
+export const indexedRoutePaths = routeRegistry.flatMap((route) => {
+  if (!route.includeInSitemap) {
+    return [];
+  }
+
+  if (route.dynamic && route.pathPattern === "/casos/:id") {
+    return Array.from(caseStudyPaths);
+  }
+
+  return [route.canonicalPath];
+});
+
+export const routeSitemapMeta = routeRegistry.flatMap((route) => {
+  if (!route.includeInSitemap) {
+    return [];
+  }
+
+  if (route.dynamic && route.pathPattern === "/casos/:id") {
+    return CASE_STUDIES.map((caseStudy) => ({
+      path: `/casos/${caseStudy.id}`,
+      changefreq: route.changefreq,
+      priority: route.priority,
+      title: route.title,
+      description: route.description
+    }));
+  }
+
+  return [{
+    path: route.canonicalPath,
+    changefreq: route.changefreq,
+    priority: route.priority,
+    title: route.title,
+    description: route.description
+  }];
+});

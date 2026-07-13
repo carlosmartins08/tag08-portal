@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../config/siteNetwork";
 import ThreeDimensionalTilt from "../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../components/Subtle3DCanvas";
+import ServiceInsightsBridge from "../components/ServiceInsightsBridge";
 import MiniCases from "../components/MiniCases";
 
 interface ProcessProps {
@@ -525,6 +526,11 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
         title="Eficiência Operacional Homologada"
         subtitle="Empresas de escala que reduziram retrabalho e liberaram os fundadores do caos diário com a inteligência de processos da TAG08."
         badge="OPERATIONAL PROOF // PROCESSOS SÁBIOS"
+      />
+
+      <ServiceInsightsBridge
+        servicePath="/servicos/process-intelligence"
+        onNavigate={onNavigate}
       />
 
       {/* SECTION - WORK SYSTEM (WhatsApp Neon Callout inspired by screenshot) */}

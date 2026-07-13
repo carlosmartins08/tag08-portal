@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUp, MessageCircle, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { type UiLanguage } from "../i18n/siteI18n";
@@ -8,6 +8,7 @@ import { trackOutboundClick } from "../lib/analytics";
 
 interface WhatsAppButtonProps {
   language: UiLanguage;
+  currentPage: string;
 }
 
 type Copy = {
@@ -46,13 +47,14 @@ const COPY: Record<UiLanguage, Copy> = {
   },
 };
 
-export default function WhatsAppButton({ language }: WhatsAppButtonProps) {
+export default function WhatsAppButton({ language, currentPage }: WhatsAppButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<UiLanguage>(language);
   const [isLgpdBannerOpen, setIsLgpdBannerOpen] = useState(false);
   const [isCustomOpen, setIsCustomOpen] = useState(false);
+  const floatingRef = useRef<HTMLDivElement>(null);
 
   const copy = COPY[selectedLanguage] ?? COPY.pt;
 
@@ -61,13 +63,11 @@ export default function WhatsAppButton({ language }: WhatsAppButtonProps) {
   }, [language]);
 
   useEffect(() => {
-    const dismissed = safeStorage.get("whatsapp_notification_dismissed") === "true";
-    let timer: number | undefined;
+    setIsOpen(false);
+    setShowNotification(false);
+  }, [currentPage]);
 
-    if (!dismissed) {
-      timer = window.setTimeout(() => setShowNotification(true), 6000);
-    }
-
+  useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 400);
     };
@@ -78,15 +78,37 @@ export default function WhatsAppButton({ language }: WhatsAppButtonProps) {
       setIsCustomOpen(Boolean(customEvent.detail?.custom));
     };
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        setShowNotification(false);
+      }
+    };
+
+    const handlePointerDown = (event: MouseEvent | TouchEvent) => {
+      const target = event.target;
+      if (!(target instanceof Node)) {
+        return;
+      }
+
+      if (floatingRef.current && !floatingRef.current.contains(target)) {
+        setIsOpen(false);
+        setShowNotification(false);
+      }
+    };
+
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("mousedown", handlePointerDown);
+    window.addEventListener("touchstart", handlePointerDown, { passive: true });
     window.addEventListener("lgpd-banner-change" as any, handleLgpdChange);
 
     return () => {
-      if (timer) {
-        window.clearTimeout(timer);
-      }
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("mousedown", handlePointerDown);
+      window.removeEventListener("touchstart", handlePointerDown);
       window.removeEventListener("lgpd-banner-change" as any, handleLgpdChange);
     };
   }, []);
@@ -112,7 +134,7 @@ export default function WhatsAppButton({ language }: WhatsAppButtonProps) {
 
   return (
     <>
-      <div className={`fixed left-6 z-40 transition-all duration-500 ease-out ${bottomOffset}`}>
+      <div className={`fixed left-4 sm:left-6 z-40 transition-all duration-500 ease-out ${bottomOffset}`}>
         <AnimatePresence>
           {showScrollTop && (
             <motion.button
@@ -134,14 +156,14 @@ export default function WhatsAppButton({ language }: WhatsAppButtonProps) {
         </AnimatePresence>
       </div>
 
-      <div className={`fixed right-6 z-40 flex flex-col items-end transition-all duration-500 ease-out ${bottomOffset}`}>
+      <div ref={floatingRef} className={`fixed right-4 sm:right-6 z-40 flex flex-col items-end transition-all duration-500 ease-out ${bottomOffset}`}>
         <AnimatePresence>
           {showNotification && !isOpen && (
             <motion.div
               initial={{ opacity: 0, scale: 0.8, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              className="mb-3 max-w-xs bg-charcoal-900 border border-brand/20 rounded-xl p-4 shadow-2xl relative text-left"
+              className="mb-3 w-[min(18rem,calc(100vw-2rem))] sm:w-80 bg-charcoal-900 border border-brand/20 rounded-xl p-4 shadow-2xl relative text-left"
             >
               <button
                 type="button"
@@ -180,18 +202,19 @@ export default function WhatsAppButton({ language }: WhatsAppButtonProps) {
           )}
         </AnimatePresence>
 
-        <motion.button
-          type="button"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.96 }}
-          onClick={() => setIsOpen((prev) => !prev)}
-          aria-label={copy.ariaOpen}
-          className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-brand text-black shadow-[0_10px_35px_rgba(0,0,0,0.35)] transition-colors hover:bg-brand/90"
-        >
-          <MessageCircle className="h-6 w-6" />
-        </motion.button>
+          <motion.button
+            type="button"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            onClick={() => setIsOpen((prev) => !prev)}
+            aria-label={copy.ariaOpen}
+            aria-expanded={isOpen}
+            className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-brand text-black shadow-[0_10px_35px_rgba(0,0,0,0.35)] transition-colors hover:bg-brand/90"
+          >
+            <MessageCircle className="h-6 w-6" />
+          </motion.button>
 
         <AnimatePresence>
           {isOpen && (
@@ -199,7 +222,7 @@ export default function WhatsAppButton({ language }: WhatsAppButtonProps) {
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              className="mt-4 w-80 overflow-hidden rounded-xl border border-white/[0.08] bg-charcoal-900 shadow-3xl"
+              className="mt-4 w-[min(20rem,calc(100vw-2rem))] sm:w-80 max-h-[calc(100vh-8rem)] overflow-hidden rounded-xl border border-white/[0.08] bg-charcoal-900 shadow-3xl"
             >
               <div className="flex items-center justify-between border-b border-white/[0.05] bg-charcoal-800 p-4">
                 <div className="text-sm font-semibold text-white">{copy.title}</div>

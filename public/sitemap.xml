@@ -73,10 +73,22 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://tag08.com.br/cliente/onboarding</loc>
+    <loc>https://tag08.com.br/casos/case-clinica-alphaville</loc>
     <lastmod>2026-07-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tag08.com.br/casos/case-saas-process</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tag08.com.br/casos/case-branding-advocacia</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tag08.com.br/sebraetec-impulsionando-empreendedores</loc>
@@ -98,24 +110,6 @@
   </url>
   <url>
     <loc>https://tag08.com.br/servicos/assessoria-marketing-digital-estrategico</loc>
-    <lastmod>2026-07-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tag08.com.br/casos/case-clinica-alphaville</loc>
-    <lastmod>2026-07-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tag08.com.br/casos/case-saas-process</loc>
-    <lastmod>2026-07-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tag08.com.br/casos/case-branding-advocacia</loc>
     <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

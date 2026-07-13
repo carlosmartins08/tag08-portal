@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import ThreeDimensionalTilt from "../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../components/Subtle3DCanvas";
+import ServiceInsightsBridge from "../components/ServiceInsightsBridge";
 import MiniCases from "../components/MiniCases";
 import { buildBrazilWhatsAppUrl } from "../config/siteNetwork";
 
@@ -616,6 +617,11 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
 
         </div>
       </section>
+
+      <ServiceInsightsBridge
+        servicePath="/servicos/assessoria-marketing-digital-estrategico"
+        onNavigate={onNavigate}
+      />
 
       {/* MiniCases Validation block */}
       <MiniCases onNavigate={onNavigate} />

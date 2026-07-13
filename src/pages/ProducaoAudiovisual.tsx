@@ -127,6 +127,7 @@ export default function ProducaoAudiovisual({ onNavigate }: ProducaoProps) {
     .map((id) => DELIVERABLES.find((d) => d.id === id)?.name)
     .filter((name): name is string => Boolean(name))
     .join(", ");
+  const hasSelectedTools = selectedTools.length > 0;
 
   const getWhatsAppLink = () => {
     const formatName = currentFormatDetails.name;
@@ -470,32 +471,32 @@ Quero conversar sobre o próximo passo com a TAG08.`;
       {/*=========================================
           SECTION 5: INTERACTIVE SIMULATOR (PLANNER)
          =========================================*/}
-      <section id="planner" className="px-6 md:px-8 py-20 border-b border-white/[0.04] text-left relative z-10 scroll-mt-24">
-        <div className="max-w-7xl mx-auto space-y-12">
+      <section id="planner" className="px-6 md:px-8 py-16 sm:py-20 border-b border-white/[0.04] text-left relative z-10 scroll-mt-24">
+        <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 max-w-5xl">
-            <div className="space-y-3">
-              <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 max-w-5xl">
+            <div className="space-y-2.5 sm:space-y-3">
+              <span className="font-mono text-[8px] sm:text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
                 DIAGNÓSTICO DE FORMATO AUDIOVISUAL
               </span>
-              <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white uppercase tracking-tighter">
+              <h2 className="font-display font-black text-[1.55rem] sm:text-3xl md:text-4xl text-white uppercase tracking-tighter leading-[0.95]">
                 Entenda qual tipo de conteúdo faz mais sentido para o seu momento.
               </h2>
             </div>
-            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm">
+            <p className="text-zinc-400 text-[13px] sm:text-sm leading-relaxed max-w-sm">
               Responda a partir do contexto da sua marca para identificar se faz mais sentido registrar, apresentar, explicar, reaproveitar ou alimentar canais com mais consistência.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
             
             {/* Lado Esquerdo: Formato (Column) + Entregáveis */}
-            <div className="lg:col-span-7 space-y-8">
+            <div className="lg:col-span-7 space-y-6 sm:space-y-8">
               
               {/* Formatos Buttons Selector */}
-              <div className="space-y-4">
-                <span className="font-mono text-[9.5px] text-zinc-500 uppercase tracking-widest font-bold block">1. ESCOLHA O FORMATO QUE FAZ MAIS SENTIDO</span>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="space-y-3 sm:space-y-4">
+                <span className="font-mono text-[8px] sm:text-[9.5px] text-zinc-500 uppercase tracking-widest font-bold block">1. ESCOLHA O FORMATO QUE FAZ MAIS SENTIDO</span>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
                   {FORMATOS.map((f) => (
                     <button
                       key={f.id}
@@ -506,40 +507,40 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                         else if (f.id === "evento") setSelectedTools(["evento", "autoridade", "redes"]);
                         else setSelectedTools(["redes", "bastidores", "autoridade", "apoio"]);
                       }}
-                      className={`p-4 rounded-xl text-left border relative transition-all cursor-pointer focus:outline-none ${
+                      className={`p-3.5 sm:p-4 rounded-xl text-left border relative transition-all cursor-pointer focus:outline-none min-h-[88px] sm:min-h-0 ${
                         selectedFormat === f.id
                           ? "bg-brand/5 border-brand text-white shadow-xl shadow-brand/5"
                           : "bg-white/[0.01] border-white/5 text-zinc-400 hover:border-white/10"
                       }`}
                     >
-                      <span className="font-sans text-[7px] text-brand block mb-1 font-black uppercase tracking-wider">{f.tag}</span>
-                      <h4 className="text-white text-xs sm:text-sm font-semibold uppercase leading-tight">{f.name}</h4>
+                      <span className="font-sans text-[8px] sm:text-[7px] text-brand block mb-1 font-black uppercase tracking-wider">{f.tag}</span>
+                      <h4 className="text-white text-[13px] sm:text-sm font-semibold uppercase leading-tight">{f.name}</h4>
                     </button>
                   ))}
                 </div>
               </div>
 
               {/* Deliverables Grid selector */}
-              <div className="space-y-4">
-                <span className="font-mono text-[9.5px] text-zinc-500 uppercase tracking-widest font-bold block">2. MARQUE O QUE PODE SER PRODUZIDO</span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="space-y-3 sm:space-y-4">
+                <span className="font-mono text-[8px] sm:text-[9.5px] text-zinc-500 uppercase tracking-widest font-bold block">2. MARQUE O QUE PODE SER PRODUZIDO</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3">
                   {DELIVERABLES.map((del) => {
                     const isSelected = selectedTools.includes(del.id);
                     return (
                       <button
                         key={del.id}
                         onClick={() => handleToggleTool(del.id)}
-                        className={`p-4 rounded-xl border text-left transition-all relative flex flex-col justify-between h-36 cursor-pointer focus:outline-none group ${
+                        className={`p-3.5 sm:p-4 rounded-xl border text-left transition-all relative flex flex-col justify-between min-h-[10rem] sm:h-36 cursor-pointer focus:outline-none group ${
                           isSelected
                             ? "bg-brand text-black border-brand/40 shadow-lg shadow-brand/5 font-medium"
                             : "bg-white/[0.01] border-white/5 text-zinc-400 hover:border-white/10"
                         }`}
                       >
                         <div className="space-y-1 text-left">
-                          <h5 className={`text-xs uppercase font-semibold font-display tracking-tight leading-snug group-hover:text-white transition-colors ${isSelected ? "text-black group-hover:text-black" : "text-white"}`}>
+                          <h5 className={`text-[13px] sm:text-xs uppercase font-semibold font-display tracking-tight leading-snug group-hover:text-white transition-colors ${isSelected ? "text-black group-hover:text-black" : "text-white"}`}>
                             {del.name}
                           </h5>
-                          <p className={`text-[10px] leading-relaxed line-clamp-3 font-medium transition-colors ${isSelected ? "text-black/75" : "text-zinc-500 group-hover:text-zinc-400"}`}>
+                          <p className={`text-[11px] sm:text-[10px] leading-relaxed line-clamp-2 sm:line-clamp-3 font-medium transition-colors ${isSelected ? "text-black/75" : "text-zinc-500 group-hover:text-zinc-400"}`}>
                             {del.desc}
                           </p>
                         </div>
@@ -560,70 +561,79 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
             {/* Lado Direito: Preview de Setup a enviar por WhatsApp */}
             <div className="lg:col-span-5">
-              <div className="bg-charcoal-900 border border-white/[0.08] rounded-3xl p-6 sm:p-8 space-y-6 relative overflow-hidden shadow-2xl">
+              <div className="bg-charcoal-900 border border-white/[0.08] rounded-2xl sm:rounded-3xl p-4 sm:p-8 space-y-4 sm:space-y-6 relative overflow-hidden shadow-2xl">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
                 
-                  <div className="flex justify-between items-center border-b border-white/[0.04] pb-4">
+                  <div className="flex justify-between items-center gap-3 border-b border-white/[0.04] pb-3 sm:pb-4">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-                    <span className="font-mono text-[9px] text-brand uppercase tracking-wider font-extrabold">RESUMO DO FORMATO AUDIOVISUAL</span>
+                    <span className="font-mono text-[8px] sm:text-[9px] text-brand uppercase tracking-wider font-extrabold">RESUMO DO FORMATO AUDIOVISUAL</span>
                     </div>
-                  <span className="font-mono text-[9px] text-zinc-500">TAG08_AUDIOVISUAL</span>
+                  <span className="font-mono text-[8px] sm:text-[9px] text-zinc-500">TAG08_AUDIOVISUAL</span>
                   </div>
 
                 {/* Setup selected details */}
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   <div className="space-y-1.5">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-black block">FORMATO AVALIADO:</span>
-                    <h4 className="font-display font-medium text-lg text-brand-secondary uppercase tracking-tight leading-none">
+                    <span className="font-mono text-[8px] sm:text-[9px] text-zinc-500 uppercase font-black block">FORMATO AVALIADO:</span>
+                    <h4 className="font-display font-medium text-base sm:text-lg text-brand-secondary uppercase tracking-tight leading-none">
                       {currentFormatDetails.name}
                     </h4>
-                    <p className="text-zinc-400 text-xs leading-normal">
+                    <p className="text-zinc-400 text-[13px] sm:text-xs leading-normal">
                       {currentFormatDetails.desc}
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-white/[0.04] space-y-2.5 text-left">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-black block">O QUE ESSE FORMATO AJUDA A ORGANIZAR:</span>
-                    <div className="grid grid-cols-2 gap-2">
+                  <div className="pt-3 sm:pt-4 border-t border-white/[0.04] space-y-2.5 text-left">
+                    <span className="font-mono text-[8px] sm:text-[9px] text-zinc-500 uppercase font-black block">O QUE ESSE FORMATO AJUDA A ORGANIZAR:</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {currentFormatDetails.features.map((feat, fidx) => (
                         <div key={fidx} className="flex gap-2 items-center">
                           <Check className="w-3 h-3 text-brand text-xs shrink-0" />
-                          <span className="text-zinc-300 text-[11px] font-medium font-sans">{feat}</span>
+                          <span className="text-zinc-300 text-[11px] sm:text-[11px] font-medium font-sans">{feat}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
                   {/* Chosen tools list output */}
-                  <div className="pt-4 border-t border-white/[0.04] space-y-2.5">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-black block">MATERIAIS RELACIONADOS ({selectedTools.length}):</span>
-                    <div className="flex flex-wrap gap-2 text-left max-h-40 overflow-y-auto pr-1">
-                      {selectedTools.map((tId) => {
-                        const dl = DELIVERABLES.find(d => d.id === tId);
-                        if (!dl) return null;
-                        return (
-                          <span key={tId} className="px-2.5 py-1 bg-white/[0.03] border border-white/5 text-zinc-300 text-[10px] rounded-lg font-sans font-medium hover:border-brand/40 transition-colors">
-                            {dl.name}
-                          </span>
-                        );
-                      })}
+                    <div className="pt-3 sm:pt-4 border-t border-white/[0.04] space-y-2.5">
+                      <span className="font-mono text-[8px] sm:text-[9px] text-zinc-500 uppercase font-black block">MATERIAIS RELACIONADOS ({selectedTools.length}):</span>
+                      {hasSelectedTools ? (
+                        <div className="flex flex-wrap gap-2 text-left max-h-40 overflow-y-auto pr-1">
+                          {selectedTools.map((tId) => {
+                            const dl = DELIVERABLES.find(d => d.id === tId);
+                            if (!dl) return null;
+                            return (
+                              <span key={tId} className="px-2.5 py-1 bg-white/[0.03] border border-white/5 text-zinc-300 text-[10px] rounded-lg font-sans font-medium hover:border-brand/40 transition-colors">
+                                {dl.name}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <div className="rounded-2xl border border-dashed border-white/8 bg-white/[0.02] px-4 py-4 sm:py-5 space-y-2">
+                          <h5 className="text-sm sm:text-sm font-semibold text-white">Nenhum material selecionado ainda.</h5>
+                          <p className="text-[11px] leading-relaxed text-zinc-400 max-w-md">
+                            Marque ao menos um item para visualizar possibilidades de desdobramento para esse formato audiovisual.
+                          </p>
+                        </div>
+                      )}
                     </div>
-                  </div>
                 </div>
 
                 {/* Core action trigger with prefilled parameters */}
-                <div className="pt-4 space-y-3">
+                <div className="pt-3 sm:pt-4 space-y-2.5 sm:space-y-3">
                   <a
                     href={getWhatsAppLink()}
                     target="_blank"
                     rel="noreferrer"
-                    className="block w-full bg-brand-secondary hover:bg-brand hover:shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.22)] text-black text-xs font-mono font-black uppercase tracking-widest py-4 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.15)]"
+                    className="block w-full bg-brand-secondary hover:bg-brand hover:shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.22)] text-black text-[10px] sm:text-xs font-mono font-black uppercase tracking-widest py-3.5 sm:py-4 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.15)]"
                   >
                     <MessageSquare className="w-4 h-4 text-black" />
                     <span>CONVERSAR SOBRE MEU FORMATO AUDIOVISUAL</span>
                   </a>
-                  <span className="block text-center font-mono text-[8px] text-zinc-500 uppercase leading-none select-none">
+                  <span className="block text-center font-mono text-[7px] sm:text-[8px] text-zinc-500 uppercase leading-none select-none">
                     USE ESTE RESUMO COMO PONTO DE PARTIDA PARA A CONVERSA
                   </span>
                 </div>
@@ -916,7 +926,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[460px] lg:min-h-[500px]">
             <div className="absolute inset-0 bg-black/15 rounded-[24px] overflow-hidden" />
             <img 
-              src="https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=800" 
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3CradialGradient id='g' cx='30%25' cy='30%25' r='80%25'%3E%3Cstop offset='0%25' stop-color='%23f5f5f5' stop-opacity='.18'/%3E%3Cstop offset='60%25' stop-color='%23000000' stop-opacity='.25'/%3E%3Cstop offset='100%25' stop-color='%23000000' stop-opacity='.85'/%3E%3C/radialGradient%3E%3ClinearGradient id='l' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23d4d4d8' stop-opacity='.12'/%3E%3Cstop offset='100%25' stop-color='%233f3f46' stop-opacity='.45'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='%230b0b0d'/%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Cg opacity='.65'%3E%3Ccircle cx='180' cy='120' r='96' fill='url(%23l)'/%3E%3Ccircle cx='610' cy='360' r='160' fill='%23facc15' fill-opacity='.08'/%3E%3Cpath d='M80 390C180 300 290 320 380 250s170-90 320-30' fill='none' stroke='%23ffffff' stroke-opacity='.15' stroke-width='2'/%3E%3Cpath d='M110 150h180M510 120h180M120 420h120' stroke='%23ffffff' stroke-opacity='.08' stroke-width='3'/%3E%3C/g%3E%3C/svg%3E" 
               alt="TAG08 Equipe Técnica Apoio Audiovisual" 
               className="absolute inset-0 w-full h-full object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[10%] hover:scale-105 duration-500 transition-all"
               referrerPolicy="no-referrer"
@@ -1033,45 +1043,45 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             {/*=========================================
           SECTION 10: FAQ (12-Column Layout)
          =========================================*/}
-      <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand/[0.015] rounded-full blur-[160px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[40px] bg-charcoal-950 border border-white/[0.04] p-6 sm:p-10 lg:p-14 relative overflow-hidden shadow-2xl">
+        <div className="max-w-7xl mx-auto rounded-[28px] sm:rounded-[40px] bg-charcoal-950 border border-white/[0.04] p-4 sm:p-8 lg:p-14 relative overflow-hidden shadow-2xl">
           <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.015)_1.2px,transparent_1.2px)] [background-size:24px_24px] pointer-events-none" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch relative z-10">
             {/* Left Side: Accordion Category selector */}
-            <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
-              <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+            <div className="lg:col-span-5 flex flex-col justify-between space-y-5 sm:space-y-8 text-left">
+              <div className="space-y-3 sm:space-y-4">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[8px] sm:text-[9px] rounded-lg uppercase tracking-widest font-mono">
                   FAQ // ENCONTRE RESPOSTAS
                 </div>
-                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
+                <h2 className="font-display font-black text-[1.6rem] sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
                   Dúvidas comuns sobre produção audiovisual
                 </h2>
-                <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
+                <p className="text-zinc-400 text-[13px] sm:text-[13px] leading-relaxed font-sans max-w-sm">
                   Antes de gravar, é importante entender objetivo, contexto, formato e uso posterior do material. Essas respostas ajudam a esclarecer como a TAG08 conduz esse processo.
                 </p>
               </div>
 
-              <div className="space-y-3 pt-4">
+              <div className="space-y-2.5 sm:space-y-3 pt-3 sm:pt-4">
                 {faqCategories.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setActiveFaq(item.id)}
-                    className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all text-left group cursor-pointer ${
+                    className={`w-full flex items-center justify-between p-3.5 sm:p-4 rounded-xl border transition-all text-left group cursor-pointer ${
                       activeFaq === item.id
                         ? "bg-brand text-black border-brand shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.12)]"
                         : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
                     }`}
                   >
-                    <span className="font-mono text-xs font-black uppercase tracking-wider flex items-center gap-3">
+                    <span className="font-mono text-[11px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-2.5 sm:gap-3">
                       <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
                         {String(item.id + 1).padStart(2, '0')}.
                       </span>
                       {item.title}
                     </span>
-                    <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
+                    <ArrowRight className={`w-4 h-4 shrink-0 transition-transform group-hover:translate-x-1 ${
                       activeFaq === item.id ? "text-black rotate-[-45deg] stroke-[2.5]" : "text-zinc-500"
                     }`} />
                   </button>
@@ -1080,7 +1090,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             </div>
 
             {/* Central Side: Responsive image + Answer container */}
-            <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
+            <div className="lg:col-span-4 relative flex flex-col justify-end p-4 sm:p-6 min-h-[300px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
               <img
                 src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800"
                 alt="TAG08 Produção Audiovisual"
@@ -1092,30 +1102,30 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
                 </svg>
               </div>
-              <div className="absolute top-6 left-6 z-10 pointer-events-none font-mono text-[8px] text-white/20 uppercase tracking-widest leading-none">
+              <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10 pointer-events-none font-mono text-[7px] sm:text-[8px] text-white/20 uppercase tracking-widest leading-none">
                 SYS // BROADCAST_FAQ
               </div>
 
-              <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left font-sans">
-                <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
+              <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-4 sm:p-5 rounded-2xl space-y-2.5 sm:space-y-3 shadow-2xl text-left font-sans">
+                <span className="font-mono text-[8px] sm:text-[8.5px] text-brand uppercase tracking-widest font-black block">
                   {faqCategories[activeFaq].title}
                 </span>
                 
-                <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
+                <h4 className="text-white font-semibold text-[13px] sm:text-sm leading-tight border-b border-white/5 pb-2">
                   {faqQuestions[activeFaq]}
                 </h4>
                 
-                <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
+                <p className="text-zinc-300 text-[13px] sm:text-[12.5px] leading-relaxed font-sans font-medium">
                   {faqAnswers[activeFaq]}
                 </p>
               </div>
             </div>
 
             {/* Right Side: Proportional side cards */}
-            <div className="lg:col-span-3 flex flex-col justify-between gap-4">
-              <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
-                <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">SERVIÇOS &amp; FORMATOS</span>
+            <div className="lg:col-span-3 flex flex-col justify-between gap-3 sm:gap-4">
+              <div className="bg-[#121214] border border-white/5 rounded-2xl p-4 sm:p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-3 sm:space-y-4 flex-1">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <span className="font-mono text-[8px] sm:text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">SERVIÇOS &amp; FORMATOS</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">Planejamento e clareza</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     O processo começa entendendo o contexto da marca, a função do material e o uso esperado depois da gravação.
@@ -1130,9 +1140,9 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 </button>
               </div>
 
-              <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
-                <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">CONVERSA CONSULTIVA</span>
+              <div className="bg-brand text-black rounded-2xl p-4 sm:p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-3 sm:space-y-4 flex-1">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <span className="font-mono text-[8px] sm:text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">CONVERSA CONSULTIVA</span>
                   <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer conversar sobre seu audiovisual?</h4>
                   <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-sans">
                     Sem pacote pronto. Primeiro entendemos contexto, objetivo e uso do material.
