@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowUpRight, MessageSquare, Phone, Mail, MapPin, ShieldAlert, CheckCircle, Eye, Type, RefreshCw, Instagram, Linkedin, Youtube, Facebook, Twitter, Sun, Moon, Cookie, Lock, Scale, FileText } from "lucide-react";
+import { ArrowUpRight, MessageSquare, Phone, Mail, MapPin, ShieldAlert, CheckCircle, Eye, Type, RefreshCw, Instagram, Linkedin, Youtube, Facebook, Twitter, Cookie, Lock, Scale, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
 import { getLocalizedNetworkLinks, TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_YOUTUBE_URL, TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
@@ -8,8 +8,6 @@ import { trackOutboundClick } from "../lib/analytics";
 
 interface FooterProps {
   onNavigate: (page: string) => void;
-  theme: "light" | "dark" | "balanced";
-  setTheme: (theme: "light" | "dark" | "balanced") => void;
   language: UiLanguage;
 }
 
@@ -207,7 +205,7 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
   },
 };
 
-export default function Footer({ onNavigate, theme, setTheme, language }: FooterProps) {
+export default function Footer({ onNavigate, language }: FooterProps) {
   const source = i18n[language].footer;
   const copy = {
     ...FOOTER_COPY[language],

@@ -83,36 +83,6 @@ export default function App() {
   const scrollDepthMarksRef = useRef<Set<number>>(new Set());
   const engagementTrackedRef = useRef(false);
 
-  // Responsive state theme ("light" / "dark") for perfect brand balance with system preference detection
-  const [theme, setTheme] = useState<"light" | "dark" | "balanced">(() => {
-    const saved = safeStorage.get("tag08_theme");
-    if (saved === "light" || saved === "dark" || saved === "balanced") {
-      return saved;
-    }
-    // Detect OS visual theme preference automatically
-    if (typeof window !== "undefined" && window.matchMedia) {
-      const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      return systemPreference;
-    }
-    return "light";
-  });
-
-  // Sync state parameters to persistent storage and documentElement classes
-  useEffect(() => {
-    safeStorage.set("tag08_theme", theme);
-    if (theme === "light") {
-      document.documentElement.classList.add("light");
-      document.documentElement.classList.remove("dark");
-    } else if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-    } else {
-      // Balanced mode (similar to premium light concrete background)
-      document.documentElement.classList.add("light");
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
   useEffect(() => {
     safeStorage.set("tag08_language", language);
     document.documentElement.lang = i18n[language].htmlLang;
@@ -245,7 +215,6 @@ export default function App() {
       route_key: route?.key,
       page_group: route?.routeCategory ?? "aux",
       is_service_page: Boolean(route?.isServicePage),
-      theme
     });
 
     // Update or append meta description item
@@ -559,8 +528,6 @@ export default function App() {
       <Header
         currentPage={currentPage}
         onNavigate={handleNavigate}
-        theme={theme}
-        setTheme={setTheme}
         language={language}
         onLanguageChange={setLanguage}
       />
@@ -590,8 +557,6 @@ export default function App() {
       {/* Footer element */}
       <Footer
         onNavigate={handleNavigate}
-        theme={theme}
-        setTheme={setTheme}
         language={language}
       />
 

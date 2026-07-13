@@ -48,8 +48,6 @@ export const i18n = {
       navMobileContact: "Falar conosco",
       statusTag: "SP | Aberto para projetos",
       languageLabel: "Idioma",
-      lightThemeTooltip: "Ativar modo escuro",
-      darkThemeTooltip: "Ativar modo clássico / equilibrado",
       servicePages: [
         { path: "/servicos/assessoria-marketing-digital-estrategico", name: "Assessoria de Marketing", desc: "Direção CMO externa e performance de canais" },
         { path: "/servicos/gestao-de-redes-sociais", name: "Gestão de Redes Sociais", desc: "Posicionamento recorrente com alto engajamento" },
@@ -304,8 +302,6 @@ export const i18n = {
       navMobileContact: "Talk to us",
       statusTag: "SP | Open for Projects",
       languageLabel: "Language",
-      lightThemeTooltip: "Switch to dark mode",
-      darkThemeTooltip: "Switch to balanced mode",
       servicePages: [
         { path: "/servicos/assessoria-marketing-digital-estrategico", name: "Marketing Advisory", desc: "Fractional CMO support and channel performance" },
         { path: "/servicos/gestao-de-redes-sociais", name: "Social Media Management", desc: "Consistent editorial planning with high engagement" },
@@ -509,8 +505,6 @@ export const i18n = {
       navMobileContact: "Hablar con nosotros",
       statusTag: "SP | Disponible para proyectos",
       languageLabel: "Idioma",
-      lightThemeTooltip: "Cambiar a modo nocturno",
-      darkThemeTooltip: "Cambiar a modo equilibrado",
       servicePages: [
         { path: "/servicos/assessoria-marketing-digital-estrategico", name: "Asesoría de Marketing", desc: "Dirección CMO externa y performance de canales" },
         { path: "/servicos/gestao-de-redes-sociais", name: "Gestión de Redes Sociales", desc: "Posicionamiento constante con alta interacción" },

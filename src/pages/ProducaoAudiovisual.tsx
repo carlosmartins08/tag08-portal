@@ -74,6 +74,37 @@ const FORMATOS: Formato[] = [
   }
 ];
 
+const TAG08_CHANNEL_SHORTS = [
+  {
+    id: "dOGBAq02Ji8",
+    title: "Produção de vídeos no sertão da Paraíba, muito calor diversão e novas ideias. 💡"
+  },
+  {
+    id: "JRTSyDm7F04",
+    title: "Como fazemos as coisas aqui, o coração da TAG08 pulsa forte o verbo “ACREDITAR”"
+  },
+  {
+    id: "TxSfU-W75tI",
+    title: "Criação de conteúdo para Unida Construtor"
+  },
+  {
+    id: "BVkLt70eZfw",
+    title: "Sedação Ambulatorial- Bastidores com Glória Pimenta"
+  },
+  {
+    id: "ptGg7_AGe8o",
+    title: "Fashion Filme Doctor Play | #Shorts"
+  },
+  {
+    id: "tbKkbZx4kAk",
+    title: "Making Of #08 | #Shorts"
+  }
+].map((item) => ({
+  ...item,
+  href: `https://www.youtube.com/shorts/${item.id}`,
+  thumbnail: `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`
+}));
+
 interface FAQCategory {
   id: number;
   title: string;
@@ -465,6 +496,78 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             ))}
           </div>
 
+        </div>
+      </section>
+
+      {/*=========================================
+          SECTION 4.5: FORMATOS AUDIOVISUAIS // TAG08 (Shorts reais do canal)
+         =========================================*/}
+      <section className="px-6 md:px-8 py-20 border-b border-white/[0.04] bg-black/35 text-left relative z-10">
+        <div className="max-w-7xl mx-auto space-y-12">
+          <div className="text-left space-y-3 max-w-2xl">
+            <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
+              FORMATOS AUDIOVISUAIS // TAG08
+            </span>
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
+              Shorts reais publicados no canal.
+            </h2>
+            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
+              Estes são exemplos reais do canal oficial da TAG08. Eles mostram bastidores, produção, posicionamento e trabalhos já publicados que ajudam a entender o tipo de material que o audiovisual pode gerar.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {TAG08_CHANNEL_SHORTS.map((short) => (
+              <a
+                key={short.id}
+                href={short.href}
+                target="_blank"
+                rel="noreferrer"
+                className="group block h-full overflow-hidden rounded-[28px] border border-white/[0.05] bg-charcoal-900 transition-all duration-300 hover:border-brand/30 hover:-translate-y-0.5"
+              >
+                <div className="relative aspect-[9/16] overflow-hidden bg-black">
+                  <img
+                    src={short.thumbnail}
+                    alt={short.title}
+                    className="h-full w-full object-cover brightness-[0.82] contrast-[1.05] transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="inline-flex items-center rounded-full border border-white/10 bg-black/45 px-2.5 py-1 font-mono text-[8px] uppercase tracking-widest text-white/75 backdrop-blur-sm">
+                      SHORT REAL
+                    </span>
+                  </div>
+                  <div className="absolute top-4 right-4 z-10">
+                    <span className="inline-flex items-center rounded-full border border-brand-secondary/15 bg-brand-secondary/10 px-2.5 py-1 font-mono text-[8px] uppercase tracking-widest text-brand-secondary backdrop-blur-sm">
+                      YOUTUBE
+                    </span>
+                  </div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white/90 backdrop-blur-sm transition-transform duration-300 group-hover:scale-105">
+                      <PlayCircle className="h-7 w-7" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4 p-5 sm:p-6">
+                  <h3 className="text-sm sm:text-[15px] font-semibold leading-snug text-white">
+                    {short.title}
+                  </h3>
+                  <div className="flex items-center justify-between border-t border-white/[0.05] pt-3">
+                    <span className="font-mono text-[8.5px] uppercase tracking-widest text-zinc-500">
+                      Publicado no canal
+                    </span>
+                    <span className="inline-flex items-center gap-1 font-mono text-[9px] font-bold uppercase tracking-widest text-brand-secondary">
+                      Assistir
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 

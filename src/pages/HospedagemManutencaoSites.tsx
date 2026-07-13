@@ -1777,6 +1777,87 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
           </div>
         </section>
 
+        <section className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/10 text-left">
+          <div className="max-w-7xl mx-auto space-y-10">
+            <div className="space-y-3 max-w-2xl">
+              <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/15 px-2.5 py-1 rounded-md inline-block">
+                PROVA DE MÉTODO
+              </span>
+              <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-tight tracking-tighter">
+                Hospedagem e manutenção existem para sustentar a operação depois da publicação.
+              </h2>
+              <p className="text-zinc-400 text-sm sm:text-base leading-relaxed font-sans font-medium max-w-3xl">
+                A TAG08 trata essa frente como continuidade operacional: rotina de revisão, monitoramento, atualizações, backup, segurança e suporte para que o site continue confiável quando o projeto já estiver no ar.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="bg-charcoal-900 border border-white/[0.06] rounded-3xl p-6 space-y-4">
+                <div className="w-11 h-11 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand">
+                  <RefreshCw className="w-5 h-5" />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Rotina de manutenção</h3>
+                  <p className="text-zinc-400 text-xs leading-relaxed font-sans">
+                    Revisões periódicas para manter conteúdo, links, integrações e ajustes técnicos em ordem.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-charcoal-900 border border-white/[0.06] rounded-3xl p-6 space-y-4">
+                <div className="w-11 h-11 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand">
+                  <Activity className="w-5 h-5" />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Monitoramento</h3>
+                  <p className="text-zinc-400 text-xs leading-relaxed font-sans">
+                    Acompanhamento de estabilidade, disponibilidade e comportamento do site para identificar sinais de problema antes que virem interrupção.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-charcoal-900 border border-white/[0.06] rounded-3xl p-6 space-y-4">
+                <div className="w-11 h-11 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Backup e segurança</h3>
+                  <p className="text-zinc-400 text-xs leading-relaxed font-sans">
+                    Cópias de segurança, revisão de acessos e cuidado preventivo para reduzir risco operacional e perda de informação.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-charcoal-900 border border-white/[0.06] rounded-3xl p-6 space-y-4">
+                <div className="w-11 h-11 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand">
+                  <FileCheck className="w-5 h-5" />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Suporte pós-publicação</h3>
+                  <p className="text-zinc-400 text-xs leading-relaxed font-sans">
+                    A operação segue acompanhada depois da entrega, com responsabilidade sobre ajustes e estabilidade do que já entrou no ar.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[28px] border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-1">
+                <h3 className="text-white font-display font-black text-base sm:text-lg uppercase tracking-tight">
+                  O site não termina no lançamento.
+                </h3>
+                <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
+                  Quando hospedagem e manutenção são tratadas como continuidade, a marca ganha menos improviso, mais previsibilidade e uma base mais confiável para evoluir.
+                </p>
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-3 py-2 text-[10px] font-mono uppercase tracking-widest text-brand">
+                <Lock className="w-3.5 h-3.5" />
+                Publicação acompanhada
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* SECTION 8 - FAQ */}
         <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand/[0.015] rounded-full blur-[160px] pointer-events-none" />

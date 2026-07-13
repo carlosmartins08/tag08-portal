@@ -121,12 +121,42 @@ const PROCESS_INTELLIGENCE_BRIDGE: ServiceInsightsBridgeConfig = {
   ],
 };
 
+const GESTAO_REDES_BRIDGE: ServiceInsightsBridgeConfig = {
+  servicePath: "/servicos/gestao-de-redes-sociais",
+  serviceTitle: "Gestão de Redes Sociais",
+  title: "Leituras que ajudam a sustentar presença com direção",
+  intro:
+    "A ponte editorial aqui existe para reduzir ruído antes da conversa. Os temas abaixo tratam de jornada, vídeo e intenção para que a presença nas redes tenha função real.",
+  hubCtaLabel: "Abrir Hub de Insights",
+  hubPath: "/insights",
+  items: [
+    {
+      status: "published",
+      postId: "jornada-do-consumidor-commerce-connections",
+      note: "Publicado no Hub de Insights",
+    },
+    {
+      status: "published",
+      postId: "facebook-vender-mais",
+      note: "Publicado no Hub de Insights",
+    },
+    {
+      status: "planned",
+      title: "Como definir uma frequência possível sem perder consistência",
+      excerpt:
+        "Nem toda marca precisa publicar mais. Em muitos casos, o ponto crítico é sustentar uma cadência realista que preserve clareza, revisão e coerência editorial.",
+      note: "Tema em preparação",
+    },
+  ],
+};
+
 export const SERVICE_INSIGHTS_BRIDGE_CONTENT: Record<
   string,
   ServiceInsightsBridgeConfig
 > = {
   [ASSESSORIA_MARKETING_BRIDGE.servicePath]: ASSESSORIA_MARKETING_BRIDGE,
   [DEVELOPMENT_WEB_BRIDGE.servicePath]: DEVELOPMENT_WEB_BRIDGE,
+  [GESTAO_REDES_BRIDGE.servicePath]: GESTAO_REDES_BRIDGE,
   [PROCESS_INTELLIGENCE_BRIDGE.servicePath]: PROCESS_INTELLIGENCE_BRIDGE,
 };
 

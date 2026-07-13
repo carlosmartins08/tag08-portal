@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { AlertCircle, ArrowUpRight, ArrowRight, BarChart, Workflow, FileText, Server, Layers, Cpu, CheckCircle, MessageSquare } from "lucide-react";
 import { motion } from "motion/react";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../config/siteNetwork";
@@ -521,16 +521,16 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
       </section>
 
       {/* OPERATIONS / PROCESSES CLIENTS LOGO SOCIAL PROOF */}
+      <ServiceInsightsBridge
+        servicePath="/servicos/process-intelligence"
+        onNavigate={onNavigate}
+      />
+
       <MiniCases 
         onNavigate={onNavigate} 
         title="Eficiência Operacional Homologada"
         subtitle="Empresas de escala que reduziram retrabalho e liberaram os fundadores do caos diário com a inteligência de processos da TAG08."
         badge="OPERATIONAL PROOF // PROCESSOS SÁBIOS"
-      />
-
-      <ServiceInsightsBridge
-        servicePath="/servicos/process-intelligence"
-        onNavigate={onNavigate}
       />
 
       {/* SECTION - WORK SYSTEM (WhatsApp Neon Callout inspired by screenshot) */}

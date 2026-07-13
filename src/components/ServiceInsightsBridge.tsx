@@ -32,9 +32,9 @@ export default function ServiceInsightsBridge({
   };
 
   return (
-    <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-16 border-b border-white/[0.04] bg-charcoal-950/95 text-left">
-      <div className="max-w-7xl mx-auto rounded-[28px] sm:rounded-[36px] border border-white/[0.05] bg-white/[0.02] p-5 sm:p-7 lg:p-8 space-y-6">
-        <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <section className="px-4 sm:px-6 md:px-8 py-10 sm:py-12 border-b border-white/[0.04] bg-charcoal-950/95 text-left">
+      <div className="max-w-7xl mx-auto rounded-[28px] sm:rounded-[36px] border border-white/[0.05] bg-white/[0.02] p-4 sm:p-6 lg:p-7 space-y-5">
+        <div className="flex flex-col gap-2.5 sm:gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand/10 border border-brand/20 text-brand text-[10px] font-mono uppercase tracking-widest">
               <BookOpen className="w-3.5 h-3.5" />
@@ -57,20 +57,20 @@ export default function ServiceInsightsBridge({
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {items.map((item, index) => {
             const isPublished = item.status === "published";
 
             return (
               <article
                 key={`${bridge.servicePath}-${index}`}
-                className={`rounded-2xl border p-5 sm:p-6 flex flex-col justify-between gap-5 transition-all duration-300 ${
+                className={`rounded-2xl border p-4 sm:p-5 flex flex-col justify-between gap-4 transition-all duration-300 ${
                   isPublished
                     ? "border-brand/20 bg-brand/5"
                     : "border-white/[0.06] bg-white/[0.02]"
                 }`}
               >
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   <div className="flex items-center justify-between gap-3">
                     <span
                       className={`inline-flex items-center rounded-full px-2.5 py-1 text-[9px] font-mono font-black uppercase tracking-widest ${
@@ -95,7 +95,7 @@ export default function ServiceInsightsBridge({
                   </p>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">
                     {isPublished
                       ? item.note ?? item.post.serviceNote

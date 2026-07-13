@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChevronDown, Menu, X, ArrowUpRight, MessageSquare, Briefcase, Compass, Settings, Users, Mail, Award, Activity, Sun, Moon, Video } from "lucide-react";
+import { ChevronDown, Menu, X, ArrowUpRight, MessageSquare, Briefcase, Compass, Settings, Users, Mail, Award, Activity, Video } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
 import { TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
@@ -8,13 +8,11 @@ import { trackCtaClick, trackOutboundClick } from "../lib/analytics";
 interface HeaderProps {
   currentPage: string;
   onNavigate: (page: string) => void;
-  theme: "light" | "dark" | "balanced";
-  setTheme: (theme: "light" | "dark" | "balanced") => void;
   language: UiLanguage;
   onLanguageChange: (language: UiLanguage) => void;
 }
 
-export default function Header({ currentPage, onNavigate, theme, setTheme, language, onLanguageChange }: HeaderProps) {
+export default function Header({ currentPage, onNavigate, language, onLanguageChange }: HeaderProps) {
   const copy = i18n[language].header;
   const serviceIcons = [Award, MessageSquare, Compass, Settings, Video, Briefcase, Users];
   const localizedServices = copy.servicePages.map((svc, index) => ({
@@ -254,20 +252,6 @@ export default function Header({ currentPage, onNavigate, theme, setTheme, langu
             </span>
           </div>
 
-          {/* Theme selection toggle button */}
-          <button
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            className="p-2.5 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand/40 text-white/80 hover:text-brand transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 cursor-pointer flex items-center justify-center shadow"
-            title={theme === "light" ? copy.lightThemeTooltip : copy.darkThemeTooltip}
-            aria-label="Alternar tema visual"
-          >
-            {theme === "light" ? (
-              <Moon className="w-3.5 h-3.5" />
-            ) : (
-              <Sun className="w-3.5 h-3.5 text-brand stroke-[2.5]" />
-            )}
-          </button>
-
           <button
             id="btn-nav-contato"
             onClick={() => handleLinkClick("/contato", copy.navMobileContact, "header-cta", "conversion")}
@@ -279,19 +263,6 @@ export default function Header({ currentPage, onNavigate, theme, setTheme, langu
 
         {/* Mobile Actions block including trigger and quick toggles */}
         <div className="lg:hidden flex items-center gap-2.5">
-          <button
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            className="p-2 text-white/80 hover:text-brand rounded-xl bg-white/[0.02] border border-white/[0.05] shadow cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 flex items-center justify-center"
-            title={theme === "light" ? copy.lightThemeTooltip : copy.darkThemeTooltip}
-            aria-label="Alternar tema visual mobile"
-          >
-            {theme === "light" ? (
-              <Moon className="w-4 h-4" />
-            ) : (
-              <Sun className="w-4 h-4 text-brand stroke-[2.5]" />
-            )}
-          </button>
-
           <button
             id="btn-toggle-mobile-menu"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

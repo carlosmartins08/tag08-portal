@@ -1,11 +1,15 @@
-﻿import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { MessageSquare, Sparkles, TrendingUp, Share2, Camera, Heart, ArrowUpRight, ArrowRight, BarChart3, Users, Check, Play, Pause, Volume2, VolumeX, Eye, Film, X, Clock, ExternalLink, Zap, Award } from "lucide-react";
+import { useRef, useState } from "react";
+import { motion } from "motion/react";
+import { MessageSquare, Sparkles, TrendingUp, ArrowUpRight, ArrowRight, Users, Plus, Minus } from "lucide-react";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../config/siteNetwork";
 import ThreeDimensionalTilt from "../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../components/Subtle3DCanvas";
+import ServiceInsightsBridge from "../components/ServiceInsightsBridge";
 import MiniCases from "../components/MiniCases";
+import TrustTestimonialsSection from "../components/TrustTestimonialsSection";
+import { TAG08_YOUTUBE_SHORTS } from "../content/youtubeShorts";
 
+/*
 interface PlayableShort {
   id: string;
   title: string;
@@ -119,6 +123,157 @@ const shortsData: PlayableShort[] = [
     ]
   }
 ];
+*/
+
+type DiagnosticKey = "challenge" | "routine" | "channels" | "priority" | "formats" | "moment";
+type DiagnosticAnswer = string | string[];
+
+interface DiagnosticOption {
+  value: string;
+  label: string;
+}
+
+interface DiagnosticQuestion {
+  key: DiagnosticKey;
+  step: string;
+  title: string;
+  helper: string;
+  multi?: boolean;
+  options: DiagnosticOption[];
+}
+
+const EDITORIAL_DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
+  {
+    key: "challenge",
+    step: "Etapa 01",
+    title: "Qual é o principal desafio hoje?",
+    helper: "Escolha a leitura que mais descreve o travamento atual.",
+    options: [
+      { value: "clarity", label: "Falta clareza" },
+      { value: "consistency", label: "Falta consistência" },
+      { value: "time", label: "Falta tempo" },
+      { value: "direction", label: "Não sei por onde começar" }
+    ]
+  },
+  {
+    key: "routine",
+    step: "Etapa 02",
+    title: "Como a rotina atual funciona?",
+    helper: "Queremos entender se existe fluxo, improviso ou pausa.",
+    options: [
+      { value: "none", label: "Ainda não existe" },
+      { value: "improvised", label: "É improvisada" },
+      { value: "partial", label: "Existe, mas é parcial" },
+      { value: "reviewed", label: "Já existe com revisão" }
+    ]
+  },
+  {
+    key: "channels",
+    step: "Etapa 03",
+    title: "Quais canais vocês usam hoje?",
+    helper: "Marque os canais que fazem parte da rotina da marca.",
+    multi: true,
+    options: [
+      { value: "instagram", label: "Instagram" },
+      { value: "tiktok", label: "TikTok" },
+      { value: "linkedin", label: "LinkedIn" },
+      { value: "youtube", label: "YouTube" },
+      { value: "site-whatsapp", label: "Site e WhatsApp" }
+    ]
+  },
+  {
+    key: "priority",
+    step: "Etapa 04",
+    title: "Qual prioridade editorial faz mais sentido agora?",
+    helper: "Escolha a função principal da presença nas redes neste momento.",
+    options: [
+      { value: "authority", label: "Autoridade" },
+      { value: "recurrence", label: "Presença recorrente" },
+      { value: "behind-scenes", label: "Bastidores" },
+      { value: "commercial-support", label: "Apoio comercial" }
+    ]
+  },
+  {
+    key: "formats",
+    step: "Etapa 05",
+    title: "Que formatos fazem mais sentido?",
+    helper: "Marque os formatos que o material precisa sustentar.",
+    multi: true,
+    options: [
+      { value: "reels", label: "Reels e cortes" },
+      { value: "carousels", label: "Carrosséis" },
+      { value: "testimonials", label: "Depoimentos" },
+      { value: "institutional", label: "Vídeo institucional" },
+      { value: "bastidores", label: "Bastidores" }
+    ]
+  },
+  {
+    key: "moment",
+    step: "Etapa 06",
+    title: "Qual é o momento da marca?",
+    helper: "Isso ajuda a TAG08 a entender urgência e profundidade do apoio.",
+    options: [
+      { value: "foundation", label: "Precisa organizar a base" },
+      { value: "review", label: "Quer revisar a direção" },
+      { value: "accelerate", label: "Quer acelerar com critério" },
+      { value: "start", label: "Quer iniciar agora" }
+    ]
+  }
+];
+
+const getDiagnosticQuestion = (key: DiagnosticKey) =>
+  EDITORIAL_DIAGNOSTIC_QUESTIONS.find((question) => question.key === key);
+
+const getDiagnosticValueLabel = (key: DiagnosticKey, value: DiagnosticAnswer) => {
+  const question = getDiagnosticQuestion(key);
+  if (!question) {
+    return "Aguardando resposta";
+  }
+
+  if (Array.isArray(value)) {
+    if (!value.length) {
+      return "Aguardando resposta";
+    }
+
+    return value
+      .map((item) => question.options.find((option) => option.value === item)?.label ?? item)
+      .join(" � ");
+  }
+
+  return question.options.find((option) => option.value === value)?.label ?? "Aguardando resposta";
+};
+
+const buildDiagnosticRecommendation = ({
+  challenge,
+  routine,
+  moment,
+}: {
+  challenge: string;
+  routine: string;
+  moment: string;
+}) => {
+  if (!challenge || !routine || !moment) {
+    return "Complete as respostas para gerar a leitura final e o próximo passo.";
+  }
+
+  if (challenge === "direction" || routine === "none") {
+    return "Começar por direção editorial, linha de conteúdo e rotina possível antes de pensar em volume.";
+  }
+
+  if (challenge === "clarity" || moment === "review") {
+    return "Revisar narrativa, prioridade editorial e formatos que expliquem melhor a oferta.";
+  }
+
+  if (challenge === "consistency" || routine === "improvised") {
+    return "Organizar frequência, revisão e formatos para reduzir improviso e sustentar presença.";
+  }
+
+  if (moment === "accelerate") {
+    return "A conversa pode avançar para escopo, formato e cadência com foco em consistência.";
+  }
+
+  return "A TAG08 pode ajudar a transformar o diagnóstico em linha editorial, formato e próxima ação prática.";
+};
 
 interface SocialMediaProps {
   onNavigate: (page: string) => void;
@@ -126,14 +281,167 @@ interface SocialMediaProps {
 
 export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
   const [activeFaq, setActiveFaq] = useState(0);
-  const [selectedShort, setSelectedShort] = useState<PlayableShort | null>(null);
-  const [hoveredShort, setHoveredShort] = useState<string | null>(null);
-  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [diagnosticAnswers, setDiagnosticAnswers] = useState<Record<DiagnosticKey, DiagnosticAnswer>>({
+    challenge: "",
+    routine: "",
+    channels: [],
+    priority: "",
+    formats: [],
+    moment: ""
+  });
+  const [diagnosticName, setDiagnosticName] = useState("");
+  const [diagnosticWhatsapp, setDiagnosticWhatsapp] = useState("");
+  const [diagnosticConsent, setDiagnosticConsent] = useState(false);
+  const diagnosticQuestionRefs = useRef<Record<DiagnosticKey, HTMLDivElement | null>>({
+    challenge: null,
+    routine: null,
+    channels: null,
+    priority: null,
+    formats: null,
+    moment: null
+  });
+
+  const answeredCount = EDITORIAL_DIAGNOSTIC_QUESTIONS.reduce((count, question) => {
+    const value = diagnosticAnswers[question.key];
+    if (Array.isArray(value)) {
+      return count + (value.length > 0 ? 1 : 0);
+    }
+    return count + (value ? 1 : 0);
+  }, 0);
+
+  const diagnosticProgress = Math.round((answeredCount / EDITORIAL_DIAGNOSTIC_QUESTIONS.length) * 100);
+  const challengeLabel = getDiagnosticValueLabel("challenge", diagnosticAnswers.challenge);
+  const routineLabel = getDiagnosticValueLabel("routine", diagnosticAnswers.routine);
+  const channelsLabel = getDiagnosticValueLabel("channels", diagnosticAnswers.channels);
+  const priorityLabel = getDiagnosticValueLabel("priority", diagnosticAnswers.priority);
+  const formatsLabel = getDiagnosticValueLabel("formats", diagnosticAnswers.formats);
+  const momentLabel = getDiagnosticValueLabel("moment", diagnosticAnswers.moment);
+  const diagnosticReady = Boolean(
+    challengeLabel !== "Aguardando resposta" &&
+    routineLabel !== "Aguardando resposta" &&
+    channelsLabel !== "Aguardando resposta" &&
+    priorityLabel !== "Aguardando resposta" &&
+    formatsLabel !== "Aguardando resposta" &&
+    momentLabel !== "Aguardando resposta" &&
+    diagnosticName.trim() &&
+    diagnosticWhatsapp.trim() &&
+    diagnosticConsent
+  );
+  const diagnosticRecommendation = buildDiagnosticRecommendation({
+    challenge: diagnosticAnswers.challenge as string,
+    routine: diagnosticAnswers.routine as string,
+    moment: diagnosticAnswers.moment as string
+  });
+  const visibleShorts = TAG08_YOUTUBE_SHORTS.slice(-3);
+  const diagnosticSummaryCards = [
+    { label: "Principal desafio", value: challengeLabel },
+    { label: "Rotina atual", value: routineLabel },
+    { label: "Canais usados", value: channelsLabel },
+    { label: "Prioridade editorial", value: priorityLabel },
+    { label: "Formato recomendado", value: formatsLabel },
+    { label: "Momento da marca", value: momentLabel }
+  ];
+  const diagnosticMessage = `Ol� TAG08! Conclu� meu diagn�stico editorial.
+
+Seu diagn�stico editorial
+
+Principal desafio: ${challengeLabel}
+Rotina atual: ${routineLabel}
+Canais usados: ${channelsLabel}
+Prioridade editorial: ${priorityLabel}
+Formatos desejados: ${formatsLabel}
+Momento da marca: ${momentLabel}
+Nome: ${diagnosticName.trim()}
+WhatsApp: ${diagnosticWhatsapp.trim()}
+Consentimento: ${diagnosticConsent ? "Autorizado" : "N�o autorizado"}
+
+Pr�ximo passo: conversar com a TAG08 para entender escopo e dire��o editorial.`;
+  const diagnosticWhatsAppUrl = buildBrazilWhatsAppUrl(diagnosticMessage);
+
+  const scrollToDiagnosticQuestion = (key: DiagnosticKey) => {
+    const target = diagnosticQuestionRefs.current[key];
+    if (!target) return;
+
+    window.setTimeout(() => {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 60);
+  };
+
+  const setDiagnosticSingleAnswer = (key: Exclude<DiagnosticKey, "channels" | "formats">, value: string) => {
+    setDiagnosticAnswers((prev) => ({
+      ...prev,
+      [key]: value
+    }));
+  };
+
+  const toggleDiagnosticMultiAnswer = (key: "channels" | "formats", value: string) => {
+    setDiagnosticAnswers((prev) => {
+      const current = Array.isArray(prev[key]) ? (prev[key] as string[]) : [];
+      return {
+        ...prev,
+        [key]: current.includes(value) ? current.filter((item) => item !== value) : [...current, value]
+      };
+    });
+  };
+
+  const handleDiagnosticAnswerSelect = (question: DiagnosticQuestion, optionValue: string) => {
+    if (question.multi) {
+      toggleDiagnosticMultiAnswer(question.key as "channels" | "formats", optionValue);
+      return;
+    }
+
+    setDiagnosticSingleAnswer(question.key as Exclude<DiagnosticKey, "channels" | "formats">, optionValue);
+
+    const nextQuestionIndex = EDITORIAL_DIAGNOSTIC_QUESTIONS.findIndex((item) => item.key === question.key) + 1;
+    const nextQuestion = EDITORIAL_DIAGNOSTIC_QUESTIONS[nextQuestionIndex];
+    if (nextQuestion) {
+      scrollToDiagnosticQuestion(nextQuestion.key);
+    }
+  };
 
   const handleLinkClick = (page: string) => {
     onNavigate(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const faqItems = [
+    {
+      id: 0,
+      eyebrow: "Planejamento editorial",
+      question: "A gestão de redes sociais é só fazer posts?",
+      answer:
+        "Não. A gestão envolve linha editorial, calendário, linguagem, criação, direção visual, revisão e acompanhamento. O objetivo é dar função ao conteúdo dentro da estratégia da marca."
+    },
+    {
+      id: 1,
+      eyebrow: "Frequência possível",
+      question: "Preciso postar todos os dias?",
+      answer:
+        "Não necessariamente. A frequência precisa ser possível de sustentar e coerente com o momento da marca. Uma rotina realista costuma ser melhor do que volume sem critério."
+    },
+    {
+      id: 2,
+      eyebrow: "Criação de conteúdo",
+      question: "A TAG08 cria os conteúdos?",
+      answer:
+        "Sim, dentro do escopo contratado. Podemos apoiar temas, legendas, peças, roteiros, formatos e organização editorial conforme a necessidade da marca."
+    },
+    {
+      id: 3,
+      eyebrow: "Vídeos e bastidores",
+      question: "A gestão inclui vídeos e bastidores?",
+      answer:
+        "Pode incluir ou se conectar com produção audiovisual quando isso fizer sentido para a estratégia. Vídeos curtos, bastidores e recortes devem servir à linha editorial, não apenas ocupar espaço."
+    },
+    {
+      id: 4,
+      eyebrow: "Expectativas e resultado",
+      question: "A TAG08 promete alcance ou engajamento?",
+      answer:
+        "Não prometemos alcance, engajamento ou crescimento instantâneo. Trabalhamos para construir clareza, consistência, presença e melhoria contínua com responsabilidade."
+    }
+  ];
+  const activeFaqItem = faqItems[activeFaq] ?? faqItems[0];
 
   return (
     <div className="bg-charcoal-950 text-white min-h-screen pt-28 pb-20 relative overflow-hidden">
@@ -150,7 +458,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
-                GEST??O DE REDES SOCIAIS // TAG08
+                GESTÃO DE REDES SOCIAIS // TAG08
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
                 Redes sociais <br />
@@ -159,7 +467,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
-                A TAG08 organiza a presença da marca nas redes sociais com estratégia, narrativa, calendário, formatos e acompanhamento para que o conteúdo deixe de ser postagem solta e passe a cumprir uma função clara.
+                A TAG08 organiza a presença da marca nas redes sociais com estratégia, narrativa, calend�rio, formatos e acompanhamento para que o conteúdo deixe de ser postagem solta e passe a cumprir uma função clara.
               </p>
             </div>
           </div>
@@ -168,7 +476,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
               <img 
                 src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1600"
-                alt="Presença com direção TAG08"
+                alt="Presen�a com direção TAG08"
                 className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
               />
@@ -202,11 +510,11 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Linha editorial</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Temas, formatos e prioridades<br/>organizados com intenção</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Temas, formatos e prioridades<br/>organizados com inten��o</span>
             </div>
             <div className="space-y-2">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Frequência possível</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Cadência pensada para a<br/>realidade da operação</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Frequ�ncia possível</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Cad�ncia pensada para a<br/>realidade da operação</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Narrativa de marca</span>
@@ -214,7 +522,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Acompanhamento</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Revisão contínua para ajustar<br/>a direção quando preciso</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Revis�o cont�nua para ajustar<br/>a direção quando preciso</span>
             </div>
           </div>
         </div>
@@ -229,7 +537,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               Quando as redes sociais <span className="text-brand">deixam de construir presença.</span>
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Muitas marcas publicam com frequ?ncia, mas ainda n???o conseguem transmitir clareza, consist???ncia ou percep??????o de valor. O problema nem sempre ??? falta de conte???do; muitas vezes ??? falta de linha editorial, posicionamento e crit???rio de produ??????o.
+              Muitas marcas publicam com frequência, mas ainda não conseguem transmitir clareza, consistência ou percepção de valor. O problema nem sempre é falta de conteúdo; muitas vezes é falta de linha editorial, posicionamento e critério de produção.
             </p>
           </div>
 
@@ -237,35 +545,35 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
               <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Postagens sem direção</span>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                Os conte?dos saem, mas n???o parecem construir uma narrativa clara sobre a marca, seus diferenciais ou sua forma de gerar valor.
+                Os conteúdos saem, mas não parecem construir uma narrativa clara sobre a marca, seus diferenciais ou sua forma de gerar valor.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Calendário sem prioridade</span>
+              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Calend�rio sem prioridade</span>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                A rotina existe, mas os temas são definidos por urgência, tendência ou improviso, sem conexão com uma estratégia maior.
+                A rotina existe, mas os temas s�o definidos por urgência, tend�ncia ou improviso, sem conex�o com uma estratégia maior.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
               <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Visual sem consistência</span>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                Cada peça parece seguir uma lógica diferente, enfraquecendo reconhecimento, confiança e percepção profissional.
+                Cada pe�a parece seguir uma l�gica diferente, enfraquecendo reconhecimento, confian�a e percep��o profissional.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Pouca conexão com o comercial</span>
+              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Pouca conex�o com o comercial</span>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                O conteúdo até movimenta a página, mas não ajuda o público a entender melhor a oferta, o processo ou o próximo passo.
+                O conteúdo at� movimenta a p�gina, mas não ajuda o p�blico a entender melhor a oferta, o processo ou o próximo passo.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all sm:col-span-2">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Produção difícil de sustentar</span>
+              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Produ��o dif�cil de sustentar</span>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                A marca depende de esforço pontual, ideias soltas e aprovações demoradas, tornando a presença instável.
+                A marca depende de esfor�o pontual, ideias soltas e aprova��es demoradas, tornando a presença inst�vel.
               </p>
             </div>
           </div>
@@ -277,7 +585,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
           <div className="text-left space-y-2 max-w-2xl">
             <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">O que organizamos</span>
             <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
-              Gestão de redes não é só calendário. É direção editorial.
+              Gest�o de redes não � s� calend�rio. � direção editorial.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
               A TAG08 estrutura temas, formatos, frequência, linguagem, design e revisão para que a presença da marca nas redes tenha consistência e função dentro da estratégia.
@@ -292,7 +600,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Linha editorial</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Definição de temas, mensagens, pilares de conteúdo e prioridades para orientar a comunicação da marca.
+                  Defini��o de temas, mensagens, pilares de conteúdo e prioridades para orientar a comunicação da marca.
                 </p>
               </div>
             </div>
@@ -302,9 +610,9 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 <MessageSquare className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Calendário possível</h4>
+                <h4 className="text-white font-display font-black text-sm uppercase">Calend�rio possível</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Organização de uma rotina de publicação compatível com o momento, a equipe, os canais e a capacidade de aprovação.
+                  Organização de uma rotina de publicação compat�vel com o momento, a equipe, os canais e a capacidade de aprovação.
                 </p>
               </div>
             </div>
@@ -316,7 +624,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Criação de conteúdo</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Desenvolvimento de legendas, peças, roteiros e formatos alinhados ao posicionamento e ao objetivo de cada publicação.
+                  Desenvolvimento de legendas, pe�as, roteiros e formatos alinhados ao posicionamento e ao objetivo de cada publicação.
                 </p>
               </div>
             </div>
@@ -326,9 +634,9 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 <Users className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Direção visual</h4>
+                <h4 className="text-white font-display font-black text-sm uppercase">Dire��o visual</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Aplicação de identidade, estética, hierarquia e consistência visual para fortalecer reconhecimento e percepção profissional.
+                  Aplicação de identidade, est�tica, hierarquia e consistência visual para fortalecer reconhecimento e percep��o profissional.
                 </p>
               </div>
             </div>
@@ -340,7 +648,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Acompanhamento e revisão</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Leitura do que precisa evoluir, ajustes de rota, organização de feedbacks e melhoria contínua do processo editorial.
+                  Leitura do que precisa evoluir, ajustes de rota, organização de feedbacks e melhoria cont�nua do processo editorial.
                 </p>
               </div>
             </div>
@@ -360,28 +668,28 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               Escolha o escopo pelo momento da sua presença digital.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
-              A gestão de redes pode começar de forma mais enxuta ou evoluir para uma rotina editorial mais completa. O escopo ideal depende da maturidade da marca, da frequência possível e da estrutura disponível para aprovar e sustentar conteúdo.
+              A gest�o de redes pode come�ar de forma mais enxuta ou evoluir para uma rotina editorial mais completa. O escopo ideal depende da maturidade da marca, da frequência possível e da estrutura dispon�vel para aprovar e sustentar conteúdo.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {[
               {
-                name: "Presença organizada",
+                name: "Presen�a organizada",
                 subtitle: "Para marcas que precisam sair da postagem solta.",
-                desc: "Organização inicial de temas, calendário, linguagem e peças para criar uma rotina mais clara e consistente nas redes.",
+                desc: "Organização inicial de temas, calend�rio, linguagem e pe�as para criar uma rotina mais clara e consistente nas redes.",
                 badge: "01"
               },
               {
                 name: "Linha editorial recorrente",
-                subtitle: "Para marcas que precisam manter frequência com intenção.",
+                subtitle: "Para marcas que precisam manter frequência com inten��o.",
                 desc: "Planejamento, criação e acompanhamento de conteúdos com narrativa, formatos definidos e alinhamento ao posicionamento da marca.",
                 badge: "02"
               },
               {
-                name: "Conteúdo com acompanhamento",
-                subtitle: "Para marcas que precisam evoluir a presença com mais critério.",
-                desc: "Gestão editorial com revisão, ajustes de rota, leitura de aprendizados e integração com outras frentes de comunicação.",
+                name: "Conte�do com acompanhamento",
+                subtitle: "Para marcas que precisam evoluir a presença com mais crit�rio.",
+                desc: "Gest�o editorial com revisão, ajustes de rota, leitura de aprendizados e integração com outras frentes de comunicação.",
                 badge: "03"
               }
             ].map((plan) => (
@@ -427,11 +735,11 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 O que garantimos (e o que foca em outras areas)
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                Nossa filosofia repudia falsas promessas de escopo infinito sem direção tática. Esclarecer com integridade os limites da nossa produção corporativa é nossa garantia de sinergia:
+                Nossa filosofia repudia falsas promessas de escopo infinito sem direção t�tica. Esclarecer com integridade os limites da nossa produ��o corporativa � nossa garantia de sinergia:
               </p>
 
               <div className="p-5 rounded-2xl bg-brand-secondary/[0.01] border border-white/[0.03] text-xs text-zinc-400 font-sans leading-relaxed">
-                Nossa equipe foca estritamente no planejamento, design e rotinas intelectuais. Para gravação física, fornecemos roteiros clínicos que você ou seu time gravam de forma descomplicada.
+                Nossa equipe foca estritamente no planejamento, design e rotinas intelectuais. Para gravação f�sica, fornecemos roteiros cl�nicos que voc� ou seu time gravam de forma descomplicada.
               </div>
             </div>
 
@@ -449,8 +757,8 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                   {[
                     "Planejamento de linha editorial sob medida",
                     "Roteiros escritos com gancho e call-to-action",
-                    "Design exclusivo sob Figma para carrosséis",
-                    "Legendas magnéticas para educar o público",
+                    "Design exclusivo sob Figma para carross�is",
+                    "Legendas magn�ticas para educar o p�blico",
                     "Agendamento e automação das postagens"
                   ].map((inc, index) => (
                     <div key={index} className="flex gap-3 text-xs text-zinc-300 font-sans items-start font-medium leading-relaxed font-semibold">
@@ -465,15 +773,15 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               <div className="bg-charcoal-900 border border-white/[0.05] p-7 rounded-3xl space-y-5 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-zinc-600/30" />
                 <span className="font-mono text-[9px] text-zinc-500 bg-white/[0.02] border border-white/5 px-2.5 py-1 rounded font-black uppercase inline-block">
-                  NaO INCLUaDO NESTA DIVIsão
+                  NaO INCLUaDO NESTA DIVIs�o
                 </span>
                 
                 <div className="space-y-3.5">
                   {[
-                    "Gravações de camera (deslocamento fasico)",
+                    "Grava��es de camera (deslocamento fasico)",
                     "Oraamento de trafego pago ativo",
-                    "Interações de Direct, comentarios e SAC",
-                    "Apoio de co-produção física presencial",
+                    "Intera��es de Direct, comentarios e SAC",
+                    "Apoio de co-produ��o f�sica presencial",
                     "Criação integral de nova marca/rebranding"
                   ].map((exc, index) => (
                     <div key={index} className="flex gap-3 text-xs text-zinc-400 font-sans items-start font-medium leading-relaxed">
@@ -497,19 +805,19 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 METODOLOGIA DE FLUXO
               </span>
               <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
-                Nosso Ciclo Mensal Sistemático
+                Nosso Ciclo Mensal Sistem�tico
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
-                Seguimos um ritmo de planejamento consistente para manter sua grade de canais digitais organizada, clara e sem depender de urgência de última hora:
+                Seguimos um ritmo de planejamento consistente para manter sua grade de canais digitais organizada, clara e sem depender de urgência de �ltima hora:
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {[
-                { title: "Linha editorial", desc: "Definimos temas, mensagens e prioridades para orientar a produção ao longo do mês." },
-                { title: "Formatos e roteiros", desc: "Estruturamos falas, carrosséis e recortes para manter consistência entre conteúdo e posicionamento." },
+                { title: "Linha editorial", desc: "Definimos temas, mensagens e prioridades para orientar a produ��o ao longo do m�s." },
+                { title: "Formatos e roteiros", desc: "Estruturamos falas, carross�is e recortes para manter consistência entre conteúdo e posicionamento." },
                 { title: "Ajustes de identidade", desc: "Aplicamos identidade, hierarquia visual e consistência para que os conteúdos comuniquem a mesma marca." },
-                { title: "Acompanhamento contínuo", desc: "Revisamos a rotina e os aprendizados para ajustar temas, formatos e frequência quando necessário." }
+                { title: "Acompanhamento cont�nuo", desc: "Revisamos a rotina e os aprendizados para ajustar temas, formatos e frequência quando necess�rio." }
               ].map((step, sIdx) => (
                 <div key={sIdx} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-2xl text-left space-y-4 hover:border-brand/10 transition-all duration-300">
                   <div className="font-sans text-[10px] font-black text-brand-secondary bg-brand-secondary/5 w-8 h-8 rounded-lg flex items-center justify-center border border-brand-secondary/10 shadow-[0_4px_10px_rgba(var(--color-brand-secondary-rgb),0.05)]">
@@ -540,10 +848,10 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
 
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { title: "Presença mais coerente", desc: "O foco é tornar a comunicação mais clara, reconhecível e conectada ao posicionamento da marca." },
-                { title: "Leitura de conteúdo", desc: "Observamos se os formatos ajudam a sustentar a narrativa ou apenas ocupam espaço." },
-                { title: "Aproximação do público", desc: "Acompanhamos se os recortes e as falas facilitam compreensão, confiança e próximo passo." },
-                { title: "Ajuste contínuo", desc: "Usamos os aprendizados do ciclo para refinar temas, frequência e linguagem editorial." }
+                { title: "Presen�a mais coerente", desc: "O foco � tornar a comunicação mais clara, reconhec�vel e conectada ao posicionamento da marca." },
+                { title: "Leitura de conteúdo", desc: "Observamos se os formatos ajudam a sustentar a narrativa ou apenas ocupam espa�o." },
+                { title: "Aproximação do p�blico", desc: "Acompanhamos se os recortes e as falas facilitam compreens�o, confian�a e próximo passo." },
+                { title: "Ajuste cont�nuo", desc: "Usamos os aprendizados do ciclo para refinar temas, frequência e linguagem editorial." }
               ].map((item, iIdx) => (
                 <div key={iIdx} className="p-5 rounded-2xl bg-charcoal-900/60 border border-white/[0.03] space-y-1.5 text-left hover:border-brand/10 transition-colors">
                   <div className="w-2 h-2 rounded-full bg-brand-secondary" />
@@ -562,42 +870,48 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
           <div className="space-y-2 max-w-3xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-              Critérios de confiança
+              Crit�rios de confian�a
             </span>
             <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">
               O que sustenta uma presença mais consistente.
             </h4>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed max-w-2xl">
-              A gestão de redes funciona melhor quando existe direção editorial, rotina possível, revisão constante e conexão com o posicionamento da marca.
+              A gest�o de redes funciona melhor quando existe direção editorial, rotina possível, revisão constante e conex�o com o posicionamento da marca.
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-3 w-full max-w-xl">
             <div className="rounded-2xl border border-white/[0.06] bg-black/20 px-4 py-3 space-y-1">
               <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Linha editorial</span>
-              <p className="text-[11px] leading-relaxed text-zinc-300">Temas, mensagens e formatos organizados antes da produção.</p>
+              <p className="text-[11px] leading-relaxed text-zinc-300">Temas, mensagens e formatos organizados antes da produ��o.</p>
             </div>
             <div className="rounded-2xl border border-white/[0.06] bg-black/20 px-4 py-3 space-y-1">
               <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Rotina possível</span>
-              <p className="text-[11px] leading-relaxed text-zinc-300">Frequência compatível com a estrutura real da marca.</p>
+              <p className="text-[11px] leading-relaxed text-zinc-300">Frequ�ncia compat�vel com a estrutura real da marca.</p>
             </div>
             <div className="rounded-2xl border border-white/[0.06] bg-black/20 px-4 py-3 space-y-1">
-              <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Consistência visual</span>
-              <p className="text-[11px] leading-relaxed text-zinc-300">Peças alinhadas à identidade, estética e percepção desejada.</p>
+              <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Consist�ncia visual</span>
+              <p className="text-[11px] leading-relaxed text-zinc-300">Pe�as alinhadas � identidade, est�tica e percep��o desejada.</p>
             </div>
             <div className="rounded-2xl border border-white/[0.06] bg-black/20 px-4 py-3 space-y-1">
               <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Acompanhamento</span>
-              <p className="text-[11px] leading-relaxed text-zinc-300">Revisão, aprendizados e ajustes para manter a presença em evolução.</p>
+              <p className="text-[11px] leading-relaxed text-zinc-300">Revis�o, aprendizados e ajustes para manter a presença em evolu��o.</p>
             </div>
           </div>
         </div>
       </section>
+
+      <ServiceInsightsBridge
+        servicePath="/servicos/gestao-de-redes-sociais"
+        onNavigate={onNavigate}
+      />
+
       {/* CASE STUDIES / CLIENTS LOGO SOCIAL PROOF */}
       <MiniCases 
         onNavigate={onNavigate} 
         title="Projetos que mostram conteúdo com direção."
-        subtitle="A gestão de redes funciona melhor quando a marca combina linha editorial, consistência visual, frequência possível e revisão contínua. Os projetos devem mostrar esse processo, não prometer resultado instantâneo."
-        badge="MÉTODO EM PRÁTICA"
+        subtitle="A gest�o de redes funciona melhor quando a marca combina linha editorial, consistência visual, frequência possível e revisão cont�nua. Os projetos devem mostrar esse processo, não prometer resultado instant�neo."
+        badge="M�TODO EM PR�TICA"
       />
 
       {false && (
@@ -614,7 +928,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               Simulador de Alcance Organico e Funil Social
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-              O alcance org???nico s???nior ??? um jogo de regularidade editorial e distribui??????o de alta qualidade t?????????cnica. Ajuste a frequ?????????ncia de postagens semanais e descubra o impacto cumulativo projetado no LinkedIn e Instagram para a sua marca B2B ou Perfil M?????????dico.
+              O alcance orgânico sênior é um jogo de regularidade editorial e distribuição de alta qualidade técnica. Ajuste a frequência de postagens semanais e descubra o impacto cumulativo projetado no LinkedIn e Instagram para a sua marca B2B ou Perfil Médico.
             </p>
           </div>
 
@@ -623,13 +937,13 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
             <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-6">
                 <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block pb-3 border-b border-white/[0.05]">
-                  Frequência Semanal Estimada:
+                  Frequ�ncia Semanal Estimada:
                 </span>
 
                 {/* LinkedIn Frequency Selector */}
                 <div className="space-y-3">
                   <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    Frequência LinkedIn (Artigos/Posts):
+                    Frequ�ncia LinkedIn (Artigos/Posts):
                   </label>
                   <div className="grid grid-cols-3 gap-2">
                     {[
@@ -665,7 +979,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 {/* Instagram Reels Frequency Selector */}
                 <div className="space-y-3">
                   <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    Frequência Instagram / TikTok (Vadeos Reels):
+                    Frequ�ncia Instagram / TikTok (Vadeos Reels):
                   </label>
                   <div className="grid grid-cols-3 gap-2">
                     {[
@@ -701,7 +1015,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 {/* Content Pillar Selector */}
                 <div className="space-y-3">
                   <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    Linha Editorial Principal de Negócios:
+                    Linha Editorial Principal de Neg�cios:
                   </label>
                   <select 
                     id="editorial-pillar"
@@ -710,7 +1024,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                     }}
                     className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-xs text-zinc-300 font-sans focus:outline-none focus:border-brand"
                   >
-                    <option value="tech">Autoridade Técnica (Estudos Cientaficos e Engenharia)</option>
+                    <option value="tech">Autoridade T�cnica (Estudos Cientaficos e Engenharia)</option>
                     <option value="behind">Bastidores Premium (Rotina Corporativa e Clientes Reais)</option>
                     <option value="sales">Venda Direta / Casos de Sucesso Comerciais</option>
                   </select>
@@ -723,7 +1037,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                   <span className="text-[10px] font-mono font-black uppercase tracking-wider">Distribuiaao Inteligente TAG08</span>
                 </div>
                 <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                  Nas não apenas criamos artes bonitas. Nas estruturamos de forma ativa o tom de voz sênior, criamos roteiros, fazemos a curadoria visual e cuidamos da distribuição orgânica e paga para que sua marca tenha falado comercial constante.
+                  Nas não apenas criamos artes bonitas. Nas estruturamos de forma ativa o tom de voz s�nior, criamos roteiros, fazemos a curadoria visual e cuidamos da distribui��o org�nica e paga para que sua marca tenha falado comercial constante.
                 </p>
               </div>
             </div>
@@ -743,7 +1057,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                     <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Impressaes Organicas / Mas</span>
                     <p id="sim-impressions" className="text-3xl font-display font-black text-white">42.400</p>
                     <span className="text-[9.5px] text-zinc-400 block leading-tight font-sans">
-                      Visualizações de suas postagens no feed orgânico.
+                      Visualiza��es de suas postagens no feed org�nico.
                     </span>
                   </div>
 
@@ -751,7 +1065,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                     <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Novos Visitantes de Perfil</span>
                     <p id="sim-growth" className="text-3xl font-display font-black text-brand">2.120</p>
                     <span className="text-[9.5px] text-zinc-400 block leading-tight font-sans">
-                      Empresários e potenciais parceiros acessando seu hub.
+                      Empres�rios e potenciais parceiros acessando seu hub.
                     </span>
                   </div>
 
@@ -759,7 +1073,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                     <span className="font-mono text-[8px] text-brand-secondary/80 uppercase font-black block">Leads de Alto Padrao (SQL)</span>
                     <p id="sim-leads" className="text-3xl font-display font-black text-brand-secondary">18</p>
                     <span className="text-[9.5px] text-zinc-400 block leading-tight font-sans">
-                      Contatos ultra-qualificados agendando reuniões.
+                      Contatos ultra-qualificados agendando reuni�es.
                     </span>
                   </div>
                 </div>
@@ -776,11 +1090,11 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                       { week: "W1", name: "Analise Cientafica", tag: "AUTORIDADE" },
                       { week: "W1", name: "Estudo de Caso", tag: "PROVA SOCIAL" },
                       { week: "W2", name: "Entrevista de Time", tag: "BASTIDORES" },
-                      { week: "W2", name: "Visão de Vanguarda", tag: "CONCEITO" },
+                      { week: "W2", name: "Vis�o de Vanguarda", tag: "CONCEITO" },
                       { week: "W3", name: "Diagnastico Clanico", tag: "CONCEITO" },
                       { week: "W3", name: "Venda Direta", tag: "OFERTA" },
                       { week: "W4", name: "Processo Interno", tag: "BASTIDORES" },
-                      { week: "W4", name: "Atendimento Vip", tag: "RELAções" }
+                      { week: "W4", name: "Atendimento Vip", tag: "RELA��es" }
                     ].map((cell, idx) => (
                       <div key={idx} className="p-3 bg-zinc-950/80 border border-white/5 rounded-xl space-y-1.5 text-left relative overflow-hidden">
                         <span className="font-sans text-[6.5px] text-zinc-500 font-bold block">{cell.week} // {cell.tag}</span>
@@ -828,12 +1142,12 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               }} />
 
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 mt-6">
-                <span className="font-mono text-[8px] text-zinc-600">PROJEções DE CONVERsão BASEADAS EM CAMPANHAS REALIZADAS TAG08 // 2026</span>
+                <span className="font-mono text-[8px] text-zinc-600">PROJE��es DE CONVERs�o BASEADAS EM CAMPANHAS REALIZADAS TAG08 // 2026</span>
                 <button 
                   onClick={() => onNavigate("/contato")}
                   className="text-xs font-mono text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
                 >
-                  Agendar Sessão Estratégica <ArrowRight className="w-3.5 h-3.5" />
+                  Agendar Sess�o Estrat�gica <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -842,211 +1156,159 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
       </section>
       )}
 
-      {/* INTERACTIVE INNOVATION: SIMULADOR DE DIAGNÓSTICO EDITORIAL */}
+      {/* INTERACTIVE INNOVATION: SIMULADOR DE DIAGN�STICO EDITORIAL */}
       <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-neutral-950 text-left relative overflow-hidden">
         <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-brand/[0.01] rounded-full blur-[140px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto space-y-12 relative z-10">
           <div className="space-y-3 max-w-3xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-              Diagnóstico editorial
+              Diagn�stico editorial
             </span>
             <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
-              O que está travando sua presença nas redes?
+              O que est� travando sua presença nas redes?
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-              Nem sempre o problema é postar pouco. Muitas vezes a presença digital trava por falta de linha editorial, frequência possível, clareza de mensagem, consistência visual ou processo de aprovação.
+              Nem sempre o problema � postar pouco. Muitas vezes a presença digital trava por falta de linha editorial, frequência possível, clareza de mensagem, consistência visual ou processo de aprovação.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* Controls */}
             <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-8 text-left">
-              <div className="space-y-6">
-                <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block pb-3 border-b border-white/[0.05]">
-                  Sinais de diagnóstico:
-                </span>
-
-                <div className="space-y-3">
-                  <p className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    1) Sua marca tem uma linha editorial clara?
-                  </p>
-                  <p className="text-[11px] text-zinc-400 leading-relaxed">
-                    Temas, mensagens e formatos estão organizados antes da produção?
-                  </p>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { id: "q1-yes", name: "Sim", value: "high" },
-                      { id: "q1-mid", name: "Em construção", value: "mid" },
-                      { id: "q1-no", name: "Não", value: "low" }
-                    ].map((opt) => {
-                      return (
-                        <button
-                          key={opt.id}
-                          id={opt.id}
-                          onClick={() => {
-                            (window as any)._qEditorial = opt.value;
-                            document.querySelectorAll(".q1-btn").forEach((btn: any) => {
-                              btn.className = "q1-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer " +
-                                (btn.id === opt.id ? "bg-brand-secondary/10 border-brand-secondary text-brand-secondary" : "bg-white/[0.01] border-white/5 text-zinc-400");
-                            });
-                            (window as any)._updateSocialSim && (window as any)._updateSocialSim();
-                          }}
-                          className="q1-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer bg-white/[0.01] border-white/5 text-zinc-400"
-                        >
-                          {opt.name}
-                        </button>
-                      );
-                    })}
-                  </div>
+              <div className="space-y-5">
+                <div className="flex items-center justify-between gap-3 border-b border-white/[0.05] pb-3">
+                  <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block">
+                    Pr�-qualificação editorial
+                  </span>
+                  <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
+                    {answeredCount}/{EDITORIAL_DIAGNOSTIC_QUESTIONS.length} respostas
+                  </span>
                 </div>
 
-                <div className="space-y-3">
-                  <p className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    2) A frequência atual é sustentável?
-                  </p>
-                  <p className="text-[11px] text-zinc-400 leading-relaxed">
-                    A rotina de conteúdo respeita a capacidade real de criação, aprovação e publicação?
-                  </p>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { id: "q2-yes", name: "Sim", value: "high" },
-                      { id: "q2-mid", name: "Parcial", value: "mid" },
-                      { id: "q2-no", name: "Não", value: "low" }
-                    ].map((opt) => {
-                      return (
-                        <button
-                          key={opt.id}
-                          id={opt.id}
-                          onClick={() => {
-                            (window as any)._qFrequencia = opt.value;
-                            document.querySelectorAll(".q2-btn").forEach((btn: any) => {
-                              btn.className = "q2-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer " +
-                                (btn.id === opt.id ? "bg-brand/10 border-brand text-white" : "bg-white/[0.01] border-white/5 text-zinc-400");
-                            });
-                            (window as any)._updateSocialSim && (window as any)._updateSocialSim();
-                          }}
-                          className="q2-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer bg-white/[0.01] border-white/5 text-zinc-400"
-                        >
-                          {opt.name}
-                        </button>
-                      );
-                    })}
-                  </div>
+                <div className="space-y-4">
+                  {EDITORIAL_DIAGNOSTIC_QUESTIONS.map((question) => {
+                    const currentValue = diagnosticAnswers[question.key];
+                    const selectedLabels = getDiagnosticValueLabel(question.key, currentValue);
+                    const hasSelection = selectedLabels !== "Aguardando resposta";
+                    const selectedValues = Array.isArray(currentValue)
+                      ? currentValue
+                      : currentValue
+                        ? [currentValue]
+                        : [];
+
+                    return (
+                      <div
+                        key={question.key}
+                        ref={(node) => {
+                          diagnosticQuestionRefs.current[question.key] = node;
+                        }}
+                        className="space-y-3 rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 sm:p-5 scroll-mt-24"
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="space-y-1.5">
+                            <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-black block">
+                              {question.step}
+                            </span>
+                            <p className="text-xs font-mono text-zinc-200 font-bold uppercase tracking-wider block">
+                              {question.title}
+                            </p>
+                            <p className="text-[11px] text-zinc-400 leading-relaxed">
+                              {question.helper}
+                            </p>
+                          </div>
+                          {hasSelection && (
+                            <span className="inline-flex shrink-0 items-center rounded-full border border-brand/20 bg-brand/5 px-2.5 py-1 font-mono text-[8px] uppercase tracking-widest text-brand">
+                              OK
+                            </span>
+                          )}
+                        </div>
+
+                        <div className={`grid gap-2 ${question.multi ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1 sm:grid-cols-2"}`}>
+                          {question.options.map((option) => {
+                            const isActive = selectedValues.includes(option.value);
+                            return (
+                              <button
+                                key={option.value}
+                                type="button"
+                                aria-pressed={isActive}
+                                onClick={() => handleDiagnosticAnswerSelect(question, option.value)}
+                                className={`rounded-xl border px-3 py-3 text-left transition-all duration-200 cursor-pointer text-xs sm:text-[13px] leading-snug hover:-translate-y-0.5 ${
+                                  isActive
+                                    ? "bg-brand-secondary/10 border-brand-secondary text-brand-secondary"
+                                    : "bg-white/[0.01] border-white/10 text-zinc-300 hover:text-white hover:border-white/20"
+                                }`}
+                              >
+                                {option.label}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {hasSelection && (
+                          <p className="text-[10px] text-brand-secondary font-mono uppercase tracking-widest leading-relaxed">
+                            Sele��o atual: {selectedLabels}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
 
-                <div className="space-y-3">
-                  <p className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    3) O visual comunica a mesma marca?
-                  </p>
-                  <p className="text-[11px] text-zinc-400 leading-relaxed">
-                    As peças mantêm consistência de identidade, hierarquia e percepção profissional?
-                  </p>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { id: "q3-yes", name: "Sim", value: "high" },
-                      { id: "q3-mid", name: "Em construção", value: "mid" },
-                      { id: "q3-no", name: "Não", value: "low" }
-                    ].map((opt) => {
-                      return (
-                        <button
-                          key={opt.id}
-                          id={opt.id}
-                          onClick={() => {
-                            (window as any)._qVisual = opt.value;
-                            document.querySelectorAll(".q3-btn").forEach((btn: any) => {
-                              btn.className = "q3-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer " +
-                                (btn.id === opt.id ? "bg-brand-secondary/10 border-brand-secondary text-brand-secondary" : "bg-white/[0.01] border-white/5 text-zinc-400");
-                            });
-                            (window as any)._updateSocialSim && (window as any)._updateSocialSim();
-                          }}
-                          className="q3-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer bg-white/[0.01] border-white/5 text-zinc-400"
-                        >
-                          {opt.name}
-                        </button>
-                      );
-                    })}
-                  </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <label className="space-y-2 rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 text-left">
+                    <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-bold block">
+                      Nome
+                    </span>
+                    <input
+                      type="text"
+                      value={diagnosticName}
+                      onChange={(event) => setDiagnosticName(event.target.value)}
+                      placeholder="Seu nome"
+                      className="w-full rounded-xl border border-white/[0.06] bg-black/30 px-3 py-2 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-brand/40"
+                    />
+                  </label>
+
+                  <label className="space-y-2 rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 text-left">
+                    <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-bold block">
+                      WhatsApp
+                    </span>
+                    <input
+                      type="tel"
+                      value={diagnosticWhatsapp}
+                      onChange={(event) => setDiagnosticWhatsapp(event.target.value)}
+                      placeholder="+55 83 9XXXX-XXXX"
+                      className="w-full rounded-xl border border-white/[0.06] bg-black/30 px-3 py-2 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-brand/40"
+                    />
+                  </label>
                 </div>
 
-                <div className="space-y-3">
-                  <p className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    4) O conteúdo ajuda o público a entender a oferta?
-                  </p>
-                  <p className="text-[11px] text-zinc-400 leading-relaxed">
-                    As publicações conduzem para clareza, confiança e próximo passo ou apenas ocupam o feed?
-                  </p>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { id: "q4-yes", name: "Sim", value: "high" },
-                      { id: "q4-mid", name: "Parcial", value: "mid" },
-                      { id: "q4-no", name: "Não", value: "low" }
-                    ].map((opt) => {
-                      return (
-                        <button
-                          key={opt.id}
-                          id={opt.id}
-                          onClick={() => {
-                            (window as any)._qOferta = opt.value;
-                            document.querySelectorAll(".q4-btn").forEach((btn: any) => {
-                              btn.className = "q4-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer " +
-                                (btn.id === opt.id ? "bg-brand/10 border-brand text-white" : "bg-white/[0.01] border-white/5 text-zinc-400");
-                            });
-                            (window as any)._updateSocialSim && (window as any)._updateSocialSim();
-                          }}
-                          className="q4-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer bg-white/[0.01] border-white/5 text-zinc-400"
-                        >
-                          {opt.name}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <p className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    5) Existe processo de revisão e melhoria?
-                  </p>
-                  <p className="text-[11px] text-zinc-400 leading-relaxed">
-                    A marca aprende com o que publica ou apenas repete formatos sem critério?
-                  </p>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { id: "q5-yes", name: "Sim", value: "high" },
-                      { id: "q5-mid", name: "Parcial", value: "mid" },
-                      { id: "q5-no", name: "Não", value: "low" }
-                    ].map((opt) => {
-                      return (
-                        <button
-                          key={opt.id}
-                          id={opt.id}
-                          onClick={() => {
-                            (window as any)._qProcesso = opt.value;
-                            document.querySelectorAll(".q5-btn").forEach((btn: any) => {
-                              btn.className = "q5-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer " +
-                                (btn.id === opt.id ? "bg-brand-secondary/10 border-brand-secondary text-brand-secondary" : "bg-white/[0.01] border-white/5 text-zinc-400");
-                            });
-                            (window as any)._updateSocialSim && (window as any)._updateSocialSim();
-                          }}
-                          className="q5-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer bg-white/[0.01] border-white/5 text-zinc-400"
-                        >
-                          {opt.name}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
+                <label className="flex items-start gap-3 rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 text-left cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={diagnosticConsent}
+                    onChange={(event) => setDiagnosticConsent(event.target.checked)}
+                    className="mt-1 h-4 w-4 rounded border-white/20 bg-black/40 accent-brand"
+                  />
+                  <span className="space-y-1">
+                    <span className="block font-mono text-[9px] text-zinc-300 font-bold uppercase tracking-widest">
+                      Consentimento LGPD
+                    </span>
+                    <span className="block text-[11px] text-zinc-400 leading-relaxed">
+                      Autorizo a TAG08 a usar essas respostas para continuar o atendimento por WhatsApp e evitar que eu repita tudo depois.
+                    </span>
+                  </span>
+                </label>
               </div>
 
               <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] space-y-2">
                 <div className="flex items-center gap-2 text-brand">
                   <Sparkles className="w-4 h-4 shrink-0" />
                   <span className="text-[10px] font-mono font-black uppercase tracking-wider">
-                    Leitura editorial ativa
+                    Resumo �til para atendimento
                   </span>
                 </div>
                 <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                  O diagnóstico não define destino, ele organiza decisão. O objetivo é reduzir ruído, clarear prioridades e transformar presença em direção.
+                  As respostas viram uma leitura organizada que a equipe pode abrir j� com contexto. O objetivo � reduzir repeti��o e acelerar a conversa certa.
                 </p>
               </div>
             </div>
@@ -1055,154 +1317,126 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
 
               <div className="space-y-6 w-full">
-                <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block">
-                  Diagnóstico inicial de presença:
-                </span>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="space-y-2 max-w-2xl">
+                    <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+                      Seu diagnóstico editorial
+                    </span>
+                    <h3 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
+                      Resumo pronto para enviar
+                    </h3>
+                    <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
+                      A leitura abaixo ajuda a TAG08 a continuar a conversa sem repetir perguntas e sem perder a l�gica do seu contexto.
+                    </p>
+                  </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
-                    <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Leitura atual</span>
-                    <p id="sim-overall-level" className="text-2xl sm:text-3xl font-display font-black text-white">Presença sem direção clara</p>
-                    <span className="text-[9.5px] text-zinc-400 block leading-tight font-sans">
-                      Leitura inicial de maturidade editorial.
+                  <div className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-3 min-w-[120px]">
+                    <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-bold block">
+                      Progresso
                     </span>
-                  </div>
-                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
-                    <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Risco principal</span>
-                    <p id="sim-main-risk" className="text-2xl sm:text-3xl font-display font-black text-brand">Linha editorial em construção</p>
-                    <span className="text-[9.5px] text-zinc-400 block leading-tight font-sans">
-                      Ponto mais provável de travamento.
-                    </span>
-                  </div>
-                  <div className="p-5 rounded-2xl bg-brand-secondary/[0.02] border border-brand-secondary/10 space-y-1">
-                    <span className="font-mono text-[8px] text-brand-secondary/80 uppercase font-black block">Próximo passo</span>
-                    <p id="sim-next-step" className="text-2xl sm:text-3xl font-display font-black text-brand-secondary">Rotina editorial parcialmente organizada</p>
-                    <span className="text-[9.5px] text-zinc-400 block leading-tight font-sans">
-                      Ajustes iniciais para manter consistência.
-                    </span>
+                    <p className="text-2xl font-display font-black text-white leading-none mt-1">
+                      {diagnosticProgress}%
+                    </p>
                   </div>
                 </div>
 
-                <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-5 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-bold block">Leitura do padrão editorial</span>
-                    <span className="font-sans text-[9px] text-zinc-500">Mapeamento em andamento</span>
-                  </div>
+                <div className="h-2 rounded-full bg-white/[0.04] overflow-hidden">
+                  <div
+                    className="h-full bg-brand-secondary transition-all duration-300"
+                    style={{ width: `${diagnosticProgress}%` }}
+                  />
+                </div>
 
-                  <div className="grid grid-cols-4 gap-2">
-                    {[
-                      { week: "Q1", name: "Posicionamento", tag: "BASE" },
-                      { week: "Q1", name: "Mensagem", tag: "CLAREZA" },
-                      { week: "Q2", name: "Frequência", tag: "ROTINA" },
-                      { week: "Q2", name: "Identidade", tag: "CONSISTÊNCIA" },
-                      { week: "Q3", name: "Oferta", tag: "PROPOSITO" },
-                      { week: "Q3", name: "Canal", tag: "ALINHAMENTO" },
-                      { week: "Q4", name: "Revisão", tag: "MELHORIA" },
-                      { week: "Q4", name: "Ajustes", tag: "PRÓXIMOS PASSOS" }
-                    ].map((cell, idx) => (
-                      <div key={idx} className="p-3 bg-zinc-950/80 border border-white/5 rounded-xl space-y-1.5 text-left relative overflow-hidden">
-                        <span className="font-sans text-[6.5px] text-zinc-500 font-bold block">{cell.week} // {cell.tag}</span>
-                        <p className="text-white text-[9.5px] font-sans font-bold leading-tight line-clamp-2">{cell.name}</p>
-                        <div className="w-full bg-zinc-900 h-1 rounded-full overflow-hidden mt-2">
-                          <div className="bg-brand-secondary h-full sim-progress-segment" />
-                        </div>
-                      </div>
-                    ))}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {diagnosticSummaryCards.map((card) => (
+                    <div key={card.label} className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-4 space-y-1.5">
+                      <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-bold block">
+                        {card.label}
+                      </span>
+                      <p className="text-sm sm:text-[15px] text-white font-semibold leading-snug">
+                        {card.value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 space-y-1.5">
+                    <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-bold block">
+                      Contato recebido
+                    </span>
+                    <p className="text-sm text-white font-semibold leading-snug">
+                      {diagnosticName.trim() || "Aguardando nome"}
+                    </p>
                   </div>
+                  <div className="rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 space-y-1.5">
+                    <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-bold block">
+                      WhatsApp informado
+                    </span>
+                    <p className="text-sm text-white font-semibold leading-snug">
+                      {diagnosticWhatsapp.trim() || "Aguardando WhatsApp"}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-5 space-y-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-bold block">
+                      Leitura da TAG08
+                    </span>
+                    <span className={`font-mono text-[8px] uppercase tracking-widest font-black px-2.5 py-1 rounded-md border ${
+                      diagnosticConsent
+                        ? "text-brand-secondary border-brand-secondary/20 bg-brand-secondary/5"
+                        : "text-zinc-500 border-white/[0.05] bg-white/[0.01]"
+                    }`}>
+                      {diagnosticConsent ? "Consentimento ativo" : "Consentimento pendente"}
+                    </span>
+                  </div>
+                  <p className="text-white text-sm sm:text-base font-semibold leading-snug">
+                    {diagnosticRecommendation}
+                  </p>
+                  <p className="text-zinc-400 text-xs leading-relaxed">
+                    O diagnóstico ajuda a organizar prioridade, formato e próximo passo. Quando isso chega pronto para a equipe, a conversa comercial fica mais objetiva.
+                  </p>
                 </div>
               </div>
 
-              <p id="sim-summary-text" className="text-zinc-400 text-xs leading-relaxed mt-6">
-                Essa leitura não substitui um diagnóstico completo, mas ajuda a identificar se o próximo passo deve ser organizar linha editorial, ajustar frequência, revisar identidade visual, melhorar processo ou integrar conteúdo com estratégia comercial.
-              </p>
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-t border-white/[0.05] pt-4 mt-6">
+                <div className="space-y-1.5 max-w-md">
+                  <span className="font-mono text-[8px] text-zinc-600 uppercase tracking-widest font-bold block">
+                    Antes de compartilhar
+                  </span>
+                  <p className="text-zinc-400 text-xs leading-relaxed">
+                    {diagnosticReady
+                      ? "O resumo j� est� pronto para ser enviado com contexto."
+                      : "Complete respostas, nome, WhatsApp e consentimento para liberar o envio."}
+                  </p>
+                </div>
 
-              <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 mt-6">
-                <span className="font-mono text-[8px] text-zinc-600">DIAGNÓSTICO EDITORIAL // SIMULADOR</span>
-                <button
-                  onClick={() => onNavigate("/contato")}
-                  className="text-xs font-mono text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
+                <a
+                  href={diagnosticReady ? diagnosticWhatsAppUrl : "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-disabled={!diagnosticReady}
+                  onClick={(event) => {
+                    if (!diagnosticReady) {
+                      event.preventDefault();
+                    }
+                  }}
+                  className={`group inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-mono text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
+                    diagnosticReady
+                      ? "bg-brand text-black hover:bg-brand-dark shadow-[0_12px_35px_rgba(var(--color-brand-secondary-rgb),0.2)]"
+                      : "cursor-not-allowed bg-white/[0.05] text-zinc-500 border border-white/[0.06]"
+                  }`}
                 >
-                  SOLICITAR DIAGNÓSTICO EDITORIAL <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                  <span>ENVIAR DIAGN�STICO POR WHATSAPP</span>
+                  <ArrowRight className="w-4 h-4 stroke-[2.5] transition-transform group-hover:translate-x-1" />
+                </a>
               </div>
-
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    (function() {
-                      const scoreMap = {
-                        high: 2,
-                        mid: 1,
-                        low: 0,
-                      };
-
-                      const labels = [
-                        "Presença sem direção clara",
-                        "Linha editorial em construção",
-                        "Rotina editorial parcialmente organizada",
-                        "Presença consistente, pronta para evoluir",
-                      ];
-
-                      const getLevel = (score) => {
-                        if (score >= 8) return labels[3];
-                        if (score >= 5) return labels[2];
-                        if (score >= 2) return labels[1];
-                        return labels[0];
-                      };
-
-                      window._updateSocialSim = function() {
-                        const score = (scoreMap[(window as any)._qEditorial || "mid"] || 0) +
-                          (scoreMap[(window as any)._qFrequencia || "mid"] || 0) +
-                          (scoreMap[(window as any)._qVisual || "mid"] || 0) +
-                          (scoreMap[(window as any)._qOferta || "mid"] || 0) +
-                          (scoreMap[(window as any)._qProcesso || "mid"] || 0);
-
-                        const lowCount = [
-                          (window as any)._qEditorial,
-                          (window as any)._qFrequencia,
-                          (window as any)._qVisual,
-                          (window as any)._qOferta,
-                          (window as any)._qProcesso,
-                        ].filter((value) => value === "low").length;
-
-                        const overall = getLevel(score);
-                        const risk = lowCount >= 2 ? "Risco de execução sem direção" : "Risco parcial de priorização";
-                        const nextStep = score >= 8
-                          ? "Presença consistente, pronta para evoluir"
-                          : score >= 5
-                          ? "Organizar processo e revisão"
-                          : score >= 2
-                          ? "Reconstruir linha editorial"
-                          : "Reorganizar prioridades e frequência";
-
-                        const levelEl = document.getElementById("sim-overall-level");
-                        const riskEl = document.getElementById("sim-main-risk");
-                        const nextStepEl = document.getElementById("sim-next-step");
-                        const segments = document.querySelectorAll(".sim-progress-segment");
-                        const width = Math.max(12, Math.min(100, 18 + (score * 9)));
-
-                        if (levelEl) levelEl.innerText = overall;
-                        if (riskEl) riskEl.innerText = risk;
-                        if (nextStepEl) nextStepEl.innerText = nextStep;
-
-                        segments.forEach((segment, index) => {
-                          const shift = (index % 4) * 5;
-                          segment.style.width = Math.max(8, Math.min(100, width - shift)) + "%";
-                        });
-                      };
-
-                      setTimeout(() => {
-                        window._updateSocialSim && window._updateSocialSim();
-                      }, 250);
-                    })();
-                  `,
-                }}
-              />
             </div>
           </div>
         </div>
       </section>
-
       {/* SHORTS & BASTIDORES PRODUCTION SHOWCASE */}
       <section className="px-4 sm:px-6 md:px-8 py-20 border-b border-white/[0.04] bg-charcoal-900/20 text-left relative overflow-hidden">
         {/* Background visual accents */}
@@ -1216,7 +1450,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 FORMATOS AUDIOVISUAIS // TAG08
               </div>
               <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white leading-none tracking-tighter uppercase">
-                Vídeos curtos, bastidores e recortes com função editorial.
+                V�deos curtos, bastidores e recortes com função editorial.
               </h2>
             </div>
             <div className="lg:col-span-5">
@@ -1226,274 +1460,65 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
             </div>
           </div>
 
-          {/* Interactive Shorts Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {shortsData.map((item) => (
-              <motion.div
-                key={item.id}
-                onMouseEnter={() => setHoveredShort(item.id)}
-                onMouseLeave={() => setHoveredShort(null)}
-                onClick={() => setSelectedShort(item)}
-                className="group relative aspect-[9/16] bg-zinc-900 rounded-3xl overflow-hidden border border-white/[0.06] hover:border-brand-secondary/55 hover:shadow-[0_20px_50px_rgba(var(--color-brand-secondary-rgb),0.06)] transition-all duration-500 cursor-pointer flex flex-col justify-between"
-                whileHover={{ y: -6 }}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {visibleShorts.map((short) => (
+              <motion.a
+                key={short.id}
+                href={short.href}
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ y: -4 }}
+                className="group block rounded-[28px] overflow-hidden border border-white/[0.06] bg-white/[0.02] transition-all duration-300 hover:border-brand-secondary/45 hover:shadow-[0_18px_50px_rgba(var(--color-brand-secondary-rgb),0.08)]"
               >
-                {/* Autoplayers or thumb posters */}
-                <div className="absolute inset-0 z-0">
-                  {hoveredShort === item.id ? (
-                    <video
-                      src={item.videoUrl}
-                      muted
-                      playsInline
-                      autoPlay
-                      loop
-                      className="w-full h-full object-cover brightness-[0.8] transition-all duration-500"
-                    />
-                  ) : (
-                    <div className="w-full h-full relative">
-                      <img
-                        src={item.thumbnail}
-                        alt={item.title}
-                        className="w-full h-full object-cover brightness-[0.7] transition-transform duration-700 group-hover:scale-105"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
-                  )}
-                  {/* Dark Vignette Overlays */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/40 pointer-events-none" />
-                </div>
+                <div className="relative aspect-[9/16] bg-zinc-900">
+                  <img
+                    src={short.thumbnail}
+                    alt={short.title}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-black/25" />
 
-                {/* Top Details (Duration & Category) */}
-                <div className="relative z-10 p-5 flex justify-between items-center">
-                  <span className="font-mono text-[9px] font-black tracking-widest text-brand-secondary bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/5 uppercase">
-                    {item.category}
-                  </span>
-                  <div className="flex items-center gap-1 text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/5 font-sans text-[9.5px]">
-                    <Clock className="w-3 h-3 text-brand-secondary shrink-0" />
-                    <span>{item.duration}</span>
-                  </div>
-                </div>
-
-                {/* Center Hover Action Indicator */}
-                <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ 
-                      scale: hoveredShort === item.id ? 1 : 0.8, 
-                      opacity: hoveredShort === item.id ? 1 : 0 
-                    }}
-                    className="w-12 h-12 rounded-full bg-brand-secondary flex items-center justify-center text-black shadow-lg shadow-brand-secondary/20"
-                  >
-                    <Play className="w-5 h-5 fill-black ml-0.5" />
-                  </motion.div>
-                </div>
-
-                {/* Bottom Metadata Block */}
-                <div className="relative z-10 p-5 space-y-2 mt-auto">
-                  <div className="space-y-0.5">
-                    <span className="text-[10px] text-zinc-400 font-mono font-bold uppercase tracking-wider block">
-                      {item.subtitle}
+                  <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/60 px-3 py-1.5 backdrop-blur-md">
+                    <span className="font-mono text-[9px] font-black uppercase tracking-[0.24em] text-brand-secondary">
+                      SHORT REAL
                     </span>
-                    <h3 className="font-display font-bold text-base sm:text-lg text-white leading-tight uppercase group-hover:text-brand-secondary transition-colors">
-                      {item.title}
-                    </h3>
                   </div>
 
-                  <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[9px] font-mono text-brand-secondary font-black tracking-widest">
-                    <span>VER RECORTE</span>
-                    <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  <div className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/60 px-3 py-1.5 backdrop-blur-md">
+                    <span className="font-mono text-[9px] font-black uppercase tracking-[0.24em] text-zinc-200">
+                      YouTube oficial
+                    </span>
+                  </div>
+
+                  <div className="absolute inset-x-4 bottom-4 space-y-2">
+                    <span className="font-mono text-[9px] font-black uppercase tracking-[0.28em] text-brand-secondary/90">
+                      Recorte editorial
+                    </span>
+                    <h3 className="font-display text-lg leading-tight font-black text-white uppercase">
+                      {short.title}
+                    </h3>
+                    <div className="flex items-center justify-between gap-3 border-t border-white/10 pt-3 text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-zinc-200">
+                      <span>Assistir no YouTube</span>
+                      <ArrowUpRight className="h-4 w-4 stroke-[2.5] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </div>
                   </div>
                 </div>
-              </motion.div>
+              </motion.a>
             ))}
+          </div>
+
+          <div className="flex flex-col gap-2 border border-white/[0.05] bg-white/[0.02] rounded-[24px] p-5 sm:p-6">
+            <span className="font-mono text-[9px] font-black uppercase tracking-[0.28em] text-brand-secondary">
+              Fonte oficial
+            </span>
+            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
+              Os recortes acima saem do canal oficial da TAG08 e funcionam como apoio editorial para mostrar bastidores, contexto e presenca real sem criar video ficticio dentro da pagina.
+            </p>
           </div>
 
         </div>
       </section>
-
-      {/* IMMERSIVE VERTICAL VIDEO PRESENTATION MODAL */}
-      <AnimatePresence>
-        {selectedShort && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-10 overflow-y-auto bg-black/95 backdrop-blur-xl cursor-zoom-out"
-            onClick={() => setSelectedShort(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.95, y: 20, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.95, y: 20, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 180 }}
-              className="relative w-full max-w-5xl bg-[#09090b] border border-white/[0.08] rounded-[32px] overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[92vh] md:max-h-[85vh] text-left cursor-default overflow-y-auto md:overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Left Column - Vertical Video Container */}
-              <div className="w-full md:w-[42%] aspect-[9/16] md:aspect-auto md:h-full bg-black relative flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/[0.06]">
-                <video
-                  src={selectedShort.videoUrl}
-                  muted={soundEnabled}
-                  playsInline
-                  autoPlay
-                  loop
-                  className="w-full h-full object-cover"
-                />
-
-                {/* Video controls / Custom elements overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30 pointer-events-none" />
-                
-                {/* Audio Toggle control overlay */}
-                <div className="absolute bottom-5 right-5 z-20">
-                  <button
-                    onClick={() => setSoundEnabled(!soundEnabled)}
-                    className="p-3 rounded-full bg-black/60 hover:bg-black/90 border border-white/10 text-brand-secondary transition-colors flex items-center justify-center cursor-pointer shadow-lg"
-                  >
-                    {soundEnabled ? (
-                      <VolumeX className="w-5 h-5" />
-                    ) : (
-                      <Volume2 className="w-5 h-5 animate-pulse" />
-                    )}
-                  </button>
-                </div>
-
-                {/* Category indicator label overlays */}
-                <div className="absolute top-5 left-5 z-20 flex gap-2">
-                  <span className="font-mono text-[8px] sm:text-[9px] font-black tracking-widest text-brand-secondary bg-black/75 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/5 uppercase">
-                    {selectedShort.category}
-                  </span>
-                </div>
-              </div>
-
-              {/* Right Column - Editorial Notes & Formats */}
-              <div className="w-full md:w-[58%] p-6 sm:p-8 md:p-10 flex flex-col justify-between overflow-y-auto h-full max-h-[85vh]">
-                
-                {/* Header Actions */}
-                <div className="flex items-center justify-between pb-6 border-b border-white/5">
-                  <div className="space-y-1">
-                    <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-black block">
-                      FORMATOS AUDIOVISUAIS // TAG08
-                    </span>
-                    <h3 className="font-display font-black text-xl text-white uppercase tracking-tight font-display">
-                      LEITURA EDITORIAL DO RECORTE
-                    </h3>
-                  </div>
-                  
-                  {/* Close modal */}
-                  <button
-                    onClick={() => setSelectedShort(null)}
-                    className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-
-                {/* Strategy Details Block */}
-                <div className="py-6 space-y-6 flex-grow">
-                  <div className="space-y-1.5">
-                    <span className="text-brand-secondary text-[10px] font-mono uppercase font-black tracking-wider block">
-                      {selectedShort.subtitle}
-                    </span>
-                    <h2 className="text-white font-display font-medium text-2xl uppercase tracking-tight leading-none font-display">
-                      {selectedShort.title}
-                    </h2>
-                  </div>
-
-                  {/* Behind the scenes tese */}
-                  <div className="grid grid-cols-1 gap-4">
-                    <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5 text-left">
-                      <div className="flex items-center gap-2">
-                        <Camera className="w-4 h-4 text-brand-secondary" />
-                        <span className="font-mono text-[9px] text-brand-secondary font-black uppercase tracking-wider">
-                          OS BASTIDORES E O CONTEXTO
-                        </span>
-                      </div>
-                      <p className="text-zinc-300 text-xs leading-relaxed font-sans font-medium">
-                        {selectedShort.behindTheScenes}
-                      </p>
-                    </div>
-
-                    <div className="p-4 rounded-2xl bg-brand-secondary/[0.01] border border-brand-secondary/10 space-y-1.5 text-left">
-                      <div className="flex items-center gap-2">
-                        <Zap className="w-4 h-4 text-brand-secondary" />
-                        <span className="font-mono text-[9px] text-brand-secondary font-black uppercase tracking-wider">
-                          FUNCAO EDITORIAL DO RECORTE
-                        </span>
-                      </div>
-                      <p className="text-zinc-300 text-xs leading-relaxed font-sans font-medium">
-                        {selectedShort.strategy}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* In-depth stats row */}
-                  <div className="space-y-3">
-                    <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-black text-left">
-                      FUNCOES EDITORIAIS DO RECORTE:
-                    </span>
-                    <div className="grid grid-cols-3 gap-3">
-                      <div className="bg-white/[0.01] border border-white/5 p-3 rounded-xl flex flex-col justify-between text-left">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase font-black">FUNCAO</span>
-                        <span className="text-brand-secondary font-display font-black text-[1.4rem] leading-none mt-1">
-                          {selectedShort.metrics.reach}
-                        </span>
-                      </div>
-                      <div className="bg-white/[0.01] border border-white/5 p-3 rounded-xl flex flex-col justify-between text-left">
-                        <span className="font-mono text-[8.5px] text-zinc-500 uppercase font-black">APOIO</span>
-                        <span className="text-white font-display font-black text-[1.4rem] leading-none mt-1">
-                          {selectedShort.metrics.saves}
-                        </span>
-                      </div>
-                      <div className="bg-white/[0.01] border border-white/5 p-3 rounded-xl flex flex-col justify-between text-left">
-                        <span className="font-mono text-[8.5px] text-zinc-500 uppercase font-black">PROXIMO PASSO</span>
-                        <span className="text-brand-secondary font-display font-black text-[1.4rem] leading-none mt-1">
-                          {selectedShort.metrics.directs}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Deliverables lists */}
-                  <div className="space-y-2 text-left">
-                    <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-black">
-                      FORMATOS ENVOLVIDOS PELO PROJETO:
-                    </span>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {selectedShort.deliverables.map((del, dIdx) => (
-                        <div key={dIdx} className="flex gap-2 items-center text-xs text-zinc-300 font-sans font-medium">
-                          <Check className="w-3.5 h-3.5 text-brand-secondary shrink-0" />
-                          <span>{del}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Modal CTA footer */}
-                <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center gap-4">
-                  <div className="flex-grow space-y-1 text-center sm:text-left">
-                    <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-wider block font-bold">
-                      APOIO EDITORIAL // DISPONIVEL
-                    </span>
-                    <span className="text-zinc-400 text-[10px] leading-tight block">
-                      Quando fizer sentido, esses recortes podem apoiar a linha editorial da marca.
-                    </span>
-                  </div>
-
-                  <button
-                    onClick={() => handleLinkClick("/servicos/producao-audiovisual")}
-                    className="w-full sm:w-auto px-6 py-3 bg-brand-secondary hover:bg-brand-dark text-black text-[11px] font-sans font-bold uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-[0_12px_35px_rgba(var(--color-brand-secondary-rgb),0.15)] cursor-pointer"
-                  >
-                    <span>CONHECER PRODUCAO AUDIOVISUAL</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
-                  </button>
-                </div>
-
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* SECTION 6 - WORK SYSTEM (WhatsApp official contact block) */}
       <section className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
@@ -1644,13 +1669,13 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
       </section>
 
       {/* SECTION 7 - CTA para Landing Comercial - PREMIUM GRAPHIC BLOCK */}
-      <section className="py-12 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/10 text-left">
+      <section className="py-10 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/10 text-left">
         <div className="max-w-7xl mx-auto">
-          <div className="p-8 sm:p-10 rounded-3xl bg-neutral-900/50 border border-white/[0.06] relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8 text-left">
+          <div className="p-6 sm:p-8 rounded-3xl bg-neutral-900/50 border border-white/[0.06] relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-7 text-left">
             <div className="absolute inset-0 bg-[radial-gradient(#ffffff03_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
             
             <div className="relative z-10 space-y-2 max-w-2xl">
-              <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 px-2.5 py-0.5 rounded border border-brand-secondary/10 uppercase tracking-widest font-black">PRÓXIMO PASSO</span>
+              <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 px-2.5 py-0.5 rounded border border-brand-secondary/10 uppercase tracking-widest font-black">PR�XIMO PASSO</span>
               <h3 className="font-display font-semibold text-xl sm:text-2xl text-white uppercase tracking-tight">Vamos organizar a presença da sua marca nas redes?</h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans font-medium">
                 Antes de propor uma rotina de conteúdo, a TAG08 entende seu posicionamento, seus canais, sua frequência possível e os gargalos que hoje dificultam uma presença mais consistente.
@@ -1664,11 +1689,13 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
               }}
               className="group relative px-6 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0 overflow-hidden shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:-translate-y-0.5 relative z-10 cursor-pointer"
             >
-              ORGANIZAR MINHA PRESENÇA <ArrowRight className="w-4 h-4 ml-1.5 inline-block group-hover:translate-x-1 transition-transform" />
+              ORGANIZAR MINHA PRESEN�A <ArrowRight className="w-4 h-4 ml-1.5 inline-block group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         </div>
       </section>
+
+      <TrustTestimonialsSection />
 
       {/* SECTION - FAQ */}
       <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
@@ -1681,45 +1708,52 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
             <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
-                  D?VIDAS SOBRE GEST?O DE REDES
+                  D�vidas sobre gest�o de redes
                 </div>
                 <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
                   Antes de contratar, <br />
-                  entenda como a gestão funciona.
+                  entenda como a gest�o funciona.
                 </h2>
-                <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
-                  A gestão de redes sociais da TAG08 organiza linha editorial, frequência, formatos, criação, revisão e acompanhamento para construir uma presença mais clara e consistente.
+                <p className="text-zinc-300 font-medium text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
+                  A gest�o de redes sociais da TAG08 organiza linha editorial, frequência, formatos, criação, revisão e acompanhamento para construir uma presença mais clara e consistente.
                 </p>
               </div>
 
               <div className="space-y-3 pt-4">
-                {([
-                  { id: 0, title: "GEST?O DE REDES" },
-                  { id: 1, title: "FREQUÊNCIA POSSÍVEL" },
-                  { id: 2, title: "CRIA??O DE CONTE?DO" },
-                  { id: 3, title: "VÍDEOS E BASTIDORES" },
-                  { id: 4, title: "EXPECTATIVAS E RESULTADO" }
-                ]).map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveFaq(item.id)}
-                    className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all text-left group cursor-pointer ${
-                      activeFaq === item.id
-                        ? "bg-brand text-black border-brand shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.12)]"
-                        : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
-                    }`}
-                  >
-                    <span className="font-mono text-xs font-black uppercase tracking-wider flex items-center gap-3">
-                      <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
-                        {String(item.id + 1).padStart(2, '0')}.
+                {faqItems.map((item) => {
+                  const isActive = activeFaq === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setActiveFaq(item.id)}
+                      aria-expanded={isActive}
+                      aria-controls={`faq-panel-${item.id}`}
+                      className={`w-full min-h-[66px] flex items-center justify-between gap-4 px-4 py-4 rounded-xl border transition-all duration-200 text-left group cursor-pointer hover:-translate-y-0.5 ${
+                        isActive
+                          ? "bg-brand text-black border-brand shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.12)]"
+                          : "bg-white/[0.015] border-white/10 text-zinc-300 hover:text-white hover:border-white/20 hover:bg-white/[0.03]"
+                      }`}
+                    >
+                      <span className="min-w-0 font-mono text-xs font-semibold uppercase tracking-wider flex items-center gap-3">
+                        <span className={isActive ? "shrink-0 text-black" : "shrink-0 text-brand"}>
+                          {String(item.id + 1).padStart(2, "0")}.
+                        </span>
+                        <span className="truncate">{item.question}</span>
                       </span>
-                      {item.title}
-                    </span>
-                    <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
-                      activeFaq === item.id ? "text-black rotate-[-45deg] stroke-[2.5]" : "text-zinc-500"
-                    }`} />
-                  </button>
-                ))}
+                      <span
+                        aria-hidden="true"
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-200 ${
+                          isActive
+                            ? "border-black/15 bg-black/10 text-black"
+                            : "border-white/10 bg-white/5 text-zinc-200 group-hover:text-white"
+                        }`}
+                      >
+                        {isActive ? <Minus className="h-4 w-4 stroke-[2.5]" /> : <Plus className="h-4 w-4 stroke-[2.5]" />}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -1739,70 +1773,55 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
                 SYS // SOCIAL_MGMT
               </div>
 
-              <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left">
+              <div
+                id={`faq-panel-${activeFaqItem.id}`}
+                className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left"
+              >
                 <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
-                  {([
-                    "PLANEJAMENTO EDITORIAL",
-                    "FREQUÊNCIA POSSÍVEL",
-                    "CRIA??O DE CONTE?DO",
-                    "VÍDEOS E BASTIDORES",
-                    "EXPECTATIVAS E RESULTADO"
-                  ])[activeFaq]}
+                  {activeFaqItem.eyebrow}
                 </span>
-                
-                <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
-                  {([
-                    "A gestão de redes sociais é só fazer posts?",
-                    "Preciso postar todos os dias?",
-                    "A TAG08 cria os conteúdos?",
-                    "A gestão inclui vídeos e bastidores?",
-                    "A TAG08 promete alcance ou engajamento?"
-                  ])[activeFaq]}
+
+                <h4 className="text-white font-semibold text-sm sm:text-base leading-tight border-b border-white/5 pb-2">
+                  {activeFaqItem.question}
                 </h4>
-                
+
                 <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
-                  {([
-                    "Não. A gestão envolve linha editorial, calendário, linguagem, criação, direção visual, revisão e acompanhamento. O objetivo é dar função ao conteúdo dentro da estratégia da marca.",
-                    "Não necessariamente. A frequência precisa ser possível de sustentar e coerente com o momento da marca. Uma rotina realista costuma ser melhor do que volume sem critério.",
-                    "Sim, dentro do escopo contratado. Podemos apoiar temas, legendas, peças, roteiros, formatos e organização editorial conforme a necessidade da marca.",
-                    "Pode incluir ou se conectar com produção audiovisual quando isso fizer sentido para a estratégia. Vídeos curtos, bastidores e recortes devem servir à linha editorial, não apenas ocupar espaço.",
-                    "Não prometemos alcance, engajamento ou crescimento instantâneo. Trabalhamos para construir clareza, consistência, presença e melhoria contínua com responsabilidade."
-                  ])[activeFaq]}
+                  {activeFaqItem.answer}
                 </p>
               </div>
             </div>
 
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
-              <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
+              <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 hover:-translate-y-0.5 transition-all duration-200 text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">COMO AGIMOS</span>
+                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">Como agimos</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">Linha editorial, frequência possível e revisão constante.</h4>
-                  <p className="text-zinc-400 text-xs leading-relaxed font-sans">
+                  <p className="text-zinc-300 text-xs leading-relaxed font-sans">
                     Evitamos improviso e mantemos a presença coerente com o posicionamento da marca.
                   </p>
                 </div>
                 <button
                   onClick={() => handleLinkClick("/servicos")}
-                  className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
+                  className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5 transition-all duration-200 hover:-translate-y-0.5"
                 >
-                  <span>Ver Soluções</span>
+                  <span>Ver Solu��es</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
 
-              <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
+              <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all duration-200 text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">PRÓXIMO PASSO</span>
+                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">Pr�ximo passo</span>
                   <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer entender o melhor caminho para sua marca?</h4>
                   <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
-                    Fale com a TAG08 para entender se gestão de redes, conteúdo, audiovisual ou outro caminho faz mais sentido agora.
+                    Fale com a TAG08 para entender se gest�o de redes, conteúdo, audiovisual ou outro caminho faz mais sentido agora.
                   </p>
                 </div>
                 <a
                   href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20entender%20a%20melhor%20forma%20de%20organizar%20a%20presenca%20da%20minha%20marca%20nas%20redes.")}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-all"
+                  className="group flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-all duration-200"
                 >
                   <span>FALAR COM A TAG08</span>
                   <ArrowUpRight className="w-4 h-4 text-black stroke-[2.5]" />
@@ -1814,27 +1833,29 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
       </section>
 
       {/* SECTION 5 - ACTION TRIGGER FOOTER */}
-      <section className="px-4 sm:px-6 md:px-8 py-20 text-center space-y-6 max-w-4xl mx-auto">
-        <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
+      <section className="px-4 sm:px-6 md:px-8 py-14 sm:py-16 text-center space-y-4 sm:space-y-5 max-w-4xl mx-auto">
+        <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-white uppercase leading-tight tracking-tighter">
           Organize uma presença mais clara nas redes. <br />
-          <span className="text-brand">A TAG08 ajuda a estruturar linha editorial, frequência, formatos e revisão para publicar com mais critério.</span>
+          <span className="text-brand">A TAG08 ajuda a estruturar linha editorial, frequência, formatos e revisão para publicar com mais crit�rio.</span>
         </h2>
-        <p className="text-zinc-400 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">
-          A TAG08 ajuda a organizar linha editorial, frequência, formatos e revisão para que sua marca publique com mais critério e consistência.
+        <p className="text-zinc-400 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
+          A TAG08 ajuda a organizar linha editorial, frequência, formatos e revisão para que sua marca publique com mais crit�rio e consistência.
         </p>
-        <div className="pt-4">
+        <div className="pt-2 sm:pt-3">
           <button
             onClick={() => handleLinkClick("/contato")}
-            className="group bg-brand text-black font-mono font-black text-[10px] uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
+            className="group bg-brand text-black font-mono font-black text-[10px] uppercase tracking-widest py-3.5 px-7 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
           >
-            <span>ORGANIZAR MINHA PRESENÇA</span>
+            <span>ORGANIZAR MINHA PRESEN�A</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
           </button>
         </div>
       </section>
+
     </div>
   );
 }
+
 
 
 
