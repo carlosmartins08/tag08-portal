@@ -21,7 +21,7 @@ const CLIENT_CASES = [
     name: "Alan Rocha",
     handle: "@alanrochap",
     categoryTags: ["DESIGN", "SOCIAL MEDIA", "BRANDING"],
-    tagline: "A ÚNICA REAÇÃO FOI PENSAR:",
+    tagline: "A ?NICA REA??O FOI PENSAR:",
     quote: "Parece que fui dirigida por alguém que me conhece de verdade. Que entende meu estilo, minha energia e o que quero mostrar.",
     avatar: clientAlanRocha,
     backgroundImg: moodyClientPortrait,
@@ -33,7 +33,7 @@ const CLIENT_CASES = [
     name: "Clínica Le Visage",
     handle: "@clinicalevisage",
     categoryTags: ["ESTÉTICA", "LUXURY SPA", "IDENTIDADE"],
-    tagline: "SOPRO DE SOFISTICAÇÃO E ARTE:",
+    tagline: "SOPRO DE SOFISTICA??O E ARTE:",
     quote: "A TAG08 capturou o refinamento dermoestético com absoluto primor. Nosso novo visual personifica o acolhimento elegante e o requinte que nossos pacientes exigem.",
     avatar: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=200",
     backgroundImg: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=1200",
@@ -69,7 +69,7 @@ const CLIENT_CASES = [
     name: "Legal Lab",
     handle: "@legallab.law",
     categoryTags: ["LAW TECH", "CORPORATIVO", "MINIMALISMO"],
-    tagline: "DIREITO & INOVAÇÃO PRECISA:",
+    tagline: "DIREITO & INOVA??O PRECISA:",
     quote: "Unindo a seriedade jurídica ao design de precisão digital hexagonal. Uma transição visual impecável que reposicionou nossa marca perante grandes corporações.",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
     backgroundImg: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&q=80&w=1200",
@@ -81,7 +81,7 @@ const CLIENT_CASES = [
     name: "Squalis Educação",
     handle: "@squaliseducacao",
     categoryTags: ["ACADEMIA", "PROCESSOS", "TECNOLOGIA"],
-    tagline: "PERFORMANCE DE SINALIZAÇÃO:",
+    tagline: "PERFORMANCE DE SINALIZA??O:",
     quote: "O redesenho integral do ecossistema Squalis facilitou não apenas as vendas nos canais de captação de alunos, mas elevou incrivelmente o valor de mercado percebido pelos tomadores de decisão.",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200",
     backgroundImg: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1200",
@@ -115,7 +115,7 @@ const YOUTUBE_VIDEOS = [
     embedCode: "612U4R57M70",
     videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
     views: "PORTFÓLIO 02",
-    tagline: "BASTIDORES COM FUNÇÃO"
+    tagline: "BASTIDORES COM FUN??O"
   },
   {
     id: "trafego-pago-saboroso",
@@ -153,7 +153,7 @@ const SERVICOS_TILES = [
     desc: "Planejamento editorial com redação, roteiros e publicação consistente.",
     metricLabel: "CLAREZA",
     metricValue: "Direção",
-    chartLabel: "CONSTRUÇÃO DE PRESENÇA",
+    chartLabel: "CONSTRU??O DE PRESEN?A",
     chartSubtitle: "Organiza conteúdo e distribuição para dar mais coerência à presença digital.",
     bgClass: "bg-charcoal-900",
     textClass: "text-white",
@@ -194,7 +194,7 @@ const SERVICOS_TILES = [
     title: "Branding & Identidade",
     subtitle: "MARCA AUTORAL",
     desc: "Posicionamento estético, paletas e manuais de expressão de marca.",
-    metricLabel: "PERCEPÇÃO",
+    metricLabel: "PERCEP??O",
     metricValue: "Coerência",
     chartLabel: "VALOR PERCEBIDO",
     chartSubtitle: "Direção visual e verbal para reforçar a leitura da marca.",
@@ -240,11 +240,11 @@ const SERVICOS_TILES = [
   {
     id: "copywriting",
     title: "Copywriting Estratégico",
-    subtitle: "COMUNICAÇÃO DIRECIONADA",
+    subtitle: "COMUNICA??O DIRECIONADA",
     desc: "Roteiros e textos focados em extrair a personalidade do seu negócio.",
     metricLabel: "CONTEÚDO",
     metricValue: "Com direção",
-    chartLabel: "RETENÇÃO DA LEITURA",
+    chartLabel: "RETEN??O DA LEITURA",
     chartSubtitle: "Estrutura textual que favorece compreensão e continuidade.",
     bgClass: "bg-charcoal-900",
     textClass: "text-white",
@@ -264,7 +264,7 @@ const SERVICOS_TILES = [
     title: "Desenvolvimento Web",
     subtitle: "INSTITUCIONAIS & LANDING PAGES",
     desc: "Portais limpos, responsivos e codificados à mão.",
-    metricLabel: "EXECUÇÃO",
+    metricLabel: "EXECU??O",
     metricValue: "Com critério",
     chartLabel: "VELOCIDADE DE ACESSO",
     chartSubtitle: "Arquitetura pensada para navegação clara em desktop e mobile.",
@@ -308,7 +308,7 @@ const PORTFOLIO_SERVICES_DATA = [
     longDesc: "Organizamos pautas, formatos e publicações para sustentar uma presença digital clara e coerente.",
     metricLabel: "CLAREZA",
     metricValue: "Direção",
-    chartLabel: "CONSTRUÇÃO DE PRESENÇA",
+    chartLabel: "CONSTRU??O DE PRESEN?A",
     chartSubtitle: "Conteúdo alinhado a um plano editorial que ajuda a manter a comunicação consistente.",
     bgImage: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=1200",
     wavePath: "M10,48 C30,48 50,20 70,36 C90,52 110,8 130,28 C150,48 170,12 190,4",
@@ -347,7 +347,7 @@ const PORTFOLIO_SERVICES_DATA = [
     subtitle: "MARCA AUTORAL",
     shortDesc: "Posicionamento visual e verbal coerente.",
     longDesc: "Desenvolvemos identidade, tom e sistema visual para alinhar percepção e contexto de marca.",
-    metricLabel: "PERCEPÇÃO",
+    metricLabel: "PERCEP??O",
     metricValue: "Coerência",
     chartLabel: "VALOR PERCEBIDO",
     chartSubtitle: "Direção visual e verbal para reforçar a leitura da marca.",
@@ -386,12 +386,12 @@ const PORTFOLIO_SERVICES_DATA = [
   {
     id: "copywriting",
     title: "Copywriting Estratégico",
-    subtitle: "COMUNICAÇÃO DIRECIONADA",
+    subtitle: "COMUNICA??O DIRECIONADA",
     shortDesc: "Textos que deixam a mensagem mais clara.",
     longDesc: "Redigimos legendas, páginas e argumentos para comunicar com precisão e menos ruído.",
     metricLabel: "CONTEÚDO",
     metricValue: "Com direção",
-    chartLabel: "RETENÇÃO DA LEITURA",
+    chartLabel: "RETEN??O DA LEITURA",
     chartSubtitle: "Estrutura textual que favorece compreensão e continuidade.",
     bgImage: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=1200",
     wavePath: "M10,35 C40,45 60,10 90,30 C120,45 150,15 190,10",
@@ -408,7 +408,7 @@ const PORTFOLIO_SERVICES_DATA = [
     subtitle: "CANAL PRÓPRIO",
     shortDesc: "Portais responsivos codificados à mão.",
     longDesc: "Criamos sites e landing pages com estrutura limpa, acessível e pensada para navegação clara.",
-    metricLabel: "EXECUÇÃO",
+    metricLabel: "EXECU??O",
     metricValue: "Com critério",
     chartLabel: "VELOCIDADE DE ACESSO",
     chartSubtitle: "Arquitetura pensada para navegação clara em desktop e mobile.",
@@ -511,7 +511,7 @@ const DIAGNOSTIQUER_PHASES = {
     symptoms: [
       {
         id: "content_focus",
-        label: "CONTEÚDO SEM DIREÇÃO",
+        label: "CONTE?DO SEM DIRE??O",
         desc: "A marca até publica, mas os conteúdos não constroem uma percepção clara nem conduzem o público para uma decisão.",
         symptom: "A comunicação existe, mas não organiza percepção nem gera próximo passo."
       },
@@ -547,7 +547,7 @@ const DIAGNOSTIQUER_PHASES = {
     symptoms: [
       {
         id: "overloaded",
-        label: "OPERAÇÃO SOBRECARREGADA",
+        label: "OPERA??O SOBRECARREGADA",
         desc: "A equipe entrega no esforço, mas o fluxo depende de poucas pessoas, muita memória e pouca previsibilidade.",
         symptom: "Quando a operação depende de poucas mãos, o crescimento vira cansaço recorrente."
       }
@@ -880,7 +880,7 @@ export default function Home({ onNavigate }: HomeProps) {
     { name: "DESENVOLVIMENTO WEB", style: "filled-white" },
     { name: "BRANDING", style: "outline" },
     { name: "PROCESSOS", style: "outline" },
-    { name: "OPERAÇÃO", style: "filled-neon" },
+    { name: "OPERA??O", style: "filled-neon" },
   ];
 
   return (
@@ -1013,7 +1013,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 </span>
                 
                 <p className="text-black/60 font-mono text-[9px] uppercase tracking-wide font-bold">
-                  DIREÇÃO PARA CONSTRUIR. ESTRUTURA PARA CRESCER.
+                  DIRE??O PARA CONSTRUIR. ESTRUTURA PARA CRESCER.
                 </p>
               </div>
 
@@ -1115,7 +1115,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-brand animate-pulse" />
                   <span className="font-mono text-[9px] uppercase tracking-widest text-brand font-black bg-brand/5 border border-brand/10 px-2 py-0.5 rounded">
-                    SESSÃO DIAGNÓSTICA EXCLUSIVA
+                    SESS?O DIAGN?STICA EXCLUSIVA
                   </span>
                 </div>
                 <h3 className="font-display font-medium text-xl sm:text-2xl text-white leading-tight uppercase">
@@ -1228,7 +1228,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       </div>
                     </div>
 
-                    {/* Card M-03: EVOLUÇÃO DE MARCA */}
+                    {/* Card M-03: EVOLU??O DE MARCA */}
                     <div 
                       onClick={() => {
                         onNavigate("/servicos/branding-identidade");
@@ -1238,7 +1238,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-mono text-[8.5px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/15 px-2 py-0.5 rounded tracking-widest font-bold">M-03</span>
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-semibold">EVOLUÇÃO DE MARCA</span>
+                        <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-semibold">EVOLU??O DE MARCA</span>
                       </div>
                       
                       <div>
@@ -1515,7 +1515,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     {/* Tactics Pills inside the column */}
                     <div className="mt-6 space-y-2 relative z-20">
                       <span className="text-[8px] font-mono text-zinc-600 uppercase tracking-widest block font-bold">
-                        PÍLULAS DE ATUAÇÃO:
+                        P?LULAS DE ATUA??O:
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {phase.pills.map((p) => {
@@ -1718,7 +1718,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* INDEPENDENT SECTION 2.2: SUTILEZA OPERACIONAL // DIREÇÃO SÊNIOR */}
+      {/* INDEPENDENT SECTION 2.2: SUTILEZA OPERACIONAL // DIRE??O S?NIOR */}
       <section id="metodologia-preview" className="py-28 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
         {/* Glow corner decors */}
         <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-brand-secondary/[0.01] rounded-full blur-[140px] pointer-events-none" />
@@ -1836,7 +1836,7 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
 
               <div className="pt-6 border-t border-black/[0.08] mt-8 flex items-center justify-between w-full text-black/60 font-mono text-[9.5px] uppercase tracking-widest">
-                05 // EVOLUÇÃO
+                05 // EVOLU??O
                 <button
                   onClick={() => {
                     const target = document.getElementById("contato");
@@ -1874,7 +1874,7 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
 
               <div className="pt-6 border-t border-brand-secondary/10 mt-8 flex items-center justify-between w-full text-zinc-500 font-mono text-[9px] uppercase tracking-wider">
-                <span>04 // EVOLUÇÃO</span>
+                <span>04 // EVOLU??O</span>
                 <ArrowLeft className="w-4 h-4 text-brand-secondary hidden lg:block" />
                 <ArrowDown className="w-4 h-4 text-brand-secondary lg:hidden" />
               </div>
@@ -2002,7 +2002,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   <span className="font-mono text-[9px] text-brand-secondary tracking-widest uppercase font-extrabold bg-brand-secondary/10 px-2.5 py-1 rounded-full">
                     Estúdio Operacional
                   </span>
-                  <span className="text-zinc-500 font-mono text-[8px]">SÃO PAULO / BR</span>
+                  <span className="text-zinc-500 font-mono text-[8px]">S?O PAULO / BR</span>
                 </div>
 
                 {/* HERO DIGITAL ".T" CENTERING */}
@@ -2395,7 +2395,7 @@ export default function Home({ onNavigate }: HomeProps) {
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
                 <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
-                  CONTEÚDO COM DIREÇÃO
+                  CONTE?DO COM DIRE??O
                 </span>
                 <span className="font-mono text-[9px] text-white/40 tracking-wider">
                   PRESENÇA EDITORIAL
@@ -2653,7 +2653,7 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Step 3 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">03 // PRODUÇÃO</div>
+              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">03 // PRODU??O</div>
               <h4 className="font-display font-semibold text-white">Produção</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
                 Transformamos a direção aprovada em conteúdo, design, site, campanhas, processos ou materiais aplicáveis.
@@ -2663,7 +2663,7 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Step 4 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">04 // ATIVAÇÃO</div>
+              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">04 // ATIVA??O</div>
               <h4 className="font-display font-semibold text-white">Ativação</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
                 Colocamos as entregas em uso, acompanhando ajustes necessários e pontos de atenção.
@@ -2673,7 +2673,7 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Step 5 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">05 // EVOLUÇÃO</div>
+              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">05 // EVOLU??O</div>
               <h4 className="font-display font-semibold text-white">Evolução</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
                 Revisamos aprendizados, identificamos melhorias e organizamos próximos passos com responsabilidade.
@@ -2687,7 +2687,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* SECTION 6.5 - PRODUÇÃO AUDIOVISUAL */}
+      {/* SECTION 6.5 - PRODU??O AUDIOVISUAL */}
       <section id="videos-recentes" className="py-24 px-4 sm:px-6 md:px-8 bg-black border-b border-white/[0.04] relative overflow-hidden">
         {/* Subtle decorative grid overlay and luminous auras */}
         <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.01)_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
@@ -2807,7 +2807,7 @@ export default function Home({ onNavigate }: HomeProps) {
                         </span>
                         <span className="text-white/20 text-xs">//</span>
                         <span className="font-mono text-[9px] text-zinc-400 font-bold uppercase tracking-wider">
-                          DURAÇÃO: {visibleYoutubeVideos[activeVideoIndex].duration} MIN
+                          DURA??O: {visibleYoutubeVideos[activeVideoIndex].duration} MIN
                         </span>
                       </div>
                       
@@ -2931,7 +2931,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   className="group w-full flex items-center justify-between bg-red-600 hover:bg-red-700 text-white font-mono font-black text-[9.5px] uppercase tracking-wider py-3 px-4 rounded-xl shadow-lg transition-all text-center cursor-pointer select-none"
                 >
                   <span className="flex items-center gap-1.5">
-                    CONHECER PRODUÇÃO AUDIOVISUAL
+                    CONHECER PRODU??O AUDIOVISUAL
                   </span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-white transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
@@ -3044,7 +3044,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* PORTFÓLIO DE TESTEMUNHOS & CASOS DE CLIENTES (UNIFICADO - O CLIENTE DICTA A REVOLUÇÃO) */}
+      {/* PORTF?LIO DE TESTEMUNHOS & CASOS DE CLIENTES (UNIFICADO - O CLIENTE DICTA A REVOLU??O) */}
       <section id="portfolio-marcas" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         
         {/* Editorial magazine background grid lines */}
@@ -3073,7 +3073,7 @@ export default function Home({ onNavigate }: HomeProps) {
               </span>
               <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter uppercase">
                 O CLIENTE DICTA <br />
-                A REVOLUÇÃO_
+                A REVOLU??O_
               </h2>
             </div>
 
@@ -3174,11 +3174,11 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
                   <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-extrabold">
-                    MÁXIMA RETENÇÃO VISUAL
+                    M?XIMA RETEN??O VISUAL
                   </span>
                 </div>
                 <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/5 border border-brand/10 px-1.5 rounded">
-                  DIREÇÃO DE FLUXO TOTAL
+                  DIRE??O DE FLUXO TOTAL
                 </span>
               </div>
             </div>
@@ -3650,7 +3650,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   </span>
                 </div>
                 <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
-                  OPERAÇÃO ATIVA
+                  OPERA??O ATIVA
                 </span>
               </div>
 

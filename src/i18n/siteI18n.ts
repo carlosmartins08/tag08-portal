@@ -513,11 +513,11 @@ export const i18n = {
       servicePages: [
         { path: "/servicos/assessoria-marketing-digital-estrategico", name: "Asesoría de Marketing", desc: "Dirección CMO externa y performance de canales" },
         { path: "/servicos/gestao-de-redes-sociais", name: "Gestión de Redes Sociales", desc: "Posicionamiento constante con alta interacción" },
-        { path: "/servicos/branding-identidade", name: "Branding & Identidad", desc: "Diseao y narrativa visual corporativa" },
+        { path: "/servicos/branding-identidade", name: "Branding & Identidad", desc: "Diseño y narrativa visual corporativa" },
         { path: "/servicos/desenvolvimento-web", name: "Desarrollo Web", desc: "Portales institucionales ligeros y páginas de conversión" },
         { path: "/servicos/producao-audiovisual", name: "Producción Audiovisual", desc: "Videos y aftermovies premium para marcas" },
         { path: "/servicos/process-intelligence", name: "Process Intelligence", desc: "Mapeo y playbooks de procesos" },
-        { path: "/servicos/process-activation", name: "Process Activation", desc: "Implementa??o y auditoraas corporativas" },
+        { path: "/servicos/process-activation", name: "Process Activation", desc: "Implementación y auditorías corporativas" },
       ],
     },
     footer: {

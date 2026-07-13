@@ -452,7 +452,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">03 // PERCEPÇÃO ABAIXO DA ENTREGA</span>
+                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">03 // PERCEP??O ABAIXO DA ENTREGA</span>
                 <h4 className="text-white font-display font-black text-sm uppercase">A aparência não acompanha o valor entregue</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
                   Quando a identidade visual fica aquém da entrega, a marca precisa justificar demais algo que deveria ser percebido com naturalidade.
@@ -460,7 +460,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">04 // DIREÇÃO DE MARCA</span>
+                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">04 // DIRE??O DE MARCA</span>
                 <h4 className="text-white font-display font-black text-sm uppercase">A identidade precisa de critério</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
                   Direção visual não é enfeite. É o que ajuda a marca a manter consistência, clareza e reconhecimento ao longo do tempo.
@@ -559,7 +559,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
             </p>
           </div>
           <span className="font-mono text-[8.5px] text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
-            DIREÇÃO VISUAL // TAG08
+            DIRE??O VISUAL // TAG08
           </span>
         </div>
       </section>
@@ -584,7 +584,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block cursor-help select-none active:scale-95 transition-transform"
                 title="Área restrita de gestão. Clique 5 vezes para habilitar recursos ocultos."
               >
-                {isAdmin ? "PORTFÓLIO VISUAL // GESTÃO" : "PORTFÓLIO VISUAL // PINTEREST HUB"}
+                {isAdmin ? "PORTF?LIO VISUAL // GEST?O" : "PORTF?LIO VISUAL // PINTEREST HUB"}
               </span>
               <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase tracking-tight leading-none">
                 Aplicações que mostram a identidade em uso.
@@ -609,7 +609,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 >
                   {formOpen ? (
                     <>
-                      <span>FECHAR PAINEL DE GESTÃO</span>
+                      <span>FECHAR PAINEL DE GEST?O</span>
                     </>
                   ) : (
                     <>
@@ -1074,7 +1074,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                               previewTitle.innerText = "Exemplos de aplicação";
                               previewTagline.innerText = "Referências práticas para ver a identidade funcionando em canais reais.";
                               previewTagline.className = "text-zinc-300 font-sans text-xs leading-relaxed";
-                              previewBadge.innerText = "APLICAÇÃO";
+                              previewBadge.innerText = "APLICA??O";
                               previewBadge.className = "font-mono text-[8px] bg-brand/10 text-brand border border-brand/20 px-2 py-0.5 rounded font-black uppercase";
                               previewValues.innerText = "Redes sociais\nApresentações\nPropostas\nSite e materiais comerciais";
                               previewFit.innerText = "Pontos de contato que pedem leitura rápida e padronização";
@@ -1094,7 +1094,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                               previewTitle.innerText = "Próximos passos";
                               previewTagline.innerText = "A ordem prática para sair da decisão e colocar a identidade em uso.";
                               previewTagline.className = "text-zinc-400 font-sans text-xs leading-relaxed";
-                              previewBadge.innerText = "ORIENTAÇÃO";
+                              previewBadge.innerText = "ORIENTA??O";
                               previewBadge.className = "font-mono text-[8px] bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2 py-0.5 rounded font-black uppercase";
                               previewValues.innerText = "Definir base\nAplicar nas peças prioritárias\nRevisar o conjunto\nExpandir com critério";
                               previewFit.innerText = "Times que precisam colocar a marca em uso sem atraso";
@@ -1213,7 +1213,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 },
                 {
                   title: "Critérios de consistência",
-                  focus: "03 // PADRÃO",
+                  focus: "03 // PADR?O",
                   desc: "Orientações para que novas peças respeitem a direção visual definida."
                 },
                 {

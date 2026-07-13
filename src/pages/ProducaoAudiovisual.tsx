@@ -19,15 +19,12 @@ interface Deliverable {
 }
 
 const DELIVERABLES: Deliverable[] = [
-  { id: "aftermovie", name: "Aftermovie do Evento", category: "event", desc: "VÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deo cinematogrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡fico com os melhores momentos emocionais e tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©cnicos." },
-  { id: "reels", name: "Reels de Alto Impacto", category: "digital", desc: "Formatos rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡pidos (9:16) pensados para alcance qualificado e boa retenÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o." },
-  { id: "cortes", name: "Cortes de Falas & Palestras", category: "digital", desc: "Falas impactantes editadas dinamicamente com legendas premium." },
-  { id: "depoimentos", name: "Depoimentos de Clientes (Social Proof)", category: "event", desc: "Entrevistas rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡pidas colhendo feedbacks espontÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½neos ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºteis para a prova social." },
-  { id: "institucional", name: "VÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deo Resumo Institucional", category: "inst", desc: "ApresentaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o executiva sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³bria direcionada ao investidor corporativo." },
-  { id: "teaser", name: "Teaser PrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©/PÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³s Evento", category: "event", desc: "Gatilho de expectativa ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©pico para ancorar as campanhas de marketing." },
-  { id: "stories", name: "Stories DinÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢micos em Tempo Real", category: "digital", desc: "CaptaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½pida para publicaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½o em tempo de execuÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½o das atividades." },
-  { id: "anuncios", name: "VariaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes para TrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡fego Pago (Ads)", category: "ads", desc: "Criativos com ganchos fortes adaptados especificamente para conversÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o." },
-  { id: "banco", name: "Banco de Imagens Exclusivo", category: "inst", desc: "Recortes em alta resoluÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de equipe, infraestrutura e processos de entrega." }
+  { id: "institucional", name: "Vídeos institucionais e de apresentação", category: "inst", desc: "Para apresentar a marca, equipe, história, método, serviço ou posicionamento de forma mais humana, visual e compreensível." },
+  { id: "evento", name: "Cobertura de eventos e ações presenciais", category: "event", desc: "Para registrar encontros, lançamentos, inaugurações, treinamentos, palestras e ativações com olhar narrativo, pensando também no uso posterior do material." },
+  { id: "redes", name: "Conteúdos para redes sociais", category: "digital", desc: "Para transformar falas, bastidores, rotinas, produtos, serviços e momentos da marca em vídeos curtos, cortes e publicações conectadas à linha editorial." },
+  { id: "autoridade", name: "Depoimentos, entrevistas e autoridade", category: "digital", desc: "Para organizar falas de clientes, especialistas, lideranças ou equipe em conteúdos claros, objetivos e úteis para fortalecer confiança." },
+  { id: "bastidores", name: "Bastidores, cultura e marca empregadora", category: "inst", desc: "Para mostrar pessoas, processos, ambiente, rotina e cultura de forma autêntica, sem transformar bastidor em encenação vazia." },
+  { id: "apoio", name: "Materiais de apoio para site, campanhas e apresentações", category: "inst", desc: "Para gerar vídeos, chamadas, recortes e materiais visuais que apoiem páginas, propostas, apresentações comerciais e canais digitais." }
 ];
 
 interface Formato {
@@ -40,39 +37,39 @@ interface Formato {
 
 const FORMATOS: Formato[] = [
   {
-    id: "essencial",
-    name: "ConteÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºdo Essencial",
-      tag: "GRAVAÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ES PONTUAIS OU REDES",
-    desc: "Perfeito para marcas pessoais, gravaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes pontuais de estÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºdio e bastidores internos das marcas.",
+    id: "institucional",
+    name: "Registro institucional",
+      tag: "APRESENTAÇÃO E POSICIONAMENTO",
+    desc: "Para apresentar marca, equipe, história, método ou serviço com clareza.",
     features: [
-      "GravaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o sob demanda e rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡pida",
-      "Bastidores e produÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡pida",
-      "Foco em Reels e Shorts verticais",
-      "Roteiro bÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡sico de direÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o"
+      "Mensagem principal definida",
+      "Roteiro objetivo",
+      "Base para site e proposta",
+      "Material para desdobrar cortes"
     ]
   },
   {
-    id: "cobertura",
-    name: "Cobertura EstratÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©gica",
-      tag: "EVENTOS E ATIVAÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ES",
-    desc: "Desenvolvido para eventos corporativos de mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©dio e grande porte, palestras, ativaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes de patrocinadores e lanÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§amentos.",
+    id: "evento",
+    name: "Cobertura de evento",
+      tag: "REGISTRO E USO POSTERIOR",
+    desc: "Para encontros, lançamentos, inaugurações, treinamentos e palestras que precisam gerar material útil depois.",
     features: [
-      "Mapeamento tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡tico do cronograma antes",
-      "Foco em depoimentos e aftermovie",
-      "Entrega ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡gil para aproveitamento",
-      "Teaser do evento em alta energia"
+      "Registro narrativo",
+      "Falas e bastidores",
+      "Cortes para comunicação posterior",
+      "Material de apoio"
     ]
   },
   {
-    id: "completa",
-    name: "ProduÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o Executiva Completa",
-    tag: "END-TO-END SYSTEM",
-    desc: "Nossa entrega mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡xima de ponta a ponta. Planejamento estratÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©gico, roteirizaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o, mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºltiplos formatos de captaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o e planos estritos de distribuiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o contÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­nua.",
+    id: "recorrente",
+    name: "Conteúdo recorrente",
+    tag: "LINHA EDITORIAL",
+    desc: "Para transformar rotinas, bastidores e falas em materiais contínuos para canais digitais.",
     features: [
-      "DireÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âªnior de narrativa",
-      "Roteiros detalhados e marcaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cena",
-      "CaptaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes cinematogrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ficas sob medida",
-      "AdaptaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o para mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºltiplos canais comerciais"
+      "Captação reaproveitável",
+      "Vídeos curtos",
+      "Linha editorial",
+      "Consistência de publicação"
     ]
   }
 ];
@@ -83,27 +80,27 @@ interface FAQCategory {
 }
 
 const faqCategories: FAQCategory[] = [
-  { id: 0, title: "ESCOPO & EXPERT" },
-  { id: 1, title: "ENTREGAS E CORTES" },
-  { id: 2, title: "ROTEIRO E DIREÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢O" },
-  { id: 3, title: "DESLOCAMENTO BR" },
-  { id: 4, title: "FILMAGEM VS EDIÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢O" }
+  { id: 0, title: "PLANEJAMENTO" },
+  { id: 1, title: "FORMATO" },
+  { id: 2, title: "EVENTOS" },
+  { id: 3, title: "REAPROVEITAMENTO" },
+  { id: 4, title: "CANAIS" }
 ];
 
 const faqQuestions = [
-  "A TAG08 faz apenas filmagem ou tambÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©m a ediÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o contÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­nua?",
-  "Como funcionam as entregas de vÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deos curtos em formato Reels e Stories?",
-  "Existe roteirizaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o prÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©via e marcaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o antes do inÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­cio das gravaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes?",
-  "A TAG08 atende fora do polo base? Quais taxas extras de viagem incidem?",
-  "Posso contratar a TAG08 apenas para pÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³s-produÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o ou ediÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de material ja captado?"
+  "A TAG08 faz apenas a gravação ou também ajuda no planejamento?",
+  "Preciso saber exatamente qual vídeo quero produzir antes de falar com a TAG08?",
+  "Vocês fazem cobertura de eventos?",
+  "Uma gravação pode gerar vários conteúdos?",
+  "A produção audiovisual serve só para redes sociais?"
 ];
 
 const faqAnswers = [
-  "Nossa atuaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ de ponta a ponta. NÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o somos simples operadores de cÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢mera: desenhamos a estratÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©gia de posicionamento, roteirizamos, dirigimos a gravaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o, realizamos a captaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½udio e vÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deo em qualidade de cinema, tratamos cor, editamos cortes estÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ticos e dinÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢micos de alta velocidade e estruturamos as legendas premium.",
-  "Totalmente inclusos dentro do planejamento estratÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©gico. Criamos ganchos fortes nos primeiros 3 segundos do vÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deo, aplicando quebras de padrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o e legendas elegantes para boa retenÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o nas redes sociais, integradas ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â  estÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©tica do seu branding.",
-  "Sim. Antes de ligarmos qualquer equipamento de captaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o, construÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­mos um cronograma tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡tico integrado. Mapeamos os pontos focais obrigatÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³rios do evento corporativo ou da produÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de estÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºdio, preparamos roteiro tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©cnico de perguntas para colher depoimentos isentos de dor e definimos as referÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âªncias de corte.",
-  "Atendemos em todo o territÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³rio nacional. Nossas operaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes principais abrangem projetos com logÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­stica coordenada. Custos adicionais de transporte terrestre/aÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©reo, seguro de equipamentos e ajuda de custo de hospedagem e alimentaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o acordados de forma transparente direto no escopo contratual.",
-  "Sim. Para marcas e eventos com grandes acervos raw histÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ricos de gravaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o, oferecemos a modalidade de consultoria pÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³s-editorial e design de narrativa rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡pida. Criamos novos roteiros tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ticos, aplicamos cortes rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡pidos adaptados em novas copys, inserimos legendas modernas e refinamos a identidade sonora para reaproveitar seu acervo."
+  "A produção pode envolver planejamento, pauta, roteiro, direção, captação, edição e orientação de uso. Antes de gravar, entendemos o contexto da marca e a função que o material precisa cumprir.",
+  "Não. A conversa inicial serve justamente para entender o momento da marca e indicar o formato mais coerente: institucional, evento, bastidores, depoimentos, conteúdo recorrente ou material de apoio.",
+  "Sim. A cobertura pode registrar palestras, lançamentos, inaugurações, treinamentos, encontros, bastidores e momentos importantes. O material também pode ser pensado para uso posterior em redes, site, apresentações e comunicação institucional.",
+  "Pode, desde que exista planejamento. Um mesmo material pode gerar vídeo principal, cortes, chamadas, bastidores, depoimentos, publicações e materiais de apoio, dependendo do escopo definido.",
+  "Não. O material pode apoiar redes sociais, site, páginas comerciais, apresentações, campanhas, comunicação interna, branding, autoridade e relacionamento com clientes."
 ];
 
 interface ProducaoProps {
@@ -114,8 +111,8 @@ export default function ProducaoAudiovisual({ onNavigate }: ProducaoProps) {
   const [activeFaq, setActiveFaq] = useState<number>(0);
   
   // Custom calculator states
-  const [selectedFormat, setSelectedFormat] = useState<string>("cobertura");
-  const [selectedTools, setSelectedTools] = useState<string[]>(["aftermovie", "reels", "depoimentos"]);
+  const [selectedFormat, setSelectedFormat] = useState<string>("institucional");
+  const [selectedTools, setSelectedTools] = useState<string[]>(["institucional", "apoio"]);
 
   const handleToggleTool = (toolId: string) => {
     setSelectedTools(prev => 
@@ -125,21 +122,21 @@ export default function ProducaoAudiovisual({ onNavigate }: ProducaoProps) {
     );
   };
 
-  const currentFormatDetails = FORMATOS.find(f => f.id === selectedFormat) || FORMATOS[1];
+  const currentFormatDetails = FORMATOS.find(f => f.id === selectedFormat) || FORMATOS[0];
+  const currentSelectedTools = selectedTools
+    .map((id) => DELIVERABLES.find((d) => d.id === id)?.name)
+    .filter((name): name is string => Boolean(name))
+    .join(", ");
 
   const getWhatsAppLink = () => {
-    const formatName = currentFormatDetails.name.toUpperCase();
-    const deliverablesList = selectedTools
-      .map(id => DELIVERABLES.find(d => d.id === id)?.name)
-      .filter(Boolean)
-      .join(", ");
+    const formatName = currentFormatDetails.name;
 
-    const message = `OlÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ TAG08! Configurei minha proposta tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©cnica usando o simulador inteligente de produÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o audiovisual e cheguei no seguinte setup:
-  
- - FORMATO DE CONTRATAÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½!ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½O: ${formatName}
- - ENTREGÃƒÆ’Ã†â€™Ãƒâ€šÃ‚ÂVEIS DESEJADOS: ${deliverablesList}
+    const message = `Olá TAG08! Quero entender qual formato audiovisual faz mais sentido para o momento da minha marca.
 
-Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de clareza de 30 minutos com um diretor de produÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o audiovisual para viabilizar as diÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡rias e o plano orÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§amentÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡rio.`;
+- FORMATO AVALIADO: ${formatName}
+- MATERIAIS RELACIONADOS: ${currentSelectedTools}
+
+Quero conversar sobre o próximo passo com a TAG08.`;
 
     return buildBrazilWhatsAppUrl(message);
   };
@@ -167,16 +164,16 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-baseline text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
-                ProduÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o Audiovisual
+                Produção Audiovisual
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
                 Narrativa audiovisual com <br />
-                <span className="text-brand">presenÃƒÆ’Ã‚Â§a e funÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o estratÃƒÆ’Ã‚Â©gica.</span>
+                <span className="text-brand">presença e função estratégica.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-[15px] leading-relaxed font-sans font-medium">
-                A TAG08 transforma presenÃƒÆ’Ã‚Â§a, fala, ambiente, bastidores e eventos em conteÃƒÆ’Ã‚Âºdo com clareza, estÃƒÆ’Ã‚Â©tica e funÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o estratÃƒÆ’Ã‚Â©gica. Antes de gravar, entendemos o contexto da marca, os usos do material e os formatos que precisam sustentar comunicaÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o, portfÃƒÆ’Ã‚Â³lio e relacionamento.
+                A TAG08 transforma presença, fala, ambiente, bastidores e eventos em conteúdo com clareza, estética e função estratégica. Antes de gravar, entendemos o contexto da marca, os usos do material e os formatos que precisam sustentar comunicação, portfólio e relacionamento.
               </p>
             </div>
           </div>
@@ -186,7 +183,7 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.35/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
               <img 
                 src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1600"
-                alt="ProduÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o Audiovisual TAG08"
+                alt="Produção Audiovisual TAG08"
                 className="w-full h-full object-cover grayscale brightness-40 group-hover:scale-[1.02] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
               />
@@ -208,12 +205,12 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
                   <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-bold">TAG08 AUDIOVISUAL</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Narrativa, presenÃƒÆ’Ã‚Â§a e conteÃƒÆ’Ã‚Âºdo com direÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o</h4>
+                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Narrativa, presença e conteúdo com direção</h4>
                 </div>
 
                 <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8.5px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
                   <div className="w-1.5 h-1.5 rounded-full bg-brand animate-ping" />
-                  <span>CaptaÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o, ediÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o e distribuiÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o para uso recorrente</span>
+                  <span>Captação, edição e distribuição para uso recorrente</span>
                 </div>
               </div>
             </div>
@@ -223,19 +220,19 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-2 text-left border-t border-white/[0.04]">
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Narrativa</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Capta fala, bastidores e ambiente<br/>com intenÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o editorial</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Capta fala, bastidores e ambiente<br/>com intenção editorial</span>
             </div>
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Clareza</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Organiza o material para apoiar<br/>apresentaÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o, redes e site</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Organiza o material para apoiar<br/>apresentação, redes e site</span>
             </div>
             <div className="space-y-1.5">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-white">AplicaÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">PeÃƒÆ’Ã‚Â§as pensadas para uso recorrente<br/>e consistente</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-white">Aplicação</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Peças pensadas para uso recorrente<br/>e consistente</span>
             </div>
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Continuidade</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">ConteÃƒÆ’Ã‚Âºdo ÃƒÆ’Ã‚Âºtil depois da gravaÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o<br/>e da ediÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Conteúdo útil depois da gravação<br/>e da edição</span>
             </div>
           </div>
 
@@ -254,39 +251,35 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                 Sinais de desalinhamento audiovisual
               </span>
               <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white uppercase tracking-tighter">
-                Quando o vÃƒÂ­deo existe, mas ainda nÃƒÂ£o sustenta a marca.
+                Quando o vídeo existe, mas não constrói presença.
               </h2>
             </div>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Muitas marcas produzem vÃƒÂ­deo, mas seguem com material sem intenÃƒÂ§ÃƒÂ£o clara, sem narrativa definida, sem formato adequado ou sem reaproveitamento consistente. O problema nem sempre ÃƒÂ© falta de vÃƒÂ­deo. Muitas vezes ÃƒÂ© falta de intenÃƒÂ§ÃƒÂ£o, narrativa, formato e continuidade.
+              Muitas marcas gravam conteúdos, registram eventos e publicam vídeos, mas ainda não conseguem transformar esses materiais em presença clara, recorrente e útil para a comunicação. O problema pode estar menos na captação e mais na falta de narrativa, formato, edição e estratégia de uso.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
             {[
               {
-                title: "Registro sem intenÃƒÂ§ÃƒÂ£o",
-                desc: "O material mostra o que aconteceu, mas nÃƒÂ£o ajuda a marca a comunicar uma ideia, uma postura ou um contexto com mais clareza."
+                title: "Vídeos sem função clara",
+                desc: "O conteúdo é gravado, mas não fica claro se ele deve apresentar a marca, educar o público, registrar um momento, apoiar vendas ou fortalecer autoridade."
               },
               {
-                title: "Fala sem direÃƒÂ§ÃƒÂ£o",
-                desc: "Depoimentos, bastidores e cenas sÃƒÂ£o gravados sem um eixo editorial claro, o que enfraquece a leitura do conteÃƒÂºdo."
+                title: "Bastidores pouco aproveitados",
+                desc: "Eventos, processos, atendimentos, equipe e rotina geram material valioso, mas acabam não sendo transformados em conteúdo útil para a marca."
               },
               {
-                title: "Formato ÃƒÂºnico para tudo",
-                desc: "O mesmo vÃƒÂ­deo tenta servir redes, site, apresentaÃƒÂ§ÃƒÂ£o e evento sem adaptaÃƒÂ§ÃƒÂ£o para cada ponto de contato."
+                title: "Falas sem narrativa",
+                desc: "Especialistas e lideranças têm conhecimento para compartilhar, mas os vídeos precisam de direção para ficarem claros, objetivos e reaproveitáveis."
               },
               {
-                title: "Bastidores sem reaproveitamento",
-                desc: "O conteÃƒÂºdo fica parado depois da gravaÃƒÂ§ÃƒÂ£o e nÃƒÂ£o vira cortes, trechos ou peÃƒÂ§as de apoio para a comunicaÃƒÂ§ÃƒÂ£o da marca."
+                title: "Conteúdo sem continuidade",
+                desc: "A marca grava em momentos pontuais, mas não constrói uma presença audiovisual recorrente conectada à linha editorial."
               },
               {
-                title: "EdiÃƒÂ§ÃƒÂ£o sem contexto",
-                desc: "A montagem existe, mas nÃƒÂ£o conversa com posicionamento, linguagem ou prÃƒÂ³ximo passo da marca."
-              },
-              {
-                title: "Continuidade fragilizada",
-                desc: "O material nÃƒÂ£o cria uma base ÃƒÂºtil para usos futuros e acaba exigindo novo esforÃƒÂ§o toda vez que a marca precisa comunicar algo."
+                title: "Material sem reaproveitamento",
+                desc: "Um vídeo longo, cobertura ou gravação pode gerar cortes, chamadas, bastidores, reels, publicações e materiais de apoio, desde que exista planejamento."
               }
             ].map((item, idx) => (
               <div 
@@ -310,20 +303,20 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
       </section>
 
       {/*=========================================
-          SECTION 3: TARGET AUDIENCE (Para quem ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©)
+          SECTION 3: TARGET AUDIENCE (Para quem é)
          =========================================*/}
       <section className="px-6 md:px-8 py-20 border-b border-white/[0.04] relative z-10">
         <div className="max-w-7xl mx-auto space-y-14 text-center">
           
           <div className="max-w-2xl mx-auto space-y-3 text-center">
             <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-              MAPEAMENTO DE SOLICITANTES // DIALÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½0TICA
+              CONTEXTOS DE APLICAÇÃO // TAG08
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
-              Para quem o Audiovisual de Elite ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â© ObrigatÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³rio?
+              Para marcas que precisam transformar presença em conteúdo.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
-              Identifique se o seu formato de atuaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o comercial demanda uma roupagem visual sofisticada no patamar exigido por seus consumidores.
+              A produção audiovisual da TAG08 faz sentido para negócios, profissionais e instituições que já têm histórias, experiências, bastidores, eventos, pessoas ou conhecimento para comunicar, mas precisam organizar isso em formatos claros, bem editados e úteis para diferentes canais.
             </p>
           </div>
 
@@ -331,33 +324,28 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
             {[
               {
                 icon: Award,
-                title: "Empresas com Eventos SÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âªniores",
-                desc: "Encontros corporativos, palestras exclusivas, summits e workshops premium necessitam perpetuar o calor e alto status da marca no digital pÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³s-evento."
-              },
-              {
-                icon: Layers,
-                title: "Marcas com LanÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§amentos e AtivaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes",
-                desc: "Anas de lanÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§amentos de produtos fÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­sicos digitais, promoÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes de impacto ou aberturas de filias exigem narrativa cinematogrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡fica de peso."
+                title: "Empresas com rotina, equipe e bastidores relevantes",
+                desc: "Negócios que têm processos, atendimentos, entregas, cultura ou operação acontecendo todos os dias, mas ainda não transformam essa rotina em conteúdo com clareza."
               },
               {
                 icon: Play,
-                title: "Especialistas e Marcas Pessoais",
-                desc: "Profissionais liberais, conselheiros, executivos de board e infoprodutores premium precisam gerar regularidade de autoridade limpa e polida."
-              },
-              {
-                icon: Monitor,
-                title: "Empresas que Querem Humanizar OperaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes",
-                desc: "NegÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³cios que buscam mostrar seus bastidores, engenharia operacional robusta, escritÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³rio fÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­sico e a uniÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o da equipe de forma elegante."
+                title: "Profissionais e especialistas que precisam comunicar autoridade",
+                desc: "Pessoas que dominam um assunto, atendem clientes ou lideram uma área, mas precisam de direção para transformar fala, conhecimento e experiência em vídeos objetivos."
               },
               {
                 icon: Video,
-                title: "TrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡fego Pago Exigindo Alta RetenÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o",
-                desc: "Lojas c2c, serviÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§os b2b e marcas de luxo que precisam de funis de criativos cinematogrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ficos para performar agressivamente em anÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºncios."
+                title: "Eventos que merecem registro estratégico",
+                desc: "Encontros, lançamentos, inaugurações, treinamentos, palestras e ações presenciais que não devem virar apenas lembrança, mas material útil para comunicação posterior."
+              },
+              {
+                icon: Monitor,
+                title: "Marcas que precisam alimentar redes, site e campanhas",
+                desc: "Negócios que precisam de vídeos, cortes, bastidores, depoimentos, chamadas e materiais audiovisuais conectados à linha editorial e aos canais da marca."
               },
               {
                 icon: Film,
-                title: "DocumentaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de Legado e ReputaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o",
-                desc: "InstituiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes, fundaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes e cooperativas que pretendem consolidar em vÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deo seus manifestos fundadores, projetos sociais e reputaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o real."
+                title: "Projetos que precisam de narrativa institucional",
+                desc: "Iniciativas que precisam apresentar história, propósito, método, equipe, serviço ou transformação de forma mais humana, visual e compreensível."
               }
             ].map((audience, idx) => {
               const AudienceIcon = audience.icon;
@@ -389,20 +377,20 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
       </section>
 
       {/*=========================================
-          SECTION 4: ACTIVE FRONTS OF ACTION (Frentes de atuaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o)
+          SECTION 4: ACTIVE FRONTS OF ACTION (Frentes de atuação)
          =========================================*/}
       <section className="px-6 md:px-8 py-20 bg-charcoal-900/10 border-b border-white/[0.04] text-left relative z-10">
         <div className="max-w-7xl mx-auto space-y-16">
           
           <div className="text-left space-y-3 max-w-2xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-              SERVIÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½!OS INTEGRADOS // AUDIOVISUAL COMPACT
+              FRENTES AUDIOVISUAIS // TAG08
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tighter">
-              As Quatro Frentes de AtuaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o SÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âªnior da TAG08
+              Frentes audiovisuais com função clara.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Estruturamos as frentes de captaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o, direÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©cnica e roteiro para atender com precisÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o executiva a cada objetivo de posicionamento no mercado digital.
+              A produção pode assumir diferentes formatos, mas cada entrega precisa responder a uma necessidade concreta da marca: apresentar, registrar, explicar, aproximar, educar, documentar ou alimentar canais com consistência.
             </p>
           </div>
 
@@ -410,27 +398,39 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
             {[
               {
                 num: "FRENTE 01",
-                title: "CaptaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o & ConteÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºdo para Redes Sociais",
-                desc: "ProduÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o contÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­nua e planejada sob roteiro refinado para TikTok, Instagram Reels, LinkedIn e canais digitais modernos de negÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³cios.",
-                list: ["Roteiro de quebra de padrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o inicial", "CaptaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de alta nitidez com pÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½s color-grading", "Cortes rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½pidos e dinÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢micos", "Legendas de alto padrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o", "Efeitos sonoros sutis e envolventes"]
+                title: "Vídeos institucionais e de apresentação",
+                desc: "Para apresentar a marca, equipe, história, estrutura, método, serviço ou posicionamento de forma mais humana, visual e compreensível.",
+                list: ["Apresentação da marca", "Equipe e estrutura", "História e método", "Serviço e posicionamento", "Materiais para site e propostas"]
               },
               {
                 num: "FRENTE 02",
-                title: "Cobertura de Eventos Corporativos",
-                desc: "Ancoragem completa de palestras, ativaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes de patrocinadores, summits e festas internas de marcas corporativas.",
-                list: ["Aftermovie cinematogrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½fico", "Cortes rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½pidos editados no local", "Depoimentos de participantes colhidos com maestria", "Galeria organizada de fotos institucionais", "Stories dinÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢micos sob demanda"]
+                title: "Cobertura de eventos e ações presenciais",
+                desc: "Para registrar encontros, lançamentos, inaugurações, treinamentos, palestras e ativações com olhar narrativo, pensando também no uso posterior do material.",
+                list: ["Registro de encontros", "Lançamentos e inaugurações", "Treinamentos e palestras", "Ativações e ações presenciais", "Material para comunicação posterior"]
               },
               {
-                num: "FRENÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¤ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¤ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¥ÃƒÆ’Ã‚Â¢Ãƒâ€šÃ‚Â¬Ãƒâ€šÃ‚Â¡ 03",
-                title: "VÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deos Institucionais & DocumentÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡rios de Marca",
-                desc: "Manifestos de negÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³cio, histÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³rias fundadoras e documentÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡rios de processos industriais ou de escritÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³rios focados em autoridade.",
-                list: ["VÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deo institucional", "Manifesto de marca assinado por diretores", "VÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deos para recepÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o e showrooms", "VÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deo comercial para captaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³cios", "ApresentaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes com Motion Graphics"]
+                num: "FRENTE 03",
+                title: "Conteúdos para redes sociais",
+                desc: "Para transformar falas, bastidores, rotinas, produtos, serviços e momentos da marca em vídeos curtos, cortes e publicações conectadas à linha editorial.",
+                list: ["Vídeos curtos", "Cortes de falas", "Bastidores e rotinas", "Produtos e serviços", "Publicações conectadas à linha editorial"]
               },
               {
                 num: "FRENTE 04",
-                title: "Campanhas Visuais & LanÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§amentos",
-                desc: "VÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deos estruturados de vendas para ancorar campanhas agressivas de trÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡fego pago, lanÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§amentos de infoprodutos e novas linhas luxo.",
-                list: ["VÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½deos em formato 16:9 e vertical 9:16", "Estrutura rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½pida para mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºltiplos anÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºncios (A/B)", "Roteiro orientado ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ aÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½o imediata pÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½s-clique", "DireÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½o de cÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢mera voltada ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ alta conversÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o", "CTA de alta densidade no desfecho"]
+                title: "Depoimentos, entrevistas e autoridade",
+                desc: "Para organizar falas de clientes, especialistas, lideranças ou equipe em conteúdos claros, objetivos e úteis para fortalecer confiança.",
+                list: ["Depoimentos guiados", "Entrevistas objetivas", "Falas de especialistas", "Lideranças e equipe", "Conteúdo para fortalecer confiança"]
+              },
+              {
+                num: "FRENTE 05",
+                title: "Bastidores, cultura e marca empregadora",
+                desc: "Para mostrar pessoas, processos, ambiente, rotina e cultura de forma autêntica, sem transformar bastidor em encenação vazia.",
+                list: ["Pessoas e processos", "Ambiente e rotina", "Cultura do dia a dia", "Marca empregadora", "Bastidores autênticos"]
+              },
+              {
+                num: "FRENTE 06",
+                title: "Materiais de apoio para site, campanhas e apresentações",
+                desc: "Para gerar vídeos, chamadas, recortes e materiais visuais que apoiem páginas, propostas, apresentações comerciais e canais digitais.",
+                list: ["Vídeos para páginas", "Chamadas e recortes", "Materiais visuais de apoio", "Propostas e apresentações comerciais", "Canais digitais da marca"]
               }
             ].map((frente, idx) => (
               <div 
@@ -450,7 +450,7 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                 </div>
 
                 <div className="space-y-3.5 pt-4 border-t border-white/[0.04]">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">ENTREGÃƒÆ’Ã†â€™Ãƒâ€šÃ‚ÂVEIS POSSÃƒÆ’Ã†â€™Ãƒâ€šÃ‚ÂVEIS:</span>
+                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">FORMATOS POSSÍVEIS:</span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {frente.list.map((item, itemIdx) => (
                       <div key={itemIdx} className="flex gap-2.5 items-center">
@@ -476,35 +476,35 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 max-w-5xl">
             <div className="space-y-3">
               <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-                MONTE SEU CHECKLIST // SIMULADOR DE AUDIOVISUAL
+                DIAGNÓSTICO DE FORMATO AUDIOVISUAL
               </span>
               <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white uppercase tracking-tighter">
-                Simulador Inteligente de Planejamento de DiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ria
+                Entenda qual tipo de conteúdo faz mais sentido para o seu momento.
               </h2>
             </div>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Selecione o seu formato tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡tico de preferÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âªncia e monte o pacote de entregÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡veis do seu projeto. Obtenha um resumo tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©cnico imediato.
+              Responda a partir do contexto da sua marca para identificar se faz mais sentido registrar, apresentar, explicar, reaproveitar ou alimentar canais com mais consistência.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            {/* Lado Esquerdo: Formato (Column) + EntregÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡veis */}
+            {/* Lado Esquerdo: Formato (Column) + Entregáveis */}
             <div className="lg:col-span-7 space-y-8">
               
               {/* Formatos Buttons Selector */}
               <div className="space-y-4">
-                <span className="font-mono text-[9.5px] text-zinc-500 uppercase tracking-widest font-bold block">1. ESCOLHA O FORMATO DE CONTRATAÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½!ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½O</span>
+                <span className="font-mono text-[9.5px] text-zinc-500 uppercase tracking-widest font-bold block">1. ESCOLHA O FORMATO QUE FAZ MAIS SENTIDO</span>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {FORMATOS.map((f) => (
                     <button
                       key={f.id}
                       onClick={() => {
                         setSelectedFormat(f.id);
-                        // Auto reset/preset default deliverables depending on selected format
-                        if (f.id === "essencial") setSelectedTools(["reels", "cortes"]);
-                        else if (f.id === "cobertura") setSelectedTools(["aftermovie", "reels", "depoimentos"]);
-                        else setSelectedTools(["institucional", "reels", "depoimentos", "anuncios", "banco"]);
+                        // Ajusta os materiais sugeridos de acordo com o formato selecionado.
+                        if (f.id === "institucional") setSelectedTools(["institucional", "apoio"]);
+                        else if (f.id === "evento") setSelectedTools(["evento", "autoridade", "redes"]);
+                        else setSelectedTools(["redes", "bastidores", "autoridade", "apoio"]);
                       }}
                       className={`p-4 rounded-xl text-left border relative transition-all cursor-pointer focus:outline-none ${
                         selectedFormat === f.id
@@ -521,7 +521,7 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
 
               {/* Deliverables Grid selector */}
               <div className="space-y-4">
-                <span className="font-mono text-[9.5px] text-zinc-500 uppercase tracking-widest font-bold block">2. SELECIONE OS ENTREGÃƒÆ’Ã†â€™Ãƒâ€šÃ‚ÂVEIS DESEJADOS</span>
+                <span className="font-mono text-[9.5px] text-zinc-500 uppercase tracking-widest font-bold block">2. MARQUE O QUE PODE SER PRODUZIDO</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {DELIVERABLES.map((del) => {
                     const isSelected = selectedTools.includes(del.id);
@@ -545,7 +545,7 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                         </div>
                         
                         <div className="flex justify-between items-center w-full pt-2 border-t border-black/5">
-                          <span className={`font-sans text-[7px] font-bold uppercase ${isSelected ? "text-black/60" : "text-zinc-400"}`}>{del.category} asset</span>
+                          <span className={`font-sans text-[7px] font-bold uppercase ${isSelected ? "text-black/60" : "text-zinc-400"}`}>{del.category} material</span>
                           <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${isSelected ? "bg-black text-brand border-black" : "border-zinc-700 text-zinc-500"}`}>
                             {isSelected ? <Check className="w-2.5 h-2.5 stroke-[3]" /> : <Plus className="w-2.5 h-2.5" />}
                           </div>
@@ -563,18 +563,18 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
               <div className="bg-charcoal-900 border border-white/[0.08] rounded-3xl p-6 sm:p-8 space-y-6 relative overflow-hidden shadow-2xl">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
                 
-                <div className="flex justify-between items-center border-b border-white/[0.04] pb-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-                    <span className="font-mono text-[9px] text-brand uppercase tracking-wider font-extrabold">RESUMO DA PROPOSTA AUDIOVISUAL</span>
+                  <div className="flex justify-between items-center border-b border-white/[0.04] pb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
+                    <span className="font-mono text-[9px] text-brand uppercase tracking-wider font-extrabold">RESUMO DO FORMATO AUDIOVISUAL</span>
+                    </div>
+                  <span className="font-mono text-[9px] text-zinc-500">TAG08_AUDIOVISUAL</span>
                   </div>
-                  <span className="font-mono text-[9px] text-zinc-500">TAG08_PROD_SYSTEM</span>
-                </div>
 
                 {/* Setup selected details */}
                 <div className="space-y-4">
                   <div className="space-y-1.5">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-black block">FORMATO SELECIONADO:</span>
+                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-black block">FORMATO AVALIADO:</span>
                     <h4 className="font-display font-medium text-lg text-brand-secondary uppercase tracking-tight leading-none">
                       {currentFormatDetails.name}
                     </h4>
@@ -584,7 +584,7 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                   </div>
 
                   <div className="pt-4 border-t border-white/[0.04] space-y-2.5 text-left">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-black block">INCLUSO NESSE FORMATO:</span>
+                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-black block">O QUE ESSE FORMATO AJUDA A ORGANIZAR:</span>
                     <div className="grid grid-cols-2 gap-2">
                       {currentFormatDetails.features.map((feat, fidx) => (
                         <div key={fidx} className="flex gap-2 items-center">
@@ -597,7 +597,7 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
 
                   {/* Chosen tools list output */}
                   <div className="pt-4 border-t border-white/[0.04] space-y-2.5">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-black block">CARDS DE ENTREGAS OPERACIONAIS ({selectedTools.length}):</span>
+                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-black block">MATERIAIS RELACIONADOS ({selectedTools.length}):</span>
                     <div className="flex flex-wrap gap-2 text-left max-h-40 overflow-y-auto pr-1">
                       {selectedTools.map((tId) => {
                         const dl = DELIVERABLES.find(d => d.id === tId);
@@ -621,10 +621,10 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                     className="block w-full bg-brand-secondary hover:bg-brand hover:shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.22)] text-black text-xs font-mono font-black uppercase tracking-widest py-4 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.15)]"
                   >
                     <MessageSquare className="w-4 h-4 text-black" />
-                    <span>CHAMAR NO WHATSAPP</span>
+                    <span>CONVERSAR SOBRE MEU FORMATO AUDIOVISUAL</span>
                   </a>
                   <span className="block text-center font-mono text-[8px] text-zinc-500 uppercase leading-none select-none">
-                    ALERTA: DIÃƒÆ’Ã†â€™Ãƒâ€šÃ‚ÂRIAS SOB CONSULTA DE DATA DA AGENDA
+                    USE ESTE RESUMO COMO PONTO DE PARTIDA PARA A CONVERSA
                   </span>
                 </div>
 
@@ -644,13 +644,13 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-              METODOLOGIA DE PROCESSOS // DIRETRIZ
+              METODOLOGIA DE PRODUÇÃO // TAG08
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
-              A Cobertura ComeÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§a Antes e Continua Depois do Evento
+              Um processo pensado antes, durante e depois da gravação.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm mx-auto">
-              Nenhum profissional da TAG08 chega ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ captaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o apenas segurando uma cÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢mera. Nosso mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½todo cobre o ciclo de vida completo de ponta a ponta.
+              A produção audiovisual não começa no dia da captação. Antes de gravar, entendemos o contexto da marca, definimos a função do conteúdo, organizamos formatos possíveis e planejamos como o material poderá ser usado depois.
             </p>
           </div>
 
@@ -661,41 +661,41 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
             {[
               {
                 num: "01",
-                tag: "ALINHAMENTO PRÃƒÆ’Ã†â€™Ãƒâ€šÃ‚ÂTICO",
-                title: "O Antes: InteligÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âªncia e Roteiro",
+                tag: "ENTENDIMENTO DO CONTEXTO",
+                title: "Entendimento do contexto",
                 color: "group-hover:border-brand/40",
                 list: [
-                  "Briefing profundo do evento ou campanha",
-                  "Mapeamento dos palestrantes obrigatÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³rios",
-                  "CriaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de guia narrativo e lista de cenas obrigatÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³rias",
-                  "PreparaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de roteiro de perguntas para depoimentos",
-                  "DefiniÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o estrita das referÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âªncias de estilo visual"
+                  "Começamos entendendo a marca, o momento, os canais, o público e a função que o conteúdo audiovisual precisa cumprir.",
+                  "Mapeamos o que precisa ser comunicado com clareza e o que deve ficar como base para as próximas etapas.",
+                  "Organizamos o que já existe, o que falta e o que pode ser reaproveitado no processo.",
+                  "Alinhamos expectativas para evitar excesso de ruído e orientar a produção com critério.",
+                  "Definimos o ponto de partida antes de qualquer decisão de captação."
                 ]
               },
               {
                 num: "02",
-                tag: "EXECUÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½O DE CAMPO",
-                title: "O Durante: CaptaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de Alta Fidelidade",
+                tag: "NARRATIVA E FORMATO",
+                title: "Definição de narrativa e formatos",
                 color: "group-hover:border-brand-secondary/40 border-l border-r border-white/5",
                 list: [
-                  "PresenÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§a de um diretor de narrativa em campo",
-                  "CaptaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o em alta resoluÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½o (CÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½meras FX CinematogrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ficas)",
-                  "Colheita espontÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢nea de depoimentos estruturados",
-                  "ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âudio profissional sem chiados ou ecos",
-                  "Captura focada na experiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âªncia do participante"
+                  "Organizamos quais mensagens são prioritárias e quais formatos fazem mais sentido para o uso previsto.",
+                  "Definimos se o material precisa servir para apresentação, registro, redes, site, campanhas ou comunicação institucional.",
+                  "Estruturamos a narrativa para que o conteúdo tenha direção e não apenas presença de imagem.",
+                  "Ajustamos o recorte de cada entrega ao canal em que ela será usada.",
+                  "Criamos uma base clara para orientar a captação."
                 ]
               },
               {
                 num: "03",
-                tag: "PÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½S-PRODUÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½!ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½O SÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½`NIOR",
-                title: "O Depois: EdiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o e Entrega Veloz",
+                tag: "CAPTAÇÃO, EDIÇÃO E USO",
+                title: "Captação com direção, edição e entrega",
                 color: "group-hover:border-brand/40",
                 list: [
-                  "SeleÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o rigorosa de frames sob alta aprovaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o",
-                  "Tratamento de cor (Color Grading) sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³brio",
-                  "CriaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cortes rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡pidos e micro-teasers em 48h",
-                  "Montagem de aftermovies ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©picos ou institucionais",
-                  "Entrega organizada em galeria ou pastas estruturadas"
+                  "Definimos roteiro, pauta, cenas, falas, dinâmica de gravação, prioridades de registro e materiais que precisam ser captados.",
+                  "Durante a gravação, conduzimos o processo para registrar falas, ambientes, bastidores, detalhes e momentos com clareza e intenção.",
+                  "O material captado é editado, estruturado e desdobrado em peças coerentes com a narrativa, os canais e os objetivos de comunicação.",
+                  "Além dos arquivos finais, indicamos como os materiais podem ser utilizados em redes sociais, site, apresentações, campanhas ou comunicação institucional.",
+                  "Fechamos o processo com orientação de uso e reaproveitamento."
                 ]
               }
             ].map((step, idx) => (
@@ -730,7 +730,7 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                 </div>
 
                 <div className="pt-4 border-t border-white/[0.04] text-[9.5px] font-mono text-zinc-500 uppercase tracking-widest flex justify-between">
-                  <span>METODOLOGIA ATIVA</span>
+                  <span>PROCESSO ATIVO</span>
                   <span className="text-brand font-bold select-none">TAG08_PROCESS_0{idx + 1}</span>
                 </div>
               </div>
@@ -741,39 +741,39 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
       </section>
 
       {/*=========================================
-          SECTION 7: INCLUSIONS AND ADD-ONS
+          SECTION 7: INCLUSIONS AND COMPLEMENTS
          =========================================*/}
       <section className="px-6 md:px-8 py-20 bg-charcoal-900/10 border-b border-white/[0.04] text-left relative z-10">
         <div className="max-w-7xl mx-auto space-y-12">
           
           <div className="text-left space-y-3 max-w-2xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-              TABELA DE INCLUSÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢O TÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½0CNICA // RIGOR COMERCIAL
+              INCLUSÕES E COMPLEMENTOS // TAG08
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
-              Clareza Estrita: O que estÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ incluso no Escopo?
+              O escopo precisa acompanhar o uso do material.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Sem promessas fantasiosas ou surpresas no final do projeto. Veja de forma limpa todas as rotinas embutidas sob contrato e quais itens podem ser solicitados separadamente.
+              Cada produção pode envolver diferentes entregas, dependendo do objetivo, dos canais e do momento da marca. O importante é definir o que precisa ser captado, editado e organizado para que o conteúdo tenha uso real depois da gravação.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-            {/* O QUE ESTÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â INCLUSO */}
+            {/* ITENS DEFINIDOS NO ESCOPO */}
             <div className="bg-charcoal-900 border border-white/[0.06] rounded-2.5xl p-6 sm:p-9 space-y-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-2 text-brand font-mono text-[9px] uppercase tracking-widest font-black pb-4 border-b border-white/[0.04]">
                   <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                  <span>PRESET PADRÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢O // INCLUSO EM NOSSOS ESCOPOS</span>
+                  <span>MATERIAIS DE APOIO // ESCOPOS DEFINIDOS</span>
                 </div>
                 
                 <div className="grid gap-4.5 pt-6 text-left">
                   {[
-                    { title: "DireÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½o de captaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o dedicada", desc: "Acompanhamento no set com olhar contÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½nuo sobre falas obrigatÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½rias e ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ngulos." },
-                    { title: "Roteiro e guia de cenas", desc: "Cronograma tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©cnico planejado integrado ao time de marketing do contratante." },
-                    { title: "SLA estrito de ediÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o e finalizaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o", desc: "Entrega programada em cronogramas transparentes de andamento." },
-                    { title: "Trilha sonora licenciada inclusa", desc: "MÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºsicas e efeitos sonoros isentos de royalties de direitos autorais." },
-                    { title: "Entrega em galeria digital organizada", desc: "Todos os arquivos finais segmentados por formato direto no Drive de forma limpa." }
+                    { title: "Captação principal", desc: "Registro das falas, ambientes, cenas, bastidores, detalhes e momentos essenciais para construir a narrativa do material." },
+                    { title: "Edição e finalização", desc: "Organização do conteúdo em vídeos claros, com ritmo, cortes, ajustes visuais, áudio tratado e acabamento coerente com a identidade da marca." },
+                    { title: "Cortes e desdobramentos", desc: "Criação de versões menores, chamadas, recortes e materiais derivados para redes sociais, site, apresentações ou comunicação institucional." },
+                    { title: "Roteiro, pauta e direção", desc: "Apoio na definição do que precisa ser dito, registrado e priorizado para que a gravação tenha mais clareza e menos improviso." },
+                    { title: "Cobertura de bastidores", desc: "Registro complementar de equipe, ambiente, preparação, rotina e detalhes que ajudam a aproximar a marca do público." }
                   ].map((inc, iIdx) => (
                     <div key={iIdx} className="flex gap-3 text-left">
                       <div className="w-5 h-5 rounded-md bg-brand/10 text-brand flex items-center justify-center font-bold text-[10px] shrink-0 font-sans mt-0.5">
@@ -788,25 +788,25 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                 </div>
               </div>
               <div className="pt-6 border-t border-white/[0.04] text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
-                SUPORTE INCLUSO SOB SLA CONTRATUAL
+                ESCOPOS DEFINIDOS CONFORME USO REAL
               </div>
             </div>
 
-            {/* CONTRATADO ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¬ PARTE */}
+            {/* COMPLEMENTOS POSSÍVEIS */}
             <div className="bg-white/[0.01] border border-white/[0.04] rounded-2.5xl p-6 sm:p-9 space-y-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-2 text-zinc-500 font-mono text-[9px] uppercase tracking-widest font-bold pb-4 border-b border-white/[0.04]">
                   <span className="w-1.5 h-1.5 rounded-full bg-zinc-650" />
-                  <span>OPCIONAIS DISPONÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½VEIS // CONTRATADOS ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ PARTE</span>
+                  <span>COMPLEMENTOS POSSÍVEIS // DEFINIDOS CONFORME ESCOPO</span>
                 </div>
                 
                 <div className="grid gap-4.5 pt-6 text-left">
                   {[
-                    { title: "DiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡rias operacionais adicionais", desc: "Garantia de equipe estendida em eventos corporativos com mais de 3 dias." },
-                    { title: "CaptaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes aÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©reas por Drone", desc: "AutorizaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o prÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©via de espaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§os pela ANAC e voos cinÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©ticos profissionais." },
-                    { title: "Viagens intermunicipais ou interestaduais", desc: "Deslocamento de equipe e frete de lentes protegidos fora da regiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o metropolitana." },
-                    { title: "Sistemas de locuÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o em estÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºdio", desc: "Vozes profissionais registradas para manifestos ou vÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deos institucionais de alto luxo." },
-                    { title: "Motion graphics e animaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes complexas", desc: "CriaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o sob medida em canvas 3D e renderizaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes animadas para marcas tech." }
+                    { title: "Entrega e orientação de uso", desc: "Indicação de como os materiais podem ser aproveitados nos canais da marca, respeitando contexto, linha editorial e objetivo de comunicação." },
+                    { title: "Materiais de apoio para site e apresentações", desc: "Vídeos, chamadas e recortes que complementam páginas, propostas e apresentações comerciais." },
+                    { title: "Cobertura complementar de bastidores", desc: "Registro extra de equipe, preparação, rotina e ambiente quando isso fizer sentido para o material final." },
+                    { title: "Captação adicional prevista no planejamento", desc: "Registros extras definidos no escopo quando houver necessidade real de ampliar a narrativa ou o uso posterior." },
+                    { title: "Desdobramentos para canais da marca", desc: "Versões e cortes organizados para apoiar comunicação institucional, social ou comercial." }
                   ].map((opt, oIdx) => (
                     <div key={oIdx} className="flex gap-3 text-left">
                       <div className="w-5 h-5 rounded-md bg-white/5 text-zinc-400 border border-white/5 flex items-center justify-center font-bold text-[10px] shrink-0 font-sans mt-0.5">
@@ -821,7 +821,7 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                 </div>
               </div>
               <div className="pt-6 border-t border-white/[0.04] text-[9.5px] font-mono text-zinc-500 uppercase tracking-widest">
-                CONTROLE DE ALTERAÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½!ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½"ES E ADULTOS ADICIONAIS
+                ITENS DEFINIDOS CONFORME ESCOPO
               </div>
             </div>
           </div>
@@ -830,48 +830,48 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
       </section>
 
       {/*=========================================
-          SECTION 8: SYNERGY INTEGRATION (Audiovisual + soluÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes)
+          SECTION 8: SYNERGY INTEGRATION (Audiovisual + soluções)
          =========================================*/}
       <section className="px-6 md:px-8 py-20 border-b border-white/[0.04] relative z-10">
         <div className="max-w-7xl mx-auto space-y-16">
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-              CONEXÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢O DE PRODUTO // CROSS LINKING
+              INTEGRAÇÃO ENTRE FRENTES // TAG08
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
-              A Sinergia Correta: Audiovisual no Ecossistema TAG08
+              Audiovisual não precisa ficar isolado.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm mx-auto">
-              Quando unimos a captaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o cinematogrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡fica ao poder das outras disciplinas tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ticas de marketing da TAG08, o resultado comercial escala.
+              Uma produção bem planejada pode alimentar diferentes frentes da comunicação: redes sociais, site, branding, apresentações comerciais, campanhas, relacionamento e canais oficiais da marca, como YouTube, Vimeo, Pinterest, Google Meu Negócio e WhatsApp, quando fizer sentido. O valor está em pensar o material desde o início para que ele tenha função depois da gravação.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
             {[
               {
-                title: "Audiovisual + Redes Sociais",
-                desc: "Transformamos horas de captaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes brutas em um cronograma impecÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡vel de pautas contÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­nuas para alimentar seu perfil mensalmente.",
-                cta: "GestÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de Redes Sociais",
+                title: "Redes sociais",
+                desc: "Vídeos, cortes, bastidores, chamadas e depoimentos podem alimentar a linha editorial com mais presença, clareza e recorrência.",
+                cta: "Gestão de Redes Sociais",
                 page: "/servicos/gestao-de-redes-sociais"
               },
               {
-                title: "Audiovisual + Branding SÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âªnior",
-                desc: "Traduzimos paleta de cores, tipografia, logos e tom de voz diretamente para o color-grading e trilha sonora das suas mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­dias corporativas.",
-                cta: "Branding & Identidade",
-                page: "/servicos/branding-identidade"
-              },
-              {
-                title: "Audiovisual + Estruturas Web",
-                desc: "Anexamos os vÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deos institucionais rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡pidos compactados em landing pages de alta velocidade para nÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o atrasar o carregamento.",
+                title: "Site e páginas comerciais",
+                desc: "Materiais audiovisuais podem ajudar a apresentar a marca, explicar serviços, humanizar páginas e apoiar jornadas de decisão com mais contexto.",
                 cta: "Desenvolvimento Web",
                 page: "/servicos/desenvolvimento-web"
               },
               {
-                title: "Audiovisual + TrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡fego de Elite",
-                desc: "Seus vÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­deos verticais prontos divididos em criativos de anÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºncios inteligentes e variaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ticas de hooks visuais para mais conversÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes.",
-                cta: "Contato",
-                page: "/contato"
+                title: "Branding e posicionamento",
+                desc: "A produção pode reforçar identidade, tom de voz, narrativa institucional, cultura e percepção de marca de forma mais concreta.",
+                cta: "Branding & Identidade",
+                page: "/servicos/branding-identidade"
+              },
+              {
+                title: "Processos comerciais e relacionamento",
+                desc: "Depoimentos, apresentações, registros institucionais e vídeos explicativos podem apoiar conversas comerciais sem substituir o diagnóstico consultivo.",
+                cta: "Process Activation",
+                page: "/servicos/process-activation"
               }
             ].map((syn, idx) => (
               <div 
@@ -917,33 +917,33 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
             <div className="absolute inset-0 bg-black/15 rounded-[24px] overflow-hidden" />
             <img 
               src="https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=800" 
-              alt="TAG08 Equipe TÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©cnica Apoio Audiovisual" 
+              alt="TAG08 Equipe Técnica Apoio Audiovisual" 
               className="absolute inset-0 w-full h-full object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[10%] hover:scale-105 duration-500 transition-all"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
                 <span className="font-mono text-[9px] text-white/60 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-black border border-white/5">
-                  CINEMATOGRAPHER
+                  AUDIOVISUAL
                 </span>
                 <span className="font-mono text-[9px] text-white/50 tracking-wider font-extrabold">
-                  STAGE_CONTROL
+                  TAG08
                 </span>
               </div>
               <div className="space-y-1.5 opacity-25 select-none">
                 <div className="font-display font-extrabold text-[1.8rem] text-white/50 tracking-widest leading-none uppercase select-none">
-                  audiovisual_core
+                  audiovisual
                 </div>
                 <div className="font-display font-extrabold text-[1.5rem] text-white/30 tracking-widest leading-none uppercase select-none pl-6">
-                  strategic_evolution_
+                  conteudo_com_funcao_
                 </div>
               </div>
               <div className="flex justify-between items-end">
                 <span className="font-mono text-[9px] text-white/40 tracking-wider">
-                  SLA: ISO SECURED
+                  PROCESSO ORGANIZADO
                 </span>
                 <span className="font-mono text-[9px] text-white/60 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-black border border-white/5">
-                  HIGH RESOLUTION
+                  CONTEXTO DEFINIDO
                 </span>
               </div>
             </div>
@@ -957,15 +957,15 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                   <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
                 </div>
                 <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
-                  RESERVE SUA DIÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½RIA CONFORME CRONOGRAMA DE OPERAÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½!ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½O
+                  CONVERSA CONSULTIVA
                 </span>
               </div>
               <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
-                RESERVE O RIGOR <br />
-                DA SUA CAPTAÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½!ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½O!
+                Vamos entender qual produção <br />
+                faz sentido para o seu momento?
               </h2>
               <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
-                Em videoconferÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âªncia privada rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡pida de 30 minutos, nosso diretor operacional de audiovisual analisarÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ seu cronograma, validarÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ focos de cenas obrigatÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³rias e desenharÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ o playbook de tomadas completo.
+                Conte um pouco sobre o que você precisa comunicar, registrar ou transformar em conteúdo. A partir disso, avaliamos o formato mais coerente: institucional, evento, bastidores, depoimentos, conteúdo recorrente ou material de apoio para canais digitais.
               </p>
             </div>
             <div className="bg-charcoal-900/98 backdrop-blur-3xl border border-white/[0.08] p-6 sm:p-7 rounded-[28px] shadow-[0_25px_60px_rgba(0,0,0,0.5)] space-y-6 max-w-md relative overflow-hidden text-left font-sans">
@@ -976,10 +976,10 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                 </div>
                 <div className="space-y-0.5">
                   <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
-                    CONSULTA DE AGENDA COMERCIAL
+                    CONVERSA CONSULTIVA
                   </span>
                   <p className="text-white text-xs leading-snug font-sans font-semibold">
-                    Avaliaremos a viabilidade logÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­stica internacional de viagens e equipes para data indicada.
+                    Sem pacote pronto. Primeiro entendemos contexto, objetivo e uso do material.
                   </p>
                 </div>
               </div>
@@ -987,7 +987,7 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
               {/* Contacts info details */}
               <div className="space-y-3 font-sans">
                 <a 
-                  href={buildBrazilWhatsAppUrl("OlÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡! Gostaria de agendar um diÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡logo operacional para entender a viabilidade de agenda de captaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o cinematogrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡fica da TAG08 no meu evento de marca.")}
+                  href={buildBrazilWhatsAppUrl("Olá, quero entender qual formato audiovisual faz mais sentido para o momento da minha marca.")}
                   target="_blank"
                   rel="noreferrer"
                   className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner cursor-pointer"
@@ -999,7 +999,7 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                       </div>
                       <div className="flex flex-col text-left">
                         <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
-                          FALAR CONOSCO DIRETAMENTE (WhatsApp)
+                          CONVERSAR SOBRE MEU AUDIOVISUAL
                         </span>
                         <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                           +55 83 9.9886-8882
@@ -1007,7 +1007,7 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                       </div>
                     </div>
                     <span className="text-[10px] text-brand font-mono font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
-                      CONECTAR
+                      INICIAR CONVERSA
                     </span>
                   </div>
                 </a>
@@ -1017,11 +1017,11 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-brand animate-pulse" />
                   <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest font-extrabold">
-                    TAG08 BROADCAST
+                    TAG08 AUDIOVISUAL
                   </span>
                 </div>
                 <span className="font-mono text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/25 px-2 py-0.5 rounded uppercase leading-none">
-                  VIVA_CORE
+                  PRÓXIMO PASSO
                 </span>
               </div>
             </div>
@@ -1030,8 +1030,8 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
         </div>
       </section>
 
-      {/*=========================================
-          SECTION 10: FAQ (Premium 12-Column Layout matching GestaoRedesSociais)
+            {/*=========================================
+          SECTION 10: FAQ (12-Column Layout)
          =========================================*/}
       <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand/[0.015] rounded-full blur-[160px] pointer-events-none" />
@@ -1047,11 +1047,10 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
                   FAQ // ENCONTRE RESPOSTAS
                 </div>
                 <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
-                  DÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½aVIDAS &amp; <br />
-                  SUA DECISÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢O
+                  Dúvidas comuns sobre produção audiovisual
                 </h2>
                 <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
-                  EsclareÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§a as principais dÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºvidas sobre como a TAG08 lidera, executa e garante a pÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³s-produÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o e entrega ideal do seu posicionamento visual.
+                  Antes de gravar, é importante entender objetivo, contexto, formato e uso posterior do material. Essas respostas ajudam a esclarecer como a TAG08 conduz esse processo.
                 </p>
               </div>
 
@@ -1084,7 +1083,7 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
             <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
               <img
                 src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800"
-                alt="Cinema Production TAG08"
+                alt="TAG08 Produção Audiovisual"
                 className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
               />
               <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
@@ -1112,40 +1111,40 @@ Gostaria de agendar minha sessÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de cla
               </div>
             </div>
 
-            {/* Right Side: Proposional side cards */}
+            {/* Right Side: Proportional side cards */}
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PORTFÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½LIO &amp; MOCKUPS</span>
-                  <h4 className="text-white font-semibold text-sm leading-snug">Rigor TÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©cnico e Processos SÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³lidos</h4>
+                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">SERVIÇOS &amp; FORMATOS</span>
+                  <h4 className="text-white font-semibold text-sm leading-snug">Planejamento e clareza</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    SubstituÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­mos gravaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes brutas sem sentido por roteiros tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ticos, cronograma de tomadas e entrega rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡pida em canais integrados.
+                    O processo começa entendendo o contexto da marca, a função do material e o uso esperado depois da gravação.
                   </p>
                 </div>
                 <button
                   onClick={() => handleLinkClick("/servicos")}
                   className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
                 >
-                  <span>Ver Todos ServiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§os</span>
+                  <span>VER SERVIÇOS</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
 
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">CMO BROADCAST</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Precisa de Escopo Customizado?</h4>
+                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">CONVERSA CONSULTIVA</span>
+                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer conversar sobre seu audiovisual?</h4>
                   <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-sans">
-                    Fale em canal reservado e discuta ideias de aftermovies, institucionais exclusivos ou documentÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡rios de marca com diretores.
+                    Sem pacote pronto. Primeiro entendemos contexto, objetivo e uso do material.
                   </p>
                 </div>
                 <a
-                  href={buildBrazilWhatsAppUrl("OlÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡! Gostaria de conversar com os diretores de audiovisual da TAG08 sobre um escopo de captaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o personalizado para meu negÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³cio.")}
+                  href={buildBrazilWhatsAppUrl("Olá, quero entender qual formato audiovisual faz mais sentido para o momento da minha marca.")}
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center justify-between text-xs font-sans font-bold text-black border-t border-black/10 pt-2 cursor-pointer select-none"
                 >
-                  <span>MENSAGEM PRIVADA</span>
+                  <span>CONVERSAR SOBRE MEU AUDIOVISUAL</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </a>
               </div>

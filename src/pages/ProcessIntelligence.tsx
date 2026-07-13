@@ -880,7 +880,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 
                 <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
                   {([
-                    "Realizamos um mergulho assistido por meio de entrevistas sigilosas focadas e inspeï¿½ï¿½es cotidianas junto aos responsáveis de setores da sua empresa, identificando redundï¿½ncias, vazamento de energia e ruídos internos de comunicação.",
+                    "Realizamos um mergulho assistido por meio de entrevistas sigilosas focadas e inspe??es cotidianas junto aos respons?veis de setores da sua empresa, identificando redund?ncias, vazamento de energia e ru?dos internos de comunica??o.",
                     "Entregamos uma Wiki Corporativa personalizada e organizada de forma integrada (geralmente estruturada no Notion ou central da empresa) contendo todos os organogramas interativos de faturamento e manuais práticos de playbooks escritos.",
                     "Sim. Conduzimos reuniões curtas direcionadas com os colaboradores-chave para garantir que os workflows redesenhados condigam plenamente com a realidade operacional, assegurando máxima eficácia de onboarding da equipe futura.",
                     "Muito enxuto. O projeto é projetado para desonerar a agenda dos sócios. Exigimos apenas breves reuniões cirúrgicas de onboarding e validações rápidas semanais de progresso dos playbooks."
@@ -933,7 +933,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
       {/* SECTION 6 - ACTION TRIGGER FOOTER */}
       <section className="px-4 sm:px-6 md:px-8 py-20 text-center space-y-6 max-w-4xl mx-auto">
         <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
-          CONSTRUA UMA ESTRUTURA AUTï¿½NOMA <br />
+          CONSTRUA UMA ESTRUTURA AUT?NOMA <br />
           <span className="text-brand">QUE OPERA CUMPRINDO PROTOCOLOS SÁBIOS.</span>
         </h2>
         <p className="text-zinc-400 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">

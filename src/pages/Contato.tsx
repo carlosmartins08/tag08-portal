@@ -643,7 +643,7 @@ export default function Contato() {
 
       </div>
 
-      {/* SEï¿½ï¿½O COMPLEMENTAR: ALINHAMENTO COM O PÚBLICO ALVO */}
+      {/* SE??O COMPLEMENTAR: ALINHAMENTO COM O P?BLICO ALVO */}
       <div className="max-w-7xl mx-auto px-6 mt-24 pt-20 border-t border-white/[0.04] space-y-20 text-left">
         
         {/* Próximos Passos (Timeline) */}

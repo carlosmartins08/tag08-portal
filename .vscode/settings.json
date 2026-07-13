@@ -1,0 +1,5 @@
+{
+    "js/ts.experimental.useTsgo": true,
+    "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
+    "tailwindCSS.lint.cssConflict": "warning"
+}

@@ -23,41 +23,41 @@ interface Question {
 const auditQuestions: Question[] = [
   {
     id: 1,
-    text: "Qual Ã© o maior gargalo comercial da sua marca no momento?",
+    text: "Qual é o maior gargalo comercial da sua marca no momento?",
     options: [
-      { label: "A", value: 10, text: "NÃ£o geramos contatos regulares de potenciais clientes (orgÃ¢nico ou pago)" },
-      { label: "B", value: 20, text: "AtÃ© geramos leads, mas sÃ£o desqualificados, choram preÃ§o e travam no comercial" },
-      { label: "C", value: 15, text: "Nossa presenÃ§a digital Ã© inexistente ou amadora frente aos nossos concorrentes" },
-      { label: "D", value: 25, text: "Falta de governanÃ§a: temos boas ideias mas falta equipe dedicada para executar" }
+      { label: "A", value: 10, text: "Não geramos contatos regulares de potenciais clientes (orgânico ou pago)" },
+      { label: "B", value: 20, text: "Até geramos leads, mas são desqualificados, choram preço e travam no comercial" },
+      { label: "C", value: 15, text: "Nossa presença digital é inexistente ou amadora frente aos nossos concorrentes" },
+      { label: "D", value: 25, text: "Falta de governança: temos boas ideias mas falta equipe dedicada para executar" }
     ]
   },
   {
     id: 2,
-    text: "Qual Ã© o investimento mensal atual (ou planejado) em trÃ¡fego pago?",
+    text: "Qual é o investimento mensal atual (ou planejado) em tráfego pago?",
     options: [
-      { label: "A", value: 10, text: "NÃ£o investimos em anÃºncios (foco exclusivo em redes sociais orgÃ¢nicas)" },
-      { label: "B", value: 15, text: "Investimento inicial ou instÃ¡vel (atÃ© R$ 2.000 / mÃªs)" },
-      { label: "C", value: 25, text: "Investimento moderado (entre R$ 2.000 e R$ 10.000 / mÃªs)" },
-      { label: "D", value: 30, text: "Investimento em canais sem prioridade clara (acima de R$ 10.000 / mÃªs)" }
+      { label: "A", value: 10, text: "Não investimos em anúncios (foco exclusivo em redes sociais orgânicas)" },
+      { label: "B", value: 15, text: "Investimento inicial ou instável (até R$ 2.000 / mês)" },
+      { label: "C", value: 25, text: "Investimento moderado (entre R$ 2.000 e R$ 10.000 / mês)" },
+      { label: "D", value: 30, text: "Investimento em canais sem prioridade clara (acima de R$ 10.000 / mês)" }
     ]
   },
   {
     id: 3,
-    text: "Como vocÃª define o ticket mÃ©dio da sua soluÃ§Ã£o ou produto principal?",
+    text: "Como você define o ticket médio da sua solução ou produto principal?",
     options: [
       { label: "A", value: 10, text: "Varejo ou baixo valor (Abaixo de R$ 500 por venda/assinatura)" },
-      { label: "B", value: 15, text: "MÃ©dio valor transacional (Entre R$ 500 e R$ 2.500)" },
-      { label: "C", value: 25, text: "ServiÃ§o especializado ou venda consultiva (Entre R$ 2.500 e R$ 10.000)" },
+      { label: "B", value: 15, text: "Médio valor transacional (Entre R$ 500 e R$ 2.500)" },
+      { label: "C", value: 25, text: "Serviço especializado ou venda consultiva (Entre R$ 2.500 e R$ 10.000)" },
       { label: "D", value: 30, text: "Corporativo, Enterprise ou B2B Complexo (Acima de R$ 10.000)" }
     ]
   },
   {
     id: 4,
-    text: "Quem dita a direÃ§Ã£o tÃ¡tica e faz a gestÃ£o do seu marketing hoje?",
+    text: "Quem dita a direção tática e faz a gestão do seu marketing hoje?",
     options: [
-      { label: "A", value: 10, text: "O prÃ³prio fundador / dono conduz quando tem tempo livre operacional" },
-      { label: "B", value: 15, text: "Contratamos freelancers ou agÃªncias, mas operam soltos, sem direÃ§Ã£o clara" },
-      { label: "C", value: 20, text: "Temos um departamento interno jÃºnior ou intermediÃ¡rio sem governanÃ§a estrita" },
+      { label: "A", value: 10, text: "O próprio fundador / dono conduz quando tem tempo livre operacional" },
+      { label: "B", value: 15, text: "Contratamos freelancers ou agências, mas operam soltos, sem direção clara" },
+      { label: "C", value: 20, text: "Temos um departamento interno júnior ou intermediário sem governança estrita" },
       { label: "D", value: 25, text: "Contamos com um CMO estrategista liderando e acompanhando dados em tempo real" }
     ]
   }
@@ -185,7 +185,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-3 max-w-2xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-              COMPARAÇÃO ESTRATÉGICA
+              COMPARA??O ESTRAT?GICA
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
               A diferença entre executar ações soltas e trabalhar com direção.
@@ -451,8 +451,8 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   </div>
 
                   <div className="pt-4 border-t border-white/[0.04] text-[9px] font-mono text-zinc-500 uppercase tracking-widest relative z-10 flex justify-between">
-                    <span>MÃ“DULO DE ASSESSORIA</span>
-                    <span className="text-brand font-semibold select-none">MÃ‰TODO_0{idx + 1}</span>
+                    <span>MÓDULO DE ASSESSORIA</span>
+                    <span className="text-brand font-semibold select-none">MÉTODO_0{idx + 1}</span>
                   </div>
                 </div>
               );
@@ -602,7 +602,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                               onClick={handleResetQuiz}
                               className="bg-white/5 hover:bg-white/[0.08] text-white hover:text-white border border-white/10 hover:border-white/20 text-xs font-mono font-bold uppercase tracking-widest py-4 px-6 rounded-xl text-center transition-all duration-300 cursor-pointer"
                             >
-                              REPETIR DIAGNÃ“STICO
+                              REPETIR DIAGNÓSTICO
                             </button>
                           </div>
                         </div>

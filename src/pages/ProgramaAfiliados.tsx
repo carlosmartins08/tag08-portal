@@ -45,7 +45,7 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
     },
     {
       q: "Como indico um novo cliente e garanto meu comissionamento?",
-      a: "O fluxo ï¿½ extremamente seguro: após se cadastrar no programa, você teré um canal direto com nosso gerente de contas. Cada indicaï¿½ï¿½o ï¿½ registrada em nossa planilha de oportunidades vinculada ao seu nome/CNPJ. Quando a proposta comercial ï¿½ enviada ao lead indicado, você recebe uma notificaï¿½ï¿½o instantï¿½nea para acompanhar o progresso."
+      a: "O fluxo ? extremamente seguro: ap?s se cadastrar no programa, voc? ter? um canal direto com nosso gerente de contas. Cada indica??o ? registrada em nossa planilha de oportunidades vinculada ao seu nome/CNPJ. Quando a proposta comercial ? enviada ao lead indicado, voc? recebe uma notifica??o instant?nea para acompanhar o progresso."
     },
     {
       q: "Qual é o prazo e a forma de pagamento da comissão?",
@@ -106,7 +106,7 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
                   rel="noreferrer"
                   className="group bg-brand-secondary text-black font-mono font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
                 >
-                  <span>CADASTRAR MINHA INDICAï¿½ï¿½O</span>
+                  <span>CADASTRAR MINHA INDICA??O</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
                 </a>
               </div>
@@ -340,7 +340,7 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
               { num: "01", term: "CADASTRO & REGISTRO", desc: "Entre em contato conosco para registrar os dados básicos ou envie o contato da indicação diretamente ao nosso gerente de contas parceiras." },
               { num: "02", term: "ABORDAGEM COMERCIAL", desc: "Nossa equipe sênior assume as negociações comerciais, elabora a proposta e faz a apresentação profissional do portfólio." },
               { num: "03", term: "CONTRATO ASSINADO", desc: "A venda é concluída de forma oficial com garantia jurídica. Notificamos você instantaneamente da assinatura real do projeto." },
-              { num: "04", term: "RECEBIMENTO NO PIX", desc: "A cada pagamento ou mensalidade compensada enviada pelo cliente ï¿½ agï¿½ncia, realizamos o repasse dos 10% em sua conta informada." }
+              { num: "04", term: "RECEBIMENTO NO PIX", desc: "A cada pagamento ou mensalidade compensada enviada pelo cliente ? ag?ncia, realizamos o repasse dos 10% em sua conta informada." }
             ].map((step, sIdx) => (
               <div key={sIdx} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-2xl space-y-4 flex flex-col justify-between relative hover:border-brand/20 transition-all duration-300">
                 <span className="font-display font-black text-3xl text-brand-secondary">{step.num}</span>
@@ -377,7 +377,7 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
               >
                 <span>{faq.q}</span>
                 <span className="text-brand font-sans text-lg shrink-0 ml-4 font-bold">
-                  {activeFaq === fIdx ? "ï¿½ï¿½" : "ï¿½9"}
+                  {activeFaq === fIdx ? "??" : "?9"}
                 </span>
               </button>
               
@@ -415,7 +415,7 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
               rel="noreferrer"
               className="group bg-brand-secondary text-black font-mono font-black text-[10px] uppercase tracking-widest py-4 px-10 rounded-full shadow-[0_20px_50px_rgba(var(--color-brand-secondary-rgb),0.3)] hover:scale-102 transition-all flex items-center gap-2 cursor-pointer"
             >
-              <span>REALIZAR MINHA PRIMEIRA INDICAï¿½ï¿½O</span>
+              <span>REALIZAR MINHA PRIMEIRA INDICA??O</span>
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
             </a>
           </div>

@@ -426,7 +426,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
           <div className="space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 font-sans">
               <div className="space-y-1 text-left">
-                <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-widest font-bold">INTERAÇÃO SOCIAL &amp; COMPANHEIRISMO</span>
+                <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-widest font-bold">INTERA??O SOCIAL &amp; COMPANHEIRISMO</span>
                 <h2 className="font-display font-black text-2xl sm:text-3xl text-zinc-900 uppercase tracking-tight">
                   Nosso Time &amp; Líderes <span className="text-brand drop-shadow-sm font-light font-sans">●</span>
                 </h2>
@@ -461,7 +461,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                 <div className="relative z-10 space-y-4 mt-auto">
                   <div className="space-y-1">
-                    <span className="font-mono text-[8px] text-zinc-500 block uppercase font-bold">DIREÇÃO GERAL</span>
+                    <span className="font-mono text-[8px] text-zinc-500 block uppercase font-bold">DIRE??O GERAL</span>
                     <h3 className="font-display font-black text-xl text-white uppercase tracking-tight">Carlos Eduardo</h3>
                     <p className="text-brand text-[10.5px] font-mono uppercase leading-none">Fundador &amp; Diretor de Criação</p>
                     <p className="text-zinc-400 text-xs leading-relaxed pt-2 italic">
@@ -663,7 +663,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
           <div id="vagas-abertas-anchor" className="space-y-10 pt-8 border-t border-zinc-100">
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-zinc-100 pb-5">
               <div className="text-left space-y-1">
-                <span className="font-mono text-[9px] text-brand bg-black px-2 py-0.5 rounded uppercase tracking-widest font-black">CARREIRA CORPORATIVA // SELEÇÃO RÍGIDA</span>
+                <span className="font-mono text-[9px] text-brand bg-black px-2 py-0.5 rounded uppercase tracking-widest font-black">CARREIRA CORPORATIVA // SELE??O R?GIDA</span>
                 <h2 className="font-display font-black text-2xl sm:text-3xl text-zinc-900 uppercase tracking-tight">
                   Vagas em Aberto
                 </h2>
@@ -772,7 +772,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
             </div>
           </div>
 
-          {/* NOVO BLOCO CENTRAL: DIRETRIZES DE CULTURA, REQUISITOS, TIPO DE CONTRATO E ETAPAS DE SELEÇÃO */}
+          {/* NOVO BLOCO CENTRAL: DIRETRIZES DE CULTURA, REQUISITOS, TIPO DE CONTRATO E ETAPAS DE SELE??O */}
           <div className="space-y-12 pt-12 border-t border-zinc-100 text-left">
             
             {/* Cultura e Expectativas */}
@@ -794,7 +794,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                   { title: "Rigor Clônico de Prazos", desc: "Se uma tarefa está mapeada para entrega na terça-feira às 14h, ela será disponibilizada pontualmente sem atrasos." },
                   { title: "Documentação de Ativos", desc: "Todo o seu escopo intelectual de processos e designs precisa ser documentado de maneira limpa para a equipe." },
                   { title: "Comunicação Altamente Ativa", desc: "Esperamos respostas céleres sobre as demandas ativas, sem barreiras de silêncio ou pendências." },
-                  { title: "Constância de Qualidade", desc: "Sua centï¿½sima entrega de arte, copy ou código deve conter o mesmo padrão de excelï¿½ncia clínica da primeira." }
+                  { title: "Const?ncia de Qualidade", desc: "Sua cent?sima entrega de arte, copy ou c?digo deve conter o mesmo padr?o de excel?ncia cl?nica da primeira." }
                 ].map((item, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-zinc-50 border border-zinc-100 space-y-1.5">
                     <h4 className="text-zinc-900 font-display font-bold text-xs uppercase tracking-tight">{item.title}</h4>
@@ -819,7 +819,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                   { title: "Regime PJ (Prestador)", focus: "FLEXIBILIDADE E ESCALA", desc: "Ideal para consultores seniores autorais e designers que preferem emitir Notas Fiscais com flexibilidade de horas." },
                   { title: "Regime CLT (Fixo)", focus: "ESTABILIDADE & SUPORTE", desc: "Para profissionais focados em dedicação integral e desenvolvimento contínuo nos escritórios de Joinville ou São Paulo." },
                   { title: "Banco de Freelance", focus: "DEMANDAS SOB ESCALA", desc: "Projetos isolados pontuais pagos por frentes de entrega específicas sênior de Branding, Web ou Criação de Identidades." },
-                  { title: "Estï¿½gio de Criação", focus: "FORMAï¿½ï¿½O OPERACIONAL", desc: "Para mentes promissoras acadï¿½micas dispostas a adotar nossa rigorosa cultura e metodologia de design e processos." }
+                  { title: "Est?gio de Cria??o", focus: "FORMA??O OPERACIONAL", desc: "Para mentes promissoras acad?micas dispostas a adotar nossa rigorosa cultura e metodologia de design e processos." }
                 ].map((bond, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2 text-left">
                     <span className="font-mono text-[8.5px] text-brand border border-brand/15 bg-brand/5 px-2 py-0.5 rounded uppercase block w-max">
@@ -920,7 +920,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                   {/* Header text containing dynamic personalization */}
                   <div className="space-y-1 text-left">
                     <span className="font-mono text-[9px] text-brand bg-black px-2 py-0.5 rounded font-black uppercase tracking-widest inline-block">
-                      ETAPA {currentStep} DE 3 " {currentStep === 1 ? "DADOS PESSOAIS" : currentStep === 2 ? "LINKS PROFISSIONAIS" : "CURRï¿½CULO & APRESENTAï¿½ï¿½O"}
+                      ETAPA {currentStep} DE 3 " {currentStep === 1 ? "DADOS PESSOAIS" : currentStep === 2 ? "LINKS PROFISSIONAIS" : "CURR?CULO & APRESENTA??O"}
                     </span>
                     <h2 className="font-display font-black text-2xl text-zinc-900 uppercase tracking-tight">
                       {currentStep === 1 ? "Identificação Primária" : currentStep === 2 ? "Presença na Web" : "Ficha & Conquistas"}
@@ -939,7 +939,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <AnimatePresence mode="wait">
                     
-                    {/* STEP 1: APRESENTAï¿½ï¿½O PRIMï¿½RIA */}
+                    {/* STEP 1: APRESENTA??O PRIM?RIA */}
                     {currentStep === 1 && (
                       <motion.div
                         key="step-1"

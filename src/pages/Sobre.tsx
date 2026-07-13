@@ -42,7 +42,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400",
       tag: "CONTEÚDO",
       status: "ATIVA",
-      badge: "REDAÇÃO",
+      badge: "REDA??O",
       linkedin: "https://www.linkedin.com/in/camila-martins-tag08",
       connections: "Linha editorial",
       focus: "Narrativa e consistência"
@@ -136,7 +136,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       desc: "Conectamos estratégia, conteúdo, design, tecnologia e processos para evitar soluções soltas.",
       gradientClass: "from-blue-500/10 to-transparent border-blue-500/15 hover:border-blue-500/35",
       iconColor: "text-[#3b82f6]",
-      badge: "COORDENAÇÃO",
+      badge: "COORDENA??O",
       delay: 0.3
     },
     {
@@ -153,28 +153,28 @@ export default function Sobre({ onNavigate }: SobreProps) {
     {
       id: 0,
       area: "DESIGN & CREATIVE BRANDS",
-      title: "Designer GrÃ¡fico / Visual SÃªnior",
-      tempo: "Remoto â¬¢ ContrataÃ§Ã£o Recorrente",
-      desc: "EstruturaÃ§Ã£o de marcas ricas herÃ¡ldicas, e layouts premium de redes sociais com tipografia avanÃ§ada e senso estÃ©tico exigente.",
-      requirements: ["DomÃ­nio cirÃºrgico do Figma e Illustrator", "Apego extremo a espaÃ§amento, tracking e contrastes", "PortfÃ³lio com soluÃ§Ãµes reais corporativas de alto requinte"],
+      title: "Designer Gráfico / Visual Sênior",
+      tempo: "Remoto ⬢ Contratação Recorrente",
+      desc: "Estruturação de marcas ricas heráldicas, e layouts premium de redes sociais com tipografia avançada e senso estético exigente.",
+      requirements: ["Domínio cirúrgico do Figma e Illustrator", "Apego extremo a espaçamento, tracking e contrastes", "Portfólio com soluções reais corporativas de alto requinte"],
       color: "border-brand-secondary/20 shadow-brand-secondary/2"
     },
     {
       id: 1,
-      area: "GROWTH & ANALYTICS SÃ¯Â¿Â½`NIOR",
+      area: "GROWTH & ANALYTICS S?`NIOR",
       title: "Head de Performance Google / Meta Ads",
-      tempo: "Remoto â¬¢ ContrataÃ§Ã£o Imediata",
-      desc: "Gerenciamento estratÃ©gico de orÃ§amentos de alta intensidade de compra para marcas B2B, consultorias e saÃºde premium.",
-      requirements: ["Mais de 4 anos gerenciando contas reais exigentes", "Habilidade cirÃºrgica de traduzir tÃ¡ticas em ROI nos relatÃ³rios", "Foco em canais Meta Ads de alto tÃ­quete"],
+      tempo: "Remoto ⬢ Contratação Imediata",
+      desc: "Gerenciamento estratégico de orçamentos de alta intensidade de compra para marcas B2B, consultorias e saúde premium.",
+      requirements: ["Mais de 4 anos gerenciando contas reais exigentes", "Habilidade cirúrgica de traduzir táticas em ROI nos relatórios", "Foco em canais Meta Ads de alto tíquete"],
       color: "border-purple-500/20 shadow-purple-500/2"
     },
     {
       id: 2,
       area: "FRONT-END ARCHITECTURE",
-      title: "Dev React.js / Node.js SÃªnior",
+      title: "Dev React.js / Node.js Sênior",
       tempo: "Remoto â¬¢ Banco de Talentos",
-      desc: "Transformar os protÃ³tipos de alta definiÃ§Ã£o do Figma em cÃ³digo sÃªnior, responsivo e ultra veloz sem construtores lentos.",
-      requirements: ["DomÃ­nio supremo de React, Vite, TS e Tailwind", "ApreÃ§o intransigente pelo pixel-perfect do designer", "ObssessÃ£o por otimizaÃ§Ã£o tÃ©cnica e Core Web Vitals"],
+      desc: "Transformar os protótipos de alta definição do Figma em código sênior, responsivo e ultra veloz sem construtores lentos.",
+      requirements: ["Domínio supremo de React, Vite, TS e Tailwind", "Apreço intransigente pelo pixel-perfect do designer", "Obssessão por otimização técnica e Core Web Vitals"],
       color: "border-blue-500/20 shadow-blue-500/2"
     }
   ];
@@ -182,7 +182,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
   const COLLABORATION_BLOCKS = [
     {
       id: 0,
-      area: "COLABORAÇÃO",
+      area: "COLABORA??O",
       title: "Pensamento estratégico",
       tempo: "Cultura TAG08",
       desc: "Buscamos pessoas que entendam contexto, façam boas perguntas e conectem execução com objetivo.",
@@ -191,7 +191,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
     },
     {
       id: 1,
-      area: "PADRÃO DE ENTREGA",
+      area: "PADR?O DE ENTREGA",
       title: "Cuidado com a entrega",
       tempo: "Processo e revisão",
       desc: "Qualidade não é detalhe final. É postura durante briefing, produção, revisão e melhoria.",
@@ -266,7 +266,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
               <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
                 <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                <span>TAG08 // DIREÇÃO</span>
+                <span>TAG08 // DIRE??O</span>
               </div>
             </div>
           </div>
@@ -292,7 +292,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
           <div className="pt-12 sm:pt-16 border-t border-white/[0.04] space-y-8 text-left font-sans">
             <div className="space-y-2">
-              <span className="font-mono text-[8px] text-brand tracking-widest block uppercase font-bold">ENTENDIMENTO E DIREÇÃO</span>
+              <span className="font-mono text-[8px] text-brand tracking-widest block uppercase font-bold">ENTENDIMENTO E DIRE??O</span>
               <h3 className="font-display font-black text-white text-xl sm:text-2xl uppercase tracking-tight">Conversas diretas com quem pensa e executa.</h3>
               <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-2xl font-medium">
                 Você conversa com quem participa da direção do trabalho, sem prometer atalhos e sem intermediários que diluem o contexto.
@@ -317,12 +317,12 @@ export default function Sobre({ onNavigate }: SobreProps) {
                     <span className="font-sans text-[7.5px] text-brand-secondary font-extrabold uppercase tracking-widest">{TILES_HERO[0].badge}</span>
                   </div>
 
-                  <span className="font-mono text-[8px] text-zinc-500 font-bold uppercase tracking-wider">TAG08 // DIREÇÃO</span>
+                  <span className="font-mono text-[8px] text-zinc-500 font-bold uppercase tracking-wider">TAG08 // DIRE??O</span>
                 </div>
 
                 <div className="relative z-10 space-y-4 mt-auto">
                   <div className="space-y-1">
-                    <span className="font-mono text-[8.5px] text-brand block uppercase font-bold">EQUIPE E DIREÇÃO</span>
+                    <span className="font-mono text-[8.5px] text-brand block uppercase font-bold">EQUIPE E DIRE??O</span>
                     <h4 className="font-display font-black text-2xl sm:text-3xl text-white uppercase leading-none tracking-tight">{TILES_HERO[0].name}</h4>
                     <p className="text-zinc-300 text-xs font-sans font-medium">{TILES_HERO[0].role}</p>
                     <p className="text-brand-secondary text-[8.5px] font-mono uppercase tracking-wider pt-1">{TILES_HERO[0].connections} // {TILES_HERO[0].focus}</p>
@@ -688,13 +688,13 @@ export default function Sobre({ onNavigate }: SobreProps) {
         </div>
       </section>
 
-      {/* SECTION 4 - CULTURA E COLABORAÇÃO */}
+      {/* SECTION 4 - CULTURA E COLABORA??O */}
       <section className="px-4 sm:px-6 md:px-8 py-24 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-14">
           
           {/* Section Header */}
           <div className="max-w-3xl text-left space-y-3">
-            <span className="font-mono text-xs text-brand uppercase tracking-widest block font-bold">CULTURA E COLABORAÇÃO</span>
+            <span className="font-mono text-xs text-brand uppercase tracking-widest block font-bold">CULTURA E COLABORA??O</span>
             <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
               Trabalhar com a TAG08 exige critério, clareza e responsabilidade.
             </h2>
@@ -814,7 +814,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       <section className="px-4 sm:px-6 md:px-8 py-20 bg-[radial-gradient(circle_at_right_top,_rgba(var(--color-brand-rgb),0.035),_transparent_55%)]">
         <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-secondary/10 border border-brand-secondary/30 text-brand font-black text-[9px] rounded-lg uppercase tracking-widest font-mono">
-            Pr�ximo passo
+            Pr?ximo passo
           </div>
 
           <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white uppercase tracking-tight max-w-2xl mx-auto leading-none">
@@ -822,7 +822,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
           </h2>
 
           <p className="text-zinc-300 text-xs sm:text-sm max-w-md mx-auto leading-relaxed font-sans">
-            Antes de propor qualquer solu��o, entendemos o momento, os desafios e as prioridades da sua marca para indicar um caminho mais claro, coerente e respons�vel.
+            Antes de propor qualquer solu??o, entendemos o momento, os desafios e as prioridades da sua marca para indicar um caminho mais claro, coerente e respons?vel.
           </p>
 
           <div className="pt-4">

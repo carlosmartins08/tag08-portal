@@ -21,7 +21,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
   const handleCopyDomainScope = (domain: any) => {
     const scopeLines = domain.subservices.map((sub: any) => `- ${sub.name}: ${sub.desc}`).join("\n");
-    const textToCopy = `TAG08 - Escopo de Atendimento: ${domain.title}\n${domain.description}\n\nEntregÃ¡veis:\n${scopeLines}\n\nPara mais informaÃ§Ãµes, fale com a nossa equipe em tag08.com.br`;
+    const textToCopy = `TAG08 - Escopo de Atendimento: ${domain.title}\n${domain.description}\n\nEntregáveis:\n${scopeLines}\n\nPara mais informações, fale com a nossa equipe em tag08.com.br`;
     navigator.clipboard.writeText(textToCopy).then(() => {
       setCopiedDomainSlug(domain.slug);
       setTimeout(() => {
@@ -291,21 +291,21 @@ export default function Servicos({ onNavigate }: ServicosProps) {
          =========================================*/}
       <div className="py-5 border-y border-white/[0.04] bg-charcoal-900/40 relative z-20 overflow-hidden select-none">
         <div className="animate-marquee whitespace-nowrap flex items-center gap-12 text-xs font-mono font-bold uppercase tracking-widest text-zinc-400">
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PRESENÃ’â¬¡A DIGITAL INTELIGENTE</span>
+          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PRESENÒ⬡A DIGITAL INTELIGENTE</span>
           <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> ENGENHARIA WEB INSTANTNEA</span>
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> CONTROL OPERATIONAL SYSTEMS</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> DIRECIONAMENTO CONCEITUAL SÃ’BRIO</span>
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PROCESSOS E OPERAÇÃO</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> PRESENÇA COM DIREÇÃO</span>
+          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> DIRECIONAMENTO CONCEITUAL SÒBRIO</span>
+          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PROCESSOS E OPERA??O</span>
+          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> PRESEN?A COM DIRE??O</span>
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> BRANDING E IDENTIDADE</span>
           
           {/* Repeat once more to secure contiguous slide chain */}
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PRESENÃ’â¬¡A DIGITAL INTELIGENTE</span>
+          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PRESENÒ⬡A DIGITAL INTELIGENTE</span>
           <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> ENGENHARIA WEB INSTANTNEA</span>
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> CONTROL OPERATIONAL SYSTEMS</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> DIRECIONAMENTO CONCEITUAL SÃ’BRIO</span>
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PROCESSOS E OPERAÇÃO</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> PRESENÇA COM DIREÇÃO</span>
+          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> DIRECIONAMENTO CONCEITUAL SÒBRIO</span>
+          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PROCESSOS E OPERA??O</span>
+          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> PRESEN?A COM DIRE??O</span>
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> BRANDING E IDENTIDADE</span>
         </div>
       </div>
@@ -500,7 +500,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                           onClick={() => handleLinkClick(domain.ctaPage)}
                           className="inline-flex items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-xs text-white font-mono font-semibold uppercase tracking-widest py-3 px-6 rounded-xl transition-all duration-300 group/btn shrink-0"
                         >
-                          <span>ENTENDER SOLUÇÃO</span>
+                          <span>ENTENDER SOLU??O</span>
                           <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform" />
                         </button>
 
@@ -769,7 +769,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 {([
                   { id: 0, title: "PONTO DE PARTIDA" },
                   { id: 1, title: "PACOTES" },
-                  { id: 2, title: "COMBINAÇÃO" },
+                  { id: 2, title: "COMBINA??O" },
                   { id: 3, title: "TEMPO" },
                   { id: 4, title: "RESULTADO" }
                 ]).map((item) => (
@@ -818,7 +818,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   {([
                     "PONTO DE PARTIDA",
                     "PACOTES",
-                    "COMBINAÇÃO",
+                    "COMBINA??O",
                     "TEMPO",
                     "RESULTADO"
                   ])[activeFaq]}
@@ -850,7 +850,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">ORIENTAÇÃO</span>
+                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">ORIENTA??O</span>
                   <h4 className="text-white font-semibold text-sm leading-snug font-display">Escolha melhor antes de avançar</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     A TAG08 organiza o ponto de partida para evitar escolhas apressadas e escopos desalinhados.

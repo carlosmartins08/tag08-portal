@@ -47,7 +47,7 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
 
             <div className="pt-2 text-center md:text-left space-y-2">
               <span className="font-mono text-[9.5px] text-zinc-500 uppercase tracking-widest font-black block">
-                DIREÇÃO & GOVERNANÇA DE ATIVOS
+                DIRE??O & GOVERNAN?A DE ATIVOS
               </span>
               <p className="text-zinc-500 text-[11px] leading-relaxed font-sans max-w-xs mx-auto md:mx-0 select-none">
                 O endereço referenciado não reside sob o mapeamento técnico da agência TAG08.

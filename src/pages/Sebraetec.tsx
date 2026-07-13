@@ -20,7 +20,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
   const faqs = [
     {
       q: "O que é o Programa SEBRAETEC?",
-      a: "O SEBRAETEC é um programa nacional do SEBRAE que visa facilitar o acesso de micro e pequenas empresas à inovação e tecnologia. Ele conecta sua empresa a prestadores de serviços tecnolï¿½gicos registrados, como a TAG08, e subsidia atï¿½ 70% ou 80% do valor total do projeto."
+      a: "O SEBRAETEC ? um programa nacional do SEBRAE que visa facilitar o acesso de micro e pequenas empresas ? inova??o e tecnologia. Ele conecta sua empresa a prestadores de servi?os tecnol?gicos registrados, como a TAG08, e subsidia at? 70% ou 80% do valor total do projeto."
     },
     {
       q: "Quem pode se beneficiar do subsídio?",
@@ -56,7 +56,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
-                PARCERIAS E INOVAÇÃO SUBSIDIADA // SEBRAETEC
+                PARCERIAS E INOVA??O SUBSIDIADA // SEBRAETEC
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
                 SEBRAETEC + TAG08 <br />
@@ -140,7 +140,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-24">
               <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-                VIABILIZAÇÃO // BENEFï¿½CIOS REAIS
+                VIABILIZA??O // BENEF?CIOS REAIS
               </span>
               <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
                 Por que usar o Sebraetec em seu projeto?
@@ -193,7 +193,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">02 // DOCUMENTAÇÃO Bï¿½SICA</span>
+                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">02 // DOCUMENTA??O B?SICA</span>
                 <h4 className="text-white font-display font-bold text-sm uppercase">Prontidão Cadastral</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
                   É preciso apresentar cartão CNPJ, cópia do contrato social ou CCMEI (no caso de MEI), e certidão negativa de débitos (CND) federais atualizada de forma regular junto aos órgãos de união.
@@ -204,7 +204,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
                 <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">03 // LIMITE DO SUBSҍDIO</span>
                 <h4 className="text-white font-display font-bold text-sm uppercase">Cotações por CNPJ</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Cada CNPJ possui um limite financeiro anual subsidiado (variï¿½vel por regiï¿½o). ï¿½0 possï¿½vel acumular e sequenciar diferentes projetos, como Branding primeiro e depois Desenvolvimento Web.
+                  Cada CNPJ possui um limite financeiro anual subsidiado (vari?vel por regi?o). ?0 poss?vel acumular e sequenciar diferentes projetos, como Branding primeiro e depois Desenvolvimento Web.
                 </p>
               </div>
 
@@ -212,7 +212,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
                 <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">04 // APOIO COOPERATIVO</span>
                 <h4 className="text-white font-display font-bold text-sm uppercase">Suporte de Equipe Técnico</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Todo o trï¿½mite, preenchimento das solicitações burocrï¿½ticas e validações tï¿½cnicas com os gestores credenciados do SEBRAE são acompanhados lado a lado pelas equipes estratï¿½gicas da TAG08.
+                  Todo o tr?mite, preenchimento das solicita??es burocr?ticas e valida??es t?cnicas com os gestores credenciados do SEBRAE s?o acompanhados lado a lado pelas equipes estrat?gicas da TAG08.
                 </p>
               </div>
             </div>
@@ -300,9 +300,9 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
             {[
               { num: "01", term: "DIAGNÓSTICO INICIAL", desc: "Reunião de alinhamento com a TAG08 para definir o escopo tecnológico ideal para o momento da sua empresa." },
               { num: "02", term: "PROPOSTA TÒ⬰CNICA", desc: "Elaboramos todo o material de projeto, escopo e justificativas em conformidade com as normas do Sebraetec." },
-              { num: "03", term: "ENVIO & ANï¿½LISE", desc: "Submetemos o projeto ao SEBRAE para anï¿½lise e emissão do termo de concessão com liberaï¿½ï¿½o do subsï¿½dio." },
-              { num: "04", term: "EXECUï¿½ï¿½O DE ELITE", desc: "Com a anuï¿½ncia oficial, iniciamos o projeto. Entregamos toda a maturidade de design e web da nossa equipe." },
-              { num: "05", term: "HOMOLOGAï¿½ï¿½O", desc: "Vocï¿½ recebe o projeto finalizado, pronto e validado em faturamento ativo. O SEBRAE quita a parcela subsidiada." }
+              { num: "03", term: "ENVIO & AN?LISE", desc: "Submetemos o projeto ao SEBRAE para an?lise e emiss?o do termo de concess?o com libera??o do subs?dio." },
+              { num: "04", term: "EXECU??O DE ELITE", desc: "Com a anu?ncia oficial, iniciamos o projeto. Entregamos toda a maturidade de design e web da nossa equipe." },
+              { num: "05", term: "HOMOLOGA??O", desc: "Voc? recebe o projeto finalizado, pronto e validado em faturamento ativo. O SEBRAE quita a parcela subsidiada." }
             ].map((step, sIdx) => (
               <div key={sIdx} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-2xl space-y-4 flex flex-col justify-between relative hover:border-brand/20 transition-all duration-300">
                 <span className="font-display font-black text-3xl text-brand-secondary">{step.num}</span>
@@ -358,7 +358,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
               >
                 <span>{faq.q}</span>
                 <span className="text-brand font-sans text-lg shrink-0 ml-4 font-bold">
-                  {activeFaq === fIdx ? "ï¿½ï¿½ " : "ï¿½9"}
+                  {activeFaq === fIdx ? "?? " : "?9"}
                 </span>
               </button>
               
@@ -382,11 +382,11 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
           </span>
           
           <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white uppercase tracking-tighter leading-tight max-w-3xl mx-auto z-10">
-            PRONTO PARA ACELERAR COM <span className="text-brand-secondary">DIREÇÃO E ATï¿½0 70% DE DESCONTO?</span>
+            PRONTO PARA ACELERAR COM <span className="text-brand-secondary">DIRE??O E AT?0 70% DE DESCONTO?</span>
           </h2>
           
           <p className="text-zinc-400 text-xs sm:text-sm font-medium max-w-2xl mx-auto z-10 leading-relaxed">
-            Nossos consultores credenciados estï¿½o ï¿½ disposiï¿½ï¿½o de sua marca para dar prioridade e celeridade ao seu diagnóstico cadastral. Pague menos, modernize mais e capte o real potencial comercial do seu CNPJ.
+            Nossos consultores credenciados est?o ? disposi??o de sua marca para dar prioridade e celeridade ao seu diagn?stico cadastral. Pague menos, modernize mais e capte o real potencial comercial do seu CNPJ.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 z-10 relative">

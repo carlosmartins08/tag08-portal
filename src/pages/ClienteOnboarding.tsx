@@ -537,14 +537,14 @@ const translations: Record<Language, Record<string, string>> = {
     equipe_section_focal: "Definiciones de Punto Focal",
     equipe_label_ti: "Punto focal técnico (ej. DNS, TI)",
     equipe_placeholder_ti: "ej. Camila (Marketing)",
-    equipe_label_approver: "¿Quién aprueba decisiones estratégicas? *",
+    equipe_label_approver: "?Qui?n aprueba decisiones estrat?gicas? *",
     equipe_placeholder_approver: "ej. CEO, Director de Marketing o la propia Mara",
-    equipe_label_finance: "¿Recibe facturación y cobros?",
+    equipe_label_finance: "?Recibe facturaci?n y cobros?",
     equipe_placeholder_finance: "ej. financeiro@empresa.com",
     
     // Step 3: Radar
-    radar_label_moment: "¿Cuál es el mayor desafío en su ecosistema actual? *",
-    radar_label_priority: "¿Cuál es su máxima prioridad comercial con TAG08? *",
+    radar_label_moment: "?Cu?l es el mayor desaf?o en su ecosistema actual? *",
+    radar_label_priority: "?Cu?l es su m?xima prioridad comercial con TAG08? *",
     radar_label_term: "Nivel de Organización Actual",
     radar_term_desc: "Arrastren para evaluar la organización y estándares de sus comunicaciones u operaciones internas.",
     radar_term_score: "Nota:",
@@ -556,7 +556,7 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Step 4: Serviços
     escopo_title: "ALCANCE DE ENTRADA",
-    escopo_heading: "¿Cuáles son los módulos o áreas de servicio acordados con TAG08?",
+    escopo_heading: "?Cu?les son los m?dulos o ?reas de servicio acordados con TAG08?",
     escopo_desc: "Seleccione uno o más módulos abajo contratados para activar las directrices de briefing correspondientes.",
     escopo_label_custom: "Si ha seleccionado \"Otro\", describa brevemente el alcance personalizado contratado:",
     escopo_placeholder_custom: "ej. Asesoría en automatizaciones de CRMs y API de ventas",
@@ -581,18 +581,18 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Step 7: Expectativas
     expectativas_title: "PERSPECTIVAS OPERACIONALES & METAS DE ÉXITO",
-    expectativas_subtitle: "¿Por qué recurrió a TAG08 en este momento particular?",
+    expectativas_subtitle: "?Por qu? recurri? a TAG08 en este momento particular?",
     expectativas_desc: "Mapear los dolores de su organización protege nuestras entregas técnicas y acelera la definición de canales de comunicación.",
     expectativas_placeholder_1: "ej. Sentimos que nuestra comunicación actual nos hace lucir más pequeños de lo que realmente somos...",
-    expectativas_label_tried: "¿Qué ha intentado antes para resolver este desafío? (ej. agencias, recursos internos)",
+    expectativas_label_tried: "?Qu? ha intentado antes para resolver este desaf?o? (ej. agencias, recursos internos)",
     expectativas_placeholder_tried: "ej. Trabajamos provisionalmente con una agencia tradicional para posteos cotidianos...",
-    expectativas_label_did_not_work: "¿Qué considera que falló en esos intentos pasados?",
+    expectativas_label_did_not_work: "?Qu? considera que fall? en esos intentos pasados?",
     expectativas_placeholder_did_not_work: "ej. Publicaciones genéricas sin estética sofisticada, alta demanda de correcciones...",
-    expectativas_label_good_result: "Al cabo de 90 días de iniciar con TAG08, ¿qué logros le confirmarían que tomamos la decisión adecuada?",
+    expectativas_label_good_result: "Al cabo de 90 d?as de iniciar con TAG08, ?qu? logros le confirmar?an que tomamos la decisi?n adecuada?",
     expectativas_placeholder_good_result: "ej. Un posicionamiento institucional sólido en redes que capte leads de alto poder adquisitivo...",
-    expectativas_label_urgency: "¿Cuál es su principal urgencia de operaciones o marketing en este instante?",
+    expectativas_label_urgency: "?Cu?l es su principal urgencia de operaciones o marketing en este instante?",
     expectativas_placeholder_urgency: "ej. Rediseñar y optimizar nuestro sitio web que está obsoleto...",
-    expectativas_label_not_err: "¿Qué considera que NO podemos fallar de ninguna manera en sus entregables u operaciones de comunicación? *",
+    expectativas_label_not_err: "?Qu? considera que NO podemos fallar de ninguna manera en sus entregables u operaciones de comunicaci?n? *",
     expectativas_placeholder_not_err: "ej. Emplear un lenguaje demasiado informal, o variar las tipografías oficiales de marca...",
     
     // Step 8: Consentimento
@@ -1639,12 +1639,12 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
       },
       es: {
         1: "Comencemos con lo básico. ¿Cuál es el nombre oficial de la empresa o proyecto que iniciaremos?",
-        2: "Estupendo. Ahora dgame quin ser la persona principal de contacto coordinando directamente con TAG08.",
+        2: "Estupendo. Ahora dígame quién será la persona principal de contacto coordinando directamente con TAG08.",
         3: "Para entender mejor su ecosistema actual, elija la frase táctica que mejor se alinee con su realidad comercial.",
-        4: "Sintona excelente. Vamos a definir qu ramas o módulos de servicio se han acordado con TAG08.",
+        4: "Sintonía excelente. Vamos a definir qué ramas o módulos de servicio se han acordado con TAG08.",
         5: "De acuerdo. Mapeamos sus servicios. Ahora, respondamos algunas preguntas técnicas para abastecer a nuestros equipos creativos y de ingeniería.",
         6: "Si dispone de carpetas compartidas, manuales de identidad visual o presentaciones de ventas, comparta los enlaces a continuación (no comparta contraseñas).",
-        7: "Para finalizar nuestro mapa de ruta corporativo, dgame: al cabo de 90 das de sociedad, qu logros le confirmaran que tomamos la decisin adecuada?",
+        7: "Para finalizar nuestro mapa de ruta corporativo, dígame: al cabo de 90 días de sociedad, qué logros le confirmarían que tomamos la decisión adecuada?",
         8: "Estamos del todo listos. Lea y marque las casillas de consentimiento para enviar de forma segura sus directrices operacionales."
       }
     };
@@ -2389,7 +2389,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                           <div className="space-y-2 font-sans">
                             <label className="text-xs text-zinc-400">Quais atributos comportamentais e conceitos visuais a marca deve transmitir?</label>
-                            <textarea value={brDesiredAttributes} onChange={(e) => setBrDesiredAttributes(e.target.value)} rows={2} placeholder="Elegï¿½ncia discreta, sobriedade, robustez clínica e minimalismo sofisticado" className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-xs text-white resize-none" />
+                            <textarea value={brDesiredAttributes} onChange={(e) => setBrDesiredAttributes(e.target.value)} rows={2} placeholder="Elegância discreta, sobriedade, robustez clínica e minimalismo sofisticado" className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-xs text-white resize-none" />
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
