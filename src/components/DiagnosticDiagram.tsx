@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Compass, ShieldCheck, Workflow, Sparkles } from "lucide-react";
 
 interface DiagnosticPillar {
@@ -15,14 +15,20 @@ interface DiagnosticPillar {
 export default function DiagnosticDiagram() {
   const [activePillar, setActivePillar] = useState<string>("posicionamento");
   const [radialAngle, setRadialAngle] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
 
   // Rotating elements animation loop
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setRadialAngle(0);
+      return;
+    }
+
     const interval = setInterval(() => {
       setRadialAngle((prev) => (prev + 1) % 360);
     }, 50);
     return () => clearInterval(interval);
-  }, []);
+  }, [prefersReducedMotion]);
 
   const pillars: DiagnosticPillar[] = [
     {
@@ -111,7 +117,7 @@ export default function DiagnosticDiagram() {
               <svg 
                 viewBox="0 0 200 200" 
                 className="absolute inset-0 w-full h-full transform"
-                style={{ transform: `rotate(${radialAngle}deg)` }}
+                style={{ transform: `rotate(${prefersReducedMotion ? 0 : radialAngle}deg)` }}
               >
                 <circle cx="100" cy="100" r="92" stroke="rgba(255, 255, 255, 0.01)" strokeWidth="0.5" fill="none" />
                 <circle cx="100" cy="100" r="84" stroke="rgba(255, 255, 255, 0.015)" strokeWidth="0.5" fill="none" strokeDasharray="3 3" />
@@ -151,7 +157,7 @@ export default function DiagnosticDiagram() {
                   strokeDasharray={circumference}
                   initial={{ strokeDashoffset: circumference }}
                   animate={{ strokeDashoffset: dashOffset }}
-                  transition={{ duration: 0.95, ease: "easeOut" }}
+                  transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.95, ease: "easeOut" }}
                   strokeLinecap="round"
                 />
               </svg>
@@ -168,7 +174,7 @@ export default function DiagnosticDiagram() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.25 }}
+                    transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.25 }}
                     className="font-sans font-black text-5xl text-white tracking-widest leading-none mt-1 flex items-baseline justify-center"
                   >
                     {currentPillar.score}
@@ -179,7 +185,7 @@ export default function DiagnosticDiagram() {
                 <p className="text-zinc-500 text-[8px] uppercase tracking-wider font-mono mt-1.5 font-bold">
                   Índice Médio
                 </p>
-                <div className="w-1.5 h-1.5 rounded-full bg-brand mt-2 animate-pulse" />
+                <div className={`w-1.5 h-1.5 rounded-full bg-brand mt-2 ${prefersReducedMotion ? "" : "animate-pulse"}`} />
               </div>
             </div>
           </div>

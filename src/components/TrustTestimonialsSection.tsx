@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Star } from "lucide-react";
 import { TRUST_REVIEWS } from "../content/googleReviews";
 
@@ -7,6 +7,7 @@ export default function TrustTestimonialsSection() {
   const [activeReview, setActiveReview] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
   const [viewportWidth, setViewportWidth] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const updateViewportWidth = () => setViewportWidth(window.innerWidth);
@@ -16,14 +17,14 @@ export default function TrustTestimonialsSection() {
   }, []);
 
   useEffect(() => {
-    if (isHovering) return;
+    if (isHovering || prefersReducedMotion) return;
 
     const interval = window.setInterval(() => {
       setActiveReview((prev) => (prev + 1) % TRUST_REVIEWS.length);
     }, 6500);
 
     return () => window.clearInterval(interval);
-  }, [isHovering]);
+  }, [isHovering, prefersReducedMotion]);
 
   const isLargeScreen = viewportWidth >= 1024;
   const currentReview = TRUST_REVIEWS[activeReview];
@@ -38,7 +39,7 @@ export default function TrustTestimonialsSection() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 border-b border-white/[0.05] pb-6">
           <div className="space-y-4 text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand/10 bg-brand/5 font-mono text-[9px] uppercase tracking-widest text-brand-secondary font-black">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary animate-pulse" />
+              <span className={`w-1.5 h-1.5 rounded-full bg-brand-secondary ${prefersReducedMotion ? "" : "animate-pulse"}`} />
               Confianca construida na pratica
             </div>
 
@@ -81,11 +82,13 @@ export default function TrustTestimonialsSection() {
           <div className="lg:col-span-3 w-full overflow-hidden h-[170px] sm:h-[195px] lg:h-[500px] relative flex items-center lg:items-start select-none">
             <motion.div
               animate={
-                isLargeScreen
-                  ? { y: -activeReview * (148 + 16), x: 0 }
-                  : { x: typeof window !== "undefined" && window.innerWidth >= 640 ? -activeReview * (98 + 16) : -activeReview * (85 + 16), y: 0 }
+                prefersReducedMotion
+                  ? { x: 0, y: 0 }
+                  : isLargeScreen
+                    ? { y: -activeReview * (148 + 16), x: 0 }
+                    : { x: typeof window !== "undefined" && window.innerWidth >= 640 ? -activeReview * (98 + 16) : -activeReview * (85 + 16), y: 0 }
               }
-              transition={{ type: "spring", stiffness: 140, damping: 22 }}
+              transition={prefersReducedMotion ? { duration: 0 } : { type: "spring", stiffness: 140, damping: 22 }}
               className="flex flex-row lg:flex-col gap-4 absolute left-4 sm:left-6 lg:left-0 lg:top-0 h-[140px] sm:h-[160px] lg:h-auto items-center lg:items-center w-max lg:w-full py-2"
             >
               {TRUST_REVIEWS.map((review, index) => {
@@ -120,14 +123,14 @@ export default function TrustTestimonialsSection() {
 
           <div className="lg:col-span-9 flex flex-col justify-center">
             <AnimatePresence mode="wait">
-              <motion.div
-                key={activeReview}
-                initial={{ opacity: 0, x: 20, scale: 0.99 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -20, scale: 0.99 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-                className="bg-charcoal-900/90 border border-white/[0.06] p-5 sm:p-8 lg:p-10 rounded-[28px] sm:rounded-[36px] relative overflow-hidden text-left shadow-2xl flex flex-col justify-between min-h-[340px] w-full group/card"
-              >
+            <motion.div
+              key={activeReview}
+              initial={{ opacity: 0, x: 20, scale: 0.99 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: -20, scale: 0.99 }}
+              transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.35, ease: "easeOut" }}
+              className="bg-charcoal-900/90 border border-white/[0.06] p-5 sm:p-8 lg:p-10 rounded-[28px] sm:rounded-[36px] relative overflow-hidden text-left shadow-2xl flex flex-col justify-between min-h-[340px] w-full group/card"
+            >
                 <span className="font-serif text-[180px] sm:text-[230px] text-brand-secondary/[0.03] absolute right-6 sm:right-10 -top-8 sm:-top-12 leading-none select-none pointer-events-none font-black italic">
                   "
                 </span>
@@ -178,9 +181,9 @@ export default function TrustTestimonialsSection() {
           </div>
         </div>
 
-        <div className="mt-10 p-4 sm:p-5 bg-charcoal-900 border border-white/[0.05] rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-4 text-left select-none">
+          <div className="mt-10 p-4 sm:p-5 bg-charcoal-900 border border-white/[0.05] rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-4 text-left select-none">
           <div className="flex items-center gap-3">
-            <span className="w-2 h-2 rounded-full bg-[#34A853] animate-pulse shrink-0" />
+            <span className={`w-2 h-2 rounded-full bg-[#34A853] shrink-0 ${prefersReducedMotion ? "" : "animate-pulse"}`} />
             <p className="text-xs text-zinc-300 font-sans">
               Enquanto os reviews oficiais nao sao fornecidos, estes depoimentos seguem marcados como internos para nao fingir validacao externa.
             </p>

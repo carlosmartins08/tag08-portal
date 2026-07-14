@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { 
   Building2, 
   Heart, 
@@ -97,23 +97,26 @@ export default function MiniCases({
   highlightColor = "var(--color-brand)",
   onNavigate
 }: MiniCasesProps) {
+  const prefersReducedMotion = useReducedMotion();
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: prefersReducedMotion ? 0 : 0.1,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 15 },
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 15 },
     visible: { 
       opacity: 1, 
       y: 0, 
-      transition: { type: "spring" as const, stiffness: 100, damping: 15 } 
+      transition: prefersReducedMotion
+        ? { duration: 0 }
+        : { type: "spring" as const, stiffness: 100, damping: 15 } 
     },
   };
 
@@ -151,10 +154,10 @@ export default function MiniCases({
         {/* Dynamic Logo Cards Layout */}
         <motion.div 
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          variants={prefersReducedMotion ? undefined : containerVariants}
+          initial={prefersReducedMotion ? false : "hidden"}
+          whileInView={prefersReducedMotion ? undefined : "visible"}
+          viewport={prefersReducedMotion ? undefined : { once: true, margin: "-100px" }}
         >
           {logos.map((logo, idx) => {
             const IconComponent = logo.iconName ? iconMap[logo.iconName] : undefined;
@@ -162,7 +165,7 @@ export default function MiniCases({
             return (
               <motion.div
                 key={`${logo.name}-${idx}`}
-                variants={itemVariants}
+                variants={prefersReducedMotion ? undefined : itemVariants}
                 className="bg-charcoal-900 border border-white/[0.06] hover:border-brand/40 rounded-3xl p-6 flex flex-col justify-between h-[180px] group transition-all duration-300 relative overflow-hidden"
               >
                 {/* Micro Ambient Glow in background */}

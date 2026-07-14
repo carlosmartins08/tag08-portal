@@ -301,9 +301,9 @@ export const BLOG_POSTS: EditorialBlogPost[] = [
     decisionStage: "entendimento",
     strategicSynthesis: {
       problem: "O conteudo chama atencao, mas nao organiza a decisao.",
-      thesis: "Se a peÃ§a nao esclarece o problema, ela ainda nao cumpre a funcao editorial da TAG08.",
+      thesis: "Se a peça nao esclarece o problema, ela ainda nao cumpre a funcao editorial da TAG08.",
       risk: "A marca fica bonita, mas continua sem orientar escolha.",
-      nextStep: "Abrir uma assessoria para alinhar posicionamento, objeÃ§oes e proximo passo."
+      nextStep: "Abrir uma assessoria para alinhar posicionamento, objeçoes e proximo passo."
     },
     expertLens: [
       {
@@ -315,7 +315,7 @@ export const BLOG_POSTS: EditorialBlogPost[] = [
       title: "Framework de leitura",
       rows: [
         { label: "Pergunta central", value: "O conteudo ajuda ou apenas enfeita?" },
-        { label: "Sinal de alerta", value: "A peÃ§a chama atencao, mas nao orienta acao." },
+        { label: "Sinal de alerta", value: "A peça chama atencao, mas nao orienta acao." },
         { label: "Resposta pratica", value: "Reescrever com foco em problema, tese e proximo passo." }
       ]
     },
@@ -386,7 +386,7 @@ export const BLOG_POSTS: EditorialBlogPost[] = [
     faq: [
       {
         question: "Processo e marketing competem entre si?",
-        answer: "Nao. O marketing fica mais claro quando a operacao sustenta a promessa."
+        answer: "Não. O marketing fica mais claro quando a operacao sustenta a promessa."
       }
     ],
     relatedInsights: ["estrategia-antes-da-estetica", "importancia-velocidade-conversao-sites"]
@@ -451,7 +451,7 @@ export const BLOG_POSTS: EditorialBlogPost[] = [
     faq: [
       {
         question: "Um site bonito ja resolve o problema?",
-        answer: "Nao. A interface precisa ajudar o visitante a entender, confiar e agir."
+        answer: "Não. A interface precisa ajudar o visitante a entender, confiar e agir."
       }
     ],
     relatedInsights: ["estrategia-antes-da-estetica", "anatomia-do-caos-operacional"]

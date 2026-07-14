@@ -130,7 +130,11 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const bottomOffset = isLgpdBannerOpen ? (isCustomOpen ? "bottom-[425px]" : "bottom-[245px]") : "bottom-6";
+  const bottomOffset = isLgpdBannerOpen
+    ? isCustomOpen
+      ? "bottom-[calc(425px+env(safe-area-inset-bottom))] sm:bottom-[425px]"
+      : "bottom-[calc(245px+env(safe-area-inset-bottom))] sm:bottom-[245px]"
+    : "bottom-[calc(0.75rem+env(safe-area-inset-bottom))] sm:bottom-6";
 
   return (
     <>
@@ -146,7 +150,7 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92 }}
               onClick={handleScrollToTop}
-              className="bg-charcoal-900/90 text-white w-11 h-11 rounded-full flex items-center justify-center border border-white/10 hover:border-brand/40 hover:text-brand shadow-[0_8px_25px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="bg-charcoal-900/90 text-white w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center border border-white/10 hover:border-brand/40 hover:text-brand shadow-[0_8px_25px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
               title={copy.backTop}
               aria-label={copy.backTop}
             >
@@ -211,9 +215,9 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
             onClick={() => setIsOpen((prev) => !prev)}
             aria-label={copy.ariaOpen}
             aria-expanded={isOpen}
-            className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-brand text-black shadow-[0_10px_35px_rgba(0,0,0,0.35)] transition-colors hover:bg-brand/90"
+            className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-brand text-black shadow-[0_10px_35px_rgba(0,0,0,0.35)] transition-colors hover:bg-brand/90"
           >
-            <MessageCircle className="h-6 w-6" />
+            <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6" />
           </motion.button>
 
         <AnimatePresence>
