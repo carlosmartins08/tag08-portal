@@ -82,7 +82,7 @@ const CACHE_TTL_MS = 10 * 60 * 1000;
 const officialContentCache = new Map<string, { expiresAt: number; response: OfficialContentApiResponse }>();
 const OFFICIAL_CONTENT_REQUEST_TIMEOUT_MS = 4_000;
 
-const YOUTUBE_API_KEY = (process.env.YOUTUBE_API_KEY || process.env.VITE_YOUTUBE_API_KEY || "").trim();
+const YOUTUBE_API_KEY = (process.env.YOUTUBE_API_KEY || "").trim();
 const YOUTUBE_CHANNEL_HANDLE = (process.env.YOUTUBE_CHANNEL_HANDLE || TAG08_OFFICIAL_YOUTUBE_HANDLE).trim();
 const YOUTUBE_CHANNEL_ID = (process.env.YOUTUBE_CHANNEL_ID || "").trim();
 const GOOGLE_BUSINESS_LOCATION_NAME = (process.env.GOOGLE_BUSINESS_LOCATION_NAME || "").trim();

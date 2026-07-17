@@ -1,5 +1,8 @@
 import { CASE_STUDIES } from "../data";
 
+export const ROUTE_LOCALES = ["pt", "en", "es"] as const;
+export type RouteLocale = (typeof ROUTE_LOCALES)[number];
+
 export type RouteKey =
   | "home"
   | "sobre"
@@ -321,6 +324,31 @@ export const canonicalizeRoute = (inputPath: string): string => {
   return exact ? exact.canonicalPath : aliasNormalized;
 };
 
+const isRouteLocale = (value: string | undefined): value is RouteLocale =>
+  value === "pt" || value === "en" || value === "es";
+
+export const getLocalizedPath = (path: string, locale: RouteLocale): string => {
+  const normalizedPath = normalizePath(path);
+  if (locale === "pt") {
+    return normalizedPath;
+  }
+
+  return normalizedPath === "/" ? `/${locale}` : `/${locale}${normalizedPath}`;
+};
+
+export const resolveLocalizedPath = (segments: string[] = []) => {
+  const [firstSegment, ...remainingSegments] = segments;
+  const locale = isRouteLocale(firstSegment) ? firstSegment : "pt";
+  const pathSegments = isRouteLocale(firstSegment) ? remainingSegments : segments;
+  const path = pathSegments.length ? `/${pathSegments.join("/")}` : "/";
+
+  return {
+    locale,
+    path: normalizePath(path),
+    explicitLocale: isRouteLocale(firstSegment)
+  };
+};
+
 const matchesDynamicRoute = (path: string, route: RouteDefinition): boolean => {
   if (!route.dynamic || !route.pathPattern) {
     return false;
@@ -361,6 +389,31 @@ export const publicRoutePaths = routeRegistry.flatMap((route) => {
 
   return [route.canonicalPath];
 });
+
+export const renderableRoutePaths = routeRegistry.flatMap((route) => {
+  if (route.key === "not-found") {
+    return [];
+  }
+
+  if (route.dynamic && route.pathPattern === "/casos/:id") {
+    return Array.from(caseStudyPaths);
+  }
+
+  return [route.canonicalPath];
+});
+
+export const staticRouteSegments = () => {
+  const canonicalPaths = renderableRoutePaths;
+  const aliases = Object.keys(legacyAliases);
+  const allPaths = Array.from(new Set([...canonicalPaths, ...aliases]));
+
+  return ROUTE_LOCALES.flatMap((locale) =>
+    allPaths.map((path) => {
+      const localizedPath = getLocalizedPath(path, locale);
+      return localizedPath === "/" ? [] : localizedPath.slice(1).split("/");
+    })
+  );
+};
 
 export const indexedRoutePaths = routeRegistry.flatMap((route) => {
   if (!route.includeInSitemap) {

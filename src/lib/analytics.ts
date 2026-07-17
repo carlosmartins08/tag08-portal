@@ -14,8 +14,8 @@ type AnalyticsWindowState = WindowWithAnalytics & {
   __tag08GoogleAnalyticsConfigured?: boolean;
 };
 
-const GA4_ID = (import.meta.env.VITE_GA4_ID ?? "").trim();
-export const GSC_VERIFICATION_TOKEN = (import.meta.env.VITE_GSC_VERIFICATION ?? "").trim();
+const GA4_ID = (process.env.NEXT_PUBLIC_GA4_ID ?? "").trim();
+export const GSC_VERIFICATION_TOKEN = (process.env.NEXT_PUBLIC_GSC_VERIFICATION ?? "").trim();
 
 const GTAG_SCRIPT_ID = "tag08-google-tag";
 const PAGE_VIEW_DEBOUNCE_MS = 800;

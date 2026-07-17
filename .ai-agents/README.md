@@ -13,10 +13,10 @@ Fluxo sugerido:
 ## Handoff atual
 
 ### Concluído
-- Endpoint mínimo de onboarding em `server/index.ts` com contrato versionado.
+- Endpoint minimo de onboarding em `src/app/api/onboarding/route.ts` com contrato versionado.
 - Fila local de fallback no onboarding com retry controlado.
 - Registry único de rotas em `src/config/routeRegistry.ts`.
-- Sitemap gerado a partir do mesmo registry.
+- Sitemap gerado pelo App Router a partir do mesmo registry.
 - Rede cross-domain consolidada em `src/config/siteNetwork.ts`.
 - Base estratégica da TAG08 consolidada em `docs/TAG08_KNOWLEDGE_SYSTEM.md`.
 - Build e typecheck passam após correção dos blocos JSX quebrados.
@@ -32,7 +32,7 @@ Fluxo sugerido:
 
 ## Regras gerais
 
-- Trabalhar no repositório atual sem inventar nova stack.
+- Trabalhar no repositorio atual sem criar uma segunda aplicacao ou um segundo roteador.
 - Entregar mudanças mínimas e funcionais primeiro.
 - Registrar impacto, risco e critérios de aceite ao final.
 - Não tocar em arquivos já resolvidos por outro agente sem justificar o conflito.

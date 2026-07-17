@@ -4,7 +4,7 @@ import path from "node:path";
 const root = process.cwd();
 
 const replacementsByFile = {
-  "src/pages/Sobre.tsx": [
+  "src/features/site/pages/Sobre.tsx": [
     [/SOBRE A TAG08 \/\/ ESTRAT.*GIA/g, "SOBRE A TAG08 // ESTRATÉGIA"],
     [/AGENDE UM DIAGN.*STICO/g, "AGENDE UM DIAGNÓSTICO"],
     [/Taxa de Reten.* de/g, "Taxa de Retenção de"],
@@ -24,7 +24,7 @@ const replacementsByFile = {
     [/É?0 UM TRABALHO DE ELITE\./g, "É UM TRABALHO DE ELITE."],
     [/RESERVAR DIAGN.*STICO/g, "RESERVAR DIAGNÓSTICO"],
   ],
-  "src/pages/DesenvolvimentoWeb.tsx": [
+  "src/features/site/pages/DesenvolvimentoWeb.tsx": [
     [/M.*TRICAS DE PERFORMANCE REAL \/\/ VISÃO DE ENGENHARIA/g, "MÉTRICAS DE PERFORMANCE REAL // VISÃO DE ENGENHARIA"],
     [/SOLU.*ES MODULARES DE TECNOLOGIA/g, "SOLUÇÕES MODULARES DE TECNOLOGIA"],
     [/ENGENHARIA DIGNA DE ADMIRA.*O/g, "ENGENHARIA DIGNA DE ADMIRAÇÃO"],

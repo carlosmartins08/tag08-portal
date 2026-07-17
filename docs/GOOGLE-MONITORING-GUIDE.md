@@ -12,8 +12,8 @@
 - Verificação Search Console por prefixo: `index.html`
 
 ## Variáveis de ambiente
-- `VITE_GA4_ID`
-- `VITE_GSC_VERIFICATION`
+- `NEXT_PUBLIC_GA4_ID`
+- `NEXT_PUBLIC_GSC_VERIFICATION`
 
 ## Regras de coleta
 - Não enviar nome, e-mail, telefone, CNPJ, mensagem ou qualquer outro dado pessoal/corporativo do formulário.
@@ -74,7 +74,7 @@
 ## Search Console
 - Propriedade de domínio: verificação por DNS.
 - Propriedade por prefixo de URL: tag HTML no `<head>`.
-- O token em `VITE_GSC_VERIFICATION` só faz sentido para a verificação por tag HTML.
+- O token em `NEXT_PUBLIC_GSC_VERIFICATION` só faz sentido para a verificação por tag HTML.
 
 ## Implementação atual
 - `src/App.tsx` envia `page_view`, `scroll_depth` e `engagement_time`.
@@ -84,7 +84,7 @@
 - `src/pages/ClienteOnboarding.tsx` envia início, etapa e submit do onboarding.
 
 ## Checklist de operação
-1. Confirmar que `VITE_GA4_ID` usa o formato `G-...`.
+1. Confirmar que `NEXT_PUBLIC_GA4_ID` usa o formato `G-...`.
 2. Confirmar que a verificação do Search Console é por DNS ou por tag HTML, não as duas ao mesmo tempo sem necessidade.
 3. Marcar como conversão no GA4 apenas os eventos que realmente representam valor para o negócio.
 4. Revisar mensalmente quais eventos são acionados em volume e remover ruído.

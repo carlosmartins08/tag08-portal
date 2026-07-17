@@ -21,11 +21,8 @@ Recuperar fila local, restaurar envio e documentar incidente de onboarding.
 3. Confirmar eventos de conectividade:
    - status da rede no browser
    - retorno `navigator.onLine`
-4. Confirmar que a stack local esta ativa:
-   - `npm run dev:backend`
-   - `npm run dev`
-   - ou `npm run dev:with-backend`
-5. Confirmar que o proxy do Vite esta apontando para `ONBOARDING_PORT`.
+4. Confirmar que a stack local esta ativa com `npm run dev`.
+5. Confirmar que `DATABASE_URL` esta configurada no ambiente que recebe os envios.
 
 ## Recuperacao de fila
 

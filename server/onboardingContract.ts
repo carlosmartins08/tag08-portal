@@ -78,17 +78,6 @@ export interface OnboardingSubmissionResult {
   error?: string;
 }
 
-export interface OnboardingIngestMetrics {
-  totalReceived: number;
-  totalFailure: number;
-  recoveredFromQueue: number;
-  averageProcessingMs: number;
-}
-
-interface OnboardingIngestOptions {
-  fromQueue?: boolean;
-}
-
 const requiredText = (value: unknown): value is string => typeof value === "string" && value.trim().length > 0;
 
 const normalizePhone = (raw: unknown): string => {
@@ -113,46 +102,6 @@ const normalizeText = (raw: unknown): string => {
     .trim()
     .replace(/\s+/g, " ")
     .slice(0, 500);
-};
-
-const metricsState: OnboardingIngestMetrics & { processingSamplesMs: number[] } = {
-  totalReceived: 0,
-  totalFailure: 0,
-  recoveredFromQueue: 0,
-  averageProcessingMs: 0,
-  processingSamplesMs: []
-};
-
-export const getOnboardingMetrics = (): OnboardingIngestMetrics => {
-  return {
-    totalReceived: metricsState.totalReceived,
-    totalFailure: metricsState.totalFailure,
-    recoveredFromQueue: metricsState.recoveredFromQueue,
-    averageProcessingMs: metricsState.averageProcessingMs
-  };
-};
-
-export const getFailureRate = (): number => {
-  if (!metricsState.totalReceived) return 0;
-  return metricsState.totalFailure / metricsState.totalReceived;
-};
-
-const computeFailureRate = () => {
-  metricsState.averageProcessingMs =
-    metricsState.processingSamplesMs.length === 0
-      ? 0
-      : Math.round(
-          metricsState.processingSamplesMs.reduce((acc, value) => acc + value, 0) /
-            metricsState.processingSamplesMs.length
-        );
-};
-
-const recordProcessingTime = (ms: number) => {
-  metricsState.processingSamplesMs.push(ms);
-  if (metricsState.processingSamplesMs.length > 30) {
-    metricsState.processingSamplesMs.shift();
-  }
-  computeFailureRate();
 };
 
 const getBaseSubmission = (payload: unknown): OnboardingPayload | null => {
@@ -294,73 +243,4 @@ export const parseAndValidatePayload = (
   }
 
   return { payload: normalized, errors };
-};
-
-const makeSubmissionId = (payload: OnboardingPayload): string => {
-  const base = payload.clientData?.companyName || "cliente";
-  const safeBase = base.replace(/[^a-zA-Z0-9]+/g, "").slice(0, 10).toLowerCase() || "cliente";
-  return `onb_${Date.now()}_${safeBase}`;
-};
-
-export const ingestOnboardingSubmission = async (
-  payload: unknown,
-  metadata?: OnboardingIngestOptions
-): Promise<OnboardingSubmissionResult> => {
-  const start = Date.now();
-  const { payload: parsedPayload, errors } = parseAndValidatePayload(payload);
-
-  if (errors.length > 0 || !parsedPayload) {
-    metricsState.totalReceived += 1;
-    metricsState.totalFailure += 1;
-    return {
-      ok: false,
-      submissionId: "",
-      status: "failed",
-      schemaVersion: parsedPayload?.schemaVersion || ONBOARDING_PAYLOAD_VERSION,
-      receivedAt: new Date().toISOString(),
-      error: errors.join(" | ")
-    };
-  }
-
-  const fromQueue = metadata?.fromQueue === true || parsedPayload.meta?.replayedFromQueue === true;
-  if (fromQueue) {
-    metricsState.recoveredFromQueue += 1;
-  }
-
-  const submissionId = makeSubmissionId(parsedPayload);
-  parsedPayload.schemaVersion = ONBOARDING_PAYLOAD_VERSION;
-  parsedPayload.status = "accepted";
-  parsedPayload.meta = {
-    ...parsedPayload.meta,
-    replayedFromQueue: fromQueue
-  };
-
-  // TODO: integrar persistencia definitiva (DB/Storage) em etapa posterior.
-  // Hoje garantimos contrato e observabilidade minima para execucao.
-  metricsState.totalReceived += 1;
-
-  const processingMs = Date.now() - start;
-  recordProcessingTime(processingMs);
-  console.log(
-    JSON.stringify({
-      event: "onboarding_submission_ingested",
-      submissionId,
-      status: parsedPayload.status,
-      fromQueue,
-      processingMs,
-      serviceCount: parsedPayload.selectedServices.length,
-      receivedAt: new Date().toISOString()
-    })
-  );
-
-  return {
-    ok: true,
-    submissionId,
-    status: parsedPayload.status,
-    schemaVersion: parsedPayload.schemaVersion || ONBOARDING_PAYLOAD_VERSION,
-    receivedAt: new Date().toISOString(),
-    metrics: {
-      processingMs
-    }
-  };
 };

@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SubmissionStatus {
+  RECEIVED
+  ACCEPTED
+  FAILED
+  RETAINED
+  DELETED
+}
+
+enum DeliveryTarget {
+  GOOGLE_SHEETS
+  CLICKUP
+}
+
+enum DeliveryStatus {
+  PENDING
+  PROCESSING
+  DELIVERED
+  FAILED
+}
+
+model ContactLead {
+  id              String           @id
+  idempotencyKey  String           @unique @map("idempotency_key")
+  payload         Json
+  name            String
+  email           String
+  whatsapp        String
+  locale          String
+  consentVersion  String           @map("consent_version")
+  source          String
+  status          SubmissionStatus @default(RECEIVED)
+  retentionUntil  DateTime         @map("retention_until")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+
+  @@map("contact_leads")
+}
+
+model TalentApplication {
+  id              String           @id
+  idempotencyKey  String           @unique @map("idempotency_key")
+  payload         Json
+  name            String
+  email           String
+  vacancyId       String           @map("vacancy_id")
+  locale          String
+  consentVersion  String           @map("consent_version")
+  source          String
+  status          SubmissionStatus @default(RECEIVED)
+  retentionUntil  DateTime         @map("retention_until")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+
+  @@map("talent_applications")
+}
+
+model OnboardingSubmission {
+  id              String           @id
+  idempotencyKey  String           @unique @map("idempotency_key")
+  payload         Json
+  companyName     String           @map("company_name")
+  email           String
+  locale          String
+  schemaVersion   Int              @map("schema_version")
+  source          String
+  status          SubmissionStatus @default(RECEIVED)
+  retentionUntil  DateTime         @map("retention_until")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+
+  @@map("onboarding_submissions")
+}
+
+model SimulatorConfigVersion {
+  id          String   @id
+  version     Int      @unique
+  parameters  Json
+  source      String
+  valid       Boolean  @default(true)
+  activatedAt DateTime @map("activated_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("simulator_config_versions")
+}
+
+model IntegrationDelivery {
+  id              String         @id
+  idempotencyKey  String         @unique @map("idempotency_key")
+  target          DeliveryTarget
+  aggregateType   String         @map("aggregate_type")
+  aggregateId     String         @map("aggregate_id")
+  payload         Json
+  status          DeliveryStatus @default(PENDING)
+  attempts        Int            @default(0)
+  nextAttemptAt   DateTime       @default(now()) @map("next_attempt_at")
+  deliveredAt     DateTime?      @map("delivered_at")
+  lastErrorCode   String?        @map("last_error_code")
+  lastErrorAt     DateTime?      @map("last_error_at")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+
+  @@index([status, nextAttemptAt])
+  @@map("integration_deliveries")
+}

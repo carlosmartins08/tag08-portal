@@ -1,7 +1,12 @@
 node_modules/
+.next/
+*.tsbuildinfo
 build/
 dist/
 coverage/
+.audit*/
+.tmp*.png
+metadata.json
 .DS_Store
 *.log
 .env*

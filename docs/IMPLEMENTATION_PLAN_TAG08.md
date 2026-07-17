@@ -13,7 +13,7 @@
 
 ## Fase 2 (semana 3) - Governança de produto e rotas
 - Consolidação do route registry como única fonte.
-- Sincronização com SEO (`App`, `generate-sitemap.ts`, metadados).
+- Sincronização com SEO (`src/app/[locale]/[[...segments]]/page.tsx`, `src/app/sitemap.ts`, metadados).
 - Registro de rotas e aliases em `docs/ROUTES.md`.
 - Atualização da arquitetura em `docs/ARCHITECTURE.md`.
 
