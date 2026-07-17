@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Briefcase, 
@@ -9,7 +9,6 @@ import {
   Phone, 
   Linkedin, 
   Globe, 
-  FileText, 
   Send, 
   CheckCircle2, 
   ArrowRight, 
@@ -20,7 +19,6 @@ import {
   Cpu, 
   Flame,
   Plus,
-  Trash2,
   Lock,
   Eye,
   Type,
@@ -28,6 +26,7 @@ import {
   Award
 } from "lucide-react";
 import { trackOutboundClick } from "../../../lib/analytics";
+import { queueFormSubmission } from "../../../lib/formQueue";
 
 interface Vacancy {
   id: string;
@@ -38,20 +37,6 @@ interface Vacancy {
   reward: string;
   description: string;
   requirements: string[];
-}
-
-interface Application {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  role: string;
-  linkedin: string;
-  portfolio: string;
-  coverLetter: string;
-  fileName: string;
-  status: "Pendente" | "Em AnÃ¡lise" | "Entrevista";
-  submittedAt: string;
 }
 
 export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: string) => void }) {
@@ -66,13 +51,6 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
   // File Onboarding Wizard state
   const [currentStep, setCurrentStep] = useState(1);
 
-  // File Upload Visual State
-  const [uploadedFileName, setUploadedFileName] = useState<string>("");
-  const [isDragging, setIsDragging] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // Status lists
-  const [applications, setApplications] = useState<Application[]>([]);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [consent, setConsent] = useState(false);
@@ -189,34 +167,6 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
   const activeVacancy = vacancies.find(v => v.id === selectedVacancy) || vacancies[0];
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const file = e.dataTransfer.files[0];
-      if (file.type === "application/pdf" || file.name.endsWith(".pdf") || file.name.endsWith(".docx")) {
-        setUploadedFileName(file.name);
-      } else {
-        alert("Apenas arquivos PDF ou DOCX sÃ£o aceitos.");
-      }
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setUploadedFileName(e.target.files[0].name);
-    }
-  };
-
   const handleApply = (id: string) => {
     setSelectedVacancy(id);
     setCurrentStep(1);
@@ -241,44 +191,37 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
     setSubmitting(true);
     try {
       const locale = document.documentElement.lang.startsWith("en") ? "en" : document.documentElement.lang.startsWith("es") ? "es" : "pt";
+      const idempotencyKey = crypto.randomUUID();
+      const payload = {
+        vacancyId: activeVacancy.id,
+        vacancyTitle: activeVacancy.title,
+        name: formName,
+        email: formEmail,
+        phone: formPhone,
+        linkedin: formLinkedin,
+        portfolio: formPortfolio,
+        coverLetter: formCoverLetter,
+        resumeFileName: "",
+        consent,
+        consentVersion: "talent-v1",
+        locale,
+        source: "talent-page"
+      };
       const response = await fetch("/api/talent-applications", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Idempotency-Key": crypto.randomUUID() },
-        body: JSON.stringify({
-          vacancyId: activeVacancy.id,
-          vacancyTitle: activeVacancy.title,
-          name: formName,
-          email: formEmail,
-          phone: formPhone,
-          linkedin: formLinkedin,
-          portfolio: formPortfolio,
-          coverLetter: formCoverLetter,
-          resumeFileName: uploadedFileName,
-          consent,
-          consentVersion: "talent-v1",
-          locale,
-          source: "talent-page"
-        })
+        headers: { "Content-Type": "application/json", "Idempotency-Key": idempotencyKey },
+        body: JSON.stringify(payload)
       });
       const result = await response.json().catch(() => null);
-      if (!response.ok || !result?.applicationId) throw new Error("submission_failed");
+      if (!response.ok || !result?.applicationId) {
+        if (response.status >= 500) {
+          queueFormSubmission({ endpoint: "/api/talent-applications", idempotencyKey, payload });
+          throw new Error("submission_queued");
+        }
+        setSubmitError("Revise os campos obrigatórios e tente novamente.");
+        return;
+      }
 
-      setApplications((current) => [
-        {
-          id: result.applicationId,
-          name: formName,
-          email: formEmail,
-          phone: formPhone,
-          role: activeVacancy.title,
-          linkedin: formLinkedin,
-          portfolio: formPortfolio,
-          coverLetter: formCoverLetter,
-          fileName: uploadedFileName || "Sem anexo",
-          status: "Pendente",
-          submittedAt: new Date().toLocaleDateString("pt-BR", { hour: "2-digit", minute: "2-digit" })
-        },
-        ...current
-      ]);
       setSubmitSuccess(true);
       setCurrentStep(1);
       setFormName("");
@@ -287,18 +230,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
       setFormLinkedin("");
       setFormPortfolio("");
       setFormCoverLetter("");
-      setUploadedFileName("");
       setConsent(false);
     } catch {
-      setSubmitError("Não foi possível registrar sua candidatura agora. Tente novamente em instantes.");
+      setSubmitError("Sua candidatura foi salva neste navegador e será reenviada quando a conexão voltar.");
     } finally {
       setSubmitting(false);
     }
-  };
-
-  const handleDeleteApplication = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setApplications((current) => current.filter((app) => app.id !== id));
   };
 
   return (
@@ -1087,47 +1024,11 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                         transition={{ duration: 0.25 }}
                         className="space-y-4"
                       >
-                        {/* Drag and Drop Zone */}
-                        <div className="space-y-1.5 text-left">
-                          <label className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
-                            Adicionar CurrÃ­culo (PDF/DOCX)
-                          </label>
-                          <div
-                            onDragOver={handleDragOver}
-                            onDragLeave={handleDragLeave}
-                            onDrop={handleDrop}
-                            onClick={() => fileInputRef.current?.click()}
-                            className={`border-2 border-dashed rounded-2xl p-5 hover:bg-zinc-100/50 transition-all text-center cursor-pointer flex flex-col items-center justify-center ${
-                              isDragging 
-                                ? "border-zinc-950 bg-zinc-100" 
-                                : uploadedFileName 
-                                  ? "border-green-500/50 bg-green-500/[0.01]" 
-                                  : "border-zinc-200 hover:border-zinc-300"
-                            }`}
-                          >
-                            <input
-                              type="file"
-                              ref={fileInputRef}
-                              onChange={handleFileChange}
-                              accept=".pdf,.docx"
-                              className="hidden"
-                            />
-                            
-                            <FileText className={`w-8 h-8 mb-1.5 ${uploadedFileName ? "text-green-600" : "text-zinc-400"}`} />
-                            {uploadedFileName ? (
-                              <div className="space-y-1">
-                                <p className="text-xs text-zinc-900 font-bold">{uploadedFileName}</p>
-                                <p className="text-[9px] text-brand bg-black px-1.5 py-0.5 rounded font-mono uppercase inline-block">Anexo Pronto</p>
-                              </div>
-                            ) : (
-                              <div className="space-y-1">
-                                <p className="text-xs text-zinc-800 font-bold">
-                                  Arraste seu PDF aqui ou <span className="text-zinc-650 underline">explore arquivos</span>
-                                </p>
-                                <p className="text-[9.5px] text-zinc-400 font-sans">Tamanho limite: 10MB</p>
-                              </div>
-                            )}
-                          </div>
+                        <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-left">
+                          <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-600">Currículo e evidências</p>
+                          <p className="mt-1 text-[11px] leading-relaxed text-zinc-500">
+                            Nesta etapa não recebemos arquivos. Inclua LinkedIn e portfólio no passo anterior para que a equipe avalie sua experiência com segurança.
+                          </p>
                         </div>
 
                         {/* Miniature Pitch Letter */}
@@ -1240,73 +1141,26 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
               </AnimatePresence>
             </div>
 
-            {/* Applicant tracker on right */}
+            {/* Application privacy notice */}
             <div className="lg:col-span-5 space-y-5">
               <div className="bg-zinc-50 border border-zinc-100 p-5 sm:p-6.5 rounded-3xl space-y-4">
                 <div className="flex items-center gap-2 font-mono text-[9px] text-brand bg-black px-2 py-0.5 rounded font-bold uppercase tracking-wider self-start inline-flex">
                   <Terminal className="w-3.5 h-3.5 animate-pulse" />
-                  Console de Rastreamento
+                  Envio protegido
                 </div>
                 
                 <h3 className="font-display font-black text-lg text-zinc-900 uppercase tracking-tight leading-none">
-                  Suas Fichas Enviadas
+                  Como funciona a candidatura
                 </h3>
                 <p className="text-zinc-500 text-xs leading-relaxed">
-                  Confira em tempo real o status operacional do seu processo seletivo armazenado no navegador.
+                  Seus dados são enviados com consentimento para o Banco de Talentos. Esta página não mantém cópias da candidatura nem exibe informações pessoais após o envio.
                 </p>
 
-                <div className="space-y-2.5 pt-1">
-                  {applications.length === 0 ? (
-                    <div className="border border-dashed border-zinc-200 rounded-2xl p-6 text-center text-zinc-400 font-mono text-[9.5px] space-y-1 uppercase">
-                      <p>Nenhuma ficha enviada recentemente.</p>
-                      <p className="text-zinc-400 text-[8.5px]">Seu status aparecerÃ¡ de forma privativa assim que submetido.</p>
-                    </div>
-                  ) : (
-                    applications.map((app) => (
-                      <div 
-                        key={app.id}
-                        className="bg-white border border-zinc-250/65 p-4 rounded-xl space-y-2 relative group hover:border-zinc-950 transition-colors"
-                      >
-                        <button
-                          onClick={(e) => handleDeleteApplication(app.id, e)}
-                          className="absolute top-4 right-4 p-1 shadow-sm opacity-0 group-hover:opacity-100 bg-zinc-50 hover:bg-zinc-100 text-zinc-400 hover:text-red-500 rounded-lg transition-all cursor-pointer"
-                          title="Remover histÃ³rico"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                        
-                        <div className="flex items-center justify-between">
-                          <span className="font-sans text-[8.5px] text-brand bg-black px-1.5 py-0.5 rounded font-bold">
-                            {app.id}
-                          </span>
-                          <span className="text-[9px] font-bold font-sans px-2 py-0.5 rounded bg-zinc-100 text-zinc-800 flex items-center gap-1">
-                            <span className="w-1 h-1 rounded-full bg-green-500 animate-ping" /> {app.status}
-                          </span>
-                        </div>
-
-                        <div>
-                          <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-wide">
-                            {app.role}
-                          </h4>
-                          <p className="text-[10px] text-zinc-400 font-sans">
-                            Submetido em: {app.submittedAt}
-                          </p>
-                        </div>
-
-                        <div className="border-t border-zinc-100 pt-2 flex justify-between items-center text-[10px] text-zinc-500">
-                          <span className="truncate max-w-[130px] font-mono text-[9px]">CV: {app.fileName}</span>
-                          <a 
-                            href={app.linkedin} 
-                            target="_blank" 
-                            rel="noreferrer"
-                            className="hover:text-zinc-900 font-sans text-[9px] font-bold flex items-center gap-0.5"
-                          >
-                            LinkedIn <ArrowRight className="w-2.5 h-2.5 text-brand" />
-                          </a>
-                        </div>
-                      </div>
-                    ))
-                  )}
+                <div className="space-y-2.5 pt-1 border border-dashed border-zinc-200 rounded-2xl p-5 text-left">
+                  <p className="text-zinc-700 text-xs font-semibold">1. Recebimento e confirmação</p>
+                  <p className="text-zinc-500 text-[11px] leading-relaxed">A candidatura é registrada antes da confirmação exibida na tela.</p>
+                  <p className="text-zinc-700 text-xs font-semibold">2. Triagem interna</p>
+                  <p className="text-zinc-500 text-[11px] leading-relaxed">A equipe analisa o perfil no Banco de Talentos e entra em contato pelos canais informados, se houver aderência.</p>
                 </div>
               </div>
 

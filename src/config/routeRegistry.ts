@@ -3,6 +3,11 @@ import { CASE_STUDIES } from "../data";
 export const ROUTE_LOCALES = ["pt", "en", "es"] as const;
 export type RouteLocale = (typeof ROUTE_LOCALES)[number];
 
+// EN and ES remain available for review, but only reviewed locales may be indexed.
+export const INDEXABLE_LOCALES: readonly RouteLocale[] = ["pt"];
+
+export const isLocaleIndexable = (locale: RouteLocale): boolean => INDEXABLE_LOCALES.includes(locale);
+
 export type RouteKey =
   | "home"
   | "sobre"

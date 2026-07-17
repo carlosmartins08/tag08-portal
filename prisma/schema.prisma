@@ -103,6 +103,7 @@ model IntegrationDelivery {
   attempts        Int            @default(0)
   nextAttemptAt   DateTime       @default(now()) @map("next_attempt_at")
   deliveredAt     DateTime?      @map("delivered_at")
+  externalReference String?      @map("external_reference")
   lastErrorCode   String?        @map("last_error_code")
   lastErrorAt     DateTime?      @map("last_error_at")
   createdAt       DateTime       @default(now()) @map("created_at")
@@ -110,4 +111,15 @@ model IntegrationDelivery {
 
   @@index([status, nextAttemptAt])
   @@map("integration_deliveries")
+}
+
+model RetentionAudit {
+  id            String   @id
+  aggregateType String   @map("aggregate_type")
+  aggregateId   String   @map("aggregate_id")
+  action        String
+  occurredAt    DateTime @default(now()) @map("occurred_at")
+
+  @@index([aggregateType, aggregateId])
+  @@map("retention_audits")
 }

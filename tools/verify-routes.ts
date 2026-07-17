@@ -1,0 +1,29 @@
+import assert from "node:assert/strict";
+import { getLocalizedPath, renderableRoutePaths, routeRegistry } from "../src/config/routeRegistry";
+
+const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+
+const check = async (path: string, expectedStatus: number) => {
+  const response = await fetch(`${baseUrl}${path}`, { redirect: "manual" });
+  assert.equal(response.status, expectedStatus, `${path} returned ${response.status}`);
+  return response;
+};
+
+for (const path of renderableRoutePaths) {
+  await check(path, 200);
+  await check(getLocalizedPath(path, "en"), 200);
+  await check(getLocalizedPath(path, "es"), 200);
+}
+
+for (const route of routeRegistry) {
+  for (const alias of route.aliases || []) {
+    const response = await check(alias, 308);
+    assert.equal(response.headers.get("location"), route.canonicalPath);
+  }
+}
+
+const languageRedirect = await check("/sobre?lang=en&utm_source=route-check", 308);
+assert.equal(languageRedirect.headers.get("location"), "/en/sobre?utm_source=route-check");
+await check("/not-a-route", 404);
+await check("/robots.txt", 200);
+await check("/sitemap.xml", 200);

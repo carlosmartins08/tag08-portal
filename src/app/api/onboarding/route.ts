@@ -10,8 +10,8 @@ const resolveQueueHint = (payload: unknown): boolean => {
   return meta?.replayedFromQueue === true;
 };
 
-export async function OPTIONS() {
-  return optionsResponse();
+export async function OPTIONS(request: Request) {
+  return optionsResponse(request);
 }
 
 export async function POST(request: Request) {
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
 
   if (result.errors.length > 0) {
     console.warn(JSON.stringify({ event: "onboarding_submission_rejected", requestId, error: "invalid_payload" }));
-    return jsonResponse({ ok: false, status: "failed", error: result.errors.join(" | "), requestId }, 400);
+    return jsonResponse({ ok: false, status: "failed", error: result.errors.join(" | "), requestId }, 400, request);
   }
 
   result.payload.schemaVersion = ONBOARDING_PAYLOAD_VERSION;
@@ -42,13 +42,13 @@ export async function POST(request: Request) {
 
     console.log(JSON.stringify({ event: "onboarding_submission_accepted", requestId, submissionId: persisted.id, fromQueue, replayed: !persisted.created }));
 
-    return jsonResponse({ ok: true, submissionId: persisted.id, status: "accepted", schemaVersion: ONBOARDING_PAYLOAD_VERSION, receivedAt, requestId }, 202);
+    return jsonResponse({ ok: true, submissionId: persisted.id, status: "accepted", schemaVersion: ONBOARDING_PAYLOAD_VERSION, receivedAt, requestId }, 202, request);
   } catch (error) {
     if (isPersistenceUnavailable(error)) {
-      return jsonResponse({ ok: false, status: "failed", error: "persistence_unavailable", requestId }, 503);
+      return jsonResponse({ ok: false, status: "failed", error: "persistence_unavailable", requestId }, 503, request);
     }
 
     console.error(JSON.stringify({ event: "onboarding_submission_failed", requestId, error: "persistence_error" }));
-    return jsonResponse({ ok: false, status: "failed", error: "persistence_error", requestId }, 500);
+    return jsonResponse({ ok: false, status: "failed", error: "persistence_error", requestId }, 500, request);
   }
 }

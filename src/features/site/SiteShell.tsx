@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
+import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import Lenis from "lenis";
@@ -9,30 +9,11 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import WhatsAppButton from "../../components/WhatsAppButton";
 import Breadcrumbs from "../../components/Breadcrumbs";
-import ErrorBoundary from "../../components/ErrorBoundary";
 import { canonicalizeRoute, getLocalizedPath, getRouteByPath, type RouteLocale } from "../../config/routeRegistry";
 import { i18n, type UiLanguage } from "../../i18n/siteI18n";
 import { safeStorage } from "../../utils/storage";
 import { initializeGoogleAnalytics, trackEngagement, trackPageView, trackScrollDepth } from "../../lib/analytics";
-
-const Home = dynamic(() => import("./pages/Home"));
-const Sobre = dynamic(() => import("./pages/Sobre"));
-const Servicos = dynamic(() => import("./pages/Servicos"));
-const ProcessIntelligence = dynamic(() => import("./pages/ProcessIntelligence"));
-const ProcessActivation = dynamic(() => import("./pages/ProcessActivation"));
-const DesenvolvimentoWeb = dynamic(() => import("./pages/DesenvolvimentoWeb"));
-const Branding = dynamic(() => import("./pages/Branding"));
-const GestaoRedesSociais = dynamic(() => import("./pages/GestaoRedesSociais"));
-const Contato = dynamic(() => import("./pages/Contato"));
-const TrabalheConosco = dynamic(() => import("./pages/TrabalheConosco"));
-const Insights = dynamic(() => import("./pages/Insights"));
-const ClienteOnboarding = dynamic(() => import("./pages/ClienteOnboarding"));
-const CaseStudyDetail = dynamic(() => import("./pages/CaseStudyDetail"));
-const Sebraetec = dynamic(() => import("./pages/Sebraetec"));
-const ProgramaAfiliados = dynamic(() => import("./pages/ProgramaAfiliados"));
-const HospedagemManutencaoSites = dynamic(() => import("./pages/HospedagemManutencaoSites"));
-const AssessoriaMarketingDigitalEstrategico = dynamic(() => import("./pages/AssessoriaMarketingDigitalEstrategico"));
-const ProducaoAudiovisual = dynamic(() => import("./pages/ProducaoAudiovisual"));
+import { flushFormQueue } from "../../lib/formQueue";
 
 const localeToUiLanguage: Record<RouteLocale, UiLanguage> = {
   pt: "pt",
@@ -43,9 +24,10 @@ const localeToUiLanguage: Record<RouteLocale, UiLanguage> = {
 type SiteShellProps = {
   path: string;
   locale: RouteLocale;
+  children: ReactNode;
 };
 
-export default function SiteShell({ path, locale }: SiteShellProps) {
+export default function SiteShell({ path, locale, children }: SiteShellProps) {
   const router = useRouter();
   const [language, setLanguage] = useState<UiLanguage>(localeToUiLanguage[locale]);
   const lenisRef = useRef<Lenis | null>(null);
@@ -61,6 +43,12 @@ export default function SiteShell({ path, locale }: SiteShellProps) {
 
   useEffect(() => {
     initializeGoogleAnalytics();
+  }, []);
+
+  useEffect(() => {
+    void flushFormQueue();
+    window.addEventListener("online", flushFormQueue);
+    return () => window.removeEventListener("online", flushFormQueue);
   }, []);
 
   useEffect(() => {
@@ -174,52 +162,6 @@ export default function SiteShell({ path, locale }: SiteShellProps) {
     };
   }, [language, path]);
 
-  const renderPage = () => {
-    const activeRoute = getRouteByPath(path);
-    if (activeRoute?.routeCategory === "case-study") {
-      return <CaseStudyDetail caseId={path.replace("/casos/", "")} onNavigate={navigate} />;
-    }
-
-    switch (path) {
-      case "/":
-        return <Home onNavigate={navigate} />;
-      case "/sobre":
-        return <Sobre onNavigate={navigate} />;
-      case "/servicos":
-        return <Servicos onNavigate={navigate} />;
-      case "/servicos/process-intelligence":
-        return <ProcessIntelligence onNavigate={navigate} />;
-      case "/servicos/process-activation":
-        return <ProcessActivation onNavigate={navigate} />;
-      case "/servicos/desenvolvimento-web":
-        return <DesenvolvimentoWeb onNavigate={navigate} />;
-      case "/servicos/branding-identidade":
-        return <Branding onNavigate={navigate} />;
-      case "/servicos/gestao-de-redes-sociais":
-        return <GestaoRedesSociais onNavigate={navigate} />;
-      case "/servicos/producao-audiovisual":
-        return <ProducaoAudiovisual onNavigate={navigate} />;
-      case "/contato":
-        return <Contato />;
-      case "/trabalhe-conosco":
-        return <TrabalheConosco onNavigate={navigate} />;
-      case "/insights":
-        return <Insights onNavigate={navigate} />;
-      case "/cliente/onboarding":
-        return <ClienteOnboarding onNavigate={navigate} />;
-      case "/sebraetec-impulsionando-empreendedores":
-        return <Sebraetec onNavigate={navigate} />;
-      case "/programa-afiliados":
-        return <ProgramaAfiliados onNavigate={navigate} />;
-      case "/hospedagem-manutencao-sites":
-        return <HospedagemManutencaoSites onNavigate={navigate} />;
-      case "/servicos/assessoria-marketing-digital-estrategico":
-        return <AssessoriaMarketingDigitalEstrategico onNavigate={navigate} />;
-      default:
-        return null;
-    }
-  };
-
   return (
     <div className="min-h-screen bg-main text-primary font-sans flex flex-col justify-between selection:bg-brand selection:text-black relative overflow-x-hidden transition-colors duration-350">
       <div className="absolute inset-0 radial-grid opacity-[0.22] pointer-events-none z-0" />
@@ -236,7 +178,7 @@ export default function SiteShell({ path, locale }: SiteShellProps) {
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
           >
-            <ErrorBoundary boundaryName={`route:${path}`}>{renderPage()}</ErrorBoundary>
+            {children}
           </motion.div>
         </AnimatePresence>
       </main>

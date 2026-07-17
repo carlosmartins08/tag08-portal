@@ -20,6 +20,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { ContactFormData } from "../../../types";
 import { TAG08_OFFICIAL_CHANNELS, TAG08_OFFICIAL_CONTACT, TAG08_WHATSAPP_CONTACTS, buildGoogleMapsEmbedUrl } from "../../../config/siteNetwork";
 import { trackFormError, trackFormStart, trackFormSubmit, trackLeadEvent, trackOutboundClick } from "../../../lib/analytics";
+import { queueFormSubmission } from "../../../lib/formQueue";
 
 export default function Contato() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -126,29 +127,39 @@ export default function Contato() {
     try {
       const locale = document.documentElement.lang.startsWith("en") ? "en" : document.documentElement.lang.startsWith("es") ? "es" : "pt";
       const searchParams = new URLSearchParams(window.location.search);
+      const idempotencyKey = crypto.randomUUID();
+      const payload = {
+        ...formData,
+        consent,
+        consentVersion: "contact-v1",
+        locale,
+        source: "contact-page",
+        utm: {
+          source: searchParams.get("utm_source") || "",
+          medium: searchParams.get("utm_medium") || "",
+          campaign: searchParams.get("utm_campaign") || "",
+          content: searchParams.get("utm_content") || "",
+          term: searchParams.get("utm_term") || ""
+        }
+      };
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Idempotency-Key": crypto.randomUUID()
+          "Idempotency-Key": idempotencyKey
         },
-        body: JSON.stringify({
-          ...formData,
-          consent,
-          consentVersion: "contact-v1",
-          locale,
-          source: "contact-page",
-          utm: {
-            source: searchParams.get("utm_source") || "",
-            medium: searchParams.get("utm_medium") || "",
-            campaign: searchParams.get("utm_campaign") || "",
-            content: searchParams.get("utm_content") || "",
-            term: searchParams.get("utm_term") || ""
-          }
-        })
+        body: JSON.stringify(payload)
       });
 
-      if (!response.ok) throw new Error("submission_failed");
+      if (!response.ok) {
+        if (response.status >= 500) {
+          queueFormSubmission({ endpoint: "/api/contact", idempotencyKey, payload });
+          throw new Error("submission_queued");
+        }
+        setSubmitError("Revise os campos obrigatórios e tente novamente.");
+        setLoading(false);
+        return;
+      }
 
       setLoading(false);
       setSuccess(true);
@@ -165,7 +176,7 @@ export default function Contato() {
       });
     } catch {
       setLoading(false);
-      setSubmitError("Não foi possível registrar seus dados agora. Tente novamente em instantes.");
+      setSubmitError("Sua solicitação foi salva neste navegador e será reenviada quando a conexão voltar.");
       trackFormError({
         form_name: "contact",
         form_surface: "contact-page",

@@ -57,6 +57,15 @@ const appendToSheet = async (delivery) => {
   if (!tab) throw new Error("google_sheet_tab_not_configured");
 
   const token = await getGoogleAccessToken();
+  const idRange = encodeURIComponent(`${tab}!A:A`);
+  const existing = await fetch(
+    `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEETS_SPREADSHEET_ID}/values/${idRange}`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  if (!existing.ok) throw new Error("google_sheets_lookup_failed");
+  const existingValues = (await existing.json()).values || [];
+  if (existingValues.some((row) => row[0] === delivery.id)) return delivery.id;
+
   const range = encodeURIComponent(`${tab}!A:D`);
   const response = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEETS_SPREADSHEET_ID}/values/${range}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
@@ -67,6 +76,7 @@ const appendToSheet = async (delivery) => {
     }
   );
   if (!response.ok) throw new Error("google_sheets_append_failed");
+  return delivery.id;
 };
 
 const createClickUpTask = async (delivery) => {
@@ -75,6 +85,14 @@ const createClickUpTask = async (delivery) => {
     : process.env.CLICKUP_ONBOARDING_LIST_ID;
   if (!process.env.CLICKUP_API_TOKEN || !listId) throw new Error("clickup_not_configured");
 
+  const taskName = `${delivery.aggregate_type}:${delivery.id}`;
+  const existingTasks = await fetch(`https://api.clickup.com/api/v2/list/${listId}/task?include_closed=true`, {
+    headers: { Authorization: process.env.CLICKUP_API_TOKEN }
+  });
+  if (!existingTasks.ok) throw new Error("clickup_task_lookup_failed");
+  const task = (await existingTasks.json()).tasks?.find((item) => item.name === taskName);
+  if (task?.id) return task.id;
+
   const response = await fetch(`https://api.clickup.com/api/v2/list/${listId}/task`, {
     method: "POST",
     headers: {
@@ -82,12 +100,13 @@ const createClickUpTask = async (delivery) => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      name: `${delivery.aggregate_type}:${delivery.aggregate_id}`,
+      name: taskName,
       description: JSON.stringify(delivery.payload),
       tags: ["tag08", delivery.aggregate_type]
     })
   });
   if (!response.ok) throw new Error("clickup_task_create_failed");
+  return (await response.json()).id;
 };
 
 const claimDeliveries = async (client) => {
@@ -110,12 +129,12 @@ const claimDeliveries = async (client) => {
   return result.rows;
 };
 
-const markDelivered = (client, id) =>
+const markDelivered = (client, id, externalReference) =>
   client.query(
     `UPDATE integration_deliveries
-     SET status = 'DELIVERED'::"DeliveryStatus", delivered_at = NOW(), last_error_code = NULL, last_error_at = NULL, updated_at = NOW()
+     SET status = 'DELIVERED'::"DeliveryStatus", delivered_at = NOW(), external_reference = $2, last_error_code = NULL, last_error_at = NULL, updated_at = NOW()
      WHERE id = $1`,
-    [id]
+    [id, externalReference]
   );
 
 const markFailed = (client, delivery, code) => {
@@ -130,9 +149,9 @@ const markFailed = (client, delivery, code) => {
 
 const processDelivery = async (delivery) => {
   if (process.env.INTEGRATIONS_ENABLED !== "true") return "disabled";
-  if (delivery.target === "GOOGLE_SHEETS") await appendToSheet(delivery);
-  if (delivery.target === "CLICKUP") await createClickUpTask(delivery);
-  return "delivered";
+  if (delivery.target === "GOOGLE_SHEETS") return appendToSheet(delivery);
+  if (delivery.target === "CLICKUP") return createClickUpTask(delivery);
+  throw new Error("unsupported_delivery_target");
 };
 
 const client = await pool.connect();
@@ -144,9 +163,10 @@ try {
   for (const delivery of deliveries) {
     try {
       const outcome = await processDelivery(delivery);
-      if (outcome === "delivered") await markDelivered(client, delivery.id);
       if (outcome === "disabled") {
         await client.query(`UPDATE integration_deliveries SET status = 'PENDING'::"DeliveryStatus", updated_at = NOW() WHERE id = $1`, [delivery.id]);
+      } else {
+        await markDelivered(client, delivery.id, outcome);
       }
     } catch (error) {
       await markFailed(client, delivery, error instanceof Error ? error.message : "integration_delivery_failed");

@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node tools/clear-next-dev-cache.mjs",
     "dev": "next dev",
+    "prebuild": "npm run db:generate",
     "build": "next build",
     "postbuild": "node tools/prepare-standalone.mjs",
     "start": "node .next/standalone/server.js",
@@ -15,10 +17,13 @@
     "worker:integrations": "node server/integrationWorker.mjs",
     "worker:retention": "tsx server/retentionWorker.ts",
     "verify:routes": "tsx tools/verify-routes.ts",
+    "test:routes": "tsx tests/routeRegistry.test.ts && tsx tests/localePublishing.test.ts && tsx tests/proxy.test.ts",
+    "test:contracts": "tsx tests/onboardingContract.test.ts && tsx tests/submissionContracts.test.ts && tsx tests/apiResponse.test.ts",
+    "test": "npm run test:routes && npm run test:contracts",
     "audit:colors": "node tools/audit-brand-colors.mjs",
     "audit:typography": "node tools/audit-typography.mjs",
     "lint": "tsc --noEmit",
-    "check": "npm run lint && npm run build"
+    "check": "npm test && npm run lint && npm run build"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

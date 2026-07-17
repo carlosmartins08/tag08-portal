@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import SiteShell from "../../../features/site/SiteShell";
+import RouteContent from "../../../features/site/RouteContent";
 import {
   canonicalizeRoute,
   getLocalizedPath,
   getRouteByPath,
+  isLocaleIndexable,
   resolveLocalizedPath,
   staticRouteSegments,
   ROUTE_LOCALES,
@@ -61,7 +63,7 @@ export async function generateMetadata({ params }: RoutePageProps): Promise<Meta
       canonical: canonicalUrl,
       languages: getAlternates(canonicalPath)
     },
-    robots: route.indexable ? { index: true, follow: true } : { index: false, follow: true },
+    robots: route.indexable && isLocaleIndexable(locale) ? { index: true, follow: true } : { index: false, follow: true },
     openGraph: {
       title: seo.title,
       description: seo.description,
@@ -99,7 +101,9 @@ export default async function RoutePage({ params }: RoutePageProps) {
       {breadcrumbSchema ? (
         <script id="schema-breadcrumb" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       ) : null}
-      <SiteShell path={canonicalPath} locale={locale} />
+      <SiteShell path={canonicalPath} locale={locale}>
+        <RouteContent path={canonicalPath} locale={locale} />
+      </SiteShell>
     </>
   );
 }
