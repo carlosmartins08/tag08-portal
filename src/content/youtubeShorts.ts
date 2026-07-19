@@ -8,7 +8,7 @@ export interface YouTubeShort {
 export const TAG08_YOUTUBE_SHORTS: YouTubeShort[] = [
   {
     id: "dOGBAq02Ji8",
-    title: "Produção de vídeos no sertão da Paraíba, muito calor diversão e novas ideias. 💡",
+    title: "Produção de vídeos no sertão da Paraíba, muito calor, diversão e novas ideias.",
     href: "https://www.youtube.com/shorts/dOGBAq02Ji8",
     thumbnail: "https://i.ytimg.com/vi/dOGBAq02Ji8/hqdefault.jpg"
   },
@@ -20,7 +20,7 @@ export const TAG08_YOUTUBE_SHORTS: YouTubeShort[] = [
   },
   {
     id: "JRTSyDm7F04",
-    title: "Como fazemos as coisas aqui, o coração da TAG08 pulsa forte o verbo “ACREDITAR”",
+    title: "Como fazemos as coisas aqui: o coração da TAG08 pulsa forte com o verbo acreditar.",
     href: "https://www.youtube.com/shorts/JRTSyDm7F04",
     thumbnail: "https://i.ytimg.com/vi/JRTSyDm7F04/hqdefault.jpg"
   },
@@ -32,7 +32,7 @@ export const TAG08_YOUTUBE_SHORTS: YouTubeShort[] = [
   },
   {
     id: "BVkLt70eZfw",
-    title: "Sedação Ambulatorial- Bastidores com Glória Pimenta",
+    title: "Sedação Ambulatorial: bastidores com Glória Pimenta",
     href: "https://www.youtube.com/shorts/BVkLt70eZfw",
     thumbnail: "https://i.ytimg.com/vi/BVkLt70eZfw/hqdefault.jpg"
   },

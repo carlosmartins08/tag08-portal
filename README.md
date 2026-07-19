@@ -18,20 +18,48 @@ Portal institucional TAG08 em Next.js App Router. As paginas publicas sao gerada
 ## Comandos
 
 ```bash
-npm install
+npm ci
 npm run dev
 npm run lint
 npm run build
 npm run start
+npm run preflight:deploy
+npm run verify:staging
+npm run verify:seo
+npm run verify:persistence
 ```
 
 ## Variaveis locais
 
-Copie `.env.example` para `.env.local`. Use `NEXT_PUBLIC_GA4_ID` e `NEXT_PUBLIC_GSC_VERIFICATION` para analytics e Search Console; as demais variaveis preservam os contratos atuais de onboarding e conteudo oficial.
+Copie `.env.example` para `.env`. Use `NEXT_PUBLIC_GA4_ID` e `NEXT_PUBLIC_GSC_VERIFICATION` para analytics e Search Console; as demais variaveis preservam os contratos atuais de onboarding e conteudo oficial. Nunca versione `.env`.
+
+## Sequencia de deploy
+
+Execute na raiz da aplicacao, com as variaveis do ambiente ja configuradas:
+
+```bash
+npm ci
+npm run preflight:deploy
+npm run db:migrate
+npm run build
+npm run start
+```
+
+Para producao, substitua o preflight por `npm run preflight:deploy -- --production`. Mantenha `INTEGRATIONS_ENABLED=false` no primeiro deploy. Em staging, rode `BASE_URL=https://seu-staging.example npm run verify:staging` para validar rotas, health do banco, protecao das metricas, SEO, os tres formularios, idempotencia e outbox com registros sinteticos removidos ao fim. Apos a aprovacao do staging, habilite um destino por vez e valide novamente com `npm run preflight:deploy -- --allow-integrations`.
+
+Os jobs sao unitarios e devem ser acionados pelo agendador da hospedagem, nunca pelo processo web:
+
+```bash
+npm run worker:integrations
+npm run worker:retention
+```
+
+Agende integracoes em intervalo curto e retencao uma vez ao dia. O primeiro usa lease, retries e idempotencia; o segundo remove apenas registros vencidos que nao estejam em processamento.
 
 ## Regras de manutencao
 
 - Nao crie rotas fora de `routeRegistry.ts`.
 - Nao altere os contratos em `server/onboardingContract.ts` sem compatibilidade explicita.
 - Alias devem redirecionar para a URL canonica, nunca renderizar uma segunda pagina.
-- O deploy deve executar `npm run check` antes de ir para staging.
+- O deploy deve executar `npm run check`, `npm run verify:routes` e `npm run verify:seo` antes de ir para staging.
+- Staging e producao devem executar o preflight antes de aplicar migrations. As integracoes exigem `--allow-integrations` somente apos aprovacao.

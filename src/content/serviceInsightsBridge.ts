@@ -150,13 +150,137 @@ const GESTAO_REDES_BRIDGE: ServiceInsightsBridgeConfig = {
   ],
 };
 
+const BRANDING_BRIDGE: ServiceInsightsBridgeConfig = {
+  servicePath: "/servicos/branding-identidade",
+  serviceTitle: "Branding e Identidade Visual",
+  title: "Leituras para transformar identidade em uma marca utilizável",
+  intro:
+    "A identidade ganha valor quando deixa de ser apenas estética e passa a orientar comunicação, materiais e decisões. Estes temas ajudam a organizar essa passagem.",
+  hubCtaLabel: "Abrir Hub de Insights",
+  hubPath: "/insights",
+  items: [
+    {
+      status: "published",
+      postId: "estrategia-antes-da-estetica",
+      note: "Publicado no Hub de Insights",
+    },
+    {
+      status: "planned",
+      title: "O que um guia de marca precisa resolver no dia a dia",
+      excerpt:
+        "Um guia útil não serve para decorar. Ele reduz dúvida sobre aplicação, contraste, tipografia e prioridades nos pontos de contato da marca.",
+      note: "Tema em preparação",
+    },
+    {
+      status: "planned",
+      title: "Como aplicar uma identidade sem transformar tudo de uma vez",
+      excerpt:
+        "A implantação funciona melhor quando começa pelos materiais e canais que mais representam a marca, com uma ordem clara de atualização.",
+      note: "Tema em preparação",
+    },
+  ],
+};
+
+const AUDIOVISUAL_BRIDGE: ServiceInsightsBridgeConfig = {
+  servicePath: "/servicos/producao-audiovisual",
+  serviceTitle: "Produção Audiovisual",
+  title: "Leituras para dar função ao conteúdo em vídeo",
+  intro:
+    "Produção audiovisual não começa na câmera. Os temas abaixo ajudam a definir objetivo, contexto e uso do conteúdo antes da gravação.",
+  hubCtaLabel: "Abrir Hub de Insights",
+  hubPath: "/insights",
+  items: [
+    {
+      status: "published",
+      postId: "youtube-para-consideracao",
+      note: "Publicado no Hub de Insights",
+    },
+    {
+      status: "planned",
+      title: "O que definir antes de produzir um vídeo para a marca",
+      excerpt:
+        "Público, mensagem, canal, duração e próximo passo precisam ser definidos antes do roteiro para que o vídeo tenha função real.",
+      note: "Tema em preparação",
+    },
+    {
+      status: "planned",
+      title: "Como reaproveitar uma produção sem perder coerência",
+      excerpt:
+        "Uma captação pode atender diferentes formatos quando a distribuição e os recortes são planejados desde o início.",
+      note: "Tema em preparação",
+    },
+  ],
+};
+
+const PROCESS_ACTIVATION_BRIDGE: ServiceInsightsBridgeConfig = {
+  servicePath: "/servicos/process-activation",
+  serviceTitle: "Process Activation",
+  title: "Leituras para fazer o processo entrar na rotina",
+  intro:
+    "Ativar um processo exige mais do que documentar etapas. Estes temas ajudam a entender adesão, clareza e continuidade na operação.",
+  hubCtaLabel: "Abrir Hub de Insights",
+  hubPath: "/insights",
+  items: [
+    {
+      status: "published",
+      postId: "anatomia-do-caos-operacional",
+      note: "Publicado no Hub de Insights",
+    },
+    {
+      status: "published",
+      postId: "automacao-marketing-vendas",
+      note: "Publicado no Hub de Insights",
+    },
+    {
+      status: "planned",
+      title: "Como transformar um playbook em um hábito de equipe",
+      excerpt:
+        "A adoção depende de responsáveis, cadência de revisão e espaço para ajustar o processo sem voltar ao improviso.",
+      note: "Tema em preparação",
+    },
+  ],
+};
+
+const HOSPEDAGEM_BRIDGE: ServiceInsightsBridgeConfig = {
+  servicePath: "/hospedagem-manutencao-sites",
+  serviceTitle: "Hospedagem e Manutenção",
+  title: "Leituras para manter o site confiável depois do lançamento",
+  intro:
+    "A publicação é o início da operação. Estes temas ajudam a organizar manutenção, desempenho e decisões técnicas sem depender de urgência.",
+  hubCtaLabel: "Abrir Hub de Insights",
+  hubPath: "/insights",
+  items: [
+    {
+      status: "published",
+      postId: "boas-praticas-manutencao-site",
+      note: "Publicado no Hub de Insights",
+    },
+    {
+      status: "published",
+      postId: "importancia-velocidade-conversao-sites",
+      note: "Publicado no Hub de Insights",
+    },
+    {
+      status: "planned",
+      title: "O que revisar depois de publicar um site",
+      excerpt:
+        "Backups, atualizações, links, formulários e desempenho precisam de rotina definida para que problemas não apareçam só quando já impactaram o negócio.",
+      note: "Tema em preparação",
+    },
+  ],
+};
+
 export const SERVICE_INSIGHTS_BRIDGE_CONTENT: Record<
   string,
   ServiceInsightsBridgeConfig
 > = {
   [ASSESSORIA_MARKETING_BRIDGE.servicePath]: ASSESSORIA_MARKETING_BRIDGE,
+  [AUDIOVISUAL_BRIDGE.servicePath]: AUDIOVISUAL_BRIDGE,
+  [BRANDING_BRIDGE.servicePath]: BRANDING_BRIDGE,
   [DEVELOPMENT_WEB_BRIDGE.servicePath]: DEVELOPMENT_WEB_BRIDGE,
   [GESTAO_REDES_BRIDGE.servicePath]: GESTAO_REDES_BRIDGE,
+  [HOSPEDAGEM_BRIDGE.servicePath]: HOSPEDAGEM_BRIDGE,
+  [PROCESS_ACTIVATION_BRIDGE.servicePath]: PROCESS_ACTIVATION_BRIDGE,
   [PROCESS_INTELLIGENCE_BRIDGE.servicePath]: PROCESS_INTELLIGENCE_BRIDGE,
 };
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Briefcase, 
@@ -69,21 +70,21 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
     const newErrors: Record<string, string> = {};
     if (step === 1) {
       if (!formName.trim()) {
-        newErrors.name = "Nome Ã© obrigatÃ³rio";
+        newErrors.name = "Nome é obrigatório";
       }
       if (!formEmail.trim() || !formEmail.includes("@")) {
-        newErrors.email = "E-mail vÃ¡lido Ã© obrigatÃ³rio";
+        newErrors.email = "E-mail válido é obrigatório";
       }
       if (!formPhone.trim()) {
-        newErrors.phone = "Telefone Ã© obrigatÃ³rio";
+        newErrors.phone = "Telefone é obrigatório";
       }
     } else if (step === 2) {
       if (!formLinkedin.trim() || !formLinkedin.includes("linkedin.com")) {
-        newErrors.linkedin = "Insira um link do LinkedIn vÃ¡lido (contendo linkedin.com)";
+        newErrors.linkedin = "Insira um link do LinkedIn válido (contendo linkedin.com)";
       }
     } else if (step === 3) {
       if (!formCoverLetter.trim() || formCoverLetter.length < 20) {
-        newErrors.coverLetter = "Sua mini-carta de apresentaÃ§Ã£o deve ter pelo menos 20 caracteres";
+        newErrors.coverLetter = "Sua mini-carta de apresentação deve ter pelo menos 20 caracteres";
       }
     }
 
@@ -106,61 +107,61 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
   const vacancies: Vacancy[] = [
     {
       id: "copywriter",
-      title: "Copywriter EstratÃ©gico SÃªnior",
-      department: "Editorial & EstratÃ©gia",
-      type: "PJ / HÃ­brido",
-      location: "Joinville/SC ou SÃ£o Paulo/SP",
-      reward: "R$ 6k - R$ 9k + BÃ´nus",
-      description: "Buscamos um construtor de narrativas sÃªnior focado em reestruturar a percepÃ§Ã£o de marcas B2B e infoprodutos. Profissional com domÃ­nio absoluto sobre funis de conversÃ£o ativa, manual de voz e storytelling sofisticado.",
+      title: "Copywriter Estratégico Sênior",
+      department: "Editorial & Estratégia",
+      type: "PJ / Híbrido",
+      location: "Joinville/SC ou São Paulo/SP",
+      reward: "R$ 6k - R$ 9k + Bônus",
+      description: "Buscamos um construtor de narrativas sênior focado em reestruturar a percepção de marcas B2B e infoprodutos. Profissional com domínio absoluto sobre funis de conversão ativa, manual de voz e storytelling sofisticado.",
       requirements: [
-        "PortfÃ³lio comprovado com projetos de alto ticket B2B ou infoprodutos de alto posicionamento",
-        "Capacidade tÃ©cnica de criar diretrizes e playbooks de voz",
-        "Conhecimento de SEO, marketing de conteÃºdo B2B e redaÃ§Ã£o publicitÃ¡ria clÃ¡ssica",
-        "Perfil altamente orientado a prazos rÃ­gidos, processos claros e consistÃªncia"
+        "Portfólio comprovado com projetos de alto ticket B2B ou infoprodutos de alto posicionamento",
+        "Capacidade técnica de criar diretrizes e playbooks de voz",
+        "Conhecimento de SEO, marketing de conteúdo B2B e redação publicitária clássica",
+        "Perfil altamente orientado a prazos rígidos, processos claros e consistência"
       ]
     },
     {
       id: "ui-designer",
-      title: "UI/UX & Web Designer SÃªnior",
-      department: "CriaÃ§Ã£o & Tecnologia",
+      title: "UI/UX & Web Designer Sênior",
+      department: "Criação & Tecnologia",
       type: "PJ / Remoto",
       location: "Foco Nacional",
       reward: "R$ 7k - R$ 10k",
-      description: "Profissional obsessivo por estÃ©tica limpa, tipografia, contraste e arquiteturas de pÃ¡ginas que convertem. VocÃª serÃ¡ responsÃ¡vel por traduzir o posicionamento das marcas em interfaces memorÃ¡veis e leves usando Figma.",
+      description: "Profissional obsessivo por estética limpa, tipografia, contraste e arquiteturas de páginas que convertem. Você será responsável por traduzir o posicionamento das marcas em interfaces memoráveis e leves usando Figma.",
       requirements: [
-        "Figma em nÃ­vel avanÃ§ado (Auto Layout, Sistemas de Cores, ComponentizaÃ§Ã£o robusta)",
-        "Sensibilidade estÃ©tica apurada (SuÃ­Ã§o, Brutalista, Minimalista)",
-        "DesejÃ¡vel entendimento prÃ¡tico de HTML/CSS para facilitar o handoff",
-        "OrganizaÃ§Ã£o extrema com arquivos, prazos e entrega"
+        "Figma em nível avançado (Auto Layout, Sistemas de Cores, Componentização robusta)",
+        "Sensibilidade estética apurada (Suíço, Brutalista, Minimalista)",
+        "Desejável entendimento prático de HTML/CSS para facilitar o handoff",
+        "Organização extrema com arquivos, prazos e entrega"
       ]
     },
     {
       id: "trafego-performance",
-      title: "Gestor de Performance & MÃ­dia Paga",
-      department: "MÃ­dia & InteligÃªncia",
-      type: "PJ / HÃ­brido",
-      location: "Joinville/SC ou SÃ£o Paulo/SP",
-      reward: "Fixo + VariÃ¡vel sobre ROAS",
-      description: "Orientado por dados e conversÃµes reais. ResponsÃ¡vel por planejar e executar as campanhas pagas de trÃ¡fego (Meta Ads & Google Ads) conectadas diretamente aos funis de autoria e canais dos nossos parceiros estrategizados.",
+      title: "Gestor de Performance & Mídia Paga",
+      department: "Mídia & Inteligência",
+      type: "PJ / Híbrido",
+      location: "Joinville/SC ou São Paulo/SP",
+      reward: "Fixo + Variável sobre ROAS",
+      description: "Orientado por dados e conversões reais. Responsável por planejar e executar as campanhas pagas de tráfego (Meta Ads & Google Ads) conectadas diretamente aos funis de autoria e canais dos nossos parceiros estrategizados.",
       requirements: [
-        "MÃ­nimo de 3 anos liderando mÃ­dias pagas em escala (alto investimento)",
-        "DomÃ­nio sobre funis complexos, tagueamento analÃ­tico (GTM, GA4) e captaÃ§Ã£o B2B",
-        "Habilidade para gerar relatÃ³rios visuais claros focados em margem e ROI",
-        "Proatividade total para sugerir melhorias drÃ¡sticas nas Landing Pages"
+        "Mínimo de 3 anos liderando mídias pagas em escala (alto investimento)",
+        "Domínio sobre funis complexos, tagueamento analítico (GTM, GA4) e captação B2B",
+        "Habilidade para gerar relatórios visuais claros focados em margem e ROI",
+        "Proatividade total para sugerir melhorias drásticas nas Landing Pages"
       ]
     },
     {
       id: "espontanea",
-      title: "Banco de Talentos / Candidatura EspontÃ¢nea",
-      department: "Todas as Ã¡reas",
+      title: "Banco de Talentos / Candidatura Espontânea",
+      department: "Todas as áreas",
       type: "PJ ou Freelance",
-      location: "HÃ­brido ou Remoto",
+      location: "Híbrido ou Remoto",
       reward: "A combinar",
-      description: "NÃ£o encontrou uma vaga aberta que se encaixe no seu momento atual? Envie suas informaÃ§Ãµes e portfÃ³lio para nosso banco de talentos prioritÃ¡rio. Avaliamos novas fichas semanalmente.",
+      description: "Não encontrou uma vaga aberta que se encaixe no seu momento atual? Envie suas informações e portfólio para nosso banco de talentos prioritário. Avaliamos novas fichas semanalmente.",
       requirements: [
-        "Extrema dedicaÃ§Ã£o pela excelÃªncia em sua especialidade",
+        "Extrema dedicação pela excelência em sua especialidade",
         "Vontade de trabalhar sob processos organizados e playbooks rigorosos",
-        "Autonomia extrema para gerenciar o prÃ³prio escopo tÃ©cnico"
+        "Autonomia extrema para gerenciar o próprio escopo técnico"
       ]
     }
   ];
@@ -254,11 +255,11 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
             
             <h1 className="font-display font-black text-4xl sm:text-5xl text-white uppercase tracking-tighter leading-[1.0]">
               Trabalhe com uma equipe que acredita em <br/>
-              <span className="text-brand">direÃ§Ã£o, responsabilidade e evoluÃ§Ã£o constante.</span>
+              <span className="text-brand">direção, responsabilidade e evolução constante.</span>
             </h1>
             
             <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-lg">
-              Buscamos profissionais obsessivos por estÃ©tica limpa, tipografia, contraste e arquiteturas de conteÃºdo que convertem de verdade. Venha trabalhar de forma inteligente, organizada e sÃ­ncrona.
+              Buscamos profissionais obsessivos por estética limpa, tipografia, contraste e arquiteturas de conteúdo que convertem de verdade. Venha trabalhar de forma inteligente, organizada e síncrona.
             </p>
             
             <div className="flex flex-wrap gap-4 pt-2">
@@ -280,17 +281,19 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
           {/* Right Hero Image Frame (Mockup Style: Tablet Holding Professional) */}
           <div className="lg:col-span-5 relative mt-8 lg:mt-0">
             <div className="absolute inset-0 bg-gradient-to-tr from-brand/20 to-transparent rounded-[32px] transform translate-y-3 translate-x-3 -z-10 blur-md pointer-events-none" />
-            <div className="border border-white/10 rounded-[32px] overflow-hidden bg-charcoal-900 group">
-              <img 
+            <div className="relative aspect-[4/5] border border-white/10 rounded-[32px] overflow-hidden bg-charcoal-900 group">
+              <Image
+                fill
+                sizes="(max-width: 1024px) 100vw, 42vw"
                 src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600" 
                 alt="Profissional TAG08" 
-                className="w-full aspect-[4/5] object-cover group-hover:scale-103 transition-transform duration-700"
+                className="object-cover group-hover:scale-103 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
               {/* Floating aesthetic widget over image */}
               <div className="absolute bottom-5 left-5 right-5 bg-black/75 backdrop-blur-md border border-white/15 p-4 rounded-2xl flex items-center justify-between">
                 <div>
-                  <p className="text-[10px] text-brand font-mono uppercase tracking-widest font-bold">POSICIONAMENTO SÃŠNIOR</p>
+                  <p className="text-[10px] text-brand font-mono uppercase tracking-widest font-bold">POSICIONAMENTO SÊNIOR</p>
                   <p className="text-white text-xs font-bold mt-0.5">Let's grow your brand!</p>
                 </div>
                 <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
@@ -338,19 +341,19 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
             {/* Core culture central column */}
             <div className="lg:col-span-4 flex flex-col justify-between space-y-4 lg:border-l lg:border-zinc-100 lg:pl-10">
               <div className="space-y-2">
-                <p className="text-[10px] text-zinc-400 uppercase tracking-widest font-mono font-bold">VALORES EXTRAORDINÃRIOS</p>
+                <p className="text-[10px] text-zinc-400 uppercase tracking-widest font-mono font-bold">VALORES EXTRAORDINÁRIOS</p>
                 <h3 className="font-display font-black text-xl text-zinc-900 uppercase tracking-tight">
                   Social Media <br/>Management
                 </h3>
                 <p className="text-zinc-500 text-xs leading-relaxed font-sans">
-                  NÃ£o criamos apenas posts redundantes de feed. Estruturamos autoria, tom de narrativa impecÃ¡vel e canais ativos que geram relevÃ¢ncia e conversÃ£o premium para clientes de alto ticket.
+                  Não criamos apenas posts redundantes de feed. Estruturamos autoria, tom de narrativa impecável e canais ativos que geram relevância e conversão premium para clientes de alto ticket.
                 </p>
               </div>
               <a 
                 href="#vagas-abertas-anchor"
                 className="inline-flex self-start px-4 py-2 bg-zinc-950 text-white font-mono font-bold text-[9.5px] uppercase tracking-wider rounded-lg hover:bg-zinc-800 transition-colors"
               >
-                Conhecer MÃ©todos
+                Conhecer Métodos
               </a>
             </div>
 
@@ -363,7 +366,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                   Let's grow your <br />Brand Together!
                 </h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans mt-2">
-                  Oferecer serviÃ§os com prazos cirÃºrgicos e processos bem documentados. Esse Ã© nosso pacto. Se vocÃª compartilha disso, estamos esperando sua candidatura.
+                  Oferecer serviços com prazos cirúrgicos e processos bem documentados. Esse é nosso pacto. Se você compartilha disso, estamos esperando sua candidatura.
                 </p>
               </div>
               <a 
@@ -380,13 +383,13 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
           <div className="space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 font-sans">
               <div className="space-y-1 text-left">
-                <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-widest font-bold">INTERA??O SOCIAL &amp; COMPANHEIRISMO</span>
+                <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-widest font-bold">INTERAÇÃO SOCIAL &amp; COMPANHEIRISMO</span>
                 <h2 className="font-display font-black text-2xl sm:text-3xl text-zinc-900 uppercase tracking-tight">
-                  Nosso Time &amp; LÃ­deres <span className="text-brand drop-shadow-sm font-light font-sans">â—</span>
+                  Nosso Time &amp; Líderes <span className="text-brand drop-shadow-sm font-light font-sans">●</span>
                 </h2>
               </div>
               <p className="text-zinc-500 text-xs sm:text-sm font-sans tracking-wider max-w-xs leading-tight">
-                Profissionais experientes que consolidam nosso ecossistema de entrega cirÃºrgica rÃ¡pida.
+                Profissionais experientes que consolidam nosso ecossistema de entrega cirúrgica rápida.
               </p>
             </div>
 
@@ -397,10 +400,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
               <div className="lg:col-span-4 bg-zinc-950 text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[380px] shadow-lg">
                 <div className="absolute inset-0 z-0 pointer-events-none">
                   {/* Founder photo */}
-                  <img 
+                  <Image
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 34vw"
                     src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" 
                     alt="Carlos Eduardo" 
-                    className="w-full h-full object-cover opacity-15 grayscale brightness-[0.7] group-hover:scale-105 group-hover:opacity-25 transition-all duration-700"
+                    className="object-cover opacity-15 grayscale brightness-[0.7] group-hover:scale-105 group-hover:opacity-25 transition-all duration-700"
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/75 to-transparent" />
@@ -415,11 +420,11 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                 <div className="relative z-10 space-y-4 mt-auto">
                   <div className="space-y-1">
-                    <span className="font-mono text-[8px] text-zinc-500 block uppercase font-bold">DIRE??O GERAL</span>
+                    <span className="font-mono text-[8px] text-zinc-500 block uppercase font-bold">DIREÇÃO GERAL</span>
                     <h3 className="font-display font-black text-xl text-white uppercase tracking-tight">Carlos Eduardo</h3>
-                    <p className="text-brand text-[10.5px] font-mono uppercase leading-none">Fundador &amp; Diretor de CriaÃ§Ã£o</p>
+                    <p className="text-brand text-[10.5px] font-mono uppercase leading-none">Fundador &amp; Diretor de Criação</p>
                     <p className="text-zinc-400 text-xs leading-relaxed pt-2 italic">
-                      "Conduz o posicionamento das marcas parceiras por meio de metodologias consistentes de design e estÃ©tica refinada."
+                      "Conduz o posicionamento das marcas parceiras por meio de metodologias consistentes de design e estética refinada."
                     </p>
                   </div>
 
@@ -444,10 +449,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
                   <div className="flex gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
-                      <img 
+                      <Image
+                        fill
+                        sizes="80px"
                         src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" 
                         alt="Marina Fontes" 
-                        className="w-full h-full object-cover group-hover:scale-104 transition-all duration-500"
+                        className="object-cover group-hover:scale-104 transition-all duration-500"
                         referrerPolicy="no-referrer"
                       />
                     </div>
@@ -455,7 +462,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       <span className="font-sans text-[7.5px] text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">UI/UX &amp; Brand Director</span>
                       <h4 className="font-display font-black text-base text-zinc-900 uppercase tracking-tight leading-none pt-0.5">Marina Fontes</h4>
                       <p className="text-zinc-500 text-[11px] font-sans leading-snug pt-1">
-                        Cria diretrizes estÃ©ticas e manuais grÃ¡ficos para marcas com exigÃªncia alta de consistÃªncia visual.
+                        Cria diretrizes estéticas e manuais gráficos para marcas com exigência alta de consistência visual.
                       </p>
                     </div>
                   </div>
@@ -478,10 +485,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
                   <div className="flex gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
-                      <img 
+                      <Image
+                        fill
+                        sizes="80px"
                         src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250" 
                         alt="Renato Silveira" 
-                        className="w-full h-full object-cover group-hover:scale-104 transition-all duration-500"
+                        className="object-cover group-hover:scale-104 transition-all duration-500"
                         referrerPolicy="no-referrer"
                       />
                     </div>
@@ -489,12 +498,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       <span className="font-sans text-[7.5px] text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">Tech Lead Architect</span>
                       <h4 className="font-display font-black text-base text-zinc-900 uppercase tracking-tight leading-none pt-0.5">Renato Silveira</h4>
                       <p className="text-zinc-500 text-[11px] font-sans leading-snug pt-1">
-                        ResponsÃ¡vel pela integridade tÃ©cnica, empacotamento leve e SEO dos sites.
+                        Responsável pela integridade técnica, empacotamento leve e SEO dos sites.
                       </p>
                     </div>
                   </div>
                   <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-[9px] font-mono text-zinc-400 uppercase">
-                    <span className="flex items-center gap-1">ðŸ“ SÃ£o Paulo / SP</span>
+                    <span className="flex items-center gap-1">📍 São Paulo / SP</span>
                     <a 
                       href="https://www.linkedin.com/in/renato-silveira-tag08"
                       target="_blank"
@@ -512,10 +521,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
                   <div className="flex gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
-                      <img 
+                      <Image
+                        fill
+                        sizes="80px"
                         src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=250" 
                         alt="Amanda Reis" 
-                        className="w-full h-full object-cover group-hover:scale-104 transition-all duration-500"
+                        className="object-cover group-hover:scale-104 transition-all duration-500"
                         referrerPolicy="no-referrer"
                       />
                     </div>
@@ -523,7 +534,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       <span className="font-sans text-[7.5px] text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">Content Strategist</span>
                       <h4 className="font-display font-black text-base text-zinc-900 uppercase tracking-tight leading-none pt-0.5">Amanda Reis</h4>
                       <p className="text-zinc-500 text-[11px] font-sans leading-snug pt-1">
-                        DomÃ­nio em roteiros, storytelling e manuais de voz para executivos.
+                        Domínio em roteiros, storytelling e manuais de voz para executivos.
                       </p>
                     </div>
                   </div>
@@ -546,10 +557,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
                   <div className="flex gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
-                      <img 
+                      <Image
+                        fill
+                        sizes="80px"
                         src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=250" 
                         alt="Lucas Mendes" 
-                        className="w-full h-full object-cover group-hover:scale-104 transition-all duration-500"
+                        className="object-cover group-hover:scale-104 transition-all duration-500"
                         referrerPolicy="no-referrer"
                       />
                     </div>
@@ -557,12 +570,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       <span className="font-sans text-[7.5px] text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">Performance Specialist</span>
                       <h4 className="font-display font-black text-base text-zinc-900 uppercase tracking-tight leading-none pt-0.5">Lucas Mendes</h4>
                       <p className="text-zinc-500 text-[11px] font-sans leading-snug pt-1">
-                        AnÃ¡lise fria de CPA, LTV e otimizaÃ§Ã£o cirÃºrgica no Meta &amp; Google Ads.
+                        Análise fria de CPA, LTV e otimização cirúrgica no Meta &amp; Google Ads.
                       </p>
                     </div>
                   </div>
                   <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-[9px] font-mono text-zinc-400 uppercase">
-                    <span className="flex items-center gap-1">ðŸ“ SÃ£o Paulo / SP</span>
+                    <span className="flex items-center gap-1">📍 São Paulo / SP</span>
                     <a 
                       href="https://www.linkedin.com/in/lucas-mendes-tag08"
                       target="_blank"
@@ -588,19 +601,19 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 <div className="lg:col-span-8 space-y-3">
                   <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-zinc-950 text-brand font-mono text-[8px] lg:text-[9.5px] font-black tracking-widest uppercase">
                     <Linkedin className="w-3.5 h-3.5 fill-brand stroke-none" />
-                    <span>InovaÃ§Ã£o, Processos & Insights DiÃ¡rios</span>
+                    <span>Inovação, Processos & Insights Diários</span>
                   </div>
                   <h4 className="font-display font-black text-zinc-900 text-lg sm:text-xl uppercase tracking-tight leading-none">
                     Engaje com nossos diretores no LinkedIn
                   </h4>
                   <p className="text-zinc-500 text-xs leading-relaxed max-w-2xl font-medium">
-                    Acompanhe a rotina de faturamento de alto ticket, as preleÃ§Ãµes de design estratÃ©gico do nosso fundador e a engenharia web sem construtores de cÃ³digo desenvolvida pelo nosso time. Conecte-se com nossos lÃ­deres para insights diÃ¡rios que aceleram carreiras e marcas corporativas.
+                    Acompanhe a rotina de faturamento de alto ticket, as preleções de design estratégico do nosso fundador e a engenharia web sem construtores de código desenvolvida pelo nosso time. Conecte-se com nossos líderes para insights diários que aceleram carreiras e marcas corporativas.
                   </p>
                 </div>
                 
                 <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end w-full">
                   <div className="bg-white border border-zinc-200 rounded-2xl p-4 text-center sm:text-left lg:text-left flex-1 shadow-sm">
-                    <span className="block font-display font-black text-lg text-zinc-900">32k+ conexÃµes</span>
+                    <span className="block font-display font-black text-lg text-zinc-900">32k+ conexões</span>
                     <span className="block text-zinc-400 font-mono text-[8px] uppercase tracking-wider mt-0.5">Autoridade de mercado unificada</span>
                   </div>
                   <div className="bg-zinc-950 text-white rounded-2xl p-4 text-center sm:text-left lg:text-left flex-1 shadow-sm">
@@ -617,13 +630,13 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
           <div id="vagas-abertas-anchor" className="space-y-10 pt-8 border-t border-zinc-100">
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-zinc-100 pb-5">
               <div className="text-left space-y-1">
-                <span className="font-mono text-[9px] text-brand bg-black px-2 py-0.5 rounded uppercase tracking-widest font-black">CARREIRA CORPORATIVA // SELE??O R?GIDA</span>
+                <span className="font-mono text-[9px] text-brand bg-black px-2 py-0.5 rounded uppercase tracking-widest font-black">CARREIRA CORPORATIVA // SELEÇÃO RÍGIDA</span>
                 <h2 className="font-display font-black text-2xl sm:text-3xl text-zinc-900 uppercase tracking-tight">
                   Vagas em Aberto
                 </h2>
               </div>
               <p className="text-zinc-400 text-xs font-mono uppercase tracking-widest">
-                {vacancies.length} POSIÃ‡Ã•ES DISPONÃVEIS
+                {vacancies.length} POSIÇÕES DISPONÍVEIS
               </p>
             </div>
 
@@ -670,7 +683,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       {activeVacancy.title}
                     </h3>
                     <p className="text-zinc-400 font-mono text-[9px] uppercase tracking-wider mt-1">
-                      {activeVacancy.department} â¬¢ {activeVacancy.type}
+                      {activeVacancy.department} ⬢ {activeVacancy.type}
                     </p>
                   </div>
                   <div className="px-3 py-1.5 bg-zinc-950 text-brand rounded-xl text-xs font-sans font-bold tracking-wide">
@@ -681,7 +694,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 <div className="space-y-4">
                   <div>
                     <h4 className="font-mono text-[9.5px] font-bold text-zinc-500 uppercase tracking-wider mb-1.5">
-                      DescriÃ§Ã£o do Escopo TÃ©cnico
+                      Descrição do Escopo Técnico
                     </h4>
                     <p className="text-zinc-600 text-xs sm:text-[13px] leading-relaxed">
                       {activeVacancy.description}
@@ -690,7 +703,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                   <div className="space-y-2 pt-1">
                     <h4 className="font-mono text-[9.5px] font-bold text-zinc-500 uppercase tracking-wider mb-2.5">
-                      Requisitos DesejÃ¡veis para Handoff Perfeito
+                      Requisitos Desejáveis para Handoff Perfeito
                     </h4>
                     <div className="grid grid-cols-1 gap-2">
                       {activeVacancy.requirements.map((req, i) => (
@@ -716,7 +729,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       onClick={() => handleApply(activeVacancy.id)}
                       className="px-4.5 py-2.5 bg-zinc-950 text-white font-mono font-bold text-[9.5px] uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-colors cursor-pointer flex items-center gap-1.5"
                     >
-                      Preencher FormulÃ¡rio <ArrowRight className="w-3.5 h-3.5 text-brand" />
+                      Preencher Formulário <ArrowRight className="w-3.5 h-3.5 text-brand" />
                     </button>
                   </div>
 
@@ -726,7 +739,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
             </div>
           </div>
 
-          {/* NOVO BLOCO CENTRAL: DIRETRIZES DE CULTURA, REQUISITOS, TIPO DE CONTRATO E ETAPAS DE SELE??O */}
+          {/* NOVO BLOCO CENTRAL: DIRETRIZES DE CULTURA, REQUISITOS, TIPO DE CONTRATO E ETAPAS DE SELEÇÃO */}
           <div className="space-y-12 pt-12 border-t border-zinc-100 text-left">
             
             {/* Cultura e Expectativas */}
@@ -739,16 +752,16 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                   O que esperamos do seu trabalho todos os dias
                 </h3>
                 <p className="text-zinc-500 text-xs sm:text-sm font-sans leading-relaxed">
-                  A TAG08 executa uma parceria consultiva sÃ³lida baseada em processos e rigor tÃ©cnico de ponta. NÃ£o somos um local de improvisaÃ§Ãµes ou desculpas de cronogramas. Nosso pacto operacional baseia-se em quatro pilares estritos:
+                  A TAG08 executa uma parceria consultiva sólida baseada em processos e rigor técnico de ponta. Não somos um local de improvisações ou desculpas de cronogramas. Nosso pacto operacional baseia-se em quatro pilares estritos:
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
-                  { title: "Rigor ClÃ´nico de Prazos", desc: "Se uma tarefa estÃ¡ mapeada para entrega na terÃ§a-feira Ã s 14h, ela serÃ¡ disponibilizada pontualmente sem atrasos." },
-                  { title: "DocumentaÃ§Ã£o de Ativos", desc: "Todo o seu escopo intelectual de processos e designs precisa ser documentado de maneira limpa para a equipe." },
-                  { title: "ComunicaÃ§Ã£o Altamente Ativa", desc: "Esperamos respostas cÃ©leres sobre as demandas ativas, sem barreiras de silÃªncio ou pendÃªncias." },
-                  { title: "Const?ncia de Qualidade", desc: "Sua cent?sima entrega de arte, copy ou c?digo deve conter o mesmo padr?o de excel?ncia cl?nica da primeira." }
+                  { title: "Rigor Clônico de Prazos", desc: "Se uma tarefa está mapeada para entrega na terça-feira às 14h, ela será disponibilizada pontualmente sem atrasos." },
+                  { title: "Documentação de Ativos", desc: "Todo o seu escopo intelectual de processos e designs precisa ser documentado de maneira limpa para a equipe." },
+                  { title: "Comunicação Altamente Ativa", desc: "Esperamos respostas céleres sobre as demandas ativas, sem barreiras de silêncio ou pendências." },
+                  { title: "Constância de Qualidade", desc: "Sua centésima entrega de arte, copy ou código deve conter o mesmo padrão de excelência clínica da primeira." }
                 ].map((item, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-zinc-50 border border-zinc-100 space-y-1.5">
                     <h4 className="text-zinc-900 font-display font-bold text-xs uppercase tracking-tight">{item.title}</h4>
@@ -758,22 +771,22 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
               </div>
             </div>
 
-            {/* Tipos de VÃ­nculos de Trabalho */}
+            {/* Tipos de Vínculos de Trabalho */}
             <div className="p-6 sm:p-8 rounded-3xl bg-zinc-950 text-white space-y-6">
               <div className="space-y-2">
-                <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">OPÃ‡Ã•ES DE PARCERIA // CONDIÃ‡Ã•ES CONTRATUAIS</span>
-                <h4 className="font-display font-black text-xl uppercase">Formatos de ContrataÃ§Ã£o e AtuaÃ§Ã£o DisponÃ­veis</h4>
+                <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">OPÇÕES DE PARCERIA // CONDIÇÕES CONTRATUAIS</span>
+                <h4 className="font-display font-black text-xl uppercase">Formatos de Contratação e Atuação Disponíveis</h4>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans max-w-xl">
-                  Estamos constantemente em busca das melhores mentes do mercado independente de sua preferÃªncia logÃ­stica comercial de contrataÃ§Ã£o:
+                  Estamos constantemente em busca das melhores mentes do mercado independente de sua preferência logística comercial de contratação:
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {[
                   { title: "Regime PJ (Prestador)", focus: "FLEXIBILIDADE E ESCALA", desc: "Ideal para consultores seniores autorais e designers que preferem emitir Notas Fiscais com flexibilidade de horas." },
-                  { title: "Regime CLT (Fixo)", focus: "ESTABILIDADE & SUPORTE", desc: "Para profissionais focados em dedicaÃ§Ã£o integral e desenvolvimento contÃ­nuo nos escritÃ³rios de Joinville ou SÃ£o Paulo." },
-                  { title: "Banco de Freelance", focus: "DEMANDAS SOB ESCALA", desc: "Projetos isolados pontuais pagos por frentes de entrega especÃ­ficas sÃªnior de Branding, Web ou CriaÃ§Ã£o de Identidades." },
-                  { title: "Est?gio de Cria??o", focus: "FORMA??O OPERACIONAL", desc: "Para mentes promissoras acad?micas dispostas a adotar nossa rigorosa cultura e metodologia de design e processos." }
+                  { title: "Regime CLT (Fixo)", focus: "ESTABILIDADE & SUPORTE", desc: "Para profissionais focados em dedicação integral e desenvolvimento contínuo nos escritórios de Joinville ou São Paulo." },
+                  { title: "Banco de Freelance", focus: "DEMANDAS SOB ESCALA", desc: "Projetos isolados pontuais pagos por frentes de entrega específicas sênior de Branding, Web ou Criação de Identidades." },
+                  { title: "Estágio de Criação", focus: "FORMAÇÃO OPERACIONAL", desc: "Para mentes promissoras acadêmicas dispostas a adotar nossa rigorosa cultura e metodologia de design e processos." }
                 ].map((bond, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2 text-left">
                     <span className="font-mono text-[8.5px] text-brand border border-brand/15 bg-brand/5 px-2 py-0.5 rounded uppercase block w-max">
@@ -786,22 +799,22 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
               </div>
             </div>
 
-            {/* Etapas do Processo de AvaliaÃ§Ã£o de Candidatos */}
+            {/* Etapas do Processo de Avaliação de Candidatos */}
             <div className="space-y-6 pt-6 border-t border-zinc-100">
               <div className="space-y-1">
                 <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-widest font-bold block">workflow seletivo // sem desvios</span>
                 <h4 className="font-display font-black text-xl text-zinc-900 uppercase">Como avaliamos e integramos novos talentos</h4>
                 <p className="text-zinc-500 text-xs sm:text-sm font-sans leading-relaxed max-w-xl">
-                  Nosso processo de recrutamento Ã© transparente, rÃ¡pido e focado em competÃªncia operacional tÃ©cnica real:
+                  Nosso processo de recrutamento é transparente, rápido e focado em competência operacional técnica real:
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {[
-                  { step: "01", title: "Ficha & Triagem", desc: "RevisÃ£o detalhada de seu portfÃ³lio de especialista, histÃ³rico de links e e-mail de contato." },
-                  { step: "02", title: "Entrevista de Sintonia", desc: "Conversa rÃ¡pida de 15 minutos para avaliar sinergia com nossa rigorosa cultura e expectativas PJ/CLT." },
-                  { step: "03", title: "Desafio TÃ©cnico Real", desc: "Um teste prÃ¡tico real remunerado focado no seu escopo imediato operacional de entrega diÃ¡ria." },
-                  { step: "04", title: "Alinhamento & Onboarding", desc: "Assinatura segura de contratos, entrega do seu manual de onboarding e liberaÃ§Ã£o de seus acessos centrais." }
+                  { step: "01", title: "Ficha & Triagem", desc: "Revisão detalhada de seu portfólio de especialista, histórico de links e e-mail de contato." },
+                  { step: "02", title: "Entrevista de Sintonia", desc: "Conversa rápida de 15 minutos para avaliar sinergia com nossa rigorosa cultura e expectativas PJ/CLT." },
+                  { step: "03", title: "Desafio Técnico Real", desc: "Um teste prático real remunerado focado no seu escopo imediato operacional de entrega diária." },
+                  { step: "04", title: "Alinhamento & Onboarding", desc: "Assinatura segura de contratos, entrega do seu manual de onboarding e liberação de seus acessos centrais." }
                 ].map((st, sIdx) => (
                   <div key={sIdx} className="p-4 rounded-xl border border-zinc-100 bg-zinc-50/50 flex gap-4">
                     <div className="font-sans font-black text-zinc-300 text-2xl shrink-0 mt-0.5">{st.step}</div>
@@ -874,17 +887,17 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                   {/* Header text containing dynamic personalization */}
                   <div className="space-y-1 text-left">
                     <span className="font-mono text-[9px] text-brand bg-black px-2 py-0.5 rounded font-black uppercase tracking-widest inline-block">
-                      ETAPA {currentStep} DE 3 " {currentStep === 1 ? "DADOS PESSOAIS" : currentStep === 2 ? "LINKS PROFISSIONAIS" : "CURR?CULO & APRESENTA??O"}
+                      ETAPA {currentStep} DE 3 " {currentStep === 1 ? "DADOS PESSOAIS" : currentStep === 2 ? "LINKS PROFISSIONAIS" : "CURRÍCULO & APRESENTAÇÃO"}
                     </span>
                     <h2 className="font-display font-black text-2xl text-zinc-900 uppercase tracking-tight">
-                      {currentStep === 1 ? "IdentificaÃ§Ã£o PrimÃ¡ria" : currentStep === 2 ? "PresenÃ§a na Web" : "Ficha & Conquistas"}
+                      {currentStep === 1 ? "Identificação Primária" : currentStep === 2 ? "Presença na Web" : "Ficha & Conquistas"}
                     </h2>
                     <p className="text-zinc-500 text-xs">
                       {currentStep === 1 
-                        ? `Apresente-se brevemente para iniciarmos seu processo de seleÃ§Ã£o para a vaga de ${activeVacancy.title}.` 
+                        ? `Apresente-se brevemente para iniciarmos seu processo de seleção para a vaga de ${activeVacancy.title}.`
                         : currentStep === 2 
-                          ? `Excelente, ${formName.split(" ")[0]}! Agora, compartilhe os links onde seu trabalho Ã© exposto.` 
-                          : `Quase lÃ¡! Para finalizar, anexe seu currÃ­culo e faÃ§a uma mini apresentaÃ§Ã£o profissional.`}
+                          ? `Excelente, ${formName.split(" ")[0]}! Agora, compartilhe os links onde seu trabalho é exposto.`
+                          : `Quase lá! Para finalizar, anexe seu currículo e faça uma mini apresentação profissional.`}
                     </p>
                   </div>
                 </div>
@@ -893,7 +906,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <AnimatePresence mode="wait">
                     
-                    {/* STEP 1: APRESENTA??O PRIM?RIA */}
+                    {/* STEP 1: APRESENTAÇÃO PRIMÁRIA */}
                     {currentStep === 1 && (
                       <motion.div
                         key="step-1"
@@ -964,7 +977,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       </motion.div>
                     )}
 
-                    {/* STEP 2: CONEXÃ•ES PROFISSIONAIS */}
+                    {/* STEP 2: CONEXÕES PROFISSIONAIS */}
                     {currentStep === 2 && (
                       <motion.div
                         key="step-2"
@@ -995,7 +1008,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                         <div className="space-y-1.5 text-left">
                           <label className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
-                            Link do PortfÃ³lio / GitHub (Opcional)
+                            Link do Portfólio / GitHub (Opcional)
                           </label>
                           <div className="relative">
                             <Globe className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400" />
@@ -1008,13 +1021,13 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                             />
                           </div>
                           <p className="text-[10px] text-zinc-450 leading-tight">
-                            Gostamos de analisar cases prÃ¡ticos. Recomendamos inserir seu portfÃ³lio para ganhar destaque preferencial na triagem.
+                            Gostamos de analisar cases práticos. Recomendamos inserir seu portfólio para ganhar destaque preferencial na triagem.
                           </p>
                         </div>
                       </motion.div>
                     )}
 
-                    {/* STEP 3: CURRÃCULO & MINI LETTER */}
+                    {/* STEP 3: CURRÍCULO & MINI LETTER */}
                     {currentStep === 3 && (
                       <motion.div
                         key="step-3"
@@ -1038,7 +1051,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                           </label>
                           <textarea
                             rows={3}
-                            placeholder="Conte em poucas linhas seus maiores cases de conversÃ£o sÃ³lida ou reestruturaÃ§Ã£o estÃ©tica..."
+                            placeholder="Conte em poucas linhas seus maiores cases de conversão sólida ou reestruturação estética..."
                             value={formCoverLetter}
                             onChange={(e) => setFormCoverLetter(e.target.value)}
                             className={`w-full bg-white border rounded-xl p-3 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 font-sans leading-relaxed ${
@@ -1068,7 +1081,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
               {/* Step Navigation Controls bottom footer */}
               <div className="pt-6 border-t border-zinc-200/50 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p className="text-[10px] text-zinc-400 leading-tight flex items-center gap-1.5 self-start sm:self-center">
-                  <Lock className="w-3.5 h-3.5 text-zinc-350 shrink-0" /> GestÃ£o privativa de dados e cookies locais.
+                  <Lock className="w-3.5 h-3.5 text-zinc-350 shrink-0" /> Gestão privativa de dados e cookies locais.
                 </p>
                 
                 <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
@@ -1119,7 +1132,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       Candidatura Recebida!
                     </h3>
                     <p className="text-zinc-500 text-xs sm:text-sm mt-2 max-w-sm leading-relaxed">
-                      Sua triagem de competÃªncia para a vaga de <span className="text-zinc-950 font-bold">{activeVacancy.title}</span> foi consolidada. Retornaremos em breve.
+                      Sua triagem de competência para a vaga de <span className="text-zinc-950 font-bold">{activeVacancy.title}</span> foi consolidada. Retornaremos em breve.
                     </p>
                     
                     <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -1133,7 +1146,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                         onClick={() => onNavigate("/")}
                         className="px-4.5 py-2.5 bg-zinc-100 text-zinc-800 border border-zinc-200 font-mono text-[10px] uppercase tracking-widest rounded-xl hover:bg-zinc-200 transition-all cursor-pointer"
                       >
-                        PÃ¡gina Inicial
+                        Página Inicial
                       </button>
                     </div>
                   </motion.div>
@@ -1174,7 +1187,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                   Pacto de Alinhamento de Valor
                 </h4>
                 <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans">
-                  Desenvolvemos pessoas que gostam de processos independentes com metas claras de performance e transparÃªncia. Se vocÃª procura um lugar sem drama operacional com alto ticket B2B, faÃ§a sua candidatura.
+                  Desenvolvemos pessoas que gostam de processos independentes com metas claras de performance e transparência. Se você procura um lugar sem drama operacional com alto ticket B2B, faça sua candidatura.
                 </p>
               </div>
 

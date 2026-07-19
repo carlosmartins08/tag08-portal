@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { ArrowUpRight, MessageSquare, Phone, Mail, MapPin, ShieldAlert, CheckCircle, Eye, Type, RefreshCw, Instagram, Linkedin, Youtube, Facebook, Twitter, Cookie, Lock, Scale, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
@@ -5,6 +6,7 @@ import { i18n, type UiLanguage } from "../i18n/siteI18n";
 import { getLocalizedNetworkLinks, TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_YOUTUBE_URL, TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
 import { safeStorage } from "../utils/storage";
 import { trackOutboundClick } from "../lib/analytics";
+import { readCookiePreferences, saveCookiePreferences, type CookiePreferences } from "../lib/cookieConsent";
 
 interface FooterProps {
   onNavigate: (page: string) => void;
@@ -276,7 +278,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
 
   // LGPD & Cookie Privacy States
   const [showCookieBanner, setShowCookieBanner] = useState<boolean>(false);
-  const [cookiePreferences, setCookiePreferences] = useState({
+  const [cookiePreferences, setCookiePreferences] = useState<CookiePreferences>({
     essential: true,
     performance: true,
     marketing: true
@@ -311,16 +313,15 @@ export default function Footer({ onNavigate, language }: FooterProps) {
   };
 
   useEffect(() => {
-    const consent = safeStorage.get("tag08_lgpd_consent");
-    if (!consent) {
+    const preferences = readCookiePreferences();
+    if (!preferences) {
       const timer = setTimeout(() => {
         setShowCookieBanner(true);
       }, 1200);
       return () => clearTimeout(timer);
     } else {
       try {
-        const parsed = JSON.parse(consent);
-        setCookiePreferences(parsed);
+        setCookiePreferences(preferences);
       } catch (e) {
         // Safe fallback
       }
@@ -328,22 +329,22 @@ export default function Footer({ onNavigate, language }: FooterProps) {
   }, []);
 
   const handleAcceptAllCookies = () => {
-    const preferences = { essential: true, performance: true, marketing: true };
+    const preferences: CookiePreferences = { essential: true, performance: true, marketing: true };
     setCookiePreferences(preferences);
-    safeStorage.set("tag08_lgpd_consent", JSON.stringify(preferences));
+    saveCookiePreferences(preferences);
     setShowCookieBanner(false);
   };
 
   const handleRejectCookies = () => {
-    const preferences = { essential: true, performance: false, marketing: false };
+    const preferences: CookiePreferences = { essential: true, performance: false, marketing: false };
     setCookiePreferences(preferences);
-    safeStorage.set("tag08_lgpd_consent", JSON.stringify(preferences));
+    saveCookiePreferences(preferences);
     setShowCookieBanner(false);
     setCustomizeCookies(false);
   };
 
   const handleSaveCookiePreferences = () => {
-    safeStorage.set("tag08_lgpd_consent", JSON.stringify(cookiePreferences));
+    saveCookiePreferences(cookiePreferences);
     setShowCookieBanner(false);
     setCustomizeCookies(false);
   };
@@ -382,9 +383,11 @@ export default function Footer({ onNavigate, language }: FooterProps) {
           {/* Brand Column */}
           <div className="space-y-6 lg:col-span-1">
             <div>
-              <img
+              <Image
                 src="/brand/logos/logo-horizontal-mono-white.svg"
                 alt="TAG08"
+                width={190}
+                height={36}
                 className="h-9 w-auto max-w-[190px]"
               />
               <p className="text-zinc-400 text-xs font-mono tracking-widest mt-2 uppercase">

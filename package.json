@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
+  },
   "scripts": {
     "predev": "node tools/clear-next-dev-cache.mjs",
     "dev": "next dev",
@@ -13,12 +16,21 @@
     "preview": "node .next/standalone/server.js",
     "clean": "node -e \"const fs=require('fs'); fs.rmSync('.next', { recursive: true, force: true });\"",
     "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate deploy",
-    "worker:integrations": "node server/integrationWorker.mjs",
-    "worker:retention": "tsx server/retentionWorker.ts",
+    "db:migrate": "node tools/db-migrate.mjs",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "db:status": "docker compose ps",
+    "worker:integrations": "node --env-file-if-exists=.env server/integrationWorker.mjs",
+    "worker:retention": "node --env-file-if-exists=.env server/retentionWorker.mjs",
+    "preflight:deploy": "node tools/preflight-deploy.mjs",
     "verify:routes": "tsx tools/verify-routes.ts",
-    "test:routes": "tsx tests/routeRegistry.test.ts && tsx tests/localePublishing.test.ts && tsx tests/proxy.test.ts",
+    "verify:health": "node tools/verify-health.mjs",
+    "verify:seo": "node tools/verify-seo.mjs",
+    "verify:persistence": "node tools/verify-persistence.mjs",
+    "verify:staging": "npm run verify:routes && npm run verify:health && npm run verify:seo && npm run verify:persistence",
+    "test:routes": "tsx tests/routeRegistry.test.ts && tsx tests/localePublishing.test.ts && tsx tests/proxy.test.ts && tsx tests/serviceInsightsBridge.test.ts && tsx tests/processIntelligenceSimulator.test.ts && tsx tests/processActivationSimulator.test.ts && tsx tests/affiliateCommissionSimulator.test.ts && tsx tests/hostingPriceSimulator.test.ts && tsx tests/cookieConsent.test.ts && tsx tests/youtubeShorts.test.ts",
     "test:contracts": "tsx tests/onboardingContract.test.ts && tsx tests/submissionContracts.test.ts && tsx tests/apiResponse.test.ts",
+    "test:browser": "playwright test",
     "test": "npm run test:routes && npm run test:contracts",
     "audit:colors": "node tools/audit-brand-colors.mjs",
     "audit:typography": "node tools/audit-typography.mjs",
@@ -40,6 +52,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^22.14.0",
     "@types/react": "^19.2.17",
@@ -49,5 +63,11 @@
     "tailwindcss": "^4.1.14",
     "tsx": "^4.23.1",
     "typescript": "~5.8.2"
+  },
+  "overrides": {
+    "@hono/node-server": "1.19.13",
+    "next": {
+      "postcss": "8.5.10"
+    }
   }
 }

@@ -102,6 +102,7 @@ model IntegrationDelivery {
   status          DeliveryStatus @default(PENDING)
   attempts        Int            @default(0)
   nextAttemptAt   DateTime       @default(now()) @map("next_attempt_at")
+  processingStartedAt DateTime?  @map("processing_started_at")
   deliveredAt     DateTime?      @map("delivered_at")
   externalReference String?      @map("external_reference")
   lastErrorCode   String?        @map("last_error_code")
@@ -110,6 +111,7 @@ model IntegrationDelivery {
   updatedAt       DateTime       @updatedAt @map("updated_at")
 
   @@index([status, nextAttemptAt])
+  @@index([status, processingStartedAt])
   @@map("integration_deliveries")
 }
 

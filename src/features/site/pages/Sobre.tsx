@@ -1,6 +1,7 @@
 ﻿import React, { useState } from "react";
 import { ArrowUpRight, Star, ArrowRight, Zap, Target, Users, Settings, BookOpen, FileCheck2, Sparkles, Cpu, Award, Shield, Check, MessageSquare, Activity, Triangle, Layers, Linkedin } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import Image from "next/image";
 import { trackOutboundClick } from "../../../lib/analytics";
 
 interface SobreProps {
@@ -27,36 +28,36 @@ export default function Sobre({ onNavigate }: SobreProps) {
     const TILES_HERO = [
     {
       name: "Carlos Eduardo",
-      role: "Fundador & Diretor de CriaÃ§Ã£o",
+      role: "Fundador & Diretor de Criação",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
-      tag: "ESTRATÃ‰GIA",
+      tag: "ESTRATÉGIA",
       status: "ATIVO",
       badge: "FUNDADOR",
       linkedin: "https://www.linkedin.com/in/carlos-eduardo-tag08",
-      connections: "DireÃ§Ã£o",
+      connections: "Direção",
       focus: "Posicionamento e identidade"
     },
     {
       name: "Camila Martins",
       role: "Copywriter & Roteiro",
       avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400",
-      tag: "CONTEÃšDO",
+      tag: "CONTEÚDO",
       status: "ATIVA",
-      badge: "REDA??O",
+      badge: "REDAÇÃO",
       linkedin: "https://www.linkedin.com/in/camila-martins-tag08",
       connections: "Linha editorial",
-      focus: "Narrativa e consistÃªncia"
+      focus: "Narrativa e consistência"
     },
     {
       name: "Danilo Aguiar",
-      role: "TrÃ¡fego & Analytics",
+      role: "Tráfego & Analytics",
       avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400",
-      tag: "MÃDIA",
+      tag: "MÍDIA",
       status: "ATIVO",
-      badge: "ANÃLISE",
+      badge: "ANÁLISE",
       linkedin: "https://www.linkedin.com/in/danilo-aguiar-tag08",
-      connections: "AquisiÃ§Ã£o",
-      focus: "Leads e critÃ©rio"
+      connections: "Aquisição",
+      focus: "Leads e critério"
     },
     {
       name: "Lucas Henrique",
@@ -67,7 +68,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       badge: "ARQUITETURA",
       linkedin: "https://www.linkedin.com/in/lucas-henrique-tag08",
       connections: "Estrutura",
-      focus: "Sites e experiÃªncia"
+      focus: "Sites e experiência"
     }
   ];
 
@@ -80,7 +81,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
     {
       name: "ADIDAS LAB",
       icon: <Triangle className="w-4 h-4 text-zinc-400 group-hover:text-brand transition-colors" />,
-      tagline: "DireÃ§Ã£o"
+      tagline: "Direção"
     },
     {
       name: "VELORA CORP",
@@ -116,32 +117,32 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
   const CORES_DIFERENCIAIS = [
     {
-      title: "DiagnÃ³stico antes da execuÃ§Ã£o",
-      desc: "Antes de propor entregas, entendemos contexto, gargalos, prioridades e capacidade real de execuÃ§Ã£o.",
+      title: "Diagnóstico antes da execução",
+      desc: "Antes de propor entregas, entendemos contexto, gargalos, prioridades e capacidade real de execução.",
       gradientClass: "from-brand-secondary/10 to-transparent border-brand-secondary/15 hover:border-brand-secondary/35",
       iconColor: "text-brand-secondary",
-      badge: "DIAGNÃ“STICO",
+      badge: "DIAGNÓSTICO",
       delay: 0.1
     },
     {
       title: "Clareza de escopo",
-      desc: "Organizamos o que serÃ¡ feito, por que serÃ¡ feito, o que fica fora e quais prÃ³ximos passos sÃ£o viÃ¡veis.",
+      desc: "Organizamos o que será feito, por que será feito, o que fica fora e quais próximos passos são viáveis.",
       gradientClass: "from-purple-500/10 to-transparent border-purple-500/15 hover:border-purple-500/35",
       iconColor: "text-[#a855f7]",
       badge: "ESCOPO",
       delay: 0.2
     },
     {
-      title: "CoordenaÃ§Ã£o entre Ã¡reas",
-      desc: "Conectamos estratÃ©gia, conteÃºdo, design, tecnologia e processos para evitar soluÃ§Ãµes soltas.",
+      title: "Coordenação entre áreas",
+      desc: "Conectamos estratégia, conteúdo, design, tecnologia e processos para evitar soluções soltas.",
       gradientClass: "from-blue-500/10 to-transparent border-blue-500/15 hover:border-blue-500/35",
       iconColor: "text-[#3b82f6]",
-      badge: "COORDENA??O",
+      badge: "COORDENAÇÃO",
       delay: 0.3
     },
     {
       title: "Entrega com responsabilidade",
-      desc: "A execuÃ§Ã£o acontece com critÃ©rio, revisÃ£o e alinhamento, sem promessa artificial ou pressÃ£o por atalhos.",
+      desc: "A execução acontece com critério, revisão e alinhamento, sem promessa artificial ou pressão por atalhos.",
       gradientClass: "from-emerald-500/10 to-transparent border-emerald-500/15 hover:border-emerald-500/35",
       iconColor: "text-[#10b981]",
       badge: "RESPONSABILIDADE",
@@ -153,28 +154,28 @@ export default function Sobre({ onNavigate }: SobreProps) {
     {
       id: 0,
       area: "DESIGN & CREATIVE BRANDS",
-      title: "Designer GrÃ¡fico / Visual SÃªnior",
-      tempo: "Remoto â¬¢ ContrataÃ§Ã£o Recorrente",
-      desc: "EstruturaÃ§Ã£o de marcas ricas herÃ¡ldicas, e layouts premium de redes sociais com tipografia avanÃ§ada e senso estÃ©tico exigente.",
-      requirements: ["DomÃ­nio cirÃºrgico do Figma e Illustrator", "Apego extremo a espaÃ§amento, tracking e contrastes", "PortfÃ³lio com soluÃ§Ãµes reais corporativas de alto requinte"],
+      title: "Designer Gráfico / Visual Sênior",
+      tempo: "Remoto ⬢ Contratação Recorrente",
+      desc: "Estruturação de marcas ricas heráldicas, e layouts premium de redes sociais com tipografia avançada e senso estético exigente.",
+      requirements: ["Domínio cirúrgico do Figma e Illustrator", "Apego extremo a espaçamento, tracking e contrastes", "Portfólio com soluções reais corporativas de alto requinte"],
       color: "border-brand-secondary/20 shadow-brand-secondary/2"
     },
     {
       id: 1,
       area: "GROWTH & ANALYTICS S?`NIOR",
       title: "Head de Performance Google / Meta Ads",
-      tempo: "Remoto â¬¢ ContrataÃ§Ã£o Imediata",
-      desc: "Gerenciamento estratÃ©gico de orÃ§amentos de alta intensidade de compra para marcas B2B, consultorias e saÃºde premium.",
-      requirements: ["Mais de 4 anos gerenciando contas reais exigentes", "Habilidade cirÃºrgica de traduzir tÃ¡ticas em ROI nos relatÃ³rios", "Foco em canais Meta Ads de alto tÃ­quete"],
+      tempo: "Remoto ⬢ Contratação Imediata",
+      desc: "Gerenciamento estratégico de orçamentos de alta intensidade de compra para marcas B2B, consultorias e saúde premium.",
+      requirements: ["Mais de 4 anos gerenciando contas reais exigentes", "Habilidade cirúrgica de traduzir táticas em ROI nos relatórios", "Foco em canais Meta Ads de alto tíquete"],
       color: "border-purple-500/20 shadow-purple-500/2"
     },
     {
       id: 2,
       area: "FRONT-END ARCHITECTURE",
-      title: "Dev React.js / Node.js SÃªnior",
-      tempo: "Remoto Ã¢Â¬Â¢ Banco de Talentos",
-      desc: "Transformar os protÃ³tipos de alta definiÃ§Ã£o do Figma em cÃ³digo sÃªnior, responsivo e ultra veloz sem construtores lentos.",
-      requirements: ["DomÃ­nio supremo de React, Vite, TS e Tailwind", "ApreÃ§o intransigente pelo pixel-perfect do designer", "ObssessÃ£o por otimizaÃ§Ã£o tÃ©cnica e Core Web Vitals"],
+      title: "Dev React.js / Node.js Sênior",
+      tempo: "Remoto ⬢ Banco de Talentos",
+      desc: "Transformar os protótipos de alta definição do Figma em código sênior, responsivo e ultra veloz sem construtores lentos.",
+      requirements: ["Domínio supremo de React, Vite, TS e Tailwind", "Apreço intransigente pelo pixel-perfect do designer", "Obssessão por otimização técnica e Core Web Vitals"],
       color: "border-blue-500/20 shadow-blue-500/2"
     }
   ];
@@ -182,20 +183,20 @@ export default function Sobre({ onNavigate }: SobreProps) {
   const COLLABORATION_BLOCKS = [
     {
       id: 0,
-      area: "COLABORA??O",
-      title: "Pensamento estratÃ©gico",
+      area: "COLABORAÇÃO",
+      title: "Pensamento estratégico",
       tempo: "Cultura TAG08",
-      desc: "Buscamos pessoas que entendam contexto, faÃ§am boas perguntas e conectem execuÃ§Ã£o com objetivo.",
-      requirements: ["Leitura de contexto antes da tarefa", "Perguntas que melhoram a direÃ§Ã£o", "Capacidade de ligar detalhe e resultado"],
+      desc: "Buscamos pessoas que entendam contexto, façam boas perguntas e conectem execução com objetivo.",
+      requirements: ["Leitura de contexto antes da tarefa", "Perguntas que melhoram a direção", "Capacidade de ligar detalhe e resultado"],
       color: "border-brand-secondary/20 shadow-brand-secondary/2"
     },
     {
       id: 1,
-      area: "PADR?O DE ENTREGA",
+    area: "PADRÃO DE ENTREGA",
       title: "Cuidado com a entrega",
-      tempo: "Processo e revisÃ£o",
-      desc: "Qualidade nÃ£o Ã© detalhe final. Ã‰ postura durante briefing, produÃ§Ã£o, revisÃ£o e melhoria.",
-      requirements: ["AtenÃ§Ã£o ao briefing e ao escopo", "Ritmo consistente de revisÃ£o", "Compromisso com a melhoria contÃ­nua"],
+      tempo: "Processo e revisão",
+      desc: "Qualidade não é detalhe final. É postura durante briefing, produção, revisão e melhoria.",
+      requirements: ["Atenção ao briefing e ao escopo", "Ritmo consistente de revisão", "Compromisso com a melhoria contínua"],
       color: "border-purple-500/20 shadow-purple-500/2"
     },
     {
@@ -203,8 +204,8 @@ export default function Sobre({ onNavigate }: SobreProps) {
       area: "PROCESSO",
       title: "Responsabilidade com o processo",
       tempo: "Equipe e rotina",
-      desc: "Trabalhar bem em equipe exige clareza de escopo, prazos possÃ­veis, comunicaÃ§Ã£o objetiva e registro das decisÃµes.",
-      requirements: ["Escopo claro antes da execuÃ§Ã£o", "ComunicaÃ§Ã£o objetiva entre Ã¡reas", "Registro das decisÃµes e prÃ³ximos passos"],
+      desc: "Trabalhar bem em equipe exige clareza de escopo, prazos possíveis, comunicação objetiva e registro das decisões.",
+      requirements: ["Escopo claro antes da execução", "Comunicação objetiva entre áreas", "Registro das decisões e próximos passos"],
       color: "border-blue-500/20 shadow-blue-500/2"
     }
   ];
@@ -226,23 +227,25 @@ export default function Sobre({ onNavigate }: SobreProps) {
                 Sobre a TAG08
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase">
-                DireÃ§Ã£o para construir presenÃ§a. <br />
+                Direção para construir presença. <br />
                 <span className="text-brand">Estrutura para sustentar crescimento.</span>
               </h1>
             </div>
 
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
-                A TAG08 Ã© uma consultoria criativa, estratÃ©gica e operacional que conecta comunicaÃ§Ã£o, design, tecnologia e processos para ajudar marcas a saÃ­rem do improviso e construÃ­rem uma presenÃ§a digital mais clara, consistente e responsÃ¡vel.
+                A TAG08 é uma consultoria criativa, estratégica e operacional que conecta comunicação, design, tecnologia e processos para ajudar marcas a saírem do improviso e construírem uma presença digital mais clara, consistente e responsável.
               </p>
             </div>
           </div>
 
           <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left">
-            <img
+            <Image
+              fill
+              sizes="100vw"
               src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1600"
               alt="Time de Especialistas TAG08"
-              className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
+              className="object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
@@ -261,12 +264,12 @@ export default function Sobre({ onNavigate }: SobreProps) {
             <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10">
               <div className="space-y-1">
                 <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-bold">TAG08 LAB CONSOLE</span>
-                <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">PresenÃ§a com direÃ§Ã£o</h4>
+                <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Presença com direção</h4>
               </div>
 
               <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
                 <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                <span>TAG08 // DIRE??O</span>
+                <span>TAG08 // DIREÇÃO</span>
               </div>
             </div>
           </div>
@@ -277,35 +280,37 @@ export default function Sobre({ onNavigate }: SobreProps) {
               <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Entendimento do momento<br />da marca</span>
             </div>
             <div className="space-y-2">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">MÃ©todo</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">DireÃ§Ã£o antes da execuÃ§Ã£o</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Método</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Direção antes da execução</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Estrutura</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">ComunicaÃ§Ã£o, design e operaÃ§Ã£o<br />organizados com critÃ©rio</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Comunicação, design e operação<br />organizados com critério</span>
             </div>
             <div className="space-y-2">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-brand">ExecuÃ§Ã£o responsÃ¡vel</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Execução responsável</span>
               <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Entrega acompanhada<br />e sustentada no tempo</span>
             </div>
           </div>
 
           <div className="pt-12 sm:pt-16 border-t border-white/[0.04] space-y-8 text-left font-sans">
             <div className="space-y-2">
-              <span className="font-mono text-[8px] text-brand tracking-widest block uppercase font-bold">ENTENDIMENTO E DIRE??O</span>
+              <span className="font-mono text-[8px] text-brand tracking-widest block uppercase font-bold">ENTENDIMENTO E DIREÇÃO</span>
               <h3 className="font-display font-black text-white text-xl sm:text-2xl uppercase tracking-tight">Conversas diretas com quem pensa e executa.</h3>
               <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-2xl font-medium">
-                VocÃª conversa com quem participa da direÃ§Ã£o do trabalho, sem prometer atalhos e sem intermediÃ¡rios que diluem o contexto.
+                Você conversa com quem participa da direção do trabalho, sem prometer atalhos e sem intermediários que diluem o contexto.
               </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pt-2">
               <div className="lg:col-span-5 bg-gradient-to-br from-brand-secondary/[0.08] via-zinc-950 to-transparent border border-brand-secondary/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[360px] shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.03)] hover:border-brand-secondary/45 transition-all duration-300">
                 <div className="absolute inset-0 z-0 pointer-events-none">
-                  <img
+                  <Image
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 42vw"
                     src={TILES_HERO[0].avatar}
                     alt={TILES_HERO[0].name}
-                    className="w-full h-full object-cover opacity-20 grayscale brightness-[0.7] group-hover:scale-[1.01] group-hover:opacity-30 transition-all duration-1000"
+                    className="object-cover opacity-20 grayscale brightness-[0.7] group-hover:scale-[1.01] group-hover:opacity-30 transition-all duration-1000"
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent" />
@@ -317,17 +322,17 @@ export default function Sobre({ onNavigate }: SobreProps) {
                     <span className="font-sans text-[7.5px] text-brand-secondary font-extrabold uppercase tracking-widest">{TILES_HERO[0].badge}</span>
                   </div>
 
-                  <span className="font-mono text-[8px] text-zinc-500 font-bold uppercase tracking-wider">TAG08 // DIRE??O</span>
+                  <span className="font-mono text-[8px] text-zinc-500 font-bold uppercase tracking-wider">TAG08 // DIREÇÃO</span>
                 </div>
 
                 <div className="relative z-10 space-y-4 mt-auto">
                   <div className="space-y-1">
-                    <span className="font-mono text-[8.5px] text-brand block uppercase font-bold">EQUIPE E DIRE??O</span>
+                    <span className="font-mono text-[8.5px] text-brand block uppercase font-bold">EQUIPE E DIREÇÃO</span>
                     <h4 className="font-display font-black text-2xl sm:text-3xl text-white uppercase leading-none tracking-tight">{TILES_HERO[0].name}</h4>
                     <p className="text-zinc-300 text-xs font-sans font-medium">{TILES_HERO[0].role}</p>
                     <p className="text-brand-secondary text-[8.5px] font-mono uppercase tracking-wider pt-1">{TILES_HERO[0].connections} // {TILES_HERO[0].focus}</p>
                     <p className="text-zinc-400 text-xs leading-relaxed max-w-sm pt-2 italic">
-                      A TAG08 conecta estratÃ©gia, comunicaÃ§Ã£o, design, tecnologia e processos para ajudar marcas a saÃ­rem do improviso e construÃ­rem uma presenÃ§a digital mais clara, consistente e responsÃ¡vel.
+                      A TAG08 conecta estratégia, comunicação, design, tecnologia e processos para ajudar marcas a saírem do improviso e construírem uma presença digital mais clara, consistente e responsável.
                     </p>
                   </div>
 
@@ -351,10 +356,12 @@ export default function Sobre({ onNavigate }: SobreProps) {
                     className="bg-charcoal-900 border border-white/[0.08] rounded-3xl p-5 flex flex-col justify-between text-left relative overflow-hidden h-[360px] group transition-all duration-300 hover:border-brand/40"
                   >
                     <div className="absolute inset-0 z-0 pointer-events-none">
-                      <img
+                      <Image
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
                         src={member.avatar}
                         alt={member.name}
-                        className="w-full h-full object-cover opacity-45 grayscale brightness-[0.7] group-hover:scale-105 group-hover:opacity-55 transition-all duration-700"
+                        className="object-cover opacity-45 grayscale brightness-[0.7] group-hover:scale-105 group-hover:opacity-55 transition-all duration-700"
                         referrerPolicy="no-referrer"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
@@ -400,21 +407,21 @@ export default function Sobre({ onNavigate }: SobreProps) {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
                 <div className="lg:col-span-8 space-y-3">
                   <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-brand-secondary/10 border border-brand-secondary/20 text-brand-secondary font-mono text-[8px] lg:text-[9.5px] font-black tracking-widest uppercase">
-                    <span>Rede de contexto e direÃ§Ã£o</span>
+                    <span>Rede de contexto e direção</span>
                   </div>
                   <h4 className="font-display font-black text-white text-lg sm:text-2xl uppercase tracking-tight leading-none">Acompanhe a TAG08 no LinkedIn</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed max-w-2xl font-medium">
-                    Publicamos referÃªncias, bastidores e atualizaÃ§Ãµes do que estamos construindo, sempre com foco em direÃ§Ã£o, mÃ©todo e aprendizagem aplicada.
+                    Publicamos referências, bastidores e atualizações do que estamos construindo, sempre com foco em direção, método e aprendizagem aplicada.
                   </p>
                 </div>
 
                 <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end w-full">
                   <div className="bg-black/45 border border-white/5 rounded-2xl p-4 text-center sm:text-left lg:text-left flex-1">
-                    <span className="block font-display font-black text-xl text-brand-secondary">DireÃ§Ã£o</span>
-                    <span className="block text-zinc-500 font-mono text-[8px] uppercase tracking-wider">Linha editorial e critÃ©rio</span>
+                    <span className="block font-display font-black text-xl text-brand-secondary">Direção</span>
+                    <span className="block text-zinc-500 font-mono text-[8px] uppercase tracking-wider">Linha editorial e critério</span>
                   </div>
                   <div className="bg-black/45 border border-white/5 rounded-2xl p-4 text-center sm:text-left lg:text-left flex-1">
-                    <span className="block font-display font-black text-xl text-white">MÃ©todo</span>
+                    <span className="block font-display font-black text-xl text-white">Método</span>
                     <span className="block text-zinc-500 font-mono text-[8px] uppercase tracking-wider">Processo, postura e entrega</span>
                   </div>
                 </div>
@@ -432,13 +439,13 @@ export default function Sobre({ onNavigate }: SobreProps) {
           {/* Logo Title Block */}
           <div className="text-center space-y-3">
             <span className="font-mono text-[9px] text-brand-secondary font-black uppercase tracking-widest bg-brand/5 border border-brand/10 px-3 py-1 rounded-full inline-block">
-              ConfianÃ§a construÃ­da com mÃ©todo
+              Confiança construída com método
             </span>
             <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-white uppercase leading-none tracking-tighter max-w-4xl mx-auto">
-              A confianÃ§a vem da forma como o trabalho Ã© conduzido.
+              A confiança vem da forma como o trabalho é conduzido.
             </h2>
             <p className="font-sans text-xs sm:text-[13px] text-zinc-400 leading-relaxed max-w-3xl mx-auto">
-              A TAG08 constrÃ³i relaÃ§Ãµes a partir de diagnÃ³stico, clareza de escopo, comunicaÃ§Ã£o objetiva e execuÃ§Ã£o responsÃ¡vel. Mais do que parecer grande, o trabalho precisa fazer sentido para o momento real da marca.
+              A TAG08 constrói relações a partir de diagnóstico, clareza de escopo, comunicação objetiva e execução responsável. Mais do que parecer grande, o trabalho precisa fazer sentido para o momento real da marca.
             </p>
             {/* Infinite Logo Marquee Carousel */}
             <div className="w-full overflow-hidden relative pt-8 pb-4 opacity-75 hover:opacity-100 transition-opacity duration-300 select-none">
@@ -494,10 +501,10 @@ export default function Sobre({ onNavigate }: SobreProps) {
           <div className="max-w-3xl text-left space-y-3 pt-6">
             <span className="font-mono text-xs text-brand uppercase tracking-widest block font-bold">Diferenciais TAG08</span>
             <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-white uppercase leading-none tracking-tighter">
-              Quatro critÃ©rios que orientam a entrega.
+              Quatro critérios que orientam a entrega.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-2xl">
-              A TAG08 organiza estratÃ©gia, escopo, coordenaÃ§Ã£o e revisÃ£o para evitar ruÃ­do e manter o trabalho coerente com o momento real da marca.
+              A TAG08 organiza estratégia, escopo, coordenação e revisão para evitar ruído e manter o trabalho coerente com o momento real da marca.
             </p>
           </div>
           {/* Reference 1: "Fast and flexible" colored tiles grid layout with top right oblique arrow */}
@@ -536,35 +543,37 @@ export default function Sobre({ onNavigate }: SobreProps) {
         </div>
       </section>
 
-      {/* NOVO BLOCO: O QUE ACREDITAMOS NA PRÃTICA (Valores vivos aplicados, cultura e parceria) */}
+      {/* NOVO BLOCO: O QUE ACREDITAMOS NA PRÁTICA (Valores vivos aplicados, cultura e parceria) */}
       <section className="px-4 sm:px-6 md:px-8 py-24 border-b border-white/[0.04] bg-zinc-950 text-left">
         <div className="max-w-7xl mx-auto space-y-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
               <span className="font-mono text-[9px] tracking-widest text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/15 px-3 py-1 rounded-full uppercase inline-block">
-                O que acreditamos na prÃ¡tica
+                O que acreditamos na prática
               </span>
               <h2 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase leading-tight tracking-tight">
-                PresenÃ§a digital precisa de direÃ§Ã£o, nÃ£o de improviso.
+                Presença digital precisa de direção, não de improviso.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-md">
-                A TAG08 acredita que comunicaÃ§Ã£o, design, tecnologia e processos sÃ³ geram valor quando estÃ£o conectados a um diagnÃ³stico claro, a prioridades bem definidas e a uma execuÃ§Ã£o possÃ­vel de sustentar.
+                A TAG08 acredita que comunicação, design, tecnologia e processos só geram valor quando estão conectados a um diagnóstico claro, a prioridades bem definidas e a uma execução possível de sustentar.
               </p>
 
               <div className="p-5 rounded-2xl bg-charcoal-900 border border-white/[0.03] space-y-2.5">
-                <span className="font-mono text-[8px] text-zinc-500 block uppercase">CRITÃ‰RIO DE BASE</span>
+                <span className="font-mono text-[8px] text-zinc-500 block uppercase">CRITÉRIO DE BASE</span>
                 <p className="text-zinc-300 text-xs font-sans leading-relaxed">
-                  A TAG08 nÃ£o busca parecer maior do que Ã©. Busca construir caminhos mais claros, coerentes e sustentÃ¡veis para cada marca.
+                  A TAG08 não busca parecer maior do que é. Busca construir caminhos mais claros, coerentes e sustentáveis para cada marca.
                 </p>
               </div>
             </div>
 
             <div className="lg:col-span-7">
               <div className="relative rounded-[28px] sm:rounded-[36px] overflow-hidden aspect-[4/3] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left">
-                <img
+                <Image
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 58vw"
                   src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200"
                   alt="Time de Especialistas TAG08"
-                  className="w-full h-full object-cover grayscale brightness-75 group-hover:scale-105 duration-1000 ease-out"
+                  className="object-cover grayscale brightness-75 group-hover:scale-105 duration-1000 ease-out"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-95 pointer-events-none" />
@@ -573,12 +582,12 @@ export default function Sobre({ onNavigate }: SobreProps) {
                 <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10">
                   <div className="space-y-1">
                     <span className="font-mono text-[9px] text-brand-secondary font-black uppercase tracking-widest block">TAG08 LAB CONSOLE</span>
-                    <h4 className="font-display font-black text-white text-sm sm:text-base uppercase tracking-tight leading-none">DireÃ§Ã£o aplicada</h4>
+                    <h4 className="font-display font-black text-white text-sm sm:text-base uppercase tracking-tight leading-none">Direção aplicada</h4>
                   </div>
 
                   <div className="bg-black/80 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none">
                     <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                    <span>MÃ©todo // prÃ¡tica</span>
+                    <span>Método // prática</span>
                   </div>
                 </div>
               </div>
@@ -589,22 +598,22 @@ export default function Sobre({ onNavigate }: SobreProps) {
             {[
               {
                 title: "Clareza antes da velocidade",
-                desc: "Crescer rÃ¡pido sem entender o caminho costuma gerar retrabalho, ruÃ­do e decisÃµes frÃ¡geis.",
+                desc: "Crescer rápido sem entender o caminho costuma gerar retrabalho, ruído e decisões frágeis.",
                 icon: <Target className="w-4 h-4 text-brand" />
               },
               {
-                title: "EstratÃ©gia antes do volume",
-                desc: "Mais conteÃºdo, mais campanha ou mais ferramenta nÃ£o resolvem quando a mensagem, o pÃºblico e o posicionamento ainda estÃ£o confusos.",
+                title: "Estratégia antes do volume",
+                desc: "Mais conteúdo, mais campanha ou mais ferramenta não resolvem quando a mensagem, o público e o posicionamento ainda estão confusos.",
                 icon: <BookOpen className="w-4 h-4 text-brand" />
               },
               {
-                title: "ExecuÃ§Ã£o com responsabilidade",
-                desc: "Cada entrega precisa respeitar escopo, contexto, prazo possÃ­vel, qualidade e capacidade operacional.",
+                title: "Execução com responsabilidade",
+                desc: "Cada entrega precisa respeitar escopo, contexto, prazo possível, qualidade e capacidade operacional.",
                 icon: <Settings className="w-4 h-4 text-brand" />
               },
               {
-                title: "Melhoria contÃ­nua",
-                desc: "O trabalho nÃ£o termina na publicaÃ§Ã£o. Acompanhamos aprendizados, ajustamos rotas e organizamos prÃ³ximos passos.",
+                title: "Melhoria contínua",
+                desc: "O trabalho não termina na publicação. Acompanhamos aprendizados, ajustamos rotas e organizamos próximos passos.",
                 icon: <FileCheck2 className="w-4 h-4 text-brand" />
               }
             ].map((item, idx) => (
@@ -627,19 +636,19 @@ export default function Sobre({ onNavigate }: SobreProps) {
               <div className="space-y-2">
                 <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-wider">FECHAMENTO OPERACIONAL</span>
                 <h3 className="font-display font-medium text-xl sm:text-2xl text-white uppercase tracking-tight">
-                  O que acreditamos vira critÃ©rio de entrega.
+                  O que acreditamos vira critério de entrega.
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                  A TAG08 nÃ£o busca parecer maior do que Ã©. Busca construir caminhos mais claros, coerentes e sustentÃ¡veis para cada marca.
+                  A TAG08 não busca parecer maior do que é. Busca construir caminhos mais claros, coerentes e sustentáveis para cada marca.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
-                  { title: "Contexto", desc: "Entender o momento da marca antes de propor soluÃ§Ãµes." },
-                  { title: "CritÃ©rio", desc: "Delimitar o que faz sentido executar agora e o que deve esperar." },
-                  { title: "SustentaÃ§Ã£o", desc: "Organizar entregas que possam ser mantidas com responsabilidade." },
-                  { title: "Continuidade", desc: "Revisar, ajustar e seguir com prÃ³ximos passos mais claros." }
+                  { title: "Contexto", desc: "Entender o momento da marca antes de propor soluções." },
+                  { title: "Critério", desc: "Delimitar o que faz sentido executar agora e o que deve esperar." },
+                  { title: "Sustentação", desc: "Organizar entregas que possam ser mantidas com responsabilidade." },
+                  { title: "Continuidade", desc: "Revisar, ajustar e seguir com próximos passos mais claros." }
                 ].map((point, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-brand/[0.01] border border-brand/5 space-y-1.5 hover:border-brand/20 transition-all">
                     <span className="font-mono text-[9px] text-brand font-bold">0{idx + 1}</span>
@@ -654,23 +663,23 @@ export default function Sobre({ onNavigate }: SobreProps) {
               <div className="p-6 rounded-3xl bg-neutral-900/50 border border-white/[0.06] relative overflow-hidden text-left">
                 <div className="absolute inset-0 bg-[radial-gradient(#ffffff03_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
                 <div className="relative z-10 space-y-2">
-                  <h4 className="text-white font-display font-semibold text-lg uppercase tracking-tight">PrÃ³ximo passo com clareza</h4>
+                  <h4 className="text-white font-display font-semibold text-lg uppercase tracking-tight">Próximo passo com clareza</h4>
                   <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-xl leading-relaxed">
-                    Antes de transformar qualquer demanda em execuÃ§Ã£o, a TAG08 ajuda a organizar prioridades, identificar gargalos e indicar um caminho coerente.
+                    Antes de transformar qualquer demanda em execução, a TAG08 ajuda a organizar prioridades, identificar gargalos e indicar um caminho coerente.
                   </p>
                 </div>
                 <button
                   onClick={() => handleLinkClick("/servicos")}
                   className="mt-6 group relative px-6 py-3.5 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0 overflow-hidden shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:-translate-y-0.5"
                 >
-                  CONHECER SOLUÃ‡Ã•ES
+                  CONHECER SOLUÇÕES
                 </button>
               </div>
 
               <div className="p-6 rounded-3xl bg-charcoal-900/40 border border-white/[0.04] space-y-4">
-                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-wider">APRENDIZADO EM PRÃTICA</span>
+                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-wider">APRENDIZADO EM PRÁTICA</span>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                  O trabalho nÃ£o termina na publicaÃ§Ã£o. Acompanhamos aprendizados, ajustamos rotas e organizamos prÃ³ximos passos.
+                  O trabalho não termina na publicação. Acompanhamos aprendizados, ajustamos rotas e organizamos próximos passos.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.03]">
@@ -679,7 +688,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                   </div>
                   <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.03]">
                     <span className="block text-white text-xs font-display font-bold uppercase tracking-tight">Continuidade</span>
-                    <span className="block text-zinc-500 text-[11px] mt-1">A execuÃ§Ã£o sustenta o que foi acordado.</span>
+                    <span className="block text-zinc-500 text-[11px] mt-1">A execução sustenta o que foi acordado.</span>
                   </div>
                 </div>
               </div>
@@ -688,22 +697,22 @@ export default function Sobre({ onNavigate }: SobreProps) {
         </div>
       </section>
 
-      {/* SECTION 4 - CULTURA E COLABORA??O */}
+      {/* SECTION 4 - CULTURA E COLABORAÇÃO */}
       <section className="px-4 sm:px-6 md:px-8 py-24 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-14">
           
           {/* Section Header */}
           <div className="max-w-3xl text-left space-y-3">
-            <span className="font-mono text-xs text-brand uppercase tracking-widest block font-bold">CULTURA E COLABORA??O</span>
+            <span className="font-mono text-xs text-brand uppercase tracking-widest block font-bold">CULTURA E COLABORAÇÃO</span>
             <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
-              Trabalhar com a TAG08 exige critÃ©rio, clareza e responsabilidade.
+              Trabalhar com a TAG08 exige critério, clareza e responsabilidade.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-2xl font-medium">
-              A TAG08 valoriza pessoas que sabem pensar antes de executar, respeitam processo, cuidam da qualidade e entendem que criatividade tambÃ©m precisa de mÃ©todo.
+              A TAG08 valoriza pessoas que sabem pensar antes de executar, respeitam processo, cuidam da qualidade e entendem que criatividade também precisa de método.
             </p>
           </div>
 
-          {/* Bloco de princÃ­pios de colaboraÃ§Ã£o */}
+          {/* Bloco de princípios de colaboração */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
             {COLLABORATION_BLOCKS.map((vaga) => {
               const isOpen = selectedVaga === vaga.id;
@@ -749,7 +758,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                           transition={{ duration: 0.25 }}
                           className="pt-4 border-t border-white/[0.05] space-y-2.5"
                         >
-                          <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-black block">PRINCÃPIOS ESSENCIAIS:</span>
+                          <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-black block">PRINCÍPIOS ESSENCIAIS:</span>
                           <div className="space-y-1.5">
                             {vaga.requirements.map((req, rIdx) => (
                               <div key={rIdx} className="flex gap-2 text-xs text-zinc-300 items-start leading-relaxed font-sans font-medium">
@@ -777,7 +786,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                           : "bg-white/[0.01] border border-white/10 hover:border-brand/40 text-zinc-300 hover:text-white"
                       }`}
                     >
-                      <span>{isOpen ? "ENTENDIDO" : "PRINCÃPIOS"}</span>
+                      <span>{isOpen ? "ENTENDIDO" : "PRINCÍPIOS"}</span>
                       <ArrowRight className={`w-3 h-3 transition-transform ${isOpen ? "rotate-90" : ""}`} />
                     </button>
                   </div>
@@ -794,7 +803,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
             <div className="space-y-1.5 max-w-xl">
               <h4 className="text-white font-display font-black text-sm sm:text-base uppercase">QUER FAZER PARTE DO JEITO TAG08 DE TRABALHAR?</h4>
               <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                Se vocÃª se identifica com pensamento estratÃ©gico, cuidado com a entrega e responsabilidade com o processo, vale conhecer nosso espaÃ§o de colaboraÃ§Ã£o.
+                Se você se identifica com pensamento estratégico, cuidado com a entrega e responsabilidade com o processo, vale conhecer nosso espaço de colaboração.
               </p>
             </div>
             
@@ -822,7 +831,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
           </h2>
 
           <p className="text-zinc-300 text-xs sm:text-sm max-w-md mx-auto leading-relaxed font-sans">
-            Antes de propor qualquer solu??o, entendemos o momento, os desafios e as prioridades da sua marca para indicar um caminho mais claro, coerente e respons?vel.
+            Antes de propor qualquer solução, entendemos o momento, os desafios e as prioridades da sua marca para indicar um caminho mais claro, coerente e responsável.
           </p>
 
           <div className="pt-4">

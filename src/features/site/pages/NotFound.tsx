@@ -47,10 +47,10 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
 
             <div className="pt-2 text-center md:text-left space-y-2">
               <span className="font-mono text-[9.5px] text-zinc-500 uppercase tracking-widest font-black block">
-                DIRE??O & GOVERNAN?A DE ATIVOS
+                DIREÇÃO & GOVERNANÇA DE ATIVOS
               </span>
               <p className="text-zinc-500 text-[11px] leading-relaxed font-sans max-w-xs mx-auto md:mx-0 select-none">
-                O endereÃ§o referenciado nÃ£o reside sob o mapeamento tÃ©cnico da agÃªncia TAG08.
+                O endereço referenciado não reside sob o mapeamento técnico da agência TAG08.
               </p>
             </div>
           </div>
@@ -64,7 +64,7 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
                 Oops, Parecemos Fora de Rumo!
               </h1>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-lg">
-                Assim como no marketing digital, rotas desalinhadas drenam energia e recursos. Vamos reconectar sua experiÃªncia com nossos principais pontos de ancoragem operacional sÃªnior.
+                Assim como no marketing digital, rotas desalinhadas drenam energia e recursos. Vamos reconectar sua experiência com nossos principais pontos de ancoragem operacional sênior.
               </p>
             </div>
 
@@ -80,11 +80,11 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
                 </div>
                 <div className="space-y-1">
                   <h4 className="text-white font-semibold text-xs sm:text-sm font-display flex items-center gap-1.5">
-                    <span>Voltar ao InÃ­cio</span>
+                    <span>Voltar ao Início</span>
                     <ArrowLeft className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 duration-200 text-brand" />
                   </h4>
                   <p className="text-zinc-500 text-[11px] leading-snug">
-                    Retorne para a governanÃ§a central e explore toda a nossa apresentaÃ§Ã£o corporativa.
+                    Retorne para a governança central e explore toda a nossa apresentação corporativa.
                   </p>
                 </div>
               </motion.button>
@@ -100,11 +100,11 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
                 </div>
                 <div className="space-y-1">
                   <h4 className="text-white font-semibold text-xs sm:text-sm font-display flex items-center gap-1.5">
-                    <span>Nossas SoluÃ§Ãµes</span>
+                    <span>Nossas Soluções</span>
                     <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 duration-200 text-brand" />
                   </h4>
                   <p className="text-zinc-500 text-[11px] leading-snug">
-                    Descubra nossos ecossistemas de Branding, Desenvolvimento Web e Processos SÃªnior.
+                    Descubra nossos ecossistemas de Branding, Desenvolvimento Web e Processos Sênior.
                   </p>
                 </div>
               </motion.button>
@@ -126,7 +126,7 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
               </div>
 
               <a
-                href={buildBrazilWhatsAppUrl("OlÃ¡,%20acabei%20de%20encontrar%2520uma%2520rota%2520404%2520no%2520portal%2520da%2520TAG08!")}
+                href={buildBrazilWhatsAppUrl("Olá,%20acabei%20de%20encontrar%2520uma%2520rota%2520404%2520no%2520portal%2520da%2520TAG08!")}
                 target="_blank"
                 rel="noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-1 bg-black hover:bg-neutral-900 border border-black text-white px-4 py-2.5 rounded-xl font-mono text-[10px] uppercase font-black tracking-widest hover:scale-[1.02] transition-all cursor-pointer whitespace-nowrap"

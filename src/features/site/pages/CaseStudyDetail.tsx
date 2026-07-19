@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect } from "react";
 import { ArrowLeft, ArrowUpRight, CheckCircle2, TrendingUp, Award, Calendar, ChevronRight, Share2, Copy, Check, MessageSquare, Zap, Target } from "lucide-react";
 import { motion } from "motion/react";
+import Image from "next/image";
 import { CASE_STUDIES } from "../../../data";
 
 interface CaseStudyDetailProps {
@@ -19,16 +20,16 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
   if (!selectedCase) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center text-center p-6 bg-charcoal-950 text-white font-sans">
-        <h2 className="font-display font-black text-3xl uppercase text-zinc-400 mb-4">Caso de Sucesso nÃ£o encontrado</h2>
+        <h2 className="font-display font-black text-3xl uppercase text-zinc-400 mb-4">Caso de Sucesso não encontrado</h2>
         <p className="text-zinc-500 text-sm max-w-md mb-8">
-          O caso estratÃ©gico solicitado nÃ£o pÃ´de ser localizado em nossa base operacional.
+          O caso estratégico solicitado não pôde ser localizado em nossa base operacional.
         </p>
         <button
           onClick={() => onNavigate("/")}
           className="inline-flex items-center gap-2 px-6 py-3 bg-brand-secondary text-black font-black font-mono text-xs uppercase tracking-widest rounded-xl hover:bg-white transition-all duration-300"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Voltar ao InÃ­cio</span>
+          <span>Voltar ao Início</span>
         </button>
       </div>
     );
@@ -57,7 +58,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
               onClick={() => onNavigate("/")} 
               className="hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
             >
-              InÃ­cio
+              Início
             </button>
             <ChevronRight className="w-3 h-3 text-zinc-600" />
             <button 
@@ -92,7 +93,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
               className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-secondary/5 hover:bg-brand-secondary/10 border border-brand-secondary/10 hover:border-brand-secondary/20 text-brand-secondary rounded-xl text-xs font-mono tracking-wider transition-all duration-300 cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Voltar ao InÃ­cio</span>
+              <span>Voltar ao Início</span>
             </button>
           </div>
         </div>
@@ -110,7 +111,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                   {selectedCase.category}
                 </span>
                 <span className="text-zinc-500 font-mono text-[10px] tracking-wide uppercase">
-                  ConsÃ³rcio de Crescimento Ativo TAG08
+                  Consórcio de Crescimento Ativo TAG08
                 </span>
               </div>
 
@@ -119,17 +120,19 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
               </h1>
 
               <p className="text-zinc-400 text-sm leading-relaxed font-sans text-left max-w-2xl">
-                AnÃ¡lise aprofundada de resultados e direÃ§Ã£o operacional da implementaÃ§Ã£o em parceria com a marca parceira <strong className="text-white font-medium">{selectedCase.client}</strong>.
+                Análise aprofundada de resultados e direção operacional da implementação em parceria com a marca parceira <strong className="text-white font-medium">{selectedCase.client}</strong>.
               </p>
             </div>
 
             {/* Immersive Main Banner Image */}
             <div className="relative h-[280px] sm:h-[420px] rounded-[32px] overflow-hidden group shadow-2xl border border-white/[0.04]">
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/15 to-transparent z-10" />
-              <img
+              <Image
+                fill
+                sizes="100vw"
                 src={selectedCase.image}
                 alt={selectedCase.title}
-                className="w-full h-full object-cover transition-transform duration-700 pointer-events-none brightness-[0.95]"
+                className="object-cover transition-transform duration-700 pointer-events-none brightness-[0.95]"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute bottom-6 left-6 right-6 z-20 flex flex-wrap items-center justify-between gap-4">
@@ -156,7 +159,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-red-500" />
                   <h3 className="font-sans text-[11px] uppercase tracking-wider text-red-450 font-black">
-                    O CÃŠNARIO ANTERIOR (O DESAFIO)
+                    O CÊNARIO ANTERIOR (O DESAFIO)
                   </h3>
                 </div>
                 <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed font-sans font-normal">
@@ -164,7 +167,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                 </p>
                 <div className="pt-2 border-t border-white/[0.03] flex items-center gap-2 text-[10px] font-mono text-zinc-500 uppercase">
                   <Target className="w-3.5 h-3.5 text-red-550" />
-                  <span>DiagnÃ³stico de pontos fracos</span>
+                  <span>Diagnóstico de pontos fracos</span>
                 </div>
               </div>
 
@@ -173,7 +176,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-brand-secondary" />
                   <h3 className="font-sans text-[11px] uppercase tracking-wider text-brand-secondary font-black">
-                    A ESTRAT?GIA ADOTADA (SOLU??O)
+                    A ESTRATÉGIA ADOTADA (SOLUÇÃO)
                   </h3>
                 </div>
                 <p className="text-zinc-350 text-xs sm:text-sm leading-relaxed font-sans font-normal">
@@ -181,7 +184,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                 </p>
                 <div className="pt-2 border-t border-white/[0.03] flex items-center gap-2 text-[10px] font-mono text-zinc-500 uppercase">
                   <Zap className="w-3.5 h-3.5 text-brand" />
-                  <span>MÃ©todos ativos aplicados</span>
+                  <span>Métodos ativos aplicados</span>
                 </div>
               </div>
             </div>
@@ -189,7 +192,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
             {/* In-depth details section mock blog post metrics progression */}
             <div className="space-y-6 pt-6 text-left">
               <h3 className="font-display font-medium text-xl text-white uppercase tracking-tight">
-                Entregas Operadas e Resultados AlcanÃ§ados
+                Entregas Operadas e Resultados Alcançados
               </h3>
               
               <ul className="grid gap-4">
@@ -235,7 +238,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                 </div>
 
                 <div className="border-t border-white/[0.04] pt-4">
-                  <span className="text-zinc-500 font-mono text-[9px] uppercase tracking-wider block">EstÃ¡gio de ImplementaÃ§Ã£o</span>
+                  <span className="text-zinc-500 font-mono text-[9px] uppercase tracking-wider block">Estágio de Implementação</span>
                   <div className="flex items-center gap-1.5 mt-1 text-xs text-zinc-300 font-semibold font-sans">
                     <span className="w-2 h-2 rounded-full bg-brand-secondary animate-pulse" />
                     <span>Conferido & Ativo</span>
@@ -257,8 +260,8 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                 </div>
 
                 <div className="border-t border-white/[0.04] pt-4 space-y-2 text-[11px] text-zinc-400 font-sans leading-relaxed">
-                  <p>âœ“ AlocaÃ§Ã£o de metodologias de tom de voz corporativo sÃªnior</p>
-                  <p>âœ“ Canais de trÃ¡fego de alta intenÃ§Ã£o e precisÃ£o tÃ©cnica</p>
+                  <p>✓ Alocação de metodologias de tom de voz corporativo sênior</p>
+                  <p>✓ Canais de tráfego de alta intenção e precisão técnica</p>
                 </div>
               </div>
             </div>
@@ -272,10 +275,10 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                   Crescimento Ativo
                 </span>
                 <h3 className="font-display font-black text-xl lg:text-2xl uppercase tracking-tight leading-none text-left">
-                  Sua marca no prÃ³ximo nÃ­vel de faturamento
+                  Sua marca no próximo nível de faturamento
                 </h3>
                 <p className="text-zinc-800 text-xs font-sans leading-relaxed text-left">
-                  Gostaria de ver sua operaÃ§Ã£o corporativa aplicando esta mesma inteligÃªncia estÃ©tica e performance de conversÃ£o?
+                  Gostaria de ver sua operação corporativa aplicando esta mesma inteligência estética e performance de conversão?
                 </p>
               </div>
 

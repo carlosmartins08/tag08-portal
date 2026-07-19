@@ -17,6 +17,6 @@
 
 ## Operacao
 
-- Render executa `npm start`, que inicia o servidor standalone gerado pelo Next.
+- A hospedagem Node.js da TAG08 executa `npm start`, que inicia o servidor standalone gerado pelo Next por proxy na porta interna `3000`.
 - Staging deve validar URLs canonicas, alias, APIs, sitemap e HTML sem JavaScript antes do corte.
-- O release Vite marcado por `pre-next-migration-20260716` e o deploy anterior permanecem como rollback ate a estabilizacao do Next.
+- O release anterior permanece disponivel como rollback ate a estabilizacao do Next.

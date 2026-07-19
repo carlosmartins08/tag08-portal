@@ -1,6 +1,7 @@
 ﻿import { Check, ArrowRight, ArrowUpRight, ShieldCheck, Cpu, Sparkles, Settings2, Share2, TrendingUp, BarChart3, Award, Copy, Star, Calendar, Video } from "lucide-react";
 import { useState } from "react";
 import { motion } from "motion/react";
+import Image from "next/image";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
@@ -295,8 +296,8 @@ export default function Servicos({ onNavigate }: ServicosProps) {
           <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> ENGENHARIA WEB INSTANTNEA</span>
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> CONTROL OPERATIONAL SYSTEMS</span>
           <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> DIRECIONAMENTO CONCEITUAL SÒBRIO</span>
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PROCESSOS E OPERA??O</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> PRESEN?A COM DIRE??O</span>
+          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PROCESSOS E OPERAÇÃO</span>
+          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> PRESENÇA COM DIREÇÃO</span>
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> BRANDING E IDENTIDADE</span>
           
           {/* Repeat once more to secure contiguous slide chain */}
@@ -304,8 +305,8 @@ export default function Servicos({ onNavigate }: ServicosProps) {
           <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> ENGENHARIA WEB INSTANTNEA</span>
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> CONTROL OPERATIONAL SYSTEMS</span>
           <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> DIRECIONAMENTO CONCEITUAL SÒBRIO</span>
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PROCESSOS E OPERA??O</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> PRESEN?A COM DIRE??O</span>
+          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PROCESSOS E OPERAÇÃO</span>
+          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> PRESENÇA COM DIREÇÃO</span>
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> BRANDING E IDENTIDADE</span>
         </div>
       </div>
@@ -500,7 +501,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                           onClick={() => handleLinkClick(domain.ctaPage)}
                           className="inline-flex items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-xs text-white font-mono font-semibold uppercase tracking-widest py-3 px-6 rounded-xl transition-all duration-300 group/btn shrink-0"
                         >
-                          <span>ENTENDER SOLU??O</span>
+                          <span>ENTENDER SOLUÇÃO</span>
                           <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform" />
                         </button>
 
@@ -529,10 +530,12 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                     <div className="lg:col-span-6 w-full h-full xl:pl-6">
                       <ThreeDimensionalTilt>
                         <div className="relative rounded-2xl overflow-hidden aspect-[16/10] sm:aspect-[1.5/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group/img">
-                          <img
+                          <Image
+                            fill
+                            sizes="(max-width: 1024px) 100vw, 50vw"
                             src={domain.image}
                             alt={domain.title}
-                            className="w-full h-full object-cover grayscale brightness-[0.4] group-hover/img:scale-105 group-hover/img:grayscale-0 group-hover/img:brightness-[0.6] transition-all duration-700 ease-out"
+                            className="object-cover grayscale brightness-[0.4] group-hover/img:scale-105 group-hover/img:grayscale-0 group-hover/img:brightness-[0.6] transition-all duration-700 ease-out"
                             referrerPolicy="no-referrer"
                           />
                           {/* Rich overlays */}
@@ -635,10 +638,12 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
           <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[520px]">
             <div className="absolute inset-0 bg-black/10 rounded-[24px] overflow-hidden" />
-            <img
+            <Image
+              fill
+              sizes="(max-width: 1024px) 100vw, 42vw"
               src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800"
               alt="TAG08 Directors Partnership"
-              className="absolute inset-0 w-full h-full object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
+              className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
@@ -769,7 +774,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 {([
                   { id: 0, title: "PONTO DE PARTIDA" },
                   { id: 1, title: "PACOTES" },
-                  { id: 2, title: "COMBINA??O" },
+                  { id: 2, title: "COMBINAÇÃO" },
                   { id: 3, title: "TEMPO" },
                   { id: 4, title: "RESULTADO" }
                 ]).map((item) => (
@@ -798,10 +803,12 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
             {/* Middle Column: Cover image */}
             <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
-              <img
+              <Image
+                fill
+                sizes="(max-width: 1024px) 100vw, 34vw"
                 src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800"
                 alt="TAG08 Meeting"
-                className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
+                className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
               />
               <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
                 <svg viewBox="0 0 100 100" className="w-full h-full text-brand fill-none stroke-current" strokeWidth="0.75" strokeLinecap="round">
@@ -818,7 +825,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   {([
                     "PONTO DE PARTIDA",
                     "PACOTES",
-                    "COMBINA??O",
+                    "COMBINAÇÃO",
                     "TEMPO",
                     "RESULTADO"
                   ])[activeFaq]}
@@ -850,7 +857,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">ORIENTA??O</span>
+                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">ORIENTAÇÃO</span>
                   <h4 className="text-white font-semibold text-sm leading-snug font-display">Escolha melhor antes de avançar</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     A TAG08 organiza o ponto de partida para evitar escolhas apressadas e escopos desalinhados.

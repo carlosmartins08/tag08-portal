@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { ChevronDown, Menu, X, ArrowUpRight, MessageSquare, Briefcase, Compass, Settings, Users, Mail, Award, Activity, Video } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
@@ -94,9 +95,11 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
           onClick={() => handleLinkClick("/", copy.brandSubtitle, "header-logo", "brand")}
           className="flex items-center gap-3 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 group select-none"
         >
-          <img
+          <Image
             src="/brand/logos/logo-horizontal-no-tagline-primary.svg"
             alt="TAG08"
+            width={200}
+            height={32}
             className="h-8 w-auto max-w-[150px] sm:max-w-[200px] opacity-95 transition-opacity duration-300 group-hover:opacity-100"
           />
           <span className="sr-only">{copy.brandSubtitle}</span>
@@ -266,6 +269,9 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
           <button
             id="btn-toggle-mobile-menu"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
             className="p-2 text-white/80 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 focus:ring-1 focus:ring-brand/30 rounded-xl bg-white/[0.02] border border-white/[0.05] shadow"
           >
             {mobileMenuOpen ? <X className="w-5 h-5 text-brand" /> : <Menu className="w-5 h-5" />}
@@ -277,6 +283,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            id="mobile-navigation"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}

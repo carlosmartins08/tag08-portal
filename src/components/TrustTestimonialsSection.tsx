@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Star } from "lucide-react";
 import { TRUST_REVIEWS } from "../content/googleReviews";
@@ -105,9 +106,11 @@ export default function TrustTestimonialsSection() {
                         : "w-[85px] h-[115px] sm:w-[98px] sm:h-[132px] lg:w-[110px] lg:h-[148px] border border-white/[0.06] opacity-35 grayscale hover:opacity-75 hover:grayscale-0 scale-95 hover:scale-98"
                     }`}
                   >
-                    <img
+                    <Image
                       src={review.avatar}
                       alt={review.name}
+                      width={135}
+                      height={180}
                       className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
                       referrerPolicy="no-referrer"
                     />
@@ -148,9 +151,11 @@ export default function TrustTestimonialsSection() {
                 <div className="mt-6 pt-5 border-t border-dashed border-white/[0.08] relative z-10">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                      <img
+                      <Image
                         src={currentReview.avatar}
                         alt={currentReview.name}
+                        width={40}
+                        height={40}
                         className="w-10 h-10 rounded-full object-cover border-2 border-brand-secondary"
                         referrerPolicy="no-referrer"
                       />

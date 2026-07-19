@@ -1,0 +1,95 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: tag08-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: tag08
+      POSTGRES_USER: tag08
+      POSTGRES_PASSWORD: tag08_local_only
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - tag08_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tag08 -d tag08"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  web:
+    image: tag08-local:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: tag08-web-local
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: postgresql://tag08:tag08_local_only@postgres:5432/tag08
+      DATABASE_SSL: "false"
+      ALLOWED_ORIGINS: http://localhost:3000
+      INTEGRATIONS_ENABLED: "false"
+      GOOGLE_SHEETS_ENABLED: "false"
+      CLICKUP_ENABLED: "false"
+    ports:
+      - "127.0.0.1:3000:3000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:3000/api/onboarding/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  migrate:
+    image: tag08-migrate-local:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: migration
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://tag08:tag08_local_only@postgres:5432/tag08
+      DATABASE_SSL: "false"
+
+  integration-worker:
+    image: tag08-jobs-local:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: jobs
+    profiles: ["jobs"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    command: node server/integrationWorker.mjs
+    environment:
+      DATABASE_URL: postgresql://tag08:tag08_local_only@postgres:5432/tag08
+      DATABASE_SSL: "false"
+      INTEGRATIONS_ENABLED: "false"
+      GOOGLE_SHEETS_ENABLED: "false"
+      CLICKUP_ENABLED: "false"
+
+  retention-worker:
+    image: tag08-jobs-local:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: jobs
+    profiles: ["jobs"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    command: node server/retentionWorker.mjs
+    environment:
+      DATABASE_URL: postgresql://tag08:tag08_local_only@postgres:5432/tag08
+      DATABASE_SSL: "false"
+
+volumes:
+  tag08_postgres_data:

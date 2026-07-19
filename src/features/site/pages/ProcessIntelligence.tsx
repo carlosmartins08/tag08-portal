@@ -1,4 +1,5 @@
 ﻿import { useState } from "react";
+import Image from "next/image";
 import { AlertCircle, ArrowUpRight, ArrowRight, BarChart, Workflow, FileText, Server, Layers, Cpu, CheckCircle, MessageSquare } from "lucide-react";
 import { motion } from "motion/react";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
@@ -6,6 +7,7 @@ import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import MiniCases from "../../../components/MiniCases";
+import { calculateProcessIntelligenceWaste } from "../../../lib/simulators/processIntelligence";
 
 interface ProcessProps {
   onNavigate: (page: string) => void;
@@ -13,6 +15,10 @@ interface ProcessProps {
 
 export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
   const [activeFaq, setActiveFaq] = useState(0);
+  const [collaborators, setCollaborators] = useState(5);
+  const [hoursPerDay, setHoursPerDay] = useState(2.5);
+  const [monthlySalary, setMonthlySalary] = useState(4500);
+  const waste = calculateProcessIntelligenceWaste({ collaborators, hoursPerDay, monthlySalary });
 
   const handleLinkClick = (page: string) => {
     onNavigate(page);
@@ -53,9 +59,11 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           {/* 2. Panoramic Wide Banner Image with capsule neon overlay trigger wrapped in 3D perspective tilt container */}
           <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px] overflow-visible">
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
-              <img 
+              <Image
                 src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1600"
                 alt="Mapeamento de Processos TAG08"
+                fill
+                sizes="100vw"
                 className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
               />
@@ -93,7 +101,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">4 Semanas</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Mapeamento de Diagnastico<br/>e Entrega dos Playbooks</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Mapeamento de Diagnóstico<br/>e Entrega dos Playbooks</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">-50%</span>
@@ -120,7 +128,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-4">
               <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-                PATOLOGIAS OPERACIONAIS // DIAGNaSTICO
+              PATOLOGIAS OPERACIONAIS // DIAGNÓSTICO
               </span>
               <h2 className="font-display font-medium text-3xl sm:text-4xl text-white leading-tight uppercase">
                 Sinais invisaveis de "Caos Organizado" na sua empresa
@@ -168,7 +176,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 <BarChart className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Diagnastico Amplo</h4>
+                      <h4 className="text-white font-display font-black text-sm uppercase">Diagnóstico Amplo</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
                   Auditoria de ferramentas, entrevistas em detalhes com os colaboradores atuais, mensuração estruturada dos pontos cegos e desperdacio de retrabalho corporativo por falta de precedancia.
                 </p>
@@ -227,7 +235,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-4">
-              <span className="font-sans text-brand text-xs font-black">FASE A // DIAGNaSTICO PROFUNDO</span>
+                    <span className="font-sans text-brand text-xs font-black">FASE A // DIAGNÓSTICO PROFUNDO</span>
               <h4 className="text-white font-display font-black text-base uppercase leading-none">Mergulho no Cotidiano</h4>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
                 Analise direta do ecossistema de produtividade, gargalos técnicos e vazamento produtivo por parte da equipe atual através de entrevistas e alocação de tempo real de tarefas.
@@ -260,7 +268,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
         <div className="max-w-7xl mx-auto space-y-12 relative z-10">
           <div className="space-y-3 max-w-3xl">
             <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-              DIAGNaSTICO FINANCEIRO // CALCULADORA DE DESPERDaCIO
+                  DIAGNÓSTICO FINANCEIRO // CALCULADORA DE DESPERDÍCIO
             </span>
             <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
               Calculadora de Desperdacio Operacional e ROI de Processos
@@ -281,21 +289,21 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 {/* Slider 1: Colaboradores */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">
+                    <label htmlFor="process-intelligence-collaborators" className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">
                       Colaboradores Afetados:
                     </label>
                     <span className="text-sm font-sans text-brand-secondary font-black bg-brand-secondary/10 px-2.5 py-0.5 rounded-lg border border-brand-secondary/20">
-                      <span id="colab-val">5</span> pessoas
+                      <span>{collaborators}</span> pessoas
                     </span>
                   </div>
                   <input 
                     type="range" 
-                    id="colab-range"
+                    id="process-intelligence-collaborators"
                     min="1" 
                     max="40" 
                     step="1" 
-                    defaultValue="5"
-                    onChange={() => (window as any)._updateWasteSim && (window as any)._updateWasteSim()}
+                    value={collaborators}
+                    onChange={(event) => setCollaborators(Number(event.target.value))}
                     className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-brand-secondary"
                   />
                   <div className="flex items-center justify-between text-[9px] font-sans text-zinc-500">
@@ -308,21 +316,21 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 {/* Slider 2: Horas Gastas */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">
+                    <label htmlFor="process-intelligence-hours-per-day" className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">
                       Tempo perdido por pessoa/dia:
                     </label>
                     <span className="text-sm font-sans text-white font-semibold">
-                      <span id="hours-val">2.5</span> horas
+                      <span>{hoursPerDay.toFixed(1)}</span> horas
                     </span>
                   </div>
                   <input 
                     type="range" 
-                    id="hours-range"
+                    id="process-intelligence-hours-per-day"
                     min="0.5" 
                     max="8.0" 
                     step="0.5" 
-                    defaultValue="2.5"
-                    onChange={() => (window as any)._updateWasteSim && (window as any)._updateWasteSim()}
+                    value={hoursPerDay}
+                    onChange={(event) => setHoursPerDay(Number(event.target.value))}
                     className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-white"
                   />
                   <div className="flex items-center justify-between text-[9px] font-sans text-zinc-500">
@@ -335,21 +343,21 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 {/* Slider 3: Salario Madio */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">
+                    <label htmlFor="process-intelligence-monthly-salary" className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">
                       Salario Madio Mensal (R$):
                     </label>
                     <span className="text-sm font-sans text-white font-semibold">
-                      R$ <span id="salary-val">4.500</span>
+                      R$ <span>{monthlySalary.toLocaleString("pt-BR")}</span>
                     </span>
                   </div>
                   <input 
                     type="range" 
-                    id="salary-range"
+                    id="process-intelligence-monthly-salary"
                     min="2000" 
                     max="15000" 
                     step="500" 
-                    defaultValue="4500"
-                    onChange={() => (window as any)._updateWasteSim && (window as any)._updateWasteSim()}
+                    value={monthlySalary}
+                    onChange={(event) => setMonthlySalary(Number(event.target.value))}
                     className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-white"
                   />
                   <div className="flex items-center justify-between text-[9px] font-sans text-zinc-500">
@@ -384,7 +392,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
                     <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Horas Desperdiaadas / Ano</span>
-                    <p id="waste-hours" className="text-3xl font-display font-black text-white">3.000h</p>
+                    <p className="text-3xl font-display font-black text-white">{waste.annualWasteHours.toLocaleString("pt-BR")}h</p>
                     <span className="text-[9px] text-zinc-400 block leading-tight font-sans">
                       Peraodo total do time gasto em tarefas robaticas.
                     </span>
@@ -392,7 +400,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
 
                   <div className="p-5 rounded-2xl bg-brand-secondary/[0.02] border border-brand-secondary/10 space-y-1">
                     <span className="font-mono text-[8px] text-brand-secondary/80 uppercase font-black block">Custo do Desperdacio / Ano</span>
-                    <p id="waste-cost" className="text-2xl sm:text-3xl font-display font-black text-brand-secondary">R$ 84.375</p>
+                    <p className="text-2xl sm:text-3xl font-display font-black text-brand-secondary">R$ {waste.annualWasteCost.toLocaleString("pt-BR")}</p>
                     <span className="text-[9px] text-zinc-400 block leading-tight font-sans">
                       Dinheiro direto perdido pagando tempo improdutivo.
                     </span>
@@ -400,7 +408,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
 
                   <div className="p-5 rounded-2xl bg-emerald-500/[0.02] border border-emerald-500/10 space-y-1">
                     <span className="font-mono text-[8px] text-emerald-500/80 uppercase font-black block">Horas Recuperaveis (Anual)</span>
-                    <p id="recover-hours" className="text-3xl font-display font-black text-emerald-500">2.400h</p>
+                    <p className="text-3xl font-display font-black text-emerald-500">{waste.recoverableHours.toLocaleString("pt-BR")}h</p>
                     <span className="text-[9px] text-zinc-400 block leading-tight font-sans">
                       Tempo recuperado para direcionar a atividades de alta receita.
                     </span>
@@ -447,52 +455,8 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 </div>
               </div>
 
-              {/* JS calculation script */}
-              <script dangerouslySetInnerHTML={{
-                __html: `
-                  (function() {
-                    window._updateWasteSim = function() {
-                      const colabEl = document.getElementById("colab-range");
-                      const hoursEl = document.getElementById("hours-range");
-                      const salaryEl = document.getElementById("salary-range");
-
-                      const colab = colabEl ? parseInt(colabEl.value) : 5;
-                      const hours = hoursEl ? parseFloat(hoursEl.value) : 2.5;
-                      const salary = salaryEl ? parseInt(salaryEl.value) : 4500;
-
-                      const colabVal = document.getElementById("colab-val");
-                      const hoursVal = document.getElementById("hours-val");
-                      const salaryVal = document.getElementById("salary-val");
-
-                      if (colabVal) colabVal.innerText = colab.toString();
-                      if (hoursVal) hoursVal.innerText = hours.toFixed(1);
-                      if (salaryVal) salaryVal.innerText = salary.toLocaleString("pt-BR");
-
-                      // Math: 22 working days per month, 12 months. Total working hours/year = 22 * 12 * hours * colab
-                      const annualWasteHours = Math.round(22 * 12 * hours * colab);
-                      // Cost per hour = salary / (22 * 8 working hours per day)
-                      const hourlyCost = salary / 176;
-                      const annualWasteCost = Math.round(annualWasteHours * hourlyCost);
-                      // Recoverable hours = 80% of waste hours
-                      const recHours = Math.round(annualWasteHours * 0.8);
-
-                      const whEl = document.getElementById("waste-hours");
-                      const wcEl = document.getElementById("waste-cost");
-                      const rhEl = document.getElementById("recover-hours");
-
-                      if (whEl) whEl.innerText = annualWasteHours.toLocaleString("pt-BR") + "h";
-                      if (wcEl) wcEl.innerText = "R$ " + annualWasteCost.toLocaleString("pt-BR");
-                      if (rhEl) rhEl.innerText = recHours.toLocaleString("pt-BR") + "h";
-                    };
-                    setTimeout(() => {
-                      window._updateWasteSim && window._updateWasteSim();
-                    }, 500);
-                  })();
-                `
-              }} />
-
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 mt-6">
-                <span className="font-sans text-[8px] text-zinc-600">MaTRICAS BASEADAS EM DIAGNaSTICOS DE EMPRESAS B2B REALIZADOS // 2026</span>
+                <span className="font-sans text-[8px] text-zinc-600">MÉTRICAS BASEADAS EM DIAGNÓSTICOS DE EMPRESAS B2B REALIZADOS // 2026</span>
                 <button 
                   onClick={() => onNavigate("/contato")}
                   className="text-xs font-mono text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
@@ -509,7 +473,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
       <section className="px-4 sm:px-6 md:px-8 py-10 border-b border-white/[0.04] bg-charcoal-900/40 text-left">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 max-w-3xl">
-            <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">AUTONOMIA OPERACIONAL E GOVERNANaA DE VERDADE</h4>
+                      <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">AUTONOMIA OPERACIONAL E GOVERNANÇA DE VERDADE</h4>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed">
               O objetivo final a fazer com que sua empresa ganhe autonomia real, permitindo que a equipe execute as entregas sob o mesmo nível rigoroso de qualidade sem que os fundadores precisem ficar vigiando ou ditando cada passo das tarefas.
             </p>
@@ -541,10 +505,12 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           {/* Left Column: Portrait */}
           <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[520px]">
             <div className="absolute inset-0 bg-black/10 rounded-[24px] overflow-hidden" />
-            <img 
+            <Image
+              fill
+              sizes="(max-width: 1024px) 100vw, 42vw"
               src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800" 
               alt="TAG08 Process Specialist" 
-              className="absolute inset-0 w-full h-full object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
+              className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
@@ -569,7 +535,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                   LATENCY: 12MS
                 </span>
                 <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
-                  SaNIOR SECURITY
+                  SÊNIOR SECURITY
                 </span>
               </div>
             </div>
@@ -603,7 +569,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 </div>
                 <div className="space-y-0.5">
                   <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
-                    GOVERNANaA PLENA
+                    GOVERNANÇA PLENA
                   </span>
                   <p className="text-white text-xs leading-snug font-sans font-semibold">
                     Unifique diretrizes operacionais de faturamento, atendimento e onboarding de novos colaboradores em playbooks funcionais legaveis.
@@ -778,7 +744,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           {/* CTA conectando ao Process Activation */}
           <div className="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex flex-col md:flex-row items-center justify-between gap-6 text-left">
             <div className="space-y-1.5">
-              <h3 className="font-display font-semibold text-lg text-white">Praximo Passo: Implantar com Maestria</h3>
+              <h3 className="font-display font-semibold text-lg text-white">Próximo Passo: Implantar com Maestria</h3>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-xl leading-relaxed">
                 Se os processos forem mapeados mas sua equipe não os seguir, o caos continuara. Conheaa nossa divisão complementar de ativação e auditoria para garantir a adoção.
               </p>
@@ -850,10 +816,12 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
             </div>
 
             <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
-              <img
+              <Image
+                fill
+                sizes="(max-width: 1024px) 100vw, 34vw"
                 src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800"
                 alt="TAG08 Process Intelligence"
-                className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
+                className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
               />
               <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
                 <svg viewBox="0 0 100 100" className="w-full h-full text-brand fill-none stroke-current" strokeWidth="0.75" strokeLinecap="round">
@@ -886,7 +854,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 
                 <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
                   {([
-                    "Realizamos um mergulho assistido por meio de entrevistas sigilosas focadas e inspe??es cotidianas junto aos respons?veis de setores da sua empresa, identificando redund?ncias, vazamento de energia e ru?dos internos de comunica??o.",
+                    "Realizamos um mergulho assistido por meio de entrevistas sigilosas focadas e inspeções cotidianas junto aos responsáveis de setores da sua empresa, identificando redundâncias, vazamento de energia e ruídos internos de comunicação.",
                     "Entregamos uma Wiki Corporativa personalizada e organizada de forma integrada (geralmente estruturada no Notion ou central da empresa) contendo todos os organogramas interativos de faturamento e manuais práticos de playbooks escritos.",
                     "Sim. Conduzimos reuniões curtas direcionadas com os colaboradores-chave para garantir que os workflows redesenhados condigam plenamente com a realidade operacional, assegurando máxima eficácia de onboarding da equipe futura.",
                     "Muito enxuto. O projeto é projetado para desonerar a agenda dos sócios. Exigimos apenas breves reuniões cirúrgicas de onboarding e validações rápidas semanais de progresso dos playbooks."

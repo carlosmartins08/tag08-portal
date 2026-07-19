@@ -27,6 +27,38 @@ const getWindow = () => window as WindowWithAnalytics;
 
 const hasGoogleAnalytics = () => Boolean(GA4_ID) && typeof window !== "undefined";
 
+const hasAnalyticsConsent = () => {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  try {
+    const raw = window.localStorage.getItem("tag08_lgpd_consent");
+    if (!raw) {
+      return false;
+    }
+
+    return JSON.parse(raw)?.performance === true;
+  } catch {
+    return false;
+  }
+};
+
+export const updateGoogleAnalyticsConsent = (granted: boolean) => {
+  if (!hasGoogleAnalytics()) {
+    return;
+  }
+
+  const win = getWindow() as WindowWithAnalytics & Record<string, boolean | undefined>;
+  win[`ga-disable-${GA4_ID}`] = !granted;
+  win.gtag?.("consent", "update", {
+    analytics_storage: granted ? "granted" : "denied",
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied"
+  });
+};
+
 const getDeviceCategory = (): DeviceCategory => {
   if (typeof window === "undefined") {
     return "desktop";
@@ -60,7 +92,7 @@ export const getMonitoringConfig = () => ({
 });
 
 export const initializeGoogleAnalytics = () => {
-  if (!hasGoogleAnalytics()) {
+  if (!hasGoogleAnalytics() || !hasAnalyticsConsent()) {
     return false;
   }
 
@@ -79,6 +111,15 @@ export const initializeGoogleAnalytics = () => {
   const analyticsWindow = win as AnalyticsWindowState;
   if (!analyticsWindow.__tag08GoogleAnalyticsConfigured) {
     win.gtag("js", new Date());
+    win.gtag("consent", "default", {
+      analytics_storage: "denied",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied"
+    });
+    win.gtag("consent", "update", {
+      analytics_storage: "granted"
+    });
     win.gtag("config", GA4_ID, {
       send_page_view: false,
       allow_google_signals: false
@@ -96,7 +137,7 @@ export const initializeGoogleAnalytics = () => {
 };
 
 export const trackAnalyticsEvent = (eventName: string, params: AnalyticsParams = {}) => {
-  if (!hasGoogleAnalytics()) {
+  if (!hasGoogleAnalytics() || !hasAnalyticsConsent()) {
     return;
   }
 
@@ -255,6 +296,16 @@ export const trackFormSubmit = (params: {
     language: params.language,
     page_path: params.page_path
   });
+
+  if (params.status === "success" || params.status === "queued") {
+    trackAnalyticsEvent("generate_lead", {
+      form_name: params.form_name,
+      form_surface: params.form_surface,
+      delivery_status: params.status,
+      language: params.language,
+      page_path: params.page_path
+    });
+  }
 };
 
 export const trackFormError = (params: {
@@ -322,5 +373,21 @@ export const trackEngagement = (params: {
     engaged_seconds: params.engaged_seconds,
     language: params.language,
     route_type: params.route_type
+  });
+};
+
+export const trackVideoEvent = (params: {
+  action: "selected" | "started" | "closed";
+  video_id: string;
+  video_source: "youtube";
+  surface: string;
+  page_path?: string;
+}) => {
+  trackAnalyticsEvent("content_video", {
+    video_action: params.action,
+    video_id: params.video_id,
+    video_source: params.video_source,
+    video_surface: params.surface,
+    page_path: params.page_path
   });
 };

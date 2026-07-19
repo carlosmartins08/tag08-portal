@@ -12,7 +12,8 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 import { canonicalizeRoute, getLocalizedPath, getRouteByPath, type RouteLocale } from "../../config/routeRegistry";
 import { i18n, type UiLanguage } from "../../i18n/siteI18n";
 import { safeStorage } from "../../utils/storage";
-import { initializeGoogleAnalytics, trackEngagement, trackPageView, trackScrollDepth } from "../../lib/analytics";
+import { initializeGoogleAnalytics, trackEngagement, trackPageView, trackScrollDepth, updateGoogleAnalyticsConsent } from "../../lib/analytics";
+import { COOKIE_CONSENT_EVENT, readCookiePreferences, type CookiePreferences } from "../../lib/cookieConsent";
 import { flushFormQueue } from "../../lib/formQueue";
 
 const localeToUiLanguage: Record<RouteLocale, UiLanguage> = {
@@ -33,6 +34,7 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
   const lenisRef = useRef<Lenis | null>(null);
   const scrollDepthMarksRef = useRef<Set<number>>(new Set());
   const engagementTrackedRef = useRef(false);
+  const [analyticsEnabled, setAnalyticsEnabled] = useState(false);
 
   useEffect(() => {
     const nextLanguage = localeToUiLanguage[locale];
@@ -42,7 +44,22 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
   }, [locale]);
 
   useEffect(() => {
-    initializeGoogleAnalytics();
+    const syncAnalyticsConsent = (preferences: CookiePreferences | null) => {
+      const enabled = preferences?.performance === true;
+      setAnalyticsEnabled(enabled);
+      updateGoogleAnalyticsConsent(enabled);
+      if (enabled) {
+        initializeGoogleAnalytics();
+      }
+    };
+
+    syncAnalyticsConsent(readCookiePreferences());
+    const handleCookieConsent = (event: Event) => {
+      syncAnalyticsConsent((event as CustomEvent<CookiePreferences>).detail);
+    };
+
+    window.addEventListener(COOKIE_CONSENT_EVENT, handleCookieConsent);
+    return () => window.removeEventListener(COOKIE_CONSENT_EVENT, handleCookieConsent);
   }, []);
 
   useEffect(() => {
@@ -160,7 +177,7 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
       window.clearTimeout(engagementTimer);
       window.removeEventListener("scroll", trackCurrentScrollDepth);
     };
-  }, [language, path]);
+  }, [analyticsEnabled, language, path]);
 
   return (
     <div className="min-h-screen bg-main text-primary font-sans flex flex-col justify-between selection:bg-brand selection:text-black relative overflow-x-hidden transition-colors duration-350">

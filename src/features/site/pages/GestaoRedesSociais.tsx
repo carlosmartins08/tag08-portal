@@ -1,5 +1,6 @@
 ﻿import { useRef, useState } from "react";
 import { motion } from "motion/react";
+import Image from "next/image";
 import { MessageSquare, Sparkles, TrendingUp, ArrowUpRight, ArrowRight, Users, Plus, Minus } from "lucide-react";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
@@ -8,6 +9,7 @@ import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import MiniCases from "../../../components/MiniCases";
 import TrustTestimonialsSection from "../../../components/TrustTestimonialsSection";
 import { TAG08_YOUTUBE_SHORTS } from "../../../content/youtubeShorts";
+import { trackVideoEvent } from "../../../lib/analytics";
 
 /*
 interface PlayableShort {
@@ -33,7 +35,7 @@ const shortsData: PlayableShort[] = [
   {
     id: "short-01",
     title: "Bastidores de identidade",
-    subtitle: "Processo visual e direÃ§Ã£o",
+    subtitle: "Processo visual e direção",
     category: "Branding & Design",
     duration: "42s",
     videoUrl: "https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0227e333ef33d97d477e6e5d8a011de&profile_id=165&oauth2_token_id=57447761",
@@ -146,13 +148,13 @@ const EDITORIAL_DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
   {
     key: "challenge",
     step: "Etapa 01",
-    title: "Qual Ã© o principal desafio hoje?",
+    title: "Qual é o principal desafio hoje?",
     helper: "Escolha a leitura que mais descreve o travamento atual.",
     options: [
       { value: "clarity", label: "Falta clareza" },
-      { value: "consistency", label: "Falta consistÃªncia" },
+      { value: "consistency", label: "Falta consistência" },
       { value: "time", label: "Falta tempo" },
-      { value: "direction", label: "NÃ£o sei por onde comeÃ§ar" }
+      { value: "direction", label: "Não sei por onde começar" }
     ]
   },
   {
@@ -161,16 +163,16 @@ const EDITORIAL_DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
     title: "Como a rotina atual funciona?",
     helper: "Queremos entender se existe fluxo, improviso ou pausa.",
     options: [
-      { value: "none", label: "Ainda nÃ£o existe" },
-      { value: "improvised", label: "Ã‰ improvisada" },
-      { value: "partial", label: "Existe, mas Ã© parcial" },
-      { value: "reviewed", label: "JÃ¡ existe com revisÃ£o" }
+      { value: "none", label: "Ainda não existe" },
+      { value: "improvised", label: "É improvisada" },
+      { value: "partial", label: "Existe, mas é parcial" },
+      { value: "reviewed", label: "Já existe com revisão" }
     ]
   },
   {
     key: "channels",
     step: "Etapa 03",
-    title: "Quais canais vocÃªs usam hoje?",
+    title: "Quais canais vocês usam hoje?",
     helper: "Marque os canais que fazem parte da rotina da marca.",
     multi: true,
     options: [
@@ -185,10 +187,10 @@ const EDITORIAL_DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
     key: "priority",
     step: "Etapa 04",
     title: "Qual prioridade editorial faz mais sentido agora?",
-    helper: "Escolha a funÃ§Ã£o principal da presenÃ§a nas redes neste momento.",
+    helper: "Escolha a função principal da presença nas redes neste momento.",
     options: [
       { value: "authority", label: "Autoridade" },
-      { value: "recurrence", label: "PresenÃ§a recorrente" },
+      { value: "recurrence", label: "Presença recorrente" },
       { value: "behind-scenes", label: "Bastidores" },
       { value: "commercial-support", label: "Apoio comercial" }
     ]
@@ -201,21 +203,21 @@ const EDITORIAL_DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
     multi: true,
     options: [
       { value: "reels", label: "Reels e cortes" },
-      { value: "carousels", label: "CarrossÃ©is" },
+      { value: "carousels", label: "Carrosséis" },
       { value: "testimonials", label: "Depoimentos" },
-      { value: "institutional", label: "VÃ­deo institucional" },
+      { value: "institutional", label: "Vídeo institucional" },
       { value: "bastidores", label: "Bastidores" }
     ]
   },
   {
     key: "moment",
     step: "Etapa 06",
-    title: "Qual Ã© o momento da marca?",
-    helper: "Isso ajuda a TAG08 a entender urgÃªncia e profundidade do apoio.",
+    title: "Qual é o momento da marca?",
+    helper: "Isso ajuda a TAG08 a entender urgência e profundidade do apoio.",
     options: [
       { value: "foundation", label: "Precisa organizar a base" },
-      { value: "review", label: "Quer revisar a direÃ§Ã£o" },
-      { value: "accelerate", label: "Quer acelerar com critÃ©rio" },
+      { value: "review", label: "Quer revisar a direção" },
+      { value: "accelerate", label: "Quer acelerar com critério" },
       { value: "start", label: "Quer iniciar agora" }
     ]
   }
@@ -237,7 +239,7 @@ const getDiagnosticValueLabel = (key: DiagnosticKey, value: DiagnosticAnswer) =>
 
     return value
       .map((item) => question.options.find((option) => option.value === item)?.label ?? item)
-      .join(" â€¢ ");
+      .join(" • ");
   }
 
   return question.options.find((option) => option.value === value)?.label ?? "Aguardando resposta";
@@ -253,11 +255,11 @@ const buildDiagnosticRecommendation = ({
   moment: string;
 }) => {
   if (!challenge || !routine || !moment) {
-    return "Complete as respostas para gerar a leitura final e o prÃ³ximo passo.";
+    return "Complete as respostas para gerar a leitura final e o próximo passo.";
   }
 
   if (challenge === "direction" || routine === "none") {
-    return "ComeÃ§ar por direÃ§Ã£o editorial, linha de conteÃºdo e rotina possÃ­vel antes de pensar em volume.";
+    return "Começar por direção editorial, linha de conteúdo e rotina possível antes de pensar em volume.";
   }
 
   if (challenge === "clarity" || moment === "review") {
@@ -265,14 +267,14 @@ const buildDiagnosticRecommendation = ({
   }
 
   if (challenge === "consistency" || routine === "improvised") {
-    return "Organizar frequÃªncia, revisÃ£o e formatos para reduzir improviso e sustentar presenÃ§a.";
+    return "Organizar frequência, revisão e formatos para reduzir improviso e sustentar presença.";
   }
 
   if (moment === "accelerate") {
-    return "A conversa pode avanÃ§ar para escopo, formato e cadÃªncia com foco em consistÃªncia.";
+    return "A conversa pode avançar para escopo, formato e cadência com foco em consistência.";
   }
 
-  return "A TAG08 pode ajudar a transformar o diagnÃ³stico em linha editorial, formato e prÃ³xima aÃ§Ã£o prÃ¡tica.";
+  return "A TAG08 pode ajudar a transformar o diagnóstico em linha editorial, formato e próxima ação prática.";
 };
 
 interface SocialMediaProps {
@@ -341,9 +343,9 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
     { label: "Formato recomendado", value: formatsLabel },
     { label: "Momento da marca", value: momentLabel }
   ];
-  const diagnosticMessage = `OlÃ¡ TAG08! ConcluÃ­ meu diagnÃ³stico editorial.
+  const diagnosticMessage = `Olá TAG08! Concluí meu diagnóstico editorial.
 
-Seu diagnÃ³stico editorial
+Seu diagnóstico editorial
 
 Principal desafio: ${challengeLabel}
 Rotina atual: ${routineLabel}
@@ -353,9 +355,9 @@ Formatos desejados: ${formatsLabel}
 Momento da marca: ${momentLabel}
 Nome: ${diagnosticName.trim()}
 WhatsApp: ${diagnosticWhatsapp.trim()}
-Consentimento: ${diagnosticConsent ? "Autorizado" : "NÃ£o autorizado"}
+Consentimento: ${diagnosticConsent ? "Autorizado" : "Não autorizado"}
 
-PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o editorial.`;
+Próximo passo: conversar com a TAG08 para entender escopo e direção editorial.`;
   const diagnosticWhatsAppUrl = buildBrazilWhatsAppUrl(diagnosticMessage);
 
   const scrollToDiagnosticQuestion = (key: DiagnosticKey) => {
@@ -408,37 +410,37 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
     {
       id: 0,
       eyebrow: "Planejamento editorial",
-      question: "A gestÃ£o de redes sociais Ã© sÃ³ fazer posts?",
+      question: "A gestão de redes sociais é só fazer posts?",
       answer:
-        "NÃ£o. A gestÃ£o envolve linha editorial, calendÃ¡rio, linguagem, criaÃ§Ã£o, direÃ§Ã£o visual, revisÃ£o e acompanhamento. O objetivo Ã© dar funÃ§Ã£o ao conteÃºdo dentro da estratÃ©gia da marca."
+        "Não. A gestão envolve linha editorial, calendário, linguagem, criação, direção visual, revisão e acompanhamento. O objetivo é dar função ao conteúdo dentro da estratégia da marca."
     },
     {
       id: 1,
-      eyebrow: "FrequÃªncia possÃ­vel",
+      eyebrow: "Frequência possível",
       question: "Preciso postar todos os dias?",
       answer:
-        "NÃ£o necessariamente. A frequÃªncia precisa ser possÃ­vel de sustentar e coerente com o momento da marca. Uma rotina realista costuma ser melhor do que volume sem critÃ©rio."
+        "Não necessariamente. A frequência precisa ser possível de sustentar e coerente com o momento da marca. Uma rotina realista costuma ser melhor do que volume sem critério."
     },
     {
       id: 2,
-      eyebrow: "CriaÃ§Ã£o de conteÃºdo",
-      question: "A TAG08 cria os conteÃºdos?",
+      eyebrow: "Criação de conteúdo",
+      question: "A TAG08 cria os conteúdos?",
       answer:
-        "Sim, dentro do escopo contratado. Podemos apoiar temas, legendas, peÃ§as, roteiros, formatos e organizaÃ§Ã£o editorial conforme a necessidade da marca."
+        "Sim, dentro do escopo contratado. Podemos apoiar temas, legendas, peças, roteiros, formatos e organização editorial conforme a necessidade da marca."
     },
     {
       id: 3,
-      eyebrow: "VÃ­deos e bastidores",
-      question: "A gestÃ£o inclui vÃ­deos e bastidores?",
+      eyebrow: "Vídeos e bastidores",
+      question: "A gestão inclui vídeos e bastidores?",
       answer:
-        "Pode incluir ou se conectar com produÃ§Ã£o audiovisual quando isso fizer sentido para a estratÃ©gia. VÃ­deos curtos, bastidores e recortes devem servir Ã  linha editorial, nÃ£o apenas ocupar espaÃ§o."
+        "Pode incluir ou se conectar com produção audiovisual quando isso fizer sentido para a estratégia. Vídeos curtos, bastidores e recortes devem servir à linha editorial, não apenas ocupar espaço."
     },
     {
       id: 4,
       eyebrow: "Expectativas e resultado",
       question: "A TAG08 promete alcance ou engajamento?",
       answer:
-        "NÃ£o prometemos alcance, engajamento ou crescimento instantÃ¢neo. Trabalhamos para construir clareza, consistÃªncia, presenÃ§a e melhoria contÃ­nua com responsabilidade."
+        "Não prometemos alcance, engajamento ou crescimento instantâneo. Trabalhamos para construir clareza, consistência, presença e melhoria contínua com responsabilidade."
     }
   ];
   const activeFaqItem = faqItems[activeFaq] ?? faqItems[0];
@@ -458,26 +460,28 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
-                GESTÃƒO DE REDES SOCIAIS // TAG08
+                GESTÃO DE REDES SOCIAIS // TAG08
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
                 Redes sociais <br />
-                <span className="text-brand">com direÃ§Ã£o, linha editorial e consistÃªncia.</span>
+                <span className="text-brand">com direção, linha editorial e consistência.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
-                A TAG08 organiza a presenÃ§a da marca nas redes sociais com estratÃ©gia, narrativa, calendÃ¡rio, formatos e acompanhamento para que o conteÃºdo deixe de ser postagem solta e passe a cumprir uma funÃ§Ã£o clara.
+                A TAG08 organiza a presença da marca nas redes sociais com estratégia, narrativa, calendário, formatos e acompanhamento para que o conteúdo deixe de ser postagem solta e passe a cumprir uma função clara.
               </p>
             </div>
           </div>
 
           <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px] overflow-visible">
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
-              <img 
+              <Image
+                fill
+                sizes="100vw"
                 src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1600"
-                alt="PresenÃ§a com direÃ§Ã£o TAG08"
-                className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
+                alt="Presença com direção TAG08"
+                className="object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
@@ -496,7 +500,7 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
                   <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-bold">FORMATOS EM USO // TAG08</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Recortes com direÃ§Ã£o e revisÃ£o</h4>
+                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Recortes com direção e revisão</h4>
                 </div>
 
                 <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
@@ -510,11 +514,11 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Linha editorial</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Temas, formatos e prioridades<br/>organizados com intenÃ§Ã£o</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Temas, formatos e prioridades<br/>organizados com intenção</span>
             </div>
             <div className="space-y-2">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">FrequÃªncia possÃ­vel</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">CadÃªncia pensada para a<br/>realidade da operaÃ§Ã£o</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Frequência possível</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Cadência pensada para a<br/>realidade da operação</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Narrativa de marca</span>
@@ -522,7 +526,7 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Acompanhamento</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">RevisÃ£o contÃ­nua para ajustar<br/>a direÃ§Ã£o quando preciso</span>
+              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Revisão contínua para ajustar<br/>a direção quando preciso</span>
             </div>
           </div>
         </div>
@@ -534,46 +538,46 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
           <div className="lg:col-span-4 space-y-4">
             <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block font-bold">Sinais de desalinhamento</span>
             <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase leading-none tracking-tight">
-              Quando as redes sociais <span className="text-brand">deixam de construir presenÃ§a.</span>
+              Quando as redes sociais <span className="text-brand">deixam de construir presença.</span>
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Muitas marcas publicam com frequÃªncia, mas ainda nÃ£o conseguem transmitir clareza, consistÃªncia ou percepÃ§Ã£o de valor. O problema nem sempre Ã© falta de conteÃºdo; muitas vezes Ã© falta de linha editorial, posicionamento e critÃ©rio de produÃ§Ã£o.
+              Muitas marcas publicam com frequência, mas ainda não conseguem transmitir clareza, consistência ou percepção de valor. O problema nem sempre é falta de conteúdo; muitas vezes é falta de linha editorial, posicionamento e critério de produção.
             </p>
           </div>
 
           <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Postagens sem direÃ§Ã£o</span>
+              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Postagens sem direção</span>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                Os conteÃºdos saem, mas nÃ£o parecem construir uma narrativa clara sobre a marca, seus diferenciais ou sua forma de gerar valor.
+                Os conteúdos saem, mas não parecem construir uma narrativa clara sobre a marca, seus diferenciais ou sua forma de gerar valor.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">CalendÃ¡rio sem prioridade</span>
+              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Calendário sem prioridade</span>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                A rotina existe, mas os temas sÃ³o definidos por urgÃªncia, tendÃªncia ou improviso, sem conexÃ£o com uma estratÃ©gia maior.
+                A rotina existe, mas os temas sóo definidos por urgência, tendência ou improviso, sem conexão com uma estratégia maior.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Visual sem consistÃªncia</span>
+              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Visual sem consistência</span>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                Cada peÃ§a parece seguir uma lÃ³gica diferente, enfraquecendo reconhecimento, confianÃ§a e percepÃ§Ã£o profissional.
+                Cada peça parece seguir uma lógica diferente, enfraquecendo reconhecimento, confiança e percepção profissional.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Pouca conexÃ£o com o comercial</span>
+              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Pouca conexão com o comercial</span>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                O conteÃºdo atÃ© movimenta a pÃ¡gina, mas nÃ£o ajuda o pÃºblico a entender melhor a oferta, o processo ou o prÃ³ximo passo.
+                O conteúdo até movimenta a página, mas não ajuda o público a entender melhor a oferta, o processo ou o próximo passo.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all sm:col-span-2">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">ProduÃ§Ã£o difÃ­cil de sustentar</span>
+              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Produção difícil de sustentar</span>
               <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                A marca depende de esforÃ§o pontual, ideias soltas e aprovaÃ§Ãµes demoradas, tornando a presenÃ§a instÃ¡vel.
+                A marca depende de esforço pontual, ideias soltas e aprovações demoradas, tornando a presença instável.
               </p>
             </div>
           </div>
@@ -585,10 +589,10 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
           <div className="text-left space-y-2 max-w-2xl">
             <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">O que organizamos</span>
             <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
-              GestÃ£o de redes nÃ£o Ã© sÃ³ calendÃ¡rio. Ã‰ direÃ§Ã£o editorial.
+              Gestão de redes não é só calendário. É direção editorial.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              A TAG08 estrutura temas, formatos, frequÃªncia, linguagem, design e revisÃ£o para que a presenÃ§a da marca nas redes tenha consistÃªncia e funÃ§Ã£o dentro da estratÃ©gia.
+              A TAG08 estrutura temas, formatos, frequência, linguagem, design e revisão para que a presença da marca nas redes tenha consistência e função dentro da estratégia.
             </p>
           </div>
 
@@ -600,7 +604,7 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm uppercase">Linha editorial</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  DefiniÃ§Ã£o de temas, mensagens, pilares de conteÃºdo e prioridades para orientar a comunicaÃ§Ã£o da marca.
+                  Definição de temas, mensagens, pilares de conteúdo e prioridades para orientar a comunicação da marca.
                 </p>
               </div>
             </div>
@@ -610,9 +614,9 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
                 <MessageSquare className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">CalendÃ¡rio possÃ­vel</h4>
+                <h4 className="text-white font-display font-black text-sm uppercase">Calendário possível</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  OrganizaÃ§Ã£o de uma rotina de publicaÃ§Ã£o compatÃ©vel com o momento, a equipe, os canais e a capacidade de aprovaÃ§Ã£o.
+                  Organização de uma rotina de publicação compatével com o momento, a equipe, os canais e a capacidade de aprovação.
                 </p>
               </div>
             </div>
@@ -622,9 +626,9 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
                 <TrendingUp className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">CriaÃ§Ã£o de conteÃºdo</h4>
+                <h4 className="text-white font-display font-black text-sm uppercase">Criação de conteúdo</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Desenvolvimento de legendas, peÃ§as, roteiros e formatos alinhados ao posicionamento e ao objetivo de cada publicaÃ§Ã£o.
+                  Desenvolvimento de legendas, peças, roteiros e formatos alinhados ao posicionamento e ao objetivo de cada publicação.
                 </p>
               </div>
             </div>
@@ -634,9 +638,9 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
                 <Users className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">DireÃ§Ã£o visual</h4>
+                <h4 className="text-white font-display font-black text-sm uppercase">Direção visual</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  AplicaÃ§Ã£o de identidade, estÃ©tica, hierarquia e consistÃªncia visual para fortalecer reconhecimento e percepÃ§Ã£o profissional.
+                  Aplicação de identidade, estética, hierarquia e consistência visual para fortalecer reconhecimento e percepção profissional.
                 </p>
               </div>
             </div>
@@ -646,9 +650,9 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
                 <Sparkles className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Acompanhamento e revisÃ£o</h4>
+                <h4 className="text-white font-display font-black text-sm uppercase">Acompanhamento e revisão</h4>
                 <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
-                  Leitura do que precisa evoluir, ajustes de rota, organizaÃ§Ã£o de feedbacks e melhoria contÃ­nua do processo editorial.
+                  Leitura do que precisa evoluir, ajustes de rota, organização de feedbacks e melhoria contínua do processo editorial.
                 </p>
               </div>
             </div>
@@ -662,34 +666,34 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
           {/* SECTION 4 - PLANOS DISPONIVEIS */}
           <div className="space-y-3 max-w-3xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-              NÃ­veis de escopo
+              Níveis de escopo
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white leading-tight uppercase">
-              Escolha o escopo pelo momento da sua presenÃ§a digital.
+              Escolha o escopo pelo momento da sua presença digital.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
-              A gestÃ£o de redes pode comeÃ§ar de forma mais enxuta ou evoluir para uma rotina editorial mais completa. O escopo ideal depende da maturidade da marca, da frequÃªncia possÃ­vel e da estrutura disponÃ­vel para aprovar e sustentar conteÃºdo.
+              A gestão de redes pode começar de forma mais enxuta ou evoluir para uma rotina editorial mais completa. O escopo ideal depende da maturidade da marca, da frequência possível e da estrutura disponível para aprovar e sustentar conteúdo.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {[
               {
-                name: "PresenÃ§a organizada",
+                name: "Presença organizada",
                 subtitle: "Para marcas que precisam sair da postagem solta.",
-                desc: "OrganizaÃ§Ã£o inicial de temas, calendÃ¡rio, linguagem e peÃ§as para criar uma rotina mais clara e consistente nas redes.",
+                desc: "Organização inicial de temas, calendário, linguagem e peças para criar uma rotina mais clara e consistente nas redes.",
                 badge: "01"
               },
               {
                 name: "Linha editorial recorrente",
-                subtitle: "Para marcas que precisam manter frequÃªncia com intenÃ§Ã£o.",
-                desc: "Planejamento, criaÃ§Ã£o e acompanhamento de conteÃºdos com narrativa, formatos definidos e alinhamento ao posicionamento da marca.",
+                subtitle: "Para marcas que precisam manter frequência com intenção.",
+                desc: "Planejamento, criação e acompanhamento de conteúdos com narrativa, formatos definidos e alinhamento ao posicionamento da marca.",
                 badge: "02"
               },
               {
-                name: "ConteÃºdo com acompanhamento",
-                subtitle: "Para marcas que precisam evoluir a presenÃ§a com mais critÃ©rio.",
-                desc: "GestÃ£o editorial com revisÃ£o, ajustes de rota, leitura de aprendizados e integraÃ§Ã£o com outras frentes de comunicaÃ§Ã£o.",
+                name: "Conteúdo com acompanhamento",
+                subtitle: "Para marcas que precisam evoluir a presença com mais critério.",
+                desc: "Gestão editorial com revisão, ajustes de rota, leitura de aprendizados e integração com outras frentes de comunicação.",
                 badge: "03"
               }
             ].map((plan) => (
@@ -723,23 +727,23 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
               </motion.div>
             ))}
           </div>
-          {/* Incluso x NÃ£o Incluso */}
+          {/* Incluso x Não Incluso */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start pt-12 border-t border-white/[0.04]">
             
             {/* Left intro details column */}
             <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-24">
               <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-                ALINHAMENTO DE EXPECTATIVAS // TRANSPARÃŠNCIA
+                ALINHAMENTO DE EXPECTATIVAS // TRANSPARÊNCIA
               </span>
               <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
                 O que garantimos (e o que foca em outras areas)
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                Nossa filosofia repudia falsas promessas de escopo infinito sem direÃ§Ã£o tÃ¡tica. Esclarecer com integridade os limites da nossa produÃ§Ã£o corporativa Ã© nossa garantia de sinergia:
+                Nossa filosofia repudia falsas promessas de escopo infinito sem direção tática. Esclarecer com integridade os limites da nossa produção corporativa é nossa garantia de sinergia:
               </p>
 
               <div className="p-5 rounded-2xl bg-brand-secondary/[0.01] border border-white/[0.03] text-xs text-zinc-400 font-sans leading-relaxed">
-                Nossa equipe foca estritamente no planejamento, design e rotinas intelectuais. Para gravaÃ§Ã£o fÃ­sica, fornecemos roteiros clÃ­nicos que vocÃª ou seu time gravam de forma descomplicada.
+                Nossa equipe foca estritamente no planejamento, design e rotinas intelectuais. Para gravação física, fornecemos roteiros clínicos que você ou seu time gravam de forma descomplicada.
               </div>
             </div>
 
@@ -757,9 +761,9 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
                   {[
                     "Planejamento de linha editorial sob medida",
                     "Roteiros escritos com gancho e call-to-action",
-                    "Design exclusivo sob Figma para carrossÃ³is",
-                    "Legendas magnÃ©ticas para educar o pÃºblico",
-                    "Agendamento e automaÃ§Ã£o das postagens"
+                    "Design exclusivo sob Figma para carrossóis",
+                    "Legendas magnéticas para educar o público",
+                    "Agendamento e automação das postagens"
                   ].map((inc, index) => (
                     <div key={index} className="flex gap-3 text-xs text-zinc-300 font-sans items-start font-medium leading-relaxed font-semibold">
                       <div className="w-1.5 h-1.5 rounded-full bg-brand-secondary mt-1.5 shrink-0" />
@@ -769,20 +773,20 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
                 </div>
               </div>
 
-              {/* NÃ£o incluso */}
+              {/* Não incluso */}
               <div className="bg-charcoal-900 border border-white/[0.05] p-7 rounded-3xl space-y-5 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-zinc-600/30" />
                 <span className="font-mono text-[9px] text-zinc-500 bg-white/[0.02] border border-white/5 px-2.5 py-1 rounded font-black uppercase inline-block">
-                  NÃƒO INCLUÃDO NESTA DIVISÃƒO
+                  NÃO INCLUÍDO NESTA DIVISÃO
                 </span>
                 
                 <div className="space-y-3.5">
                   {[
-                    "GravaÃ§Ãµes de cÃ¢mera (deslocamento fÃ­sico)",
-                    "OrÃ§amento de trafego pago ativo",
-                    "InteraÃ§Ãµes de Direct, comentarios e SAC",
-                    "Apoio de coproduÃ§Ã£o fÃ­sica presencial",
-                    "CriaÃ§Ã£o integral de nova marca/rebranding"
+                    "Gravações de câmera (deslocamento físico)",
+                    "Orçamento de trafego pago ativo",
+                    "Interações de Direct, comentarios e SAC",
+                    "Apoio de coprodução física presencial",
+                    "Criação integral de nova marca/rebranding"
                   ].map((exc, index) => (
                     <div key={index} className="flex gap-3 text-xs text-zinc-400 font-sans items-start font-medium leading-relaxed">
                       <div className="w-1.5 h-1.5 rounded-full bg-zinc-600 mt-1.5 shrink-0" />
@@ -798,26 +802,26 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
             </div>
           </div>
 
-          {/* Ciclo Mensal de OperaÃ§Ã£o - CHRONOLOGICAL TIMELINE */}
+          {/* Ciclo Mensal de Operação - CHRONOLOGICAL TIMELINE */}
           <div className="space-y-10 pt-12 border-t border-white/[0.04]">
             <div className="space-y-3">
               <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
                 METODOLOGIA DE FLUXO
               </span>
               <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
-                Nosso Ciclo Mensal SistemÃ¡tico
+                Nosso Ciclo Mensal Sistemático
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
-                Seguimos um ritmo de planejamento consistente para manter sua grade de canais digitais organizada, clara e sem depender de urgÃªncia de Ãºltima hora:
+                Seguimos um ritmo de planejamento consistente para manter sua grade de canais digitais organizada, clara e sem depender de urgência de última hora:
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {[
-                { title: "Linha editorial", desc: "Definimos temas, mensagens e prioridades para orientar a produÃ§Ã£o ao longo do mÃªs." },
-                { title: "Formatos e roteiros", desc: "Estruturamos falas, carrossÃ³is e recortes para manter consistÃªncia entre conteÃºdo e posicionamento." },
-                { title: "Ajustes de identidade", desc: "Aplicamos identidade, hierarquia visual e consistÃªncia para que os conteÃºdos comuniquem a mesma marca." },
-                { title: "Acompanhamento contÃ­nuo", desc: "Revisamos a rotina e os aprendizados para ajustar temas, formatos e frequÃªncia quando necessÃ³rio." }
+                { title: "Linha editorial", desc: "Definimos temas, mensagens e prioridades para orientar a produção ao longo do mês." },
+                { title: "Formatos e roteiros", desc: "Estruturamos falas, carrossóis e recortes para manter consistência entre conteúdo e posicionamento." },
+                { title: "Ajustes de identidade", desc: "Aplicamos identidade, hierarquia visual e consistência para que os conteúdos comuniquem a mesma marca." },
+                { title: "Acompanhamento contínuo", desc: "Revisamos a rotina e os aprendizados para ajustar temas, formatos e frequência quando necessório." }
               ].map((step, sIdx) => (
                 <div key={sIdx} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-2xl text-left space-y-4 hover:border-brand/10 transition-all duration-300">
                   <div className="font-sans text-[10px] font-black text-brand-secondary bg-brand-secondary/5 w-8 h-8 rounded-lg flex items-center justify-center border border-brand-secondary/10 shadow-[0_4px_10px_rgba(var(--color-brand-secondary-rgb),0.05)]">
@@ -832,26 +836,26 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
             </div>
           </div>
 
-          {/* Relatarios e Aprendizados - ACTIVE DASHBOARD PREVIEW */}
+          {/* Relatórios e Aprendizados - ACTIVE DASHBOARD PREVIEW */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-12 border-t border-white/[0.04]">
             <div className="lg:col-span-5 space-y-4">
               <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
                 CULTURE OF METRICS MENSAL
               </span>
               <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
-                Acompanhamos a presenÃ§a para melhorar a consistÃªncia editorial
+                Acompanhamos a presença para melhorar a consistência editorial
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                A leitura do trabalho serve para ajustar temas, formatos, frequÃªncia e pontos de melhoria sem transformar redes sociais em promessa de resultado.
+                A leitura do trabalho serve para ajustar temas, formatos, frequência e pontos de melhoria sem transformar redes sociais em promessa de resultado.
               </p>
             </div>
 
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { title: "PresenÃ§a mais coerente", desc: "O foco Ã© tornar a comunicaÃ§Ã£o mais clara, reconhecÃ­vel e conectada ao posicionamento da marca." },
-                { title: "Leitura de conteÃºdo", desc: "Observamos se os formatos ajudam a sustentar a narrativa ou apenas ocupam espaÃ§o." },
-                { title: "AproximaÃ§Ã£o do pÃºblico", desc: "Acompanhamos se os recortes e as falas facilitam compreensÃ£o, confianÃ§a e prÃ³ximo passo." },
-                { title: "Ajuste contÃ­nuo", desc: "Usamos os aprendizados do ciclo para refinar temas, frequÃªncia e linguagem editorial." }
+                { title: "Presença mais coerente", desc: "O foco é tornar a comunicação mais clara, reconhecível e conectada ao posicionamento da marca." },
+                { title: "Leitura de conteúdo", desc: "Observamos se os formatos ajudam a sustentar a narrativa ou apenas ocupam espaço." },
+                { title: "Aproximação do público", desc: "Acompanhamos se os recortes e as falas facilitam compreensão, confiança e próximo passo." },
+                { title: "Ajuste contínuo", desc: "Usamos os aprendizados do ciclo para refinar temas, frequência e linguagem editorial." }
               ].map((item, iIdx) => (
                 <div key={iIdx} className="p-5 rounded-2xl bg-charcoal-900/60 border border-white/[0.03] space-y-1.5 text-left hover:border-brand/10 transition-colors">
                   <div className="w-2 h-2 rounded-full bg-brand-secondary" />
@@ -870,32 +874,32 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
           <div className="space-y-2 max-w-3xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-              CritÃ©rios de confianÃ§a
+              Critérios de confiança
             </span>
             <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">
-              O que sustenta uma presenÃ§a mais consistente.
+              O que sustenta uma presença mais consistente.
             </h4>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed max-w-2xl">
-              A gestÃ£o de redes funciona melhor quando existe direÃ§Ã£o editorial, rotina possÃ­vel, revisÃ£o constante e conexÃ£o com o posicionamento da marca.
+              A gestão de redes funciona melhor quando existe direção editorial, rotina possível, revisão constante e conexão com o posicionamento da marca.
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-3 w-full max-w-xl">
             <div className="rounded-2xl border border-white/[0.06] bg-black/20 px-4 py-3 space-y-1">
               <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Linha editorial</span>
-              <p className="text-[11px] leading-relaxed text-zinc-300">Temas, mensagens e formatos organizados antes da produÃ§Ã£o.</p>
+              <p className="text-[11px] leading-relaxed text-zinc-300">Temas, mensagens e formatos organizados antes da produção.</p>
             </div>
             <div className="rounded-2xl border border-white/[0.06] bg-black/20 px-4 py-3 space-y-1">
-              <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Rotina possÃ­vel</span>
-              <p className="text-[11px] leading-relaxed text-zinc-300">FrequÃªncia compatÃ©vel com a estrutura real da marca.</p>
+              <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Rotina possível</span>
+              <p className="text-[11px] leading-relaxed text-zinc-300">Frequência compatével com a estrutura real da marca.</p>
             </div>
             <div className="rounded-2xl border border-white/[0.06] bg-black/20 px-4 py-3 space-y-1">
-              <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">ConsistÃªncia visual</span>
-              <p className="text-[11px] leading-relaxed text-zinc-300">PeÃ§as alinhadas Ã  identidade, estÃ©tica e percepÃ§Ã£o desejada.</p>
+              <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Consistência visual</span>
+              <p className="text-[11px] leading-relaxed text-zinc-300">Peças alinhadas à identidade, estética e percepção desejada.</p>
             </div>
             <div className="rounded-2xl border border-white/[0.06] bg-black/20 px-4 py-3 space-y-1">
               <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Acompanhamento</span>
-              <p className="text-[11px] leading-relaxed text-zinc-300">RevisÃ£o, aprendizados e ajustes para manter a presenÃ§a em evoluÃ§Ã£o.</p>
+              <p className="text-[11px] leading-relaxed text-zinc-300">Revisão, aprendizados e ajustes para manter a presença em evolução.</p>
             </div>
           </div>
         </div>
@@ -909,267 +913,25 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
       {/* CASE STUDIES / CLIENTS LOGO SOCIAL PROOF */}
       <MiniCases 
         onNavigate={onNavigate} 
-        title="Projetos que mostram conteÃºdo com direÃ§Ã£o."
-        subtitle="A gestÃ£o de redes funciona melhor quando a marca combina linha editorial, consistÃªncia visual, frequÃªncia possÃ­vel e revisÃ£o contÃ­nua. Os projetos devem mostrar esse processo, nÃ£o prometer resultado instantÃ¢neo."
-        badge="MÃ‰TODO EM PRÃTICA"
+        title="Projetos que mostram conteúdo com direção."
+        subtitle="A gestão de redes funciona melhor quando a marca combina linha editorial, consistência visual, frequência possível e revisão contínua. Os projetos devem mostrar esse processo, não prometer resultado instantâneo."
+        badge="MÉTODO EM PRÁTICA"
       />
 
-      {false && (
-      /* INTERACTIVE INNOVATION: SIMULADOR DE CRESCIMENTO E EDITORIAL */
-      <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-neutral-950 text-left relative overflow-hidden">
-        <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-brand/[0.01] rounded-full blur-[140px] pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto space-y-12 relative z-10">
-          <div className="space-y-3 max-w-3xl">
-            <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-              PLANEJAMENTO ESTRATÃ‰GICO // SIMULaÃ§Ã£o CORPORATIVA
-            </span>
-            <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
-              Simulador de Alcance Organico e Funil Social
-            </h2>
-            <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-              O alcance orgÃ¢nico sÃªnior Ã© um jogo de regularidade editorial e distribuiÃ§Ã£o de alta qualidade tÃ©cnica. Ajuste a frequÃªncia de postagens semanais e descubra o impacto cumulativo projetado no LinkedIn e Instagram para a sua marca B2B ou Perfil MÃ©dico.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* Controls */}
-            <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-8 text-left">
-              <div className="space-y-6">
-                <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block pb-3 border-b border-white/[0.05]">
-                  FrequÃªncia Semanal Estimada:
-                </span>
-
-                {/* LinkedIn Frequency Selector */}
-                <div className="space-y-3">
-                  <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    FrequÃªncia LinkedIn (Artigos/Posts):
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { id: "1x", name: "1x / sem" },
-                      { id: "3x", name: "3x / sem" },
-                      { id: "5x", name: "5x / sem" }
-                    ].map((freq) => {
-                      const isSelected = freq.id === "3x";
-                      return (
-                        <button
-                          key={freq.id}
-                          id={"btn-lk-" + freq.id}
-                          onClick={() => {
-                            (window as any)._linkedinFreq = freq.id;
-                            document.querySelectorAll(".lk-btn").forEach((btn: any) => {
-                              btn.className = "lk-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer " + 
-                                (btn.id === "btn-lk-" + freq.id ? "bg-brand-secondary/10 border-brand-secondary text-brand-secondary" : "bg-white/[0.01] border-white/5 text-zinc-400");
-                            });
-                            // Trigger calculation
-                            (window as any)._updateSocialSim && (window as any)._updateSocialSim();
-                          }}
-                          className={`lk-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer ${
-                            isSelected ? "bg-brand-secondary/10 border-brand-secondary text-brand-secondary" : "bg-white/[0.01] border-white/5 text-zinc-400"
-                          }`}
-                        >
-                          {freq.name}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Instagram Reels Frequency Selector */}
-                <div className="space-y-3">
-                  <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    FrequÃªncia Instagram / TikTok (VÃ­deos Reels):
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { id: "2x", name: "2x / sem" },
-                      { id: "4x", name: "4x / sem" },
-                      { id: "7x", name: "Diario" }
-                    ].map((freq) => {
-                      const isSelected = freq.id === "4x";
-                      return (
-                        <button
-                          key={freq.id}
-                          id={"btn-in-" + freq.id}
-                          onClick={() => {
-                            (window as any)._instaFreq = freq.id;
-                            document.querySelectorAll(".in-btn").forEach((btn: any) => {
-                              btn.className = "in-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer " + 
-                                (btn.id === "btn-in-" + freq.id ? "bg-brand/10 border-brand text-white" : "bg-white/[0.01] border-white/5 text-zinc-400");
-                            });
-                            // Trigger calculation
-                            (window as any)._updateSocialSim && (window as any)._updateSocialSim();
-                          }}
-                          className={`in-btn py-2.5 text-center text-xs font-sans rounded-lg border cursor-pointer ${
-                            isSelected ? "bg-brand/10 border-brand text-white" : "bg-white/[0.01] border-white/5 text-zinc-400"
-                          }`}
-                        >
-                          {freq.name}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Content Pillar Selector */}
-                <div className="space-y-3">
-                  <label className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider block">
-                    Linha Editorial Principal de NegÃ³cios:
-                  </label>
-                  <select 
-                    id="editorial-pillar"
-                    onChange={() => {
-                      (window as any)._updateSocialSim && (window as any)._updateSocialSim();
-                    }}
-                    className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-xs text-zinc-300 font-sans focus:outline-none focus:border-brand"
-                  >
-                    <option value="tech">Autoridade TÃ©cnica (Estudos CientÃ­ficos e Engenharia)</option>
-                    <option value="behind">Bastidores Premium (Rotina Corporativa e Clientes Reais)</option>
-                    <option value="sales">Venda Direta / Casos de Sucesso Comerciais</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] space-y-2">
-                <div className="flex items-center gap-2 text-brand">
-                  <Sparkles className="w-4 h-4 shrink-0" />
-                  <span className="text-[10px] font-mono font-black uppercase tracking-wider">Distribuiaao Inteligente TAG08</span>
-                </div>
-                <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                  NÃ³s nÃ£o apenas criamos artes bonitas. NÃ³s estruturamos de forma ativa o tom de voz sÃªnior, criamos roteiros, fazemos a curadoria visual e cuidamos da distribuiÃ§Ã£o orgÃ¢nica e paga para que sua marca tenha uma fala comercial constante.
-                </p>
-              </div>
-            </div>
-
-            {/* Results Panel */}
-            <div className="lg:col-span-7 bg-[#09090b] border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
-
-              <div className="space-y-6 w-full">
-                <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block">
-                  Calculo de Funil Social Projetado (Mensal):
-                </span>
-
-                {/* Results Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
-                    <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Impressaes Organicas / Mas</span>
-                    <p id="sim-impressions" className="text-3xl font-display font-black text-white">42.400</p>
-                    <span className="text-[9.5px] text-zinc-400 block leading-tight font-sans">
-                      VisualizaÃ§Ãµes de suas postagens no feed orgÃ¢nico.
-                    </span>
-                  </div>
-
-                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
-                    <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Novos Visitantes de Perfil</span>
-                    <p id="sim-growth" className="text-3xl font-display font-black text-brand">2.120</p>
-                    <span className="text-[9.5px] text-zinc-400 block leading-tight font-sans">
-                      EmpresÃ³rios e potenciais parceiros acessando seu hub.
-                    </span>
-                  </div>
-
-                  <div className="p-5 rounded-2xl bg-brand-secondary/[0.02] border border-brand-secondary/10 space-y-1">
-                    <span className="font-mono text-[8px] text-brand-secondary/80 uppercase font-black block">Leads de Alto Padrao (SQL)</span>
-                    <p id="sim-leads" className="text-3xl font-display font-black text-brand-secondary">18</p>
-                    <span className="text-[9.5px] text-zinc-400 block leading-tight font-sans">
-                      Contatos ultra-qualificados agendando reuniÃµes.
-                    </span>
-                  </div>
-                </div>
-
-                {/* Monthly Editorial Grid Preview */}
-                <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-5 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-bold block">SimulaÃ§Ã£o de Grid do Feed Comercial</span>
-                    <span className="font-sans text-[9px] text-zinc-500">MÃªs 01 (Preview do Planejamento)</span>
-                  </div>
-
-                  <div className="grid grid-cols-4 gap-2">
-                    {[
-                      { week: "W1", name: "Analise Cientafica", tag: "AUTORIDADE" },
-                      { week: "W1", name: "Estudo de Caso", tag: "PROVA SOCIAL" },
-                      { week: "W2", name: "Entrevista de Time", tag: "BASTIDORES" },
-                      { week: "W2", name: "VisÃ³o de Vanguarda", tag: "CONCEITO" },
-                      { week: "W3", name: "Diagnastico Clanico", tag: "CONCEITO" },
-                      { week: "W3", name: "Venda Direta", tag: "OFERTA" },
-                      { week: "W4", name: "Processo Interno", tag: "BASTIDORES" },
-                      { week: "W4", name: "Atendimento Vip", tag: "RELAÃ‡Ã•ES" }
-                    ].map((cell, idx) => (
-                      <div key={idx} className="p-3 bg-zinc-950/80 border border-white/5 rounded-xl space-y-1.5 text-left relative overflow-hidden">
-                        <span className="font-sans text-[6.5px] text-zinc-500 font-bold block">{cell.week} // {cell.tag}</span>
-                        <p className="text-white text-[9.5px] font-sans font-bold leading-tight line-clamp-2">{cell.name}</p>
-                        <div className="w-full bg-zinc-900 h-1 rounded-full overflow-hidden mt-2">
-                          <div className="bg-brand-secondary h-full" style={{ width: `${Math.round(40 + Math.random() * 50)}%` }} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* JS Dynamic logic mounting on load or trigger */}
-              <script dangerouslySetInnerHTML={{
-                __html: `
-                  (function() {
-                    window._updateSocialSim = function() {
-                      const lk = window._linkedinFreq || "3x";
-                      const insta = window._instaFreq || "4x";
-                      const pillar = document.getElementById("editorial-pillar")?.value || "tech";
-
-                      let lkMul = lk === "1x" ? 1.0 : lk === "3x" ? 2.8 : 4.5;
-                      let insMul = insta === "2x" ? 1.5 : insta === "4x" ? 3.2 : 5.8;
-                      let pillarMul = pillar === "tech" ? 1.2 : pillar === "behind" ? 1.0 : 0.8;
-
-                      // Calculate
-                      const baseImpressions = Math.round((lkMul * 8000 + insMul * 12000) * pillarMul);
-                      const baseProfile = Math.round(baseImpressions * 0.05 * (pillar === "behind" ? 1.15 : 1.0));
-                      const baseLeads = Math.round(baseProfile * 0.008 * (pillar === "sales" ? 1.3 : pillar === "tech" ? 1.1 : 0.8));
-
-                      const impEl = document.getElementById("sim-impressions");
-                      const groEl = document.getElementById("sim-growth");
-                      const leaEl = document.getElementById("sim-leads");
-
-                      if (impEl) impEl.innerText = baseImpressions.toLocaleString("pt-BR");
-                      if (groEl) groEl.innerText = baseProfile.toLocaleString("pt-BR");
-                      if (leaEl) leaEl.innerText = Math.max(2, baseLeads).toString();
-                    };
-                    setTimeout(() => {
-                      window._updateSocialSim && window._updateSocialSim();
-                    }, 500);
-                  })();
-                `
-              }} />
-
-              <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 mt-6">
-                <span className="font-mono text-[8px] text-zinc-600">PROJEÃ‡Ã•ES DE CONVERsÃ³o BASEADAS EM CAMPANHAS REALIZADAS TAG08 // 2026</span>
-                <button 
-                  onClick={() => onNavigate("/contato")}
-                  className="text-xs font-mono text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
-                >
-                  Agendar SessÃ³o EstratÃ©gica <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      )}
-
-      {/* INTERACTIVE INNOVATION: SIMULADOR DE DIAGNÃ“STICO EDITORIAL */}
+      {/* INTERACTIVE INNOVATION: SIMULADOR DE DIAGNÓSTICO EDITORIAL */}
       <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-neutral-950 text-left relative overflow-hidden">
         <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-brand/[0.01] rounded-full blur-[140px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto space-y-12 relative z-10">
           <div className="space-y-3 max-w-3xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-              DiagnÃ³stico editorial
+              Diagnóstico editorial
             </span>
             <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
-              O que estÃ¡ travando sua presenÃ§a nas redes?
+              O que está travando sua presença nas redes?
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-              Nem sempre o problema Ã© postar pouco. Muitas vezes a presenÃ§a digital trava por falta de linha editorial, frequÃªncia possÃ­vel, clareza de mensagem, consistÃªncia visual ou processo de aprovaÃ§Ã£o.
+              Nem sempre o problema é postar pouco. Muitas vezes a presença digital trava por falta de linha editorial, frequência possível, clareza de mensagem, consistência visual ou processo de aprovação.
             </p>
           </div>
 
@@ -1178,7 +940,7 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
               <div className="space-y-5">
                 <div className="flex items-center justify-between gap-3 border-b border-white/[0.05] pb-3">
                   <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block">
-                    PrÃ©-qualificaÃ§Ã£o editorial
+                    Pré-qualificação editorial
                   </span>
                   <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
                     {answeredCount}/{EDITORIAL_DIAGNOSTIC_QUESTIONS.length} respostas
@@ -1246,7 +1008,7 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
 
                         {hasSelection && (
                           <p className="text-[10px] text-brand-secondary font-mono uppercase tracking-widest leading-relaxed">
-                            SeleÃ§Ã£o atual: {selectedLabels}
+                            Seleção atual: {selectedLabels}
                           </p>
                         )}
                       </div>
@@ -1304,11 +1066,11 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
                 <div className="flex items-center gap-2 text-brand">
                   <Sparkles className="w-4 h-4 shrink-0" />
                   <span className="text-[10px] font-mono font-black uppercase tracking-wider">
-                    Resumo Ãºtil para atendimento
+                    Resumo útil para atendimento
                   </span>
                 </div>
                 <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                  As respostas viram uma leitura organizada que a equipe pode abrir jÃ¡ com contexto. O objetivo Ã© reduzir repetiÃ§Ã£o e acelerar a conversa certa.
+                  As respostas viram uma leitura organizada que a equipe pode abrir já com contexto. O objetivo é reduzir repetição e acelerar a conversa certa.
                 </p>
               </div>
             </div>
@@ -1320,13 +1082,13 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div className="space-y-2 max-w-2xl">
                     <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-                      Seu diagnÃ³stico editorial
+                      Seu diagnóstico editorial
                     </span>
                     <h3 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
                       Resumo pronto para enviar
                     </h3>
                     <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-                      A leitura abaixo ajuda a TAG08 a continuar a conversa sem repetir perguntas e sem perder a lÃ³gica do seu contexto.
+                      A leitura abaixo ajuda a TAG08 a continuar a conversa sem repetir perguntas e sem perder a lógica do seu contexto.
                     </p>
                   </div>
 
@@ -1396,7 +1158,7 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
                     {diagnosticRecommendation}
                   </p>
                   <p className="text-zinc-400 text-xs leading-relaxed">
-                    O diagnÃ³stico ajuda a organizar prioridade, formato e prÃ³ximo passo. Quando isso chega pronto para a equipe, a conversa comercial fica mais objetiva.
+                    O diagnóstico ajuda a organizar prioridade, formato e próximo passo. Quando isso chega pronto para a equipe, a conversa comercial fica mais objetiva.
                   </p>
                 </div>
               </div>
@@ -1408,7 +1170,7 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
                   </span>
                   <p className="text-zinc-400 text-xs leading-relaxed">
                     {diagnosticReady
-                      ? "O resumo jÃ¡ estÃ¡ pronto para ser enviado com contexto."
+                      ? "O resumo já está pronto para ser enviado com contexto."
                       : "Complete respostas, nome, WhatsApp e consentimento para liberar o envio."}
                   </p>
                 </div>
@@ -1429,7 +1191,7 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
                       : "cursor-not-allowed bg-white/[0.05] text-zinc-500 border border-white/[0.06]"
                   }`}
                 >
-                  <span>ENVIAR DIAGNÃ“STICO POR WHATSAPP</span>
+                  <span>ENVIAR DIAGNÓSTICO POR WHATSAPP</span>
                   <ArrowRight className="w-4 h-4 stroke-[2.5] transition-transform group-hover:translate-x-1" />
                 </a>
               </div>
@@ -1450,12 +1212,12 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
                 FORMATOS AUDIOVISUAIS // TAG08
               </div>
               <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white leading-none tracking-tighter uppercase">
-                VÃ­deos curtos, bastidores e recortes com funÃ§Ã£o editorial.
+                Vídeos curtos, bastidores e recortes com função editorial.
               </h2>
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans font-medium">
-                Quando fazem sentido para a estratÃ©gia, vÃ­deos curtos, bastidores, falas e recortes ajudam a tornar a presenÃ§a da marca mais humana, clara e recorrente nas redes sociais.
+                Quando fazem sentido para a estratégia, vídeos curtos, bastidores, falas e recortes ajudam a tornar a presença da marca mais humana, clara e recorrente nas redes sociais.
               </p>
             </div>
           </div>
@@ -1466,15 +1228,26 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
                 key={short.id}
                 href={short.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
+                onClick={() =>
+                  trackVideoEvent({
+                    action: "selected",
+                    video_id: short.id,
+                    video_source: "youtube",
+                    surface: "social-media-shorts",
+                    page_path: "/servicos/gestao-de-redes-sociais"
+                  })
+                }
                 whileHover={{ y: -4 }}
                 className="group block rounded-[28px] overflow-hidden border border-white/[0.06] bg-white/[0.02] transition-all duration-300 hover:border-brand-secondary/45 hover:shadow-[0_18px_50px_rgba(var(--color-brand-secondary-rgb),0.08)]"
               >
                 <div className="relative aspect-[9/16] bg-zinc-900">
-                  <img
+                  <Image
+                    fill
+                    sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
                     src={short.thumbnail}
                     alt={short.title}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-black/25" />
@@ -1528,10 +1301,12 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
           {/* Left Column: Portrait */}
           <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[520px]">
             <div className="absolute inset-0 bg-black/10 rounded-[24px] overflow-hidden" />
-            <img 
+            <Image
+              fill
+              sizes="(max-width: 1024px) 100vw, 42vw"
               src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800" 
               alt="TAG08 Social Media Specialist" 
-              className="absolute inset-0 w-full h-full object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
+              className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
@@ -1575,7 +1350,7 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
               </div>
               <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
                 COMO CONDUZIMOS A <br />
-                GESTAO DE REDES SOCIAIS.
+                    GESTÃO DE REDES SOCIAIS.
               </h2>
               <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
                 A TAG08 organiza a presenca nas redes com planejamento editorial, producao alinhada, revisao, publicacao e acompanhamento. O objetivo e reduzir improviso e manter a comunicacao coerente com o posicionamento da marca.
@@ -1675,10 +1450,10 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
             <div className="absolute inset-0 bg-[radial-gradient(#ffffff03_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
             
             <div className="relative z-10 space-y-2 max-w-2xl">
-              <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 px-2.5 py-0.5 rounded border border-brand-secondary/10 uppercase tracking-widest font-black">PRÃ“XIMO PASSO</span>
-              <h3 className="font-display font-semibold text-xl sm:text-2xl text-white uppercase tracking-tight">Vamos organizar a presenÃ§a da sua marca nas redes?</h3>
+              <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 px-2.5 py-0.5 rounded border border-brand-secondary/10 uppercase tracking-widest font-black">PRÓXIMO PASSO</span>
+              <h3 className="font-display font-semibold text-xl sm:text-2xl text-white uppercase tracking-tight">Vamos organizar a presença da sua marca nas redes?</h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans font-medium">
-                Antes de propor uma rotina de conteÃºdo, a TAG08 entende seu posicionamento, seus canais, sua frequÃªncia possÃ­vel e os gargalos que hoje dificultam uma presenÃ§a mais consistente.
+                Antes de propor uma rotina de conteúdo, a TAG08 entende seu posicionamento, seus canais, sua frequência possível e os gargalos que hoje dificultam uma presença mais consistente.
               </p>
             </div>
             
@@ -1689,7 +1464,7 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
               }}
               className="group relative px-6 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0 overflow-hidden shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:-translate-y-0.5 relative z-10 cursor-pointer"
             >
-              ORGANIZAR MINHA PRESENÃ‡A <ArrowRight className="w-4 h-4 ml-1.5 inline-block group-hover:translate-x-1 transition-transform" />
+              ORGANIZAR MINHA PRESENÇA <ArrowRight className="w-4 h-4 ml-1.5 inline-block group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         </div>
@@ -1708,14 +1483,14 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
             <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
-                  DÃºvidas sobre gestÃ£o de redes
+                  Dúvidas sobre gestão de redes
                 </div>
                 <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
                   Antes de contratar, <br />
-                  entenda como a gestÃ£o funciona.
+                  entenda como a gestão funciona.
                 </h2>
                 <p className="text-zinc-300 font-medium text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
-                  A gestÃ£o de redes sociais da TAG08 organiza linha editorial, frequÃªncia, formatos, criaÃ§Ã£o, revisÃ£o e acompanhamento para construir uma presenÃ§a mais clara e consistente.
+                  A gestão de redes sociais da TAG08 organiza linha editorial, frequência, formatos, criação, revisão e acompanhamento para construir uma presença mais clara e consistente.
                 </p>
               </div>
 
@@ -1758,10 +1533,12 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
             </div>
 
             <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
-              <img
+              <Image
+                fill
+                sizes="(max-width: 1024px) 100vw, 34vw"
                 src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800"
                 alt="TAG08 Redes Sociais"
-                className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
+                className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
               />
               <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
                 <svg viewBox="0 0 100 100" className="w-full h-full text-brand fill-none stroke-current" strokeWidth="0.75" strokeLinecap="round">
@@ -1795,26 +1572,26 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 hover:-translate-y-0.5 transition-all duration-200 text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">Como agimos</span>
-                  <h4 className="text-white font-semibold text-sm leading-snug">Linha editorial, frequÃªncia possÃ­vel e revisÃ£o constante.</h4>
+                  <h4 className="text-white font-semibold text-sm leading-snug">Linha editorial, frequência possível e revisão constante.</h4>
                   <p className="text-zinc-300 text-xs leading-relaxed font-sans">
-                    Evitamos improviso e mantemos a presenÃ§a coerente com o posicionamento da marca.
+                    Evitamos improviso e mantemos a presença coerente com o posicionamento da marca.
                   </p>
                 </div>
                 <button
                   onClick={() => handleLinkClick("/servicos")}
                   className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5 transition-all duration-200 hover:-translate-y-0.5"
                 >
-                  <span>Ver SoluÃ§Ãµes</span>
+                  <span>Ver Soluções</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
 
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all duration-200 text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">PrÃ³ximo passo</span>
+                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">Próximo passo</span>
                   <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer entender o melhor caminho para sua marca?</h4>
                   <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
-                    Fale com a TAG08 para entender se gestÃ£o de redes, conteÃºdo, audiovisual ou outro caminho faz mais sentido agora.
+                    Fale com a TAG08 para entender se gestão de redes, conteúdo, audiovisual ou outro caminho faz mais sentido agora.
                   </p>
                 </div>
                 <a
@@ -1835,18 +1612,18 @@ PrÃ³ximo passo: conversar com a TAG08 para entender escopo e direÃ§Ã£o edi
       {/* SECTION 5 - ACTION TRIGGER FOOTER */}
       <section className="px-4 sm:px-6 md:px-8 py-14 sm:py-16 text-center space-y-4 sm:space-y-5 max-w-4xl mx-auto">
         <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-white uppercase leading-tight tracking-tighter">
-          Organize uma presenÃ§a mais clara nas redes. <br />
-          <span className="text-brand">A TAG08 ajuda a estruturar linha editorial, frequÃªncia, formatos e revisÃ£o para publicar com mais critÃ©rio.</span>
+          Organize uma presença mais clara nas redes. <br />
+          <span className="text-brand">A TAG08 ajuda a estruturar linha editorial, frequência, formatos e revisão para publicar com mais critério.</span>
         </h2>
         <p className="text-zinc-400 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
-          A TAG08 ajuda a organizar linha editorial, frequÃªncia, formatos e revisÃ£o para que sua marca publique com mais critÃ©rio e consistÃªncia.
+          A TAG08 ajuda a organizar linha editorial, frequência, formatos e revisão para que sua marca publique com mais critério e consistência.
         </p>
         <div className="pt-2 sm:pt-3">
           <button
             onClick={() => handleLinkClick("/contato")}
             className="group bg-brand text-black font-mono font-black text-[10px] uppercase tracking-widest py-3.5 px-7 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
           >
-            <span>ORGANIZAR MINHA PRESENÃ‡A</span>
+            <span>ORGANIZAR MINHA PRESENÇA</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
           </button>
         </div>

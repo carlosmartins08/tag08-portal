@@ -1,5 +1,6 @@
 ﻿import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import Image from "next/image";
 import { 
   Check, ArrowRight, ArrowUpRight, BarChart3, Users, Settings, 
   ShieldCheck, Cpu, Sparkles, Clock, Zap, Award, Target, 
@@ -24,41 +25,41 @@ interface Question {
 const auditQuestions: Question[] = [
   {
     id: 1,
-    text: "Qual Ã© o maior gargalo comercial da sua marca no momento?",
+    text: "Qual é o maior gargalo comercial da sua marca no momento?",
     options: [
-      { label: "A", value: 10, text: "NÃ£o geramos contatos regulares de potenciais clientes (orgÃ¢nico ou pago)" },
-      { label: "B", value: 20, text: "AtÃ© geramos leads, mas sÃ£o desqualificados, choram preÃ§o e travam no comercial" },
-      { label: "C", value: 15, text: "Nossa presenÃ§a digital Ã© inexistente ou amadora frente aos nossos concorrentes" },
-      { label: "D", value: 25, text: "Falta de governanÃ§a: temos boas ideias mas falta equipe dedicada para executar" }
+      { label: "A", value: 10, text: "Não geramos contatos regulares de potenciais clientes (orgânico ou pago)" },
+      { label: "B", value: 20, text: "Até geramos leads, mas são desqualificados, choram preço e travam no comercial" },
+      { label: "C", value: 15, text: "Nossa presença digital é inexistente ou amadora frente aos nossos concorrentes" },
+      { label: "D", value: 25, text: "Falta de governança: temos boas ideias mas falta equipe dedicada para executar" }
     ]
   },
   {
     id: 2,
-    text: "Qual Ã© o investimento mensal atual (ou planejado) em trÃ¡fego pago?",
+    text: "Qual é o investimento mensal atual (ou planejado) em tráfego pago?",
     options: [
-      { label: "A", value: 10, text: "NÃ£o investimos em anÃºncios (foco exclusivo em redes sociais orgÃ¢nicas)" },
-      { label: "B", value: 15, text: "Investimento inicial ou instÃ¡vel (atÃ© R$ 2.000 / mÃªs)" },
-      { label: "C", value: 25, text: "Investimento moderado (entre R$ 2.000 e R$ 10.000 / mÃªs)" },
-      { label: "D", value: 30, text: "Investimento em canais sem prioridade clara (acima de R$ 10.000 / mÃªs)" }
+      { label: "A", value: 10, text: "Não investimos em anúncios (foco exclusivo em redes sociais orgânicas)" },
+      { label: "B", value: 15, text: "Investimento inicial ou instável (até R$ 2.000 / mês)" },
+      { label: "C", value: 25, text: "Investimento moderado (entre R$ 2.000 e R$ 10.000 / mês)" },
+      { label: "D", value: 30, text: "Investimento em canais sem prioridade clara (acima de R$ 10.000 / mês)" }
     ]
   },
   {
     id: 3,
-    text: "Como vocÃª define o ticket mÃ©dio da sua soluÃ§Ã£o ou produto principal?",
+    text: "Como você define o ticket médio da sua solução ou produto principal?",
     options: [
       { label: "A", value: 10, text: "Varejo ou baixo valor (Abaixo de R$ 500 por venda/assinatura)" },
-      { label: "B", value: 15, text: "MÃ©dio valor transacional (Entre R$ 500 e R$ 2.500)" },
-      { label: "C", value: 25, text: "ServiÃ§o especializado ou venda consultiva (Entre R$ 2.500 e R$ 10.000)" },
+      { label: "B", value: 15, text: "Médio valor transacional (Entre R$ 500 e R$ 2.500)" },
+      { label: "C", value: 25, text: "Serviço especializado ou venda consultiva (Entre R$ 2.500 e R$ 10.000)" },
       { label: "D", value: 30, text: "Corporativo, Enterprise ou B2B Complexo (Acima de R$ 10.000)" }
     ]
   },
   {
     id: 4,
-    text: "Quem dita a direÃ§Ã£o tÃ¡tica e faz a gestÃ£o do seu marketing hoje?",
+    text: "Quem dita a direção tática e faz a gestão do seu marketing hoje?",
     options: [
-      { label: "A", value: 10, text: "O prÃ³prio fundador / dono conduz quando tem tempo livre operacional" },
-      { label: "B", value: 15, text: "Contratamos freelancers ou agÃªncias, mas operam soltos, sem direÃ§Ã£o clara" },
-      { label: "C", value: 20, text: "Temos um departamento interno jÃºnior ou intermediÃ¡rio sem governanÃ§a estrita" },
+      { label: "A", value: 10, text: "O próprio fundador / dono conduz quando tem tempo livre operacional" },
+      { label: "B", value: 15, text: "Contratamos freelancers ou agências, mas operam soltos, sem direção clara" },
+      { label: "C", value: 20, text: "Temos um departamento interno júnior ou intermediário sem governança estrita" },
       { label: "D", value: 25, text: "Contamos com um CMO estrategista liderando e acompanhando dados em tempo real" }
     ]
   }
@@ -107,36 +108,36 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
         level: "Baixa clareza",
         percentage: totalScore,
         color: "text-red-400 border-red-500/20 bg-red-500/5",
-        description: "A marca ainda depende muito de aÃ§Ãµes isoladas e de decisÃµes pouco organizadas. Falta uma base mais clara de posicionamento, mensagem e prÃ³ximos passos.",
-        focus: "O primeiro foco costuma ser clareza estratÃ©gica e alinhamento de comunicaÃ§Ã£o.",
-        recommendation: "A prioridade agora Ã© estruturar a base antes de ampliar a execuÃ§Ã£o."
+        description: "A marca ainda depende muito de ações isoladas e de decisões pouco organizadas. Falta uma base mais clara de posicionamento, mensagem e próximos passos.",
+        focus: "O primeiro foco costuma ser clareza estratégica e alinhamento de comunicação.",
+        recommendation: "A prioridade agora é estruturar a base antes de ampliar a execução."
       };
     } else if (totalScore <= 60) {
       return {
-        level: "Clareza em construÃ§Ã£o",
+        level: "Clareza em construção",
         percentage: totalScore,
         color: "text-brand border-brand/20 bg-brand/5",
-        description: "JÃ¡ existe movimento, mas a comunicaÃ§Ã£o ainda pode ficar mais coerente entre canais, conteÃºdos e materiais comerciais.",
-        focus: "Ajuste de mensagem, consistÃªncia e estrutura de canais.",
+        description: "Já existe movimento, mas a comunicação ainda pode ficar mais coerente entre canais, conteúdos e materiais comerciais.",
+        focus: "Ajuste de mensagem, consistência e estrutura de canais.",
         recommendation: "Vale organizar prioridades antes de ampliar qualquer frente."
       };
     } else if (totalScore <= 85) {
       return {
-        level: "Boa direÃ§Ã£o",
+        level: "Boa direção",
         percentage: totalScore,
         color: "text-brand-secondary border-brand-secondary/20 bg-brand-secondary/5",
-        description: "A marca jÃ¡ tem um caminho mais consistente, mas ainda pode ganhar clareza na sustentaÃ§Ã£o da rotina e na priorizaÃ§Ã£o das frentes.",
-        focus: "Foco em acompanhamento, revisÃ£o e continuidade do que jÃ¡ foi estruturado.",
-        recommendation: "O prÃ³ximo passo Ã© consolidar mÃ©todo e manter a execuÃ§Ã£o responsÃ¡vel."
+        description: "A marca já tem um caminho mais consistente, mas ainda pode ganhar clareza na sustentação da rotina e na priorização das frentes.",
+        focus: "Foco em acompanhamento, revisão e continuidade do que já foi estruturado.",
+        recommendation: "O próximo passo é consolidar método e manter a execução responsável."
       };
     } else {
       return {
-        level: "Pronta para avanÃ§ar",
+        level: "Pronta para avançar",
         percentage: totalScore,
         color: "text-brand-secondary border-brand-secondary/20 bg-brand-secondary/5",
-        description: "Existe base suficiente para seguir com mais seguranÃ§a, desde que a execuÃ§Ã£o continue sendo acompanhada com critÃ©rio.",
-        focus: "Prioridade em consistÃªncia, ajustes e continuidade.",
-        recommendation: "A leitura nÃ£o substitui uma anÃ¡lise completa, mas ajuda a identificar se o prÃ³ximo passo deve ser clareza, estrutura, conteÃºdo, canal ou operaÃ§Ã£o."
+        description: "Existe base suficiente para seguir com mais segurança, desde que a execução continue sendo acompanhada com critério.",
+        focus: "Prioridade em consistência, ajustes e continuidade.",
+        recommendation: "A leitura não substitui uma análise completa, mas ajuda a identificar se o próximo passo deve ser clareza, estrutura, conteúdo, canal ou operação."
       };
     }
   };
@@ -147,27 +148,27 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
   };
 
   const faqCategories = [
-    { id: 0, title: "O QUE Ã‰" },
+    { id: 0, title: "O QUE É" },
     { id: 1, title: "ESCOPO" },
     { id: 2, title: "QUANDO FAZ SENTIDO" },
     { id: 3, title: "EQUIPE INTERNA" },
-    { id: 4, title: "CLAREZA E PRÃ“XIMO PASSO" }
+    { id: 4, title: "CLAREZA E PRÓXIMO PASSO" }
   ];
 
   const faqQuestions = [
-    "O que Ã© a Assessoria de Marketing EstratÃ©gico da TAG08?",
-    "A assessoria inclui execuÃ§Ã£o de marketing?",
+    "O que é a Assessoria de Marketing Estratégico da TAG08?",
+    "A assessoria inclui execução de marketing?",
     "Quando faz sentido contratar assessoria?",
     "A assessoria substitui uma equipe interna?",
     "A TAG08 faz promessas com a assessoria?"
   ];
 
   const faqAnswers = [
-    "Ã‰ um acompanhamento para organizar posicionamento, prioridades, comunicaÃ§Ã£o, canais e prÃ³ximos passos antes da execuÃ§Ã£o. O foco Ã© ajudar a marca a decidir melhor e evitar aÃ§Ãµes soltas.",
-    "Depende do escopo. Em alguns casos a assessoria orienta decisÃµes e organiza o plano. Em outros, pode se conectar com serviÃ§os de conteÃºdo, branding, audiovisual, web ou processos.",
-    "Quando a marca sente que estÃ¡ fazendo muitas aÃ§Ãµes, mas ainda falta clareza sobre mensagem, pÃºblico, canais, prioridades ou direÃ§Ã£o comercial.",
-    "NÃ£o necessariamente. A TAG08 pode apoiar a tomada de decisÃ£o, orientar prioridades e ajudar a equipe interna ou parceiros externos a trabalharem com mais clareza.",
-    "NÃ£o prometemos crescimento instantÃ¢neo, retorno financeiro ou ganho artificial. A assessoria busca construir clareza, critÃ©rio, consistÃªncia e melhoria contÃ­nua com responsabilidade."
+    "É um acompanhamento para organizar posicionamento, prioridades, comunicação, canais e próximos passos antes da execução. O foco é ajudar a marca a decidir melhor e evitar ações soltas.",
+    "Depende do escopo. Em alguns casos a assessoria orienta decisões e organiza o plano. Em outros, pode se conectar com serviços de conteúdo, branding, audiovisual, web ou processos.",
+    "Quando a marca sente que está fazendo muitas ações, mas ainda falta clareza sobre mensagem, público, canais, prioridades ou direção comercial.",
+    "Não necessariamente. A TAG08 pode apoiar a tomada de decisão, orientar prioridades e ajudar a equipe interna ou parceiros externos a trabalharem com mais clareza.",
+    "Não prometemos crescimento instantâneo, retorno financeiro ou ganho artificial. A assessoria busca construir clareza, critério, consistência e melhoria contínua com responsabilidade."
   ];
 
   return (
@@ -179,6 +180,46 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
       {/* Floating 3D Geometric mesh for tech authority decoration */}
       <Subtle3DCanvas intensity={1.4} className="absolute right-[-10%] top-[4%] w-[490px] h-[490px] opacity-[0.38] mix-blend-screen hidden lg:block" />
 
+      <section className="px-4 sm:px-6 md:px-8 pt-10 sm:pt-14 pb-16 sm:pb-20 border-b border-white/[0.04] text-left relative z-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+          <div className="lg:col-span-8 space-y-5">
+            <span className="inline-flex items-center gap-2 rounded-full border border-brand-secondary/20 bg-brand-secondary/5 px-3 py-1.5 font-mono text-[9px] font-black uppercase tracking-widest text-brand-secondary">
+              Assessoria de marketing estratégico
+            </span>
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black uppercase leading-[0.92] tracking-tighter text-white">
+              Direção de marketing antes de ampliar a execução.
+            </h1>
+            <p className="max-w-3xl text-sm sm:text-base leading-relaxed text-zinc-400">
+              A assessoria organiza contexto, prioridades, mensagem e próximos passos para que a marca pare de reagir por urgência e passe a decidir com mais critério.
+            </p>
+            <div className="flex flex-wrap gap-2 text-[9px] font-mono font-bold uppercase tracking-widest text-zinc-300">
+              {['Diagnóstico', 'Prioridades', 'Acompanhamento'].map((item) => (
+                <span key={item} className="rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1.5">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-4 rounded-3xl border border-white/[0.06] bg-charcoal-900/80 p-5 sm:p-6 space-y-4">
+            <div className="space-y-2">
+              <span className="font-mono text-[9px] font-black uppercase tracking-widest text-brand">Quando faz sentido</span>
+              <p className="text-sm leading-relaxed text-zinc-300">
+                Quando existem muitas frentes, mas ainda falta clareza sobre o que priorizar, comunicar e acompanhar.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => handleLinkClick('/contato')}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 text-[10px] font-mono font-black uppercase tracking-widest text-black transition-colors hover:bg-brand-dark"
+            >
+              Solicitar diagnóstico
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/*=========================================
           COMPARISON MATRIX
          =========================================*/}
@@ -186,13 +227,13 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-3 max-w-2xl">
             <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-              COMPARA??O ESTRAT?GICA
+              COMPARAÇÃO ESTRATÉGICA
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
-              A diferenÃ§a entre executar aÃ§Ãµes soltas e trabalhar com direÃ§Ã£o.
+              A diferença entre executar ações soltas e trabalhar com direção.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              A assessoria existe para ajudar a marca a entender prioridades, organizar decisÃµes e reduzir desperdÃ­cio de esforÃ§o antes de transformar ideias em aÃ§Ãµes de marketing.
+              A assessoria existe para ajudar a marca a entender prioridades, organizar decisões e reduzir desperdício de esforço antes de transformar ideias em ações de marketing.
             </p>
           </div>
 
@@ -201,15 +242,15 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
               <div className="absolute top-0 left-0 right-0 h-[1px] bg-red-500/10" />
               <div className="flex items-center gap-2 text-zinc-500 font-mono text-[9px] uppercase tracking-widest">
                 <span className="w-1.5 h-1.5 rounded-full bg-red-400/70" />
-                <span>ExecuÃ§Ã£o sem direÃ§Ã£o</span>
+                <span>Execução sem direção</span>
               </div>
-              <h3 className="font-display font-bold text-lg sm:text-xl text-white uppercase leading-none">Quando tudo comeÃ§a pela urgÃªncia</h3>
+              <h3 className="font-display font-bold text-lg sm:text-xl text-white uppercase leading-none">Quando tudo começa pela urgência</h3>
 
               <ul className="space-y-4">
                 {[
-                  "AÃ§Ãµes sÃ£o feitas por urgÃªncia, gosto pessoal ou tentativa isolada, sem clareza de prioridade, mensagem ou continuidade.",
-                  "A entrega tende a ganhar mais coerÃªncia quando existe clareza sobre prioridades, canais, mensagem e capacidade real de execuÃ§Ã£o.",
-                  "O esforÃ§o se espalha em vÃ¡rias frentes sem um critÃ©rio claro de foco e sequÃªncia."
+                  "Ações são feitas por urgência, gosto pessoal ou tentativa isolada, sem clareza de prioridade, mensagem ou continuidade.",
+                  "A entrega tende a ganhar mais coerência quando existe clareza sobre prioridades, canais, mensagem e capacidade real de execução.",
+                  "O esforço se espalha em várias frentes sem um critério claro de foco e sequência."
                 ].map((item, idx) => (
                   <li key={idx} className="flex gap-3 text-zinc-500 text-xs sm:text-sm leading-relaxed">
                     <span className="text-red-400 font-bold font-sans">/ &times;</span>
@@ -223,15 +264,15 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
               <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-brand/20 via-brand/40 to-transparent" />
               <div className="flex items-center gap-2 text-brand font-mono text-[9px] uppercase tracking-widest font-bold">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                <span>Assessoria com direÃ§Ã£o</span>
+                <span>Assessoria com direção</span>
               </div>
-              <h3 className="font-display font-medium text-lg sm:text-xl text-brand-secondary uppercase leading-none">Quando a decisÃ£o parte de diagnÃ³stico</h3>
+              <h3 className="font-display font-medium text-lg sm:text-xl text-brand-secondary uppercase leading-none">Quando a decisão parte de diagnóstico</h3>
 
               <ul className="space-y-4">
                 {[
-                  "As decisÃµes partem de diagnÃ³stico, critÃ©rios, prioridades e um plano possÃ­vel de executar com responsabilidade.",
-                  "A assessoria ajuda a organizar comunicaÃ§Ã£o, canais e prÃ³ximos passos antes de ampliar a produÃ§Ã£o.",
-                  "O objetivo Ã© reduzir improviso, desalinhamento e retrabalho para que a execuÃ§Ã£o tenha mais consistÃªncia."
+                  "As decisões partem de diagnóstico, critérios, prioridades e um plano possível de executar com responsabilidade.",
+                  "A assessoria ajuda a organizar comunicação, canais e próximos passos antes de ampliar a produção.",
+                  "O objetivo é reduzir improviso, desalinhamento e retrabalho para que a execução tenha mais consistência."
                 ].map((item, idx) => (
                   <li key={idx} className="flex gap-3 text-white text-xs sm:text-sm leading-relaxed font-medium">
                     <span className="text-brand font-black font-semibold">&#10003;</span>
@@ -257,7 +298,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
               Antes de combinar canais, entenda o que precisa ser priorizado.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-              Nem toda marca precisa ativar todos os canais ao mesmo tempo. A assessoria ajuda a identificar quais frentes fazem sentido agora, quais podem esperar e quais dependem de estrutura antes da execuÃ§Ã£o.
+              Nem toda marca precisa ativar todos os canais ao mesmo tempo. A assessoria ajuda a identificar quais frentes fazem sentido agora, quais podem esperar e quais dependem de estrutura antes da execução.
             </p>
           </div>
 
@@ -280,6 +321,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   <input 
                     type="range" 
                     id="adv-spend"
+                    aria-label="Investimento mensal em midia"
                     min="2000" 
                     max="50000" 
                     step="1000" 
@@ -288,7 +330,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   />
                   <div className="flex items-center justify-between text-[9px] font-sans text-zinc-500">
                     <span>Estrutura</span>
-                    <span>DireÃ§Ã£o</span>
+                    <span>Direção</span>
                     <span>Prioridade</span>
                   </div>
                 </div>
@@ -299,9 +341,9 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   <div className="space-y-2">
                     {[
                       { id: "positioning", label: "Posicionamento e mensagem" },
-                      { id: "content", label: "ConteÃºdo e relacionamento" },
-                      { id: "channels", label: "Canais e conversÃ£o" },
-                      { id: "operations", label: "OperaÃ§Ã£o e acompanhamento" }
+                      { id: "content", label: "Conteúdo e relacionamento" },
+                      { id: "channels", label: "Canais e conversão" },
+                      { id: "operations", label: "Operação e acompanhamento" }
                     ].map((pilar) => {
                       return (
                         <label key={pilar.id} className="flex items-center gap-3 p-3 bg-white/[0.01] border border-white/[0.04] rounded-xl cursor-pointer hover:bg-white/[0.02]">
@@ -325,7 +367,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   <span className="text-[10px] font-mono font-black uppercase tracking-wider">LEITURA INICIAL</span>
                 </div>
                 <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                  O melhor caminho depende do equilÃ­brio entre clareza, estrutura e capacidade de execuÃ§Ã£o.
+                  O melhor caminho depende do equilíbrio entre clareza, estrutura e capacidade de execução.
                 </p>
               </div>
             </div>
@@ -345,25 +387,25 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   </div>
 
                   <div className="p-5 rounded-2xl bg-brand-secondary/[0.02] border border-brand-secondary/10 space-y-1">
-                    <span className="font-mono text-[8px] text-brand-secondary/80 uppercase font-black block">ConteÃºdo e relacionamento</span>
-                    <p className="text-zinc-300 text-sm leading-relaxed">Quando a presenÃ§a digital precisa de frequÃªncia, linha editorial e conexÃ£o com o pÃºblico certo.</p>
+                    <span className="font-mono text-[8px] text-brand-secondary/80 uppercase font-black block">Conteúdo e relacionamento</span>
+                    <p className="text-zinc-300 text-sm leading-relaxed">Quando a presença digital precisa de frequência, linha editorial e conexão com o público certo.</p>
                   </div>
 
                   <div className="p-5 rounded-2xl bg-emerald-500/[0.02] border border-emerald-500/10 space-y-1">
-                    <span className="font-mono text-[8px] text-emerald-500/80 uppercase font-black block">Canais e conversÃ£o</span>
+                    <span className="font-mono text-[8px] text-emerald-500/80 uppercase font-black block">Canais e conversão</span>
                     <p className="text-zinc-300 text-sm leading-relaxed">Quando site, landing page, WhatsApp, redes sociais ou materiais comerciais precisam trabalhar de forma mais integrada.</p>
                   </div>
 
                   <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
-                    <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">OperaÃ§Ã£o e acompanhamento</span>
-                    <p className="text-zinc-300 text-sm leading-relaxed">Quando a execuÃ§Ã£o depende de processo, responsÃ¡veis, revisÃ£o e melhoria contÃ­nua.</p>
+                    <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Operação e acompanhamento</span>
+                    <p className="text-zinc-300 text-sm leading-relaxed">Quando a execução depende de processo, responsáveis, revisão e melhoria contínua.</p>
                   </div>
                 </div>
 
                 <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-5 space-y-4">
                   <span className="font-mono text-[9px] text-zinc-500 uppercase font-bold block">Leitura inicial</span>
                   <p className="text-zinc-300 text-sm leading-relaxed">
-                    Leitura inicial: o melhor caminho depende do equilÃ­brio entre clareza, estrutura e capacidade de execuÃ§Ã£o.
+                    Leitura inicial: o melhor caminho depende do equilíbrio entre clareza, estrutura e capacidade de execução.
                   </p>
                 </div>
               </div>
@@ -374,7 +416,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   onClick={() => onNavigate("/contato")}
                   className="text-xs font-mono text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
                 >
-                  SOLICITAR LEITURA ESTRATÃ‰GICA <ArrowRight className="w-3.5 h-3.5" />
+                  SOLICITAR LEITURA ESTRATÉGICA <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -389,13 +431,13 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-semibold bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-              MÃ‰TODO DA ASSESSORIA
+              MÉTODO DA ASSESSORIA
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-white uppercase tracking-tighter leading-none">
-              Quatro frentes para transformar dÃºvida em direÃ§Ã£o.
+              Quatro frentes para transformar dúvida em direção.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
-              A assessoria organiza o que a marca precisa entender, decidir, planejar e acompanhar antes de transformar marketing em execuÃ§Ã£o.
+              A assessoria organiza o que a marca precisa entender, decidir, planejar e acompanhar antes de transformar marketing em execução.
             </p>
           </div>
 
@@ -404,26 +446,26 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
               {
                 num: "01",
                 icon: Target,
-                title: "DiagnÃ³stico do momento",
-                desc: "Entendemos contexto, objetivos, gargalos, canais atuais e limitaÃ§Ãµes reais antes de recomendar qualquer aÃ§Ã£o."
+                title: "Diagnóstico do momento",
+                desc: "Entendemos contexto, objetivos, gargalos, canais atuais e limitações reais antes de recomendar qualquer ação."
               },
               {
                 num: "02",
                 icon: Zap,
                 title: "Posicionamento e mensagem",
-                desc: "Organizamos como a marca deve se apresentar, quais mensagens precisam ser fortalecidas e o que precisa ficar mais claro para o pÃºblico."
+                desc: "Organizamos como a marca deve se apresentar, quais mensagens precisam ser fortalecidas e o que precisa ficar mais claro para o público."
               },
               {
                 num: "03",
                 icon: LineChart,
                 title: "Plano de prioridades",
-                desc: "Definimos o que vem primeiro, o que pode esperar e quais frentes fazem sentido para o momento atual do negÃ³cio."
+                desc: "Definimos o que vem primeiro, o que pode esperar e quais frentes fazem sentido para o momento atual do negócio."
               },
               {
                 num: "04",
                 icon: Cpu,
-                title: "Acompanhamento da execuÃ§Ã£o",
-                desc: "Apoiamos a leitura do processo, os ajustes necessÃ¡rios e a continuidade das decisÃµes para evitar aÃ§Ãµes soltas."
+                title: "Acompanhamento da execução",
+                desc: "Apoiamos a leitura do processo, os ajustes necessários e a continuidade das decisões para evitar ações soltas."
               }
             ].map((pilar, idx) => {
               const PilarIcon = pilar.icon;
@@ -452,8 +494,8 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   </div>
 
                   <div className="pt-4 border-t border-white/[0.04] text-[9px] font-mono text-zinc-500 uppercase tracking-widest relative z-10 flex justify-between">
-                    <span>MÃ“DULO DE ASSESSORIA</span>
-                    <span className="text-brand font-semibold select-none">MÃ‰TODO_0{idx + 1}</span>
+                    <span>MÓDULO DE ASSESSORIA</span>
+                    <span className="text-brand font-semibold select-none">MÉTODO_0{idx + 1}</span>
                   </div>
                 </div>
               );
@@ -479,7 +521,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
               </h2>
             </div>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Este diagnÃ³stico inicial ajuda a perceber se a marca jÃ¡ tem direÃ§Ã£o, mensagem, canais e estrutura suficientes para avanÃ§ar com mais seguranÃ§a.
+              Este diagnóstico inicial ajuda a perceber se a marca já tem direção, mensagem, canais e estrutura suficientes para avançar com mais segurança.
             </p>
           </div>
 
@@ -549,7 +591,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
                         <span className="font-mono text-[9px] text-brand uppercase tracking-wider font-extrabold">
-                          LEITURA INICIAL CONCLUÃDA
+                          LEITURA INICIAL CONCLUÍDA
                         </span>
                       </div>
                       <span className="font-mono text-[9px] text-zinc-500">TAG08_DIAG_ENGINE</span>
@@ -578,7 +620,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                               <p className="text-zinc-300 font-medium">{diag.description}</p>
                             </div>
                             <div className="pt-4 border-t border-white/[0.04]">
-                              <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black block mb-1.5">PrÃ³ximo foco</span>
+                              <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black block mb-1.5">Próximo foco</span>
                               <div className="flex gap-2.5 items-start">
                                 <div className="mt-0.5 p-1 rounded bg-brand-secondary/10 border border-brand-secondary/20 text-brand-secondary">
                                   <Sparkles className="w-3.5 h-3.5" />
@@ -596,14 +638,14 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                               className="bg-brand-secondary hover:bg-brand hover:shadow-[0_10px_35px_rgba(var(--color-brand-secondary-rgb),0.25)] text-black text-xs font-mono font-black uppercase tracking-widest py-4 px-6 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] md:col-span-1"
                             >
                               <MessageSquare className="w-4 h-4 text-black" />
-                              <span>SOLICITAR DIAGNÃ“STICO COMPLETO</span>
+                              <span>SOLICITAR DIAGNÓSTICO COMPLETO</span>
                             </button>
                             <button
                               type="button"
                               onClick={handleResetQuiz}
                               className="bg-white/5 hover:bg-white/[0.08] text-white hover:text-white border border-white/10 hover:border-white/20 text-xs font-mono font-bold uppercase tracking-widest py-4 px-6 rounded-xl text-center transition-all duration-300 cursor-pointer"
                             >
-                              REPETIR DIAGNÃ“STICO
+                              REPETIR DIAGNÓSTICO
                             </button>
                           </div>
                         </div>
@@ -634,10 +676,12 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
           <div className="rounded-[32px] sm:rounded-[40px] border border-white/[0.06] bg-black/45 overflow-hidden shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-12">
               <div className="lg:col-span-5 min-h-[320px] sm:min-h-[380px] relative overflow-hidden">
-                <img
+                <Image
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 42vw"
                   src="https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=1200"
                   alt="TAG08 assessoria"
-                  className="absolute inset-0 w-full h-full object-cover brightness-[0.48] contrast-[1.05]"
+                  className="object-cover brightness-[0.48] contrast-[1.05]"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-black/35 to-black/75" />
@@ -661,19 +705,19 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
               <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between gap-6 bg-white text-black">
                 <div className="space-y-4 max-w-2xl">
                   <span className="inline-flex items-center rounded-full border border-black/10 bg-black/[0.03] px-3 py-1 text-[9px] font-mono font-bold uppercase tracking-widest text-black/60">
-                    PrÃ³ximo passo
+                    Próximo passo
                   </span>
                   <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black leading-[0.92] tracking-tighter uppercase">
                     Vamos entender se a assessoria faz sentido para sua marca?
                   </h2>
                   <p className="text-black/75 text-sm sm:text-[15px] leading-relaxed max-w-xl">
-                    Antes de propor qualquer plano, a TAG08 entende seu momento, seus gargalos e suas prioridades para indicar se a assessoria estratÃ©gica &eacute; o caminho mais coerente agora.
+                    Antes de propor qualquer plano, a TAG08 entende seu momento, seus gargalos e suas prioridades para indicar se a assessoria estratégica &eacute; o caminho mais coerente agora.
                   </p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3">
                   <a
-                    href={buildBrazilWhatsAppUrl("OlÃ¡ TAG08! Gostaria de conversar sobre assessoria de marketing estratÃ©gico para entender se faz sentido para a minha marca.")}
+                    href={buildBrazilWhatsAppUrl("Olá TAG08! Gostaria de conversar sobre assessoria de marketing estratégico para entender se faz sentido para a minha marca.")}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-black text-white px-5 py-3 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest transition-transform hover:-translate-y-0.5"
@@ -685,7 +729,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                     onClick={() => handleLinkClick("/servicos")}
                     className="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-black/[0.03] px-5 py-3 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest text-black transition-colors hover:bg-black/[0.06]"
                   >
-                    <span>VER OUTRAS SOLUÃ‡Ã•ES</span>
+                    <span>VER OUTRAS SOLUÇÕES</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -733,10 +777,12 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
               </div>
 
               <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
-                <img
+                <Image
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 34vw"
                   src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800"
                   alt="TAG08 Assessoria"
-                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
+                  className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
                 />
                 <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
                   <svg viewBox="0 0 100 100" className="w-full h-full text-brand fill-none stroke-current" strokeWidth="0.75" strokeLinecap="round">
@@ -776,7 +822,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                     onClick={() => handleLinkClick("/servicos")}
                     className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
                   >
-                    <span>VER OUTRAS SOLUÃ‡Ã•ES</span>
+                    <span>VER OUTRAS SOLUÇÕES</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                   </button>
                 </div>
@@ -786,11 +832,11 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                     <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">CONTATO DIRETO</span>
                     <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Falar com a TAG08</h4>
                     <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-sans">
-                      Se fizer sentido, o prÃ³ximo passo &eacute; conversar sobre contexto, escopo e prioridade.
+                      Se fizer sentido, o próximo passo &eacute; conversar sobre contexto, escopo e prioridade.
                     </p>
                   </div>
                   <a
-                    href={buildBrazilWhatsAppUrl("OlÃ¡ TAG08! Gostaria de entender se a assessoria estratÃ©gica faz sentido para a minha marca.")}
+                    href={buildBrazilWhatsAppUrl("Olá TAG08! Gostaria de entender se a assessoria estratégica faz sentido para a minha marca.")}
                     target="_blank"
                     rel="noreferrer"
                     className="group flex items-center justify-between text-xs font-sans font-bold text-black border-t border-black/10 pt-2 cursor-pointer select-none"

@@ -1,4 +1,5 @@
 ﻿import { useState } from "react";
+import Image from "next/image";
 import { Check, Cpu, Code2, Smartphone, LineChart, ShieldCheck, ArrowUpRight, ArrowRight, Layers, Award, MessageSquare, Globe, Laptop, ExternalLink, Eye, Activity, Sparkles, X, Server, CheckCircle2, Monitor, Database, Zap, Briefcase } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
@@ -33,20 +34,20 @@ const webProjects: WebProject[] = [
     id: "proj-medvinci",
     title: "MedVinci Oncology Group",
     category: "Portal Corporativo",
-    client: "MedVinci Onco & SaÃºde SÃªnior",
+    client: "MedVinci Onco & Saúde Sênior",
     year: "2026",
-    tagline: "ElevaÃ§Ã£o clÃ­nica e autoridade digital inquestionÃ¡vel focado em tratamentos premium.",
-      description: "Um ecossistema digital sob medida para uma das principais clÃ­nicas oncolÃ³gicas do paÃ­s. Projetado para desmistificar procedimentos complexos de radioterapia e imunoterapia, direcionando o lead para atendimento particular de forma segura.",
+    tagline: "Elevação clínica e autoridade digital inquestionável focado em tratamentos premium.",
+      description: "Um ecossistema digital sob medida para uma das principais clínicas oncológicas do país. Projetado para desmistificar procedimentos complexos de radioterapia e imunoterapia, direcionando o lead para atendimento particular de forma segura.",
     strategy: {
-      challenge: "ClÃ­nicas oncolÃ³gicas enfrentam barreiras de frieza institucional e ansiedade do paciente. O site precisava passar acolhimento humano ao mesmo tempo que transmitia competÃªncia cientÃ­fica inabalÃ¡vel e alto status.",
-      solution: "EstruturaÃ§Ã£o de um layout com tipografia moderna, fotografia premium tratada em tons de sÃ©pia corporativo e cinza sutil, e carregamento instantÃ¢neo via Next.js estÃ¡tico. Desenvolvemos uma Ã¡rvore de decisÃµes baseada em sintomas para conduzir doadores e agendadores.",
-      result: "Aumento de 180% no agendamento de consultas de pacientes particulares por meio do canal digital primÃ¡rio de conversÃ£o nas primeiras 12 semanas pÃ³s-lanÃ§amento."
+      challenge: "Clínicas oncológicas enfrentam barreiras de frieza institucional e ansiedade do paciente. O site precisava passar acolhimento humano ao mesmo tempo que transmitia competência científica inabalável e alto status.",
+      solution: "Estruturação de um layout com tipografia moderna, fotografia premium tratada em tons de sépia corporativo e cinza sutil, e carregamento instantâneo via Next.js estático. Desenvolvemos uma árvore de decisões baseada em sintomas para conduzir doadores e agendadores.",
+      result: "Aumento de 180% no agendamento de consultas de pacientes particulares por meio do canal digital primário de conversão nas primeiras 12 semanas pós-lançamento."
     },
     technologies: ["React / Next.js", "Tailwind CSS", "Vercel Edge", "Framer Motion", "Google Maps Platform Integration"],
     metrics: [
       { label: "Tempo de Carregamento", value: "0.4s" },
       { label: "Nota Lighthouse API", value: "100/100" },
-      { label: "AtivaÃ§Ã£o de Leads", value: "+42%" }
+      { label: "Ativação de Leads", value: "+42%" }
     ],
     screenshot: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1200",
   },
@@ -56,18 +57,18 @@ const webProjects: WebProject[] = [
     category: "Landing Page B2B",
     client: "Kronos Partners Trust",
     year: "2025",
-    tagline: "ValidaÃ§Ã£o institucional sÃ³bria para captaÃ§Ã£o de fortunas com investidores qualificados.",
-    description: "Landing page corporativa extremamente focada, desenhada para captar fundos de investimentos alternativos voltada a family offices e trusts familiares. O site rejeita designs genÃ©ricos de fintechs coloridas e abraÃ§a a sobriedade analÃ­tica de investidores seniores.",
+    tagline: "Validação institucional sóbria para captação de fortunas com investidores qualificados.",
+    description: "Landing page corporativa extremamente focada, desenhada para captar fundos de investimentos alternativos voltada a family offices e trusts familiares. O site rejeita designs genéricos de fintechs coloridas e abraça a sobriedade analítica de investidores seniores.",
     strategy: {
-      challenge: "Investidores senis e gestores de fortunas ignoram landing pages comuns de startups. O portfÃ³lio de ativos exigia um visual herÃ¡ldico de legado, com total seguranÃ§a de criptografia e seriedade herÃ¡ldica pura.",
-      solution: "Layout brutalista minimalista com tons monocromÃ¡ticos de ardÃ³sia, finas linhas pretas e brancas, micro-interaÃ§Ãµes analÃ­ticas realistas e um simulador de carteira estÃ¡tico ultrarrÃ¡pido rodando localmente no navegador.",
-      result: "AtivaÃ§Ã£o de 34 leads institucionais qualificados adicionais nas primeiras 6 semanas de veiculaÃ§Ã£o em canais exclusivos de trÃ¡fego, movimentando R$ 82M sob custÃ³dia corporativa."
+      challenge: "Investidores senis e gestores de fortunas ignoram landing pages comuns de startups. O portfólio de ativos exigia um visual heráldico de legado, com total segurança de criptografia e seriedade heráldica pura.",
+      solution: "Layout brutalista minimalista com tons monocromáticos de ardósia, finas linhas pretas e brancas, micro-interações analíticas realistas e um simulador de carteira estático ultrarrápido rodando localmente no navegador.",
+      result: "Ativação de 34 leads institucionais qualificados adicionais nas primeiras 6 semanas de veiculação em canais exclusivos de tráfego, movimentando R$ 82M sob custódia corporativa."
     },
     technologies: ["React / Vite SPA", "WebGL Matrix Background", "Tailwind CSS", "Docker Engine Deploy", "Resend API Integration"],
     metrics: [
-      { label: "CaptaÃ§Ã£o Estimada", value: "R$ 82M" },
-      { label: "RetenÃ§Ã£o na PÃ¡gina", value: "3m 45s" },
-      { label: "Taxa de RejeiÃ§Ã£o", value: "12%" }
+      { label: "Captação Estimada", value: "R$ 82M" },
+      { label: "Retenção na Página", value: "3m 45s" },
+      { label: "Taxa de Rejeição", value: "12%" }
     ],
     screenshot: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
   },
@@ -77,38 +78,38 @@ const webProjects: WebProject[] = [
     category: "Web System",
     client: "AeroCargo S.A.",
     year: "2026",
-    tagline: "Painel de controle com rastreamento geoespacial em tempo real para cargas aÃ©reas exclusivas.",
-    description: "Desenvolvimento de interface em Single Page Application interconectada Ã  API de aeronaves comerciais. O cockpit possibilita que os contratantes acompanhem a logÃ­stica fÃ­sica ativa em mapas ricos com total confidencialidade de mercadorias.",
+    tagline: "Painel de controle com rastreamento geoespacial em tempo real para cargas aéreas exclusivas.",
+    description: "Desenvolvimento de interface em Single Page Application interconectada à API de aeronaves comerciais. O cockpit possibilita que os contratantes acompanhem a logística física ativa em mapas ricos com total confidencialidade de mercadorias.",
     strategy: {
-      challenge: "Sistemas ERP tradicionais e portais de fretamento operam com softwares cinzas, obsoletos, ruidosos e lentos, gerando atrito operacional constante de coordenaÃ§Ã£o presencial.",
-      solution: "CriaÃ§Ã£o de um painel em modo dark integral e design com alto contraste, utilizando bibliotecas de renderizaÃ§Ã£o vetorial rÃ¡pidas para plotagem de rotas e status de aeroportos em tempo real via canais web.",
-      result: "ReduÃ§Ã£o de 40% no envio de e-mails manuais de suporte operacional e 100% de elogios no onboarding de clientes VIP."
+      challenge: "Sistemas ERP tradicionais e portais de fretamento operam com softwares cinzas, obsoletos, ruidosos e lentos, gerando atrito operacional constante de coordenação presencial.",
+      solution: "Criação de um painel em modo dark integral e design com alto contraste, utilizando bibliotecas de renderização vetorial rápidas para plotagem de rotas e status de aeroportos em tempo real via canais web.",
+      result: "Redução de 40% no envio de e-mails manuais de suporte operacional e 100% de elogios no onboarding de clientes VIP."
     },
     technologies: ["Vite / React Routing", "WebSockets Engine", "Mapbox GL JS Map", "Tailwind CSS grid", "Node.js API Microservices"],
     metrics: [
-      { label: "LatÃªncia de Dados", value: "<150ms" },
-      { label: "SeguranÃ§a de Fluxo", value: "End-to-End" },
-      { label: "ReduÃ§Ã£o de Suporte", value: "40%" }
+      { label: "Latência de Dados", value: "<150ms" },
+      { label: "Segurança de Fluxo", value: "End-to-End" },
+      { label: "Redução de Suporte", value: "40%" }
     ],
     screenshot: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200",
   },
   {
     id: "proj-therastudio",
     title: "Thera Digital Health Hub",
-    category: "Portal MultipÃ¡ginas",
-    client: "ClÃ­nica Thera Integrada",
+    category: "Portal Multipáginas",
+    client: "Clínica Thera Integrada",
     year: "2025",
-    tagline: "PresenÃ§a digital delicada e sofisticada para clÃ­nica premium de bem-estar integrado.",
-    description: "O portal hospeda e centraliza frentes de atendimento como psicologia clÃ­nica sÃªnior, fisiatria preventiva e nutrologia esportiva de alto ticket. O design foca em transmitir uma experiÃªncia orgÃ¢nica de calma sensorial sofisticada.",
+    tagline: "Presença digital delicada e sofisticada para clínica premium de bem-estar integrado.",
+    description: "O portal hospeda e centraliza frentes de atendimento como psicologia clínica sênior, fisiatria preventiva e nutrologia esportiva de alto ticket. O design foca em transmitir uma experiência orgânica de calma sensorial sofisticada.",
     strategy: {
-      challenge: "Falta de coesÃ£o visual na apresentaÃ§Ã£o de especialidades clÃ­nicas diferentes afastava potenciais pacientes que buscavam soluÃ§Ãµes holÃ­sticas sob o mesmo selo de excelÃªncia.",
-      solution: "Uso de tipografia serifada elegante, paletas de cores quentes e off-white refinadas, transiÃ§Ãµes de pÃ¡ginas extremamente fluidas via framer-motion e sistema de agendamento integrado via cal.com customizado.",
-      result: "CentralizaÃ§Ã£o operacional perfeita de 3 especialidades em uma Ãºnica marca harmÃ´nica, elevando o tÃ­quete-mÃ©dio do paciente de R$ 350 para R$ 1.200 por consulta."
+      challenge: "Falta de coesão visual na apresentação de especialidades clínicas diferentes afastava potenciais pacientes que buscavam soluções holísticas sob o mesmo selo de excelência.",
+      solution: "Uso de tipografia serifada elegante, paletas de cores quentes e off-white refinadas, transições de páginas extremamente fluidas via framer-motion e sistema de agendamento integrado via cal.com customizado.",
+      result: "Centralização operacional perfeita de 3 especialidades em uma única marca harmônica, elevando o tíquete-médio do paciente de R$ 350 para R$ 1.200 por consulta."
     },
     technologies: ["React SPA", "Custom Headless API Gateway", "Tailwind CSS utility", "Motion API", "Cal.com Booking Engine API"],
     metrics: [
-      { label: "SessÃµes Agendadas", value: "+540" },
-      { label: "Tempo de PermanÃªncia", value: "4m 12s" },
+      { label: "Sessões Agendadas", value: "+540" },
+      { label: "Tempo de Permanência", value: "4m 12s" },
       { label: "Lighthouse Performance", value: "98/100" }
     ],
     screenshot: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1200",
@@ -261,9 +262,11 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           {/* 2. Panoramic Wide Banner Image with capsule neon overlay trigger wrapped in 3D perspective tilt container */}
           <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px] overflow-visible">
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
-              <img 
+              <Image
                 src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1600"
                 alt="Estrutura web TAG08"
+                fill
+                sizes="100vw"
                 className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
               />
@@ -324,7 +327,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       <section className="px-4 sm:px-6 md:px-8 py-20 border-b border-white/[0.04] bg-charcoal-950 text-left relative overflow-hidden">
         <div className="max-w-7xl mx-auto space-y-12">
           
-          {/* Comparativo: Site Bonito x Site EstratÃ©gico */}
+          {/* Comparativo: Site Bonito x Site Estratégico */}
           <div className="space-y-6">
             <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
               Sinais de desalinhamento digital
@@ -518,10 +521,12 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
 
           <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[520px]">
             <div className="absolute inset-0 bg-black/10 rounded-[24px] overflow-hidden" />
-            <img
+            <Image
+              fill
+              sizes="(max-width: 1024px) 100vw, 42vw"
               src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800"
               alt="TAG08 Web Specialist"
-              className="absolute inset-0 w-full h-full object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
+              className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
@@ -696,10 +701,12 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             </div>
 
             <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
-              <img
+              <Image
+                fill
+                sizes="(max-width: 1024px) 100vw, 34vw"
                 src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800"
                 alt="TAG08 Web Design"
-                className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
+                className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
               />
               <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
                 <svg viewBox="0 0 100 100" className="w-full h-full text-brand fill-none stroke-current" strokeWidth="0.75" strokeLinecap="round">

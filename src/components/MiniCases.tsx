@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { 
   Building2, 
@@ -176,9 +177,11 @@ export default function MiniCases({
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-black/40 border border-white/5 flex items-center justify-center text-zinc-400 group-hover:text-brand group-hover:border-brand/20 transition-all duration-300">
                       {logo.logoUrl ? (
-                        <img 
+                        <Image
                           src={logo.logoUrl} 
                           alt={logo.name} 
+                          width={24}
+                          height={24}
                           className="w-6 h-6 object-contain filter grayscale invert group-hover:grayscale-0 transition-all"
                           referrerPolicy="no-referrer"
                         />

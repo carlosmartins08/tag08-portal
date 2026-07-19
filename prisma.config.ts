@@ -7,7 +7,7 @@ export default defineConfig({
     path: "prisma/migrations"
   },
   datasource: {
-    // Generation does not connect. Deploys must override this with a real DATABASE_URL.
-    url: process.env.DATABASE_URL || "postgresql://tag08:tag08@localhost:5432/tag08"
+    // Generation does not connect. Migrations are guarded by tools/db-migrate.mjs.
+    url: process.env.DATABASE_URL || "postgresql://database_url_required:database_url_required@127.0.0.1:5432/database_url_required"
   }
 });

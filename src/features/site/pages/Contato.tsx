@@ -1,4 +1,4 @@
-﻿import React, { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { 
   MessageSquare, 
   Mail, 
@@ -44,24 +44,24 @@ export default function Contato() {
 
   const faqData = [
     {
-      question: "O diagnÃ³stico de posicionamento e processos Ã© cobrado?",
-      answer: "Absolutamente nÃ£o. A anÃ¡lise de presenÃ§a digital prÃ©via que realizamos e a primeira chamada de qualificaÃ§Ã£o e alinhamento sÃ£o investimentos 100% nossos para atestar o fit de atendimento mÃºtuo."
+      question: "O diagnóstico de posicionamento e processos é cobrado?",
+      answer: "Absolutamente não. A análise de presença digital prévia que realizamos e a primeira chamada de qualificação e alinhamento são investimentos 100% nossos para atestar o fit de atendimento mútuo."
     },
     {
-      question: "VocÃªs prestam atendimento internacional em outros idiomas?",
-      answer: "Sim. Para empresas e operaÃ§Ãµes brasileiras, nosso atendimento e entregÃ¡veis tÃ©cnicos sÃ£o mantidos integralmente em PortuguÃªs. Para corporaÃ§Ãµes e parceiros localizados fora do paÃ­s, dispomos de suporte estratÃ©gico e tÃ©cnico bilÃ­ngue completo, estruturado em InglÃªs ou Espanhol."
+      question: "Vocês prestam atendimento internacional em outros idiomas?",
+      answer: "Sim. Para empresas e operações brasileiras, nosso atendimento e entregáveis técnicos são mantidos integralmente em Português. Para corporações e parceiros localizados fora do país, dispomos de suporte estratégico e técnico bilíngue completo, estruturado em Inglês ou Espanhol."
     },
     {
-      question: "VocÃªs aceitam assinar Acordo de Confidencialidade (NDA)?",
-      answer: "Sim. Por lidarmos rotineiramente com planos comerciais confidenciais, faturamentos e gargalos estruturais das empresas, assinamos NDAs corporativos em conformidade total antes que qualquer dado sensÃ­vel seja compartilhado."
+      question: "Vocês aceitam assinar Acordo de Confidencialidade (NDA)?",
+      answer: "Sim. Por lidarmos rotineiramente com planos comerciais confidenciais, faturamentos e gargalos estruturais das empresas, assinamos NDAs corporativos em conformidade total antes que qualquer dado sensível seja compartilhado."
     },
     {
-      question: "As soluÃ§Ãµes da TAG08 sÃ£o modulares ou fechadas?",
-      answer: "Somos modulares. Sua empresa pode iniciar corrigindo gargalos internos urgentes via Process Intelligence, estruturar uma nova mÃ¡quina web com nossa divisÃ£o de Engenharia de Sistemas, ou delegar a gestÃ£o contÃ­nua de canais de atraÃ§Ã£o integrada."
+      question: "As soluções da TAG08 são modulares ou fechadas?",
+      answer: "Somos modulares. Sua empresa pode iniciar corrigindo gargalos internos urgentes via Process Intelligence, estruturar uma nova máquina web com nossa divisão de Engenharia de Sistemas, ou delegar a gestão contínua de canais de atração integrada."
     },
     {
       question: "Qual o perfil de cliente e faturamento atendido?",
-      answer: "Atendemos empresas em fase de expansÃ£o, indÃºstrias, clÃ­nicas sÃªnior, escritÃ³rios corporativos e marcas que jÃ¡ entenderam que marketing barato sem governanÃ§a gera ruÃ­do e desperdÃ­cio de caixa."
+      answer: "Atendemos empresas em fase de expansão, indústrias, clínicas sênior, escritórios corporativos e marcas que já entenderam que marketing barato sem governança gera ruído e desperdício de caixa."
     }
   ];
 
@@ -83,10 +83,10 @@ export default function Contato() {
 
   const validate = () => {
     const tempErrors: Partial<ContactFormData> = {};
-    if (!formData.name.trim()) tempErrors.name = "O nome Ã© de preenchimento obrigatÃ³rio.";
+    if (!formData.name.trim()) tempErrors.name = "O nome é de preenchimento obrigatório.";
     if (!formData.company.trim()) tempErrors.company = "Insira o nome corporativo da empresa.";
-    if (!formData.whatsapp.trim()) tempErrors.whatsapp = "O WhatsApp Ã© vital para iniciarmos o contato.";
-    if (!formData.email.includes("@")) tempErrors.email = "Insira um e-mail corporativo vÃ¡lido.";
+    if (!formData.whatsapp.trim()) tempErrors.whatsapp = "O WhatsApp é vital para iniciarmos o contato.";
+    if (!formData.email.includes("@")) tempErrors.email = "Insira um e-mail corporativo válido.";
     setErrors(tempErrors);
     if (Object.keys(tempErrors).length > 0) {
       trackFormError({
@@ -192,26 +192,26 @@ export default function Contato() {
 
   const handleLaunchWhatsAppFastTrack = (contact = TAG08_WHATSAPP_CONTACTS[0]) => {
     const serviceLabels: Record<string, string> = {
-      "redes-sociais": "GestÃ£o de Redes Sociais",
+      "redes-sociais": "Gestão de Redes Sociais",
       "branding": "Branding & Identidade",
       "desenvolvimento-web": "Desenvolvimento Web",
-      "trafego-performance": "TrÃ¡fego Pago & Performance",
+      "trafego-performance": "Tráfego Pago & Performance",
       "process-intelligence": "Process Intelligence",
       "process-activation": "Process Activation"
     };
 
     const stageLabels: Record<string, string> = {
       "improviso": "Estamos operando no improviso",
-      "estruturaÃ§Ã£o": "Queremos organizar nossa equipe",
+      "estruturação": "Queremos organizar nossa equipe",
       "escala": "Buscamos escala e performance",
       "outro": "Outro momento corporativo"
     };
 
-    const text = `OlÃ¡, preenchi os dados no formulÃ¡rio e quero agilizar meu contato tÃ¡tico.
+    const text = `Olá, preenchi os dados no formulário e quero agilizar meu contato tático.
 - Nome: ${formData.name}
 - Empresa: ${formData.company}
 - E-mail: ${formData.email}
-- DivisÃ£o de Interesse: ${serviceLabels[formData.service] || formData.service}
+- Divisão de Interesse: ${serviceLabels[formData.service] || formData.service}
 - Momento Da Empresa: ${stageLabels[formData.stage] || formData.stage}
 - Mensagem: ${formData.message}`;
 
@@ -232,14 +232,14 @@ export default function Contato() {
         <div className="lg:col-span-5 space-y-8 text-left sticky top-32">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand/5 border border-brand/20 rounded-full text-brand text-xs font-sans">
-              <span>SessÃ£o de Alinhamento</span>
+              <span>Sessão de Alinhamento</span>
             </div>
             <h1 className="font-display font-medium text-4xl sm:text-5xl text-gradient leading-[1.1] tracking-tight">
               Vamos entender o melhor <br />
               <span className="text-brand">caminho para sua marca?</span>
             </h1>
             <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
-              Conte um pouco sobre o seu momento. A TAG08 vai analisar sua necessidade e indicar uma soluÃ§Ã£o com clareza, responsabilidade e direÃ§Ã£o.
+              Conte um pouco sobre o seu momento. A TAG08 vai analisar sua necessidade e indicar uma solução com clareza, responsabilidade e direção.
             </p>
           </div>
 
@@ -331,7 +331,7 @@ export default function Contato() {
                   <MapPin className="w-4.5 h-4.5" />
                 </div>
                 <div>
-                  <h4 className="text-white font-semibold text-xs uppercase tracking-wider font-mono">Nosso EscritÃ³rio</h4>
+                  <h4 className="text-white font-semibold text-xs uppercase tracking-wider font-mono">Nosso Escritório</h4>
                   <p className="text-zinc-400 text-sm">{TAG08_OFFICIAL_CONTACT.address}</p>
                 </div>
               </div>
@@ -358,7 +358,7 @@ export default function Contato() {
               <div className="flex items-center justify-between gap-4 px-4 pt-4">
                 <div className="space-y-1">
                   <p className="text-[10px] uppercase tracking-widest font-mono text-brand font-black">Google Maps</p>
-                  <h4 className="text-white text-sm font-semibold">LocalizaÃ§Ã£o e avaliaÃ§Ãµes da TAG08</h4>
+                  <h4 className="text-white text-sm font-semibold">Localização e avaliações da TAG08</h4>
                 </div>
                 <a
                   href={TAG08_OFFICIAL_CONTACT.googleBusinessUrl}
@@ -366,7 +366,7 @@ export default function Contato() {
                   rel="noreferrer"
                   onClick={() =>
                     trackOutboundClick({
-                      label: "Google Meu NegÃ³cio",
+                      label: "Google Meu Negócio",
                       url: TAG08_OFFICIAL_CONTACT.googleBusinessUrl,
                       surface: "contact-google-maps"
                     })
@@ -390,7 +390,7 @@ export default function Contato() {
 
               <div className="px-4 pb-4 pt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <p className="text-[11px] text-zinc-500 leading-relaxed max-w-lg">
-                  O mapa e o perfil do Google Business concentram rota, endereÃ§o oficial e as avaliaÃ§Ãµes pÃºblicas que validam nossa presenÃ§a local.
+                  O mapa e o perfil do Google Business concentram rota, endereço oficial e as avaliações públicas que validam nossa presença local.
                 </p>
                 <a
                   href={TAG08_OFFICIAL_CONTACT.googleBusinessUrl}
@@ -405,7 +405,7 @@ export default function Contato() {
                   }
                   className="inline-flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-widest text-white hover:text-brand transition-colors"
                 >
-                  Ver avaliaÃ§Ãµes
+                  Ver avaliações
                   <ArrowRight className="w-3.5 h-3.5" />
                 </a>
               </div>
@@ -451,7 +451,7 @@ export default function Contato() {
           <div className="bg-charcoal-900 border border-white/[0.04] p-5 rounded-lg flex items-start gap-3">
             <ClipboardCheck className="w-5 h-5 text-brand shrink-0 mt-0.5" />
             <p className="text-xs text-zinc-400 leading-relaxed">
-              <strong>Procedimento pÃ³s-envio:</strong> Respondemos em no mÃ¡ximo 6 horas Ãºteis enviando uma prÃ©via diagnÃ³stica da presenÃ§a da sua marca direto no seu nÃºmero WhatsApp.
+              <strong>Procedimento pós-envio:</strong> Respondemos em no máximo 6 horas úteis enviando uma prévia diagnóstica da presença da sua marca direto no seu número WhatsApp.
             </p>
           </div>
         </div>
@@ -503,7 +503,7 @@ export default function Contato() {
                         className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-all ${
                           errors.company ? "border-red-500/50" : "border-white/[0.08]"
                         }`}
-                        placeholder="Ex: ClÃ­nica Guedes Ltda"
+                        placeholder="Ex: Clínica Guedes Ltda"
                       />
                       {errors.company && (
                         <p className="text-[10px] text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.company}</p>
@@ -557,8 +557,8 @@ export default function Contato() {
                   {/* Dropdowns */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label htmlFor="service" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
-                        ServiÃ§o de maior interesse
+                      <label htmlFor="form-service" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                        Serviço de maior interesse
                       </label>
                       <select
                         id="form-service"
@@ -567,17 +567,17 @@ export default function Contato() {
                         onChange={handleChange}
                         className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-zinc-300"
                       >
-                        <option value="redes-sociais">GestÃ£o de Redes Sociais</option>
+                        <option value="redes-sociais">Gestão de Redes Sociais</option>
                         <option value="branding">Branding &amp; Identidade Visual</option>
                         <option value="desenvolvimento-web">Desenvolvimento Web</option>
-                        <option value="trafego-performance">TrÃ¡fego Pago &amp; Performance</option>
+                        <option value="trafego-performance">Tráfego Pago &amp; Performance</option>
                         <option value="process-intelligence">Process Intelligence</option>
                         <option value="process-activation">Process Activation</option>
                       </select>
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="stage" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      <label htmlFor="form-stage" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
                         Momento Atual da Marca
                       </label>
                       <select
@@ -587,10 +587,10 @@ export default function Contato() {
                         onChange={handleChange}
                         className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-zinc-300"
                       >
-                        <option value="improviso">Produzimos conteÃºdo sem direÃ§Ã£o estratÃ©gica</option>
-                        <option value="estruturaÃ§Ã£o">Queremos documentar playbooks e processos</option>
+                        <option value="improviso">Produzimos conteúdo sem direção estratégica</option>
+                        <option value="estruturação">Queremos documentar playbooks e processos</option>
                         <option value="escala">Temos posicionamento claro e queremos escalar</option>
-                        <option value="outro">RecÃ©m iniciando no setor comercial digital</option>
+                        <option value="outro">Recém iniciando no setor comercial digital</option>
                       </select>
                     </div>
                   </div>
@@ -607,7 +607,7 @@ export default function Contato() {
                       onChange={handleChange}
                       rows={4}
                       className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white resize-none"
-                      placeholder="Fale brevemente sobre o seu modelo de negÃ³cio, seus principais canais atuais e quais sÃ£o os gargalos de posicionamento e processos hoje..."
+                      placeholder="Fale brevemente sobre o seu modelo de negócio, seus principais canais atuais e quais são os gargalos de posicionamento e processos hoje..."
                     />
                   </div>
 
@@ -626,7 +626,7 @@ export default function Contato() {
                   <div className="flex items-start gap-2.5 px-4 py-3 rounded-xl bg-white/[0.02] border border-white/[0.05]">
                     <div className="w-1.5 h-1.5 rounded-full bg-brand shrink-0 mt-1.5 animate-pulse" />
                     <p className="text-[10px] text-zinc-400 leading-relaxed font-sans">
-                      <strong>Compromisso de Confidencialidade (LGPD):</strong> Seus dados corporativos e de contato estÃ£o 100% blindados sob camadas de criptografia. NÃ³s nunca compartilhamos informaÃ§Ãµes operacionais e nÃ£o enviamos spam comercial.
+                      <strong>Compromisso de Confidencialidade (LGPD):</strong> Seus dados corporativos e de contato estão 100% blindados sob camadas de criptografia. Nós nunca compartilhamos informações operacionais e não enviamos spam comercial.
                     </p>
                   </div>
 
@@ -646,7 +646,7 @@ export default function Contato() {
                         </span>
                       ) : (
                         <span className="flex items-center gap-1.5">
-                          Solicitar AnÃ¡lise de Posicionamento <ArrowRight className="w-4 h-4" />
+                          Solicitar Análise de Posicionamento <ArrowRight className="w-4 h-4" />
                         </span>
                       )}
                     </button>
@@ -666,10 +666,10 @@ export default function Contato() {
                   <div className="space-y-3 max-w-lg mx-auto">
                     <h3 className="font-display font-semibold text-2xl text-white">Mensagem Enviada!</h3>
                     <p className="text-zinc-300 text-sm leading-relaxed">
-                      Prezado(a) <strong>{formData.name}</strong>, agradecemos a sua confianÃ§a. A equipe de consultoria estratÃ©gica da <strong>TAG08</strong> jÃ¡ foi informada do seu interesse.
+                      Prezado(a) <strong>{formData.name}</strong>, agradecemos a sua confiança. A equipe de consultoria estratégica da <strong>TAG08</strong> já foi informada do seu interesse.
                     </p>
                     <p className="text-zinc-400 text-xs font-sans">
-                      Em breve (no mÃ¡ximo 6 horas Ãºteis) entraremos em contato enviando um estudo prÃ©vio do cenÃ¡rio da sua empresa <strong>{formData.company}</strong>.
+                      Em breve (no máximo 6 horas úteis) entraremos em contato enviando um estudo prévio do cenário da sua empresa <strong>{formData.company}</strong>.
                     </p>
                   </div>
 
@@ -707,20 +707,20 @@ export default function Contato() {
 
       </div>
 
-      {/* SE??O COMPLEMENTAR: ALINHAMENTO COM O P?BLICO ALVO */}
+      {/* SECAO COMPLEMENTAR: ALINHAMENTO COM O PUBLICO ALVO */}
       <div className="max-w-7xl mx-auto px-6 mt-24 pt-20 border-t border-white/[0.04] space-y-20 text-left">
         
-        {/* PrÃ³ximos Passos (Timeline) */}
+        {/* Próximos Passos (Timeline) */}
         <div className="space-y-12 animate-fade-in">
           <div className="text-center md:text-left space-y-4">
             <span className="font-mono text-[10px] tracking-widest text-brand uppercase bg-brand/5 border border-brand/20 px-3 py-1 rounded-full">
-              PROCESSO DE AN?LISE // TRANSPARÃŠNCIA
+              PROCESSO DE ANALISE // TRANSPARENCIA
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white">
-              O que acontece apÃ³s o envio dos seus dados?
+              O que acontece após o envio dos seus dados?
             </h2>
             <p className="text-zinc-400 text-sm max-w-2xl leading-relaxed">
-              Respeitamos o seu tempo e o de sua equipe. Nosso processo comercial Ã© focado em clareza tÃ©cnica imediata, eliminando reuniÃµes comerciais vazias.
+              Respeitamos o seu tempo e o de sua equipe. Nosso processo comercial é focado em clareza técnica imediata, eliminando reuniões comerciais vazias.
             </p>
           </div>
 
@@ -731,14 +731,14 @@ export default function Contato() {
                 01
               </div>
               <div className="space-y-2">
-                <h3 className="text-white font-display font-semibold text-lg">AnÃ¡lise Preliminar</h3>
+                <h3 className="text-white font-display font-semibold text-lg">Análise Preliminar</h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                  Estudamos os canais atuais de sua marca, concorrentes mapeados e velocidade de carregamento dos seus criativos e sites. Criamos hipÃ³teses vÃ¡lidas antes de qualquer contato.
+                  Estudamos os canais atuais de sua marca, concorrentes mapeados e velocidade de carregamento dos seus criativos e sites. Criamos hipóteses válidas antes de qualquer contato.
                 </p>
               </div>
               <div className="flex items-center gap-1.5 pt-2 text-[10px] font-sans text-zinc-500">
                 <Clock className="w-3 h-3 text-brand animate-pulse" />
-                <span>Prazo: nas primeiras 2h Ãºteis</span>
+                <span>Prazo: nas primeiras 2h úteis</span>
               </div>
             </div>
 
@@ -748,14 +748,14 @@ export default function Contato() {
                 02
               </div>
               <div className="space-y-2">
-                <h3 className="text-white font-display font-semibold text-lg">Retorno DiagnÃ³stico</h3>
+                <h3 className="text-white font-display font-semibold text-lg">Retorno Diagnóstico</h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                  Enviamos as primeiras impressÃµes tÃ¡ticas direto no seu WhatsApp de forma resumida e direta. Se houver fit de trabalho inicial, propomos uma agenda rÃ¡pida de alinhamento.
+                  Enviamos as primeiras impressões táticas direto no seu WhatsApp de forma resumida e direta. Se houver fit de trabalho inicial, propomos uma agenda rápida de alinhamento.
                 </p>
               </div>
               <div className="flex items-center gap-1.5 pt-2 text-[10px] font-sans text-zinc-500">
                 <MessageSquare className="w-3 h-3 text-brand" />
-                <span>Prazo: atÃ© 6h Ãºteis totais</span>
+                <span>Prazo: até 6h úteis totais</span>
               </div>
             </div>
 
@@ -767,12 +767,12 @@ export default function Contato() {
               <div className="space-y-2">
                 <h3 className="text-white font-display font-semibold text-lg">Chamada de Alinhamento</h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                  Uma conversa de 15 minutos baseada em soluÃ§Ãµes tÃ©cnicas. Sanamos suas dÃºvidas sobre nossos playbooks operacionais de processos e apresentamos o plano de expansÃ£o ideal.
+                  Uma conversa de 15 minutos baseada em soluções técnicas. Sanamos suas dúvidas sobre nossos playbooks operacionais de processos e apresentamos o plano de expansão ideal.
                 </p>
               </div>
               <div className="flex items-center gap-1.5 pt-2 text-[10px] font-sans text-zinc-500">
                 <CheckCircle className="w-3 h-3 text-brand" />
-                <span>DuraÃ§Ã£o: Chamada Ã¡gil de 15 min</span>
+                <span>Duração: Chamada ágil de 15 min</span>
               </div>
             </div>
           </div>
@@ -785,10 +785,10 @@ export default function Contato() {
               AJUDA // PERGUNTAS FREQUENTES
             </span>
             <h2 className="font-display font-semibold text-3xl text-white leading-tight">
-              Perguntas frequentes sobre nossa contrataÃ§Ã£o
+              Perguntas frequentes sobre nossa contratação
             </h2>
             <p className="text-zinc-400 text-xs leading-relaxed max-w-sm font-sans">
-              Esclarecemos os principais termos e processos comerciais de nossa agÃªncia de crescimento para que sua marca tenha total seguranÃ§a jurÃ­dica e tÃ©cnica.
+              Esclarecemos os principais termos e processos comerciais de nossa agência de crescimento para que sua marca tenha total segurança jurídica e técnica.
             </p>
             
             <div className="pt-6 space-y-4">
@@ -798,7 +798,7 @@ export default function Contato() {
               </div>
               <div className="flex items-center gap-3 text-xs text-zinc-400">
                 <Shield className="w-4 h-4 text-brand" />
-                <span>NDA: Acordos de confidencialidade padrÃ£o</span>
+                <span>NDA: Acordos de confidencialidade padrão</span>
               </div>
             </div>
           </div>

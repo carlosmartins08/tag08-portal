@@ -119,12 +119,24 @@ export const isPersistenceUnavailable = (error: unknown) =>
 
 export const getOperationalMetrics = async () => {
   const prisma = getPrisma();
-  const [onboardingTotal, onboardingAccepted, failedDeliveries, pendingDeliveries] = await Promise.all([
+  const [onboardingTotal, onboardingAccepted, failedDeliveries, pendingDeliveries, processingDeliveries, oldestQueuedDelivery] = await Promise.all([
     prisma.onboardingSubmission.count(),
     prisma.onboardingSubmission.count({ where: { status: SubmissionStatus.ACCEPTED } }),
     prisma.integrationDelivery.count({ where: { status: DeliveryStatus.FAILED } }),
-    prisma.integrationDelivery.count({ where: { status: DeliveryStatus.PENDING } })
+    prisma.integrationDelivery.count({ where: { status: DeliveryStatus.PENDING } }),
+    prisma.integrationDelivery.count({ where: { status: DeliveryStatus.PROCESSING } }),
+    prisma.integrationDelivery.aggregate({
+      where: { status: { in: [DeliveryStatus.PENDING, DeliveryStatus.FAILED] } },
+      _min: { createdAt: true }
+    })
   ]);
 
-  return { onboardingTotal, onboardingAccepted, failedDeliveries, pendingDeliveries };
+  return {
+    onboardingTotal,
+    onboardingAccepted,
+    failedDeliveries,
+    pendingDeliveries,
+    processingDeliveries,
+    oldestQueuedDeliveryAt: oldestQueuedDelivery._min.createdAt?.toISOString() ?? null
+  };
 };

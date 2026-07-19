@@ -27,9 +27,12 @@ import {
   Sliders
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import Image from "next/image";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
+import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
+import { calculateHostingPrice, type HostingPlan } from "../../../lib/simulators/hostingPrice";
 
 interface PageProps {
   onNavigate: (page: string) => void;
@@ -42,13 +45,13 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
   const [planCategory, setPlanCategory] = useState<"todos" | "corporativo" | "especializado">("todos");
 
   // Plan customization simulator states
-  const [simPlan, setSimPlan] = useState<"basico" | "intermediario" | "avancado">("basico");
+  const [simPlan, setSimPlan] = useState<HostingPlan>("basico");
   const [simSites, setSimSites] = useState<number>(1);
   const [simEmails, setSimEmails] = useState<number>(10);
   const [simStorage, setSimStorage] = useState<number>(5);
   const [simApplyUpgrade, setSimApplyUpgrade] = useState<boolean>(false);
 
-  const handlePlanChange = (plan: "basico" | "intermediario" | "avancado") => {
+  const handlePlanChange = (plan: HostingPlan) => {
     setSimPlan(plan);
     setSimSites(1);
     setSimApplyUpgrade(false);
@@ -64,64 +67,13 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
     }
   };
 
-  const calculateSimulatedPrice = () => {
-    let basePrice = 49;
-    let extraStorageCost = 0;
-    let extraEmailCost = 0;
-    let upgradeCost = 0;
-    let extraSitesCost = 0;
-
-    // Additional sites cost
-    if (simSites > 1) {
-      extraSitesCost = (simSites - 1) * 50;
-    }
-
-    if (simPlan === "basico") {
-      basePrice = 49;
-      // Espaao adicional: R$ 3,00 por GB acima de 5 GB
-      if (simStorage > 5) {
-        extraStorageCost = (simStorage - 5) * 3;
-      }
-      // E-mails extras: R$ 5,00 por conjunto adicional de 5 e-mails acima de 10
-      if (simEmails > 10) {
-        const extraEmails = simEmails - 10;
-        extraEmailCost = Math.ceil(extraEmails / 5) * 5;
-      }
-      // Upgrade (Suporte Avanaado): R$ 15,00/mas
-      if (simApplyUpgrade) {
-        upgradeCost = 15;
-      }
-    } else if (simPlan === "intermediario") {
-      basePrice = 99;
-      // Espaao adicional: R$ 5,00 por GB acima de 15 GB
-      if (simStorage > 15) {
-        extraStorageCost = (simStorage - 15) * 5;
-      }
-      // E-mails extras: R$ 10,00 por conjunto adicional de 10 e-mails acima de 50
-      if (simEmails > 50) {
-        const extraEmails = simEmails - 50;
-        extraEmailCost = Math.ceil(extraEmails / 10) * 10;
-      }
-      // Upgrade (Backup Extra Semanal): R$ 20,00/mas
-      if (simApplyUpgrade) {
-        upgradeCost = 20;
-      }
-    } else if (simPlan === "avancado") {
-      basePrice = 199;
-      // Espaao adicional: R$ 10,00 por GB acima de 30 GB
-      if (simStorage > 30) {
-        extraStorageCost = (simStorage - 30) * 10;
-      }
-      // Emails are Unlimited, so extra emails cost is 0
-      extraEmailCost = 0;
-      // Upgrade (Suporte Personalizado): R$ 50,00/mas
-      if (simApplyUpgrade) {
-        upgradeCost = 50;
-      }
-    }
-
-    return basePrice + extraStorageCost + extraEmailCost + upgradeCost + extraSitesCost;
-  };
+  const simulatedPrice = calculateHostingPrice({
+    plan: simPlan,
+    sites: simSites,
+    emails: simEmails,
+    storageGb: simStorage,
+    applyUpgrade: simApplyUpgrade
+  });
 
   const handleLinkClick = (page: string) => {
     onNavigate(page);
@@ -135,9 +87,9 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
       title: "Hospedagem Compartilhada",
       niche: "Pequenas empresas, blogs pessoais, portfalios online",
       category: "especializado",
-      description: "Opaao econamica ideal para projetos iniciais. Os recursos do servidor (como memaria e processamento) sÃ£o distribuados de forma equilibrada entre varios sites parceiros, com custo otimizado e total fÃ¡cilidade operacional.",
-      specs: ["PreÃ§o Altamente Competitivo", "Gestao Automatizada de Painel", "Perfeito para ValidaÃ§Ã£o", "Armazenamento SSD Seguro"],
-      badge: "InÃ­cio Rapido"
+      description: "Opaao econamica ideal para projetos iniciais. Os recursos do servidor (como memaria e processamento) são distribuados de forma equilibrada entre varios sites parceiros, com custo otimizado e total fácilidade operacional.",
+      specs: ["Preço Altamente Competitivo", "Gestao Automatizada de Painel", "Perfeito para Validação", "Armazenamento SSD Seguro"],
+      badge: "Início Rapido"
     },
     {
       id: "vps",
@@ -153,26 +105,26 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
       title: "Hospedagem Dedicada",
       niche: "Grandes empresas, e-commerce de alto volume, portais complexos",
       category: "corporativo",
-      description: "Um hardware computacional completo alocado exclusivamente para sustentar a soberania digital da sua marca. Maxima velocidade com isolamento tarmico e fasico absoluto, desempenho impecavel e total liberdade de seguranÃ§a avanaada.",
-      specs: ["Nula Latancia Operacional", "Zeladoria Fasica Suprema", "Ambiente 100% Isolado", "PolÃ­ticas Customizadas"],
+      description: "Um hardware computacional completo alocado exclusivamente para sustentar a soberania digital da sua marca. Maxima velocidade com isolamento tarmico e fasico absoluto, desempenho impecavel e total liberdade de segurança avanaada.",
+      specs: ["Nula Latancia Operacional", "Zeladoria Fasica Suprema", "Ambiente 100% Isolado", "Políticas Customizadas"],
       badge: "Alta Performance"
     },
     {
       id: "nuvem",
       title: "Hospedagem na Nuvem (Cloud)",
-      niche: "Startups, aplica??es SaaS escal?veis, trafego din?mico",
+      niche: "Startups, aplicações SaaS escaláveis, tráfego dinâmico",
       category: "corporativo",
-      description: "Arquitetura distribuÃ­da entre mÃºltiplos servidores no ecossistema global. Suas cargas de processamento flutuam dinamicamente para neutralizar e mitigar sobrecargas de acessos, com cobranÃ§as transparentes baseadas em uso real.",
-      specs: ["Auto-escalonamento Inteligente", "99.99% Uptime Provado", "Distribui??o Multirregional", "Redund?ncia Cont?nua"],
+      description: "Arquitetura distribuída entre múltiplos servidores no ecossistema global. Suas cargas de processamento flutuam dinamicamente para neutralizar e mitigar sobrecargas de acessos, com cobranças transparentes baseadas em uso real.",
+      specs: ["Auto-escalonamento Inteligente", "99.99% Uptime Provado", "Distribuição Multirregional", "Redundância Contínua"],
       badge: "Suprema Elasticidade"
     },
     {
       id: "wordpress",
-      title: "Hospedagem SÃªnior WordPress",
-      niche: "Sites acadÃªmicos, blogs profissionais, portais de marcas",
+      title: "Hospedagem Sênior WordPress",
+      niche: "Sites acadêmicos, blogs profissionais, portais de marcas",
       category: "especializado",
-      description: "Infraestrutura estritamente calibrada e desenhada de forma cirÃºrgica para as exigÃªncias refinadas do CMS mais famoso do planeta. Garanta carregamentos imperceptÃ­veis, atualizaÃ§Ãµes estÃ¡ticas seguras e cache agressivo na Ãºltima milha.",
-      specs: ["Caching Integrado em NÃ­vel de Server", "SeguranÃ§a WordPress Ativa", "FÃ¡cil GestÃ£o de Ambientes", "Plugins PrÃ©-otimizados"],
+      description: "Infraestrutura estritamente calibrada e desenhada de forma cirúrgica para as exigências refinadas do CMS mais famoso do planeta. Garanta carregamentos imperceptíveis, atualizações estáticas seguras e cache agressivo na última milha.",
+      specs: ["Caching Integrado em Nível de Server", "Segurança WordPress Ativa", "Fácil Gestão de Ambientes", "Plugins Pré-otimizados"],
       badge: "Focado em CMS"
     },
     {
@@ -180,8 +132,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
       title: "E-Commerce de Luxo & Alta Escala",
       niche: "Lojas virtuais estruturadas, catalogos pesados, vendas ativas",
       category: "especializado",
-      description: "Suate integrada para garantir que nenhum carrinho de compras seja abandonado por lentidao t?cnica. Suporte nativo a m?ltiplos gateways de pagamentos criptografados, selos din?micos de seguran?a e barreira de prote??o robusta.",
-      specs: ["CertificaÃ§Ã£o SSL InclusÃ£o", "SeguranÃ§a PCI Compliant", "Tempo de Resposta Acelerado", "Faturamento Seguro"],
+      description: "Suite integrada para garantir que nenhum carrinho de compras seja abandonado por lentidão técnica. Suporte nativo a múltiplos gateways de pagamentos criptografados, selos dinâmicos de segurança e barreira de proteção robusta.",
+      specs: ["Certificação SSL Inclusão", "Segurança PCI Compliant", "Tempo de Resposta Acelerado", "Faturamento Seguro"],
       badge: "Foco Comercial"
     }
   ];
@@ -192,21 +144,21 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
       id: 0,
       title: "A Fortaleza e Seus Gigantes",
       label: "DATA CENTERS & SERVIDORES",
-      description: "Imagine os servidores como titas de processamento operando dentro de data centers de seguranÃ§a maxima. Eles sÃ£o guardiaes de alta performance que nunca adormecem, alimentados por canais de energia redundante para manter seus arquivos vivos a cada fraÃ§Ã£o de milissegundo.",
+      description: "Imagine os servidores como titãs de processamento operando dentro de data centers de segurança máxima. Eles são guardiães de alta performance que nunca adormecem, alimentados por canais de energia redundante para manter seus arquivos vivos a cada fração de milissegundo.",
       metric: "99.99% Uptime Seguro"
     },
     {
       id: 1,
       title: "Os Sentinelas de Fronteira",
-      label: "PROTOCOLOS DE SEGURANÃ‡A",
-      description: "Nas portas da fortaleza digital, barramentos de firewalls de Ãºltima geraÃ§Ã£o e criptografia SSL/TLS atuam como vigilantes. Eles barram invasÃµes indesejadas, blindam acessos indevidos e garantem transaÃ§Ãµes criptografadas perfeitas em tempo real.",
-      metric: "ReduÃ§Ã£o de Riscos 100%"
+      label: "PROTOCOLOS DE SEGURANÇA",
+      description: "Nas portas da fortaleza digital, barramentos de firewalls de última geração e criptografia SSL/TLS atuam como vigilantes. Eles barram invasões indesejadas, blindam acessos indevidos e garantem transações criptografadas perfeitas em tempo real.",
+      metric: "Redução de Riscos 100%"
     },
     {
       id: 2,
-      title: "O ArtesÃ£o da Alta Performance",
+      title: "O Artesão da Alta Performance",
       label: "MANUTENaaO & ENGENHARIA",
-      description: "Paralelamente, a engenharia dedicada da TAG08 sintoniza finamente cada engrenagem da sua aplicaÃ§Ã£o. Auditorias, revisaes regulares, atualizaÃ§Ãµes de temas/plugins e backups preventivos se combinam de forma artastica para polir seu site continuamente.",
+      description: "Paralelamente, a engenharia dedicada da TAG08 sintoniza finamente cada engrenagem da sua aplicação. Auditorias, revisaes regulares, atualizações de temas/plugins e backups preventivos se combinam de forma artastica para polir seu site continuamente.",
       metric: "Updates Proativos"
     }
   ];
@@ -223,8 +175,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
       {/* SEO META HELPER */}
       <div className="sr-only">
-        <h2>Hospedagem e ManutenÃ§Ã£o de Sites: SoluÃ§Ãµes Completas para o Sucesso Online - AgÃªncia TAG08</h2>
-        <p>Descubra soluÃ§Ãµes inovadoras em hospedagem e manutenÃ§Ã£o de sites com a AgÃªncia TAG08. Expertise, seguranÃ§a e suporte personalizado para elevar seu negÃ³cio no mundo digital. Explore agora!</p>
+        <h2>Hospedagem e Manutenção de Sites: Soluções Completas para o Sucesso Online - Agência TAG08</h2>
+        <p>Descubra soluções inovadoras em hospedagem e manutenção de sites com a Agência TAG08. Expertise, segurança e suporte personalizado para elevar seu negócio no mundo digital. Explore agora!</p>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 space-y-20 md:space-y-32">
@@ -243,7 +195,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
             </div>
             <div className="lg:col-span-5 space-y-4 pt-1 lg:pt-8">
               <p className="text-zinc-400 text-sm sm:text-base leading-relaxed font-sans font-medium">
-                Bem-vindo ao ecossistema da AgÃªncia TAG08, onde cada byte e pixel Ã© supervisionado por especialistas para garantir que seu site permaneÃ§a estÃ¡vel, rÃ¡pido e confiÃ¡vel. Aqui, nossa jornada de engenharia Ã© guiada por inovaÃ§Ã£o, previsibilidade e suporte contÃ­nuo para sua operaÃ§Ã£o digital.
+                Bem-vindo ao ecossistema da Agência TAG08, onde cada byte e pixel é supervisionado por especialistas para garantir que seu site permaneça estável, rápido e confiável. Aqui, nossa jornada de engenharia é guiada por inovação, previsibilidade e suporte contínuo para sua operação digital.
               </p>
               <div className="pt-2 flex flex-col sm:flex-row gap-3">
                 <a
@@ -254,7 +206,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                 </a>
                 <a
-                  href={buildBrazilWhatsAppUrl("Ola%20TAG08!%20Gostaria%20de%20conversar%20sobre%20as%20soluÃ§Ãµes%20de%20Hospedagem%20e%20ManutenÃ§Ã£o%20de%20Sites.")}
+                  href={buildBrazilWhatsAppUrl("Ola%20TAG08!%20Gostaria%20de%20conversar%20sobre%20as%20soluções%20de%20Hospedagem%20e%20Manutenção%20de%20Sites.")}
                   target="_blank"
                   rel="noreferrer"
                   className="px-6 py-3.5 bg-white/[0.02] border border-white/10 hover:border-brand/45 text-white hover:text-brand text-[11px] font-sans font-black uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
@@ -270,10 +222,12 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
           <div className="mt-12 sm:mt-16">
             <ThreeDimensionalTilt className="rounded-[28px] overflow-visible">
               <div className="relative rounded-[28px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group flex items-center justify-center">
-                <img
+                <Image
+                  fill
+                  sizes="100vw"
                   src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=1800"
                   alt="Soberania de Servidores e Criptografia Computacional"
-                  className="w-full h-full object-cover grayscale brightness-[0.35] group-hover:scale-[1.01] transition-all duration-[1200ms] ease-out"
+                  className="object-cover grayscale brightness-[0.35] group-hover:scale-[1.01] transition-all duration-[1200ms] ease-out"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950 via-transparent to-transparent opacity-80" />
@@ -325,10 +279,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               A HARMONIA DO YIN &amp; YANG DA SUA PRESENaA DIGITIAL.
             </h2>
             <p className="text-zinc-400 text-sm sm:text-base leading-relaxed font-sans font-medium">
-              No vasto oceano digital da internet, seu site enfrenta tempestades mec?nicas silenciosas todos os dias. Para garantir que ele resista com altivez soberana, aplic?mos uma filosofia de equilabrio perfeito.
+              No vasto oceano digital da internet, seu site enfrenta tempestades mecânicas silenciosas todos os dias. Para garantir que ele resista com altivez soberana, aplicamos uma filosofia de equilíbrio perfeito.
             </p>
             <p className="text-zinc-400 text-sm sm:text-base leading-relaxed font-sans font-medium">
-              NÃ£o se trata apenas de depositar arquivos em uma maquina compartilhada genarica; trata-se de manter uma simbiose de vigilancia que zela pela integridade da infraestrutura fasica enquanto aprimora a inteligÃªncia lagica da aplicaÃ§Ã£o.
+              Não se trata apenas de depositar arquivos em uma maquina compartilhada genarica; trata-se de manter uma simbiose de vigilancia que zela pela integridade da infraestrutura fasica enquanto aprimora a inteligência lagica da aplicação.
             </p>
           </div>
 
@@ -340,10 +294,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 </div>
                 <h3 className="font-display font-black text-xl text-white uppercase">
                   A Hospedagem <br />
-                  <span className="text-brand font-mono font-normal text-xs tracking-widest block mt-0.5">// O CORaÃ§Ã£o PULSANTE</span>
+                  <span className="text-brand font-mono font-normal text-xs tracking-widest block mt-0.5">// O CORação PULSANTE</span>
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                  a o lar digital seguro, acolhedor e blindado onde seus dados residem. Composta por servidores dedicados e estaveis que permanecem conectados em data centers supremos de alta seguranÃ§a, garantindo que seu projeto esteja totalmente visavel para o planeta a qualquer minuto.
+                  a o lar digital seguro, acolhedor e blindado onde seus dados residem. Composta por servidores dedicados e estaveis que permanecem conectados em data centers supremos de alta segurança, garantindo que seu projeto esteja totalmente visavel para o planeta a qualquer minuto.
                 </p>
               </div>
               <span className="font-sans text-[9px] text-zinc-650 group-hover:text-brand transition-colors block">RESIDaNCIA SaLIDA &gt;&gt;</span>
@@ -355,14 +309,14 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <RefreshCw className="w-6 h-6 stroke-[2]" />
                 </div>
                 <h3 className="font-display font-black text-xl text-white uppercase">
-                  A ManutenÃ§Ã£o <br />
+                  A Manutenção <br />
                   <span className="text-brand font-mono font-normal text-xs tracking-widest block mt-0.5">// A ALMA CUIDADOSA</span>
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                  A engrenagem ativa que supervisiona a saÃºde, o vigor e o rejuvenescimento do seu cÃ³digo. Realizamos atualizaÃ§Ãµes periÃ³dicas de CMS, otimizamos bancos de dados, ajustamos blocos de seguranÃ§a tÃ©cnica e aplicÃ³mos patches contra qualquer brecha ou vulnerabilidade silenciosa.
+                  A engrenagem ativa que supervisiona a saúde, o vigor e o rejuvenescimento do seu código. Realizamos atualizações periódicas de CMS, otimizamos bancos de dados, ajustamos blocos de segurança técnica e aplicómos patches contra qualquer brecha ou vulnerabilidade silenciosa.
                 </p>
               </div>
-              <span className="font-sans text-[9px] text-zinc-650 group-hover:text-brand transition-colors block">OTIMIZaÃ§Ã£o PROATIVA &gt;&gt;</span>
+              <span className="font-sans text-[9px] text-zinc-650 group-hover:text-brand transition-colors block">OTIMIZação PROATIVA &gt;&gt;</span>
             </div>
           </div>
         </section>
@@ -374,10 +328,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               DILIGaNCIA SEM CONCESSaES
             </span>
             <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase tracking-tighter leading-none">
-              PROCESSOS CONT?NUOS DE PROTE??O &amp; OTIMIZA??O.
+              PROCESSOS CONTÍNUOS DE PROTEÇÃO &amp; OTIMIZAÇÃO.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans">
-              Zelar pela saÃºde e alto dinamismo da sua presenÃ§a virtual nÃ£o Ã© um esforÃ§o esporÃ¡dico. Operamos em ciclos rÃ­gidos de auditorias periÃ³dicas para garantir que tudo opere em velocidade mÃ¡xima e estabilidade cirÃºrgica.
+              Zelar pela saúde e alto dinamismo da sua presença virtual não é um esforço esporádico. Operamos em ciclos rígidos de auditorias periódicas para garantir que tudo opere em velocidade máxima e estabilidade cirúrgica.
             </p>
           </div>
 
@@ -389,15 +343,15 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <FileCheck className="w-5 h-5 stroke-[2.5]" />
               </div>
               <div className="space-y-3">
-                <h4 className="text-white text-lg font-display font-black uppercase">ManutenÃ§Ã£o Regular</h4>
+                <h4 className="text-white text-lg font-display font-black uppercase">Manutenção Regular</h4>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                  Realizamos a atualizaÃ§Ã£o sÃ­ncrona de CMSs, plugins essenciais e temas estruturais para fechar lacunas e melhorar a integridade tÃ©cnica das entregas de carregamento.
+                  Realizamos a atualização síncrona de CMSs, plugins essenciais e temas estruturais para fechar lacunas e melhorar a integridade técnica das entregas de carregamento.
                 </p>
               </div>
               <ul className="space-y-2 pt-2 border-t border-white/5 text-[11px] text-zinc-450 font-sans">
                 <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Updates Semanais Certificados</li>
                 <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Testabilidade Pas-deploy</li>
-                <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> OtimizaÃ§Ã£o Fina de Banco</li>
+                <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Otimização Fina de Banco</li>
               </ul>
             </div>
 
@@ -407,15 +361,15 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <Award className="w-5 h-5 stroke-[2.5]" />
               </div>
               <div className="space-y-3">
-                <h4 className="text-white text-lg font-display font-black uppercase">Auditorias de SeguranÃ§a</h4>
+                <h4 className="text-white text-lg font-display font-black uppercase">Auditorias de Segurança</h4>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                  Rigorosas avaliaÃ§Ãµes periÃ³dicas para detectar eventuais scripts invasivos ou brechas, mapeando com absoluta precisÃ£o qualquer vulnerabilidade para rÃ¡pido reparo.
+                  Rigorosas avaliações periódicas para detectar eventuais scripts invasivos ou brechas, mapeando com absoluta precisão qualquer vulnerabilidade para rápido reparo.
                 </p>
               </div>
               <ul className="space-y-2 pt-2 border-t border-white/5 text-[11px] text-zinc-450 font-sans">
-                <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Varreduras Heurasticas Ativas</li>
-                <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> EmissÃ£o de Relatarios Claros</li>
-                <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Correaao Imediata de Bugs</li>
+                <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Varreduras Heurísticas Ativas</li>
+                <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Emissão de Relatórios Claros</li>
+                <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Correção Imediata de Bugs</li>
               </ul>
             </div>
 
@@ -427,7 +381,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               <div className="space-y-3">
                 <h4 className="text-white text-lg font-display font-display font-black uppercase">Fila de Backups e Rollback</h4>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                  Garantimos capias de seguranÃ§a redundantes, de forma que, caso ocorra alguma falha cratica provocÃªda por scripts externos ou erro de operaÃ§Ã£o, o site possa ser restaurado sem sobressaltos.
+                  Garantimos capias de segurança redundantes, de forma que, caso ocorra alguma falha cratica provocêda por scripts externos ou erro de operação, o site possa ser restaurado sem sobressaltos.
                 </p>
               </div>
               <ul className="space-y-2 pt-2 border-t border-white/5 text-[11px] text-zinc-450 font-sans">
@@ -440,7 +394,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
           </div>
         </section>
 
-        {/* SECTION 3: IMMERSIVE COCKPIT - SERVIDORES & PROTOCOLOS DE seguranÃ§a */}
+        {/* SECTION 3: IMMERSIVE COCKPIT - SERVIDORES & PROTOCOLOS DE segurança */}
         <section className="bg-[#050505]/40 border border-white/[0.04] rounded-[40px] p-6 sm:p-10 md:p-14 text-left relative overflow-hidden space-y-12">
           {/* Subtle cyber background grid decoration */}
           <div className="absolute inset-0 radial-grid opacity-[0.14] pointer-events-none" />
@@ -457,7 +411,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-450 text-xs sm:text-sm font-sans leading-relaxed">
-                Nossos pacotes computacionais combinam mÃ¡quinas dedicadas de alta performance com inteligÃªncia cibernÃ©tica integrada, protegendo o legado digital da sua corporaÃ§Ã£o com mÃ¡xima seguranÃ§a contra intrusÃµes maliciosas e ataques de negaÃ§Ã£o de serviÃ§o.
+                Nossos pacotes computacionais combinam máquinas dedicadas de alta performance com inteligência cibernética integrada, protegendo o legado digital da sua corporação com máxima segurança contra intrusões maliciosas e ataques de negação de serviço.
               </p>
             </div>
           </div>
@@ -478,10 +432,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {/* Tech indicator 1 */}
                   <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] space-y-1 text-left">
-                    <span className="text-zinc-500 font-mono text-[8px] uppercase font-black tracking-wider block">POTaNCIA GERAL</span>
+                    <span className="text-zinc-500 font-mono text-[8px] uppercase font-black tracking-wider block">POTÊNCIA GERAL</span>
                     <h4 className="text-white font-display font-black text-base uppercase leading-none">MaXIMO PODER</h4>
                     <p className="text-zinc-455 text-[10.5px] font-sans leading-tight mt-1.5">
-                      Processadores de mÃºltiplos nacleos para manter seu site rodando com carregamentos estaveis e ausancia total de lentidao.
+                      Processadores de múltiplos núcleos para manter seu site rodando com carregamentos estáveis e ausência total de lentidão.
                     </p>
                   </div>
                   {/* Tech indicator 2 */}
@@ -489,15 +443,15 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     <span className="text-zinc-500 font-mono text-[8px] uppercase font-black tracking-wider block">TECNOLOGIA DE PONTA</span>
                     <h4 className="text-white font-display font-black text-base uppercase leading-none">HARDWARE SSD NVMe</h4>
                     <p className="text-zinc-455 text-[10.5px] font-sans leading-tight mt-1.5">
-                      Arquiteturas robustas em estado sÃ³lido e memÃ³ria de alta transferÃªncia computacional para carregar fotos e dados instantaneamente.
+                      Arquiteturas robustas em estado sólido e memória de alta transferência computacional para carregar fotos e dados instantaneamente.
                     </p>
                   </div>
                   {/* Tech indicator 3 */}
                   <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] space-y-1 text-left">
-                    <span className="text-zinc-500 font-mono text-[8px] uppercase font-black tracking-wider block">SUPERVIsÃ£o</span>
+                    <span className="text-zinc-500 font-mono text-[8px] uppercase font-black tracking-wider block">SUPERVIsão</span>
                     <h4 className="text-brand font-display font-black text-base uppercase leading-none">MONITORIA 24/7</h4>
                     <p className="text-zinc-455 text-[10.5px] font-sans leading-tight mt-1.5">
-                      Sistemas inteligentes que fiscalizam hardware e integridade de arquivos constantemente, alertando tÃ©cnicos proativamente.
+                      Sistemas inteligentes que fiscalizam hardware e integridade de arquivos constantemente, alertando técnicos proativamente.
                     </p>
                   </div>
                 </div>
@@ -544,7 +498,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   SISTEMA DE BLINDAGEM ATIVA
                 </span>
                 <p className="text-zinc-450 text-xs sm:text-sm font-sans leading-relaxed">
-                  Tratamos a seguranÃ§a das suas informaÃ§Ãµes de forma minuciosa, integrando camadas tecnolagicas de inteligÃªncia e varreduras com auditora regular:
+                  Tratamos a segurança das suas informações de forma minuciosa, integrando camadas tecnolagicas de inteligência e varreduras com auditora regular:
                 </p>
 
                 <div className="space-y-3">
@@ -553,9 +507,9 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       <Shield className="w-4 h-4 stroke-[2]" />
                     </div>
                     <div className="space-y-0.5">
-                      <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase">Firewalls e Detecaao de IntrusÃ£o</h4>
+                    <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase">Firewalls e Detecção de Intrusão</h4>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
-                        Filtros inteligentes que servem como primeira linha de defesa ativa, mitigando acessos maliciosos antes que afetem seus serviÃ§os.
+                        Filtros inteligentes que servem como primeira linha de defesa ativa, mitigando acessos maliciosos antes que afetem seus serviços.
                       </p>
                     </div>
                   </div>
@@ -565,9 +519,9 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       <Key className="w-4 h-4 stroke-[2]" />
                     </div>
                     <div className="space-y-0.5">
-                      <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase">Certificados SSL/TLS Avanaados</h4>
+                    <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase">Certificados SSL/TLS Avançados</h4>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
-                        Criptografia robusta entre o site e seus visitantes para salvaguardar senhas, dados de pagamentos comerciais e formulÃ¡rios de conversÃ£o.
+                        Criptografia robusta entre o site e seus visitantes para salvaguardar senhas, dados de pagamentos comerciais e formulários de conversão.
                       </p>
                     </div>
                   </div>
@@ -577,9 +531,9 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       <Lock className="w-4 h-4 stroke-[2]" />
                     </div>
                     <div className="space-y-0.5">
-                      <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase">AtualizaÃ§Ãµes e Patches de SeguranÃ§a ContÃ­nuos</h4>
+                      <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase">Atualizações e Patches de Segurança Contínuos</h4>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
-                        Fechamento imediato de vulnerabilidades em tempo recorde atravÃ©s de rotinas aplicadas por especialistas em infraestrutura da TAG08.
+                        Fechamento imediato de vulnerabilidades em tempo recorde através de rotinas aplicadas por especialistas em infraestrutura da TAG08.
                       </p>
                     </div>
                   </div>
@@ -594,7 +548,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-white/[0.04] pb-6">
             <div className="lg:col-span-7 space-y-3">
               <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black leading-none">
-                ENGENHARIA E OPERAÃ§Ãµes // SIMPLICIDADE EXPLICITADA
+                ENGENHARIA E OPERAções // SIMPLICIDADE EXPLICITADA
               </span>
               <h2 className="font-display font-black text-3xl sm:text-4.5xl md:text-5xl text-white uppercase leading-none tracking-tighter">
                 COMO FUNCIONA: <br />
@@ -603,7 +557,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-                Toda grande presenÃ§a corporativa possui segredos de harmonia tÃ©cnica invisaveis aos olhos comuns. Veja abaixo como combinamos hardware soberano e carinho tÃ©cnico em etapas simplificadas.
+                Toda grande presença corporativa possui segredos de harmonia técnica invisaveis aos olhos comuns. Veja abaixo como combinamos hardware soberano e carinho técnico em etapas simplificadas.
               </p>
             </div>
           </div>
@@ -785,7 +739,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
                         {/* Built-in high specs lists */}
                         <div className="border-t border-white/[0.05] pt-6 mt-6 space-y-3 justify-end">
-                          <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest block font-bold leading-none">CARACTERÃSTICAS INCLUSAS:</span>
+                          <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest block font-bold leading-none">CARACTERÍSTICAS INCLUSAS:</span>
                           <ul className="space-y-2 text-[11px] sm:text-xs font-sans text-zinc-400">
                             {host.specs.map((spec, sIdx) => (
                               <li key={sIdx} className="flex items-center gap-1.5">
@@ -840,38 +794,38 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               {[
                 {
                   id: "basico",
-                  name: "Plano Basico",
+                  name: "Plano Básico",
                   startingPrice: "R$ 49,00",
                   audience: "Institucionais & Portfalios",
-                  purpose: "ValidaÃ§Ã£o Ã¡gil de marcas emergentes, landing pages escalÃ¡veis, blogs jornalasticos e portfalios elegantes de alto impacto.",
+                  purpose: "Validação ágil de marcas emergentes, landing pages escaláveis, blogs jornalasticos e portfalios elegantes de alto impacto.",
                   accentBorder: "border-white/5",
                   bgCard: "bg-[#0b0c0e] hover:border-white/12",
                   highlightBadge: null,
                   resources: [
-                    { label: "Armazenamento", value: "5 GB SSD NVMe", tooltip: "Solid State Drives corporativos com taxas de transferÃªncia ultrarrÃ¡pidas, carregando imagens e pÃ¡ginas instantaneamente." },
-                    { label: "Emails Profissionais", value: "10 Contas inclusas", tooltip: "Contas personalizadas com seu domÃ­nio (seu@nome.com.br) com proteÃ§Ã£o nativa contra spam e gateway corporativo." },
-                    { label: "Trafego Mensal", value: "500 GB de Volume", tooltip: "Banda larga de dados expansiva apta para resistir a navegaÃ§Ã£o constante de milhares de visitantes." },
-                    { label: "Bancos de Dados", value: "1 Banco MySQL", tooltip: "Base estruturada e blindada ideal para sustentar o banco de dados principal do seu WordPress ou aplicaÃ§Ã£o sÃªnior." },
-                    { label: "Zeladoria Regular", value: "Updates Trimestrais", tooltip: "RevisÃ£o e atualizaÃ§Ãµes proativas a cada 3 meses sob demanda para certificar que seus plugins e temas estejam saudÃ¡veis." },
-                    { label: "CertificaÃ§Ã£o SSL", value: "Let's Encrypt Incluso", tooltip: "Criptografia HTTPS de seguranÃ§a maxima ativa para proteÃ§Ã£o de dados sensaveis e melhor ranqueamento no algoritmo de buscas." },
+                    { label: "Armazenamento", value: "5 GB SSD NVMe", tooltip: "Solid State Drives corporativos com taxas de transferência ultrarrápidas, carregando imagens e páginas instantaneamente." },
+                    { label: "Emails Profissionais", value: "10 Contas inclusas", tooltip: "Contas personalizadas com seu domínio (seu@nome.com.br) com proteção nativa contra spam e gateway corporativo." },
+                    { label: "Tráfego Mensal", value: "500 GB de Volume", tooltip: "Banda larga de dados expansiva apta para resistir à navegação constante de milhares de visitantes." },
+                    { label: "Bancos de Dados", value: "1 Banco MySQL", tooltip: "Base estruturada e blindada ideal para sustentar o banco de dados principal do seu WordPress ou aplicação sênior." },
+                    { label: "Zeladoria Regular", value: "Updates Trimestrais", tooltip: "Revisão e atualizações proativas a cada 3 meses sob demanda para certificar que seus plugins e temas estejam saudáveis." },
+                    { label: "Certificação SSL", value: "Let's Encrypt Incluso", tooltip: "Criptografia HTTPS de segurança máxima ativa para proteção de dados sensíveis e melhor ranqueamento no algoritmo de buscas." },
                   ]
                 },
                 {
                   id: "intermediario",
-                  name: "Plano Intermediario",
+      name: "Plano Intermediário",
                   startingPrice: "R$ 99,00",
                   audience: "Pequenos E-commerces & Empresas",
-                  purpose: "Ideal para empresas em crescimento estavel, portais comerciais e marcas que investem em captaÃ§Ã£o contÃ­nua em trafego pago.",
+                  purpose: "Ideal para empresas em crescimento estavel, portais comerciais e marcas que investem em captação contínua em trafego pago.",
                   accentBorder: "border-brand/45",
                   bgCard: "bg-[#090a0d] border-brand/40 shadow-[0_15px_45px_rgba(var(--color-brand-rgb),0.04)]",
                   highlightBadge: "MAIS RECOMENDADO",
                   resources: [
-                    { label: "Armazenamento", value: "15 GB SSD NVMe", tooltip: "Armazenamento corporativo expandido, ideal para catÃ¡logos de produtos com muitas fotos e mÃ­dias ricas." },
+                    { label: "Armazenamento", value: "15 GB SSD NVMe", tooltip: "Armazenamento corporativo expandido, ideal para catálogos de produtos com muitas fotos e mídias ricas." },
                     { label: "Emails Profissionais", value: "50 Contas inclusas", tooltip: "Franquia sob medida para organizar todos os seus canais: suporte, financeiro, parcerias e conselho." },
-                    { label: "Trafego Mensal", value: "2 TB de Volume", tooltip: "Franquia colossal desenvolvida para aguentar surtos reais de visitas gerados por investimentos no Meta Ads ou Google Ads." },
-                    { label: "Bancos de Dados", value: "5 Bancos MySQL", tooltip: "Oferece flexibilidade total para instalar e hospedar subsistemas, ambientes de teste isolados ou Ã¡reas de membro." },
-                    { label: "Zeladoria Regular", value: "Updates Mensais", tooltip: "Zeladoria tÃ©cnica proativa a cada 30 dias com limpeza preventiva do WP, otimizaÃ§Ã£o de consultas lentas e anÃ¡lise de vulnerabilidade." },
-                    { label: "CÃ³pia Preventiva", value: "Backup Semanal Isolado", tooltip: "Backup adicional de seguranÃ§a periÃ³dico gerado e copiado automaticamente para um data center secundÃ¡rio isolado." },
+                    { label: "Tráfego Mensal", value: "2 TB de Volume", tooltip: "Franquia colossal desenvolvida para aguentar surtos reais de visitas gerados por investimentos no Meta Ads ou Google Ads." },
+                    { label: "Bancos de Dados", value: "5 Bancos MySQL", tooltip: "Oferece flexibilidade total para instalar e hospedar subsistemas, ambientes de teste isolados ou áreas de membro." },
+                    { label: "Zeladoria Regular", value: "Updates Mensais", tooltip: "Zeladoria técnica proativa a cada 30 dias com limpeza preventiva do WP, otimização de consultas lentas e análise de vulnerabilidade." },
+                    { label: "Cópia Preventiva", value: "Backup Semanal Isolado", tooltip: "Backup adicional de segurança periódico gerado e copiado automaticamente para um data center secundário isolado." },
                   ]
                 },
                 {
@@ -882,14 +836,14 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   purpose: "A engrenagem topo de linha perfeita para portais institucionais complexos, lojas virtuais massivas e marcas premium com trafego intenso.",
                   accentBorder: "border-brand",
                   bgCard: "bg-[#0d0e11] border-brand shadow-[0_20px_50px_rgba(var(--color-brand-rgb),0.08)]",
-                  highlightBadge: "POTaNCIA TOTAL CORPORATIVA",
+      highlightBadge: "POTÊNCIA TOTAL CORPORATIVA",
                   resources: [
-                    { label: "Armazenamento", value: "30 GB SSD NVMe", tooltip: "Armazenamento ultrarrÃ¡pido premium com CPU prioritaria dedicada e limites de IOPS elevados para tolerancia zero a latancia." },
-                    { label: "Emails Profissionais", value: "Contas ILIMITADAS", tooltip: "Crie quantas caixas corporativas sua operaÃ§Ã£o necessitar sem qualquer cobranÃ§a por caixas extras. Liberdade total para novos funcionÃ¡rios." },
-                    { label: "Trafego Mensal", value: "4.5 TB de Volume", tooltip: "Vazao de dados monumental capaz de suportar lanaamentos robustos de infoprodutos, campanhas agressivas e Black Fridays." },
-                    { label: "Bancos de Dados", value: "Bancos ILIMITADOS", tooltip: "Flexibilidade para hospedar mÃºltiplos bancos de dados para CRM interno, mÃºltiplos e-commerces paralelos ou integraÃ§Ãµes complexas." },
-                    { label: "Zeladoria Regular", value: "Analise Semanal Ativa", tooltip: "Zeladoria tÃ©cnica de alto nÃ­vel com testes periÃ³dicos de vulnerabilidade externa, otimizaÃ§Ã£o intensiva de banco e monitoramento ativo." },
-                    { label: "AceleraÃ§Ã£o Global", value: "CDN Giga Integrada", tooltip: "Roteamento global que entrega arquivos estÃ¡ticos e de madia praximos ao local de acesso de cada usuario, reduzindo latancia em ata 80%." },
+                    { label: "Armazenamento", value: "30 GB SSD NVMe", tooltip: "Armazenamento ultrarrápido premium com CPU prioritaria dedicada e limites de IOPS elevados para tolerancia zero a latancia." },
+                    { label: "Emails Profissionais", value: "Contas ILIMITADAS", tooltip: "Crie quantas caixas corporativas sua operação necessitar sem qualquer cobrança por caixas extras. Liberdade total para novos funcionários." },
+                    { label: "Tráfego Mensal", value: "4.5 TB de Volume", tooltip: "Vazão de dados monumental capaz de suportar lançamentos robustos de infoprodutos, campanhas agressivas e Black Fridays." },
+                    { label: "Bancos de Dados", value: "Bancos ILIMITADOS", tooltip: "Flexibilidade para hospedar múltiplos bancos de dados para CRM interno, múltiplos e-commerces paralelos ou integrações complexas." },
+                    { label: "Zeladoria Regular", value: "Analise Semanal Ativa", tooltip: "Zeladoria técnica de alto nível com testes periódicos de vulnerabilidade externa, otimização intensiva de banco e monitoramento ativo." },
+                    { label: "Aceleração Global", value: "CDN Giga Integrada", tooltip: "Roteamento global que entrega arquivos estáticos e de madia praximos ao local de acesso de cada usuario, reduzindo latancia em ata 80%." },
                   ]
                 }
               ].map((plan) => (
@@ -957,7 +911,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <div className="pt-8 mt-8 border-t border-white/[0.04]">
                     <a
                       href={buildBrazilWhatsAppUrl(`${encodeURIComponent(
-                        `Ola TAG08! Gostaria de conversar com os engenheiros comerciais para fechar a contrataÃ§Ã£o do "${plan.name.toUpperCase()}" de Hospedagem & Zeladoria no valor recorrente de ${plan.startingPrice}/mas. Aguardo retorno!`
+                        `Ola TAG08! Gostaria de conversar com os engenheiros comerciais para fechar a contratação do "${plan.name.toUpperCase()}" de Hospedagem & Zeladoria no valor recorrente de ${plan.startingPrice}/mas. Aguardo retorno!`
                       )}`)}
                       target="_blank"
                       rel="noreferrer"
@@ -972,7 +926,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
             
             <div className="pt-6 text-center">
               <span className="text-zinc-550 font-sans text-[9px] uppercase tracking-widest block leading-relaxed">
-                * Todos os planos de alicerce contam com isolamento de kernel virtual, mitigaÃ§Ã£o ativa de DDoS de 50 Gbps e suporte a SSL Let's Encrypt gratuito com updates proativos incluados.
+                * Todos os planos de alicerce contam com isolamento de kernel virtual, mitigação ativa de DDoS de 50 Gbps e suporte a SSL Let's Encrypt gratuito com updates proativos incluados.
               </span>
             </div>
           </div>
@@ -992,7 +946,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-white/[0.06] pb-10">
                 <div className="lg:col-span-7 space-y-4 text-left">
                   <span className="font-mono text-[9px] text-brand bg-brand/10 border border-brand/20 px-3 py-1 rounded inline-block uppercase tracking-widest font-black">
-                    CUSTOMIZaÃ§Ã£o EM REAL-TIME
+                    CUSTOMIZação EM REAL-TIME
                   </span>
                   <h2 className="font-display font-black text-3.5xl sm:text-4.5xl md:text-5.5xl text-white uppercase tracking-tighter leading-none">
                     MONTE SEU SETUP <br />
@@ -1001,7 +955,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 </div>
                 <div className="lg:col-span-5 text-left">
                   <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed border-l-2 border-brand/20 pl-4">
-                    Selecione o estagio fasico de partida que melhor traduz o momento atual do seu negÃ³cio e adicione recursos dedicados de forma fluida. O simulador reajusta os valores instantaneamente.
+                    Selecione o estagio fasico de partida que melhor traduz o momento atual do seu negócio e adicione recursos dedicados de forma fluida. O simulador reajusta os valores instantaneamente.
                   </p>
                 </div>
               </div>
@@ -1021,7 +975,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       cpu: "1 vCPU Dedicada",
                       ram: "1 GB RAM",
                       audience: "1 Core de Processamento",
-                      purpose: "Motor leve perfeito para landing pages, sites institucionais padrÃ£o e blogs jornalÃ­sticos focados em velocidade.",
+                      purpose: "Motor leve perfeito para landing pages, sites institucionais padrão e blogs jornalísticos focados em velocidade.",
                       startingPrice: "R$ 49,00",
                       badge: "V-Core Alpha I",
                     },
@@ -1031,7 +985,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       cpu: "2 vCPUs Dedicadas",
                       ram: "4 GB RAM",
                       audience: "2 Cores de Processamento",
-                      purpose: "Processamento duplicado calibrado para suportar mÃºltiplos portais comerciais, pequenos e-commerces e trafego estavel.",
+                      purpose: "Processamento duplicado calibrado para suportar múltiplos portais comerciais, pequenos e-commerces e trafego estavel.",
                       startingPrice: "R$ 99,00",
                       badge: "V-Core Pro II",
                     },
@@ -1109,7 +1063,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                             ? "text-brand" 
                             : "text-zinc-500 group-hover/card:text-zinc-350"
                         }`}>
-                          {isActive ? "? SOLUaaO ACOPLADA AO TRABALHO DE CUSTOMIZaÃ§Ã£o" : "[-] CLIQUE SELECIONAR E CUSTOMIZAR"}
+                          {isActive ? "✓ SOLUÇÃO ACOPLADA AO TRABALHO DE CUSTOMIZAÇÃO" : "[-] CLIQUE SELECIONAR E CUSTOMIZAR"}
                         </div>
                       </div>
                     );
@@ -1128,7 +1082,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="space-y-1">
                         <span className="font-mono text-[8.5px] text-brand uppercase tracking-wider block font-black">RECURSO #02 // MULTI-SITES</span>
-                        <h3 className="text-white font-bold text-sm sm:text-base uppercase tracking-tight">Namero de Sites Hospedados</h3>
+                    <h3 className="text-white font-bold text-sm sm:text-base uppercase tracking-tight">Número de Sites Hospedados</h3>
                         <p className="text-zinc-400 text-xs font-sans">Quantos portais independentes irao compartilhar estes recursos isolados?</p>
                       </div>
                       
@@ -1188,7 +1142,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="space-y-1">
                         <span className="font-mono text-[8.5px] text-brand uppercase tracking-wider block font-black">RECURSO #03 // ARMAZENAMENTO ULTRA-RAW</span>
-                        <h3 className="text-white font-bold text-sm sm:text-base uppercase tracking-tight">Espaao de Disco SSD NVMe Dedicado</h3>
+                    <h3 className="text-white font-bold text-sm sm:text-base uppercase tracking-tight">Espaço de Disco SSD NVMe Dedicado</h3>
                         <p className="text-zinc-400 text-xs font-sans">
                           Sua maquina conta com discos SSD corporativos com taxas de leitura de ata 7.000 MB/s.
                         </p>
@@ -1203,6 +1157,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       <div className="relative pt-1">
                         <input
                           type="range"
+                          aria-label="Armazenamento SSD do plano selecionado"
                           min={simPlan === "basico" ? 5 : simPlan === "intermediario" ? 15 : 30}
                           max={simPlan === "basico" ? 50 : simPlan === "intermediario" ? 100 : 300}
                           step="5"
@@ -1211,14 +1166,14 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                           className="w-full accent-brand bg-white/10 h-1.5 rounded-lg cursor-pointer hover:bg-white/15 transition-all"
                         />
                         <div className="flex justify-between font-sans text-[8.5px] text-zinc-500 mt-1">
-                          <span>Min: {simPlan === "basico" ? "5 GB (Basico)" : simPlan === "intermediario" ? "15 GB (Madio)" : "30 GB (Alto)"}</span>
+                          <span>Min: {simPlan === "basico" ? "5 GB (Básico)" : simPlan === "intermediario" ? "15 GB (Médio)" : "30 GB (Alto)"}</span>
                           <span>Max: {simPlan === "basico" ? "50 GB" : simPlan === "intermediario" ? "100 GB" : "300 GB"}</span>
                         </div>
                       </div>
 
                       {/* UX Upgrade: Clickable Storage Presets */}
                       <div className="flex flex-wrap gap-2 pt-1">
-                        <span className="font-mono text-[8px] text-zinc-550 uppercase tracking-wider flex items-center pr-1.5">Atalhos rÃ¡pidos:</span>
+                        <span className="font-mono text-[8px] text-zinc-550 uppercase tracking-wider flex items-center pr-1.5">Atalhos rápidos:</span>
                         {(simPlan === "basico" 
                           ? [5, 15, 30, 50] 
                           : simPlan === "intermediario" 
@@ -1241,8 +1196,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     </div>
                     
                     <span className="text-[10px] text-zinc-500 font-sans block pl-2 border-l border-brand/35">
-                      {simPlan === "basico" && `* 5 GB inclusos. Adicional: R$ 3,00 por GB ao mas.`}
-                      {simPlan === "intermediario" && `* 15 GB inclusos. Adicional: R$ 5,00 por GB ao mas.`}
+                    {simPlan === "basico" && `* 5 GB inclusos. Adicional: R$ 3,00 por GB ao mês.`}
+                    {simPlan === "intermediario" && `* 15 GB inclusos. Adicional: R$ 5,00 por GB ao mês.`}
                       {simPlan === "avancado" && `* 30 GB inclusos. Adicional: R$ 10,00 por GB ao mas.`}
                     </span>
                   </div>
@@ -1253,7 +1208,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       <div className="space-y-1">
                         <span className="font-mono text-[8.5px] text-brand uppercase tracking-wider block font-black">RECURSO #04 // EMAILS CORPORATIVOS</span>
                         <h3 className="text-white font-bold text-sm sm:text-base uppercase tracking-tight">Caixas de E-mail Profissionais</h3>
-                        <p className="text-zinc-400 text-xs font-sans font-light">Contas personalizadas @suamarca para comunicaÃ§Ã£o direta, contendo isolamento anti-spam de ponta.</p>
+                        <p className="text-zinc-400 text-xs font-sans font-light">Contas personalizadas @suamarca para comunicação direta, contendo isolamento anti-spam de ponta.</p>
                       </div>
 
                       {simPlan === "avancado" ? (
@@ -1301,8 +1256,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <div className="space-y-4 border-t border-white/[0.05] pt-6">
                     <div className="space-y-1">
                       <span className="font-mono text-[8.5px] text-brand uppercase tracking-wider block font-black">RECURSO #05 // ZELADORIA E ADICIONAIS</span>
-                      <h3 className="text-white font-bold text-sm sm:text-base uppercase tracking-tight">Opcional TÃ©cnico de Alta Performance</h3>
-                      <p className="text-zinc-400 text-xs font-sans">Turbine sua operaÃ§Ã£o com auditoria especializada de seguranÃ§a e canais prioritarios exclusivos.</p>
+                      <h3 className="text-white font-bold text-sm sm:text-base uppercase tracking-tight">Opcional Técnico de Alta Performance</h3>
+                      <p className="text-zinc-400 text-xs font-sans">Turbine sua operação com auditoria especializada de segurança e canais prioritarios exclusivos.</p>
                     </div>
 
                     <div className="pt-1">
@@ -1318,26 +1273,26 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                           <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${
                             simApplyUpgrade ? "bg-brand border-brand text-black" : "border-zinc-750 bg-black/50"
                           }`}>
-                            {simApplyUpgrade && <span className="text-xs font-black">?</span>}
+                            {simApplyUpgrade && <span className="text-xs font-black">✓</span>}
                           </div>
                         </div>
                         <div className="space-y-1 flex-1">
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                             <span className="font-mono text-[9px] font-black uppercase tracking-wider bg-white/5 px-2.5 py-0.5 rounded text-white inline-block">
-                              {simPlan === "basico" && "AUDITORIA & SUPORTE SaNIOR"}
+                      {simPlan === "basico" && "AUDITORIA & SUPORTE SÊNIOR"}
                               {simPlan === "intermediario" && "BACKUP AGRESSIVO SEMANAL EXTRA"}
                               {simPlan === "avancado" && "CANAL REATIVO PRIORITaRIO (VIP)"}
                             </span>
                             <span className="font-sans text-[10.5px] text-brand font-black">
-                              {simPlan === "basico" && "+ R$ 15,00/mas"}
-                              {simPlan === "intermediario" && "+ R$ 20,00/mas"}
+                      {simPlan === "basico" && "+ R$ 15,00/mês"}
+                      {simPlan === "intermediario" && "+ R$ 20,00/mês"}
                               {simPlan === "avancado" && "+ R$ 50,00/mas"}
                             </span>
                           </div>
                           <p className="text-xs text-zinc-400 font-sans leading-snug">
-                            {simPlan === "basico" && "Correaao tÃ©cnica preferencial e monitoramento de indisponibilidade de forma ativa."}
-                            {simPlan === "intermediario" && "CriaÃ§Ã£o de backup adicional guardado em segundo data-center independente (proteÃ§Ã£o maxima)."}
-                            {simPlan === "avancado" && "Acesso direto via link telefanico aos engenheiros de infra da TAG08 (Tempo de reaÃ§Ã£o < 15 min)."}
+                      {simPlan === "basico" && "Correção técnica preferencial e monitoramento de indisponibilidade de forma ativa."}
+                      {simPlan === "intermediario" && "Criação de backup adicional guardado em segundo data center independente (proteção máxima)."}
+                            {simPlan === "avancado" && "Acesso direto via link telefanico aos engenheiros de infra da TAG08 (Tempo de reação < 15 min)."}
                           </p>
                         </div>
                       </div>
@@ -1419,7 +1374,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       {simApplyUpgrade && (
                         <div className="flex justify-between items-center text-[11px] pl-3 border-l border-brand/20 text-brand">
                           <span>
-                            . TÃ©cnico: {simPlan === "basico" ? "Auditoria e Suporte" : simPlan === "intermediario" ? "Backup Extra" : "Atendimento VIP"}
+                            . Técnico: {simPlan === "basico" ? "Auditoria e Suporte" : simPlan === "intermediario" ? "Backup Extra" : "Atendimento VIP"}
                           </span>
                           <span className="font-bold">
                             + R$ {simPlan === "basico" ? "15,00" : simPlan === "intermediario" ? "20,00" : "50,00"}
@@ -1428,7 +1383,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       )}
 
                       <div className="pt-2 text-[9px] leading-relaxed text-zinc-550 font-sans border-t border-white/[0.04] mt-2">
-                        ? Integrado por Definiaao: IsolaÃ§Ã£o cPanel/WHM, SSL Criptografico Ilimitado, MitigaÃ§Ã£o Ativa de DDoS e Trafego Mensal Integridade.
+                        ✓ Integrado por Definição: Isolação cPanel/WHM, SSL Criptográfico Ilimitado, Mitigação Ativa de DDoS e Tráfego Mensal com Integridade.
                       </div>
                     </div>
 
@@ -1436,23 +1391,23 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     <div className="bg-[#121214]/60 border border-white/5 p-4 rounded-2xl space-y-2 transition-all">
                       <div className="flex items-center gap-1.5 font-sans text-[9px] text-brand font-black">
                         <Zap className="w-3.5 h-3.5 text-brand shrink-0 animate-pulse" />
-                        <span>DIAGNaSTICO ESTRATaGICO TAG08</span>
+                <span>DIAGNÓSTICO ESTRATÉGICO TAG08</span>
                       </div>
                       <p className="text-[11px] text-zinc-400 font-sans leading-relaxed">
                         {simPlan === "basico" && simStorage <= 15 && (
-                          "Gargalo TÃ©cnico: Baixo. Excelente relaÃ§Ã£o custo-benefacio para marcas novas que validam landing pages e sistemas basicos."
+                        "Gargalo técnico: baixo. Excelente relação custo-benefício para marcas novas que validam landing pages e sistemas básicos."
                         )}
                         {simPlan === "basico" && simStorage > 15 && (
-                          "Atributo Expandido: VocÃª turbinou o espaao em disco do plano basico. Se os portais comeaarem a crescer ou receber blogs com muitas fotos, migrar para o plano Intermediario otimiza o ganho por GB extra."
+          "Atributo expandido: você ampliou o espaço em disco do plano básico. Se os portais começarem a crescer ou receber blogs com muitas fotos, migrar para o plano intermediário otimiza o ganho por GB extra."
                         )}
                         {simPlan === "intermediario" && simSites <= 1 && (
-                          "Diagnastico Avanaado: Configura??o corporativa equilibrada. Salido para portais comerciais que dependem de const?ncia em SEO e carregamentos menores que 1.2 segundos."
+                          "Diagnóstico Avançado: Configuração corporativa equilibrada. Sólido para portais comerciais que dependem de constância em SEO e carregamentos menores que 1.2 segundos."
                         )}
                         {simPlan === "intermediario" && simSites > 1 && (
-                          "Aviso Multissite: Os recursos fasicos serao distribuados entre as marcas de forma equilibrada. Pra-ativo no gerenciamento simultaneo com proteÃ§Ã£o centralizada."
+                          "Aviso Multissite: Os recursos fasicos serao distribuados entre as marcas de forma equilibrada. Pra-ativo no gerenciamento simultaneo com proteção centralizada."
                         )}
                         {simPlan === "avancado" && (
-                          "Soberania Digital: Ideal para redes de lojas virtuais de alto trafego com carrinhos simultaneos ou sistemas corporativos escalÃ¡veis de grande alcance."
+                          "Soberania Digital: Ideal para redes de lojas virtuais de alto trafego com carrinhos simultaneos ou sistemas corporativos escaláveis de grande alcance."
                         )}
                       </p>
                     </div>
@@ -1465,36 +1420,36 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       <div className="flex items-baseline justify-center gap-1.5 pt-1">
                         <span className="font-sans text-white text-xs sm:text-sm font-bold">R$</span>
                         <motion.span 
-                          key={calculateSimulatedPrice()}
+                          key={simulatedPrice}
                           initial={{ opacity: 0, y: -4, scale: 0.95 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           transition={{ duration: 0.2 }}
                           className="font-display font-black text-brand text-3.5xl sm:text-4.5xl tracking-tighter"
                         >
-                          {calculateSimulatedPrice().toFixed(2)}
+                          {simulatedPrice.toFixed(2)}
                         </motion.span>
                         <span className="font-mono text-zinc-500 text-[9px] uppercase tracking-wider">/mas</span>
                       </div>
                       
                       <span className="text-[8px] text-zinc-550 font-sans block pt-1 leading-none">
-                        Faturamento de recorrancia mensal pas-ativaÃ§Ã£o. Sem carancia.
+                        Faturamento de recorrancia mensal pas-ativação. Sem carancia.
                       </span>
                     </div>
                   </div>
 
                   <div className="pt-6">
                     <a
-                      href={buildBrazilWhatsAppUrl(`Ola TAG08! Configurei minha proposta tÃ©cnica usando o simulador inteligente sob medida no site de hospedagem e cheguei no seguinte setup:
+                      href={buildBrazilWhatsAppUrl(`Ola TAG08! Configurei minha proposta técnica usando o simulador inteligente sob medida no site de hospedagem e cheguei no seguinte setup:
  
  - ENGINE DE SERVIDOR ESCOLHIDO: ${simPlan === "basico" ? "CLOUD SOLO (1 vCPU / 1GB RAM)" : simPlan === "intermediario" ? "CLOUD DUO (2 vCPUs / 4GB RAM)" : "CLOUD QUAD (4 vCPUs / 8GB RAM)"}
- - NaMERO DE SITES INTEGRADOS: ${simSites} site(s)
+- NÚMERO DE SITES INTEGRADOS: ${simSites} site(s)
  - ARMAZENAMENTO SSD NVMe: ${simStorage} GB ${simStorage > (simPlan === "basico" ? 5 : simPlan === "intermediario" ? 15 : 30) ? `(+${simStorage - (simPlan === "basico" ? 5 : simPlan === "intermediario" ? 15 : 30)} GB adicionais)` : ""}
  - CONTAS DE EMAIL: ${simPlan === "avancado" ? "Ilimitadas inclusas" : `${simEmails} contas`}
- - COBERTURA EXTRA TaCNICA: ${simApplyUpgrade ? "Ativado" : "NÃ£o ativado"}
+ - COBERTURA EXTRA TÉCNICA: ${simApplyUpgrade ? "Ativado" : "Não ativado"}
  
- - VALOR MENSAL ESTIMADO CONSOLIDADO: R$ ${calculateSimulatedPrice().toFixed(2)}/mas
+ - VALOR MENSAL ESTIMADO CONSOLIDADO: R$ ${simulatedPrice.toFixed(2)}/mas
  
- Gostaria de formalizar este escopo tÃ©cnico com o departamento comercial!`)}
+ Gostaria de formalizar este escopo técnico com o departamento comercial!`)}
                       target="_blank"
                       rel="noreferrer"
                       className="group/btn w-full py-4 rounded-xl bg-brand hover:bg-brand-secondary text-black font-mono text-[10px] font-black uppercase text-center block tracking-widest transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] shadow-[0_12px_40px_rgba(var(--color-brand-rgb),0.15)] focus:outline-none cursor-pointer flex items-center justify-center gap-2"
@@ -1529,7 +1484,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   O COMPROMISSO DE QUALIDADE TAG08.
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-                  Tratamos o ecossistema digital corporativo do seu negÃ³cio com o respeito que um legado precioso merece. Nossas aÃ§Ãµes de engenharia sÃ£o pautadas em compromisso indestrutavel com sua receita laquida.
+                  Tratamos o ecossistema digital corporativo do seu negócio com o respeito que um legado precioso merece. Nossas ações de engenharia são pautadas em compromisso indestrutavel com sua receita laquida.
                 </p>
               </div>
 
@@ -1554,10 +1509,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
                 <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/5 space-y-1">
                   <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase flex items-center gap-1.5">
-                    <Globe className="w-4 h-4 text-brand shrink-0" /> Canais de ExpansÃ£o
+                    <Globe className="w-4 h-4 text-brand shrink-0" /> Canais de Expansão
                   </h4>
                   <p className="text-zinc-400 text-xs font-sans">
-                    Oferecemos registros rÃ¡pidos de domÃ­nios nacionais/estrangeiros e integraÃ§Ã£o integral de e-mails corporativos.
+                    Oferecemos registros rápidos de domínios nacionais/estrangeiros e integração integral de e-mails corporativos.
                   </p>
                 </div>
 
@@ -1566,7 +1521,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     <Award className="w-4 h-4 text-brand shrink-0" /> Certificados Salidos
                   </h4>
                   <p className="text-zinc-400 text-xs font-sans">
-                    Parcerias estratÃ©gicas que reforaam as frentes digitais de nossa frota corporativa nacional e global.
+                    Parcerias estratégicas que reforaam as frentes digitais de nossa frota corporativa nacional e global.
                   </p>
                 </div>
               </div>
@@ -1584,23 +1539,23 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
             <div className="space-y-6">
               <div className="space-y-3">
                 <span className="font-mono text-[9px] text-brand bg-brand/10 border border-brand/15 px-2.5 py-0.5 rounded inline-block font-black uppercase">
-                  ECCOSSISTEMA DE EXPANsÃ£o DIGITAL
+                  ECCOSSISTEMA DE EXPANsão DIGITAL
                 </span>
                 <h3 className="font-display font-black text-2.5xl sm:text-3xl text-white uppercase leading-tight tracking-tight">
                   ESCALABILIDADE COMO UMA aRVORE SOBERANA.
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-                  Assim como uma arvore robusta estende seus ramos de forma equilibrada conforme se nutre do solo fartil, o seu ecossistema digital cresce com flexibilidade sob a nossa tutela. a medida que as demandas de processamento se alteram, vocÃª flexibiliza planos de forma elastica, sem travas penosas.
+                  Assim como uma arvore robusta estende seus ramos de forma equilibrada conforme se nutre do solo fartil, o seu ecossistema digital cresce com flexibilidade sob a nossa tutela. a medida que as demandas de processamento se alteram, você flexibiliza planos de forma elastica, sem travas penosas.
                 </p>
               </div>
 
-              {/* ExpansÃ£o e Universo Expandido */}
+              {/* Expansão e Universo Expandido */}
               <div className="p-5 sm:p-6 rounded-2xl bg-[#09090b]/50 border border-white/5 space-y-4">
                 <span className="font-mono text-[8px] text-brand font-black uppercase tracking-widest block lider-none">
                   UNIVERSO CLaSSICO EXPANDIDO TAG08
                 </span>
                 <p className="text-zinc-400 text-xs font-sans leading-relaxed">
-                  Para alam do hardware puro da hospedagem de sites corporativos, nossa agÃªncia conta com uma galaxia inteira de soluÃ§Ãµes integradas prontas para impulsionar a sua faturamento laquido:
+                  Para alam do hardware puro da hospedagem de sites corporativos, nossa agência conta com uma galaxia inteira de soluções integradas prontas para impulsionar a sua faturamento laquido:
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-display font-bold text-white uppercase">
                   <div className="flex items-center gap-1.5">
@@ -1609,11 +1564,11 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   </div>
                   <div className="flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4 text-brand shrink-0" />
-                    <span>Marketing de AtivaÃ§Ã£o</span>
+                    <span>Marketing de Ativação</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4 text-brand shrink-0" />
-                    <span>CriaÃ§Ã£o de Identidade Visual</span>
+                    <span>Criação de Identidade Visual</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4 text-brand shrink-0" />
@@ -1625,7 +1580,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
             <div className="pt-6 border-t border-white/[0.05] mt-6 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left justify-between">
               <p className="text-zinc-500 text-[10.5px] font-sans leading-tight">
-                Seu site de ponta cresce sem gargalos tÃ©cnicos e sem dores operacionais de cabeÃ§a. Cuidamos do motor tÃ©cnico para vocÃª acelerar.
+                Seu site de ponta cresce sem gargalos técnicos e sem dores operacionais de cabeça. Cuidamos do motor técnico para você acelerar.
               </p>
               <a
                 href={buildBrazilWhatsAppUrl("Ola%20TAG08!%20Gostaria%20de%20saber%2520mais%2520sobre%2520a%2520hospedagem%2520escalavel.")}
@@ -1648,10 +1603,12 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
             {/* Left Column: Portrait */}
             <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[520px]">
               <div className="absolute inset-0 bg-black/10 rounded-[24px] overflow-hidden" />
-              <img 
+              <Image
+                fill
+                sizes="(max-width: 1024px) 100vw, 42vw"
                 src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&q=80&w=800" 
                 alt="TAG08 Hosting Specialist" 
-                className="absolute inset-0 w-full h-full object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
+                className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
@@ -1695,10 +1652,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 </div>
                 <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
                   HOSPEDAGEM <br />
-                  &amp; seguranÃ§a IMEDIATA!
+                  &amp; segurança IMEDIATA!
                 </h2>
                 <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
-                  ESTRUTURAMOS A HOSPEDAGEM DE ALTO RENDIMENTO DO SEU SITE E FAZEMOS ATUALIZAÃ§Ãµes CRaTICAS CONTaNUAS, GARANTINDO SERVIDORES SEGUROS, CACHING REFINADO E TRaFEGO FLUIDO.
+                  ESTRUTURAMOS A HOSPEDAGEM DE ALTO RENDIMENTO DO SEU SITE E FAZEMOS ATUALIZAções CRaTICAS CONTaNUAS, GARANTINDO SERVIDORES SEGUROS, CACHING REFINADO E TRaFEGO FLUIDO.
                 </p>
               </div>
 
@@ -1713,7 +1670,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       INFRAESTRUTURA INTEGRAL
                     </span>
                     <p className="text-white text-xs leading-snug font-sans font-semibold">
-                      Migre gratuitamente e livre-se de instabilidades que custam caro. Garantimos monitoramento contÃ­nuo de uptime e patches preventivos anti-malware.
+                      Migre gratuitamente e livre-se de instabilidades que custam caro. Garantimos monitoramento contínuo de uptime e patches preventivos anti-malware.
                     </p>
                   </div>
                 </div>
@@ -1721,7 +1678,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 {/* DUAL CLIENT CONNECTION CHANNELS (BR & INT) */}
                 <div className="space-y-3">
                   <a 
-                    href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20consultar%20plano%20de%20Hospedagem%20e%20ManutenÃ§Ã£o%20da%20TAG08")}
+                    href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20consultar%20plano%20de%20Hospedagem%20e%20Manutenção%20da%20TAG08")}
                     target="_blank"
                     rel="noreferrer"
                     className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner"
@@ -1733,7 +1690,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                         </div>
                         <div className="flex flex-col text-left">
                           <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
-                            PROPRIETÃRIO DIRETO (WhatsApp)
+                            PROPRIETÁRIO DIRETO (WhatsApp)
                           </span>
                           <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                             +55 83 9.9886-8882
@@ -1781,13 +1738,13 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
           <div className="max-w-7xl mx-auto space-y-10">
             <div className="space-y-3 max-w-2xl">
               <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/15 px-2.5 py-1 rounded-md inline-block">
-                PROVA DE MÃ‰TODO
+                PROVA DE MÉTODO
               </span>
               <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-tight tracking-tighter">
-                Hospedagem e manutenÃ§Ã£o existem para sustentar a operaÃ§Ã£o depois da publicaÃ§Ã£o.
+                Hospedagem e manutenção existem para sustentar a operação depois da publicação.
               </h2>
               <p className="text-zinc-400 text-sm sm:text-base leading-relaxed font-sans font-medium max-w-3xl">
-                A TAG08 trata essa frente como continuidade operacional: rotina de revisÃ£o, monitoramento, atualizaÃ§Ãµes, backup, seguranÃ§a e suporte para que o site continue confiÃ¡vel quando o projeto jÃ¡ estiver no ar.
+                A TAG08 trata essa frente como continuidade operacional: rotina de revisão, monitoramento, atualizações, backup, segurança e suporte para que o site continue confiável quando o projeto já estiver no ar.
               </p>
             </div>
 
@@ -1797,9 +1754,9 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <RefreshCw className="w-5 h-5" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Rotina de manutenÃ§Ã£o</h3>
+                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Rotina de manutenção</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    RevisÃµes periÃ³dicas para manter conteÃºdo, links, integraÃ§Ãµes e ajustes tÃ©cnicos em ordem.
+                    Revisões periódicas para manter conteúdo, links, integrações e ajustes técnicos em ordem.
                   </p>
                 </div>
               </div>
@@ -1811,7 +1768,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <div className="space-y-2">
                   <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Monitoramento</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    Acompanhamento de estabilidade, disponibilidade e comportamento do site para identificar sinais de problema antes que virem interrupÃ§Ã£o.
+                    Acompanhamento de estabilidade, disponibilidade e comportamento do site para identificar sinais de problema antes que virem interrupção.
                   </p>
                 </div>
               </div>
@@ -1821,9 +1778,9 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Backup e seguranÃ§a</h3>
+                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Backup e segurança</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    CÃ³pias de seguranÃ§a, revisÃ£o de acessos e cuidado preventivo para reduzir risco operacional e perda de informaÃ§Ã£o.
+                    Cópias de segurança, revisão de acessos e cuidado preventivo para reduzir risco operacional e perda de informação.
                   </p>
                 </div>
               </div>
@@ -1833,9 +1790,9 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <FileCheck className="w-5 h-5" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Suporte pÃ³s-publicaÃ§Ã£o</h3>
+                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Suporte pós-publicação</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    A operaÃ§Ã£o segue acompanhada depois da entrega, com responsabilidade sobre ajustes e estabilidade do que jÃ¡ entrou no ar.
+                    A operação segue acompanhada depois da entrega, com responsabilidade sobre ajustes e estabilidade do que já entrou no ar.
                   </p>
                 </div>
               </div>
@@ -1844,19 +1801,24 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
             <div className="rounded-[28px] border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="space-y-1">
                 <h3 className="text-white font-display font-black text-base sm:text-lg uppercase tracking-tight">
-                  O site nÃ£o termina no lanÃ§amento.
+                  O site não termina no lançamento.
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
-                  Quando hospedagem e manutenÃ§Ã£o sÃ£o tratadas como continuidade, a marca ganha menos improviso, mais previsibilidade e uma base mais confiÃ¡vel para evoluir.
+                  Quando hospedagem e manutenção são tratadas como continuidade, a marca ganha menos improviso, mais previsibilidade e uma base mais confiável para evoluir.
                 </p>
               </div>
               <div className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-3 py-2 text-[10px] font-mono uppercase tracking-widest text-brand">
                 <Lock className="w-3.5 h-3.5" />
-                PublicaÃ§Ã£o acompanhada
+                Publicação acompanhada
               </div>
             </div>
           </div>
         </section>
+
+        <ServiceInsightsBridge
+          servicePath="/hospedagem-manutencao-sites"
+          onNavigate={onNavigate}
+        />
 
         {/* SECTION 8 - FAQ */}
         <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
@@ -1872,18 +1834,18 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     FAQ // ENCONTRE RESPOSTAS
                   </div>
                   <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
-                    DaVIDAS &amp; <br />
+                    DÚVIDAS &amp; <br />
                     ZELADORIA
                   </h2>
                   <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
-                    Esclareaa as principais dÃºvidas sobre nossa divisÃ£o tÃ©cnica de infraestrutura, servidores dedicados e otimizaÃ§Ã£o contÃ­nua de cÃ³digo.
+                    Esclareça as principais dúvidas sobre infraestrutura, servidores dedicados e otimização contínua de código.
                   </p>
                 </div>
 
                 <div className="space-y-3 pt-4">
                   {([
-                    { id: 0, title: "MIGRaÃ§Ã£o DE SITES" },
-                    { id: 1, title: "seguranÃ§a ATIVA" },
+                    { id: 0, title: "MIGRação DE SITES" },
+                    { id: 1, title: "segurança ATIVA" },
                     { id: 2, title: "ZELADORIA E SUPORTE" },
                     { id: 3, title: "DESEMPENHO DO PORTAL" }
                   ]).map((item) => (
@@ -1911,10 +1873,12 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               </div>
 
               <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
-                <img
+                <Image
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 34vw"
                   src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800"
-                  alt="TAG08 Hospedagem e ManutenÃ§Ã£o"
-                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
+                  alt="TAG08 Hospedagem e Manutenção"
+                  className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
                 />
                 <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
                   <svg viewBox="0 0 100 100" className="w-full h-full text-brand fill-none stroke-current" strokeWidth="0.75" strokeLinecap="round">
@@ -1929,8 +1893,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left">
                   <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
                     {([
-                      "MIGRaÃ§Ã£o DE SITES",
-                      "seguranÃ§a ATIVA",
+                      "MIGRação DE SITES",
+                      "segurança ATIVA",
                       "ZELADORIA E SUPORTE",
                       "DESEMPENHO DO PORTAL"
                     ])[activeFaq]}
@@ -1939,18 +1903,18 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
                     {([
                       "Posso migrar meu site ja existente para a hospedagem da TAG08?",
-                      "Como a TAG08 garante a seguranÃ§a inabalavel do meu site?",
+                      "Como a TAG08 garante a segurança inabalavel do meu site?",
                       "Preciso entender de tecnologia para gerenciar meu site?",
-                      "A hospedagem e manutenÃ§Ã£o influenciam o desempenho do site?"
+                      "A hospedagem e manutenção influenciam o desempenho do site?"
                     ])[activeFaq]}
                   </h4>
                   
                   <p className="text-zinc-350 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
                     {([
-                      "Sim, absolutamente! Fornecemos um serviÃ§o de migraÃ§Ã£o expressa 100% integral e gratuito. Nossa equipe de especialistas tÃ©cnicos cuida da transferÃªncia rigorosa do banco de dados, arquivos e chaves criptogrÃ¡ficas para nossos servidores velozes, eliminando qualquer risco de indisponibilidade ou perda de faturamento durante o processo.",
-                      "Operamos com um cintur?o de seguran?a robusto que combina firewalls din?micos ativos na camada CDN, monitoramento ininterrupto de tr?fego contra DDoS, varreduras heur?sticas de v?rus e invas?es de arquivos, al?m de backups semanais geo-distribu?dos autom?ticos.",
-                      "Absolutamente nÃ£o! Esse Ã© o grande diferencial do nosso compromisso de zeladoria digital contÃ­nua: cuidamos da burocracia tÃ©cnica, atualizaÃ§Ãµes de servidores, otimizaÃ§Ã£o de caching e blindagem cibernÃ©tica para que vocÃª possa focar em vender.",
-                      "Profundamente. Um servidor tecnicamente otimizado e atualizado entrega tempos de resposta inferiores a 0.5s, o que aumenta de forma org?nica as avalia??es no ranking SEO do Google. Portais desatualizados ou sem cache tendem a sofrer gargalos de hardware cr?nicos."
+                      "Sim, absolutamente! Fornecemos um serviço de migração expressa 100% integral e gratuito. Nossa equipe de especialistas técnicos cuida da transferência rigorosa do banco de dados, arquivos e chaves criptográficas para nossos servidores velozes, eliminando qualquer risco de indisponibilidade ou perda de faturamento durante o processo.",
+                      "Operamos com um cinturão de segurança robusto que combina firewalls dinâmicos ativos na camada CDN, monitoramento ininterrupto de tráfego contra DDoS, varreduras heurísticas de vírus e invasões de arquivos, além de backups semanais geo-distribuídos automáticos.",
+                      "Absolutamente não! Esse é o grande diferencial do nosso compromisso de zeladoria digital contínua: cuidamos da burocracia técnica, atualizações de servidores, otimização de caching e blindagem cibernética para que você possa focar em vender.",
+                      "Profundamente. Um servidor tecnicamente otimizado e atualizado entrega tempos de resposta inferiores a 0.5s, o que aumenta de forma orgânica as avaliações no ranking SEO do Google. Portais desatualizados ou sem cache tendem a sofrer gargalos de hardware crônicos."
                     ])[activeFaq]}
                   </p>
                 </div>
@@ -1962,14 +1926,14 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
                     <h4 className="text-white font-semibold text-sm leading-snug">Como agimos de forma organizada?</h4>
                     <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                      Eliminamos lentidao excessiva e falha tÃ©cnica cranica. Garantimos maxima performance de seus servidores.
+                      Eliminamos lentidão excessiva e falhas técnicas crônicas. Garantimos máxima performance dos seus servidores.
                     </p>
                   </div>
                   <button
                     onClick={() => handleLinkClick("/servicos")}
                     className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
                   >
-                    <span>Ver ServiÃ§os</span>
+                    <span>Ver Serviços</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                   </button>
                 </div>
@@ -1977,13 +1941,13 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                   <div className="space-y-2">
                     <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
-                    <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer desenhar uma estratÃ©gia sob medida?</h4>
+                    <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer desenhar uma estratégia sob medida?</h4>
                     <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
-                      Fale diretamente com os tomadores de decisÃ£o da TAG08 via WhatsApp para avaliar a viabilidade de alocaÃ§Ã£o de equipe.
+                      Fale diretamente com os tomadores de decisão da TAG08 via WhatsApp para avaliar a viabilidade de alocação de equipe.
                     </p>
                   </div>
                   <a
-                    href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20consultar%20viabilidade%20estratÃ©gica%20especializada%2520para%20minha%2520marca!")}
+                    href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20consultar%20viabilidade%20estratégica%20especializada%2520para%20minha%2520marca!")}
                     target="_blank"
                     rel="noreferrer"
                     className="group flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-all"

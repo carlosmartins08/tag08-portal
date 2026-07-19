@@ -1,13 +1,14 @@
 ﻿import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowUpRight, BookOpen, Calendar, Filter, Sparkles, User } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import Image from "next/image";
 import { BLOG_POSTS, type EditorialBlogPost } from "../../../data";
 
 interface InsightsProps {
   onNavigate: (page: string) => void;
 }
 
-const CATEGORIES = ["Todos", "EstratÃ©gia", "Branding", "Performance", "Processos", "Web"];
+const CATEGORIES = ["Todos", "Estratégia", "Branding", "Performance", "Processos", "Web"];
 
 export default function Insights({ onNavigate }: InsightsProps) {
   const [selectedPost, setSelectedPost] = useState<EditorialBlogPost | null>(null);
@@ -28,7 +29,7 @@ export default function Insights({ onNavigate }: InsightsProps) {
 
   const renderInsightCta = (post: EditorialBlogPost) => (
     <div className="rounded-2xl border border-brand/20 bg-brand/5 p-6 space-y-3">
-      <p className="text-brand font-mono text-[10px] uppercase tracking-widest">PrÃ³ximo passo recomendado</p>
+      <p className="text-brand font-mono text-[10px] uppercase tracking-widest">Próximo passo recomendado</p>
       <h3 className="text-white font-semibold text-lg">{post.relatedObjection ?? post.serviceNote}</h3>
       <div className="flex flex-wrap items-center gap-2">
         <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider text-zinc-300">
@@ -38,7 +39,7 @@ export default function Insights({ onNavigate }: InsightsProps) {
           onClick={() => handleLinkClick(post.relatedServicePath ?? post.servicePath)}
           className="inline-flex items-center gap-2 bg-brand text-black hover:bg-brand-dark transition-all duration-300 px-4 py-2.5 rounded-lg font-mono font-bold text-xs uppercase tracking-wider"
         >
-          Ver serviÃ§o
+          Ver serviço
           <ArrowUpRight className="w-3.5 h-3.5" />
         </button>
       </div>
@@ -60,8 +61,8 @@ export default function Insights({ onNavigate }: InsightsProps) {
             <div className="space-y-6">
               <div className="p-4 rounded-xl bg-brand/5 border border-brand/20 text-zinc-300 text-xs sm:text-sm font-sans flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <span className="leading-relaxed">
-                  <strong className="text-brand font-sans uppercase tracking-wider block sm:inline mr-2">[Vitrine de PrÃ©via / Preview]</strong>
-                  Esta Ã¡rea funciona como biblioteca editorial e jÃ¡ prepara cada peÃ§a para um serviÃ§o, uma dor e um prÃ³ximo passo.
+                  <strong className="text-brand font-sans uppercase tracking-wider block sm:inline mr-2">[Vitrine de Prévia / Preview]</strong>
+                  Esta área funciona como biblioteca editorial e já prepara cada peça para um serviço, uma dor e um próximo passo.
                 </span>
                 <span className="text-[10px] font-sans whitespace-nowrap bg-white/[0.05] border border-white/[0.08] px-2.5 py-1 rounded text-zinc-400">
                   SEO Canonical Ready
@@ -71,14 +72,14 @@ export default function Insights({ onNavigate }: InsightsProps) {
               <div className="space-y-3 pt-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-brand text-xs font-sans">
                   <Sparkles className="w-3 h-3" />
-                  <span>Insights TAG08 &bull; Centro de inteligÃªncia aplicada</span>
+                  <span>Insights TAG08 &bull; Centro de inteligência aplicada</span>
                 </div>
                 <h1 className="font-display font-medium text-4xl sm:text-5xl md:text-6xl text-gradient leading-[1.1] tracking-tight">
-                  ConteÃºdo com valor real<br />
+                  Conteúdo com valor real<br />
                   <span className="text-brand">e destino comercial claro.</span>
                 </h1>
                 <p className="text-zinc-300 text-sm sm:text-base max-w-2xl leading-relaxed">
-                  Cada peÃ§a editorial nasce como `BlogPost`, mas entra no site com relaÃ§Ã£o explÃ­cita a um serviÃ§o, uma objeÃ§Ã£o e uma aÃ§Ã£o concreta.
+                  Cada peça editorial nasce como `BlogPost`, mas entra no site com relação explícita a um serviço, uma objeção e uma ação concreta.
                 </p>
               </div>
             </div>
@@ -110,11 +111,13 @@ export default function Insights({ onNavigate }: InsightsProps) {
                   className="group bg-charcoal-900 border border-white/[0.05] hover:border-brand/20 rounded-2xl overflow-hidden transition-all duration-350 flex flex-col justify-between cursor-pointer transform hover:-translate-y-1"
                 >
                   <div className="relative aspect-video overflow-hidden bg-zinc-950 shrink-0">
-                    <img
+                    <Image
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                       src={post.image}
                       alt={post.title}
                       referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
                     <span className="absolute top-4 left-4 bg-brand text-black font-mono font-black text-[9px] uppercase px-2.5 py-0.5 rounded tracking-widest">
@@ -126,7 +129,7 @@ export default function Insights({ onNavigate }: InsightsProps) {
                     <div className="space-y-2">
                       <div className="flex items-center gap-3 text-zinc-500 font-mono text-[10px] uppercase tracking-wide">
                         <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {post.date}</span>
-                        <span>â€¢</span>
+                        <span>•</span>
                         <span className="flex items-center gap-1"><BookOpen className="w-3 h-3" /> {post.readingTime ?? post.readTime}</span>
                       </div>
                       <h3 className="text-white font-semibold text-lg hover:text-brand transition-colors duration-200 line-clamp-2">
@@ -169,11 +172,13 @@ export default function Insights({ onNavigate }: InsightsProps) {
             </button>
 
             <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/[0.05] bg-zinc-950">
-              <img
+              <Image
+                fill
+                sizes="(max-width: 1024px) 100vw, 70vw"
                 src={selectedPost.image}
                 alt={selectedPost.title}
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
+                className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 bg-brand text-black font-mono font-black text-xs uppercase px-3 py-1 rounded tracking-widest shadow">
@@ -184,9 +189,9 @@ export default function Insights({ onNavigate }: InsightsProps) {
             <div className="space-y-4">
               <div className="flex flex-wrap gap-4 items-center text-zinc-500 font-mono text-xs uppercase tracking-wider border-b border-white/[0.04] pb-4">
                 <span className="flex items-center gap-1.5 text-zinc-400"><Calendar className="w-4 h-4 text-brand" /> {selectedPost.date}</span>
-                <span>â€¢</span>
+                <span>•</span>
                 <span className="flex items-center gap-1.5 text-zinc-400"><BookOpen className="w-4 h-4 text-brand" /> {selectedPost.readingTime ?? selectedPost.readTime}</span>
-                <span>â€¢</span>
+                <span>•</span>
                 <span className="flex items-center gap-1.5 text-zinc-400"><User className="w-4 h-4 text-brand" /> {selectedPost.author}</span>
               </div>
 
@@ -227,7 +232,7 @@ export default function Insights({ onNavigate }: InsightsProps) {
             </div>
 
             <section className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-6 space-y-4">
-              <p className="text-brand font-mono text-[10px] uppercase tracking-widest">DireÃ§Ã£o EstratÃ©gica</p>
+              <p className="text-brand font-mono text-[10px] uppercase tracking-widest">Direção Estratégica</p>
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
                   <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-1">Problema</p>
@@ -242,7 +247,7 @@ export default function Insights({ onNavigate }: InsightsProps) {
                   <p className="text-zinc-200 text-sm leading-relaxed">{selectedPost.strategicSynthesis.risk}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-1">PrÃ³ximo passo</p>
+                  <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-1">Próximo passo</p>
                   <p className="text-zinc-200 text-sm leading-relaxed">{selectedPost.strategicSynthesis.nextStep}</p>
                 </div>
               </div>
