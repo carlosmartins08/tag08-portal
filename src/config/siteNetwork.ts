@@ -64,6 +64,7 @@ export const TAG08_OFFICIAL_CONTACT = {
 
 export const TAG08_OFFICIAL_YOUTUBE_HANDLE = "@tag08.com.br_sobre";
 export const TAG08_OFFICIAL_YOUTUBE_URL = `https://www.youtube.com/${TAG08_OFFICIAL_YOUTUBE_HANDLE}`;
+export const TAG08_OFFICIAL_PINTEREST_URL = "https://br.pinterest.com/agencia_tag08/";
 
 export const TAG08_WHATSAPP_CONTACTS: WhatsAppContact[] = [
   {
@@ -120,7 +121,7 @@ export const TAG08_OFFICIAL_CHANNELS: OfficialChannel[] = [
   {
     key: "pinterest",
     label: "Pinterest",
-    href: "https://br.pinterest.com/agencia_tag08/",
+    href: TAG08_OFFICIAL_PINTEREST_URL,
     kind: "social"
   },
   {

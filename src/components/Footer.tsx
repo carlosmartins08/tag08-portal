@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { ArrowUpRight, MessageSquare, Phone, Mail, MapPin, ShieldAlert, CheckCircle, Eye, Type, RefreshCw, Instagram, Linkedin, Youtube, Facebook, Twitter, Cookie, Lock, Scale, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
-import { getLocalizedNetworkLinks, TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_YOUTUBE_URL, TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
+import { getLocalizedNetworkLinks, TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_PINTEREST_URL, TAG08_OFFICIAL_YOUTUBE_URL, TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
 import { safeStorage } from "../utils/storage";
 import { trackOutboundClick } from "../lib/analytics";
 import { readCookiePreferences, saveCookiePreferences, type CookiePreferences } from "../lib/cookieConsent";
@@ -450,10 +450,10 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   <Twitter className="w-4 h-4" />
                 </a>
                 <a
-                  href="https://br.pinterest.com/agencia_tag08/"
+                  href={TAG08_OFFICIAL_PINTEREST_URL}
                   target="_blank"
                   rel="noreferrer"
-                  onClick={() => handleOutboundClick("Pinterest", "https://br.pinterest.com/agencia_tag08/", "footer-social")}
+                  onClick={() => handleOutboundClick("Pinterest", TAG08_OFFICIAL_PINTEREST_URL, "footer-social")}
                   className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 pointer-events-auto"
                   aria-label="Siga-nos no Pinterest"
                 >

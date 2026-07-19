@@ -141,6 +141,26 @@ export const formatIsoDuration = (duration: string) => {
   return `${String(parts[1]).padStart(2, "0")}:${String(parts[2]).padStart(2, "0")}`;
 };
 
+export const getVideoDescriptionPreview = (description: string, maxCharacters = 260) => {
+  const firstContentBlock = description
+    .replace(/https?:\/\/\S+/gi, " ")
+    .split(/\n{2,}/)
+    .find((block) => block.trim().length > 0) ?? "";
+
+  const normalized = firstContentBlock
+    .replace(/[\r\n]+/g, " ")
+    .replace(/[•·]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (normalized.length <= maxCharacters) {
+    return normalized;
+  }
+
+  const truncated = normalized.slice(0, maxCharacters + 1).replace(/\s+\S*$/, "").trim();
+  return `${truncated}…`;
+};
+
 export const FALLBACK_YOUTUBE_VIDEOS: OfficialYouTubeVideo[] = [
   {
     id: "posicionamento-alto-nivel",

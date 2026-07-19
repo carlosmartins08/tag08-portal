@@ -90,8 +90,9 @@ const GOOGLE_BUSINESS_ACCESS_TOKEN = (process.env.GOOGLE_BUSINESS_ACCESS_TOKEN |
 const GOOGLE_BUSINESS_REFRESH_TOKEN = (process.env.GOOGLE_BUSINESS_REFRESH_TOKEN || "").trim();
 const GOOGLE_BUSINESS_CLIENT_ID = (process.env.GOOGLE_BUSINESS_CLIENT_ID || "").trim();
 const GOOGLE_BUSINESS_CLIENT_SECRET = (process.env.GOOGLE_BUSINESS_CLIENT_SECRET || "").trim();
-const LIVE_OFFICIAL_CONTENT_ENABLED =
-  process.env.NODE_ENV === "production" && Boolean(YOUTUBE_API_KEY || GOOGLE_BUSINESS_LOCATION_NAME);
+// Local and staging need the same live-content path as production to validate
+// the channel before release. The credentials remain server-only in every environment.
+const LIVE_OFFICIAL_CONTENT_ENABLED = Boolean(YOUTUBE_API_KEY || GOOGLE_BUSINESS_LOCATION_NAME);
 
 const getCachedResponse = (cacheKey: string) => {
   const cached = officialContentCache.get(cacheKey);

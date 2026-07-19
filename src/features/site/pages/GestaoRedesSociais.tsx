@@ -8,9 +8,9 @@ import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import MiniCases from "../../../components/MiniCases";
 import TrustTestimonialsSection from "../../../components/TrustTestimonialsSection";
-import { TAG08_YOUTUBE_SHORTS } from "../../../content/youtubeShorts";
 import { trackVideoEvent } from "../../../lib/analytics";
 import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
+import { useOfficialYouTubeVideos } from "../../../lib/useOfficialYouTubeVideos";
 
 /*
 interface PlayableShort {
@@ -336,7 +336,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
     routine: diagnosticAnswers.routine as string,
     moment: diagnosticAnswers.moment as string
   });
-  const visibleShorts = TAG08_YOUTUBE_SHORTS.slice(-3);
+  const { videos: visibleVideos } = useOfficialYouTubeVideos(3);
   const diagnosticSummaryCards = [
     { label: "Principal desafio", value: challengeLabel },
     { label: "Rotina atual", value: routineLabel },
@@ -1218,7 +1218,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                 FORMATOS AUDIOVISUAIS // TAG08
               </div>
               <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white leading-none tracking-tighter uppercase">
-                Vídeos curtos, bastidores e recortes com função editorial.
+                Conteúdos recentes do canal com função editorial.
               </h2>
             </div>
             <div className="lg:col-span-5">
@@ -1229,16 +1229,16 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {visibleShorts.map((short) => (
+            {visibleVideos.map((video) => (
               <motion.a
-                key={short.id}
-                href={short.href}
+                key={video.id}
+                href={video.videoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() =>
                   trackVideoEvent({
                     action: "selected",
-                    video_id: short.id,
+                    video_id: video.embedCode,
                     video_source: "youtube",
                     surface: "social-media-shorts",
                     page_path: "/servicos/gestao-de-redes-sociais"
@@ -1247,12 +1247,12 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                 whileHover={{ y: -4 }}
                 className="group block rounded-[28px] overflow-hidden border border-white/[0.06] bg-white/[0.02] transition-all duration-300 hover:border-brand-secondary/45 hover:shadow-[0_18px_50px_rgba(var(--color-brand-secondary-rgb),0.08)]"
               >
-                <div className="relative aspect-[9/16] bg-zinc-900">
+                <div className="relative aspect-[16/10] bg-zinc-900">
                   <Image
                     fill
                     sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                    src={short.thumbnail}
-                    alt={short.title}
+                    src={video.thumbnail}
+                    alt={video.title}
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     referrerPolicy="no-referrer"
                   />
@@ -1260,7 +1260,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
 
                   <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/60 px-3 py-1.5 backdrop-blur-md">
                     <span className="font-mono text-[9px] font-black uppercase tracking-[0.24em] text-brand-secondary">
-                      SHORT REAL
+                      CONTEÚDO RECENTE
                     </span>
                   </div>
 
@@ -1272,10 +1272,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
 
                   <div className="absolute inset-x-4 bottom-4 space-y-2">
                     <span className="font-mono text-[9px] font-black uppercase tracking-[0.28em] text-brand-secondary/90">
-                      Recorte editorial
+                      {video.category}
                     </span>
                     <h3 className="font-display text-lg leading-tight font-black text-white uppercase">
-                      {short.title}
+                      {video.title}
                     </h3>
                     <div className="flex items-center justify-between gap-3 border-t border-white/10 pt-3 text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-zinc-200">
                       <span>Assistir no YouTube</span>
@@ -1292,7 +1292,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               Fonte oficial
             </span>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Os recortes acima saem do canal oficial da TAG08 e funcionam como apoio editorial para mostrar bastidores, contexto e presenca real sem criar video ficticio dentro da pagina.
+              Os conteúdos acima são sincronizados do canal oficial da TAG08 e funcionam como apoio editorial para mostrar bastidores, contexto e presença real sem criar vídeo fictício dentro da página.
             </p>
           </div>
 

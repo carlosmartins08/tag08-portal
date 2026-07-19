@@ -6,7 +6,7 @@ import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import MiniCases from "../../../components/MiniCases";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
-import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
+import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl, TAG08_OFFICIAL_PINTEREST_URL } from "../../../config/siteNetwork";
 import { trackOutboundClick } from "../../../lib/analytics";
 
 interface BrandingProps {
@@ -111,7 +111,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
         category: "Identidade para saúde",
         description: "Sistema visual para uma clínica que precisava comunicar cuidado, clareza e consistência em seus pontos de contato.",
         imageUrl: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=650",
-        pinterestUrl: "https://br.pinterest.com/pin/433401532892978001/",
+        pinterestUrl: TAG08_OFFICIAL_PINTEREST_URL,
         likesCount: 142,
         challenge: "Alinhar atendimento, materiais e presença digital à percepção que a clínica já entregava.",
         solution: "Criamos um sistema visual com paleta suave, monograma circular e aplicações pensadas para materiais institucionais e digitais.",
@@ -127,7 +127,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
         category: "Identidade institucional",
         description: "Rebranding para um escritório que precisava transmitir seriedade, organização e coerência em materiais físicos e digitais.",
         imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&q=80&w=650",
-        pinterestUrl: "https://br.pinterest.com/pin/433401532892978002/",
+        pinterestUrl: TAG08_OFFICIAL_PINTEREST_URL,
         likesCount: 98,
         challenge: "Organizar apresentação, papelaria e presença institucional para comunicar solidez com mais clareza.",
         solution: "Desenvolvemos um monograma simétrico, elementos de apoio e materiais consistentes para canais físicos e digitais.",
@@ -143,7 +143,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
         category: "Branding para tecnologia",
         description: "Direção visual para um SaaS que precisava diferenciar a marca com leitura clara e arquitetura de interface.",
         imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=650",
-        pinterestUrl: "https://br.pinterest.com/pin/433401532892978003/",
+        pinterestUrl: TAG08_OFFICIAL_PINTEREST_URL,
         likesCount: 187,
         challenge: "Diferenciar o produto em um mercado saturado com uma identidade visual mais legível.",
         solution: "Estruturamos uma identidade visual geométrica com aplicações para produto, interface e comunicação de lançamento.",
@@ -159,7 +159,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
         category: "Branding para varejo",
         description: "Direção estética para uma marca que precisava comunicar origem, cuidado e continuidade em embalagens e materiais de apoio.",
         imageUrl: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=650",
-        pinterestUrl: "https://br.pinterest.com/pin/433401532892978004/",
+        pinterestUrl: TAG08_OFFICIAL_PINTEREST_URL,
         likesCount: 214,
         challenge: "Estruturar embalagens e materiais para traduzir origem, cuidado e valor de marca.",
         solution: "Criamos uma direção visual para rótulos, embalagens e materiais de ponto de venda com coerência entre aplicação e percepção.",
@@ -886,13 +886,13 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 </div>
               </div>
               <a
-                href="https://br.pinterest.com"
+                href={TAG08_OFFICIAL_PINTEREST_URL}
                 target="_blank"
                 rel="noreferrer"
-                onClick={() => handleOutboundClick("Pinterest", "https://br.pinterest.com", "branding-pinterest")}
+                onClick={() => handleOutboundClick("Pinterest", TAG08_OFFICIAL_PINTEREST_URL, "branding-pinterest")}
                 className="text-[10px] font-mono font-bold text-red-500 uppercase tracking-widest hover:underline bg-red-500/5 px-3.5 py-2 rounded-xl border border-red-500/10"
               >
-                Ver portfólio visual
+                Ver acervo no Pinterest
               </a>
             </div>
           )}
@@ -1461,7 +1461,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     className="w-full bg-red-600 hover:bg-red-700 text-white font-mono text-[9px] uppercase tracking-widest font-black py-3 px-4 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-[0_4px_15px_rgba(220,38,38,0.25)] hover:scale-[1.01]"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
-                    <span>Ver referência no Pinterest</span>
+                    <span>Ver acervo no Pinterest</span>
                   </a>
                 </div>
               </div>

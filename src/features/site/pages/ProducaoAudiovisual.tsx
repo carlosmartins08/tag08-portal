@@ -14,7 +14,7 @@ import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
 import { trackVideoEvent } from "../../../lib/analytics";
 import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
-import { TAG08_YOUTUBE_SHORTS } from "../../../content/youtubeShorts";
+import { useOfficialYouTubeVideos } from "../../../lib/useOfficialYouTubeVideos";
 
 interface Deliverable {
   id: string;
@@ -114,6 +114,7 @@ interface ProducaoProps {
 
 export default function ProducaoAudiovisual({ onNavigate }: ProducaoProps) {
   const [activeFaq, setActiveFaq] = useState<number>(0);
+  const { videos: youtubeVideos } = useOfficialYouTubeVideos(4);
   
   // Custom calculator states
   const [selectedFormat, setSelectedFormat] = useState<string>("institucional");
@@ -478,7 +479,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
       </section>
 
       {/*=========================================
-          SECTION 4.5: FORMATOS AUDIOVISUAIS // TAG08 (Shorts reais do canal)
+          SECTION 4.5: FORMATOS AUDIOVISUAIS // TAG08 (Conteúdos recentes do canal)
          =========================================*/}
       <section className="px-6 md:px-8 py-20 border-b border-white/[0.04] bg-black/35 text-left relative z-10">
         <div className="max-w-7xl mx-auto space-y-12">
@@ -487,24 +488,24 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               FORMATOS AUDIOVISUAIS // TAG08
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
-              Shorts reais publicados no canal.
+              Conteúdos recentes publicados no canal.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Estes são exemplos reais do canal oficial da TAG08. Eles mostram bastidores, produção, posicionamento e trabalhos já publicados que ajudam a entender o tipo de material que o audiovisual pode gerar.
+              Estes são os conteúdos mais recentes do canal oficial da TAG08. Eles mostram bastidores, produção, posicionamento e trabalhos já publicados que ajudam a entender o tipo de material que o audiovisual pode gerar.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {TAG08_YOUTUBE_SHORTS.map((short) => (
+            {youtubeVideos.map((video) => (
               <a
-                key={short.id}
-                href={short.href}
+                key={video.id}
+                href={video.videoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() =>
                   trackVideoEvent({
                     action: "selected",
-                    video_id: short.id,
+                    video_id: video.embedCode,
                     video_source: "youtube",
                     surface: "audiovisual-shorts",
                     page_path: "/servicos/producao-audiovisual"
@@ -512,12 +513,12 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 }
                 className="group block h-full overflow-hidden rounded-[28px] border border-white/[0.05] bg-charcoal-900 transition-all duration-300 hover:border-brand/30 hover:-translate-y-0.5"
               >
-                <div className="relative aspect-[9/16] overflow-hidden bg-black">
+                <div className="relative aspect-[16/10] overflow-hidden bg-black">
                   <Image
                     fill
                     sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                    src={short.thumbnail}
-                    alt={short.title}
+                    src={video.thumbnail}
+                    alt={video.title}
                     className="object-cover brightness-[0.82] contrast-[1.05] transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                     referrerPolicy="no-referrer"
@@ -525,7 +526,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
                   <div className="absolute top-4 left-4 z-10">
                     <span className="inline-flex items-center rounded-full border border-white/10 bg-black/45 px-2.5 py-1 font-mono text-[8px] uppercase tracking-widest text-white/75 backdrop-blur-sm">
-                      SHORT REAL
+                      CONTEÚDO RECENTE
                     </span>
                   </div>
                   <div className="absolute top-4 right-4 z-10">
@@ -542,7 +543,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
                 <div className="space-y-4 p-5 sm:p-6">
                   <h3 className="text-sm sm:text-[15px] font-semibold leading-snug text-white">
-                    {short.title}
+                    {video.title}
                   </h3>
                   <div className="flex items-center justify-between border-t border-white/[0.05] pt-3">
                     <span className="font-mono text-[8.5px] uppercase tracking-widest text-zinc-500">

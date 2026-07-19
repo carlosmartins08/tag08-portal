@@ -4,7 +4,7 @@ import Image from "next/image";
 import { SERVICES, PLANS } from "../../../data";
 import { motion, AnimatePresence } from "motion/react";
 import { TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_YOUTUBE_URL, buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
-import type { OfficialContentApiResponse } from "../../../lib/officialContent";
+import { getVideoDescriptionPreview, type OfficialContentApiResponse } from "../../../lib/officialContent";
 import { trackOutboundClick, trackVideoEvent } from "../../../lib/analytics";
 import { COOKIE_CONSENT_EVENT, grantMarketingConsent, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
@@ -2902,8 +2902,11 @@ export default function Home({ onNavigate }: HomeProps) {
                         {visibleYoutubeVideos[activeVideoIndex].title}
                       </h3>
                       
-                      <p className="text-zinc-300 text-xs sm:text-[13px] font-sans leading-relaxed max-w-2xl font-medium">
-                        {visibleYoutubeVideos[activeVideoIndex].description}
+                      <p className="max-w-[66ch] text-zinc-300 text-xs sm:text-[13px] font-sans leading-relaxed font-medium line-clamp-4">
+                        <span className="mb-1 block font-mono text-[8px] font-black uppercase tracking-[0.18em] text-zinc-500">
+                          Sobre este vídeo
+                        </span>
+                        {getVideoDescriptionPreview(visibleYoutubeVideos[activeVideoIndex].description)}
                       </p>
                     </div>
 
