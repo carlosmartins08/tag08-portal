@@ -26,6 +26,7 @@ export default function Contato() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [copiedStates, setCopiedStates] = useState<Record<string, boolean>>({});
   const hasTrackedFormStartRef = useRef(false);
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const toggleFaq = (index: number) => {
     setActiveFaq(activeFaq === index ? null : index);
@@ -130,6 +131,7 @@ export default function Contato() {
       const idempotencyKey = crypto.randomUUID();
       const payload = {
         ...formData,
+        website: honeypotRef.current?.value || "",
         consent,
         consentVersion: "contact-v1",
         locale,
@@ -468,10 +470,14 @@ export default function Contato() {
                   onSubmit={handleSubmit}
                   className="space-y-6 text-left"
                 >
+                  <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
+                    <label htmlFor="contact-website">Não preencha este campo</label>
+                    <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" ref={honeypotRef} />
+                  </div>
                   {/* Row Name and company */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label htmlFor="name" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      <label htmlFor="form-name" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
                         Qual o seu nome? *
                       </label>
                       <input
@@ -480,18 +486,20 @@ export default function Contato() {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
+                        aria-invalid={Boolean(errors.name)}
+                        aria-describedby={errors.name ? "form-name-error" : undefined}
                         className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-all ${
                           errors.name ? "border-red-500/50" : "border-white/[0.08]"
                         }`}
                         placeholder="Ex: Fernando Guedes"
                       />
                       {errors.name && (
-                        <p className="text-[10px] text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.name}</p>
+                        <p id="form-name-error" className="text-[10px] text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.name}</p>
                       )}
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="company" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      <label htmlFor="form-company" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
                         Nome da Empresa *
                       </label>
                       <input
@@ -500,13 +508,15 @@ export default function Contato() {
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
+                        aria-invalid={Boolean(errors.company)}
+                        aria-describedby={errors.company ? "form-company-error" : undefined}
                         className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-all ${
                           errors.company ? "border-red-500/50" : "border-white/[0.08]"
                         }`}
                         placeholder="Ex: Clínica Guedes Ltda"
                       />
                       {errors.company && (
-                        <p className="text-[10px] text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.company}</p>
+                        <p id="form-company-error" className="text-[10px] text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.company}</p>
                       )}
                     </div>
                   </div>
@@ -514,7 +524,7 @@ export default function Contato() {
                   {/* Row Whatsapp and email */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label htmlFor="whatsapp" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      <label htmlFor="form-whatsapp" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
                         WhatsApp *
                       </label>
                       <input
@@ -523,18 +533,20 @@ export default function Contato() {
                         name="whatsapp"
                         value={formData.whatsapp}
                         onChange={handleChange}
+                        aria-invalid={Boolean(errors.whatsapp)}
+                        aria-describedby={errors.whatsapp ? "form-whatsapp-error" : undefined}
                         className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-all ${
                           errors.whatsapp ? "border-red-500/50" : "border-white/[0.08]"
                         }`}
                         placeholder="Ex: (11) 99999-9999"
                       />
                       {errors.whatsapp && (
-                        <p className="text-[10px] text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.whatsapp}</p>
+                        <p id="form-whatsapp-error" className="text-[10px] text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.whatsapp}</p>
                       )}
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="email" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      <label htmlFor="form-email" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
                         E-mail Corporativo *
                       </label>
                       <input
@@ -543,13 +555,15 @@ export default function Contato() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
+                        aria-invalid={Boolean(errors.email)}
+                        aria-describedby={errors.email ? "form-email-error" : undefined}
                         className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-all ${
                           errors.email ? "border-red-500/50" : "border-white/[0.08]"
                         }`}
                         placeholder="Ex: fernando@clinicaguedes.com"
                       />
                       {errors.email && (
-                        <p className="text-[10px] text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.email}</p>
+                        <p id="form-email-error" className="text-[10px] text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.email}</p>
                       )}
                     </div>
                   </div>
@@ -597,7 +611,7 @@ export default function Contato() {
 
                   {/* Message field */}
                   <div className="space-y-2">
-                    <label htmlFor="message" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                    <label htmlFor="form-message" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
                       Conte mais detalhes sobre suas metas corporativas
                     </label>
                     <textarea

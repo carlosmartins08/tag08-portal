@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -26,7 +26,7 @@ import {
   TrendingUp,
   Award
 } from "lucide-react";
-import { trackOutboundClick } from "../../../lib/analytics";
+import { trackFormError, trackFormStart, trackFormStep, trackFormSubmit, trackOutboundClick } from "../../../lib/analytics";
 import { queueFormSubmission } from "../../../lib/formQueue";
 
 interface Vacancy {
@@ -57,6 +57,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
   const [consent, setConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const handleOutboundClick = (label: string, url: string, surface: string) => {
     trackOutboundClick({
@@ -89,13 +90,29 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
     }
 
     setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      trackFormError({
+        form_name: "talent_application",
+        form_surface: "talent-page",
+        error_count: Object.keys(newErrors).length,
+        page_path: "/trabalhe-conosco"
+      });
+    }
     return Object.keys(newErrors).length === 0;
   };
 
   const handleNextStep = () => {
     if (validateStep(currentStep)) {
       setErrors({});
-      setCurrentStep(prev => prev + 1);
+      const nextStep = currentStep + 1;
+      setCurrentStep(nextStep);
+      trackFormStep({
+        form_name: "talent_application",
+        form_surface: "talent-page",
+        step: nextStep,
+        total_steps: 3,
+        page_path: "/trabalhe-conosco"
+      });
     }
   };
 
@@ -173,6 +190,11 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
     setCurrentStep(1);
     setErrors({});
     setSubmitSuccess(false);
+    trackFormStart({
+      form_name: "talent_application",
+      form_surface: "talent-page",
+      page_path: "/trabalhe-conosco"
+    });
     const formElement = document.getElementById("application-form-section");
     if (formElement) {
       formElement.scrollIntoView({ behavior: "smooth" });
@@ -186,6 +208,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
     if (!validateStep(3) || !consent) {
       if (!consent) setSubmitError("Confirme o consentimento para enviar sua candidatura.");
+      trackFormSubmit({
+        form_name: "talent_application",
+        form_surface: "talent-page",
+        status: "validation_error",
+        page_path: "/trabalhe-conosco"
+      });
       return;
     }
 
@@ -203,6 +231,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
         portfolio: formPortfolio,
         coverLetter: formCoverLetter,
         resumeFileName: "",
+        website: honeypotRef.current?.value || "",
         consent,
         consentVersion: "talent-v1",
         locale,
@@ -232,8 +261,20 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
       setFormPortfolio("");
       setFormCoverLetter("");
       setConsent(false);
+      trackFormSubmit({
+        form_name: "talent_application",
+        form_surface: "talent-page",
+        status: "success",
+        page_path: "/trabalhe-conosco"
+      });
     } catch {
       setSubmitError("Sua candidatura foi salva neste navegador e será reenviada quando a conexão voltar.");
+      trackFormSubmit({
+        form_name: "talent_application",
+        form_surface: "talent-page",
+        status: "queued",
+        page_path: "/trabalhe-conosco"
+      });
     } finally {
       setSubmitting(false);
     }
@@ -904,6 +945,10 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                 {/* Submitting the form block */}
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
+                    <label htmlFor="talent-website">Não preencha este campo</label>
+                    <input id="talent-website" name="website" type="text" tabIndex={-1} autoComplete="off" ref={honeypotRef} />
+                  </div>
                   <AnimatePresence mode="wait">
                     
                     {/* STEP 1: APRESENTAÇÃO PRIMÁRIA */}
@@ -917,12 +962,13 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                         className="space-y-4"
                       >
                         <div id="field-name" className="space-y-1.5 text-left">
-                          <label className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
+                          <label htmlFor="talent-name" className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
                             Nome Completo *
                           </label>
                           <div className="relative">
                             <User className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400" />
                             <input
+                              id="talent-name"
                               type="text"
                               placeholder="Ex: Carlos Silva"
                               value={formName}
@@ -937,12 +983,13 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div id="field-email" className="space-y-1.5 text-left">
-                            <label className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
+                            <label htmlFor="talent-email" className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
                               E-mail de Contato *
                             </label>
                             <div className="relative">
                               <Mail className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400" />
                               <input
+                                id="talent-email"
                                 type="email"
                                 placeholder="Ex: carlos@empresa.com"
                                 value={formEmail}
@@ -956,12 +1003,13 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                           </div>
 
                           <div id="field-phone" className="space-y-1.5 text-left">
-                            <label className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
+                            <label htmlFor="talent-phone" className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
                               WhatsApp de Contato *
                             </label>
                             <div className="relative">
                               <Phone className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400" />
                               <input
+                                id="talent-phone"
                                 type="tel"
                                 placeholder="Ex: (47) 99999-9999"
                                 value={formPhone}
@@ -988,12 +1036,13 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                         className="space-y-4"
                       >
                         <div id="field-linkedin" className="space-y-1.5 text-left">
-                          <label className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
+                          <label htmlFor="talent-linkedin" className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
                             Perfil do LinkedIn *
                           </label>
                           <div className="relative">
                             <Linkedin className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400" />
                             <input
+                              id="talent-linkedin"
                               type="url"
                               placeholder="Ex: linkedin.com/in/seunome"
                               value={formLinkedin}
@@ -1007,12 +1056,13 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                         </div>
 
                         <div className="space-y-1.5 text-left">
-                          <label className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
+                          <label htmlFor="talent-portfolio" className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
                             Link do Portfólio / GitHub (Opcional)
                           </label>
                           <div className="relative">
                             <Globe className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400" />
                             <input
+                              id="talent-portfolio"
                               type="url"
                               placeholder="Ex: behance.net/seunome ou github.com/seunome"
                               value={formPortfolio}
@@ -1046,10 +1096,11 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                         {/* Miniature Pitch Letter */}
                         <div id="field-coverLetter" className="space-y-1.5 text-left">
-                          <label className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
+                          <label htmlFor="talent-cover-letter" className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
                             Diferencial &amp; Foco em Resultados *
                           </label>
                           <textarea
+                            id="talent-cover-letter"
                             rows={3}
                             placeholder="Conte em poucas linhas seus maiores cases de conversão sólida ou reestruturação estética..."
                             value={formCoverLetter}

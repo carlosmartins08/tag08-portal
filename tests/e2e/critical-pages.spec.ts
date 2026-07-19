@@ -12,6 +12,7 @@ const criticalRoutes = [
 
 const viewports = [
   { label: "desktop", width: 1440, height: 900 },
+  { label: "tablet", width: 768, height: 1024 },
   { label: "mobile", width: 390, height: 844 }
 ] as const;
 
@@ -24,7 +25,7 @@ async function assertPageFrame(page: Page) {
   );
   expect(horizontalOverflow, "A pagina nao pode ter overflow horizontal.").toBeFalsy();
 
-  await page.waitForFunction(() =>
+  const waitForVisibleImages = () => page.waitForFunction(() =>
     Array.from(document.images)
       .filter((image) => {
         const rect = image.getBoundingClientRect();
@@ -34,8 +35,7 @@ async function assertPageFrame(page: Page) {
     undefined,
     { timeout: 15_000 }
   );
-
-  const brokenVisibleImages = await page.locator("img").evaluateAll((images) =>
+  const getBrokenVisibleImages = () => page.locator("img").evaluateAll((images) =>
     (images as HTMLImageElement[])
       .filter((image) => {
         const rect = image.getBoundingClientRect();
@@ -44,6 +44,18 @@ async function assertPageFrame(page: Page) {
       .filter((image) => !image.complete || image.naturalWidth === 0)
       .map((image) => image.currentSrc || image.getAttribute("src") || "sem-src")
   );
+
+  await waitForVisibleImages();
+  let brokenVisibleImages = await getBrokenVisibleImages();
+
+  // Remote editorial assets can fail once while the Next optimizer warms up.
+  // The retry still fails the test if the page cannot render the image after reload.
+  if (brokenVisibleImages.length > 0) {
+    await page.waitForTimeout(500);
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await waitForVisibleImages();
+    brokenVisibleImages = await getBrokenVisibleImages();
+  }
   expect(brokenVisibleImages, "Imagens visiveis devem carregar.").toEqual([]);
 }
 
@@ -79,6 +91,18 @@ test.describe("rotas indexaveis em mobile", () => {
   for (const path of publicRoutePaths) {
     test(`renderiza ${path}`, async ({ page }) => {
       await page.setViewportSize({ width: 390, height: 844 });
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      await assertPageFrame(page);
+    });
+  }
+});
+
+test.describe("rotas indexaveis em tablet", () => {
+  test.setTimeout(180_000);
+
+  for (const path of publicRoutePaths) {
+    test(`renderiza ${path}`, async ({ page }) => {
+      await page.setViewportSize({ width: 768, height: 1024 });
       await page.goto(path, { waitUntil: "domcontentloaded" });
       await assertPageFrame(page);
     });

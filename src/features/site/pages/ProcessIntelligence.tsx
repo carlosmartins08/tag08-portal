@@ -8,6 +8,7 @@ import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import MiniCases from "../../../components/MiniCases";
 import { calculateProcessIntelligenceWaste } from "../../../lib/simulators/processIntelligence";
+import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
 
 interface ProcessProps {
   onNavigate: (page: string) => void;
@@ -18,6 +19,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
   const [collaborators, setCollaborators] = useState(5);
   const [hoursPerDay, setHoursPerDay] = useState(2.5);
   const [monthlySalary, setMonthlySalary] = useState(4500);
+  const trackSimulator = useSimulatorTracking("process_intelligence_waste", 1, "/servicos/process-intelligence");
   const waste = calculateProcessIntelligenceWaste({ collaborators, hoursPerDay, monthlySalary });
 
   const handleLinkClick = (page: string) => {
@@ -303,7 +305,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                     max="40" 
                     step="1" 
                     value={collaborators}
-                    onChange={(event) => setCollaborators(Number(event.target.value))}
+                    onChange={(event) => { trackSimulator("input_changed"); setCollaborators(Number(event.target.value)); }}
                     className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-brand-secondary"
                   />
                   <div className="flex items-center justify-between text-[9px] font-sans text-zinc-500">
@@ -330,7 +332,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                     max="8.0" 
                     step="0.5" 
                     value={hoursPerDay}
-                    onChange={(event) => setHoursPerDay(Number(event.target.value))}
+                    onChange={(event) => { trackSimulator("input_changed"); setHoursPerDay(Number(event.target.value)); }}
                     className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-white"
                   />
                   <div className="flex items-center justify-between text-[9px] font-sans text-zinc-500">
@@ -357,7 +359,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                     max="15000" 
                     step="500" 
                     value={monthlySalary}
-                    onChange={(event) => setMonthlySalary(Number(event.target.value))}
+                    onChange={(event) => { trackSimulator("input_changed"); setMonthlySalary(Number(event.target.value)); }}
                     className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-white"
                   />
                   <div className="flex items-center justify-between text-[9px] font-sans text-zinc-500">
@@ -581,6 +583,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               <div className="space-y-3">
                 <a 
                   href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20solicitar%20um%20diagnóstico%20de%20Process%20Intelligence%20com%20a%20TAG08")}
+                  onClick={() => trackSimulator("cta_clicked")}
                   target="_blank"
                   rel="noreferrer"
                   className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner"

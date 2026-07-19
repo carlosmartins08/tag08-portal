@@ -592,7 +592,7 @@ function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
       className="bg-charcoal-900 border border-white/[0.04] p-5 pb-7 rounded-[28px] overflow-hidden cursor-pointer group flex flex-col justify-between transition-all duration-350 hover:border-brand/25 hover:-translate-y-1 relative shadow-lg h-full"
     >
       {/* Top Image area mimicking mockup precisely with premium grayscale/vibrant transition */}
-      <div className="relative h-[210px] w-full rounded-[20px] overflow-hidden mb-2 bg-zinc-950">
+      <div className="relative aspect-[4/3] w-full rounded-[20px] overflow-hidden mb-2 bg-zinc-950">
         <div className="absolute inset-0 bg-black/40 z-10 hover:opacity-10 transition-opacity" />
         
         {imgError ? (
@@ -1214,7 +1214,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     onNavigate("/servicos/branding-identidade");
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
-                  className="relative group overflow-hidden rounded-3xl border border-white/[0.05] hover:border-brand-secondary/30 h-[260px] bg-charcoal-900 cursor-pointer transition-all duration-300"
+                  className="relative group overflow-hidden rounded-3xl border border-white/[0.10] hover:border-brand-secondary/40 h-[260px] bg-charcoal-900 cursor-pointer transition-all duration-300"
                 >
                   <Image
                     fill
@@ -1224,7 +1224,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     className="object-cover grayscale opacity-35 group-hover:grayscale-0 group-hover:scale-102 group-hover:opacity-50 transition-all duration-700"
                     referrerPolicy="no-referrer"
                   />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-6 text-left">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-6 sm:p-8 text-left">
                       <div className="flex items-center justify-between w-full">
                         <span className="font-mono text-[8px] font-black tracking-widest text-brand uppercase bg-brand/5 border border-brand/10 px-2.5 py-0.5 rounded">
                           M-02 // BRANDING ATIVO
@@ -1252,7 +1252,7 @@ export default function Home({ onNavigate }: HomeProps) {
                         onNavigate("/servicos/gestao-de-redes-sociais");
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
-                      className="bg-charcoal-900 border border-white/[0.04] hover:border-brand-secondary/20 p-5 rounded-3xl flex flex-col justify-between h-[158px] relative overflow-hidden text-left group cursor-pointer transition-all duration-300"
+                      className="bg-charcoal-900 border border-white/[0.10] hover:border-brand-secondary/35 p-6 sm:p-8 rounded-3xl flex flex-col justify-between min-h-[190px] relative overflow-hidden text-left group cursor-pointer transition-all duration-300"
                     >
                       <div>
                         <div className="flex items-center justify-between w-full">
@@ -1283,7 +1283,7 @@ export default function Home({ onNavigate }: HomeProps) {
                         onNavigate("/servicos/branding-identidade");
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
-                      className="bg-charcoal-900 border border-white/[0.04] hover:border-brand-secondary/25 p-5 rounded-3xl flex flex-col justify-between h-[158px] relative overflow-hidden text-left cursor-pointer group transition-all duration-300"
+                      className="bg-charcoal-900 border border-white/[0.10] hover:border-brand-secondary/35 p-6 sm:p-8 rounded-3xl flex flex-col justify-between min-h-[190px] relative overflow-hidden text-left cursor-pointer group transition-all duration-300"
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-mono text-[8.5px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/15 px-2 py-0.5 rounded tracking-widest font-bold">M-03</span>
@@ -1308,7 +1308,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       onNavigate("/servicos/desenvolvimento-web");
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="bg-brand-secondary text-black p-8 rounded-3xl flex flex-col justify-between h-[340px] text-left relative overflow-hidden group cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-brand/5"
+                    className="bg-brand-secondary text-black p-8 rounded-3xl border border-brand-secondary ring-1 ring-brand-secondary/35 flex flex-col justify-between h-[412px] text-left relative overflow-hidden group cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-brand/15"
                   >
                     <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/20 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700 pointer-events-none" />
                     
@@ -1869,24 +1869,24 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Step 05: Definitive Destination Banner (Occupies 2 columns on desktop) */}
             <motion.div 
               whileHover={{ y: -3, scale: 1.01 }}
-              className="bg-brand-secondary text-black p-8 sm:p-10 rounded-[28px] rounded-r-[90px] md:col-span-1 lg:col-span-2 min-h-[240px] flex flex-col justify-between text-left group transition-all duration-500 relative overflow-hidden shadow-2xl"
+              className="bg-[#121214] border border-brand-secondary/45 text-white p-8 sm:p-10 rounded-[28px] rounded-r-[90px] md:col-span-1 lg:col-span-2 min-h-[240px] flex flex-col justify-between text-left group transition-all duration-500 relative overflow-hidden shadow-[0_20px_55px_rgba(var(--color-brand-secondary-rgb),0.08)]"
             >
-              <div className="absolute inset-0 bg-gradient-to-tr from-white/15 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-brand-secondary/10 via-transparent to-transparent pointer-events-none" />
               <div className="flex items-center justify-between w-full">
-                <span className="font-mono text-[9px] text-black/60 uppercase tracking-widest font-black bg-black/5 border border-black/10 px-2.5 py-0.5 rounded">DESTINO FINAL 05</span>
-                Ativação acompanhada
+                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/10 border border-brand-secondary/25 px-2.5 py-0.5 rounded">DESTINO FINAL 05</span>
+                <span className="text-brand-secondary">Ativação acompanhada</span>
               </div>
               
               <div className="space-y-2 mt-8 max-w-[90%]">
-                <h3 className="font-display font-black text-xl sm:text-2xl text-black uppercase tracking-tight leading-none">
+                <h3 className="font-display font-black text-xl sm:text-2xl text-white uppercase tracking-tight leading-none">
                   Ativação
                 </h3>
-                <p className="text-black/80 text-xs sm:text-[13px] leading-relaxed font-sans font-semibold">
+                <p className="text-zinc-300 text-xs sm:text-[13px] leading-relaxed font-sans font-semibold">
                   Colocamos as entregas em uso, acompanhando ajustes necessários e pontos de atenção.
                 </p>
               </div>
 
-              <div className="pt-6 border-t border-black/[0.08] mt-8 flex items-center justify-between w-full text-black/60 font-mono text-[9.5px] uppercase tracking-widest">
+              <div className="pt-6 border-t border-brand-secondary/20 mt-8 flex items-center justify-between w-full text-zinc-500 font-mono text-[9.5px] uppercase tracking-widest">
                 05 // EVOLUÇÃO
                 <button
                   onClick={() => {
@@ -1898,7 +1898,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }
                   }}
-                  className="bg-black text-white hover:bg-black/90 text-[10px] font-semibold px-4 py-2 font-mono uppercase rounded-xl transition-all flex items-center gap-2 group/btn shadow-md"
+                  className="bg-brand-secondary text-black hover:bg-brand-secondary/90 text-[10px] font-semibold px-4 py-2 font-mono uppercase rounded-xl transition-all flex items-center gap-2 group/btn shadow-md"
                 >
                   FALAR COM A TAG08 <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
                 </button>
@@ -2306,7 +2306,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 const accentCard = index === 6;
                 const gridClass = wideCard ? "lg:col-span-6" : "lg:col-span-4";
                 const cardBg = darkCard
-                  ? "bg-zinc-900 border border-white/5 shadow-md"
+                  ? "bg-zinc-900 border border-white/5"
                   : accentCard
                     ? "bg-brand-secondary/10 border border-brand-secondary/20"
                     : "bg-zinc-50 border border-black/10";
@@ -2319,7 +2319,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     key={service.id}
                     whileHover={{ y: -4, scale: 1.01 }}
                     transition={{ duration: 0.3 }}
-                    className={`${gridClass} ${cardBg} ${textColor} rounded-[32px] p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[280px] shadow-sm`}
+                    className={`${gridClass} ${cardBg} ${textColor} rounded-[32px] p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[280px]`}
                   >
                     {!darkCard && (
                       <div className="absolute inset-0 grid grid-cols-3 h-full opacity-[0.015] pointer-events-none">
@@ -2432,7 +2432,7 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.08)_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-20 pointer-events-none" />
 
           {/* Left Column: Ultra-stylish Portrait layout adorned with design overlays just like the reference */}
-          <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[520px] w-full">
+          <div className="lg:col-span-6 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[520px] w-full">
             {/* Dark background silhouette framing to lift the image */}
             <div className="absolute inset-0 bg-black/10 rounded-[24px] overflow-hidden" />
             
@@ -2475,7 +2475,7 @@ export default function Home({ onNavigate }: HomeProps) {
           </div>
 
           {/* Right Column: Dynamic Typography, Action Prompt & Overlaid Curved Card with interactive tabs */}
-          <div className="lg:col-span-7 flex flex-col justify-between space-y-8 text-left h-full relative z-10 lg:pl-4">
+          <div className="lg:col-span-6 flex flex-col justify-between space-y-8 text-left h-full relative z-10 lg:pl-2">
             
             <div className="space-y-4">
               {/* Upper badge */}
@@ -2808,7 +2808,7 @@ export default function Home({ onNavigate }: HomeProps) {
                         alt={visibleYoutubeVideos[activeVideoIndex].title} 
                         fill
                         sizes="(max-width: 768px) 100vw, 1200px"
-                        className="w-full h-full object-cover opacity-75 group-hover:scale-[1.02] transition-transform duration-[1200ms] ease-out brightness-[0.7] contrast-[1.05] grayscale-[15%]"
+                        className="w-full h-full object-cover opacity-75 group-hover:scale-[1.02] transition-transform duration-[1200ms] ease-out brightness-[0.62] contrast-[1.05] grayscale-[45%]"
                         referrerPolicy="no-referrer"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-95" />
@@ -3050,7 +3050,7 @@ export default function Home({ onNavigate }: HomeProps) {
               <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient leading-tight">
                 O que torna a TAG08 diferente?
               </h2>
-              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
+              <p className="text-zinc-400 text-xs sm:text-sm leading-[1.55]">
                 A TAG08 conecta estratégia, comunicação, design, tecnologia e processos para que a presença digital da marca tenha direção, consistência e capacidade real de sustentação.
               </p>
             </div>
@@ -3060,7 +3060,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="text-brand font-sans text-sm font-bold">01</div>
                 <div>
                   <h4 className="text-base font-semibold text-white">Diagnóstico antes da demanda</h4>
-                  <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-relaxed">
+                  <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-[1.55]">
                     Antes de executar, entendemos o momento da marca, o problema real e o que precisa ser priorizado.
                   </p>
                 </div>
@@ -3070,7 +3070,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="text-brand font-sans text-sm font-bold">02</div>
                 <div>
                   <h4 className="text-base font-semibold text-white">Estratégia que vira entrega</h4>
-                  <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-relaxed">
+                  <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-[1.55]">
                     A direção não fica só no plano. Ela se desdobra em conteúdo, identidade, site, campanhas, processos ou materiais concretos.
                   </p>
                 </div>
@@ -3080,7 +3080,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="text-brand font-sans text-sm font-bold">03</div>
                 <div>
                   <h4 className="text-base font-semibold text-white">Visão multidisciplinar</h4>
-                  <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-relaxed">
+                  <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-[1.55]">
                     Unimos posicionamento, narrativa, estética, tecnologia e operação para evitar soluções soltas.
                   </p>
                 </div>
@@ -3090,7 +3090,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="text-brand font-sans text-sm font-bold">04</div>
                 <div>
                   <h4 className="text-base font-semibold text-white">Execução com responsabilidade</h4>
-                  <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-relaxed">
+                  <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-[1.55]">
                     Trabalhamos com escopo, critério, revisão e melhoria contínua, sem prometer atalhos ou resultados artificiais.
                   </p>
                 </div>
@@ -3334,10 +3334,10 @@ export default function Home({ onNavigate }: HomeProps) {
                     </div>
 
                     {/* Star Logo under ambient glow spinning continuous */}
-                    <div className="relative w-14 h-14 sm:w-16 sm:h-16 mix-blend-screen hover:scale-[1.1] transition-transform duration-500 ease-out shrink-0">
+                    <div className="relative w-8 h-8 sm:w-10 sm:h-10 opacity-50 mix-blend-screen shrink-0" aria-hidden="true">
                       <svg
                         viewBox="0 0 100 100"
-                        className="w-full h-full text-brand fill-current animate-[spin_35s_linear_infinite] drop-shadow-[0_0_20px_rgba(var(--color-brand-rgb),0.55)]"
+                        className="w-full h-full text-brand fill-current"
                       >
                         <g transform="translate(50, 50)">
                           {[...Array(8)].map((_, index) => (
@@ -3354,7 +3354,7 @@ export default function Home({ onNavigate }: HomeProps) {
                           ))}
                         </g>
                       </svg>
-                      <div className="absolute inset-0 bg-brand/25 rounded-full blur-xl scale-75 animate-pulse" />
+                      <div className="absolute inset-0 bg-brand/20 rounded-full blur-xl scale-75" />
                     </div>
                   </div>
 

@@ -10,6 +10,7 @@ src/generated/
 .audit*/
 .tmp*.png
 metadata.json
+backups/
 .DS_Store
 *.log
 .env*

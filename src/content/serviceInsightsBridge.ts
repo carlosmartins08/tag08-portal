@@ -270,12 +270,42 @@ const HOSPEDAGEM_BRIDGE: ServiceInsightsBridgeConfig = {
   ],
 };
 
+const AFFILIATE_PROGRAM_BRIDGE: ServiceInsightsBridgeConfig = {
+  servicePath: "/programa-afiliados",
+  serviceTitle: "Programa de Afiliados",
+  title: "Leituras para indicar oportunidades com mais clareza",
+  intro:
+    "Uma indicação útil começa ao entender o problema, o momento e o próximo passo da empresa indicada. Estes conteúdos ajudam a qualificar a conversa antes do contato.",
+  hubCtaLabel: "Abrir Hub de Insights",
+  hubPath: "/insights",
+  items: [
+    {
+      status: "published",
+      postId: "definir-objetivo-marketing",
+      note: "Publicado no Hub de Insights",
+    },
+    {
+      status: "published",
+      postId: "consideracao-no-funil",
+      note: "Publicado no Hub de Insights",
+    },
+    {
+      status: "planned",
+      title: "Como preparar uma indicação sem prometer o que ainda precisa ser diagnosticado",
+      excerpt:
+        "Uma boa indicação organiza contexto, objetivo e contato. A proposta só deve nascer depois da conversa de diagnóstico com a TAG08.",
+      note: "Tema em preparação",
+    },
+  ],
+};
+
 export const SERVICE_INSIGHTS_BRIDGE_CONTENT: Record<
   string,
   ServiceInsightsBridgeConfig
 > = {
   [ASSESSORIA_MARKETING_BRIDGE.servicePath]: ASSESSORIA_MARKETING_BRIDGE,
   [AUDIOVISUAL_BRIDGE.servicePath]: AUDIOVISUAL_BRIDGE,
+  [AFFILIATE_PROGRAM_BRIDGE.servicePath]: AFFILIATE_PROGRAM_BRIDGE,
   [BRANDING_BRIDGE.servicePath]: BRANDING_BRIDGE,
   [DEVELOPMENT_WEB_BRIDGE.servicePath]: DEVELOPMENT_WEB_BRIDGE,
   [GESTAO_REDES_BRIDGE.servicePath]: GESTAO_REDES_BRIDGE,

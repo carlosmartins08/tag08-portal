@@ -13,6 +13,7 @@ import MiniCases from "../../../components/MiniCases";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
 import { trackVideoEvent } from "../../../lib/analytics";
+import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
 import { TAG08_YOUTUBE_SHORTS } from "../../../content/youtubeShorts";
 
 interface Deliverable {
@@ -117,8 +118,10 @@ export default function ProducaoAudiovisual({ onNavigate }: ProducaoProps) {
   // Custom calculator states
   const [selectedFormat, setSelectedFormat] = useState<string>("institucional");
   const [selectedTools, setSelectedTools] = useState<string[]>(["institucional", "apoio"]);
+  const trackSimulator = useSimulatorTracking("audiovisual_scope_planner", 1, "/servicos/producao-audiovisual");
 
   const handleToggleTool = (toolId: string) => {
+    trackSimulator("input_changed");
     setSelectedTools(prev => 
       prev.includes(toolId) 
         ? prev.filter(t => t !== toolId) 
@@ -590,6 +593,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                     <button
                       key={f.id}
                       onClick={() => {
+                        trackSimulator("input_changed");
                         setSelectedFormat(f.id);
                         // Ajusta os materiais sugeridos de acordo com o formato selecionado.
                         if (f.id === "institucional") setSelectedTools(["institucional", "apoio"]);
@@ -715,6 +719,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 <div className="pt-3 sm:pt-4 space-y-2.5 sm:space-y-3">
                   <a
                     href={getWhatsAppLink()}
+                    onClick={() => trackSimulator("cta_clicked")}
                     target="_blank"
                     rel="noreferrer"
                     className="block w-full bg-brand-secondary hover:bg-brand hover:shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.22)] text-black text-[10px] sm:text-xs font-mono font-black uppercase tracking-widest py-3.5 sm:py-4 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.15)]"

@@ -1,10 +1,13 @@
-﻿import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { Sparkles, Trophy, CheckCircle, ArrowUpRight, Shield, ArrowRight, Layers, DollarSign, Percent, TrendingUp, Users, HelpCircle } from "lucide-react";
 import { motion } from "motion/react";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
+import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
+import TrackedOutboundLink from "../../../components/TrackedOutboundLink";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
+import { trackSimulatorEvent } from "../../../lib/analytics";
 import { calculateAffiliateCommission } from "../../../lib/simulators/affiliateCommission";
 
 interface ProgramaAfiliadosProps {
@@ -13,6 +16,7 @@ interface ProgramaAfiliadosProps {
 
 export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps) {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
+  const trackedSimulatorActions = useRef(new Set<string>());
   
   // Commission simulator parameters
   const [numBranding, setNumBranding] = useState<number>(1);
@@ -30,26 +34,49 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const trackAffiliateSimulator = (action: "input_changed" | "cta_clicked") => {
+    const base = {
+      simulator_id: "affiliate_commission",
+      simulator_version: 1,
+      page_path: "/programa-afiliados"
+    };
+
+    if (!trackedSimulatorActions.current.has("started")) {
+      trackSimulatorEvent({ ...base, action: "started" });
+      trackedSimulatorActions.current.add("started");
+    }
+
+    if (!trackedSimulatorActions.current.has(action)) {
+      trackSimulatorEvent({ ...base, action });
+      trackedSimulatorActions.current.add(action);
+    }
+
+    if (action === "input_changed" && !trackedSimulatorActions.current.has("result_viewed")) {
+      trackSimulatorEvent({ ...base, action: "result_viewed" });
+      trackedSimulatorActions.current.add("result_viewed");
+    }
+  };
+
   const faqs = [
     {
       q: "Quem pode se cadastrar no Programa de Afiliados?",
-      a: "Qualquer pessoa física ou jurídica que possua relacionamento comercial com outras empresas. Ideal para freelancers, consultores de marketing, agências de publicidade complementares, designers, gestores de tráfego, contadores ou simplesmente parceiros que confiam e indicam o trabalho da TAG08."
+      a: "Qualquer pessoa física ou jurídica que possua relacionamento comercial com outras empresas. Ideal para freelancers, consultores de marketing, agências de publicidade complementares, designers, gestores de tráfego, contadores ou parceiros que confiam e indicam o trabalho da TAG08."
     },
     {
       q: "Qual é o valor da comissão oferecida?",
-      a: "Fornecemos 10% de comissão sobre o valor líquido fechado do contrato. Para projetos de escopo fixo (Branding, Desenvolvimento Web, Desenvolvimento de Sistemas), a comissão é paga de forma única sobre os marcos liquidados. Para contratos recorrentes (como Gestão de Redes Sociais Mensal), você recebe 10% todo mês recorrente enquanto o cliente permanecer ativo na agência (até o limite contratual de 12 meses)."
+      a: "Fornecemos 10% de comissão sobre o valor líquido fechado do contrato. Para projetos de escopo fixo, como Branding e Desenvolvimento Web, a comissão é paga de forma única sobre os marcos liquidados. Para contratos recorrentes, como Gestão de Redes Sociais, você recebe 10% a cada mês enquanto o cliente permanecer ativo na agência, até o limite contratual de 12 meses."
     },
     {
       q: "Como indico um novo cliente e garanto meu comissionamento?",
-      a: "O fluxo é extremamente seguro: após se cadastrar no programa, você terá um canal direto com nosso gerente de contas. Cada indicação é registrada em nossa planilha de oportunidades vinculada ao seu nome/CNPJ. Quando a proposta comercial é enviada ao lead indicado, você recebe uma notificação instantânea para acompanhar o progresso."
+      a: "Após se cadastrar no programa, você terá um canal direto com nosso gerente de contas. Cada indicação é registrada e vinculada ao seu nome ou CNPJ. Quando a proposta comercial é enviada ao lead indicado, você recebe uma notificação para acompanhar o progresso."
     },
     {
       q: "Qual é o prazo e a forma de pagamento da comissão?",
-      a: "Os pagamentos são liberados e transferidos via PIX em até 5 dias úteis após a compensação efetiva do pagamento do cliente (sejam parcelas mensais ou pagamentos integrais das etapas do projeto)."
+      a: "Os pagamentos são liberados e transferidos via PIX em até 5 dias úteis após a compensação efetiva do pagamento do cliente, seja em parcelas mensais ou no pagamento integral das etapas do projeto."
     },
     {
       q: "Eu preciso fechar a venda com o cliente indicado?",
-      a: "Não! O seu único papel é fazer a ponte inicial e introduzir o contato qualificado com real interesse em nossos serviços. Toda a apresentação de portfólio, formulação da proposta comercial técnica, reuniões de fechamento e negociações de valores ficam a cargo de nossa equipe de vendas."
+      a: "Não. Seu papel é fazer a ponte inicial e apresentar um contato qualificado com interesse real nos nossos serviços. A apresentação de portfólio, formulação da proposta técnica, reuniões de fechamento e negociações ficam a cargo da equipe de vendas."
     }
   ];
 
@@ -98,15 +125,17 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
               <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-transparent pointer-events-none" />
 
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(45px)" }}>
-                <a
+                <TrackedOutboundLink
                   href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20me%20cadastrar%20no%20Programa%20de%20Afiliados%20da%20TAG08%20para%20fazer%20indicações!")}
                   target="_blank"
                   rel="noreferrer"
+                  label="Cadastrar no programa de afiliados"
+                  surface="affiliate-hero"
                   className="group bg-brand-secondary text-black font-mono font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
                 >
                   <span>CADASTRAR MINHA INDICAÇÃO</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-                </a>
+                </TrackedOutboundLink>
               </div>
 
               {/* Absolutes tags in corners */}
@@ -178,7 +207,10 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
                   min="0" 
                   max="12" 
                   value={numBranding} 
-                  onChange={(e) => setNumBranding(parseInt(e.target.value) || 0)}
+                  onChange={(e) => {
+                    setNumBranding(parseInt(e.target.value) || 0);
+                    trackAffiliateSimulator("input_changed");
+                  }}
                   className="w-full accent-brand-secondary cursor-pointer bg-charcoal-950 h-2 rounded-lg"
                 />
                 <div className="flex justify-between text-[10px] text-zinc-500 font-sans">
@@ -199,7 +231,10 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
                   min="0" 
                   max="12" 
                   value={numWebsites} 
-                  onChange={(e) => setNumWebsites(parseInt(e.target.value) || 0)}
+                  onChange={(e) => {
+                    setNumWebsites(parseInt(e.target.value) || 0);
+                    trackAffiliateSimulator("input_changed");
+                  }}
                   className="w-full accent-brand-secondary cursor-pointer bg-charcoal-950 h-2 rounded-lg"
                 />
                 <div className="flex justify-between text-[10px] text-zinc-500 font-sans">
@@ -220,7 +255,10 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
                   min="0" 
                   max="12" 
                   value={numRedesSociais} 
-                  onChange={(e) => setNumRedesSociais(parseInt(e.target.value) || 0)}
+                  onChange={(e) => {
+                    setNumRedesSociais(parseInt(e.target.value) || 0);
+                    trackAffiliateSimulator("input_changed");
+                  }}
                   className="w-full accent-brand-secondary cursor-pointer bg-charcoal-950 h-2 rounded-lg"
                 />
                 <div className="flex justify-between text-[10px] text-zinc-500 font-sans">
@@ -263,15 +301,18 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
                   *Valores estimados com base no ticket médio habitual de nossos serviços de branding e desenvolvimento web. Ganhos reais variam proporcionalmente ao orçamento final fechado.
                 </p>
 
-                <a
+                <TrackedOutboundLink
                   href={buildBrazilWhatsAppUrl(`Olá,%20fiz%20uma%20simulação%20no%20site%20da%20TAG08!%20Gostaria%20de%20indicar%20oportunidades%20para%20Branding%20(${numBranding}%20proj),%20Sites%20(${numWebsites}%20proj)%20e%20Redes%20Sociais%20(${numRedesSociais}%20mensais).`)}
                   target="_blank"
                   rel="noreferrer"
+                  label="Enviar simulação de afiliados"
+                  surface="affiliate-simulator"
+                  onClick={() => trackAffiliateSimulator("cta_clicked")}
                   className="group w-full bg-brand-secondary text-black font-mono font-black text-[10px] uppercase tracking-widest py-3.5 px-6 rounded-full shadow-[0_15px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] flex items-center justify-center gap-1.5 hover:scale-102 duration-300 transition-all cursor-pointer select-none text-center"
                 >
                   <span>GARANTIR MINHAS INDICAÇÕES</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </a>
+                </TrackedOutboundLink>
               </div>
             </div>
           </div>
@@ -392,6 +433,8 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
         </div>
       </section>
 
+      <ServiceInsightsBridge servicePath="/programa-afiliados" onNavigate={onNavigate} />
+
       {/* FINAL CALL TO ACTION CARD */}
       <section className="px-4 sm:px-6 md:px-8 max-w-7xl mx-auto pt-8">
         <div className="border border-white/[0.08] bg-gradient-to-br from-charcoal-900 to-black rounded-[32px] p-8 sm:p-12 md:p-16 text-center space-y-6 relative overflow-hidden">
@@ -410,15 +453,17 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 z-10 relative">
-            <a
+            <TrackedOutboundLink
               href={buildBrazilWhatsAppUrl("Olá,%20acabei%20de%20acessar%20sua%20página%20de%20afiliados%20e%20gostaria%20de%20deixar%20minha%20primeira%20indicação%20de%20cliente!")}
               target="_blank"
               rel="noreferrer"
+              label="Realizar primeira indicação"
+              surface="affiliate-final-cta"
               className="group bg-brand-secondary text-black font-mono font-black text-[10px] uppercase tracking-widest py-4 px-10 rounded-full shadow-[0_20px_50px_rgba(var(--color-brand-secondary-rgb),0.3)] hover:scale-102 transition-all flex items-center gap-2 cursor-pointer"
             >
               <span>REALIZAR MINHA PRIMEIRA INDICAÇÃO</span>
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-            </a>
+                </TrackedOutboundLink>
           </div>
         </div>
       </section>

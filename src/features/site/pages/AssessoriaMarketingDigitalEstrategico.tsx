@@ -11,6 +11,7 @@ import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import MiniCases from "../../../components/MiniCases";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
+import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
 
 interface Question {
   id: number;
@@ -76,8 +77,10 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const [answers, setAnswers] = useState<Record<number, { score: number; text: string }>>({});
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const trackSimulator = useSimulatorTracking("marketing_assessment_quiz", 1, "/servicos/assessoria-marketing-digital-estrategico");
 
   const handleSelectOption = (questionId: number, score: number, text: string) => {
+    trackSimulator("input_changed");
     setAnswers(prev => ({
       ...prev,
       [questionId]: { score, text }
@@ -718,6 +721,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                 <div className="flex flex-col sm:flex-row gap-3">
                   <a
                     href={buildBrazilWhatsAppUrl("Olá TAG08! Gostaria de conversar sobre assessoria de marketing estratégico para entender se faz sentido para a minha marca.")}
+                    onClick={() => trackSimulator("cta_clicked")}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-black text-white px-5 py-3 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest transition-transform hover:-translate-y-0.5"

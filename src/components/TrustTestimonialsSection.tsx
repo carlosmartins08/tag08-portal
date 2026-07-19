@@ -143,7 +143,7 @@ export default function TrustTestimonialsSection() {
                     {currentReview.tagline}
                   </h3>
 
-                  <p className="text-zinc-400 text-xs sm:text-sm md:text-[15px] leading-relaxed font-sans font-normal">
+                  <p className="text-zinc-400 text-xs sm:text-sm md:text-[15px] leading-[1.55] font-sans font-normal">
                     {currentReview.text}
                   </p>
                 </div>
@@ -154,9 +154,9 @@ export default function TrustTestimonialsSection() {
                       <Image
                         src={currentReview.avatar}
                         alt={currentReview.name}
-                        width={40}
-                        height={40}
-                        className="w-10 h-10 rounded-full object-cover border-2 border-brand-secondary"
+                        width={56}
+                        height={56}
+                        className="w-14 h-14 rounded-full object-cover border-2 border-brand-secondary"
                         referrerPolicy="no-referrer"
                       />
                       <div className="text-left font-sans">

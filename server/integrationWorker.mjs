@@ -7,6 +7,8 @@ const MAX_RETRY_SECONDS = 3600;
 const MAX_CLICKUP_LOOKUP_PAGES = 100;
 const PROCESSING_LEASE_SECONDS = Number.parseInt(process.env.INTEGRATION_PROCESSING_LEASE_SECONDS || "900", 10);
 const DELIVERY_ID_FILTER = process.env.INTEGRATION_DELIVERY_ID?.trim() || null;
+const MOCK_INTEGRATION_MODE = process.env.INTEGRATION_MOCK_MODE === "true";
+const MOCK_INTEGRATION_FAILURE = process.env.INTEGRATION_MOCK_FAILURE?.trim() || null;
 
 if (!Number.isSafeInteger(PROCESSING_LEASE_SECONDS) || PROCESSING_LEASE_SECONDS < 60) {
   throw new Error("INTEGRATION_PROCESSING_LEASE_SECONDS must be an integer of at least 60 seconds.");
@@ -205,6 +207,12 @@ const markFailed = (client, delivery, code) => {
 
 const processDelivery = async (delivery) => {
   if (process.env.INTEGRATIONS_ENABLED !== "true") return "disabled";
+  if (MOCK_INTEGRATION_MODE) {
+    if (MOCK_INTEGRATION_FAILURE) {
+      throw new Error(`integration_mock_${MOCK_INTEGRATION_FAILURE}`);
+    }
+    return `mock:${delivery.target.toLowerCase()}:${delivery.id}`;
+  }
   if (delivery.target === "GOOGLE_SHEETS") {
     if (process.env.GOOGLE_SHEETS_ENABLED !== "true") return "disabled";
     return appendToSheet(delivery);

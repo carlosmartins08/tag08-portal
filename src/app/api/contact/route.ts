@@ -1,6 +1,13 @@
 import { contactLeadSchema } from "../../../../server/submissionContracts";
 import { isPersistenceUnavailable, persistContactLead } from "../../../../server/submissionStore";
-import { createRequestId, jsonResponse, optionsResponse } from "../../../lib/api/response";
+import {
+  CONTACT_REQUEST_MAX_BYTES,
+  createRequestId,
+  hasHoneypotValue,
+  jsonResponse,
+  optionsResponse,
+  readJsonBody
+} from "../../../lib/api/response";
 
 export const runtime = "nodejs";
 
@@ -10,7 +17,16 @@ export async function OPTIONS(request: Request) {
 
 export async function POST(request: Request) {
   const requestId = createRequestId();
-  const parsed = contactLeadSchema.safeParse(await request.json().catch(() => null));
+  const body = await readJsonBody(request, CONTACT_REQUEST_MAX_BYTES);
+  if (body.ok === false) {
+    return jsonResponse({ ok: false, error: body.error, requestId }, body.error === "payload_too_large" ? 413 : 400, request);
+  }
+
+  if (hasHoneypotValue(body.payload)) {
+    return jsonResponse({ ok: false, error: "invalid_payload", requestId }, 400, request);
+  }
+
+  const parsed = contactLeadSchema.safeParse(body.payload);
   if (!parsed.success) {
     return jsonResponse({ ok: false, error: "invalid_payload", requestId }, 400, request);
   }

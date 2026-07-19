@@ -1,6 +1,13 @@
 import { ONBOARDING_PAYLOAD_VERSION, parseAndValidatePayload } from "../../../../server/onboardingContract";
 import { isPersistenceUnavailable, persistOnboardingSubmission } from "../../../../server/submissionStore";
-import { createRequestId, jsonResponse, optionsResponse } from "../../../lib/api/response";
+import {
+  ONBOARDING_REQUEST_MAX_BYTES,
+  createRequestId,
+  hasHoneypotValue,
+  jsonResponse,
+  optionsResponse,
+  readJsonBody
+} from "../../../lib/api/response";
 
 export const runtime = "nodejs";
 
@@ -15,14 +22,21 @@ export async function OPTIONS(request: Request) {
 }
 
 export async function POST(request: Request) {
-  let payload: unknown;
-  try {
-    payload = await request.json();
-  } catch {
-    payload = null;
+  const requestId = createRequestId();
+  const body = await readJsonBody(request, ONBOARDING_REQUEST_MAX_BYTES);
+  if (body.ok === false) {
+    return jsonResponse(
+      { ok: false, status: "failed", error: body.error, requestId },
+      body.error === "payload_too_large" ? 413 : 400,
+      request
+    );
   }
 
-  const requestId = createRequestId();
+  const payload = body.payload;
+  if (hasHoneypotValue(payload)) {
+    return jsonResponse({ ok: false, status: "failed", error: "invalid_payload", requestId }, 400, request);
+  }
+
   const fromQueue = resolveQueueHint(payload);
   const result = parseAndValidatePayload(payload);
 

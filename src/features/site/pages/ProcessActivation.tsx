@@ -8,6 +8,7 @@ import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import MiniCases from "../../../components/MiniCases";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import { ACTIVATION_LEVELS, ACTIVATION_ROADMAPS, type ActivationLevel } from "../../../lib/simulators/processActivation";
+import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
 
 interface ActivationProps {
   onNavigate: (page: string) => void;
@@ -16,6 +17,7 @@ interface ActivationProps {
 export default function ProcessActivation({ onNavigate }: ActivationProps) {
   const [activeFaq, setActiveFaq] = useState(0);
   const [activeLevel, setActiveLevel] = useState<ActivationLevel>("bronze");
+  const trackSimulator = useSimulatorTracking("process_activation_maturity", 1, "/servicos/process-activation");
   const roadmap = ACTIVATION_ROADMAPS[activeLevel];
 
   const handleLinkClick = (page: string) => {
@@ -333,7 +335,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                   return (
                     <button
                       key={level.id}
-                      onClick={() => setActiveLevel(level.id)}
+                      onClick={() => { trackSimulator("input_changed"); setActiveLevel(level.id); }}
                       className={`p-4 rounded-xl text-left border relative transition-all cursor-pointer ${
                         isSelected ? "bg-brand-secondary/5 border-brand-secondary text-white" : "bg-white/[0.01] border-white/5 text-zinc-400 hover:border-white/10"
                       }`}
@@ -493,6 +495,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
               <div className="space-y-3">
                 <a 
                   href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20solicitar%20um%20diagnóstico%20de%20Process%20Activation%20com%20a%20TAG08")}
+                  onClick={() => trackSimulator("cta_clicked")}
                   target="_blank"
                   rel="noreferrer"
                   className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner"

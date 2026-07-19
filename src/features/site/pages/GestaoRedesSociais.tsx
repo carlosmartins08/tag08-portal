@@ -10,6 +10,7 @@ import MiniCases from "../../../components/MiniCases";
 import TrustTestimonialsSection from "../../../components/TrustTestimonialsSection";
 import { TAG08_YOUTUBE_SHORTS } from "../../../content/youtubeShorts";
 import { trackVideoEvent } from "../../../lib/analytics";
+import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
 
 /*
 interface PlayableShort {
@@ -294,6 +295,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
   const [diagnosticName, setDiagnosticName] = useState("");
   const [diagnosticWhatsapp, setDiagnosticWhatsapp] = useState("");
   const [diagnosticConsent, setDiagnosticConsent] = useState(false);
+  const trackSimulator = useSimulatorTracking("social_editorial_diagnostic", 1, "/servicos/gestao-de-redes-sociais");
   const diagnosticQuestionRefs = useRef<Record<DiagnosticKey, HTMLDivElement | null>>({
     challenge: null,
     routine: null,
@@ -370,6 +372,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
   };
 
   const setDiagnosticSingleAnswer = (key: Exclude<DiagnosticKey, "channels" | "formats">, value: string) => {
+    trackSimulator("input_changed");
     setDiagnosticAnswers((prev) => ({
       ...prev,
       [key]: value
@@ -377,6 +380,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
   };
 
   const toggleDiagnosticMultiAnswer = (key: "channels" | "formats", value: string) => {
+    trackSimulator("input_changed");
     setDiagnosticAnswers((prev) => {
       const current = Array.isArray(prev[key]) ? (prev[key] as string[]) : [];
       return {
@@ -1183,6 +1187,8 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                   onClick={(event) => {
                     if (!diagnosticReady) {
                       event.preventDefault();
+                    } else {
+                      trackSimulator("cta_clicked");
                     }
                   }}
                   className={`group inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-mono text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${

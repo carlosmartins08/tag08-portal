@@ -2,6 +2,17 @@ type AnalyticsValue = string | number | boolean | null | undefined;
 
 type AnalyticsParams = Record<string, AnalyticsValue>;
 
+const PII_PARAM_KEYS = new Set([
+  "email",
+  "phone",
+  "whatsapp",
+  "message",
+  "full_name",
+  "first_name",
+  "last_name",
+  "payload"
+]);
+
 type DeviceCategory = "mobile" | "tablet" | "desktop";
 
 type WindowWithAnalytics = Window &
@@ -76,9 +87,9 @@ const getDeviceCategory = (): DeviceCategory => {
   return "desktop";
 };
 
-const sanitizeParams = (params: AnalyticsParams = {}) =>
+export const sanitizeAnalyticsParams = (params: AnalyticsParams = {}) =>
   Object.entries(params).reduce<Record<string, Exclude<AnalyticsValue, null | undefined>>>((acc, [key, value]) => {
-    if (value === null || value === undefined) {
+    if (value === null || value === undefined || PII_PARAM_KEYS.has(key.toLowerCase())) {
       return acc;
     }
 
@@ -143,7 +154,7 @@ export const trackAnalyticsEvent = (eventName: string, params: AnalyticsParams =
 
   const win = getWindow();
   initializeGoogleAnalytics();
-  win.gtag?.("event", eventName, sanitizeParams(params));
+  win.gtag?.("event", eventName, sanitizeAnalyticsParams(params));
 };
 
 export const trackPageView = (params: {
@@ -390,4 +401,13 @@ export const trackVideoEvent = (params: {
     video_surface: params.surface,
     page_path: params.page_path
   });
+};
+
+export const trackSimulatorEvent = (params: {
+  action: "started" | "input_changed" | "result_viewed" | "cta_clicked";
+  simulator_id: string;
+  simulator_version: number;
+  page_path: string;
+}) => {
+  trackAnalyticsEvent("simulator_interaction", params);
 };

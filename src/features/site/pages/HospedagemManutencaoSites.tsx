@@ -26,13 +26,16 @@ import {
   Mail,
   Sliders
 } from "lucide-react";
+import { useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
-import { calculateHostingPrice, type HostingPlan } from "../../../lib/simulators/hostingPrice";
+import TrackedOutboundLink from "../../../components/TrackedOutboundLink";
+import { trackSimulatorEvent } from "../../../lib/analytics";
+import { calculateHostingPrice, HOSTING_PRICE_CONFIG, type HostingPlan } from "../../../lib/simulators/hostingPrice";
 
 interface PageProps {
   onNavigate: (page: string) => void;
@@ -50,8 +53,33 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
   const [simEmails, setSimEmails] = useState<number>(10);
   const [simStorage, setSimStorage] = useState<number>(5);
   const [simApplyUpgrade, setSimApplyUpgrade] = useState<boolean>(false);
+  const trackedSimulatorActions = useRef(new Set<string>());
+
+  const trackHostingSimulator = (action: "input_changed" | "cta_clicked") => {
+    const base = {
+      simulator_id: "hosting_price",
+      simulator_version: HOSTING_PRICE_CONFIG.version,
+      page_path: "/hospedagem-manutencao-sites"
+    };
+
+    if (!trackedSimulatorActions.current.has("started")) {
+      trackSimulatorEvent({ ...base, action: "started" });
+      trackedSimulatorActions.current.add("started");
+    }
+
+    if (!trackedSimulatorActions.current.has(action)) {
+      trackSimulatorEvent({ ...base, action });
+      trackedSimulatorActions.current.add(action);
+    }
+
+    if (action === "input_changed" && !trackedSimulatorActions.current.has("result_viewed")) {
+      trackSimulatorEvent({ ...base, action: "result_viewed" });
+      trackedSimulatorActions.current.add("result_viewed");
+    }
+  };
 
   const handlePlanChange = (plan: HostingPlan) => {
+    trackHostingSimulator("input_changed");
     setSimPlan(plan);
     setSimSites(1);
     setSimApplyUpgrade(false);
@@ -85,18 +113,18 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
     {
       id: "compartilhada",
       title: "Hospedagem Compartilhada",
-      niche: "Pequenas empresas, blogs pessoais, portfalios online",
+      niche: "Pequenas empresas, blogs pessoais e portfólios online",
       category: "especializado",
-      description: "Opaao econamica ideal para projetos iniciais. Os recursos do servidor (como memaria e processamento) são distribuados de forma equilibrada entre varios sites parceiros, com custo otimizado e total fácilidade operacional.",
-      specs: ["Preço Altamente Competitivo", "Gestao Automatizada de Painel", "Perfeito para Validação", "Armazenamento SSD Seguro"],
-      badge: "Início Rapido"
+      description: "Opção econômica ideal para projetos iniciais. Os recursos do servidor, como memória e processamento, são distribuídos de forma equilibrada entre vários sites parceiros, com custo otimizado e facilidade operacional.",
+      specs: ["Preço altamente competitivo", "Gestão automatizada de painel", "Perfeito para validação", "Armazenamento SSD seguro"],
+      badge: "Início rápido"
     },
     {
       id: "vps",
       title: "Hospedagem VPS (Virtual Private)",
-      niche: "Sites de madio porte, e-commerces moderados, blogs ricos",
+      niche: "Sites de médio porte, e-commerces moderados e blogs ricos",
       category: "corporativo",
-      description: "Um robusto servidor fasico segmentado em varias maquinas virtuais isoladas. Cada ambiente atua de modo individual with recursos dedicados garantidos, proporcionando total flexibilidade administrativa e tolerancia a picos de acessos.",
+      description: "Um servidor físico segmentado em várias máquinas virtuais isoladas. Cada ambiente atua de modo individual, com recursos dedicados garantidos, proporcionando flexibilidade administrativa e tolerância a picos de acesso.",
       specs: ["Recursos Dedicados (CPU/RAM)", "IP Dedicado Exclusivo", "Escalabilidade Gradual", "Controle Total de Root"],
       badge: "Mais Popular"
     },
@@ -105,8 +133,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
       title: "Hospedagem Dedicada",
       niche: "Grandes empresas, e-commerce de alto volume, portais complexos",
       category: "corporativo",
-      description: "Um hardware computacional completo alocado exclusivamente para sustentar a soberania digital da sua marca. Maxima velocidade com isolamento tarmico e fasico absoluto, desempenho impecavel e total liberdade de segurança avanaada.",
-      specs: ["Nula Latancia Operacional", "Zeladoria Fasica Suprema", "Ambiente 100% Isolado", "Políticas Customizadas"],
+      description: "Um hardware computacional completo alocado exclusivamente para sustentar a soberania digital da sua marca. Máxima velocidade com isolamento térmico e físico, desempenho consistente e liberdade de segurança avançada.",
+      specs: ["Baixa latência operacional", "Zeladoria física especializada", "Ambiente 100% isolado", "Políticas personalizadas"],
       badge: "Alta Performance"
     },
     {
@@ -130,7 +158,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
     {
       id: "ecommerce",
       title: "E-Commerce de Luxo & Alta Escala",
-      niche: "Lojas virtuais estruturadas, catalogos pesados, vendas ativas",
+      niche: "Lojas virtuais estruturadas, catálogos pesados e vendas ativas",
       category: "especializado",
       description: "Suite integrada para garantir que nenhum carrinho de compras seja abandonado por lentidão técnica. Suporte nativo a múltiplos gateways de pagamentos criptografados, selos dinâmicos de segurança e barreira de proteção robusta.",
       specs: ["Certificação SSL Inclusão", "Segurança PCI Compliant", "Tempo de Resposta Acelerado", "Faturamento Seguro"],
@@ -157,8 +185,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
     {
       id: 2,
       title: "O Artesão da Alta Performance",
-      label: "MANUTENaaO & ENGENHARIA",
-      description: "Paralelamente, a engenharia dedicada da TAG08 sintoniza finamente cada engrenagem da sua aplicação. Auditorias, revisaes regulares, atualizações de temas/plugins e backups preventivos se combinam de forma artastica para polir seu site continuamente.",
+      label: "MANUTENÇÃO & ENGENHARIA",
+      description: "A engenharia dedicada da TAG08 acompanha cada engrenagem da sua aplicação. Auditorias, revisões regulares, atualizações de temas e plugins e backups preventivos mantêm o site em evolução contínua.",
       metric: "Updates Proativos"
     }
   ];
@@ -189,7 +217,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <Radio className="w-3.5 h-3.5 animate-pulse" /> INFRAESTRUTURA DE SOBERANIDADE CORPORATIVA
               </span>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white uppercase leading-[1.0] tracking-tighter">
-                HOSPEDAGEM E MANUTENaaO: <br />
+                HOSPEDAGEM E MANUTENÇÃO: <br />
                 <span className="text-brand">SEU PORTAL PARA O FUTURO DIGITAL.</span>
               </h1>
             </div>
@@ -239,7 +267,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       ZELADORIA ATIVA EM TEMPO REAL
                     </span>
                     <h3 className="font-display font-black text-white text-xl sm:text-2xl uppercase tracking-tight">
-                      PROTEaaO ROBUSTA COM 99.99% UPTIME PROVADO
+                      PROTEÇÃO ROBUSTA E MONITORAMENTO CONTÍNUO
                     </h3>
                   </div>
                   
@@ -273,10 +301,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 text-left">
           <div className="lg:col-span-5 space-y-6 flex flex-col justify-center">
             <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/15 px-2.5 py-1 rounded-md inline-block self-start">
-              A ESSaNCIA DA VITALIDADE WEB
+              A ESSÊNCIA DA VITALIDADE WEB
             </span>
             <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-tight tracking-tighter">
-              A HARMONIA DO YIN &amp; YANG DA SUA PRESENaA DIGITIAL.
+              A HARMONIA ENTRE INFRAESTRUTURA E MANUTENÇÃO DA SUA PRESENÇA DIGITAL.
             </h2>
             <p className="text-zinc-400 text-sm sm:text-base leading-relaxed font-sans font-medium">
               No vasto oceano digital da internet, seu site enfrenta tempestades mecânicas silenciosas todos os dias. Para garantir que ele resista com altivez soberana, aplicamos uma filosofia de equilíbrio perfeito.
@@ -985,7 +1013,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       cpu: "2 vCPUs Dedicadas",
                       ram: "4 GB RAM",
                       audience: "2 Cores de Processamento",
-                      purpose: "Processamento duplicado calibrado para suportar múltiplos portais comerciais, pequenos e-commerces e trafego estavel.",
+                      purpose: "Processamento duplicado calibrado para suportar múltiplos portais comerciais, pequenos e-commerces e tráfego estável.",
                       startingPrice: "R$ 99,00",
                       badge: "V-Core Pro II",
                     },
@@ -1040,11 +1068,11 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
                           <div className="grid grid-cols-2 gap-2 text-left font-sans text-[9px]">
                             <div className="bg-white/[0.02] border border-white/5 rounded-lg p-2.5">
-                              <span className="block text-zinc-600 text-[7px] uppercase font-bold tracking-wider">MaQUINA CPU:</span>
+                              <span className="block text-zinc-600 text-[7px] uppercase font-bold tracking-wider">MÁQUINA CPU:</span>
                               <span className="text-zinc-300 font-bold">{p.cpu}</span>
                             </div>
                             <div className="bg-white/[0.02] border border-white/5 rounded-lg p-2.5">
-                              <span className="block text-zinc-650 text-[7px] uppercase font-bold tracking-wider">MaQUINA RAM:</span>
+                              <span className="block text-zinc-650 text-[7px] uppercase font-bold tracking-wider">MÁQUINA RAM:</span>
                               <span className="text-zinc-300 font-bold">{p.ram}</span>
                             </div>
                           </div>
@@ -1054,7 +1082,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                             <span className={`font-sans text-xl font-black transition-colors ${isActive ? "text-brand" : "text-zinc-300"}`}>
                               {p.startingPrice}
                             </span>
-                            <span className="text-[9px] text-zinc-500 font-sans leading-none">/Mas</span>
+                            <span className="text-[9px] text-zinc-500 font-sans leading-none">/mês</span>
                           </div>
                         </div>
 
@@ -1083,12 +1111,15 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       <div className="space-y-1">
                         <span className="font-mono text-[8.5px] text-brand uppercase tracking-wider block font-black">RECURSO #02 // MULTI-SITES</span>
                     <h3 className="text-white font-bold text-sm sm:text-base uppercase tracking-tight">Número de Sites Hospedados</h3>
-                        <p className="text-zinc-400 text-xs font-sans">Quantos portais independentes irao compartilhar estes recursos isolados?</p>
+                        <p className="text-zinc-400 text-xs font-sans">Quantos portais independentes irão compartilhar estes recursos isolados?</p>
                       </div>
                       
                       <div className="flex items-center gap-3 bg-black/60 border border-white/10 rounded-xl p-1.5 shrink-0 self-start sm:self-center">
                         <button
-                          onClick={() => setSimSites(Math.max(1, simSites - 1))}
+                          onClick={() => {
+                            trackHostingSimulator("input_changed");
+                            setSimSites(Math.max(1, simSites - 1));
+                          }}
                           disabled={simSites <= 1}
                           className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 active:scale-95 disabled:opacity-30 text-white flex items-center justify-center font-bold text-sm transition-all cursor-pointer border border-white/5"
                         >
@@ -1098,7 +1129,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                           {simSites}
                         </span>
                         <button
-                          onClick={() => setSimSites(Math.min(10, simSites + 1))}
+                          onClick={() => {
+                            trackHostingSimulator("input_changed");
+                            setSimSites(Math.min(10, simSites + 1));
+                          }}
                           disabled={simSites >= 10}
                           className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 active:scale-95 disabled:opacity-30 text-white flex items-center justify-center font-bold text-sm transition-all cursor-pointer border border-white/5"
                         >
@@ -1126,13 +1160,13 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       </div>
                       <div className="flex justify-between font-sans text-[8px] text-zinc-550">
                         <span>1 PORTAL INICIAL (INCLUSO)</span>
-                        <span>MaXIMO: 10 PORTAIS CONVIVENTES</span>
+                        <span>MÁXIMO: 10 PORTAIS CONVIVENTES</span>
                       </div>
                     </div>
 
                     {simSites > 1 && (
                       <span className="text-[10px] text-zinc-500 font-sans block pl-2 border-l border-brand/30">
-                        * Incluso 1 site base gratuito. Cada portal adicional: <strong>+ R$ 50,00/mas</strong>.
+                        * Incluso 1 site base gratuito. Cada portal adicional: <strong>+ R$ 50,00/mês</strong>.
                       </span>
                     )}
                   </div>
@@ -1144,7 +1178,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                         <span className="font-mono text-[8.5px] text-brand uppercase tracking-wider block font-black">RECURSO #03 // ARMAZENAMENTO ULTRA-RAW</span>
                     <h3 className="text-white font-bold text-sm sm:text-base uppercase tracking-tight">Espaço de Disco SSD NVMe Dedicado</h3>
                         <p className="text-zinc-400 text-xs font-sans">
-                          Sua maquina conta com discos SSD corporativos com taxas de leitura de ata 7.000 MB/s.
+                          Sua máquina conta com discos SSD corporativos com taxas de leitura de até 7.000 MB/s.
                         </p>
                       </div>
                       <span className="font-sans font-black text-brand text-sm sm:text-base bg-brand/10 px-3.5 py-1.5 rounded-lg border border-brand/20 shrink-0 self-start sm:self-center shadow-[0_0_15px_rgba(var(--color-brand-rgb),0.05)]">
@@ -1162,7 +1196,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                           max={simPlan === "basico" ? 50 : simPlan === "intermediario" ? 100 : 300}
                           step="5"
                           value={simStorage}
-                          onChange={(e) => setSimStorage(parseInt(e.target.value))}
+                          onChange={(e) => {
+                            trackHostingSimulator("input_changed");
+                            setSimStorage(parseInt(e.target.value, 10));
+                          }}
                           className="w-full accent-brand bg-white/10 h-1.5 rounded-lg cursor-pointer hover:bg-white/15 transition-all"
                         />
                         <div className="flex justify-between font-sans text-[8.5px] text-zinc-500 mt-1">
@@ -1182,7 +1219,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                         ).map((presetVal) => (
                           <button
                             key={presetVal}
-                            onClick={() => setSimStorage(presetVal)}
+                            onClick={() => {
+                              trackHostingSimulator("input_changed");
+                              setSimStorage(presetVal);
+                            }}
                             className={`px-3 py-1 rounded-md font-mono text-[9px] uppercase transition-all cursor-pointer ${
                               simStorage === presetVal
                                 ? "bg-brand text-black font-black shadow-[0_2px_8px_rgba(var(--color-brand-rgb),0.2)]"
@@ -1198,7 +1238,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     <span className="text-[10px] text-zinc-500 font-sans block pl-2 border-l border-brand/35">
                     {simPlan === "basico" && `* 5 GB inclusos. Adicional: R$ 3,00 por GB ao mês.`}
                     {simPlan === "intermediario" && `* 15 GB inclusos. Adicional: R$ 5,00 por GB ao mês.`}
-                      {simPlan === "avancado" && `* 30 GB inclusos. Adicional: R$ 10,00 por GB ao mas.`}
+                      {simPlan === "avancado" && `* 30 GB inclusos. Adicional: R$ 10,00 por GB ao mês.`}
                     </span>
                   </div>
 
@@ -1221,6 +1261,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                             onClick={() => {
                               const step = simPlan === "basico" ? 5 : 10;
                               const min = simPlan === "basico" ? 10 : 50;
+                              trackHostingSimulator("input_changed");
                               setSimEmails(Math.max(min, simEmails - step));
                             }}
                             disabled={simEmails <= (simPlan === "basico" ? 10 : 50)}
@@ -1234,6 +1275,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                           <button
                             onClick={() => {
                               const step = simPlan === "basico" ? 5 : 10;
+                              trackHostingSimulator("input_changed");
                               setSimEmails(Math.min(200, simEmails + step));
                             }}
                             disabled={simEmails >= 200}
@@ -1248,7 +1290,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     <span className="text-[10px] text-zinc-550 block font-sans">
                       {simPlan === "basico" && "* 10 contas inclusas nativamente. Caixa extra: R$ 5,00 por lote de 5 e-mails."}
                       {simPlan === "intermediario" && "* 50 contas inclusas nativamente. Caixa extra: R$ 10,00 por lote de 10 e-mails."}
-                      {simPlan === "avancado" && "* Caixa premium sem limite fasico de contas no plano corporativo avanaado."}
+                      {simPlan === "avancado" && "* Caixa premium sem limite básico de contas no plano corporativo avançado."}
                     </span>
                   </div>
 
@@ -1262,7 +1304,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
                     <div className="pt-1">
                       <div
-                        onClick={() => setSimApplyUpgrade(!simApplyUpgrade)}
+                        onClick={() => {
+                          trackHostingSimulator("input_changed");
+                          setSimApplyUpgrade(!simApplyUpgrade);
+                        }}
                         className={`p-4 rounded-2xl border text-left flex items-start gap-4 cursor-pointer transition-all duration-300 select-none ${
                           simApplyUpgrade
                             ? "bg-brand/[0.02] border-brand text-white shadow-[0_8px_30px_rgba(var(--color-brand-rgb),0.04)]"
@@ -1438,7 +1483,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   </div>
 
                   <div className="pt-6">
-                    <a
+                    <TrackedOutboundLink
                       href={buildBrazilWhatsAppUrl(`Ola TAG08! Configurei minha proposta técnica usando o simulador inteligente sob medida no site de hospedagem e cheguei no seguinte setup:
  
  - ENGINE DE SERVIDOR ESCOLHIDO: ${simPlan === "basico" ? "CLOUD SOLO (1 vCPU / 1GB RAM)" : simPlan === "intermediario" ? "CLOUD DUO (2 vCPUs / 4GB RAM)" : "CLOUD QUAD (4 vCPUs / 8GB RAM)"}
@@ -1452,11 +1497,14 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
  Gostaria de formalizar este escopo técnico com o departamento comercial!`)}
                       target="_blank"
                       rel="noreferrer"
+                      label="Solicitar setup de hospedagem"
+                      surface="hosting-simulator"
+                      onClick={() => trackHostingSimulator("cta_clicked")}
                       className="group/btn w-full py-4 rounded-xl bg-brand hover:bg-brand-secondary text-black font-mono text-[10px] font-black uppercase text-center block tracking-widest transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] shadow-[0_12px_40px_rgba(var(--color-brand-rgb),0.15)] focus:outline-none cursor-pointer flex items-center justify-center gap-2"
                     >
                       <span>SOLICITAR SETUP VIA WHATSAPP</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
-                    </a>
+                    </TrackedOutboundLink>
                     
                     <span className="text-[8.5px] text-zinc-550 block text-center pt-3 font-mono">
                       * Redireciona de forma criptografada para os consultores corporativos da TAG08.
