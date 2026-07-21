@@ -1,7 +1,7 @@
 ﻿import { useState, useEffect } from "react";
 import { Compass, Sparkles, BookOpen, Layers, CheckCircle, ArrowUpRight, ArrowRight, Award, Shield, MessageSquare, Link2, Plus, Search, Image, Grid, Trash2, ExternalLink, Heart, Bookmark, X, Palette, Type, TrendingUp, Briefcase } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import NextImage from "next/image";
+import ResilientImage from "../../../components/ResilientImage";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import MiniCases from "../../../components/MiniCases";
@@ -19,8 +19,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
   const guidePreviews = {
     identidade: { card: "p-8 rounded-[24px] border-2 bg-zinc-950 border-zinc-800 text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(255,255,255,0.02)]", title: "text-xl sm:text-2xl text-white font-display uppercase tracking-tighter leading-tight font-black", tagline: "text-zinc-400 font-sans text-xs leading-relaxed", badge: "font-mono text-[8px] bg-white/5 text-white border border-white/10 px-2 py-0.5 rounded font-black uppercase", label: "IDENTIDADE", heading: "Guia de identidade", description: "Base visual da marca para manter a leitura consistente em qualquer peça.", values: "Cores definidas\nTipografia principal\nElementos gráficos\nRegras de uso", fit: "Manual base, time interno e parceiros de produção" },
     aplicacao: { card: "p-8 rounded-[24px] border-2 bg-black border-brand/20 text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(var(--color-brand-rgb),0.05)]", title: "text-xl sm:text-2xl text-brand font-display uppercase tracking-tighter leading-none font-black", tagline: "text-zinc-300 font-sans text-xs leading-relaxed", badge: "font-mono text-[8px] bg-brand/10 text-brand border border-brand/20 px-2 py-0.5 rounded font-black uppercase", label: "APLICAÇÃO", heading: "Exemplos de aplicação", description: "Referências práticas para ver a identidade funcionando em canais reais.", values: "Redes sociais\nApresentações\nPropostas\nSite e materiais comerciais", fit: "Pontos de contato que pedem leitura rápida e padronização" },
-    consistencia: { card: "p-8 rounded-[24px] border-2 bg-[#091122] border-[#1b2b4e] text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(251,191,36,0.03)]", title: "text-xl sm:text-2xl text-amber-400 uppercase tracking-widest leading-tight font-semibold", tagline: "text-zinc-400 font-serif text-xs leading-relaxed", badge: "font-mono text-[8px] bg-amber-400/5 text-amber-400 border border-amber-400/20 px-2 py-0.5 rounded font-black uppercase", label: "CONSISTÊNCIA", heading: "Critérios de consistência", description: "O que precisa seguir igual para a marca continuar reconhecível.", values: "Ritmo visual\nEscala e contraste\nAlinhamento\nUso repetido dos mesmos critérios", fit: "Novas peças, campanhas e atualizações do dia a dia" },
-    proximos: { card: "p-8 rounded-[24px] border-2 bg-[#0d0722] border-[#25174e] text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(168,85,247,0.05)]", title: "text-xl sm:text-2xl text-purple-400 font-sans uppercase tracking-tight leading-none font-bold", tagline: "text-zinc-400 font-sans text-xs leading-relaxed", badge: "font-mono text-[8px] bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2 py-0.5 rounded font-black uppercase", label: "ORIENTAÇÃO", heading: "Próximos passos", description: "A ordem prática para sair da decisão e colocar a identidade em uso.", values: "Definir base\nAplicar nas peças prioritárias\nRevisar o conjunto\nExpandir com critério", fit: "Times que precisam colocar a marca em uso sem atraso" },
+    consistencia: { card: "p-8 rounded-[24px] border-2 bg-charcoal-900 border-white/[0.08] text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(0,0,0,0.2)]", title: "text-xl sm:text-2xl text-white uppercase tracking-widest leading-tight font-semibold", tagline: "text-zinc-400 font-sans text-xs leading-relaxed", badge: "font-mono text-[8px] bg-white/5 text-zinc-200 border border-white/10 px-2 py-0.5 rounded font-black uppercase", label: "CONSISTÊNCIA", heading: "Critérios de consistência", description: "O que precisa seguir igual para a marca continuar reconhecível.", values: "Ritmo visual\nEscala e contraste\nAlinhamento\nUso repetido dos mesmos critérios", fit: "Novas peças, campanhas e atualizações do dia a dia" },
+    proximos: { card: "p-8 rounded-[24px] border-2 bg-charcoal-900 border-white/[0.08] text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(0,0,0,0.2)]", title: "text-xl sm:text-2xl text-white font-sans uppercase tracking-tight leading-none font-bold", tagline: "text-zinc-400 font-sans text-xs leading-relaxed", badge: "font-mono text-[8px] bg-white/5 text-zinc-200 border border-white/10 px-2 py-0.5 rounded font-black uppercase", label: "ORIENTAÇÃO", heading: "Próximos passos", description: "A ordem prática para sair da decisão e colocar a identidade em uso.", values: "Definir base\nAplicar nas peças prioritárias\nRevisar o conjunto\nExpandir com critério", fit: "Times que precisam colocar a marca em uso sem atraso" },
   };
   const guidePreview = guidePreviews[activeGuide];
 
@@ -269,7 +269,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
   };
 
   return (
-    <div className="bg-charcoal-950 text-white min-h-screen pt-28 pb-20 relative overflow-hidden">
+    <div className="bg-charcoal-950 text-white min-h-screen pb-20 relative overflow-hidden">
       {/* Decorative ambient gradients */}
       <div className="absolute top-[8%] left-[-15%] w-[600px] h-[600px] bg-brand/[0.015] rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-15%] w-[600px] h-[600px] bg-brand/[0.02] rounded-full blur-[150px] pointer-events-none" />
@@ -282,7 +282,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
         <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
           
           {/* 1. Header Typography block (Ref Style: Expert guidance / tailored solution) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
                 BRANDING E IDENTIDADE // TAG08
@@ -302,8 +302,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
           {/* 2. Panoramic Wide Banner Image with capsule neon overlay trigger wrapped in 3D perspective tilt container */}
           <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px] overflow-visible">
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
-              <NextImage
-                fill
+              <ResilientImage
+                fallbackLabel="Processo de branding TAG08"
                 sizes="100vw"
                 src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=1600"
                 alt="Processo Criativo de Branding TAG08"
@@ -591,13 +591,14 @@ export default function Branding({ onNavigate }: BrandingProps) {
         <div className="max-w-7xl mx-auto space-y-12 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end border-b border-white/[0.04] pb-8">
             <div className={`${isAdmin ? "lg:col-span-8" : "lg:col-span-12"} space-y-3`}>
-              <span
+              <button
+                type="button"
                 onClick={handleBadgeClick}
                 className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block cursor-help select-none active:scale-95 transition-transform"
                 title="Área restrita de gestão. Clique 5 vezes para habilitar recursos ocultos."
               >
                     {isAdmin ? "PORTFÓLIO VISUAL // GESTÃO" : "PORTFÓLIO VISUAL // PINTEREST HUB"}
-              </span>
+              </button>
               <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase tracking-tight leading-none">
                 Aplicações que mostram a identidade em uso.
               </h2>
@@ -777,12 +778,17 @@ export default function Branding({ onNavigate }: BrandingProps) {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
                       transition={{ duration: 0.3 }}
-                      onClick={() => setSelectedWork(work)}
-                      className="bg-charcoal-900 border border-white/[0.06] hover:border-brand/40 duration-300 rounded-3xl overflow-hidden flex flex-col justify-between group shadow-xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] transition-all cursor-pointer"
+                      className="bg-charcoal-900 border border-white/[0.06] hover:border-brand/40 duration-300 rounded-3xl overflow-hidden flex flex-col justify-between group shadow-xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] transition-all"
                     >
+                      <button
+                        type="button"
+                        aria-label={`Abrir aplicação da identidade: ${work.title}`}
+                        onClick={() => setSelectedWork(work)}
+                        className="absolute inset-0 z-10 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
+                      />
                       <div className="relative aspect-[4/3] bg-zinc-950 overflow-hidden border-b border-white/[0.04]">
-                        <NextImage
-                          fill
+                        <ResilientImage
+                          fallbackLabel="Aplicação de identidade visual"
                           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                           src={work.imageUrl}
                           alt={work.title}
@@ -791,7 +797,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-black/30 opacity-70 group-hover:opacity-60 transition-opacity pointer-events-none" />
 
-                        <div className="absolute top-4 left-4 right-4 flex justify-between items-center" onClick={(e) => e.stopPropagation()}>
+                        <div className="absolute top-4 left-4 right-4 z-20 flex justify-between items-center">
                           <span className="font-mono text-[8px] bg-black/60 backdrop-blur-md text-zinc-300 font-bold tracking-widest uppercase py-1 px-2.5 rounded-md border border-white/5 shadow-sm">
                             {work.category}
                           </span>
@@ -848,7 +854,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                           </p>
                         </div>
 
-                        <div className="pt-3 border-t border-white/[0.04] flex items-center justify-between" onClick={(e) => e.stopPropagation()}>
+                        <div className="relative z-20 pt-3 border-t border-white/[0.04] flex items-center justify-between">
                           <button
                             onClick={() => setSelectedWork(work)}
                             className="text-[10px] font-sans text-zinc-400 hover:text-brand flex items-center gap-1 group-hover:translate-x-0.5 transition-all text-left cursor-pointer"
@@ -901,13 +907,13 @@ export default function Branding({ onNavigate }: BrandingProps) {
       </section>
       {/* SECTION - WORK SYSTEM */}
       <section className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(var(--color-brand-rgb),0.18)] select-none">
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.08)_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-20 pointer-events-none" />
+        <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-charcoal-900 border border-brand/30 text-white p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(0,0,0,0.34)] select-none">
+          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.08)_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-20 pointer-events-none" />
 
           <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[520px]">
             <div className="absolute inset-0 bg-black/10 rounded-[24px] overflow-hidden" />
-            <NextImage
-              fill
+            <ResilientImage
+              fallbackLabel="Projeto de branding TAG08"
               sizes="(max-width: 1024px) 100vw, 42vw"
               src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800"
               alt="TAG08 conduzindo um projeto de branding"
@@ -944,18 +950,18 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
           <div className="lg:col-span-7 flex flex-col justify-between space-y-8 text-left h-full relative z-10 lg:pl-4">
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 text-black font-semibold">
-                <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
-                  <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
+              <div className="inline-flex items-center gap-2 text-brand font-semibold">
+                <div className="w-5 h-5 rounded-full bg-brand flex items-center justify-center">
+                  <span className="w-2 h-2 rounded-full bg-black animate-ping" />
                 </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
+                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-brand">
                   SISTEMA DE TRABALHO
                 </span>
               </div>
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase">
+              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter uppercase">
                 Como conduzimos um projeto de identidade.
               </h2>
-              <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-semibold">
+              <p className="text-zinc-300 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-semibold">
                 A TAG08 organiza o processo de branding em etapas claras: entendimento do contexto, direção visual, criação do sistema, aplicações e orientações de uso para manter a identidade coerente depois da entrega.
               </p>
             </div>
@@ -1262,8 +1268,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
             </div>
 
             <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
-              <NextImage
-                fill
+              <ResilientImage
+                fallbackLabel="Branding TAG08"
                 sizes="(max-width: 1024px) 100vw, 34vw"
                 src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800"
                 alt="TAG08 Branding"
@@ -1389,6 +1395,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-10 overflow-y-auto bg-black/95 backdrop-blur-xl cursor-zoom-out"
             onClick={() => setSelectedWork(null)}
+            data-interaction-exception="modal-backdrop"
           >
             <motion.div
               initial={{ scale: 0.95, y: 20, opacity: 0 }}
@@ -1440,8 +1447,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
                   {/* Image block in 3:4 perspective aspect ratios */}
                   <div className="aspect-[4/5] w-full rounded-2xl overflow-hidden border border-white/[0.05] relative group shadow-lg">
-                    <NextImage
-                      fill
+                    <ResilientImage
+                      fallbackLabel="Aplicação de identidade visual"
                       sizes="(max-width: 768px) 100vw, 40vw"
                       src={selectedWork.imageUrl} 
                       alt={selectedWork.title} 
@@ -1533,7 +1540,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
                           {(selectedWork.colors || ["#0D0D11", "#C5A880", "#FFFFFF"]).map((col, idx) => {
                             const name = selectedWork.colorNames ? selectedWork.colorNames[idx] : col;
                             return (
-                              <div 
+                              <button
+                                type="button"
                                 key={col} 
                                 className="group/chip flex items-center gap-1.5 bg-black/40 border border-white/5 py-1 px-2.5 rounded-lg text-[9px] font-sans text-zinc-300 relative cursor-pointer active:scale-95 transition-all"
                                 onClick={() => {
@@ -1543,7 +1551,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                               >
                                 <span className="w-2.5 h-2.5 rounded-full border border-white/10 shrink-0" style={{ backgroundColor: col }} />
                                 <span className="group-hover/chip:text-brand transition-colors font-medium">{name}</span>
-                              </div>
+                              </button>
                             );
                           })}
                         </div>

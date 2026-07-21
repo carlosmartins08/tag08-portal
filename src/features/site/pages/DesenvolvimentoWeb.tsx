@@ -229,7 +229,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
   const activeNeedCard = needOptions.find((item) => item.id === activeNeed) ?? needOptions[0];
 
   return (
-    <div className="bg-charcoal-950 text-white min-h-screen pt-28 pb-20 relative overflow-hidden">
+    <div className="bg-charcoal-950 text-white min-h-screen pb-20 relative overflow-hidden">
       {/* Decorative ambient gradients */}
       <div className="absolute top-[8%] left-[-15%] w-[600px] h-[600px] bg-brand/[0.015] rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-15%] w-[600px] h-[600px] bg-brand/[0.02] rounded-full blur-[150px] pointer-events-none" />
@@ -242,7 +242,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
         <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
           
           {/* 1. Header Typography block (Ref Style: Expert guidance / tailored solution) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
                 Desenvolvimento Web

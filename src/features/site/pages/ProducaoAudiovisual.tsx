@@ -10,6 +10,7 @@ import {
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import MiniCases from "../../../components/MiniCases";
+import ResilientImage from "../../../components/ResilientImage";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
 import { trackVideoEvent } from "../../../lib/analytics";
@@ -156,7 +157,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
   };
 
   return (
-    <div className="bg-charcoal-950 text-white min-h-screen pt-28 pb-20 relative overflow-hidden">
+    <div className="bg-charcoal-950 text-white min-h-screen pb-20 relative overflow-hidden">
       {/* Dynamic Ambient Background Elements */}
       <div className="absolute top-[8%] left-[-10%] w-[580px] h-[580px] bg-brand/[0.015] rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-[25%] right-[-12%] w-[580px] h-[580px] bg-brand/[0.02] rounded-full blur-[140px] pointer-events-none" />
@@ -170,7 +171,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
       <section className="px-6 md:px-8 py-12 md:py-20 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-12 md:space-y-16">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-baseline text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
                 Produção Audiovisual
@@ -190,8 +191,8 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           {/* Epic Widescreen Cinematic Image Banner with Hover badging */}
           <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px]">
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.35/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
-              <Image
-                fill
+              <ResilientImage
+                fallbackLabel="Produção Audiovisual TAG08"
                 sizes="100vw"
                 src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1600"
                 alt="Produção Audiovisual TAG08"
@@ -1191,8 +1192,8 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
             {/* Central Side: Responsive image + Answer container */}
             <div className="lg:col-span-4 relative flex flex-col justify-end p-4 sm:p-6 min-h-[300px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
-              <Image
-                fill
+              <ResilientImage
+                fallbackLabel="Produção Audiovisual TAG08"
                 sizes="(max-width: 1024px) 100vw, 34vw"
                 src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800"
                 alt="TAG08 Produção Audiovisual"

@@ -1,5 +1,5 @@
 import { contactLeadSchema } from "../../../../server/submissionContracts";
-import { isPersistenceUnavailable, persistContactLead } from "../../../../server/submissionStore";
+import { getPersistenceErrorCode, isPersistenceUnavailable, persistContactLead } from "../../../../server/submissionStore";
 import {
   CONTACT_REQUEST_MAX_BYTES,
   createRequestId,
@@ -37,10 +37,11 @@ export async function POST(request: Request) {
     return jsonResponse({ ok: true, leadId: result.id, status: "accepted", replayed: !result.created, requestId }, 202, request);
   } catch (error) {
     if (isPersistenceUnavailable(error)) {
+      console.error(JSON.stringify({ event: "contact_persistence_unavailable", requestId, error: getPersistenceErrorCode(error) }));
       return jsonResponse({ ok: false, error: "persistence_unavailable", requestId }, 503, request);
     }
 
-    console.error(JSON.stringify({ event: "contact_submission_failed", requestId, error: "persistence_error" }));
+    console.error(JSON.stringify({ event: "contact_submission_failed", requestId, error: getPersistenceErrorCode(error) }));
     return jsonResponse({ ok: false, error: "persistence_error", requestId }, 500, request);
   }
 }

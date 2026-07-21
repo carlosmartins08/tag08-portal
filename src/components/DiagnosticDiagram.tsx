@@ -1,248 +1,153 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { Compass, ShieldCheck, Workflow, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { Compass, ShieldCheck, Workflow } from "lucide-react";
 
 interface DiagnosticPillar {
-  id: string;
+  id: "posicionamento" | "canais" | "processos";
   name: string;
   score: number;
   label: string;
-  color: string;
-  leakageLabel: string;
   description: string;
 }
 
+const PILLARS: DiagnosticPillar[] = [
+  {
+    id: "posicionamento",
+    name: "Posicionamento e percepção",
+    score: 34,
+    label: "Maturidade de marca",
+    description:
+      "Esforço invisível no digital. Postagens genéricas não atraem o público correspondente ao calibre do serviço."
+  },
+  {
+    id: "canais",
+    name: "Sincronia de canais",
+    score: 48,
+    label: "Eficiência de funil",
+    description:
+      "Anúncios rodam sem um funil estruturado de conversão. Cliques se perdem antes de se tornarem propostas viáveis."
+  },
+  {
+    id: "processos",
+    name: "Sistemas e playbooks",
+    score: 21,
+    label: "Maturidade operacional",
+    description:
+      "A ausência de fluxos consolidados deixa a equipe dependente do tempo e da validação do dono para avançar."
+  }
+];
+
+const PILLAR_ICONS = {
+  posicionamento: Compass,
+  canais: Workflow,
+  processos: ShieldCheck
+};
+
 export default function DiagnosticDiagram() {
-  const [activePillar, setActivePillar] = useState<string>("posicionamento");
-  const [radialAngle, setRadialAngle] = useState(0);
+  const [activePillarId, setActivePillarId] = useState<DiagnosticPillar["id"]>("posicionamento");
   const prefersReducedMotion = useReducedMotion();
-
-  // Rotating elements animation loop
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      setRadialAngle(0);
-      return;
-    }
-
-    const interval = setInterval(() => {
-      setRadialAngle((prev) => (prev + 1) % 360);
-    }, 50);
-    return () => clearInterval(interval);
-  }, [prefersReducedMotion]);
-
-  const pillars: DiagnosticPillar[] = [
-    {
-      id: "posicionamento",
-      name: "Posicionamento & Percepção",
-      score: 34,
-      label: "Maturidade de Marca",
-      color: "var(--color-brand)", // Brand accent
-      leakageLabel: "Vazamento de Autoridade",
-      description: "Esforço invisível no digital. Criação de postagens genéricas que não atraem o público correspondente ao seu calibre de serviço."
-    },
-    {
-      id: "canais",
-      name: "Sincronia de Canais",
-      score: 48,
-      label: "Eficiência de Funil",
-      color: "var(--color-brand)", // Greenish yellow
-      leakageLabel: "Dispersão de Tráfego",
-      description: "Anúncios rodando sem funil estruturado de conversão ativa. Cliques perdidos que nunca se tornam propostas viáveis."
-    },
-    {
-      id: "processos",
-      name: "Sistemas & Playbooks",
-      score: 21,
-      label: "Maturidade Operacional",
-      color: "var(--color-brand)",
-      leakageLabel: "Dependência de Fundadores",
-      description: "Ausência de fluxos operacionais consolidados. Equipe dependente do tempo e de validações do dono para tudo."
-    }
-  ];
-
-  const currentPillar = pillars.find((p) => p.id === activePillar) || pillars[0];
-
-  // Map the percentage score to the SVG dash stroke offset
+  const activePillar = PILLARS.find((pillar) => pillar.id === activePillarId) ?? PILLARS[0];
   const radius = 76;
   const circumference = 2 * Math.PI * radius;
-  const dashOffset = circumference - (currentPillar.score / 100) * circumference;
+  const dashOffset = circumference - (activePillar.score / 100) * circumference;
 
   return (
-    <div className="w-full mt-12 py-12 px-6 sm:px-12 bg-charcoal-900/5 border border-white/[0.02] rounded-[32px] relative overflow-hidden select-none">
-      {/* Absolute ambient lights */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand/[0.012] rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-white/[0.008] rounded-full blur-[160px] pointer-events-none" />
+    <div className="relative mt-12 overflow-hidden rounded-[32px] border border-white/[0.05] bg-charcoal-900/30 px-6 py-10 sm:px-10 sm:py-12">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.018)_1px,transparent_1px)] [background-size:24px_24px]" />
 
-      {/* Decorative guidelines representing minimalist slides */}
-      <div className="absolute left-6 top-10 h-16 w-px bg-white/5 flex flex-col justify-between pointer-events-none">
-        <span className="w-1 h-1 rounded-full bg-brand/30 -ml-[1.5px]" />
-        <span className="w-1 h-1 rounded-full bg-brand/30 -ml-[1.5px] mt-auto" />
-      </div>
-      <div className="absolute right-6 bottom-10 h-16 w-px bg-white/5 flex flex-col justify-between pointer-events-none">
-        <span className="w-1 h-1 rounded-full bg-brand/30 -ml-[1.5px]" />
-        <span className="w-1 h-1 rounded-full bg-brand/30 -ml-[1.5px] mt-auto" />
-      </div>
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        
-        {/* Simplified Grid mirroring clean slide image */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          
-          {/* COLUMN 1: Simple Headline Context (Left) */}
-          <div className="lg:col-span-4 space-y-6 text-left">
-            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-brand/10 border border-brand/20 text-brand font-bold text-[9px] rounded-md tracking-wider font-mono">
-              <Sparkles className="w-2.5 h-2.5" />
-              NÍVEL DE MATURIDADE
-            </div>
-            
-            <div className="space-y-3">
-              <h3 className="font-display font-bold text-3xl text-white tracking-tight leading-tight uppercase">
-                O DIAGNÓSTICO <br/>
-                DA REALIDADE
-              </h3>
-              <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-sm">
-                Uma análise de eficiência sobre os três pilares estratégicos da sua presença corporativa sênior.
-              </p>
-            </div>
-
-            <div className="text-[10px] text-zinc-500 font-mono tracking-wider pt-4 border-t border-white/5 uppercase">
-              Selecione os pilares à direita para interagir.
-            </div>
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
+        <div className="space-y-5 text-left lg:col-span-4">
+          <span className="inline-flex items-center rounded-md border border-brand/20 bg-brand/10 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-wider text-brand">
+            Nível de maturidade
+          </span>
+          <div className="space-y-3">
+            <h3 className="font-display text-3xl font-bold uppercase leading-tight tracking-tight text-white">
+              O diagnóstico<br />da realidade
+            </h3>
+            <p className="max-w-sm font-sans text-xs leading-relaxed text-zinc-400 sm:text-[13px]">
+              Uma análise de eficiência sobre os três pilares estratégicos da presença corporativa.
+            </p>
           </div>
-
-          {/* COLUMN 2: Stunning Orbital Gauge (Center) */}
-          <div className="lg:col-span-4 flex justify-center py-4">
-            <div className="relative w-60 h-60 flex items-center justify-center">
-              {/* Spinning orbiting elements */}
-              <svg 
-                viewBox="0 0 200 200" 
-                className="absolute inset-0 w-full h-full transform"
-                style={{ transform: `rotate(${prefersReducedMotion ? 0 : radialAngle}deg)` }}
-              >
-                <circle cx="100" cy="100" r="92" stroke="rgba(255, 255, 255, 0.01)" strokeWidth="0.5" fill="none" />
-                <circle cx="100" cy="100" r="84" stroke="rgba(255, 255, 255, 0.015)" strokeWidth="0.5" fill="none" strokeDasharray="3 3" />
-                
-                {/* Satellite small dot */}
-                <circle cx="100" cy="8" r="3" fill="var(--color-brand-secondary)" className="opacity-80" />
-                <circle cx="12" cy="100" r="1.5" fill="rgba(255,255,255,0.2)" />
-              </svg>
-
-              {/* Central Vector Circle Scale */}
-              <svg viewBox="0 0 200 200" className="w-[88%] h-[88%] relative z-10 transform -rotate-90">
-                <defs>
-                  <linearGradient id="neonGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="var(--color-brand-secondary)" />
-                    <stop offset="100%" stopColor="var(--color-brand)" />
-                  </linearGradient>
-                </defs>
-                
-                {/* Track */}
-                <circle
-                  cx="100"
-                  cy="100"
-                  r={radius}
-                  stroke="rgba(255, 255, 255, 0.03)"
-                  strokeWidth="5"
-                  fill="none"
-                />
-
-                {/* Animated Indicator */}
-                <motion.circle
-                  cx="100"
-                  cy="100"
-                  r={radius}
-                  stroke="url(#neonGlow)"
-                  strokeWidth="6"
-                  fill="none"
-                  strokeDasharray={circumference}
-                  initial={{ strokeDashoffset: circumference }}
-                  animate={{ strokeDashoffset: dashOffset }}
-                  transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.95, ease: "easeOut" }}
-                  strokeLinecap="round"
-                />
-              </svg>
-
-              {/* Flat dark central card */}
-              <div className="absolute w-[172px] h-[172px] rounded-full bg-[#0a0a0c] border border-white/[0.03] shadow-xl flex flex-col items-center justify-center text-center p-4 z-20">
-                <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-black">
-                  {currentPillar.label}
-                </span>
-
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentPillar.score}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.25 }}
-                    className="font-sans font-black text-5xl text-white tracking-widest leading-none mt-1 flex items-baseline justify-center"
-                  >
-                    {currentPillar.score}
-                    <span className="text-xl text-brand ml-0.5">%</span>
-                  </motion.div>
-                </AnimatePresence>
-
-                <p className="text-zinc-500 text-[8px] uppercase tracking-wider font-mono mt-1.5 font-bold">
-                  Índice Médio
-                </p>
-                <div className={`w-1.5 h-1.5 rounded-full bg-brand mt-2 ${prefersReducedMotion ? "" : "animate-pulse"}`} />
-              </div>
-            </div>
-          </div>
-
-          {/* COLUMN 3: Balanced stacked list items inspired perfectly by right items on Slide (Right) */}
-          <div className="lg:col-span-4 space-y-4 text-left">
-            {pillars.map((p) => {
-              const isActive = activePillar === p.id;
-              
-              return (
-                <div
-                  key={p.id}
-                  onClick={() => setActivePillar(p.id)}
-                  className={`p-4 rounded-2xl border transition-all duration-300 cursor-pointer select-none ${
-                    isActive
-                      ? "bg-white/[0.02] border-brand/20 shadow-[0_4px_20px_rgba(var(--color-brand-secondary-rgb),0.03)]"
-                      : "bg-transparent border-white/[0.02] hover:border-white/5 hover:bg-white/[0.005]"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
-                      isActive ? "bg-brand/10 text-brand" : "bg-white/5 text-zinc-500"
-                    }`}>
-                      {p.id === "posicionamento" && <Compass className="w-4.5 h-4.5" />}
-                      {p.id === "canais" && <Workflow className="w-4.5 h-4.5" />}
-                      {p.id === "processos" && <ShieldCheck className="w-4.5 h-4.5" />}
-                    </div>
-                    
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <h4 className={`text-xs font-bold uppercase tracking-wider transition-colors ${
-                          isActive ? "text-brand-secondary" : "text-zinc-300"
-                        }`}>
-                          {p.name}
-                        </h4>
-                        <span className={`font-sans text-[9px] font-bold px-1.5 py-0.5 rounded ${
-                          isActive ? "bg-brand/15 text-brand" : "bg-white/5 text-zinc-500"
-                        }`}>
-                          {p.score}%
-                        </span>
-                      </div>
-                      
-                      {/* Interactive display of snippet description only when selected or subtle preview */}
-                      <p className={`text-[11px] leading-relaxed mt-1 transition-all duration-300 ${
-                        isActive ? "text-zinc-400" : "text-zinc-600 line-clamp-1"
-                      }`}>
-                        {p.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
+          <p className="border-t border-white/5 pt-4 font-mono text-[10px] uppercase tracking-wider text-zinc-500">
+            Selecione um pilar para ver o contexto.
+          </p>
         </div>
 
+        <div className="flex justify-center py-2 lg:col-span-4">
+          <div className="relative flex h-60 w-60 items-center justify-center">
+            <svg viewBox="0 0 200 200" className="absolute inset-0 h-full w-full -rotate-90" aria-hidden="true">
+              <circle cx="100" cy="100" r={radius} stroke="rgba(255, 255, 255, 0.06)" strokeWidth="5" fill="none" />
+              <motion.circle
+                cx="100"
+                cy="100"
+                r={radius}
+                stroke="var(--color-brand)"
+                strokeWidth="6"
+                fill="none"
+                strokeDasharray={circumference}
+                animate={{ strokeDashoffset: dashOffset }}
+                transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.55, ease: "easeOut" }}
+                strokeLinecap="round"
+              />
+            </svg>
+
+            <div className="relative z-10 flex h-[172px] w-[172px] flex-col items-center justify-center rounded-full border border-white/[0.05] bg-[#0a0a0c] px-5 text-center shadow-xl">
+              <span className="font-mono text-[8px] font-black uppercase tracking-widest text-zinc-500">
+                {activePillar.label}
+              </span>
+              <motion.div
+                key={activePillar.score}
+                initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.2 }}
+                className="mt-2 flex items-center justify-center gap-1 font-display text-5xl font-black leading-none tracking-tighter text-white"
+              >
+                {activePillar.score}<span className="text-xl leading-none text-brand">%</span>
+              </motion.div>
+              <p className="mt-2 font-mono text-[8px] font-bold uppercase tracking-wider text-zinc-500">Índice médio</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-3 text-left lg:col-span-4">
+          {PILLARS.map((pillar) => {
+            const Icon = PILLAR_ICONS[pillar.id];
+            const isActive = pillar.id === activePillarId;
+
+            return (
+              <button
+                key={pillar.id}
+                type="button"
+                aria-pressed={isActive}
+                onClick={() => setActivePillarId(pillar.id)}
+                className={`w-full rounded-2xl border p-4 text-left transition-colors ${
+                  isActive
+                    ? "border-brand/40 bg-brand/[0.05]"
+                    : "border-white/[0.04] bg-transparent hover:border-white/15 hover:bg-white/[0.02]"
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <span className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${isActive ? "bg-brand/10 text-brand" : "bg-white/5 text-zinc-500"}`}>
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-center justify-between gap-3">
+                      <span className={`font-sans text-xs font-bold uppercase tracking-wide ${isActive ? "text-brand" : "text-zinc-300"}`}>
+                        {pillar.name}
+                      </span>
+                      <span className={`rounded px-1.5 py-0.5 font-sans text-[9px] font-bold ${isActive ? "bg-brand/15 text-brand" : "bg-white/5 text-zinc-500"}`}>
+                        {pillar.score}%
+                      </span>
+                    </span>
+                    <span className={`mt-1 block text-[11px] leading-relaxed ${isActive ? "text-zinc-400" : "line-clamp-1 text-zinc-600"}`}>
+                      {pillar.description}
+                    </span>
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

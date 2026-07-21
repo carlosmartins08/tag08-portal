@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
 import { TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
 import { trackCtaClick, trackOutboundClick } from "../lib/analytics";
+import CountryFlag from "./CountryFlag";
 
 interface HeaderProps {
   currentPage: string;
@@ -15,6 +16,11 @@ interface HeaderProps {
 
 export default function Header({ currentPage, onNavigate, language, onLanguageChange }: HeaderProps) {
   const copy = i18n[language].header;
+  const languageOptions: Array<{ code: UiLanguage; label: string; name: string; available: boolean }> = [
+    { code: "pt", label: "PT", name: "Português", available: true },
+    { code: "en", label: "EN", name: "English", available: false },
+    { code: "es", label: "ES", name: "Español", available: false }
+  ];
   const serviceIcons = [Award, MessageSquare, Compass, Settings, Video, Briefcase, Users];
   const localizedServices = copy.servicePages.map((svc, index) => ({
     ...svc,
@@ -65,6 +71,20 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
       surface,
       language
     });
+  };
+
+  const handleLanguageSelection = (nextLanguage: UiLanguage, surface: string) => {
+    if (nextLanguage === language || !languageOptions.find((option) => option.code === nextLanguage)?.available) return;
+
+    trackCtaClick({
+      cta_name: `language_${nextLanguage}`,
+      cta_location: surface,
+      cta_type: "navigation",
+      page_path: currentPage,
+      language
+    });
+    onLanguageChange(nextLanguage);
+    setMobileMenuOpen(false);
   };
 
   const isSolutionsActive = [
@@ -246,13 +266,25 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
           })}
         </nav>
 
-        {/* Right Corner Buttons: Fixed redundancies beautifully with high-end SP live indicator & single clean CTA */}
+        {/* Language choice and the primary conversion action. */}
         <div className="hidden lg:flex items-center gap-5">
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.05] shadow-inner select-none">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-            <span className="font-mono text-[9px] uppercase tracking-wider text-white/50">
-              {copy.statusTag}
-            </span>
+          <div aria-label="Selecionar idioma" className="flex items-center rounded-lg border border-white/[0.08] bg-white/[0.03] p-1" role="group">
+            {languageOptions.map((option) => (
+              <button
+                key={option.code}
+                type="button"
+                aria-label={option.available ? `Navegar em ${option.name}` : `${option.name} em revisão editorial`}
+                aria-pressed={language === option.code}
+                disabled={!option.available}
+                onClick={() => handleLanguageSelection(option.code, "header-language")}
+                title={option.available ? option.name : `${option.name}: conteúdo em revisão editorial`}
+                className={`rounded-md px-2.5 py-1.5 font-mono text-[10px] font-black tracking-wider transition-colors ${
+                  language === option.code ? "bg-brand text-black" : option.available ? "text-zinc-400 hover:text-white" : "cursor-not-allowed text-zinc-700"
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
           </div>
 
           <button
@@ -317,6 +349,32 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                 </div>
               </div>
 
+              <div className="space-y-3 border-t border-white/[0.05] pt-6">
+                <p className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-zinc-500">Idioma do portal</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {languageOptions.map((option) => (
+                    <button
+                      key={option.code}
+                      type="button"
+                      aria-pressed={language === option.code}
+                      aria-label={option.available ? `Navegar em ${option.name}` : `${option.name} em revisão editorial`}
+                      disabled={!option.available}
+                      onClick={() => handleLanguageSelection(option.code, "mobile-language")}
+                      title={option.available ? option.name : `${option.name}: conteúdo em revisão editorial`}
+                      className={`rounded-lg border px-3 py-2.5 text-xs font-mono font-bold transition-colors ${
+                        language === option.code
+                          ? "border-brand bg-brand text-black"
+                          : option.available
+                            ? "border-white/[0.07] bg-white/[0.02] text-zinc-400 hover:text-white"
+                            : "cursor-not-allowed border-white/[0.03] bg-white/[0.01] text-zinc-700"
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Grid of Specialized services */}
               <div className="space-y-4">
                 <div className="font-mono text-[9px] text-brand uppercase tracking-[0.2em] mb-2 font-bold flex items-center gap-1.5">
@@ -365,8 +423,8 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                   >
                     <MessageSquare className="w-4 h-4 text-brand/70" />
                     <span className="inline-flex items-center gap-2">
-                      <span className="text-[8px] font-black uppercase bg-white/[0.04] border border-white/[0.08] px-1.5 py-0.5 rounded text-zinc-300">
-                        {contact.badge}
+                      <span className="inline-flex items-center justify-center text-sm leading-none" title={contact.country.name}>
+                        <CountryFlag country={contact.country} />
                       </span>
                       <span>{contact.display}</span>
                     </span>
@@ -396,7 +454,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                     }`}
                     aria-label={`Abrir WhatsApp ${contact.label}`}
                   >
-                    {contact.badge} WhatsApp
+                    <CountryFlag country={contact.country} className="mr-1" /> WhatsApp
                   </a>
                 ))}
               </div>

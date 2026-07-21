@@ -8,6 +8,8 @@ test("analytics removes personal data keys while preserving simulator context", 
       simulator_id: "hosting_price",
       simulator_version: 1,
       page_path: "/hospedagem-manutencao-sites",
+      metric_name: "LCP",
+      metric_value: 1200,
       email: "person@example.test",
       whatsapp: "+5500000000000",
       message: "private detail",
@@ -16,7 +18,9 @@ test("analytics removes personal data keys while preserving simulator context", 
     {
       simulator_id: "hosting_price",
       simulator_version: 1,
-      page_path: "/hospedagem-manutencao-sites"
+      page_path: "/hospedagem-manutencao-sites",
+      metric_name: "LCP",
+      metric_value: 1200
     }
   );
 });

@@ -7,6 +7,7 @@ import { getLocalizedNetworkLinks, TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_PINTER
 import { safeStorage } from "../utils/storage";
 import { trackOutboundClick } from "../lib/analytics";
 import { readCookiePreferences, saveCookiePreferences, type CookiePreferences } from "../lib/cookieConsent";
+import CountryFlag from "./CountryFlag";
 
 interface FooterProps {
   onNavigate: (page: string) => void;
@@ -591,14 +592,8 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                               }`}
                               aria-label={`Abrir WhatsApp ${contact.label}`}
                             >
-                              <span
-                                className={`text-[8px] font-sans font-black border px-1.5 py-0.5 rounded leading-none ${
-                                  contact.key === "brazil"
-                                    ? "bg-white/5 border-white/10 text-zinc-400"
-                                    : "bg-brand-secondary/5 border-brand-secondary/10 text-brand-secondary"
-                                }`}
-                              >
-                                {contact.badge}
+                              <span className="text-sm leading-none" title={contact.country.name}>
+                                <CountryFlag country={contact.country} />
                               </span>
                               <span>{contact.display}</span>
                             </a>

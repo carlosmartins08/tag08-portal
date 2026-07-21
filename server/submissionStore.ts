@@ -117,6 +117,12 @@ export const persistOnboardingSubmission = async (payload: OnboardingPayload, id
 export const isPersistenceUnavailable = (error: unknown) =>
   error instanceof Error && error.message === "persistence_unavailable";
 
+export const getPersistenceErrorCode = (error: unknown) => {
+  if (isPersistenceUnavailable(error)) return "database_configuration_unavailable";
+  if (error instanceof Error) return error.name || "database_operation_failed";
+  return "database_operation_failed";
+};
+
 export const getOperationalMetrics = async () => {
   const prisma = getPrisma();
   const [onboardingTotal, onboardingAccepted, failedDeliveries, pendingDeliveries, processingDeliveries, oldestQueuedDelivery] = await Promise.all([

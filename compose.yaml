@@ -23,6 +23,9 @@ services:
       context: .
       dockerfile: Dockerfile
       target: runtime
+      args:
+        NEXT_PUBLIC_GA4_ID: ${NEXT_PUBLIC_GA4_ID:-}
+        NEXT_PUBLIC_GSC_VERIFICATION: ${NEXT_PUBLIC_GSC_VERIFICATION:-}
     container_name: tag08-web-local
     restart: unless-stopped
     depends_on:
@@ -53,6 +56,9 @@ services:
       context: .
       dockerfile: Dockerfile
       target: migration
+      args:
+        NEXT_PUBLIC_GA4_ID: ${NEXT_PUBLIC_GA4_ID:-}
+        NEXT_PUBLIC_GSC_VERIFICATION: ${NEXT_PUBLIC_GSC_VERIFICATION:-}
     restart: "no"
     depends_on:
       postgres:

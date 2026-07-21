@@ -1,0 +1,189 @@
+[
+  {
+    "name": "minScore",
+    "expected": 0.85,
+    "actual": 0.58,
+    "values": [
+      0.58,
+      0.57
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/"
+  },
+  {
+    "name": "maxNumericValue",
+    "expected": 2500,
+    "actual": 5070.089425,
+    "values": [
+      5070.089425,
+      5145.79595
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "largest-contentful-paint",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/",
+    "auditTitle": "Largest Contentful Paint",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/"
+  },
+  {
+    "name": "maxNumericValue",
+    "expected": 300,
+    "actual": 452.7608000000005,
+    "values": [
+      452.7608000000005,
+      529.0506999999998
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "total-blocking-time",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/",
+    "auditTitle": "Total Blocking Time",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.85,
+    "actual": 0.63,
+    "values": [
+      0.63,
+      0.52
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/servicos/gestao-de-redes-sociais"
+  },
+  {
+    "name": "maxNumericValue",
+    "expected": 2500,
+    "actual": 4532.9123500000005,
+    "values": [
+      4532.9123500000005,
+      4811.718800000001
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "largest-contentful-paint",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/servicos/gestao-de-redes-sociais",
+    "auditTitle": "Largest Contentful Paint",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/"
+  },
+  {
+    "name": "maxNumericValue",
+    "expected": 300,
+    "actual": 428,
+    "values": [
+      428,
+      807.0000000000009
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "total-blocking-time",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/servicos/gestao-de-redes-sociais",
+    "auditTitle": "Total Blocking Time",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.85,
+    "actual": 0.72,
+    "values": [
+      0.66,
+      0.72
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/contato"
+  },
+  {
+    "name": "maxNumericValue",
+    "expected": 2500,
+    "actual": 4594.0464999999995,
+    "values": [
+      5147.750050000001,
+      4594.0464999999995
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "largest-contentful-paint",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/contato",
+    "auditTitle": "Largest Contentful Paint",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.85,
+    "actual": 0.73,
+    "values": [
+      0.73,
+      0.71
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/cliente/onboarding"
+  },
+  {
+    "name": "maxNumericValue",
+    "expected": 2500,
+    "actual": 4529.6515,
+    "values": [
+      4529.6515,
+      4546.544
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "largest-contentful-paint",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/cliente/onboarding",
+    "auditTitle": "Largest Contentful Paint",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.85,
+    "actual": 0.66,
+    "values": [
+      0.63,
+      0.66
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/servicos/process-intelligence"
+  },
+  {
+    "name": "maxNumericValue",
+    "expected": 2500,
+    "actual": 4625.7095,
+    "values": [
+      4625.7095,
+      5620.1335
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "largest-contentful-paint",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/servicos/process-intelligence",
+    "auditTitle": "Largest Contentful Paint",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/"
+  }
+]

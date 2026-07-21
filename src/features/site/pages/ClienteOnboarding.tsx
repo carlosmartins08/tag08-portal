@@ -29,6 +29,7 @@ import {
   FolderDot
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { activateOnKeyboard } from "../../../lib/keyboard";
 import {
   ONBOARDING_QUEUE_MAX_AGE_DAYS,
   ONBOARDING_QUEUE_MAX_RETRIES,
@@ -1653,7 +1654,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
   };
 
   return (
-    <div className="bg-charcoal-950 text-white min-h-screen pt-28 pb-20 font-sans">
+    <div className="bg-charcoal-950 text-white min-h-screen pt-16 pb-20 font-sans">
       <div className="max-w-7xl mx-auto px-6 relative">
         
         {/* Subtle ambient blur background decorations */}
@@ -1670,7 +1671,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
             <h1 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tight">
               {t("title_prefix")} <span className="text-brand-secondary">TAG08</span>
             </h1>
-            <p className="text-zinc-500 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
+            <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
               {t("header_desc")}
             </p>
           </div>
@@ -2147,11 +2148,15 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider block">
                           {t("radar_label_moment")}
                         </label>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5" role="radiogroup" aria-label={t("radar_label_moment")}>
                           {momentOptions[preferredLanguage as keyof typeof momentOptions].map((opt, idx) => (
                             <div
                               key={idx}
                               onClick={() => setBusinessMoment(opt.value)}
+                              onKeyDown={(event) => activateOnKeyboard(event, () => setBusinessMoment(opt.value))}
+                              role="radio"
+                              aria-checked={businessMoment === opt.value}
+                              tabIndex={0}
                               className={`p-4 rounded-2xl border transition-all duration-300 cursor-pointer text-left flex flex-col justify-between h-[110px] ${
                                 businessMoment === opt.value
                                   ? "bg-brand-secondary/[0.03] border-brand-secondary shadow-[0_4px_15px_rgba(var(--color-brand-secondary-rgb),0.06)]"
@@ -2174,11 +2179,15 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider block">
                           {t("radar_label_priority")}
                         </label>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3" role="radiogroup" aria-label={t("radar_label_priority")}>
                           {priorityOptions[preferredLanguage as keyof typeof priorityOptions].map((opt, idx) => (
                             <div
                               key={idx}
                               onClick={() => setPriorityMap(opt.value)}
+                              onKeyDown={(event) => activateOnKeyboard(event, () => setPriorityMap(opt.value))}
+                              role="radio"
+                              aria-checked={priorityMap === opt.value}
+                              tabIndex={0}
                               className={`p-3.5 rounded-xl border text-center cursor-pointer transition-all ${
                                 priorityMap === opt.value
                                   ? "bg-white/[0.03] border-brand-secondary text-brand-secondary"
@@ -2246,6 +2255,10 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                             <div
                               key={opt.id}
                               onClick={() => handleToggleService(opt.id)}
+                              onKeyDown={(event) => activateOnKeyboard(event, () => handleToggleService(opt.id))}
+                              role="checkbox"
+                              aria-checked={active}
+                              tabIndex={0}
                               className={`p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between text-left h-[130px] relative ${
                                 active
                                   ? "bg-brand-secondary/[0.02] border-brand-secondary shadow-[0_4px_15px_rgba(var(--color-brand-secondary-rgb),0.05)]"

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 
-const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+const baseUrl = process.env.BASE_URL || "http://127.0.0.1:3000";
 const canonicalOrigin = "https://tag08.com.br";
 const mojibake = /\u00c3[\u0080-\u00bf]|\ufffd/;
 

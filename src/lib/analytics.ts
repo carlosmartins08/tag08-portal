@@ -387,6 +387,16 @@ export const trackEngagement = (params: {
   });
 };
 
+export const trackWebVital = (params: {
+  metric_name: "CLS" | "INP" | "LCP";
+  metric_value: number;
+  metric_rating: "good" | "needs_improvement" | "poor";
+  page_path: string;
+  language?: string;
+}) => {
+  trackAnalyticsEvent("web_vital", params);
+};
+
 export const trackVideoEvent = (params: {
   action: "selected" | "started" | "closed";
   video_id: string;

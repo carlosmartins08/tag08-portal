@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import Image from "next/image";
+import ResilientImage from "../../../components/ResilientImage";
 import { Sparkles, Trophy, CheckCircle, ArrowUpRight, Shield, ArrowRight, Layers, DollarSign, Percent, TrendingUp, Users, HelpCircle } from "lucide-react";
 import { motion } from "motion/react";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
@@ -81,7 +81,7 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
   ];
 
   return (
-    <div className="bg-charcoal-950 text-white min-h-screen pt-28 pb-20 relative overflow-hidden">
+    <div className="bg-charcoal-950 text-white min-h-screen pb-20 relative overflow-hidden">
       {/* Ambient gradients */}
       <div className="absolute top-[8%] left-[-15%] w-[600px] h-[600px] bg-brand/[0.015] rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-15%] w-[600px] h-[600px] bg-brand/[0.02] rounded-full blur-[150px] pointer-events-none" />
@@ -93,7 +93,7 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
       <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-20 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
                 PROGRAMA DE AFILIADOS // INDIQUE E GANHE
@@ -113,10 +113,10 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
           {/* Large Hero Banner with Tilt animation */}
           <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px] overflow-visible">
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full w-full">
-              <Image
+              <ResilientImage
+                fallbackLabel="Programa de afiliados TAG08"
                 src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1600"
                 alt="Programa de Afiliados e Parceiros Comerciais TAG08"
-                fill
                 sizes="(max-width: 640px) 100vw, 100vw"
                 className="w-full h-full object-cover grayscale brightness-40 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"

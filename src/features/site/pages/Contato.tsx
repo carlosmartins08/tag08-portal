@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { 
   MessageSquare, 
   Mail, 
@@ -21,12 +21,29 @@ import { ContactFormData } from "../../../types";
 import { TAG08_OFFICIAL_CHANNELS, TAG08_OFFICIAL_CONTACT, TAG08_WHATSAPP_CONTACTS, buildGoogleMapsEmbedUrl } from "../../../config/siteNetwork";
 import { trackFormError, trackFormStart, trackFormSubmit, trackLeadEvent, trackOutboundClick } from "../../../lib/analytics";
 import { queueFormSubmission } from "../../../lib/formQueue";
+import { COOKIE_CONSENT_EVENT, grantMarketingConsent, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
+import CountryFlag from "../../../components/CountryFlag";
 
 export default function Contato() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [copiedStates, setCopiedStates] = useState<Record<string, boolean>>({});
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const hasTrackedFormStartRef = useRef(false);
   const honeypotRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const syncMarketingConsent = (preferences: CookiePreferences | null) => {
+      setMarketingConsent(preferences?.marketing === true);
+    };
+
+    syncMarketingConsent(readCookiePreferences());
+    const handleConsentChange = (event: Event) => {
+      syncMarketingConsent((event as CustomEvent<CookiePreferences>).detail);
+    };
+
+    window.addEventListener(COOKIE_CONSENT_EVENT, handleConsentChange);
+    return () => window.removeEventListener(COOKIE_CONSENT_EVENT, handleConsentChange);
+  }, []);
 
   const toggleFaq = (index: number) => {
     setActiveFaq(activeFaq === index ? null : index);
@@ -227,7 +244,7 @@ export default function Contato() {
   };
 
   return (
-    <div className="bg-charcoal-950 text-white min-h-screen pt-28 pb-20">
+    <div className="bg-charcoal-950 text-white min-h-screen pt-16 pb-20">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         
         {/* Left column info items */}
@@ -291,8 +308,8 @@ export default function Contato() {
                       <Phone className="w-4.5 h-4.5" />
                     </div>
                     <div>
-                      <h4 className="text-white font-semibold text-xs uppercase tracking-wider font-mono">
-                        WhatsApp {contact.label}
+                      <h4 className="flex items-center gap-1.5 text-white font-semibold text-xs uppercase tracking-wider font-mono">
+                        <CountryFlag country={contact.country} className="text-sm leading-none" /> WhatsApp {contact.label}
                       </h4>
                       <p className={`text-sm font-sans font-medium ${
                         contact.key === "brazil" ? "text-zinc-400" : "text-brand-secondary"
@@ -381,13 +398,31 @@ export default function Contato() {
               </div>
 
               <div className="mt-4 h-[280px] sm:h-[320px]">
-                <iframe
-                  title="Mapa da TAG08"
-                  src={buildGoogleMapsEmbedUrl(TAG08_OFFICIAL_CONTACT.address)}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="h-full w-full border-0"
-                />
+                {marketingConsent ? (
+                  <iframe
+                    title="Mapa da TAG08"
+                    src={buildGoogleMapsEmbedUrl(TAG08_OFFICIAL_CONTACT.address)}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="h-full w-full border-0"
+                  />
+                ) : (
+                  <div className="flex h-full flex-col items-center justify-center gap-3 bg-zinc-950 px-6 text-center">
+                    <p className="max-w-md text-xs leading-relaxed text-zinc-400">
+                      O mapa externo é opcional e só é carregado depois da autorização de cookies de marketing.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        grantMarketingConsent();
+                        setMarketingConsent(true);
+                      }}
+                      className="rounded-xl border border-brand/30 bg-brand/10 px-4 py-2 text-[10px] font-mono font-black uppercase tracking-widest text-brand transition-colors hover:bg-brand hover:text-black"
+                    >
+                      Carregar mapa
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="px-4 pb-4 pt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">

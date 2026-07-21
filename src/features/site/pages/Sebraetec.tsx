@@ -1,7 +1,7 @@
 ﻿import { useState } from "react";
 import { Sparkles, Trophy, CheckCircle, ArrowUpRight, Shield, ArrowRight, Layers, FileText, Zap, HelpCircle } from "lucide-react";
 import { motion } from "motion/react";
-import Image from "next/image";
+import ResilientImage from "../../../components/ResilientImage";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
@@ -74,11 +74,11 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
           {/* Banner with absolute interactive overlay triggers */}
           <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px] overflow-visible">
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
-              <Image
-                fill
+              <ResilientImage
                 sizes="100vw"
                 src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=1600"
                 alt="Empreendedorismo e inovação subsidiada Sebraetec"
+                fallbackLabel="Inovação aplicada com a TAG08"
                 className="object-cover grayscale brightness-40 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
               />

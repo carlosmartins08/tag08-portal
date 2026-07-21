@@ -134,7 +134,7 @@ export default function TrustTestimonialsSection() {
               transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.35, ease: "easeOut" }}
               className="bg-charcoal-900/90 border border-white/[0.06] p-5 sm:p-8 lg:p-10 rounded-[28px] sm:rounded-[36px] relative overflow-hidden text-left shadow-2xl flex flex-col justify-between min-h-[340px] w-full group/card"
             >
-                <span className="font-serif text-[180px] sm:text-[230px] text-brand-secondary/[0.03] absolute right-6 sm:right-10 -top-8 sm:-top-12 leading-none select-none pointer-events-none font-black italic">
+                <span className="font-display text-[180px] sm:text-[230px] text-brand-secondary/[0.03] absolute right-6 sm:right-10 -top-8 sm:-top-12 leading-none select-none pointer-events-none font-black italic">
                   "
                 </span>
 

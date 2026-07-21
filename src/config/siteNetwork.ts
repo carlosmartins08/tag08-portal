@@ -13,12 +13,28 @@ export type OfficialChannel = {
 export type WhatsAppContact = {
   key: string;
   label: string;
-  badge: string;
   display: string;
   phoneE164: string;
   href: string;
   defaultMessage: string;
+  country: PhoneCountry;
 };
+
+export type PhoneCountry = {
+  isoCode: string | null;
+  name: string;
+  flag: string;
+};
+
+const COUNTRY_BY_DIALING_PREFIX: Array<{ prefix: string; country: PhoneCountry }> = [
+  { prefix: "+55", country: { isoCode: "BR", name: "Brasil", flag: "🇧🇷" } },
+  { prefix: "+56", country: { isoCode: "CL", name: "Chile", flag: "🇨🇱" } }
+];
+
+/** Identifies only configured calling codes; unknown numbers remain explicitly global. */
+export const getCountryFromPhoneE164 = (phoneE164: string): PhoneCountry =>
+  COUNTRY_BY_DIALING_PREFIX.find(({ prefix }) => phoneE164.startsWith(prefix))?.country
+  ?? { isoCode: null, name: "Internacional", flag: "🌐" };
 
 const normalizeWhatsAppMessage = (message: string) => {
   let normalized = message;
@@ -70,18 +86,18 @@ export const TAG08_WHATSAPP_CONTACTS: WhatsAppContact[] = [
   {
     key: "brazil",
     label: "Brasil",
-    badge: "BR",
     display: TAG08_OFFICIAL_CONTACT.phoneDisplay,
     phoneE164: TAG08_OFFICIAL_CONTACT.phoneE164,
+    country: getCountryFromPhoneE164(TAG08_OFFICIAL_CONTACT.phoneE164),
     href: buildBrazilWhatsAppUrl("Olá, gostaria de falar com a TAG08"),
     defaultMessage: "Olá, gostaria de falar com a TAG08"
   },
   {
     key: "international",
     label: "Internacional",
-    badge: "INT",
     display: TAG08_OFFICIAL_CONTACT.phoneInternationalDisplay,
     phoneE164: TAG08_OFFICIAL_CONTACT.phoneInternationalE164,
+    country: getCountryFromPhoneE164(TAG08_OFFICIAL_CONTACT.phoneInternationalE164),
     href: buildInternationalWhatsAppUrl("Hello, I would like to talk to TAG08"),
     defaultMessage: "Hello, I would like to talk to TAG08"
   }

@@ -1,6 +1,6 @@
 import { ONBOARDING_PAYLOAD_VERSION } from "../../../../../server/onboardingContract";
 import { jsonResponse, optionsResponse } from "../../../../lib/api/response";
-import { getPrisma } from "../../../../lib/server/prisma";
+import { getPrisma, getSafePersistenceErrorDetails } from "../../../../lib/server/prisma";
 
 export const runtime = "nodejs";
 const DATABASE_HEALTH_TIMEOUT_MS = 5_000;
@@ -28,7 +28,8 @@ export async function GET(request: Request) {
       status: "online",
       timestamp: new Date().toISOString()
     }, 200, request);
-  } catch {
+  } catch (error) {
+    console.error(JSON.stringify({ event: "database_health_failed", error: getSafePersistenceErrorDetails(error) }));
     return jsonResponse({
       ok: false,
       service: "tag08-onboarding-api",

@@ -1,7 +1,8 @@
 ﻿import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowUpRight, BookOpen, Calendar, Filter, Sparkles, User } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import Image from "next/image";
+import ResilientImage from "../../../components/ResilientImage";
+import { activateOnKeyboard } from "../../../lib/keyboard";
 import { BLOG_POSTS, type EditorialBlogPost } from "../../../data";
 
 interface InsightsProps {
@@ -58,31 +59,21 @@ export default function Insights({ onNavigate }: InsightsProps) {
             transition={{ duration: 0.3 }}
             className="max-w-6xl mx-auto px-6 space-y-12 text-left"
           >
-            <div className="space-y-6">
-              <div className="p-4 rounded-xl bg-brand/5 border border-brand/20 text-zinc-300 text-xs sm:text-sm font-sans flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <span className="leading-relaxed">
-                  <strong className="text-brand font-sans uppercase tracking-wider block sm:inline mr-2">[Vitrine de Prévia / Preview]</strong>
-                  Esta área funciona como biblioteca editorial e já prepara cada peça para um serviço, uma dor e um próximo passo.
-                </span>
-                <span className="text-[10px] font-sans whitespace-nowrap bg-white/[0.05] border border-white/[0.08] px-2.5 py-1 rounded text-zinc-400">
-                  SEO Canonical Ready
-                </span>
-              </div>
-
+            <header className="max-w-3xl space-y-4">
               <div className="space-y-3 pt-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-brand text-xs font-sans">
                   <Sparkles className="w-3 h-3" />
-                  <span>Insights TAG08 &bull; Centro de inteligência aplicada</span>
+                  <span>Arquivo editorial TAG08</span>
                 </div>
-                <h1 className="font-display font-medium text-4xl sm:text-5xl md:text-6xl text-gradient leading-[1.1] tracking-tight">
-                  Conteúdo com valor real<br />
-                  <span className="text-brand">e destino comercial claro.</span>
+                <h1 className="font-display font-medium text-4xl sm:text-5xl md:text-6xl text-gradient leading-[1.06] tracking-tight">
+                  Ideias que ajudam a<br />
+                  <span className="text-brand">tomar decisões melhores.</span>
                 </h1>
-                <p className="text-zinc-300 text-sm sm:text-base max-w-2xl leading-relaxed">
-                  Cada peça editorial nasce como `BlogPost`, mas entra no site com relação explícita a um serviço, uma objeção e uma ação concreta.
+                <p className="text-zinc-300 text-base sm:text-lg max-w-2xl leading-relaxed">
+                  Estratégia, marca, processos e tecnologia explicados com contexto, ponto de vista e próximo passo aplicável.
                 </p>
               </div>
-            </div>
+            </header>
 
             <div className="flex flex-wrap items-center gap-2 border-b border-white/[0.04] pb-6">
               <span className="text-zinc-500 font-mono text-xs uppercase tracking-widest mr-2 flex items-center gap-1.5">
@@ -108,11 +99,15 @@ export default function Insights({ onNavigate }: InsightsProps) {
                 <article
                   key={post.id}
                   onClick={() => setSelectedPost(post)}
+                  onKeyDown={(event) => activateOnKeyboard(event, () => setSelectedPost(post))}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Ler insight: ${post.title}`}
                   className="group bg-charcoal-900 border border-white/[0.05] hover:border-brand/20 rounded-2xl overflow-hidden transition-all duration-350 flex flex-col justify-between cursor-pointer transform hover:-translate-y-1"
                 >
                   <div className="relative aspect-video overflow-hidden bg-zinc-950 shrink-0">
-                    <Image
-                      fill
+                    <ResilientImage
+                      fallbackLabel={`${post.category} // insight TAG08`}
                       sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                       src={post.image}
                       alt={post.title}
@@ -162,7 +157,7 @@ export default function Insights({ onNavigate }: InsightsProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.3 }}
-            className="max-w-3xl mx-auto px-6 space-y-10 text-left"
+            className="max-w-5xl mx-auto px-6 space-y-10 text-left"
           >
             <button
               onClick={() => setSelectedPost(null)}
@@ -171,47 +166,47 @@ export default function Insights({ onNavigate }: InsightsProps) {
               <ArrowLeft className="w-4 h-4" /> Voltar para Insights
             </button>
 
-            <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/[0.05] bg-zinc-950">
-              <Image
-                fill
+            <header className="mx-auto max-w-3xl space-y-5">
+              <span className="inline-flex rounded-full border border-brand/20 bg-brand/10 px-3 py-1 font-mono text-[10px] font-black uppercase tracking-[0.16em] text-brand">
+                {selectedPost.category}
+              </span>
+              <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-white leading-[1.04] tracking-tight">
+                {selectedPost.title}
+              </h1>
+              <p className="max-w-2xl text-lg leading-relaxed text-zinc-300 sm:text-xl">
+                {selectedPost.excerpt}
+              </p>
+              <div className="flex flex-wrap gap-x-4 gap-y-2 items-center text-zinc-500 font-mono text-[10px] uppercase tracking-wider border-y border-white/[0.05] py-4">
+                <span className="flex items-center gap-1.5 text-zinc-400"><Calendar className="w-4 h-4 text-brand" /> {selectedPost.date}</span>
+                <span className="flex items-center gap-1.5 text-zinc-400"><BookOpen className="w-4 h-4 text-brand" /> {selectedPost.readingTime ?? selectedPost.readTime}</span>
+                <span className="flex items-center gap-1.5 text-zinc-400"><User className="w-4 h-4 text-brand" /> {selectedPost.author}</span>
+              </div>
+            </header>
+
+            <div className="relative aspect-[16/8] overflow-hidden rounded-3xl border border-white/[0.05] bg-zinc-950 shadow-2xl">
+              <ResilientImage
+                fallbackLabel={`${selectedPost.category} // insight TAG08`}
                 sizes="(max-width: 1024px) 100vw, 70vw"
                 src={selectedPost.image}
                 alt={selectedPost.title}
                 referrerPolicy="no-referrer"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 bg-brand text-black font-mono font-black text-xs uppercase px-3 py-1 rounded tracking-widest shadow">
-                {selectedPost.category}
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/50 via-transparent to-transparent" />
             </div>
 
-            <div className="space-y-4">
-              <div className="flex flex-wrap gap-4 items-center text-zinc-500 font-mono text-xs uppercase tracking-wider border-b border-white/[0.04] pb-4">
-                <span className="flex items-center gap-1.5 text-zinc-400"><Calendar className="w-4 h-4 text-brand" /> {selectedPost.date}</span>
-                <span>•</span>
-                <span className="flex items-center gap-1.5 text-zinc-400"><BookOpen className="w-4 h-4 text-brand" /> {selectedPost.readingTime ?? selectedPost.readTime}</span>
-                <span>•</span>
-                <span className="flex items-center gap-1.5 text-zinc-400"><User className="w-4 h-4 text-brand" /> {selectedPost.author}</span>
-              </div>
-
-              <h1 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-white leading-tight tracking-tight">
-                {selectedPost.title}
-              </h1>
-            </div>
-
-            <div className="prose prose-invert max-w-none text-zinc-300 text-sm sm:text-base space-y-6 leading-relaxed font-sans">
+            <article className="prose prose-invert mx-auto max-w-3xl text-zinc-300 text-base sm:text-lg space-y-7 leading-8 font-sans">
               {selectedPost.content.split("\n\n").map((para, idx) => {
                 if (para.trim().startsWith("###")) {
                   return (
-                    <h3 key={idx} className="font-display font-bold text-xl sm:text-2xl text-white pt-4 tracking-tight">
+                    <h2 key={idx} className="font-display font-bold text-2xl sm:text-3xl text-white pt-8 tracking-tight leading-tight">
                       {para.replace("###", "").trim()}
-                    </h3>
+                    </h2>
                   );
                 }
                 if (para.trim().startsWith("-") || para.trim().startsWith("*")) {
                   return (
-                    <ul key={idx} className="list-disc pl-6 space-y-2 text-zinc-400 border-l-2 border-brand/20">
+                  <ul key={idx} className="list-disc pl-6 space-y-2.5 text-zinc-300 border-l-2 border-brand/30">
                       {para.split("\n").map((item, itemIndex) => (
                         <li key={itemIndex}>{item.replace(/^[-*]\s*/, "").trim()}</li>
                       ))}
@@ -229,7 +224,7 @@ export default function Insights({ onNavigate }: InsightsProps) {
                   </p>
                 );
               })}
-            </div>
+            </article>
 
             <section className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-6 space-y-4">
               <p className="text-brand font-mono text-[10px] uppercase tracking-widest">Direção Estratégica</p>

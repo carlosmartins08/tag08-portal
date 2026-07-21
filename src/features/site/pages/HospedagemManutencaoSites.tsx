@@ -28,7 +28,8 @@ import {
 } from "lucide-react";
 import { useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import Image from "next/image";
+import { activateOnKeyboard } from "../../../lib/keyboard";
+import ResilientImage from "../../../components/ResilientImage";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
@@ -250,11 +251,11 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
           <div className="mt-12 sm:mt-16">
             <ThreeDimensionalTilt className="rounded-[28px] overflow-visible">
               <div className="relative rounded-[28px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group flex items-center justify-center">
-                <Image
-                  fill
+                <ResilientImage
                   sizes="100vw"
                   src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=1800"
                   alt="Soberania de Servidores e Criptografia Computacional"
+                  fallbackLabel="Infraestrutura e proteção operacional"
                   className="object-cover grayscale brightness-[0.35] group-hover:scale-[1.01] transition-all duration-[1200ms] ease-out"
                   referrerPolicy="no-referrer"
                 />
@@ -727,13 +728,19 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                         exit={{ opacity: 0, scale: 0.95 }}
                         transition={{ duration: 0.3 }}
                         key={host.id}
-                        onClick={() => setSelectedHosting(host.id)}
-                        className={`p-6 sm:p-8 rounded-[32px] border cursor-pointer transition-all duration-300 relative flex flex-col justify-between text-left ${
+                        className={`p-6 sm:p-8 rounded-[32px] border transition-all duration-300 relative flex flex-col justify-between text-left ${
                           isSelected
                             ? "bg-[#09090b] border-brand shadow-[0_15px_45px_rgba(var(--color-brand-rgb),0.06)] scale-[1.01]"
                             : "bg-white/[0.01] border-white/5 hover:border-white/15"
                         }`}
                       >
+                        <button
+                          type="button"
+                          aria-label={`Selecionar ${host.title}`}
+                          aria-pressed={isSelected}
+                          onClick={() => setSelectedHosting(host.id)}
+                          className="absolute inset-0 z-10 rounded-[32px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
+                        />
                         {/* Floating Selection Indicator Badge */}
                         <div className="absolute top-5 right-5 flex items-center gap-1.5">
                           <span className="font-mono text-[8px] text-zinc-500 font-bold uppercase tracking-widest">
@@ -780,7 +787,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                             href={buildBrazilWhatsAppUrl(`Ola%20TAG08!%20Gostaria%20de%20conversar%20sobre%20a%20soluaao%20de%20"${encodeURIComponent(host.title)}"%20para%20minha%20empresa.`)}
                             target="_blank"
                             rel="noreferrer"
-                            className="mt-6 w-full py-3 rounded-xl font-mono text-[10px] font-black uppercase text-center block tracking-widest transition-all duration-300 border bg-white/5 border-white/10 text-white hover:bg-brand hover:border-brand hover:text-black hover:shadow-lg"
+                            className="relative z-20 mt-6 w-full py-3 rounded-xl font-mono text-[10px] font-black uppercase text-center block tracking-widest transition-all duration-300 border bg-white/5 border-white/10 text-white hover:bg-brand hover:border-brand hover:text-black hover:shadow-lg"
                           >
                             Solicitar esta opaao
                           </a>
@@ -1033,6 +1040,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       <div
                         key={p.id}
                         onClick={() => handlePlanChange(p.id as any)}
+                        onKeyDown={(event) => activateOnKeyboard(event, () => handlePlanChange(p.id as any))}
+                        role="radio"
+                        aria-checked={isActive}
+                        tabIndex={0}
                         className={`group/card p-6 rounded-2xl border text-left flex flex-col justify-between transition-all duration-300 relative cursor-pointer outline-none select-none ${
                           isActive
                             ? "bg-[#0b0b0e] border-brand text-white shadow-[0_0_40px_rgba(var(--color-brand-rgb),0.06)]"
@@ -1308,6 +1319,13 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                           trackHostingSimulator("input_changed");
                           setSimApplyUpgrade(!simApplyUpgrade);
                         }}
+                        onKeyDown={(event) => activateOnKeyboard(event, () => {
+                          trackHostingSimulator("input_changed");
+                          setSimApplyUpgrade(!simApplyUpgrade);
+                        })}
+                        role="checkbox"
+                        aria-checked={simApplyUpgrade}
+                        tabIndex={0}
                         className={`p-4 rounded-2xl border text-left flex items-start gap-4 cursor-pointer transition-all duration-300 select-none ${
                           simApplyUpgrade
                             ? "bg-brand/[0.02] border-brand text-white shadow-[0_8px_30px_rgba(var(--color-brand-rgb),0.04)]"
@@ -1651,8 +1669,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
             {/* Left Column: Portrait */}
             <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[520px]">
               <div className="absolute inset-0 bg-black/10 rounded-[24px] overflow-hidden" />
-              <Image
-                fill
+            <ResilientImage
+              fallbackLabel="Especialista em hospedagem TAG08"
                 sizes="(max-width: 1024px) 100vw, 42vw"
                 src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&q=80&w=800" 
                 alt="TAG08 Hosting Specialist" 
@@ -1921,8 +1939,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               </div>
 
               <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
-                <Image
-                  fill
+                <ResilientImage
+                  fallbackLabel="Hospedagem e manutenção TAG08"
                   sizes="(max-width: 1024px) 100vw, 34vw"
                   src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800"
                   alt="TAG08 Hospedagem e Manutenção"

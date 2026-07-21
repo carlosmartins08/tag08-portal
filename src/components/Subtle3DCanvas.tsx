@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 
 interface Subtle3DCanvasProps {
   className?: string;
@@ -14,6 +14,26 @@ const Subtle3DFallback = ({ className = "" }: { className?: string }) => (
 );
 
 export default function Subtle3DCanvas({ className = "", intensity = 1 }: Subtle3DCanvasProps) {
+  const [shouldRenderScene, setShouldRenderScene] = useState(false);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const desktopViewport = window.matchMedia("(min-width: 768px)");
+    const updateSceneVisibility = () => setShouldRenderScene(desktopViewport.matches && !reducedMotion.matches);
+
+    updateSceneVisibility();
+    reducedMotion.addEventListener("change", updateSceneVisibility);
+    desktopViewport.addEventListener("change", updateSceneVisibility);
+    return () => {
+      reducedMotion.removeEventListener("change", updateSceneVisibility);
+      desktopViewport.removeEventListener("change", updateSceneVisibility);
+    };
+  }, []);
+
+  if (!shouldRenderScene) {
+    return <Subtle3DFallback className={className} />;
+  }
+
   return (
     <Suspense fallback={<Subtle3DFallback className={className} />}>
       <Subtle3DCanvasScene className={className} intensity={intensity} />

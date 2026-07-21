@@ -12,7 +12,7 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 import { canonicalizeRoute, getLocalizedPath, getRouteByPath, type RouteLocale } from "../../config/routeRegistry";
 import { i18n, type UiLanguage } from "../../i18n/siteI18n";
 import { safeStorage } from "../../utils/storage";
-import { initializeGoogleAnalytics, trackEngagement, trackPageView, trackScrollDepth, updateGoogleAnalyticsConsent } from "../../lib/analytics";
+import { initializeGoogleAnalytics, trackEngagement, trackPageView, trackScrollDepth, trackWebVital, updateGoogleAnalyticsConsent } from "../../lib/analytics";
 import { COOKIE_CONSENT_EVENT, readCookiePreferences, type CookiePreferences } from "../../lib/cookieConsent";
 import { flushFormQueue } from "../../lib/formQueue";
 
@@ -80,6 +80,10 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
   }, [locale, router]);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce), (max-width: 767px)").matches) {
+      return;
+    }
+
     const lenis = new Lenis({
       duration: 1.1,
       easing: (value) => Math.min(1, 1.001 - Math.pow(2, -10 * value)),
@@ -107,6 +111,97 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
   useEffect(() => {
     lenisRef.current?.scrollTo(0, { immediate: true });
   }, [path, language]);
+
+  useEffect(() => {
+    if (!analyticsEnabled || typeof PerformanceObserver === "undefined") {
+      return;
+    }
+
+    let cls = 0;
+    let inp = 0;
+    let lcp = 0;
+    const observers: PerformanceObserver[] = [];
+    const reportedMetrics = new Set<string>();
+
+    const ratingFor = (metric: "CLS" | "INP" | "LCP", value: number) => {
+      const limits =
+        metric === "CLS"
+          ? [0.1, 0.25]
+          : metric === "INP"
+            ? [200, 500]
+            : [2500, 4000];
+
+      if (value <= limits[0]) return "good" as const;
+      if (value <= limits[1]) return "needs_improvement" as const;
+      return "poor" as const;
+    };
+
+    const report = (metric: "CLS" | "INP" | "LCP", value: number) => {
+      if (value <= 0 || reportedMetrics.has(metric)) {
+        return;
+      }
+
+      reportedMetrics.add(metric);
+      trackWebVital({
+        metric_name: metric,
+        metric_value: metric === "CLS" ? Number(value.toFixed(3)) : Math.round(value),
+        metric_rating: ratingFor(metric, value),
+        page_path: path,
+        language
+      });
+    };
+
+    const observe = (type: string, onEntries: (entries: PerformanceEntry[]) => void) => {
+      if (!PerformanceObserver.supportedEntryTypes?.includes(type)) {
+        return;
+      }
+
+      const observer = new PerformanceObserver((list) => onEntries(list.getEntries()));
+      observer.observe({ type, buffered: true });
+      observers.push(observer);
+    };
+
+    observe("largest-contentful-paint", (entries) => {
+      const entry = entries.at(-1);
+      if (entry) {
+        lcp = entry.startTime;
+      }
+    });
+
+    observe("layout-shift", (entries) => {
+      entries.forEach((entry) => {
+        const shift = entry as PerformanceEntry & { hadRecentInput?: boolean; value?: number };
+        if (!shift.hadRecentInput) {
+          cls += shift.value ?? 0;
+        }
+      });
+    });
+
+    observe("event", (entries) => {
+      entries.forEach((entry) => {
+        inp = Math.max(inp, entry.duration);
+      });
+    });
+
+    const flushVitals = () => {
+      report("LCP", lcp);
+      report("CLS", cls);
+      report("INP", inp);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        flushVitals();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      flushVitals();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, [analyticsEnabled, language, path]);
 
   const navigate = (targetPath: string) => {
     const canonicalPath = canonicalizeRoute(targetPath);

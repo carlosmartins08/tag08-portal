@@ -1,7 +1,7 @@
 ﻿import React, { useState } from "react";
 import { ArrowUpRight, Star, ArrowRight, Zap, Target, Users, Settings, BookOpen, FileCheck2, Sparkles, Cpu, Award, Shield, Check, MessageSquare, Activity, Triangle, Layers, Linkedin } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import Image from "next/image";
+import ResilientImage from "../../../components/ResilientImage";
 import { trackOutboundClick } from "../../../lib/analytics";
 
 interface SobreProps {
@@ -105,7 +105,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
     },
     {
       name: "VORTEX STUDIOS",
-      icon: <Award className="w-4 h-4 text-zinc-400 group-hover:text-brand-secondary transition-colors" />,
+      icon: <Award className="w-4 h-4 text-zinc-400 group-hover:text-brand transition-colors" />,
       tagline: "Creative Motion"
     },
     {
@@ -119,32 +119,32 @@ export default function Sobre({ onNavigate }: SobreProps) {
     {
       title: "Diagnóstico antes da execução",
       desc: "Antes de propor entregas, entendemos contexto, gargalos, prioridades e capacidade real de execução.",
-      gradientClass: "from-brand-secondary/10 to-transparent border-brand-secondary/15 hover:border-brand-secondary/35",
-      iconColor: "text-brand-secondary",
+      gradientClass: "from-brand/10 to-transparent border-brand/15 hover:border-brand/35",
+      iconColor: "text-brand",
       badge: "DIAGNÓSTICO",
       delay: 0.1
     },
     {
       title: "Clareza de escopo",
       desc: "Organizamos o que será feito, por que será feito, o que fica fora e quais próximos passos são viáveis.",
-      gradientClass: "from-purple-500/10 to-transparent border-purple-500/15 hover:border-purple-500/35",
-      iconColor: "text-[#a855f7]",
+      gradientClass: "from-brand/10 to-transparent border-brand/15 hover:border-brand/35",
+      iconColor: "text-brand",
       badge: "ESCOPO",
       delay: 0.2
     },
     {
       title: "Coordenação entre áreas",
       desc: "Conectamos estratégia, conteúdo, design, tecnologia e processos para evitar soluções soltas.",
-      gradientClass: "from-blue-500/10 to-transparent border-blue-500/15 hover:border-blue-500/35",
-      iconColor: "text-[#3b82f6]",
+      gradientClass: "from-brand/10 to-transparent border-brand/15 hover:border-brand/35",
+      iconColor: "text-brand",
       badge: "COORDENAÇÃO",
       delay: 0.3
     },
     {
       title: "Entrega com responsabilidade",
       desc: "A execução acontece com critério, revisão e alinhamento, sem promessa artificial ou pressão por atalhos.",
-      gradientClass: "from-emerald-500/10 to-transparent border-emerald-500/15 hover:border-emerald-500/35",
-      iconColor: "text-[#10b981]",
+      gradientClass: "from-brand/10 to-transparent border-brand/15 hover:border-brand/35",
+      iconColor: "text-brand",
       badge: "RESPONSABILIDADE",
       delay: 0.4
     }
@@ -158,7 +158,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       tempo: "Remoto ⬢ Contratação Recorrente",
       desc: "Estruturação de marcas ricas heráldicas, e layouts premium de redes sociais com tipografia avançada e senso estético exigente.",
       requirements: ["Domínio cirúrgico do Figma e Illustrator", "Apego extremo a espaçamento, tracking e contrastes", "Portfólio com soluções reais corporativas de alto requinte"],
-      color: "border-brand-secondary/20 shadow-brand-secondary/2"
+      color: "border-brand/20 shadow-brand/2"
     },
     {
       id: 1,
@@ -167,7 +167,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       tempo: "Remoto ⬢ Contratação Imediata",
       desc: "Gerenciamento estratégico de orçamentos de alta intensidade de compra para marcas B2B, consultorias e saúde premium.",
       requirements: ["Mais de 4 anos gerenciando contas reais exigentes", "Habilidade cirúrgica de traduzir táticas em ROI nos relatórios", "Foco em canais Meta Ads de alto tíquete"],
-      color: "border-purple-500/20 shadow-purple-500/2"
+      color: "border-brand/20 shadow-brand/2"
     },
     {
       id: 2,
@@ -176,7 +176,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       tempo: "Remoto ⬢ Banco de Talentos",
       desc: "Transformar os protótipos de alta definição do Figma em código sênior, responsivo e ultra veloz sem construtores lentos.",
       requirements: ["Domínio supremo de React, Vite, TS e Tailwind", "Apreço intransigente pelo pixel-perfect do designer", "Obssessão por otimização técnica e Core Web Vitals"],
-      color: "border-blue-500/20 shadow-blue-500/2"
+      color: "border-brand/20 shadow-brand/2"
     }
   ];
 
@@ -188,7 +188,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       tempo: "Cultura TAG08",
       desc: "Buscamos pessoas que entendam contexto, façam boas perguntas e conectem execução com objetivo.",
       requirements: ["Leitura de contexto antes da tarefa", "Perguntas que melhoram a direção", "Capacidade de ligar detalhe e resultado"],
-      color: "border-brand-secondary/20 shadow-brand-secondary/2"
+      color: "border-brand/20 shadow-brand/2"
     },
     {
       id: 1,
@@ -197,7 +197,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       tempo: "Processo e revisão",
       desc: "Qualidade não é detalhe final. É postura durante briefing, produção, revisão e melhoria.",
       requirements: ["Atenção ao briefing e ao escopo", "Ritmo consistente de revisão", "Compromisso com a melhoria contínua"],
-      color: "border-purple-500/20 shadow-purple-500/2"
+      color: "border-brand/20 shadow-brand/2"
     },
     {
       id: 2,
@@ -206,7 +206,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       tempo: "Equipe e rotina",
       desc: "Trabalhar bem em equipe exige clareza de escopo, prazos possíveis, comunicação objetiva e registro das decisões.",
       requirements: ["Escopo claro antes da execução", "Comunicação objetiva entre áreas", "Registro das decisões e próximos passos"],
-      color: "border-blue-500/20 shadow-blue-500/2"
+      color: "border-brand/20 shadow-brand/2"
     }
   ];
 
@@ -240,8 +240,8 @@ export default function Sobre({ onNavigate }: SobreProps) {
           </div>
 
           <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left">
-            <Image
-              fill
+            <ResilientImage
+              fallbackLabel="Time TAG08"
               sizes="100vw"
               src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1600"
               alt="Time de Especialistas TAG08"
@@ -305,8 +305,8 @@ export default function Sobre({ onNavigate }: SobreProps) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pt-2">
               <div className="lg:col-span-5 bg-gradient-to-br from-brand-secondary/[0.08] via-zinc-950 to-transparent border border-brand-secondary/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[360px] shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.03)] hover:border-brand-secondary/45 transition-all duration-300">
                 <div className="absolute inset-0 z-0 pointer-events-none">
-                  <Image
-                    fill
+                  <ResilientImage
+                    fallbackLabel="Direção TAG08"
                     sizes="(max-width: 1024px) 100vw, 42vw"
                     src={TILES_HERO[0].avatar}
                     alt={TILES_HERO[0].name}
@@ -356,8 +356,8 @@ export default function Sobre({ onNavigate }: SobreProps) {
                     className="bg-charcoal-900 border border-white/[0.08] rounded-3xl p-5 flex flex-col justify-between text-left relative overflow-hidden h-[360px] group transition-all duration-300 hover:border-brand/40"
                   >
                     <div className="absolute inset-0 z-0 pointer-events-none">
-                      <Image
-                        fill
+                      <ResilientImage
+                        fallbackLabel="Time TAG08"
                         sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
                         src={member.avatar}
                         alt={member.name}
@@ -568,8 +568,8 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
             <div className="lg:col-span-7">
               <div className="relative rounded-[28px] sm:rounded-[36px] overflow-hidden aspect-[4/3] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left">
-                <Image
-                  fill
+                <ResilientImage
+                  fallbackLabel="Método TAG08"
                   sizes="(max-width: 1024px) 100vw, 58vw"
                   src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200"
                   alt="Time de Especialistas TAG08"

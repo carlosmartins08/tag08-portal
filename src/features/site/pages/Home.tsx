@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_YOUTUBE_URL, buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
 import { getVideoDescriptionPreview, type OfficialContentApiResponse } from "../../../lib/officialContent";
 import { trackOutboundClick, trackVideoEvent } from "../../../lib/analytics";
+import { activateOnKeyboard } from "../../../lib/keyboard";
 import { COOKIE_CONSENT_EVENT, grantMarketingConsent, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import { Suspense, lazy } from "react";
@@ -589,6 +590,10 @@ function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
   return (
     <div
       onClick={onClick}
+      onKeyDown={(event) => activateOnKeyboard(event, onClick)}
+      role="button"
+      tabIndex={0}
+      aria-label={`Abrir case: ${item.client}`}
       className="bg-charcoal-900 border border-white/[0.04] p-5 pb-7 rounded-[28px] overflow-hidden cursor-pointer group flex flex-col justify-between transition-all duration-350 hover:border-brand/25 hover:-translate-y-1 relative shadow-lg h-full"
     >
       {/* Top Image area mimicking mockup precisely with premium grayscale/vibrant transition */}
@@ -922,10 +927,7 @@ export default function Home({ onNavigate }: HomeProps) {
     { name: "ESTRATÉGIA", style: "filled-neon" },
     { name: "POSICIONAMENTO", style: "outline" },
     { name: "CONTEÚDO", style: "outline" },
-    { name: "REDES SOCIAIS", style: "filled-white" },
-    { name: "AUDIOVISUAL", style: "outline" },
-    { name: "DESENVOLVIMENTO WEB", style: "filled-white" },
-    { name: "BRANDING", style: "outline" },
+    { name: "TECNOLOGIA", style: "filled-white" },
     { name: "PROCESSOS", style: "outline" },
     { name: "OPERAÇÃO", style: "filled-neon" },
   ];
@@ -935,7 +937,7 @@ export default function Home({ onNavigate }: HomeProps) {
       {/* SECTION 1 - NEW ADVANCED HIGH-DESCRIPTIVE HERO */}
       <section id="hero" className="relative min-h-screen flex items-center pt-28 pb-16 px-4 sm:px-6 md:px-8">
         {/* Full neon floating frame container styled exactly like reference image */}
-        <div className="w-full max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden flex flex-col justify-between min-h-[82vh] lg:min-h-[85vh] shadow-[0_30px_80px_rgba(var(--color-brand-rgb),0.22)] border border-white/10 select-none">
+        <div className="w-full max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden flex flex-col justify-between min-h-[74vh] lg:min-h-[72vh] shadow-[0_30px_80px_rgba(var(--color-brand-rgb),0.22)] border border-white/10 select-none">
           
           {/* Subtle neon tech grid background effect inside the lime container */}
           <div className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.1)_1px,transparent_1px)] [background-size:16px_16px] opacity-25 pointer-events-none" />
@@ -971,6 +973,10 @@ export default function Home({ onNavigate }: HomeProps) {
               {/* Lower audio signal interactable widget exactly like reference image */}
               <div 
                 onClick={() => handleLinkClick("/contato")}
+                onKeyDown={(event) => activateOnKeyboard(event, () => handleLinkClick("/contato"))}
+                role="link"
+                tabIndex={0}
+                aria-label="Ir para contato e solicitar diagnóstico"
                 className="bg-black/5 hover:bg-black/10 transition-all duration-300 border border-black/10 p-5 rounded-2xl flex flex-col gap-4 max-w-sm cursor-pointer shadow-sm group"
               >
                 <div className="flex items-center justify-between">
@@ -1038,6 +1044,8 @@ export default function Home({ onNavigate }: HomeProps) {
                     <Image
                       src={heroCyberMannequin}
                       alt="TAG08 Cyborg Assistant"
+                      preload
+                      sizes="(max-width: 639px) 298px, (max-width: 1023px) 400px, 420px"
                       className="h-[320px] sm:h-[400px] lg:h-[420px] w-auto object-contain drop-shadow-[0_25px_60px_rgba(0,0,0,0.65)]"
                     />
 
@@ -1108,7 +1116,7 @@ export default function Home({ onNavigate }: HomeProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-120px" }}
             transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-            className="text-center max-w-3xl mx-auto space-y-4 mb-16"
+            className="max-w-2xl space-y-4 mb-16 text-left"
           >
             <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold">
               O diagnóstico da realidade
@@ -1214,6 +1222,13 @@ export default function Home({ onNavigate }: HomeProps) {
                     onNavigate("/servicos/branding-identidade");
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
+                  onKeyDown={(event) => activateOnKeyboard(event, () => {
+                    onNavigate("/servicos/branding-identidade");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  })}
+                  role="link"
+                  tabIndex={0}
+                  aria-label="Conhecer Branding e Identidade"
                   className="relative group overflow-hidden rounded-3xl border border-white/[0.10] hover:border-brand-secondary/40 h-[260px] bg-charcoal-900 cursor-pointer transition-all duration-300"
                 >
                   <Image
@@ -1252,6 +1267,13 @@ export default function Home({ onNavigate }: HomeProps) {
                         onNavigate("/servicos/gestao-de-redes-sociais");
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
+                      onKeyDown={(event) => activateOnKeyboard(event, () => {
+                        onNavigate("/servicos/gestao-de-redes-sociais");
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      })}
+                      role="link"
+                      tabIndex={0}
+                      aria-label="Conhecer Gestão de Redes Sociais"
                       className="bg-charcoal-900 border border-white/[0.10] hover:border-brand-secondary/35 p-6 sm:p-8 rounded-3xl flex flex-col justify-between min-h-[190px] relative overflow-hidden text-left group cursor-pointer transition-all duration-300"
                     >
                       <div>
@@ -1283,6 +1305,13 @@ export default function Home({ onNavigate }: HomeProps) {
                         onNavigate("/servicos/branding-identidade");
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
+                      onKeyDown={(event) => activateOnKeyboard(event, () => {
+                        onNavigate("/servicos/branding-identidade");
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      })}
+                      role="link"
+                      tabIndex={0}
+                      aria-label="Conhecer evolução de marca"
                       className="bg-charcoal-900 border border-white/[0.10] hover:border-brand-secondary/35 p-6 sm:p-8 rounded-3xl flex flex-col justify-between min-h-[190px] relative overflow-hidden text-left cursor-pointer group transition-all duration-300"
                     >
                       <div className="flex items-center justify-between">
@@ -1302,29 +1331,36 @@ export default function Home({ onNavigate }: HomeProps) {
 
                   </div>
 
-                  {/* Card M-04: SITES DE ALTO VALOR (Tall Lime Green Card aligned to companion height) */}
+                  {/* Card M-04: active state uses the support accent as guidance, not as a full surface. */}
                   <div 
                     onClick={() => {
                       onNavigate("/servicos/desenvolvimento-web");
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="bg-brand-secondary text-black p-8 rounded-3xl border border-brand-secondary ring-1 ring-brand-secondary/35 flex flex-col justify-between h-[412px] text-left relative overflow-hidden group cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-brand/15"
+                    onKeyDown={(event) => activateOnKeyboard(event, () => {
+                      onNavigate("/servicos/desenvolvimento-web");
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    })}
+                    role="link"
+                    tabIndex={0}
+                    aria-label="Conhecer Desenvolvimento Web Estratégico"
+                    className="bg-charcoal-900 text-white p-8 rounded-3xl border border-brand-secondary/70 ring-1 ring-brand-secondary/25 flex flex-col justify-between h-[412px] text-left relative overflow-hidden group cursor-pointer transition-all duration-500 hover:border-brand-secondary hover:shadow-lg hover:shadow-brand-secondary/10"
                   >
-                    <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/20 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700 pointer-events-none" />
+                    <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-brand-secondary/15 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700 pointer-events-none" />
                     
                     <div>
                       <div className="flex items-center justify-between w-full">
-                        <span className="font-mono text-[9px] font-black uppercase tracking-widest bg-black/10 border border-black/10 px-3 py-1 rounded-full block w-fit">
+                        <span className="font-mono text-[9px] font-black uppercase tracking-widest text-brand-secondary bg-brand-secondary/10 border border-brand-secondary/25 px-3 py-1 rounded-full block w-fit">
                           M-04 // DESENVOLVIMENTO WEB ESTRATÉGICO
                         </span>
-                        <ArrowUpRight className="w-4 h-4 text-black/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        <ArrowUpRight className="w-4 h-4 text-brand-secondary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </div>
-                      <h3 className="font-display font-black text-5xl tracking-tighter mt-6 leading-none">M-04</h3>
+                      <h3 className="font-display font-black text-5xl text-white tracking-tighter mt-6 leading-none">M-04</h3>
                     </div>
 
                     <div className="space-y-2 relative z-10">
-                      <h4 className="font-display font-extrabold text-[#111] text-sm uppercase tracking-tight">Desejo converter mais com meu site</h4>
-                      <p className="text-[#333] text-[11px] font-sans leading-relaxed">
+                      <h4 className="font-display font-extrabold text-white text-sm uppercase tracking-tight">Desejo converter mais com meu site</h4>
+                      <p className="text-zinc-400 text-[11px] font-sans leading-relaxed">
                         Nossos anúncios gastam verba ativa, mas as páginas lentas ou confusas falham em colher leads qualificados diariamente.
                       </p>
                     </div>
@@ -1346,6 +1382,13 @@ export default function Home({ onNavigate }: HomeProps) {
                       onNavigate("/servicos/process-intelligence");
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
+                    onKeyDown={(event) => activateOnKeyboard(event, () => {
+                      onNavigate("/servicos/process-intelligence");
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    })}
+                    role="link"
+                    tabIndex={0}
+                    aria-label="Conhecer Process Intelligence"
                     className="bg-zinc-950 border border-white/[0.08] hover:border-brand/35 p-8 rounded-3xl flex flex-col justify-between h-[340px] text-left relative overflow-hidden group cursor-pointer transition-all duration-300"
                   >
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-brand/5 rounded-full blur-3xl pointer-events-none" />
@@ -1377,6 +1420,13 @@ export default function Home({ onNavigate }: HomeProps) {
                         onNavigate("/servicos/process-activation");
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
+                      onKeyDown={(event) => activateOnKeyboard(event, () => {
+                        onNavigate("/servicos/process-activation");
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      })}
+                      role="link"
+                      tabIndex={0}
+                      aria-label="Conhecer Process Activation"
                       className="bg-zinc-100 text-charcoal-950 p-6 rounded-3xl flex flex-col justify-between h-[158px] text-left relative group overflow-hidden cursor-pointer hover:bg-zinc-200 transition-all duration-300"
                     >
                       <div className="flex items-center justify-between">
@@ -1400,6 +1450,13 @@ export default function Home({ onNavigate }: HomeProps) {
                           target.scrollIntoView({ behavior: "smooth" });
                         }
                       }}
+                      onKeyDown={(event) => activateOnKeyboard(event, () => {
+                        const target = document.getElementById("diagnostico");
+                        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+                      })}
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Abrir diagnóstico"
                       className="bg-zinc-100 text-charcoal-950 p-6 rounded-3xl flex flex-col justify-between h-[158px] text-left relative group overflow-hidden cursor-pointer hover:bg-zinc-200 transition-all duration-300"
                     >
                       <div className="flex items-center justify-between">
@@ -1427,6 +1484,13 @@ export default function Home({ onNavigate }: HomeProps) {
                       target.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
+                  onKeyDown={(event) => activateOnKeyboard(event, () => {
+                    const target = document.getElementById("diagnostico");
+                    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+                  })}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Iniciar diagnóstico"
                   className="relative group overflow-hidden rounded-3xl border border-white/[0.05] hover:border-brand-secondary/20 h-[260px] bg-charcoal-900 cursor-pointer transition-all duration-300"
                 >
                   <Image
@@ -1469,14 +1533,14 @@ export default function Home({ onNavigate }: HomeProps) {
         <div className="max-w-7xl mx-auto relative z-10 space-y-16">
           
           {/* Section Introduction */}
-          <div className="max-w-3xl mx-auto text-center space-y-4">
-            <span className="font-mono text-[9px] tracking-widest text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/15 px-3 py-1 rounded-full uppercase font-bold inline-block">
+          <div className="max-w-2xl text-left space-y-4">
+            <span className="font-mono text-[9px] tracking-widest text-brand bg-brand/5 border border-brand/15 px-3 py-1 rounded-full uppercase font-bold inline-block">
               Sinais de desalinhamento
             </span>
-            <h2 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tight leading-none">
+            <h2 className="font-display font-medium text-3xl sm:text-4xl text-white tracking-tight leading-none">
               Sinais de desgaste quando o digital cresce sem estrutura.
             </h2>
-            <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl mx-auto leading-relaxed">
+            <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
               Quando a presença digital cresce sem clareza, alguns sintomas começam a aparecer: decisões soltas, urgências constantes, conteúdo sem direção, retrabalho e dificuldade de transformar esforço em percepção real de valor. A TAG08 usa essa leitura para separar o que é problema de comunicação, o que é problema de posicionamento e o que é problema de operação. Sem esse diagnóstico, qualquer execução corre o risco de apenas acelerar a desorganização.
             </p>
           </div>
@@ -1530,16 +1594,24 @@ export default function Home({ onNavigate }: HomeProps) {
                       setActiveDiagPhase(phase.id as any);
                       setHoveredPill(null);
                     }}
-                    onClick={() => {
-                      setActiveDiagPhase(phase.id as any);
-                      setHoveredPill(null);
-                    }}
+                    role="group"
+                    aria-label={`Diagnóstico: ${phase.title}`}
                     className={`p-6 rounded-[24px] border transition-all duration-300 bg-zinc-950/40 relative group text-left cursor-pointer flex flex-col justify-between ${
                       isPhaseSelected
                         ? "border-brand-secondary bg-brand-secondary/[0.02] shadow-[0_8px_32px_rgba(var(--color-brand-secondary-rgb),0.04)]"
                         : "border-white/[0.03] hover:border-white/10"
                     }`}
                   >
+                    <button
+                      type="button"
+                      aria-label={`Selecionar a fase ${phase.title} do diagnóstico`}
+                      aria-pressed={isPhaseSelected}
+                      onClick={() => {
+                        setActiveDiagPhase(phase.id as any);
+                        setHoveredPill(null);
+                      }}
+                      className="absolute inset-0 z-10 rounded-[24px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-inset"
+                    />
                     <div>
                       {/* Interactive indicator and step */}
                       <div className="flex items-center justify-between pb-4 border-b border-white/[0.03]">
@@ -1692,6 +1764,10 @@ export default function Home({ onNavigate }: HomeProps) {
                                 key={symptom.id}
                                 onMouseEnter={() => setHoveredPill(symptom.id)}
                                 onClick={() => setHoveredPill(symptom.id)}
+                                onKeyDown={(event) => activateOnKeyboard(event, () => setHoveredPill(symptom.id))}
+                                role="button"
+                                tabIndex={0}
+                                aria-pressed={isThisSymptomActive}
                                 className={`p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-4 relative overflow-hidden ${
                                   isThisSymptomActive
                                     ? "bg-zinc-900/90 border-brand-secondary/40 shadow-[0_4px_24px_rgba(var(--color-brand-secondary-rgb),0.06)]"
@@ -3482,6 +3558,10 @@ export default function Home({ onNavigate }: HomeProps) {
                     <div
                       key={index}
                       onClick={() => setActiveReview(index)}
+                      onKeyDown={(event) => activateOnKeyboard(event, () => setActiveReview(index))}
+                      role="button"
+                      aria-pressed={isActive}
+                      tabIndex={0}
                       className={`shrink-0 cursor-pointer transition-all duration-500 overflow-hidden relative rounded-2xl sm:rounded-[22px] flex items-center justify-center ${
                         isActive
                           ? "w-[105px] h-[140px] sm:w-[120px] sm:h-[160px] lg:w-[135px] lg:h-[180px] border-2 border-brand-secondary shadow-[0_4px_30px_rgba(var(--color-brand-secondary-rgb),0.2)] scale-105 z-10 opacity-100 grayscale-0"
@@ -3604,10 +3684,10 @@ export default function Home({ onNavigate }: HomeProps) {
       {/* SECTION 9 - SEGURANÇA OPERACIONAL & DESIGNS HIGH-END (MATCHING USER REFERENCE DESIGN) */}
       <section id="prova" className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
         {/* Luminous Container mimicking the uploaded design mockup */}
-        <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(var(--color-brand-rgb),0.18)] select-none">
+        <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-charcoal-900 border border-brand/30 text-white p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(0,0,0,0.34)] select-none">
           
           {/* Internal subtle background paper/dot layout */}
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.08)_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-20 pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.08)_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-20 pointer-events-none" />
 
           {/* Left Column: Ultra-stylish Portrait layout adorned with design overlays just like "designbr" in reference */}
           <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[520px]">
@@ -3623,32 +3703,11 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Styled aesthetic watermark overlays mimicking reference image */}
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="font-mono text-[9px] text-white/65 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/10">
                   Núcleo operacional
                 </span>
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
-                  TAG08.v3
-                </span>
               </div>
 
-              {/* Seamlessly repeated design style text overlays to replicate the picture vibes perfectly */}
-              <div className="space-y-1.5 opacity-30 select-none">
-                <div className="font-display font-extrabold text-[1.8rem] text-white/40 tracking-widest leading-none uppercase select-none">
-                  design_tag08
-                </div>
-                <div className="font-display font-extrabold text-[1.5rem] text-white/20 tracking-widest leading-none uppercase select-none pl-6">
-                  direção_tag08_
-                </div>
-              </div>
-
-              <div className="flex justify-between items-end">
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
-                  LATENCY: 12MS
-                </span>
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
-                  SÊNIOR SECURITY
-                </span>
-              </div>
             </div>
           </div>
 
@@ -3657,29 +3716,29 @@ export default function Home({ onNavigate }: HomeProps) {
             
             <div className="space-y-4">
               {/* Upper social network link */}
-              <div className="inline-flex items-center gap-2 text-black font-semibold">
-                <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
-                  <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
+              <div className="inline-flex items-center gap-2 text-brand font-semibold">
+                <div className="w-5 h-5 rounded-full bg-brand flex items-center justify-center">
+                  <span className="w-2 h-2 rounded-full bg-black animate-ping" />
                 </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
+                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-brand">
                   Próximo passo com clareza
                 </span>
               </div>
 
                 {/* Massive Bold Heading mirroring reference */}
-                <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase">
+                <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter uppercase">
                 Antes de avançar, <br />
                 entenda o que sua marca realmente precisa.
                 </h2>
 
                 {/* Description Paragraph with high contrast block typeface layout */}
-              <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
+              <p className="text-zinc-300 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
                 A TAG08 ajuda a organizar prioridades, identificar gargalos e indicar um caminho coerente antes de transformar qualquer demanda em execução.
               </p>
             </div>
 
             {/* Overlaid Premium Curved Dark Action Card modeled exactly off the uploaded picture */}
-            <div className="bg-charcoal-900/98 backdrop-blur-3xl border border-white/[0.08] p-6 sm:p-7 rounded-[28px] shadow-[0_25px_60px_rgba(0,0,0,0.5)] space-y-6 max-w-md relative overflow-hidden text-left">
+            <div className="bg-black/80 backdrop-blur-3xl border border-white/[0.08] p-6 sm:p-7 rounded-[28px] shadow-[0_25px_60px_rgba(0,0,0,0.5)] space-y-6 max-w-md relative overflow-hidden text-left">
               {/* Glowing decorative indicator circle */}
               <div className="absolute top-0 right-0 w-24 h-24 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
 

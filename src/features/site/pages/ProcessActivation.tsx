@@ -1,5 +1,5 @@
 ﻿import { useState } from "react";
-import Image from "next/image";
+import ResilientImage from "../../../components/ResilientImage";
 import { BookOpen, ShieldAlert, ArrowUpRight, CheckSquare, Zap, Target, RefreshCw, BarChart2, ArrowRight, MessageSquare, Workflow } from "lucide-react";
 import { motion } from "motion/react";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
@@ -26,7 +26,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
   };
 
   return (
-    <div className="bg-charcoal-950 text-white min-h-screen pt-28 pb-20 relative overflow-hidden">
+    <div className="bg-charcoal-950 text-white min-h-screen pb-20 relative overflow-hidden">
       {/* Decorative ambient gradients */}
       <div className="absolute top-[8%] left-[-15%] w-[600px] h-[600px] bg-brand/[0.015] rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-15%] w-[600px] h-[600px] bg-brand/[0.02] rounded-full blur-[150px] pointer-events-none" />
@@ -39,7 +39,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
         <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
           
           {/* 1. Header Typography block (Ref Style: Expert guidance / tailored solution) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
                 DIVIsão DE SUSTENTação OPERACIONAL // TAG08
@@ -59,10 +59,10 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           {/* 2. Panoramic Wide Banner Image with capsule neon overlay trigger wrapped in 3D perspective tilt container */}
           <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px] overflow-visible">
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
-              <Image
+              <ResilientImage
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1600"
                 alt="Habilitação Operacional e Aprendizado Aplicado TAG08"
-                fill
+                fallbackLabel="Process Activation // TAG08"
                 sizes="100vw"
                 className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
@@ -419,8 +419,8 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           {/* Left Column: Portrait */}
           <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[520px]">
             <div className="absolute inset-0 bg-black/10 rounded-[24px] overflow-hidden" />
-            <Image
-              fill
+            <ResilientImage
+              fallbackLabel="Especialista em ativação"
               sizes="(max-width: 1024px) 100vw, 42vw"
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800" 
               alt="TAG08 Activation Specialist" 
@@ -785,8 +785,8 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
             </div>
 
             <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
-              <Image
-                fill
+              <ResilientImage
+                fallbackLabel="Process Activation // TAG08"
                 sizes="(max-width: 1024px) 100vw, 34vw"
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
                 alt="TAG08 Process Activation"

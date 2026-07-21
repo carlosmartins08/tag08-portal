@@ -5,6 +5,7 @@ import { type UiLanguage } from "../i18n/siteI18n";
 import { TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
 import { safeStorage } from "../utils/storage";
 import { trackOutboundClick } from "../lib/analytics";
+import CountryFlag from "./CountryFlag";
 
 interface WhatsAppButtonProps {
   language: UiLanguage;
@@ -195,8 +196,8 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
                     }`}
                   >
                     <MessageCircle className="w-4 h-4" />
-                    <span className="font-mono text-[10px] font-black uppercase tracking-wider">
-                      {contact.badge}
+                    <span className="text-sm leading-none" title={contact.country.name}>
+                      <CountryFlag country={contact.country} />
                     </span>
                     <span>{contact.label}</span>
                   </button>
@@ -254,8 +255,8 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
                       }`}
                     >
                       <MessageCircle className="h-4 w-4" />
-                      <span className="font-mono text-[10px] font-black uppercase tracking-wider">
-                        {contact.badge}
+                      <span className="text-sm leading-none" title={contact.country.name}>
+                        <CountryFlag country={contact.country} />
                       </span>
                       <span>{contact.display}</span>
                     </button>

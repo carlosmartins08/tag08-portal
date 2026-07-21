@@ -450,7 +450,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
   const activeFaqItem = faqItems[activeFaq] ?? faqItems[0];
 
   return (
-    <div className="bg-charcoal-950 text-white min-h-screen pt-28 pb-20 relative overflow-hidden">
+    <div className="bg-charcoal-950 text-white min-h-screen pb-20 relative overflow-hidden">
       {/* Decorative ambient gradients */}
       <div className="absolute top-[8%] left-[-15%] w-[600px] h-[600px] bg-brand/[0.015] rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-15%] w-[600px] h-[600px] bg-brand/[0.02] rounded-full blur-[150px] pointer-events-none" />
@@ -461,7 +461,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
       {/* SECTION 1 - HERO: THE EDITORIAL SYSTEM (Synchronized Style) */}
       <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-20 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
                 GESTÃO DE REDES SOCIAIS // TAG08
@@ -1301,8 +1301,8 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
 
       {/* SECTION 6 - WORK SYSTEM (WhatsApp official contact block) */}
       <section className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(var(--color-brand-rgb),0.18)] select-none">
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.08)_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-20 pointer-events-none" />
+        <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-charcoal-900 border border-brand/30 text-white p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(0,0,0,0.34)] select-none">
+          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.08)_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-20 pointer-events-none" />
 
           {/* Left Column: Portrait */}
           <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[520px]">
@@ -1346,19 +1346,19 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
           {/* Right Column: Copy & Actions */}
           <div className="lg:col-span-7 flex flex-col justify-between space-y-8 text-left h-full relative z-10 lg:pl-4">
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 text-black font-semibold">
-                <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
-                  <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
+              <div className="inline-flex items-center gap-2 text-brand font-semibold">
+                <div className="w-5 h-5 rounded-full bg-brand flex items-center justify-center">
+                  <span className="w-2 h-2 rounded-full bg-black animate-ping" />
                 </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
+                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-brand">
                   SISTEMA DE TRABALHO
                 </span>
               </div>
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
+              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter uppercase font-display">
                 COMO CONDUZIMOS A <br />
                     GESTÃO DE REDES SOCIAIS.
               </h2>
-              <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
+              <p className="text-zinc-300 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
                 A TAG08 organiza a presenca nas redes com planejamento editorial, producao alinhada, revisao, publicacao e acompanhamento. O objetivo e reduzir improviso e manter a comunicacao coerente com o posicionamento da marca.
               </p>
             </div>

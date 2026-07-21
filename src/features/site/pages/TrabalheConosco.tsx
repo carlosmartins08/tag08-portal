@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
-import Image from "next/image";
+import ResilientImage from "../../../components/ResilientImage";
 import { motion, AnimatePresence } from "motion/react";
+import { activateOnKeyboard } from "../../../lib/keyboard";
 import {
   Briefcase, 
   MapPin, 
@@ -284,7 +285,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
     <div className="w-full bg-[#070708] select-none text-left relative overflow-hidden">
       
       {/* SECTION 1: THE PREMIUM DARK HERO HEADER (Inspired by mockup's head section) */}
-      <div className="max-w-6xl mx-auto px-6 md:px-12 pt-36 pb-40">
+      <div className="max-w-6xl mx-auto px-6 md:px-12 pt-16 pb-40">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Hero Block */}
@@ -323,8 +324,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
           <div className="lg:col-span-5 relative mt-8 lg:mt-0">
             <div className="absolute inset-0 bg-gradient-to-tr from-brand/20 to-transparent rounded-[32px] transform translate-y-3 translate-x-3 -z-10 blur-md pointer-events-none" />
             <div className="relative aspect-[4/5] border border-white/10 rounded-[32px] overflow-hidden bg-charcoal-900 group">
-              <Image
-                fill
+              <ResilientImage
+                fallbackLabel="Pessoas TAG08"
                 sizes="(max-width: 1024px) 100vw, 42vw"
                 src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600" 
                 alt="Profissional TAG08" 
@@ -441,8 +442,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
               <div className="lg:col-span-4 bg-zinc-950 text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[380px] shadow-lg">
                 <div className="absolute inset-0 z-0 pointer-events-none">
                   {/* Founder photo */}
-                  <Image
-                    fill
+                  <ResilientImage
+                    fallbackLabel="Liderança TAG08"
                     sizes="(max-width: 1024px) 100vw, 34vw"
                     src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" 
                     alt="Carlos Eduardo" 
@@ -490,8 +491,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
                   <div className="flex gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
-                      <Image
-                        fill
+                      <ResilientImage
+                        fallbackLabel="Time TAG08"
                         sizes="80px"
                         src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" 
                         alt="Marina Fontes" 
@@ -526,8 +527,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
                   <div className="flex gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
-                      <Image
-                        fill
+                      <ResilientImage
+                        fallbackLabel="Time TAG08"
                         sizes="80px"
                         src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250" 
                         alt="Renato Silveira" 
@@ -562,8 +563,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
                   <div className="flex gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
-                      <Image
-                        fill
+                      <ResilientImage
+                        fallbackLabel="Time TAG08"
                         sizes="80px"
                         src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=250" 
                         alt="Amanda Reis" 
@@ -598,8 +599,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
                   <div className="flex gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
-                      <Image
-                        fill
+                      <ResilientImage
+                        fallbackLabel="Time TAG08"
                         sizes="80px"
                         src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=250" 
                         alt="Lucas Mendes" 
@@ -901,6 +902,21 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                               }
                             }
                           }}
+                          onKeyDown={(event) => activateOnKeyboard(event, () => {
+                            if (step < currentStep) {
+                              setCurrentStep(step);
+                            } else if (step > currentStep) {
+                              if (currentStep === 1 && validateStep(1)) {
+                                if (step === 3 && validateStep(2)) setCurrentStep(3);
+                                else if (step === 2) setCurrentStep(2);
+                              } else if (currentStep === 2 && validateStep(2) && step === 3) {
+                                setCurrentStep(3);
+                              }
+                            }
+                          })}
+                          role="button"
+                          tabIndex={0}
+                          aria-label={`Ir para a etapa ${step}`}
                           className={`flex items-center justify-center w-8 h-8 rounded-xl text-xs font-sans font-bold transition-all duration-300 cursor-pointer ${
                             currentStep === step 
                               ? "bg-zinc-950 text-white shadow-md ring-2 ring-brand" 

@@ -4,7 +4,7 @@ import "dotenv/config";
 import pg from "pg";
 
 const { Pool } = pg;
-const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+const baseUrl = process.env.BASE_URL || "http://127.0.0.1:3000";
 
 if (!process.env.DATABASE_URL?.trim()) {
   throw new Error("DATABASE_URL is required for persistence verification.");
