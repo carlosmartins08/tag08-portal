@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft, ArrowUpRight, CheckCircle2, TrendingUp, Award, Calendar, ChevronRight, Share2, Copy, Check, MessageSquare, Zap, Target } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
@@ -20,13 +20,13 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
   if (!selectedCase) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center text-center p-6 bg-charcoal-950 text-white font-sans">
-        <h2 className="font-display font-black text-3xl uppercase text-zinc-400 mb-4">Caso de Sucesso não encontrado</h2>
+        <h2 className="font-display font-black text-3xl text-zinc-400 mb-4">Caso de Sucesso não encontrado</h2>
         <p className="text-zinc-500 text-sm max-w-md mb-8">
           O caso estratégico solicitado não pôde ser localizado em nossa base operacional.
         </p>
         <button
           onClick={() => onNavigate("/")}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-brand-secondary text-black font-black font-mono text-xs uppercase tracking-widest rounded-xl hover:bg-white transition-all duration-300"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-brand-secondary text-black font-black tag08-meta text-xs uppercase tracking-widest rounded-xl hover:bg-white transition-all duration-300"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Voltar ao Início</span>
@@ -53,7 +53,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
         
         {/* Breadcrumb Navigation \& Action Row */}
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.04] pb-6">
-          <div className="flex items-center gap-2 text-xs font-mono text-zinc-500 uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-xs tag08-meta text-zinc-500 uppercase tracking-widest">
             <button 
               onClick={() => onNavigate("/")} 
               className="hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
@@ -74,7 +74,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
           <div className="flex items-center gap-3">
             <button
               onClick={handleShare}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.02] hover:bg-white/[0.08] border border-white/5 hover:border-white/10 rounded-xl text-xs font-mono tracking-wider transition-all duration-300 text-zinc-400 hover:text-white cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.02] hover:bg-white/[0.08] border border-white/5 hover:border-white/10 rounded-xl text-xs font-sans tracking-wider transition-all duration-300 text-zinc-400 hover:text-white cursor-pointer"
             >
               {copied ? (
                 <>
@@ -90,7 +90,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
             </button>
             <button
               onClick={() => onNavigate("/")}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-secondary/5 hover:bg-brand-secondary/10 border border-brand-secondary/10 hover:border-brand-secondary/20 text-brand-secondary rounded-xl text-xs font-mono tracking-wider transition-all duration-300 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-secondary/5 hover:bg-brand-secondary/10 border border-brand-secondary/10 hover:border-brand-secondary/20 text-brand-secondary rounded-xl text-xs font-sans tracking-wider transition-all duration-300 cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Voltar ao Início</span>
@@ -107,15 +107,15 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
             {/* Title Block & Meta information */}
             <div className="space-y-4">
               <div className="flex flex-wrap items-center gap-3">
-                <span className="bg-brand/10 border border-brand/20 text-brand font-mono text-[9px] uppercase tracking-widest px-2.5 py-1 rounded font-black">
+                <span className="bg-brand/10 border border-brand/20 text-brand tag08-meta text-xs uppercase tracking-widest px-2.5 py-1 rounded font-black">
                   {selectedCase.category}
                 </span>
-                <span className="text-zinc-500 font-mono text-[10px] tracking-wide uppercase">
+                <span className="text-zinc-500 tag08-meta text-xs tracking-wide uppercase">
                   Consórcio de Crescimento Ativo TAG08
                 </span>
               </div>
 
-              <h1 className="font-display font-black text-2xl sm:text-4xl text-white uppercase tracking-tight leading-[1.1] text-left">
+              <h1 className="font-display font-black text-2xl sm:text-4xl text-white tracking-tight leading-[1.1] text-left">
                 {selectedCase.title}
               </h1>
 
@@ -140,12 +140,12 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                   <div className="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-black">
                     <Award className="w-4 h-4" />
                   </div>
-                  <span className="font-mono text-xs text-white uppercase tracking-wider font-extrabold bg-[#070709]/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/5">
+                  <span className="tag08-meta text-xs text-white uppercase tracking-wider font-extrabold bg-[#070709]/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/5">
                     Estudo de Caso Oficial
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 text-zinc-300 font-mono text-[10px] uppercase tracking-wider bg-[#070709]/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/5">
+                <div className="flex items-center gap-2 text-zinc-300 tag08-meta text-xs uppercase tracking-wider bg-[#070709]/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/5">
                   <Calendar className="w-3.5 h-3.5" />
                   <span>Publicado em Junho de 2026</span>
                 </div>
@@ -158,14 +158,14 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                 <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/[0.015] blur-3xl pointer-events-none" />
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-red-500" />
-                  <h3 className="font-sans text-[11px] uppercase tracking-wider text-red-450 font-black">
+                  <h3 className="font-sans text-xs tracking-wider text-red-450 font-black">
                     O CÊNARIO ANTERIOR (O DESAFIO)
                   </h3>
                 </div>
                 <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed font-sans font-normal">
                   {selectedCase.challenge}
                 </p>
-                <div className="pt-2 border-t border-white/[0.03] flex items-center gap-2 text-[10px] font-mono text-zinc-500 uppercase">
+                <div className="pt-2 border-t border-white/[0.03] flex items-center gap-2 text-xs font-sans text-zinc-500 uppercase">
                   <Target className="w-3.5 h-3.5 text-red-550" />
                   <span>Diagnóstico de pontos fracos</span>
                 </div>
@@ -175,14 +175,14 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                 <div className="absolute top-0 right-0 w-32 h-32 bg-brand-secondary/[0.015] blur-3xl pointer-events-none" />
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-brand-secondary" />
-                  <h3 className="font-sans text-[11px] uppercase tracking-wider text-brand-secondary font-black">
+                  <h3 className="font-sans text-xs tracking-wider text-brand-secondary font-black">
                     A ESTRATÉGIA ADOTADA (SOLUÇÃO)
                   </h3>
                 </div>
                 <p className="text-zinc-350 text-xs sm:text-sm leading-relaxed font-sans font-normal">
                   {selectedCase.solution}
                 </p>
-                <div className="pt-2 border-t border-white/[0.03] flex items-center gap-2 text-[10px] font-mono text-zinc-500 uppercase">
+                <div className="pt-2 border-t border-white/[0.03] flex items-center gap-2 text-xs font-sans text-zinc-500 uppercase">
                   <Zap className="w-3.5 h-3.5 text-brand" />
                   <span>Métodos ativos aplicados</span>
                 </div>
@@ -191,7 +191,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
 
             {/* In-depth details section mock blog post metrics progression */}
             <div className="space-y-6 pt-6 text-left">
-              <h3 className="font-display font-medium text-xl text-white uppercase tracking-tight">
+              <h3 className="font-display font-medium text-xl text-white tracking-tight">
                 Entregas Operadas e Resultados Alcançados
               </h3>
               
@@ -209,7 +209,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                       <CheckCircle2 className="w-4.5 h-4.5 stroke-[2]" />
                     </div>
                     <div className="space-y-1">
-                      <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">Resultado {index + 1}</span>
+                      <span className="text-xs tag08-meta text-zinc-500 uppercase tracking-wider">Resultado {index + 1}</span>
                       <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">{res}</p>
                     </div>
                   </motion.li>
@@ -229,7 +229,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
 
               <div className="space-y-6">
                 <div>
-                <span className="font-mono text-[9px] text-brand-secondary font-black uppercase tracking-widest block bg-brand-secondary/5 border border-brand-secondary/15 px-2 py-0.5 rounded w-max mb-1">
+                <span className="tag08-meta text-xs text-brand-secondary font-black uppercase tracking-widest block bg-brand-secondary/5 border border-brand-secondary/15 px-2 py-0.5 rounded w-max mb-1">
                     Cliente Atendido
                   </span>
                   <p className="font-display font-black text-white text-xl uppercase tracking-tight">
@@ -238,7 +238,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                 </div>
 
                 <div className="border-t border-white/[0.04] pt-4">
-                  <span className="text-zinc-500 font-mono text-[9px] uppercase tracking-wider block">Estágio de Implementação</span>
+                  <span className="text-zinc-500 tag08-meta text-xs uppercase tracking-wider block">Estágio de Implementação</span>
                   <div className="flex items-center gap-1.5 mt-1 text-xs text-zinc-300 font-semibold font-sans">
                     <span className="w-2 h-2 rounded-full bg-brand-secondary animate-pulse" />
                     <span>Conferido & Ativo</span>
@@ -247,7 +247,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
 
                 {/* Major High Impact Metric */}
                 <div className="border-t border-white/[0.04] pt-5 bg-gradient-to-br from-white/[0.01] to-transparent p-4 rounded-xl border border-white/5">
-                  <span className="text-zinc-400 font-mono text-[10px] uppercase tracking-wider block">Resultado Medido</span>
+                  <span className="text-zinc-400 tag08-meta text-xs uppercase tracking-wider block">Resultado Medido</span>
                   <div className="flex items-baseline gap-2 mt-1">
                     <span className="font-display font-black text-4xl text-brand-secondary tracking-tight">
                       {selectedCase.metric}
@@ -259,7 +259,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                   </p>
                 </div>
 
-                <div className="border-t border-white/[0.04] pt-4 space-y-2 text-[11px] text-zinc-400 font-sans leading-relaxed">
+                <div className="border-t border-white/[0.04] pt-4 space-y-2 text-xs text-zinc-400 font-sans leading-relaxed">
                   <p>✓ Alocação de metodologias de tom de voz corporativo sênior</p>
                   <p>✓ Canais de tráfego de alta intenção e precisão técnica</p>
                 </div>
@@ -271,10 +271,10 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/[0.15] blur-3xl pointer-events-none" />
               
               <div className="space-y-2.5">
-                <span className="text-[10px] font-mono font-black uppercase tracking-widest bg-black/5 px-2 py-0.5 rounded w-max block">
+                <span className="text-xs tag08-meta font-black uppercase tracking-widest bg-black/5 px-2 py-0.5 rounded w-max block">
                   Crescimento Ativo
                 </span>
-                <h3 className="font-display font-black text-xl lg:text-2xl uppercase tracking-tight leading-none text-left">
+                <h3 className="font-display font-black text-xl lg:text-2xl tracking-tight leading-none text-left">
                   Sua marca no próximo nível de faturamento
                 </h3>
                 <p className="text-zinc-800 text-xs font-sans leading-relaxed text-left">
@@ -287,7 +287,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                   onNavigate("/contato");
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className="w-full inline-flex items-center justify-between gap-2 px-5 py-3.5 bg-black hover:bg-neutral-900 text-white font-black font-mono text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-md group-hover:scale-[1.02] cursor-pointer"
+                className="w-full inline-flex items-center justify-between gap-2 px-5 py-3.5 bg-black hover:bg-neutral-900 text-white font-black font-sans text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-md group-hover:scale-[1.02] cursor-pointer"
               >
                 <span>Falar com um Diretor</span>
                 <ArrowUpRight className="w-4 h-4 text-brand-secondary stroke-[2.5]" />

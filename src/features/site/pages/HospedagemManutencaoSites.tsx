@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import {
   CheckCircle,
   Cpu,
@@ -214,10 +214,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
         <section className="pt-8 sm:pt-16 pb-6 text-left">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-7 space-y-4">
-              <span className="font-mono text-[9px] text-brand bg-brand/10 border border-brand/20 px-3 py-1 rounded-md inline-flex items-center gap-1.5 uppercase tracking-widest font-black">
+              <span className="tag08-meta text-xs text-brand bg-brand/10 border border-brand/20 px-3 py-1 rounded-md inline-flex items-center gap-1.5 uppercase tracking-widest font-black">
                 <Radio className="w-3.5 h-3.5 animate-pulse" /> INFRAESTRUTURA DE SOBERANIDADE CORPORATIVA
               </span>
-              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white uppercase leading-[1.0] tracking-tighter">
+              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter">
                 HOSPEDAGEM E MANUTENÇÃO: <br />
                 <span className="text-brand">SEU PORTAL PARA O FUTURO DIGITAL.</span>
               </h1>
@@ -229,7 +229,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               <div className="pt-2 flex flex-col sm:flex-row gap-3">
                 <a
                   href="#escolha-plano"
-                  className="px-6 py-3.5 bg-brand hover:bg-brand-dark text-black text-[11px] font-sans font-black uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-[0_12px_40px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer"
+                  className="px-6 py-3.5 bg-brand hover:bg-brand-dark text-black text-xs font-sans font-black uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-[0_12px_40px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer"
                 >
                   <span>Mapear minha hospedagem</span>
                   <ArrowRight className="w-4 h-4 stroke-[2.5]" />
@@ -238,7 +238,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   href={buildBrazilWhatsAppUrl("Ola%20TAG08!%20Gostaria%20de%20conversar%20sobre%20as%20soluções%20de%20Hospedagem%20e%20Manutenção%20de%20Sites.")}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-6 py-3.5 bg-white/[0.02] border border-white/10 hover:border-brand/45 text-white hover:text-brand text-[11px] font-sans font-black uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="px-6 py-3.5 bg-white/[0.02] border border-white/10 hover:border-brand/45 text-white hover:text-brand text-xs font-sans font-black uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <span>Falar com especialista</span>
                   <ArrowUpRight className="w-4 h-4" />
@@ -264,10 +264,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 {/* Floating cyber metrics overlays showing maximum telemetry */}
                 <div className="absolute inset-x-6 bottom-6 sm:inset-x-10 sm:bottom-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pointer-events-none">
                   <div className="space-y-2">
-                    <span className="font-mono text-[9px] text-brand/85 tracking-widest font-bold uppercase block leading-none">
+                    <span className="tag08-meta text-xs text-brand/85 tracking-widest font-bold uppercase block leading-none">
                       ZELADORIA ATIVA EM TEMPO REAL
                     </span>
-                    <h3 className="font-display font-black text-white text-xl sm:text-2xl uppercase tracking-tight">
+                    <h3 className="font-display font-black text-white text-xl sm:text-2xl tracking-tight">
                       PROTEÇÃO ROBUSTA E MONITORAMENTO CONTÍNUO
                     </h3>
                   </div>
@@ -275,7 +275,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   {/* Mock live monitoring hardware panels */}
                   <div className="flex gap-4 sm:gap-6 bg-black/75 backdrop-blur-md px-5 py-4 rounded-2xl border border-white/15 w-full md:w-auto">
                     <div className="space-y-1 text-left">
-                      <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest font-black block leading-none">
+                      <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-black block leading-none">
                         PING MONITOR
                       </span>
                       <span className="text-brand font-sans font-black text-xs sm:text-sm flex items-center gap-1.5 leading-none">
@@ -284,7 +284,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     </div>
                     <div className="w-px bg-white/10" />
                     <div className="space-y-1 text-left">
-                      <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest font-black block leading-none">
+                      <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-black block leading-none">
                         FIREWALL STATE
                       </span>
                       <span className="text-white font-sans font-black text-xs sm:text-sm flex items-center gap-1.5 leading-none">
@@ -301,10 +301,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
         {/* SECTION 2: THE HARMONY - WHAT IS HOSTING & ZELADORIA (Yin & Yang concept) */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 text-left">
           <div className="lg:col-span-5 space-y-6 flex flex-col justify-center">
-            <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/15 px-2.5 py-1 rounded-md inline-block self-start">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/15 px-2.5 py-1 rounded-md inline-block self-start">
               A ESSÊNCIA DA VITALIDADE WEB
             </span>
-            <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-tight tracking-tighter">
+            <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-tight tracking-tighter">
               A HARMONIA ENTRE INFRAESTRUTURA E MANUTENÇÃO DA SUA PRESENÇA DIGITAL.
             </h2>
             <p className="text-zinc-400 text-sm sm:text-base leading-relaxed font-sans font-medium">
@@ -321,15 +321,15 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <div className="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand mb-1">
                   <Database className="w-6 h-6 stroke-[2]" />
                 </div>
-                <h3 className="font-display font-black text-xl text-white uppercase">
+                <h3 className="font-display font-black text-xl text-white">
                   A Hospedagem <br />
-                  <span className="text-brand font-mono font-normal text-xs tracking-widest block mt-0.5">// O CORação PULSANTE</span>
+                  <span className="text-brand font-sans font-normal text-xs tracking-widest block mt-0.5">// O CORação PULSANTE</span>
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
                   a o lar digital seguro, acolhedor e blindado onde seus dados residem. Composta por servidores dedicados e estaveis que permanecem conectados em data centers supremos de alta segurança, garantindo que seu projeto esteja totalmente visavel para o planeta a qualquer minuto.
                 </p>
               </div>
-              <span className="font-sans text-[9px] text-zinc-650 group-hover:text-brand transition-colors block">RESIDaNCIA SaLIDA &gt;&gt;</span>
+              <span className="font-sans text-xs text-zinc-650 group-hover:text-brand transition-colors block">RESIDaNCIA SaLIDA &gt;&gt;</span>
             </div>
 
             <div className="bg-[#09090b] border border-white/[0.04] p-8 lg:p-10 rounded-[32px] hover:border-brand/35 transition-all duration-300 space-y-6 flex flex-col justify-between group">
@@ -337,15 +337,15 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <div className="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand mb-1">
                   <RefreshCw className="w-6 h-6 stroke-[2]" />
                 </div>
-                <h3 className="font-display font-black text-xl text-white uppercase">
+                <h3 className="font-display font-black text-xl text-white">
                   A Manutenção <br />
-                  <span className="text-brand font-mono font-normal text-xs tracking-widest block mt-0.5">// A ALMA CUIDADOSA</span>
+                  <span className="text-brand font-sans font-normal text-xs tracking-widest block mt-0.5">// A ALMA CUIDADOSA</span>
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
                   A engrenagem ativa que supervisiona a saúde, o vigor e o rejuvenescimento do seu código. Realizamos atualizações periódicas de CMS, otimizamos bancos de dados, ajustamos blocos de segurança técnica e aplicómos patches contra qualquer brecha ou vulnerabilidade silenciosa.
                 </p>
               </div>
-              <span className="font-sans text-[9px] text-zinc-650 group-hover:text-brand transition-colors block">OTIMIZação PROATIVA &gt;&gt;</span>
+              <span className="font-sans text-xs text-zinc-650 group-hover:text-brand transition-colors block">OTIMIZação PROATIVA &gt;&gt;</span>
             </div>
           </div>
         </section>
@@ -353,10 +353,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
         {/* SECTION 5: PILARES & MANUTENaaO REGULAR */}
         <section className="space-y-12 text-left">
           <div className="text-center max-w-3xl mx-auto space-y-4">
-            <span className="font-mono text-[9px] text-brand bg-brand/10 border border-brand/15 px-3 py-1 rounded inline-block uppercase tracking-widest font-black leading-none">
+            <span className="tag08-meta text-xs text-brand bg-brand/10 border border-brand/15 px-3 py-1 rounded inline-block uppercase tracking-widest font-black leading-none">
               DILIGaNCIA SEM CONCESSaES
             </span>
-            <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase tracking-tighter leading-none">
+            <h2 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tighter leading-none">
               PROCESSOS CONTÍNUOS DE PROTEÇÃO &amp; OTIMIZAÇÃO.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans">
@@ -372,12 +372,12 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <FileCheck className="w-5 h-5 stroke-[2.5]" />
               </div>
               <div className="space-y-3">
-                <h4 className="text-white text-lg font-display font-black uppercase">Manutenção Regular</h4>
+                <h4 className="text-white text-lg font-display font-black">Manutenção Regular</h4>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
                   Realizamos a atualização síncrona de CMSs, plugins essenciais e temas estruturais para fechar lacunas e melhorar a integridade técnica das entregas de carregamento.
                 </p>
               </div>
-              <ul className="space-y-2 pt-2 border-t border-white/5 text-[11px] text-zinc-450 font-sans">
+              <ul className="space-y-2 pt-2 border-t border-white/5 text-xs text-zinc-450 font-sans">
                 <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Updates Semanais Certificados</li>
                 <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Testabilidade Pas-deploy</li>
                 <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Otimização Fina de Banco</li>
@@ -390,12 +390,12 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <Award className="w-5 h-5 stroke-[2.5]" />
               </div>
               <div className="space-y-3">
-                <h4 className="text-white text-lg font-display font-black uppercase">Auditorias de Segurança</h4>
+                <h4 className="text-white text-lg font-display font-black">Auditorias de Segurança</h4>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
                   Rigorosas avaliações periódicas para detectar eventuais scripts invasivos ou brechas, mapeando com absoluta precisão qualquer vulnerabilidade para rápido reparo.
                 </p>
               </div>
-              <ul className="space-y-2 pt-2 border-t border-white/5 text-[11px] text-zinc-450 font-sans">
+              <ul className="space-y-2 pt-2 border-t border-white/5 text-xs text-zinc-450 font-sans">
                 <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Varreduras Heurísticas Ativas</li>
                 <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Emissão de Relatórios Claros</li>
                 <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Correção Imediata de Bugs</li>
@@ -408,12 +408,12 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <ShieldCheck className="w-5 h-5 stroke-[2.5]" />
               </div>
               <div className="space-y-3">
-                <h4 className="text-white text-lg font-display font-display font-black uppercase">Fila de Backups e Rollback</h4>
+                <h4 className="text-white text-lg font-display font-display font-black">Fila de Backups e Rollback</h4>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
                   Garantimos capias de segurança redundantes, de forma que, caso ocorra alguma falha cratica provocêda por scripts externos ou erro de operação, o site possa ser restaurado sem sobressaltos.
                 </p>
               </div>
-              <ul className="space-y-2 pt-2 border-t border-white/5 text-[11px] text-zinc-450 font-sans">
+              <ul className="space-y-2 pt-2 border-t border-white/5 text-xs text-zinc-450 font-sans">
                 <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Retenaao Fasico-geografica</li>
                 <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Planos de Reparo Classicos</li>
                 <li className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" /> Rollback sob Medida e Rapido</li>
@@ -431,10 +431,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
           {/* Heading */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end relative z-10 border-b border-white/[0.06] pb-8">
             <div className="lg:col-span-7 space-y-3">
-              <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black leading-none flex items-center gap-1.5">
+              <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black leading-none flex items-center gap-1.5">
                 <Terminal className="w-4 h-4 animate-pulse text-brand" /> CONTROLE TaTICO &amp; TELEMETRIA
               </span>
-              <h2 className="font-display font-black text-2xl sm:text-3.5xl md:text-4xl text-white uppercase leading-none tracking-tight">
+              <h2 className="font-display font-black text-2xl sm:text-3.5xl md:text-4xl text-white leading-none tracking-tight">
                 A INFRAESTRUTURA POR TRaS DA BLINDAGEM.
               </h2>
             </div>
@@ -453,33 +453,33 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <div className="w-2.5 h-2.5 rounded-full bg-brand animate-ping" />
-                    <span className="font-mono text-[10px] text-white/95 font-bold uppercase tracking-widest">SERVIDORES DE ALTA PERFORMANCE VATIVOS</span>
+                    <span className="tag08-meta text-xs text-white/95 font-bold uppercase tracking-widest">SERVIDORES DE ALTA PERFORMANCE VATIVOS</span>
                   </div>
-                  <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest">NODES INTACT // BR &amp; US</span>
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">NODES INTACT // BR &amp; US</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {/* Tech indicator 1 */}
                   <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] space-y-1 text-left">
-                    <span className="text-zinc-500 font-mono text-[8px] uppercase font-black tracking-wider block">POTÊNCIA GERAL</span>
-                    <h4 className="text-white font-display font-black text-base uppercase leading-none">MaXIMO PODER</h4>
-                    <p className="text-zinc-455 text-[10.5px] font-sans leading-tight mt-1.5">
+                    <span className="text-zinc-500 tag08-meta text-xs uppercase font-black tracking-wider block">POTÊNCIA GERAL</span>
+                    <h4 className="text-white font-display font-black text-base leading-none">MaXIMO PODER</h4>
+                    <p className="text-zinc-455 text-xs font-sans leading-tight mt-1.5">
                       Processadores de múltiplos núcleos para manter seu site rodando com carregamentos estáveis e ausência total de lentidão.
                     </p>
                   </div>
                   {/* Tech indicator 2 */}
                   <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] space-y-1 text-left">
-                    <span className="text-zinc-500 font-mono text-[8px] uppercase font-black tracking-wider block">TECNOLOGIA DE PONTA</span>
-                    <h4 className="text-white font-display font-black text-base uppercase leading-none">HARDWARE SSD NVMe</h4>
-                    <p className="text-zinc-455 text-[10.5px] font-sans leading-tight mt-1.5">
+                    <span className="text-zinc-500 tag08-meta text-xs uppercase font-black tracking-wider block">TECNOLOGIA DE PONTA</span>
+                    <h4 className="text-white font-display font-black text-base leading-none">HARDWARE SSD NVMe</h4>
+                    <p className="text-zinc-455 text-xs font-sans leading-tight mt-1.5">
                       Arquiteturas robustas em estado sólido e memória de alta transferência computacional para carregar fotos e dados instantaneamente.
                     </p>
                   </div>
                   {/* Tech indicator 3 */}
                   <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] space-y-1 text-left">
-                    <span className="text-zinc-500 font-mono text-[8px] uppercase font-black tracking-wider block">SUPERVIsão</span>
-                    <h4 className="text-brand font-display font-black text-base uppercase leading-none">MONITORIA 24/7</h4>
-                    <p className="text-zinc-455 text-[10.5px] font-sans leading-tight mt-1.5">
+                    <span className="text-zinc-500 tag08-meta text-xs uppercase font-black tracking-wider block">SUPERVIsão</span>
+                    <h4 className="text-brand font-display font-black text-base leading-none">MONITORIA 24/7</h4>
+                    <p className="text-zinc-455 text-xs font-sans leading-tight mt-1.5">
                       Sistemas inteligentes que fiscalizam hardware e integridade de arquivos constantemente, alertando técnicos proativamente.
                     </p>
                   </div>
@@ -488,7 +488,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 {/* Progress bars showing live resources */}
                 <div className="space-y-3.5 pt-2">
                   <div className="space-y-1 text-left">
-                    <div className="flex justify-between font-sans text-[9px] text-zinc-400 font-black">
+                    <div className="flex justify-between font-sans text-xs text-zinc-400 font-black">
                       <span>MaDIA GERAL DE DISPONIBILIDADE (UPTIME)</span>
                       <span className="text-brand">99.99% GARANTIDO</span>
                     </div>
@@ -503,7 +503,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   </div>
 
                   <div className="space-y-1 text-left">
-                    <div className="flex justify-between font-sans text-[9px] text-zinc-400 font-black">
+                    <div className="flex justify-between font-sans text-xs text-zinc-400 font-black">
                       <span>BLINDAGEM CONTRA ATAQUES COGNITIVOS DDOS</span>
                       <span className="text-white">FILTRO DE 100% DAS AMEAaAS</span>
                     </div>
@@ -523,7 +523,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
             {/* Right Side: Security Protocols Checklist */}
             <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
               <div className="space-y-5 text-left">
-                <span className="font-mono text-[9px] text-brand uppercase font-black tracking-widest block leading-none">
+                <span className="tag08-meta text-xs text-brand uppercase font-black tracking-widest block leading-none">
                   SISTEMA DE BLINDAGEM ATIVA
                 </span>
                 <p className="text-zinc-450 text-xs sm:text-sm font-sans leading-relaxed">
@@ -536,7 +536,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       <Shield className="w-4 h-4 stroke-[2]" />
                     </div>
                     <div className="space-y-0.5">
-                    <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase">Firewalls e Detecção de Intrusão</h4>
+                    <h4 className="text-white text-xs sm:text-sm font-display font-black">Firewalls e Detecção de Intrusão</h4>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
                         Filtros inteligentes que servem como primeira linha de defesa ativa, mitigando acessos maliciosos antes que afetem seus serviços.
                       </p>
@@ -548,7 +548,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       <Key className="w-4 h-4 stroke-[2]" />
                     </div>
                     <div className="space-y-0.5">
-                    <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase">Certificados SSL/TLS Avançados</h4>
+                    <h4 className="text-white text-xs sm:text-sm font-display font-black">Certificados SSL/TLS Avançados</h4>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
                         Criptografia robusta entre o site e seus visitantes para salvaguardar senhas, dados de pagamentos comerciais e formulários de conversão.
                       </p>
@@ -560,7 +560,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       <Lock className="w-4 h-4 stroke-[2]" />
                     </div>
                     <div className="space-y-0.5">
-                      <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase">Atualizações e Patches de Segurança Contínuos</h4>
+                      <h4 className="text-white text-xs sm:text-sm font-display font-black">Atualizações e Patches de Segurança Contínuos</h4>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
                         Fechamento imediato de vulnerabilidades em tempo recorde através de rotinas aplicadas por especialistas em infraestrutura da TAG08.
                       </p>
@@ -576,10 +576,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
         <section className="space-y-12 text-left">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-white/[0.04] pb-6">
             <div className="lg:col-span-7 space-y-3">
-              <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black leading-none">
+              <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black leading-none">
                 ENGENHARIA E OPERAções // SIMPLICIDADE EXPLICITADA
               </span>
-              <h2 className="font-display font-black text-3xl sm:text-4.5xl md:text-5xl text-white uppercase leading-none tracking-tighter">
+              <h2 className="font-display font-black text-3xl sm:text-4.5xl md:text-5xl text-white leading-none tracking-tighter">
                 COMO FUNCIONA: <br />
                 <span className="text-brand">UMA JORNADA POR DETRaS DAS CORTINAS.</span>
               </h2>
@@ -612,7 +612,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       0{idx + 1}
                     </span>
                     <div className="space-y-1">
-                      <span className="font-mono text-[8px] uppercase tracking-widest font-semibold block text-zinc-500">
+                      <span className="tag08-meta text-xs uppercase tracking-widest font-semibold block text-zinc-500">
                         {step.label}
                       </span>
                       <h4 className={`text-sm sm:text-base font-display font-black uppercase transition-colors ${
@@ -639,13 +639,13 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 >
                   <div className="space-y-6">
                     <div className="flex justify-between items-center">
-                      <span className="font-mono text-[9px] text-brand bg-brand/10 border border-brand/15 px-2.5 py-1 rounded uppercase font-black">
+                      <span className="font-sans text-xs text-brand bg-brand/10 border border-brand/15 px-2.5 py-1 rounded uppercase font-black">
                         {journeySteps[activeJourney].label}
                       </span>
-                      <span className="font-mono text-[10px] text-zinc-500">TAG08 EXPERT AUDIT</span>
+                      <span className="font-sans text-xs text-zinc-500">TAG08 EXPERT AUDIT</span>
                     </div>
                     
-                    <h3 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
+                    <h3 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">
                       {journeySteps[activeJourney].title}
                     </h3>
                     
@@ -658,7 +658,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <div className="border-t border-white/5 pt-6 mt-8 flex flex-col sm:flex-row items-center gap-4 justify-between">
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-5 h-5 text-brand" />
-                      <span className="font-mono text-[10px] text-zinc-400 font-bold uppercase tracking-wider">MaTRICA ATIVA DE ENTREGA</span>
+                      <span className="tag08-meta text-xs text-zinc-400 font-bold uppercase tracking-wider">MaTRICA ATIVA DE ENTREGA</span>
                     </div>
                     <span className="font-sans text-xs text-brand font-black bg-brand/5 border border-brand/10 px-3 py-1.5 rounded-lg">
                       {journeySteps[activeJourney].metric}
@@ -674,10 +674,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
         <section id="escolha-plano" className="space-y-12 text-left">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-white/[0.04] pb-6">
             <div className="lg:col-span-7 space-y-3">
-              <span className="font-mono text-[9px] text-brand bg-brand/10 border border-brand/15 px-2.5 py-1 rounded inline-block uppercase tracking-widest font-black">
+              <span className="tag08-meta text-xs text-brand bg-brand/10 border border-brand/15 px-2.5 py-1 rounded inline-block uppercase tracking-widest font-black">
                 SELEaaO INTELIGENTE POR NICHO
               </span>
-              <h2 className="font-display font-black text-3xl sm:text-4.5xl md:text-5xl text-white uppercase tracking-tighter leading-none">
+              <h2 className="font-display font-black text-3xl sm:text-4.5xl md:text-5xl text-white tracking-tighter leading-none">
                 ESCOLHA A HOSPEDAGEM PERFEITA <br />
                 <span className="text-brand">E COMECE DA MANEIRA CERTA.</span>
               </h2>
@@ -699,7 +699,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               <button
                 key={cat.id}
                 onClick={() => setPlanCategory(cat.id as any)}
-                className={`px-5 py-2.5 rounded-xl font-mono text-[9px] font-black uppercase tracking-widest transition-all duration-300 pointer-events-auto cursor-pointer border ${
+                className={`px-5 py-2.5 rounded-xl font-sans text-xs font-black uppercase tracking-widest transition-all duration-300 pointer-events-auto cursor-pointer border ${
                   planCategory === cat.id
                     ? "bg-brand border-brand text-black shadow-[0_4px_20px_rgba(var(--color-brand-rgb),0.15)]"
                     : "bg-white/[0.02] border-white/5 text-zinc-400 hover:text-white hover:border-white/15"
@@ -743,7 +743,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                         />
                         {/* Floating Selection Indicator Badge */}
                         <div className="absolute top-5 right-5 flex items-center gap-1.5">
-                          <span className="font-mono text-[8px] text-zinc-500 font-bold uppercase tracking-widest">
+                          <span className="tag08-meta text-xs text-zinc-500 font-bold uppercase tracking-widest">
                             {host.badge}
                           </span>
                           <div className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${
@@ -759,10 +759,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                           </span>
 
                           <div className="space-y-1">
-                            <h3 className="font-display font-black text-lg sm:text-xl text-white uppercase tracking-tight leading-tight">
+                            <h3 className="font-display font-black text-lg sm:text-xl text-white tracking-tight leading-tight">
                               {host.title}
                             </h3>
-                            <span className="font-mono text-[8px] sm:text-[9.5px] text-brand font-semibold uppercase block leading-none">
+                            <span className="font-sans text-xs sm:text-xs text-brand font-semibold uppercase block leading-none">
                               IDEAL PARA: {host.niche}
                             </span>
                           </div>
@@ -774,8 +774,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
                         {/* Built-in high specs lists */}
                         <div className="border-t border-white/[0.05] pt-6 mt-6 space-y-3 justify-end">
-                          <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest block font-bold leading-none">CARACTERÍSTICAS INCLUSAS:</span>
-                          <ul className="space-y-2 text-[11px] sm:text-xs font-sans text-zinc-400">
+                          <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold leading-none">CARACTERÍSTICAS INCLUSAS:</span>
+                          <ul className="space-y-2 text-xs sm:text-xs font-sans text-zinc-400">
                             {host.specs.map((spec, sIdx) => (
                               <li key={sIdx} className="flex items-center gap-1.5">
                                 <CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" />
@@ -787,7 +787,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                             href={buildBrazilWhatsAppUrl(`Ola%20TAG08!%20Gostaria%20de%20conversar%20sobre%20a%20soluaao%20de%20"${encodeURIComponent(host.title)}"%20para%20minha%20empresa.`)}
                             target="_blank"
                             rel="noreferrer"
-                            className="relative z-20 mt-6 w-full py-3 rounded-xl font-mono text-[10px] font-black uppercase text-center block tracking-widest transition-all duration-300 border bg-white/5 border-white/10 text-white hover:bg-brand hover:border-brand hover:text-black hover:shadow-lg"
+                            className="relative z-20 mt-6 w-full py-3 rounded-xl tag08-action text-xs font-black uppercase text-center block tracking-widest transition-all duration-300 border bg-white/5 border-white/10 text-white hover:bg-brand hover:border-brand hover:text-black hover:shadow-lg"
                           >
                             Solicitar esta opaao
                           </a>
@@ -809,10 +809,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
             {/* Header */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-white/[0.04] pb-6">
               <div className="lg:col-span-7 space-y-3">
-                <span className="font-mono text-[9px] text-brand bg-brand/10 border border-brand/15 px-2.5 py-1 rounded inline-block uppercase tracking-widest font-black">
+                <span className="tag08-meta text-xs text-brand bg-brand/10 border border-brand/15 px-2.5 py-1 rounded inline-block uppercase tracking-widest font-black">
                   ALICERCES PADRONIZADOS PRONTOS
                 </span>
-                <h2 className="font-display font-black text-3xl sm:text-4.5xl md:text-5xl text-white uppercase tracking-tighter leading-none">
+                <h2 className="font-display font-black text-3xl sm:text-4.5xl md:text-5xl text-white tracking-tighter leading-none">
                   PLANOS DE HOSPEDAGEM <br />
                   <span className="text-brand">& ZELADORIA REGULAR.</span>
                 </h2>
@@ -887,17 +887,17 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   className={`p-8 rounded-[32px] border flex flex-col justify-between transition-all duration-300 relative text-left ${plan.accentBorder} ${plan.bgCard}`}
                 >
                   {plan.highlightBadge && (
-                    <div className="absolute top-5 right-5 font-sans text-[7px] tracking-widest font-black uppercase bg-brand text-black px-2.5 py-1 rounded">
+                    <div className="absolute top-5 right-5 font-sans text-xs tracking-widest font-black uppercase bg-brand text-black px-2.5 py-1 rounded">
                       {plan.highlightBadge}
                     </div>
                   )}
 
                   <div className="space-y-6">
                     <div className="space-y-2">
-                      <span className="font-mono text-[8px] text-brand font-black uppercase tracking-widest block">
+                      <span className="tag08-meta text-xs text-brand font-black uppercase tracking-widest block">
                         {plan.audience}
                       </span>
-                      <h3 className="font-display font-black text-2xl text-white uppercase tracking-tight">
+                      <h3 className="font-display font-black text-2xl text-white tracking-tight">
                         {plan.name}
                       </h3>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed pt-2 border-b border-white/[0.04] pb-4">
@@ -906,14 +906,14 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     </div>
 
                     <div className="py-2 border-b border-white/[0.04] pb-6 flex items-baseline gap-1.5">
-                      <span className="text-zinc-500 font-mono text-[8.5px] uppercase">INVESTIMENTO INTEGRAL:</span>
+                      <span className="text-zinc-500 font-sans text-xs uppercase">INVESTIMENTO INTEGRAL:</span>
                       <span className="font-sans text-3xl font-black text-white">{plan.startingPrice}</span>
                       <span className="text-zinc-500 text-xs font-sans">/mas</span>
                     </div>
 
                     {/* Resources */}
                     <div className="space-y-4 pt-2">
-                      <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest block font-bold">REQUISITOS TaCNICOS INTEGRADOS:</span>
+                      <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">REQUISITOS TaCNICOS INTEGRADOS:</span>
                       <ul className="space-y-2.5">
                         {plan.resources.map((res, rIdx) => (
                           <li key={rIdx} className="flex items-center justify-between group/feat py-0.5 border-b border-white/[0.02]">
@@ -923,14 +923,14 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                             </div>
                             
                             <div className="flex items-center gap-2">
-                              <span className="text-[9px] text-zinc-500 font-sans hidden sm:inline-block opacity-0 group-hover/feat:opacity-85 transition-opacity">
+                              <span className="text-xs text-zinc-500 font-sans hidden sm:inline-block opacity-0 group-hover/feat:opacity-85 transition-opacity">
                                 {res.label}
                               </span>
                               <div className="relative group/tool inline-flex items-center">
                                 <HelpCircle className="w-3.5 h-3.5 text-zinc-600 hover:text-brand cursor-help transition-colors select-none" />
                                 <div className="absolute bottom-full right-0 mb-3 w-64 bg-[#0a0a0c] border border-white/10 text-zinc-300 text-xs p-4 rounded-xl opacity-0 pointer-events-none group-hover/tool:opacity-100 transition-opacity duration-200 shadow-2xl z-50 leading-relaxed font-sans normal-case tracking-normal">
                                   <div className="absolute top-full right-1.5 border-[6px] border-transparent border-t-[#0a0a0c] w-0 h-0" />
-                                  <div className="font-mono text-[8.5px] text-brand font-black uppercase tracking-wider mb-1.5">
+                                  <div className="tag08-meta text-xs text-brand font-black uppercase tracking-wider mb-1.5">
                                     {res.label}
                                   </div>
                                   {res.tooltip}
@@ -950,7 +950,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       )}`)}
                       target="_blank"
                       rel="noreferrer"
-                      className="w-full py-4 rounded-xl bg-white hover:bg-brand hover:text-black hover:border-brand text-[#030303] font-mono text-[10px] font-black uppercase text-center block tracking-widest transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] shadow-md border border-white/10"
+                      className="w-full py-4 rounded-xl bg-white hover:bg-brand hover:text-black hover:border-brand text-[#030303] tag08-action text-xs font-black uppercase text-center block tracking-widest transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] shadow-md border border-white/10"
                     >
                       CONTRATAR ESTE ALICERCE
                     </a>
@@ -960,7 +960,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
             </div>
             
             <div className="pt-6 text-center">
-              <span className="text-zinc-550 font-sans text-[9px] uppercase tracking-widest block leading-relaxed">
+              <span className="text-zinc-550 font-sans text-xs uppercase tracking-widest block leading-relaxed">
                 * Todos os planos de alicerce contam com isolamento de kernel virtual, mitigação ativa de DDoS de 50 Gbps e suporte a SSL Let's Encrypt gratuito com updates proativos incluados.
               </span>
             </div>
@@ -980,10 +980,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               {/* Simulator Header */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-white/[0.06] pb-10">
                 <div className="lg:col-span-7 space-y-4 text-left">
-                  <span className="font-mono text-[9px] text-brand bg-brand/10 border border-brand/20 px-3 py-1 rounded inline-block uppercase tracking-widest font-black">
+                  <span className="tag08-meta text-xs text-brand bg-brand/10 border border-brand/20 px-3 py-1 rounded inline-block uppercase tracking-widest font-black">
                     CUSTOMIZação EM REAL-TIME
                   </span>
-                  <h2 className="font-display font-black text-3.5xl sm:text-4.5xl md:text-5.5xl text-white uppercase tracking-tighter leading-none">
+                  <h2 className="font-display font-black text-3.5xl sm:text-4.5xl md:text-5.5xl text-white tracking-tighter leading-none">
                     MONTE SEU SETUP <br />
                     <span className="text-brand">SOB MEDIDA.</span>
                   </h2>
@@ -999,7 +999,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               <div className="space-y-6 text-left">
                 <div className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-brand animate-ping" />
-                  <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-widest block font-black">PASSO #01 // DEFINA SEU ENGINE DE SERVIDOR (CPU & RAM BASE)</span>
+                  <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest block font-black">PASSO #01 // DEFINA SEU ENGINE DE SERVIDOR (CPU & RAM BASE)</span>
                 </div>
                 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -1053,11 +1053,11 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                         {/* Selected Indicator Badge */}
                         <div className="absolute top-4 right-4 flex items-center gap-1.5">
                           {isActive ? (
-                            <span className="font-sans text-[7px] font-black uppercase text-black bg-brand px-2 py-0.5 rounded shadow-[0_0_10px_rgba(var(--color-brand-rgb),0.2)] animate-pulse">
+                            <span className="font-sans text-xs font-black uppercase text-black bg-brand px-2 py-0.5 rounded shadow-[0_0_10px_rgba(var(--color-brand-rgb),0.2)] animate-pulse">
                               ENGINE BASE ATIVO
                             </span>
                           ) : (
-                            <span className="font-sans text-[7px] text-zinc-600 group-hover/card:text-zinc-400 transition-colors uppercase font-black bg-white/5 border border-white/5 px-2 py-0.5 rounded leading-none">
+                            <span className="font-sans text-xs text-zinc-600 group-hover/card:text-zinc-400 transition-colors uppercase font-black bg-white/5 border border-white/5 px-2 py-0.5 rounded leading-none">
                               {p.badge}
                             </span>
                           )}
@@ -1065,39 +1065,39 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
                         <div className="space-y-4">
                           <div className="space-y-1">
-                            <span className={`text-[8px] font-mono font-black uppercase tracking-widest block transition-colors ${isActive ? "text-brand" : "text-zinc-500 group-hover/card:text-zinc-400"}`}>
+                            <span className={`text-xs tag08-meta font-black uppercase tracking-widest block transition-colors ${isActive ? "text-brand" : "text-zinc-500 group-hover/card:text-zinc-400"}`}>
                               {p.audience}
                             </span>
-                            <h3 className="font-display font-black text-sm uppercase tracking-tight text-white block">
+                            <h3 className="font-display font-black text-sm tracking-tight text-white block">
                               {p.name}
                             </h3>
                           </div>
 
-                          <p className="text-[11px] text-zinc-400 leading-relaxed font-sans border-b border-white/[0.04] pb-4">
+                          <p className="text-xs text-zinc-400 leading-relaxed font-sans border-b border-white/[0.04] pb-4">
                             {p.purpose}
                           </p>
 
-                          <div className="grid grid-cols-2 gap-2 text-left font-sans text-[9px]">
+                          <div className="grid grid-cols-2 gap-2 text-left font-sans text-xs">
                             <div className="bg-white/[0.02] border border-white/5 rounded-lg p-2.5">
-                              <span className="block text-zinc-600 text-[7px] uppercase font-bold tracking-wider">MÁQUINA CPU:</span>
+                              <span className="block text-zinc-600 text-xs uppercase font-bold tracking-wider">MÁQUINA CPU:</span>
                               <span className="text-zinc-300 font-bold">{p.cpu}</span>
                             </div>
                             <div className="bg-white/[0.02] border border-white/5 rounded-lg p-2.5">
-                              <span className="block text-zinc-650 text-[7px] uppercase font-bold tracking-wider">MÁQUINA RAM:</span>
+                              <span className="block text-zinc-650 text-xs uppercase font-bold tracking-wider">MÁQUINA RAM:</span>
                               <span className="text-zinc-300 font-bold">{p.ram}</span>
                             </div>
                           </div>
 
                           <div className="py-2 flex items-baseline gap-1">
-                            <span className="text-zinc-500 text-[8px] font-mono uppercase tracking-widest">CUSTO DO ENGINE:</span>
+                            <span className="text-zinc-500 text-xs tag08-meta uppercase tracking-widest">CUSTO DO ENGINE:</span>
                             <span className={`font-sans text-xl font-black transition-colors ${isActive ? "text-brand" : "text-zinc-300"}`}>
                               {p.startingPrice}
                             </span>
-                            <span className="text-[9px] text-zinc-500 font-sans leading-none">/mês</span>
+                            <span className="text-xs text-zinc-500 font-sans leading-none">/mês</span>
                           </div>
                         </div>
 
-                        <div className={`mt-4 pt-3 border-t border-white/[0.04] text-center font-mono text-[8px] uppercase font-black tracking-widest transition-all ${
+                        <div className={`mt-4 pt-3 border-t border-white/[0.04] text-center tag08-meta text-xs uppercase font-black tracking-widest transition-all ${
                           isActive 
                             ? "text-brand" 
                             : "text-zinc-500 group-hover/card:text-zinc-350"
@@ -1120,8 +1120,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <div className="space-y-4">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="space-y-1">
-                        <span className="font-mono text-[8.5px] text-brand uppercase tracking-wider block font-black">RECURSO #02 // MULTI-SITES</span>
-                    <h3 className="text-white font-bold text-sm sm:text-base uppercase tracking-tight">Número de Sites Hospedados</h3>
+                        <span className="tag08-meta text-xs text-brand uppercase tracking-wider block font-black">RECURSO #02 // MULTI-SITES</span>
+                    <h3 className="text-white font-bold text-sm sm:text-base tracking-tight">Número de Sites Hospedados</h3>
                         <p className="text-zinc-400 text-xs font-sans">Quantos portais independentes irão compartilhar estes recursos isolados?</p>
                       </div>
                       
@@ -1169,14 +1169,14 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                           );
                         })}
                       </div>
-                      <div className="flex justify-between font-sans text-[8px] text-zinc-550">
+                      <div className="flex justify-between font-sans text-xs text-zinc-550">
                         <span>1 PORTAL INICIAL (INCLUSO)</span>
                         <span>MÁXIMO: 10 PORTAIS CONVIVENTES</span>
                       </div>
                     </div>
 
                     {simSites > 1 && (
-                      <span className="text-[10px] text-zinc-500 font-sans block pl-2 border-l border-brand/30">
+                      <span className="text-xs text-zinc-500 font-sans block pl-2 border-l border-brand/30">
                         * Incluso 1 site base gratuito. Cada portal adicional: <strong>+ R$ 50,00/mês</strong>.
                       </span>
                     )}
@@ -1186,8 +1186,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <div className="space-y-4 border-t border-white/[0.05] pt-6">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="space-y-1">
-                        <span className="font-mono text-[8.5px] text-brand uppercase tracking-wider block font-black">RECURSO #03 // ARMAZENAMENTO ULTRA-RAW</span>
-                    <h3 className="text-white font-bold text-sm sm:text-base uppercase tracking-tight">Espaço de Disco SSD NVMe Dedicado</h3>
+                        <span className="tag08-meta text-xs text-brand uppercase tracking-wider block font-black">RECURSO #03 // ARMAZENAMENTO ULTRA-RAW</span>
+                    <h3 className="text-white font-bold text-sm sm:text-base tracking-tight">Espaço de Disco SSD NVMe Dedicado</h3>
                         <p className="text-zinc-400 text-xs font-sans">
                           Sua máquina conta com discos SSD corporativos com taxas de leitura de até 7.000 MB/s.
                         </p>
@@ -1213,7 +1213,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                           }}
                           className="w-full accent-brand bg-white/10 h-1.5 rounded-lg cursor-pointer hover:bg-white/15 transition-all"
                         />
-                        <div className="flex justify-between font-sans text-[8.5px] text-zinc-500 mt-1">
+                        <div className="flex justify-between font-sans text-xs text-zinc-500 mt-1">
                           <span>Min: {simPlan === "basico" ? "5 GB (Básico)" : simPlan === "intermediario" ? "15 GB (Médio)" : "30 GB (Alto)"}</span>
                           <span>Max: {simPlan === "basico" ? "50 GB" : simPlan === "intermediario" ? "100 GB" : "300 GB"}</span>
                         </div>
@@ -1221,7 +1221,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
                       {/* UX Upgrade: Clickable Storage Presets */}
                       <div className="flex flex-wrap gap-2 pt-1">
-                        <span className="font-mono text-[8px] text-zinc-550 uppercase tracking-wider flex items-center pr-1.5">Atalhos rápidos:</span>
+                        <span className="tag08-meta text-xs text-zinc-550 uppercase tracking-wider flex items-center pr-1.5">Atalhos rápidos:</span>
                         {(simPlan === "basico" 
                           ? [5, 15, 30, 50] 
                           : simPlan === "intermediario" 
@@ -1234,7 +1234,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                               trackHostingSimulator("input_changed");
                               setSimStorage(presetVal);
                             }}
-                            className={`px-3 py-1 rounded-md font-mono text-[9px] uppercase transition-all cursor-pointer ${
+                            className={`px-3 py-1 rounded-md font-sans text-xs uppercase transition-all cursor-pointer ${
                               simStorage === presetVal
                                 ? "bg-brand text-black font-black shadow-[0_2px_8px_rgba(var(--color-brand-rgb),0.2)]"
                                 : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white"
@@ -1246,7 +1246,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       </div>
                     </div>
                     
-                    <span className="text-[10px] text-zinc-500 font-sans block pl-2 border-l border-brand/35">
+                    <span className="text-xs text-zinc-500 font-sans block pl-2 border-l border-brand/35">
                     {simPlan === "basico" && `* 5 GB inclusos. Adicional: R$ 3,00 por GB ao mês.`}
                     {simPlan === "intermediario" && `* 15 GB inclusos. Adicional: R$ 5,00 por GB ao mês.`}
                       {simPlan === "avancado" && `* 30 GB inclusos. Adicional: R$ 10,00 por GB ao mês.`}
@@ -1257,13 +1257,13 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <div className="space-y-4 border-t border-white/[0.05] pt-6">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="space-y-1">
-                        <span className="font-mono text-[8.5px] text-brand uppercase tracking-wider block font-black">RECURSO #04 // EMAILS CORPORATIVOS</span>
-                        <h3 className="text-white font-bold text-sm sm:text-base uppercase tracking-tight">Caixas de E-mail Profissionais</h3>
+                        <span className="tag08-meta text-xs text-brand uppercase tracking-wider block font-black">RECURSO #04 // EMAILS CORPORATIVOS</span>
+                        <h3 className="text-white font-bold text-sm sm:text-base tracking-tight">Caixas de E-mail Profissionais</h3>
                         <p className="text-zinc-400 text-xs font-sans font-light">Contas personalizadas @suamarca para comunicação direta, contendo isolamento anti-spam de ponta.</p>
                       </div>
 
                       {simPlan === "avancado" ? (
-                        <span className="font-mono font-black text-black text-[9px] tracking-widest bg-brand px-3.5 py-1.5 rounded-lg shrink-0 self-start sm:self-center shadow-[0_0_15px_rgba(var(--color-brand-rgb),0.1)]">
+                        <span className="font-sans font-black text-black text-xs tracking-widest bg-brand px-3.5 py-1.5 rounded-lg shrink-0 self-start sm:self-center shadow-[0_0_15px_rgba(var(--color-brand-rgb),0.1)]">
                           ILIMITADAS INCLUSAS
                         </span>
                       ) : (
@@ -1298,7 +1298,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       )}
                     </div>
 
-                    <span className="text-[10px] text-zinc-550 block font-sans">
+                    <span className="text-xs text-zinc-550 block font-sans">
                       {simPlan === "basico" && "* 10 contas inclusas nativamente. Caixa extra: R$ 5,00 por lote de 5 e-mails."}
                       {simPlan === "intermediario" && "* 50 contas inclusas nativamente. Caixa extra: R$ 10,00 por lote de 10 e-mails."}
                       {simPlan === "avancado" && "* Caixa premium sem limite básico de contas no plano corporativo avançado."}
@@ -1308,8 +1308,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   {/* Control 4: Active Upgrade */}
                   <div className="space-y-4 border-t border-white/[0.05] pt-6">
                     <div className="space-y-1">
-                      <span className="font-mono text-[8.5px] text-brand uppercase tracking-wider block font-black">RECURSO #05 // ZELADORIA E ADICIONAIS</span>
-                      <h3 className="text-white font-bold text-sm sm:text-base uppercase tracking-tight">Opcional Técnico de Alta Performance</h3>
+                      <span className="tag08-meta text-xs text-brand uppercase tracking-wider block font-black">RECURSO #05 // ZELADORIA E ADICIONAIS</span>
+                      <h3 className="text-white font-bold text-sm sm:text-base tracking-tight">Opcional Técnico de Alta Performance</h3>
                       <p className="text-zinc-400 text-xs font-sans">Turbine sua operação com auditoria especializada de segurança e canais prioritarios exclusivos.</p>
                     </div>
 
@@ -1341,12 +1341,12 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                         </div>
                         <div className="space-y-1 flex-1">
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                            <span className="font-mono text-[9px] font-black uppercase tracking-wider bg-white/5 px-2.5 py-0.5 rounded text-white inline-block">
+                            <span className="tag08-meta text-xs font-black uppercase tracking-wider bg-white/5 px-2.5 py-0.5 rounded text-white inline-block">
                       {simPlan === "basico" && "AUDITORIA & SUPORTE SÊNIOR"}
                               {simPlan === "intermediario" && "BACKUP AGRESSIVO SEMANAL EXTRA"}
                               {simPlan === "avancado" && "CANAL REATIVO PRIORITaRIO (VIP)"}
                             </span>
-                            <span className="font-sans text-[10.5px] text-brand font-black">
+                            <span className="font-sans text-xs text-brand font-black">
                       {simPlan === "basico" && "+ R$ 15,00/mês"}
                       {simPlan === "intermediario" && "+ R$ 20,00/mês"}
                               {simPlan === "avancado" && "+ R$ 50,00/mas"}
@@ -1372,8 +1372,8 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
                   <div className="space-y-6">
                     <div className="border-b border-white/[0.06] pb-4 space-y-1">
-                      <span className="font-mono text-[8px] text-brand uppercase tracking-widest block font-bold">FECHAMENTO CONSOLIDADO</span>
-                      <h3 className="font-display font-black text-white text-lg sm:text-xl uppercase tracking-tight">RESUMO DA INFRAESTRUTURA</h3>
+                      <span className="tag08-meta text-xs text-brand uppercase tracking-widest block font-bold">FECHAMENTO CONSOLIDADO</span>
+                      <h3 className="font-display font-black text-white text-lg sm:text-xl tracking-tight">RESUMO DA INFRAESTRUTURA</h3>
                     </div>
 
                     {/* Receipt Details with jagged visual dividers */}
@@ -1390,7 +1390,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       
                       {/* Additional sites line */}
                       {simSites > 1 && (
-                        <div className="flex justify-between items-center text-[11px] pl-3 border-l border-white/5">
+                        <div className="flex justify-between items-center text-xs pl-3 border-l border-white/5">
                           <span className="text-zinc-500">. {simSites - 1} Portal(is) Adicionais</span>
                           <span className="text-white font-medium">+ R$ {((simSites - 1) * 50).toFixed(2)}</span>
                         </div>
@@ -1400,7 +1400,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       {((simPlan === "basico" && simStorage > 5) || 
                         (simPlan === "intermediario" && simStorage > 15) || 
                         (simPlan === "avancado" && simStorage > 30)) && (
-                        <div className="flex justify-between items-center text-[11px] pl-3 border-l border-white/5">
+                        <div className="flex justify-between items-center text-xs pl-3 border-l border-white/5">
                           <span className="text-zinc-500">
                             . +{simStorage - (simPlan === "basico" ? 5 : simPlan === "intermediario" ? 15 : 30)} GB SSD extra
                           </span>
@@ -1419,7 +1419,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       {/* Emails line compute */}
                       {((simPlan === "basico" && simEmails > 10) || 
                         (simPlan === "intermediario" && simEmails > 50)) && (
-                        <div className="flex justify-between items-center text-[11px] pl-3 border-l border-white/5">
+                        <div className="flex justify-between items-center text-xs pl-3 border-l border-white/5">
                           <span className="text-zinc-500">
                             . +{simEmails - (simPlan === "basico" ? 10 : 50)} Caixas de E-mail
                           </span>
@@ -1435,7 +1435,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
                       {/* Upgrade line compute */}
                       {simApplyUpgrade && (
-                        <div className="flex justify-between items-center text-[11px] pl-3 border-l border-brand/20 text-brand">
+                        <div className="flex justify-between items-center text-xs pl-3 border-l border-brand/20 text-brand">
                           <span>
                             . Técnico: {simPlan === "basico" ? "Auditoria e Suporte" : simPlan === "intermediario" ? "Backup Extra" : "Atendimento VIP"}
                           </span>
@@ -1445,18 +1445,18 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                         </div>
                       )}
 
-                      <div className="pt-2 text-[9px] leading-relaxed text-zinc-550 font-sans border-t border-white/[0.04] mt-2">
+                      <div className="pt-2 text-xs leading-relaxed text-zinc-550 font-sans border-t border-white/[0.04] mt-2">
                         ✓ Integrado por Definição: Isolação cPanel/WHM, SSL Criptográfico Ilimitado, Mitigação Ativa de DDoS e Tráfego Mensal com Integridade.
                       </div>
                     </div>
 
                     {/* UX Upgrade: Real-Time Consultative Diagnosis Advisor */}
                     <div className="bg-[#121214]/60 border border-white/5 p-4 rounded-2xl space-y-2 transition-all">
-                      <div className="flex items-center gap-1.5 font-sans text-[9px] text-brand font-black">
+                      <div className="flex items-center gap-1.5 font-sans text-xs text-brand font-black">
                         <Zap className="w-3.5 h-3.5 text-brand shrink-0 animate-pulse" />
                 <span>DIAGNÓSTICO ESTRATÉGICO TAG08</span>
                       </div>
-                      <p className="text-[11px] text-zinc-400 font-sans leading-relaxed">
+                      <p className="text-xs text-zinc-400 font-sans leading-relaxed">
                         {simPlan === "basico" && simStorage <= 15 && (
                         "Gargalo técnico: baixo. Excelente relação custo-benefício para marcas novas que validam landing pages e sistemas básicos."
                         )}
@@ -1478,7 +1478,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     {/* Dynamic Cost Display Widget */}
                     <div className="bg-[#111113] border border-white/5 rounded-2xl p-5 space-y-1.5 flex flex-col justify-center items-center text-center relative overflow-hidden shadow-inner">
                       <div className="absolute inset-0 bg-brand/[0.005] pointer-events-none" />
-                      <span className="font-mono text-[8px] text-zinc-400 font-bold uppercase tracking-widest block">VALOR MENSAL TOTAL ESTIMADO</span>
+                      <span className="tag08-meta text-xs text-zinc-400 font-bold uppercase tracking-widest block">VALOR MENSAL TOTAL ESTIMADO</span>
                       
                       <div className="flex items-baseline justify-center gap-1.5 pt-1">
                         <span className="font-sans text-white text-xs sm:text-sm font-bold">R$</span>
@@ -1491,10 +1491,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                         >
                           {simulatedPrice.toFixed(2)}
                         </motion.span>
-                        <span className="font-mono text-zinc-500 text-[9px] uppercase tracking-wider">/mas</span>
+                        <span className="tag08-meta text-zinc-500 text-xs uppercase tracking-wider">/mas</span>
                       </div>
                       
-                      <span className="text-[8px] text-zinc-550 font-sans block pt-1 leading-none">
+                      <span className="text-xs text-zinc-550 font-sans block pt-1 leading-none">
                         Faturamento de recorrancia mensal pas-ativação. Sem carancia.
                       </span>
                     </div>
@@ -1518,13 +1518,13 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       label="Solicitar setup de hospedagem"
                       surface="hosting-simulator"
                       onClick={() => trackHostingSimulator("cta_clicked")}
-                      className="group/btn w-full py-4 rounded-xl bg-brand hover:bg-brand-secondary text-black font-mono text-[10px] font-black uppercase text-center block tracking-widest transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] shadow-[0_12px_40px_rgba(var(--color-brand-rgb),0.15)] focus:outline-none cursor-pointer flex items-center justify-center gap-2"
+                      className="group/btn w-full py-4 rounded-xl bg-brand hover:bg-brand-secondary text-black font-sans text-xs font-black uppercase text-center block tracking-widest transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] shadow-[0_12px_40px_rgba(var(--color-brand-rgb),0.15)] focus:outline-none cursor-pointer flex items-center justify-center gap-2"
                     >
                       <span>SOLICITAR SETUP VIA WHATSAPP</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
                     </TrackedOutboundLink>
                     
-                    <span className="text-[8.5px] text-zinc-550 block text-center pt-3 font-mono">
+                    <span className="text-xs text-zinc-550 block text-center pt-3 font-sans">
                       * Redireciona de forma criptografada para os consultores corporativos da TAG08.
                     </span>
                   </div>
@@ -1543,10 +1543,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
           <div className="lg:col-span-6 bg-[#09090b] border border-white/[0.04] p-8 sm:p-10 rounded-[36px] space-y-8 flex flex-col justify-between">
             <div className="space-y-6">
               <div className="space-y-3">
-                <span className="font-mono text-[9px] text-brand bg-brand/10 border border-brand/15 px-2.5 py-0.5 rounded inline-block font-black uppercase tracking-widest">
+                <span className="tag08-meta text-xs text-brand bg-brand/10 border border-brand/15 px-2.5 py-0.5 rounded inline-block font-black uppercase tracking-widest">
                   O PACTO ANCESTRAL DA EXCELaNCIA
                 </span>
-                <h3 className="font-display font-black text-2.5xl sm:text-3xl text-white uppercase leading-tight tracking-tight">
+                <h3 className="font-display font-black text-2.5xl sm:text-3xl text-white leading-tight tracking-tight">
                   O COMPROMISSO DE QUALIDADE TAG08.
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
@@ -1556,7 +1556,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                 <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/5 space-y-1">
-                  <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase flex items-center gap-1.5">
+                  <h4 className="text-white text-xs sm:text-sm font-display font-black flex items-center gap-1.5">
                     <Activity className="w-4 h-4 text-brand shrink-0" /> Monitoramento Integral
                   </h4>
                   <p className="text-zinc-400 text-xs font-sans">
@@ -1565,7 +1565,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 </div>
 
                 <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/5 space-y-1">
-                  <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase flex items-center gap-1.5">
+                  <h4 className="text-white text-xs sm:text-sm font-display font-black flex items-center gap-1.5">
                     <Shield className="w-4 h-4 text-brand shrink-0" /> Escudo Anti-DDoS
                   </h4>
                   <p className="text-zinc-400 text-xs font-sans">
@@ -1574,7 +1574,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 </div>
 
                 <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/5 space-y-1">
-                  <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase flex items-center gap-1.5">
+                  <h4 className="text-white text-xs sm:text-sm font-display font-black flex items-center gap-1.5">
                     <Globe className="w-4 h-4 text-brand shrink-0" /> Canais de Expansão
                   </h4>
                   <p className="text-zinc-400 text-xs font-sans">
@@ -1583,7 +1583,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 </div>
 
                 <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/5 space-y-1">
-                  <h4 className="text-white text-xs sm:text-sm font-display font-black uppercase flex items-center gap-1.5">
+                  <h4 className="text-white text-xs sm:text-sm font-display font-black flex items-center gap-1.5">
                     <Award className="w-4 h-4 text-brand shrink-0" /> Certificados Salidos
                   </h4>
                   <p className="text-zinc-400 text-xs font-sans">
@@ -1593,7 +1593,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               </div>
             </div>
 
-            <div className="border-t border-white/5 pt-6 mt-4 flex items-center gap-4 text-[10px] text-zinc-500 font-sans">
+            <div className="border-t border-white/5 pt-6 mt-4 flex items-center gap-4 text-xs text-zinc-500 font-sans">
               <span className="uppercase font-bold tracking-widest flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-brand" /> EXCELaNCIA HOMOLOGADA E GARANTIDA
               </span>
@@ -1604,10 +1604,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
           <div className="lg:col-span-6 flex flex-col justify-between bg-white/[0.01] border border-white/[0.04] p-8 sm:p-10 rounded-[36px]">
             <div className="space-y-6">
               <div className="space-y-3">
-                <span className="font-mono text-[9px] text-brand bg-brand/10 border border-brand/15 px-2.5 py-0.5 rounded inline-block font-black uppercase">
+                <span className="font-sans text-xs text-brand bg-brand/10 border border-brand/15 px-2.5 py-0.5 rounded inline-block font-black uppercase">
                   ECCOSSISTEMA DE EXPANsão DIGITAL
                 </span>
-                <h3 className="font-display font-black text-2.5xl sm:text-3xl text-white uppercase leading-tight tracking-tight">
+                <h3 className="font-display font-black text-2.5xl sm:text-3xl text-white leading-tight tracking-tight">
                   ESCALABILIDADE COMO UMA aRVORE SOBERANA.
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
@@ -1617,7 +1617,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
               {/* Expansão e Universo Expandido */}
               <div className="p-5 sm:p-6 rounded-2xl bg-[#09090b]/50 border border-white/5 space-y-4">
-                <span className="font-mono text-[8px] text-brand font-black uppercase tracking-widest block lider-none">
+                <span className="tag08-meta text-xs text-brand font-black uppercase tracking-widest block lider-none">
                   UNIVERSO CLaSSICO EXPANDIDO TAG08
                 </span>
                 <p className="text-zinc-400 text-xs font-sans leading-relaxed">
@@ -1645,14 +1645,14 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
             </div>
 
             <div className="pt-6 border-t border-white/[0.05] mt-6 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left justify-between">
-              <p className="text-zinc-500 text-[10.5px] font-sans leading-tight">
+              <p className="text-zinc-500 text-xs font-sans leading-tight">
                 Seu site de ponta cresce sem gargalos técnicos e sem dores operacionais de cabeça. Cuidamos do motor técnico para você acelerar.
               </p>
               <a
                 href={buildBrazilWhatsAppUrl("Ola%20TAG08!%20Gostaria%20de%20saber%2520mais%2520sobre%2520a%2520hospedagem%2520escalavel.")}
                 target="_blank"
                 rel="noreferrer"
-                className="w-full sm:w-auto px-5 py-2.5 bg-white/5 border border-white/10 text-white hover:text-brand hover:border-brand/45 font-mono text-[10px] font-black uppercase tracking-widest rounded-xl transition-all duration-300 block text-center"
+                className="w-full sm:w-auto px-5 py-2.5 bg-white/5 border border-white/10 text-white hover:text-brand hover:border-brand/45 tag08-action text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-300 block text-center"
               >
                 Conhecer planos
               </a>
@@ -1679,10 +1679,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               />
               <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
                 <div className="flex justify-between items-start">
-                  <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                  <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                     ZELADORIA DE ELITE
                   </span>
-                  <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                  <span className="font-sans text-xs text-white/40 tracking-wider">
                     TAG08.v3
                   </span>
                 </div>
@@ -1695,10 +1695,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   </div>
                 </div>
                 <div className="flex justify-between items-end">
-                  <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                  <span className="font-sans text-xs text-white/40 tracking-wider">
                     UPTIME: 99.99%
                   </span>
-                  <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                  <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                     ZELADORIA ATIVA
                   </span>
                 </div>
@@ -1712,15 +1712,15 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
                     <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
                   </div>
-                  <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
+                  <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-black/90">
                     CONFIRA NOSSO SISTEMA DE TRABALHO
                   </span>
                 </div>
-                <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
+                <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter font-display">
                   HOSPEDAGEM <br />
                   &amp; segurança IMEDIATA!
                 </h2>
-                <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
+                <p className="text-black/85 text-xs sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
                   ESTRUTURAMOS A HOSPEDAGEM DE ALTO RENDIMENTO DO SEU SITE E FAZEMOS ATUALIZAções CRaTICAS CONTaNUAS, GARANTINDO SERVIDORES SEGUROS, CACHING REFINADO E TRaFEGO FLUIDO.
                 </p>
               </div>
@@ -1732,7 +1732,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     <Cpu className="w-5 h-5 stroke-[2.5] text-black" />
                   </div>
                   <div className="space-y-0.5">
-                    <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
+                    <span className="tag08-meta text-xs text-brand uppercase tracking-wider font-extrabold block">
                       INFRAESTRUTURA INTEGRAL
                     </span>
                     <p className="text-white text-xs leading-snug font-sans font-semibold">
@@ -1752,18 +1752,18 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className="w-7 h-7 rounded-full bg-brand/10 flex items-center justify-center text-brand shrink-0 group-hover:bg-brand group-hover:text-black transition-all duration-200">
-                          <span className="text-[9px] font-mono font-black tracking-tight text-brand group-hover:text-black">BR</span>
+                          <span className="text-xs font-sans font-black tracking-tight text-brand group-hover:text-black">BR</span>
                         </div>
                         <div className="flex flex-col text-left">
-                          <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                          <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                             PROPRIETÁRIO DIRETO (WhatsApp)
                           </span>
-                          <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
+                          <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                             +55 83 9.9886-8882
                           </span>
                         </div>
                       </div>
-                      <span className="text-[10px] text-brand font-mono font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
+                      <span className="text-xs text-brand tag08-meta font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
                         CONECTAR
                       </span>
                     </div>
@@ -1778,18 +1778,18 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className="w-7 h-7 rounded-full bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0 group-hover:bg-brand-secondary group-hover:text-black transition-all duration-200">
-                          <span className="text-[9px] font-mono font-black tracking-tight text-brand-secondary group-hover:text-black">INT</span>
+                          <span className="text-xs font-sans font-black tracking-tight text-brand-secondary group-hover:text-black">INT</span>
                         </div>
                         <div className="flex flex-col text-left">
-                          <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                          <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                             INTERNATIONAL DIRECT (WhatsApp)
                           </span>
-                          <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand-secondary transition-colors mt-0.5">
+                          <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand-secondary transition-colors mt-0.5">
                             +56 9 9793 7611
                           </span>
                         </div>
                       </div>
-                      <span className="text-[10px] text-brand-secondary font-mono font-bold uppercase tracking-wider bg-brand-secondary/10 py-1 px-2.5 rounded-lg group-hover:bg-brand-secondary group-hover:text-black transition-all">
+                      <span className="text-xs text-brand-secondary tag08-meta font-bold uppercase tracking-wider bg-brand-secondary/10 py-1 px-2.5 rounded-lg group-hover:bg-brand-secondary group-hover:text-black transition-all">
                         CONECTAR
                       </span>
                     </div>
@@ -1803,10 +1803,10 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
         <section className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/10 text-left">
           <div className="max-w-7xl mx-auto space-y-10">
             <div className="space-y-3 max-w-2xl">
-              <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/15 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/15 px-2.5 py-1 rounded-md inline-block">
                 PROVA DE MÉTODO
               </span>
-              <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-tight tracking-tighter">
+              <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-tight tracking-tighter">
                 Hospedagem e manutenção existem para sustentar a operação depois da publicação.
               </h2>
               <p className="text-zinc-400 text-sm sm:text-base leading-relaxed font-sans font-medium max-w-3xl">
@@ -1820,7 +1820,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <RefreshCw className="w-5 h-5" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Rotina de manutenção</h3>
+                  <h3 className="text-white font-display font-black text-sm tracking-tight">Rotina de manutenção</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     Revisões periódicas para manter conteúdo, links, integrações e ajustes técnicos em ordem.
                   </p>
@@ -1832,7 +1832,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <Activity className="w-5 h-5" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Monitoramento</h3>
+                  <h3 className="text-white font-display font-black text-sm tracking-tight">Monitoramento</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     Acompanhamento de estabilidade, disponibilidade e comportamento do site para identificar sinais de problema antes que virem interrupção.
                   </p>
@@ -1844,7 +1844,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Backup e segurança</h3>
+                  <h3 className="text-white font-display font-black text-sm tracking-tight">Backup e segurança</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     Cópias de segurança, revisão de acessos e cuidado preventivo para reduzir risco operacional e perda de informação.
                   </p>
@@ -1856,7 +1856,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <FileCheck className="w-5 h-5" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-white font-display font-black text-sm uppercase tracking-tight">Suporte pós-publicação</h3>
+                  <h3 className="text-white font-display font-black text-sm tracking-tight">Suporte pós-publicação</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     A operação segue acompanhada depois da entrega, com responsabilidade sobre ajustes e estabilidade do que já entrou no ar.
                   </p>
@@ -1866,14 +1866,14 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
             <div className="rounded-[28px] border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="space-y-1">
-                <h3 className="text-white font-display font-black text-base sm:text-lg uppercase tracking-tight">
+                <h3 className="text-white font-display font-black text-base sm:text-lg tracking-tight">
                   O site não termina no lançamento.
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
                   Quando hospedagem e manutenção são tratadas como continuidade, a marca ganha menos improviso, mais previsibilidade e uma base mais confiável para evoluir.
                 </p>
               </div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-3 py-2 text-[10px] font-mono uppercase tracking-widest text-brand">
+              <div className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-3 py-2 text-xs tag08-meta uppercase tracking-widest text-brand">
                 <Lock className="w-3.5 h-3.5" />
                 Publicação acompanhada
               </div>
@@ -1896,14 +1896,14 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
               <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
                 <div className="space-y-4">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
                     FAQ // ENCONTRE RESPOSTAS
                   </div>
-                  <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
+                  <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter">
                     DÚVIDAS &amp; <br />
                     ZELADORIA
                   </h2>
-                  <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
+                  <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-sm">
                     Esclareça as principais dúvidas sobre infraestrutura, servidores dedicados e otimização contínua de código.
                   </p>
                 </div>
@@ -1924,7 +1924,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                           : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
                       }`}
                     >
-                      <span className="font-mono text-xs font-black uppercase tracking-wider flex items-center gap-3">
+                      <span className="tag08-meta text-xs font-black uppercase tracking-wider flex items-center gap-3">
                         <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
                           {String(item.id + 1).padStart(2, '0')}.
                         </span>
@@ -1952,12 +1952,12 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
                   </svg>
                 </div>
-                <div className="absolute top-6 left-6 z-10 pointer-events-none font-mono text-[8px] text-white/20 uppercase tracking-widest leading-none">
+                <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
                   SYS // CLOUD_HOST
                 </div>
 
                 <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left">
-                  <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
+                  <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
                     {([
                       "MIGRação DE SITES",
                       "segurança ATIVA",
@@ -1975,7 +1975,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     ])[activeFaq]}
                   </h4>
                   
-                  <p className="text-zinc-350 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
+                  <p className="text-zinc-350 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                     {([
                       "Sim, absolutamente! Fornecemos um serviço de migração expressa 100% integral e gratuito. Nossa equipe de especialistas técnicos cuida da transferência rigorosa do banco de dados, arquivos e chaves criptográficas para nossos servidores velozes, eliminando qualquer risco de indisponibilidade ou perda de faturamento durante o processo.",
                       "Operamos com um cinturão de segurança robusto que combina firewalls dinâmicos ativos na camada CDN, monitoramento ininterrupto de tráfego contra DDoS, varreduras heurísticas de vírus e invasões de arquivos, além de backups semanais geo-distribuídos automáticos.",
@@ -1989,7 +1989,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               <div className="lg:col-span-3 flex flex-col justify-between gap-4">
                 <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                   <div className="space-y-2">
-                    <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
+                    <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
                     <h4 className="text-white font-semibold text-sm leading-snug">Como agimos de forma organizada?</h4>
                     <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                       Eliminamos lentidão excessiva e falhas técnicas crônicas. Garantimos máxima performance dos seus servidores.
@@ -2006,9 +2006,9 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
                 <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                   <div className="space-y-2">
-                    <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
-                    <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer desenhar uma estratégia sob medida?</h4>
-                    <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
+                    <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
+                    <h4 className="text-black font-black text-sm leading-tight tracking-tight">Quer desenhar uma estratégia sob medida?</h4>
+                    <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
                       Fale diretamente com os tomadores de decisão da TAG08 via WhatsApp para avaliar a viabilidade de alocação de equipe.
                     </p>
                   </div>

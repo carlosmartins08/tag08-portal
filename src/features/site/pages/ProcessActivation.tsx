@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import ResilientImage from "../../../components/ResilientImage";
 import { BookOpen, ShieldAlert, ArrowUpRight, CheckSquare, Zap, Target, RefreshCw, BarChart2, ArrowRight, MessageSquare, Workflow } from "lucide-react";
 import { motion } from "motion/react";
@@ -41,16 +41,16 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           {/* 1. Header Typography block (Ref Style: Expert guidance / tailored solution) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta self-start">
                 DIVIsão DE SUSTENTação OPERACIONAL // TAG08
               </div>
-              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
+              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter font-display">
                 Process Activation <br />
                 <span className="text-brand">para transformar processos estruturados em execução real.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
-              <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
+              <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-medium">
                 De que adiantam manuais perfeitos documentados em PDFs ou wikis se o seu time os ignora na vida real? O Process Activation ensina com workshops práticos, ativa as wikis diretamente nas tarefas diárias e audita com relatórios para sustentar a nova conduta de crescimento corporativo.
               </p>
             </div>
@@ -75,7 +75,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(45px)" }}>
                 <button
                   onClick={() => handleLinkClick("/contato")}
-                  className="group bg-brand-secondary text-black font-mono font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
+                  className="group bg-brand-secondary text-black font-sans font-black text-xs sm:text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
                 >
                   <span>ATIVAR NOVA ROTINA</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -85,11 +85,11 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
               {/* Absolute indicator tags on corners */}
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
-                  <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-bold">TAG08 OPERATIONAL ACTIVATOR</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Cultura de Adesão e Sustentabilidade de Rotinas</h4>
+                  <span className="tag08-meta text-xs text-brand-secondary tracking-widest block uppercase font-bold">TAG08 OPERATIONAL ACTIVATOR</span>
+                  <h4 className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Cultura de Adesão e Sustentabilidade de Rotinas</h4>
                 </div>
 
-                <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
+                <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-xs text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
                   <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
                   <span>PROC_ACTIVATION // ENABLED</span>
                 </div>
@@ -103,8 +103,8 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
               <ShieldAlert className="w-5 h-5 stroke-[2.5]" />
             </div>
             <div className="space-y-1">
-              <h4 className="font-mono text-[10px] text-brand tracking-wider uppercase font-black">Importante: Condição Essencial de Contratação</h4>
-              <p className="text-zinc-300 text-xs sm:text-[13px] leading-relaxed font-sans font-medium">
+              <h4 className="tag08-meta text-xs text-brand tracking-wider font-black">Importante: Condição Essencial de Contratação</h4>
+              <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                 O <strong>Process Activation</strong> é expressamente condicionado à contratação e conclusão prévia do <strong>Process Intelligence</strong>. Ele não atua criando manuais do absoluto zero ou substituindo o mapeamento técnico. Sua função é implantar, de forma prática e supervisionada, as wikis e playbooks já construídos na primeira fase de assessoria técnica.
               </p>
             </div>
@@ -114,19 +114,19 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">70%</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Do Sucesso da Operação Depende<br/>exclusivamente da Disciplina</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Do Sucesso da Operação Depende<br/>exclusivamente da Disciplina</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Sessões</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Treinamentos e Alinhamentos<br/>Coordenados de Transição</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Treinamentos e Alinhamentos<br/>Coordenados de Transição</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Auditoria</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Acompanhamento e Pontuação<br/>de Conduta da Equipe</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Acompanhamento e Pontuação<br/>de Conduta da Equipe</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">30 Dias</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Supervisão Técnica Core por<br/>Diretores Seniores Ativos</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Supervisão Técnica Core por<br/>Diretores Seniores Ativos</span>
             </div>
           </div>
 
@@ -137,8 +137,8 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
       <section className="px-4 sm:px-6 md:px-8 py-16 border-b border-white/[0.04] bg-charcoal-900/10 text-left">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           <div className="lg:col-span-4 space-y-4">
-            <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block font-bold">FRICaaO PaS ESTRUTURação</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase leading-none tracking-tight">
+            <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">FRICaaO PaS ESTRUTURação</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white leading-none tracking-tight">
               POR QUE PROCESSOS REAIS DE <span className="text-brand">QUALIDADE FALHAM?</span>
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
@@ -148,33 +148,33 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
 
           <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">01 // MANUAIS ESQUECIDOS</span>
-              <h4 className="text-white font-display font-black text-sm uppercase">O PDF perfeito foi ignorado pelo time</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+              <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">01 // MANUAIS ESQUECIDOS</span>
+              <h4 className="text-white font-display font-black text-sm">O PDF perfeito foi ignorado pelo time</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Seus manuais estao perfeitos em documentos compartilhados no Google Drive, mas a equipe ignora no cotidiano, repetindo as velhas metodologias do improviso. Transponha essa inarcia.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">02 // INDISCIPLINA DE ROTINAS ANTIGAS</span>
-              <h4 className="text-white font-display font-black text-sm uppercase">Fricção de adesão de colaboradores</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+              <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">02 // INDISCIPLINA DE ROTINAS ANTIGAS</span>
+              <h4 className="text-white font-display font-black text-sm">Fricção de adesão de colaboradores</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Membros mais antigos do time sentem extrema dificuldade em preencher relatórios, centralizar conversas e usar a nova wiki corporativa. Atuamos com paciancia técnico-metodológica.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">03 // FALTA DE TEMPO DA GESTÃO DE TOPO</span>
-              <h4 className="text-white font-display font-black text-sm uppercase">Fundadores exaustos de fiscalizar o fluxo</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+              <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">03 // FALTA DE TEMPO DA GESTÃO DE TOPO</span>
+              <h4 className="text-white font-display font-black text-sm">Fundadores exaustos de fiscalizar o fluxo</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Sua diretoria de sócios não possui disponibilidade semanal para cobrar a conduta das regras dos setores na ponta do cronograma. Nós assumimos essa responsabilidade tática.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">04 // EVAPORAÇÃO SILENCIOSA DO MÉTODO</span>
-              <h4 className="text-white font-display font-black text-sm uppercase">A nova cultura evapora gradualmente</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+              <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">04 // EVAPORAÇÃO SILENCIOSA DO MÉTODO</span>
+              <h4 className="text-white font-display font-black text-sm">A nova cultura evapora gradualmente</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 A euforia das primeiras duas semanas de playbooks passa, e o time lentamente retorna ao caos e às conversas sem rumo por falta de fiscalização séria recorrente. Proteja seu investimento.
               </p>
             </div>
@@ -186,8 +186,8 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
       <section className="px-4 sm:px-6 md:px-8 py-16 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-2 max-w-2xl">
-            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">PILARES DE ATIVAÇÃO PRÁTICA SÊNIOR</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">COMO NOSSA ATIVAÇÃO CONDUZ SEU TIME</h2>
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">PILARES DE ATIVAÇÃO PRÁTICA SÊNIOR</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">COMO NOSSA ATIVAÇÃO CONDUZ SEU TIME</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
               Agimos como um vetor ativo de disciplina. Treinamos, testamos na rotina prática e cobramos a consolidação da nova rotina com foco na autonomia plena.
             </p>
@@ -199,8 +199,8 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 <Zap className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Implantação Imediata</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Implantação Imediata</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Organizamos ritos práticos de introdução por meio de checklists dinâmicos no dia a dia do colaborador, vinculando as wikis aos cards de tarefas reais de forma rápida.
                 </p>
               </div>
@@ -211,8 +211,8 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 <BookOpen className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Workshops Dedicados</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Workshops Dedicados</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Workshops interativos em vídeo com o time focado no uso das ferramentas, gravação de dúvidas conceituais das wikis, e preenchimento de métricas comerciais de rotina operacional.
                 </p>
               </div>
@@ -223,8 +223,8 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 <Target className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Auditoria Recorrente</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Auditoria Recorrente</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Analises de adesão periódicas no cronograma das wikis. Destacómos condutas exemplares e auxiliamos os colaboradores com dificuldades técnicas no funil operacional da empresa.
                 </p>
               </div>
@@ -235,8 +235,8 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 <RefreshCw className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Ajustes Incrementais</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Ajustes Incrementais</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   A rotina prática esbarra em atritos inevitáveis. Customizamos e polimos as regras e os playbooks de forma orgânica de acordo com o crescimento real das suas divisões táticas.
                 </p>
               </div>
@@ -249,8 +249,8 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
       <section className="px-4 sm:px-6 md:px-8 py-16 border-b border-white/[0.04] bg-charcoal-900/10 text-left">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="space-y-2 max-w-2xl">
-            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">DESVOLVIMENTO DA MAIOR DISCIPLINA</span>
-          <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">BENEFÍCIOS DA GOVERNANÇA ATIVA</h2>
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">DESVOLVIMENTO DA MAIOR DISCIPLINA</span>
+          <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">BENEFÍCIOS DA GOVERNANÇA ATIVA</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
               Garanta que sua empresa funcione de forma automatizada sob padrões estruturados de excelência, sem depender do monitoramento microgerenciado dos sócios.
             </p>
@@ -259,23 +259,23 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             <div className="p-5 bg-zinc-900/40 border border-white/[0.03] rounded-3xl space-y-2">
               <CheckSquare className="w-5 h-5 text-brand" />
-              <h4 className="text-white font-display font-black text-sm uppercase">Aprendizado Pratico</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">O time aprende engajado em sessões assistidas rápidas diretamente nas rotinas de tarefas da empresa.</p>
+              <h4 className="text-white font-display font-black text-sm">Aprendizado Pratico</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">O time aprende engajado em sessões assistidas rápidas diretamente nas rotinas de tarefas da empresa.</p>
             </div>
             <div className="p-5 bg-zinc-900/40 border border-white/[0.03] rounded-3xl space-y-2">
               <CheckSquare className="w-5 h-5 text-brand" />
-              <h4 className="text-white font-display font-black text-sm uppercase">Precedancia e Ordem</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">Estruturação de prazos claros unificados baseados em checklists transparentes a vista de toda a equipe.</p>
+              <h4 className="text-white font-display font-black text-sm">Precedancia e Ordem</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">Estruturação de prazos claros unificados baseados em checklists transparentes a vista de toda a equipe.</p>
             </div>
             <div className="p-5 bg-zinc-900/40 border border-white/[0.03] rounded-3xl space-y-2">
               <CheckSquare className="w-5 h-5 text-brand" />
-              <h4 className="text-white font-display font-black text-sm uppercase">Sustentabilidade Core</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">Garantimos a fiscalização contínua das regras táticas sem gastar o cronograma pessoal semanal dos fundadores.</p>
+              <h4 className="text-white font-display font-black text-sm">Sustentabilidade Core</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">Garantimos a fiscalização contínua das regras táticas sem gastar o cronograma pessoal semanal dos fundadores.</p>
             </div>
             <div className="p-5 bg-zinc-900/40 border border-white/[0.03] rounded-3xl space-y-2">
               <CheckSquare className="w-5 h-5 text-brand" />
-              <h4 className="text-white font-display font-black text-sm uppercase">Cultura de Autonomia</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">Os manuais permanecem vivos, sofrendo polimentos constantes táticos para guiar novos crescimentos futuros.</p>
+              <h4 className="text-white font-display font-black text-sm">Cultura de Autonomia</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">Os manuais permanecem vivos, sofrendo polimentos constantes táticos para guiar novos crescimentos futuros.</p>
             </div>
           </div>
         </div>
@@ -285,12 +285,12 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
       <section className="px-4 sm:px-6 md:px-8 py-10 border-b border-white/[0.04] bg-charcoal-900/40 text-left">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 max-w-3xl">
-            <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">O FIM DA CENTRALIZAÇÃO DESESPERADA</h4>
+            <h4 className="text-white font-display font-black text-sm tracking-tight">O FIM DA CENTRALIZAÇÃO DESESPERADA</h4>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed">
               O Process Activation cria uma cultura operacional de autonomia. O time passa a conduzir com mais clareza as atividades de venda, suporte e faturamento mesmo na ausência do fundador.
             </p>
           </div>
-          <span className="font-mono text-[8.5px] text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
+          <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
             PROCESS ACTIVATION // TAG08
           </span>
         </div>
@@ -310,10 +310,10 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
         
         <div className="max-w-7xl mx-auto space-y-12 relative z-10">
           <div className="space-y-3 max-w-3xl">
-            <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
               METODOLOGIA ATIVA // ROADMAP DE EXECUÇÃO
             </span>
-            <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
+            <h2 className="font-display font-medium text-3xl text-white tracking-tight">
               Simulador de Maturidade Operacional e Cronograma
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
@@ -325,7 +325,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
             {/* Controls */}
             <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-6">
-                <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block pb-3 border-b border-white/[0.05]">
+                <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block pb-3 border-b border-white/[0.05]">
                   Nível de Maturidade Atual:
                 </span>
 
@@ -340,8 +340,8 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                         isSelected ? "bg-brand-secondary/5 border-brand-secondary text-white" : "bg-white/[0.01] border-white/5 text-zinc-400 hover:border-white/10"
                       }`}
                     >
-                      <h4 className="text-white text-xs sm:text-sm font-semibold uppercase leading-tight">{level.name}</h4>
-                      <p className="text-zinc-500 text-[10px] mt-1 leading-snug">{level.description}</p>
+                      <h4 className="text-white text-xs sm:text-sm font-semibold leading-tight">{level.name}</h4>
+                      <p className="text-zinc-500 text-xs mt-1 leading-snug">{level.description}</p>
                     </button>
                   );
                 })}
@@ -350,9 +350,9 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
               <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] space-y-2">
                 <div className="flex items-center gap-2 text-brand">
                   <Zap className="w-4 h-4 shrink-0" />
-                  <span className="text-[10px] font-mono font-black uppercase tracking-wider">Metodologia Hands-on TAG08</span>
+                  <span className="text-xs tag08-meta font-black uppercase tracking-wider">Metodologia Hands-on TAG08</span>
                 </div>
-                <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
+                <p className="text-xs text-zinc-400 leading-relaxed font-sans">
                   Nossa equipe não entrega apenas manuais estáticos em PDF que ninguém lê. Nós conduzimos as sessões, gravamos treinamentos curtos, estruturamos ferramentas e auditamos a execução por 30 dias para garantir adoção real de 100% do time.
                 </p>
               </div>
@@ -364,10 +364,10 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
 
               <div className="space-y-6 w-full">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block">
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
                     Plano de Cronograma e Entregas de Ativação:
                   </span>
-                  <span className="font-sans text-[9.5px] text-brand bg-brand/10 border border-brand/20 px-2 py-0.5 rounded font-black">
+                  <span className="font-sans text-xs text-brand bg-brand/10 border border-brand/20 px-2 py-0.5 rounded font-black">
                     {roadmap.duration}
                   </span>
                 </div>
@@ -376,19 +376,19 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 <div className="space-y-4">
                   {roadmap.phases.map((phase) => (
                     <div key={phase.step} className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04] flex items-start gap-4 hover:border-brand/20 transition-all">
-                      <div className="font-sans text-[8.5px] font-black text-brand bg-brand/5 border border-brand/10 rounded px-2.5 py-1 shrink-0 mt-0.5">
+                      <div className="font-sans text-xs font-black text-brand bg-brand/5 border border-brand/10 rounded px-2.5 py-1 shrink-0 mt-0.5">
                         {phase.step}
                       </div>
                       <div className="space-y-1 text-left">
                         <div className="flex items-center justify-between">
-                          <h4 className="text-white text-xs sm:text-sm font-bold uppercase leading-tight">
+                          <h4 className="text-white text-xs sm:text-sm font-bold leading-tight">
                             {phase.title}
                           </h4>
-                          <span className="text-[9px] font-sans text-zinc-500 font-bold">
+                          <span className="text-xs font-sans text-zinc-500 font-bold">
                             {phase.badge}
                           </span>
                         </div>
-                        <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-sans">
+                        <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans">
                           {phase.description}
                         </p>
                       </div>
@@ -398,10 +398,10 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
               </div>
 
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 mt-6">
-                <span className="font-sans text-[8px] text-zinc-600">PROCESSO REGULADO SOB CONFORMIDADE OPERACIONAL ISO 9001 // 2026</span>
+                <span className="font-sans text-xs text-zinc-600">PROCESSO REGULADO SOB CONFORMIDADE OPERACIONAL ISO 9001 // 2026</span>
                 <button 
                   onClick={() => onNavigate("/contato")}
-                  className="text-xs font-mono text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
+                  className="text-xs font-sans text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
                 >
                   Cronometrar Minha Ativação <ArrowRight className="w-3.5 h-3.5" />
                 </button>
@@ -429,10 +429,10 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   OPERATIONAL CORE
                 </span>
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/40 tracking-wider">
                   TAG08.v3
                 </span>
               </div>
@@ -445,10 +445,10 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 </div>
               </div>
               <div className="flex justify-between items-end">
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/40 tracking-wider">
                   LATENCY: 12MS
                 </span>
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   SÊNIOR SECURITY
                 </span>
               </div>
@@ -462,15 +462,15 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
                   <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
                 </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
+                <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-black/90">
                   CONFIRA NOSSO SISTEMA DE TRABALHO
                 </span>
               </div>
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
+              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter font-display">
                 ATIVAMOS SISTEMAS <br />
                 E SUSTENTAMOS REGRAS!
               </h2>
-              <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
+              <p className="text-black/85 text-xs sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
                 INTEGRAMOS WORKSHOPS PRaTICOS PARALELOS, CRIAMOS ROTINAS COM CHECKLISTS DIaRIAS DIRETAS NO PAINEL E AUDITAMOS CONTINUAMENTE A ADEsão DA SUA EQUIPE PARA GERAR AUTONOMIA REAL DAS OPERAções.
               </p>
             </div>
@@ -482,7 +482,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                   <Workflow className="w-5 h-5 stroke-[2.5] text-black" />
                 </div>
                 <div className="space-y-0.5">
-                  <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
+                  <span className="tag08-meta text-xs text-brand uppercase tracking-wider font-extrabold block">
                   GOVERNANÇA ATIVA
                   </span>
                   <p className="text-white text-xs leading-snug font-sans font-semibold">
@@ -503,18 +503,18 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full bg-brand/10 flex items-center justify-center text-brand shrink-0 group-hover:bg-brand group-hover:text-black transition-all duration-200">
-                        <span className="text-[9px] font-mono font-black tracking-tight text-brand group-hover:text-black">BR</span>
+                        <span className="text-xs font-sans font-black tracking-tight text-brand group-hover:text-black">BR</span>
                       </div>
                       <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                        <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                           PROPRIETÁRIO DIRETO (WhatsApp)
                         </span>
-                        <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
+                        <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                           +55 83 9.9886-8882
                         </span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-brand font-mono font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
+                    <span className="text-xs text-brand tag08-meta font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
                       CONECTAR
                     </span>
                   </div>
@@ -529,18 +529,18 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0 group-hover:bg-brand-secondary group-hover:text-black transition-all duration-200">
-                        <span className="text-[9px] font-mono font-black tracking-tight text-brand-secondary group-hover:text-black">INT</span>
+                        <span className="text-xs font-sans font-black tracking-tight text-brand-secondary group-hover:text-black">INT</span>
                       </div>
                       <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                        <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                           INTERNATIONAL DIRECT (WhatsApp)
                         </span>
-                        <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand-secondary transition-colors mt-0.5">
+                        <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand-secondary transition-colors mt-0.5">
                           +56 9 9793 7611
                         </span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-brand-secondary font-mono font-bold uppercase tracking-wider bg-brand-secondary/10 py-1 px-2.5 rounded-lg group-hover:bg-brand-secondary group-hover:text-black transition-all">
+                    <span className="text-xs text-brand-secondary tag08-meta font-bold uppercase tracking-wider bg-brand-secondary/10 py-1 px-2.5 rounded-lg group-hover:bg-brand-secondary group-hover:text-black transition-all">
                       CONECTAR
                     </span>
                   </div>
@@ -550,11 +550,11 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 text-xs">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-brand animate-pulse" />
-                  <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest font-extrabold">
+                  <span className="tag08-meta text-xs text-white/50 uppercase tracking-widest font-extrabold">
                     AGaNCIA TAG08
                   </span>
                 </div>
-                <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
+                <span className="font-sans text-xs text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
                   OPERação ATIVA 100% online
                 </span>
               </div>
@@ -570,7 +570,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           {/* Pra-requisitos para contratação */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-4">
-              <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
                 ALINHAMENTO DE ENTRADA // EXIGaNCIAS PRaVIAS
               </span>
               <h2 className="font-display font-medium text-2xl sm:text-3xl text-gradient">
@@ -587,7 +587,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 { title: "Lideranaa Comprometida", desc: "Os diretores e fundadores precisam dar respaldo absoluto de autoridade aos nossos auditores para cobrar a equipe." }
               ].map((item, idx) => (
                 <div key={idx} className="p-5 rounded-2xl bg-charcoal-900 border border-white/[0.04] space-y-2">
-                  <h4 className="text-white text-xs sm:text-sm font-display font-medium uppercase tracking-tight text-brand-secondary">{item.title}</h4>
+                  <h4 className="text-white text-xs sm:text-sm font-display font-medium tracking-tight text-brand-secondary">{item.title}</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">{item.desc}</p>
                 </div>
               ))}
@@ -597,7 +597,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           {/* O que nas NaO fazemos na Ativação */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-10 border-t border-white/[0.04]">
             <div className="lg:col-span-5 space-y-4">
-              <span className="font-mono text-[10px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
                 LIMITES DE ESCOPO // ATUação PROFISSIONAL
               </span>
               <h3 className="font-display font-medium text-2xl text-white">
@@ -616,7 +616,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 { title: "Não Gerenciamos Suas Finanças", desc: "Efetuamos auditoria operacional na prestação de contas, mas transferências bancárias e decisões de tesouraria continuam com você." }
               ].map((point, idx) => (
                 <div key={idx} className="p-4 rounded-xl bg-white/[0.01] border border-white/[0.03] space-y-1">
-                  <h4 className="text-white text-xs sm:text-sm font-display font-medium uppercase tracking-tight text-zinc-300">{point.title}</h4>
+                  <h4 className="text-white text-xs sm:text-sm font-display font-medium tracking-tight text-zinc-300">{point.title}</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">{point.desc}</p>
                 </div>
               ))}
@@ -626,7 +626,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           {/* Ciclo de auditoria semanal */}
           <div className="space-y-8 pt-10 border-t border-white/[0.04]">
             <div className="space-y-2">
-              <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
                 SISTEMA SEMANAL DE CRITÉRIOS
               </span>
               <h3 className="font-display font-medium text-2xl text-white">
@@ -645,7 +645,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 { title: "4. Calibragem Mensal", desc: "Encontros de fim de ciclo para ajustar fluxos que geram ruído estrutural ou gargalos operacionais frequentes." }
               ].map((step, idx) => (
                 <div key={idx} className="p-5 rounded-2xl bg-charcoal-900 border border-white/[0.04] space-y-2">
-                  <h4 className="text-white font-display font-semibold text-xs sm:text-sm uppercase tracking-tight text-brand">{step.title}</h4>
+                  <h4 className="text-white font-display font-semibold text-xs sm:text-sm tracking-tight text-brand">{step.title}</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">{step.desc}</p>
                 </div>
               ))}
@@ -655,7 +655,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           {/* Matriz de Responsabilidades (TAG08 vs. Cliente) */}
           <div className="space-y-6 pt-10 border-t border-white/[0.04]">
             <div className="space-y-2">
-              <span className="font-mono text-[10px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
                 MATRIZ DE FRONTEIRAS // RESPONSABILIDADE OPERACIONAL
               </span>
               <h3 className="font-display font-medium text-2xl text-white">
@@ -667,7 +667,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
             </div>
 
             <div className="border border-white/[0.06] rounded-2xl overflow-hidden divide-y divide-white/[0.06] bg-charcoal-900/40">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 font-mono text-[10px] text-zinc-500 uppercase tracking-wider bg-white/[0.01]">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 tag08-meta text-xs text-zinc-500 uppercase tracking-wider bg-white/[0.01]">
                 <div>Esfera de Atuação TAG08</div>
                 <div>Esfera de Atuação do Cliente</div>
               </div>
@@ -680,7 +680,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
               ].map((row, rIdx) => (
                 <div key={rIdx} className="grid grid-cols-1 md:grid-cols-2 gap-6 p-5 text-xs sm:text-sm">
                   <div className="text-zinc-300 font-sans flex gap-2">
-                    <span className="text-brand-secondary font-mono font-bold shrink-0">[TAG08]</span>
+                    <span className="text-brand-secondary font-sans font-bold shrink-0">[TAG08]</span>
                     <span>{row.col1}</span>
                   </div>
                   <div className="text-zinc-400 font-sans flex gap-2 border-t md:border-t-0 border-white/[0.03] pt-3 md:pt-0">
@@ -695,14 +695,14 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           {/* Quando Contratar */}
           <div className="p-6 sm:p-8 rounded-3xl bg-charcoal-900 border border-white/[0.05] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-10 border-t border-white/[0.04]">
             <div className="lg:col-span-8 space-y-2">
-              <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-black block">CRITÉRIO DE ESCOLHA OPERACIONAL</span>
-              <h4 className="text-white font-display font-medium text-lg uppercase">Quando contratar nossa ativação sênior?</h4>
+              <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-black block">CRITÉRIO DE ESCOLHA OPERACIONAL</span>
+              <h4 className="text-white font-display font-medium text-lg">Quando contratar nossa ativação sênior?</h4>
               <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                 Se sua empresa já ultrapassou o faturamento bruto anual de R$ 300k, possui mais de 4 pessoas na operação, mas você sente que, como fundador, continua preso no operacional de microgerenciamento de tarefas básicas e cobranças redundantes todos os dias, a TAG08 Activation é o encaixe operacional perfeito para a libertação estratégica de seu tempo de negócios.
               </p>
             </div>
             <div className="lg:col-span-4 flex justify-end">
-              <span className="font-sans text-[10px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/15 px-4 py-2 rounded-xl">
+              <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/15 px-4 py-2 rounded-xl">
                 ESTRUTURA DE AUDITORIA ATIVA
               </span>
             </div>
@@ -721,7 +721,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 onNavigate("/contato");
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="px-6 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0"
+              className="px-6 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs tag08-meta font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0"
             >
               Auditar Adesão de Processos
             </button>
@@ -742,14 +742,14 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
             <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
                   FAQ // ENCONTRE RESPOSTAS
                 </div>
-                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
+                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter">
                   DÚVIDAS &amp; <br />
                   ATIVAÇÃO PRÁTICA
                 </h2>
-                <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-sm">
                   Esclareça as principais dúvidas sobre como a metodologia ativa playbooks na rotina real dos colaboradores.
                 </p>
               </div>
@@ -770,7 +770,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                         : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
                     }`}
                   >
-                    <span className="font-mono text-xs font-black uppercase tracking-wider flex items-center gap-3">
+                    <span className="tag08-meta text-xs font-black uppercase tracking-wider flex items-center gap-3">
                       <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
                         {String(item.id + 1).padStart(2, '0')}.
                       </span>
@@ -798,12 +798,12 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                   <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
                 </svg>
               </div>
-              <div className="absolute top-6 left-6 z-10 pointer-events-none font-mono text-[8px] text-white/20 uppercase tracking-widest leading-none">
+              <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
                 SYS // PROCESS_ACTIVE
               </div>
 
               <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left">
-                <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
+                <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
                   {([
                     "REQUISITO INTELLIGENCE",
                     "ENGANJAMENTO DO TIME",
@@ -821,7 +821,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                   ])[activeFaq]}
                 </h4>
                 
-                <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
+                <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
                     "Não. O Process Activation exige a conclusão prévia do Process Intelligence. Não implantamos manuais sem os playbooks e as wikis estarem estruturados e organizados sob nossa aprovação de calibre técnico.",
                     "Promovemos workshops dinâmicos assistidos voltados ao uso correto das ferramentas, criamos rotinas com checklists visuais de tarefas diárias e conectamos as bases de senhas diretas à mesa de trabalho produtiva de cada colaborador.",
@@ -835,7 +835,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">Como agimos de forma organizada?</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     Eliminamos o esquecimento operacional e táticas manuais obsoletas. Garantimos sustentação de rotas.
@@ -852,9 +852,9 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
 
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer desenhar uma estratégia sob medida?</h4>
-                  <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
+                  <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
+                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">Quer desenhar uma estratégia sob medida?</h4>
+                  <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
                     Fale diretamente com os tomadores de decisão da TAG08 via WhatsApp para avaliar a viabilidade de alocação de equipe.
                   </p>
                 </div>
@@ -875,7 +875,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
 
       {/* SECTION 6 - ACTION TRIGGER FOOTER */}
       <section className="px-4 sm:px-6 md:px-8 py-20 text-center space-y-6 max-w-4xl mx-auto">
-        <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
+        <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-none tracking-tighter">
           SAIA DA INDISCIPLINA INTELECTUAL <br />
           <span className="text-brand">E GARANTA A ADOaaO PLENA DOS SEUS PROCESSOS.</span>
         </h2>
@@ -885,7 +885,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
         <div className="pt-4">
           <button
             onClick={() => handleLinkClick("/contato")}
-            className="group bg-brand text-black font-mono font-black text-[10px] uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
+            className="group bg-brand text-black font-sans font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
           >
             <span>DISPARAR ATIVAÇÃO DE PROCESSOS DE ELITE</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />

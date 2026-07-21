@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Compass, Sparkles, BookOpen, Layers, CheckCircle, ArrowUpRight, ArrowRight, Award, Shield, MessageSquare, Link2, Plus, Search, Image, Grid, Trash2, ExternalLink, Heart, Bookmark, X, Palette, Type, TrendingUp, Briefcase } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import ResilientImage from "../../../components/ResilientImage";
@@ -17,10 +17,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
   const [activeFaq, setActiveFaq] = useState(0);
   const [activeGuide, setActiveGuide] = useState<"identidade" | "aplicacao" | "consistencia" | "proximos">("identidade");
   const guidePreviews = {
-    identidade: { card: "p-8 rounded-[24px] border-2 bg-zinc-950 border-zinc-800 text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(255,255,255,0.02)]", title: "text-xl sm:text-2xl text-white font-display uppercase tracking-tighter leading-tight font-black", tagline: "text-zinc-400 font-sans text-xs leading-relaxed", badge: "font-mono text-[8px] bg-white/5 text-white border border-white/10 px-2 py-0.5 rounded font-black uppercase", label: "IDENTIDADE", heading: "Guia de identidade", description: "Base visual da marca para manter a leitura consistente em qualquer peça.", values: "Cores definidas\nTipografia principal\nElementos gráficos\nRegras de uso", fit: "Manual base, time interno e parceiros de produção" },
-    aplicacao: { card: "p-8 rounded-[24px] border-2 bg-black border-brand/20 text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(var(--color-brand-rgb),0.05)]", title: "text-xl sm:text-2xl text-brand font-display uppercase tracking-tighter leading-none font-black", tagline: "text-zinc-300 font-sans text-xs leading-relaxed", badge: "font-mono text-[8px] bg-brand/10 text-brand border border-brand/20 px-2 py-0.5 rounded font-black uppercase", label: "APLICAÇÃO", heading: "Exemplos de aplicação", description: "Referências práticas para ver a identidade funcionando em canais reais.", values: "Redes sociais\nApresentações\nPropostas\nSite e materiais comerciais", fit: "Pontos de contato que pedem leitura rápida e padronização" },
-    consistencia: { card: "p-8 rounded-[24px] border-2 bg-charcoal-900 border-white/[0.08] text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(0,0,0,0.2)]", title: "text-xl sm:text-2xl text-white uppercase tracking-widest leading-tight font-semibold", tagline: "text-zinc-400 font-sans text-xs leading-relaxed", badge: "font-mono text-[8px] bg-white/5 text-zinc-200 border border-white/10 px-2 py-0.5 rounded font-black uppercase", label: "CONSISTÊNCIA", heading: "Critérios de consistência", description: "O que precisa seguir igual para a marca continuar reconhecível.", values: "Ritmo visual\nEscala e contraste\nAlinhamento\nUso repetido dos mesmos critérios", fit: "Novas peças, campanhas e atualizações do dia a dia" },
-    proximos: { card: "p-8 rounded-[24px] border-2 bg-charcoal-900 border-white/[0.08] text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(0,0,0,0.2)]", title: "text-xl sm:text-2xl text-white font-sans uppercase tracking-tight leading-none font-bold", tagline: "text-zinc-400 font-sans text-xs leading-relaxed", badge: "font-mono text-[8px] bg-white/5 text-zinc-200 border border-white/10 px-2 py-0.5 rounded font-black uppercase", label: "ORIENTAÇÃO", heading: "Próximos passos", description: "A ordem prática para sair da decisão e colocar a identidade em uso.", values: "Definir base\nAplicar nas peças prioritárias\nRevisar o conjunto\nExpandir com critério", fit: "Times que precisam colocar a marca em uso sem atraso" },
+    identidade: { card: "p-8 rounded-[24px] border-2 bg-zinc-950 border-zinc-800 text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(255,255,255,0.02)]", title: "text-xl sm:text-2xl text-white font-display uppercase tracking-tighter leading-tight font-black", tagline: "text-zinc-400 font-sans text-xs leading-relaxed", badge: "tag08-meta text-xs bg-white/5 text-white border border-white/10 px-2 py-0.5 rounded font-black uppercase", label: "IDENTIDADE", heading: "Guia de identidade", description: "Base visual da marca para manter a leitura consistente em qualquer peça.", values: "Cores definidas\nTipografia principal\nElementos gráficos\nRegras de uso", fit: "Manual base, time interno e parceiros de produção" },
+    aplicacao: { card: "p-8 rounded-[24px] border-2 bg-black border-brand/20 text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(var(--color-brand-rgb),0.05)]", title: "text-xl sm:text-2xl text-brand font-display uppercase tracking-tighter leading-none font-black", tagline: "text-zinc-300 font-sans text-xs leading-relaxed", badge: "tag08-meta text-xs bg-brand/10 text-brand border border-brand/20 px-2 py-0.5 rounded font-black uppercase", label: "APLICAÇÃO", heading: "Exemplos de aplicação", description: "Referências práticas para ver a identidade funcionando em canais reais.", values: "Redes sociais\nApresentações\nPropostas\nSite e materiais comerciais", fit: "Pontos de contato que pedem leitura rápida e padronização" },
+    consistencia: { card: "p-8 rounded-[24px] border-2 bg-charcoal-900 border-white/[0.08] text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(0,0,0,0.2)]", title: "text-xl sm:text-2xl text-white uppercase tracking-widest leading-tight font-semibold", tagline: "text-zinc-400 font-sans text-xs leading-relaxed", badge: "tag08-meta text-xs bg-white/5 text-zinc-200 border border-white/10 px-2 py-0.5 rounded font-black uppercase", label: "CONSISTÊNCIA", heading: "Critérios de consistência", description: "O que precisa seguir igual para a marca continuar reconhecível.", values: "Ritmo visual\nEscala e contraste\nAlinhamento\nUso repetido dos mesmos critérios", fit: "Novas peças, campanhas e atualizações do dia a dia" },
+    proximos: { card: "p-8 rounded-[24px] border-2 bg-charcoal-900 border-white/[0.08] text-left transition-all duration-500 relative overflow-hidden flex flex-col justify-between min-h-[360px] shadow-[0_20px_50px_rgba(0,0,0,0.2)]", title: "text-xl sm:text-2xl text-white font-sans uppercase tracking-tight leading-none font-bold", tagline: "text-zinc-400 font-sans text-xs leading-relaxed", badge: "tag08-meta text-xs bg-white/5 text-zinc-200 border border-white/10 px-2 py-0.5 rounded font-black uppercase", label: "ORIENTAÇÃO", heading: "Próximos passos", description: "A ordem prática para sair da decisão e colocar a identidade em uso.", values: "Definir base\nAplicar nas peças prioritárias\nRevisar o conjunto\nExpandir com critério", fit: "Times que precisam colocar a marca em uso sem atraso" },
   };
   const guidePreview = guidePreviews[activeGuide];
 
@@ -284,16 +284,16 @@ export default function Branding({ onNavigate }: BrandingProps) {
           {/* 1. Header Typography block (Ref Style: Expert guidance / tailored solution) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta self-start">
                 BRANDING E IDENTIDADE // TAG08
               </div>
-              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
+              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter font-display">
                 Identidade visual com direção <br />
                 <span className="text-brand">para marcas que precisam comunicar melhor seu valor.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
-              <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
+              <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-medium">
                 A TAG08 estrutura identidade, linguagem visual, percepção e materiais de marca para negócios que precisam sair da aparência improvisada e construir uma presença mais clara, coerente e reconhecível.
               </p>
             </div>
@@ -318,7 +318,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(45px)" }}>
                 <button
                   onClick={() => handleLinkClick("/contato")}
-                  className="group bg-brand-secondary text-black font-display font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
+                  className="group bg-brand-secondary text-black font-display font-black text-xs sm:text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
                 >
                   <span>ORGANIZAR MINHA IDENTIDADE</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -328,11 +328,11 @@ export default function Branding({ onNavigate }: BrandingProps) {
               {/* Absolute indicator tags on corners */}
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
-                  <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-semibold">TAG08 VISUAL HUB</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Identidade com coerência</h4>
+                  <span className="tag08-meta text-xs text-brand-secondary tracking-widest block uppercase font-semibold">TAG08 VISUAL HUB</span>
+                  <h4 className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Identidade com coerência</h4>
                 </div>
 
-                <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
+                <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-xs text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
                   <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
                   <span>IDENTIDADE // EM USO</span>
                 </div>
@@ -344,19 +344,19 @@ export default function Branding({ onNavigate }: BrandingProps) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Clareza visual</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Elementos visuais organizados<br/>para sustentar percepção coerente</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Elementos visuais organizados<br/>para sustentar percepção coerente</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Coerência</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Marca alinhada entre canais,<br/>materiais e pontos de contato</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Marca alinhada entre canais,<br/>materiais e pontos de contato</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Reconhecimento</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Sistema visual mais fácil de<br/>lembrar e repetir</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Sistema visual mais fácil de<br/>lembrar e repetir</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Direção de marca</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Identidade pensada para apoiar<br/>decisão e comunicação</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Identidade pensada para apoiar<br/>decisão e comunicação</span>
             </div>
           </div>
 
@@ -370,10 +370,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
         <div className="max-w-7xl mx-auto space-y-28 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-24">
-              <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
                 SINAIS DE DESALINHAMENTO VISUAL
               </span>
-              <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
+              <h3 className="font-display font-medium text-3xl text-white tracking-tight">
                 Quando a identidade visual já não sustenta o valor da marca.
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
@@ -404,10 +404,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-baseline pt-12 border-t border-white/[0.04]">
             <div className="lg:col-span-4 space-y-4">
-              <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
                 IDENTIDADE SEM SISTEMA
               </span>
-              <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight leading-tight">
+              <h2 className="font-display font-medium text-3xl text-white tracking-tight leading-tight">
                 Logo sozinho não resolve percepção.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
@@ -422,12 +422,12 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 { title: "O branding direciona", focus: "MÉTODO", desc: "O sistema visual conecta aparência, mensagem e contexto para sustentar uma marca mais clara." }
               ].map((item, idx) => (
                 <div key={idx} className="p-6 rounded-3xl bg-neutral-900/40 border border-white/[0.04] space-y-4 hover:border-brand-secondary/15 hover:bg-white/[0.01] transition-all duration-300">
-                  <div className="flex items-center justify-between border-b border-white/[0.03] pb-3 text-[9px] font-sans text-zinc-500">
+                  <div className="flex items-center justify-between border-b border-white/[0.03] pb-3 text-xs font-sans text-zinc-500">
                     <span>EIXO DE MARCA</span>
                     <span className="text-brand-secondary">{item.focus}</span>
                   </div>
                   <div className="space-y-1">
-                    <h4 className="text-white text-xs sm:text-sm font-display font-bold uppercase tracking-tight">{item.title}</h4>
+                    <h4 className="text-white text-xs sm:text-sm font-display font-bold tracking-tight">{item.title}</h4>
                     <p className="text-zinc-400 text-xs leading-relaxed font-sans">{item.desc}</p>
                   </div>
                 </div>
@@ -437,8 +437,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start pt-12 border-t border-white/[0.04]">
             <div className="lg:col-span-4 space-y-4">
-              <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block font-bold">MATURIDADE DA MARCA</span>
-              <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase leading-none tracking-tight">
+              <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">MATURIDADE DA MARCA</span>
+              <h2 className="font-display font-black text-2xl sm:text-3xl text-white leading-none tracking-tight">
                 SISTEMAS VISUAIS SUSTENTAM CONSISTÊNCIA.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
@@ -448,33 +448,33 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
             <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">01 // COERÊNCIA FRÁGIL</span>
-                <h4 className="text-white font-display font-black text-sm uppercase">Visual difícil de repetir</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">01 // COERÊNCIA FRÁGIL</span>
+                <h4 className="text-white font-display font-black text-sm">Visual difícil de repetir</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Quando cada peça parece vir de uma referência diferente, a marca perde unidade e a percepção fica instável.
                 </p>
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">02 // MATERIAIS DESALINHADOS</span>
-                <h4 className="text-white font-display font-black text-sm uppercase">A presença não fala a mesma língua</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">02 // MATERIAIS DESALINHADOS</span>
+                <h4 className="text-white font-display font-black text-sm">A presença não fala a mesma língua</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Propostas, site, redes e apresentações precisam transmitir a mesma marca, não versões concorrentes dela.
                 </p>
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">03 // PERCEPÇÃO ABAIXO DA ENTREGA</span>
-                <h4 className="text-white font-display font-black text-sm uppercase">A aparência não acompanha o valor entregue</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">03 // PERCEPÇÃO ABAIXO DA ENTREGA</span>
+                <h4 className="text-white font-display font-black text-sm">A aparência não acompanha o valor entregue</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Quando a identidade visual fica aquém da entrega, a marca precisa justificar demais algo que deveria ser percebido com naturalidade.
                 </p>
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-                <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">04 // DIREÇÃO DE MARCA</span>
-                <h4 className="text-white font-display font-black text-sm uppercase">A identidade precisa de critério</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">04 // DIREÇÃO DE MARCA</span>
+                <h4 className="text-white font-display font-black text-sm">A identidade precisa de critério</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Direção visual não é enfeite. É o que ajuda a marca a manter consistência, clareza e reconhecimento ao longo do tempo.
                 </p>
               </div>
@@ -487,8 +487,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
       <section className="px-4 sm:px-6 md:px-8 py-16 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-2 max-w-2xl">
-            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">O QUE ORGANIZAMOS</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">Identidade não é só logo. É um sistema para sustentar percepção.</h2>
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">O QUE ORGANIZAMOS</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">Identidade não é só logo. É um sistema para sustentar percepção.</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
               A TAG08 estrutura elementos visuais, linguagem, aplicações e materiais para que a marca consiga se apresentar com mais clareza, consistência e reconhecimento nos seus principais pontos de contato.
             </p>
@@ -500,8 +500,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 <Search className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Diagnóstico visual</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Diagnóstico visual</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Leitura do momento da marca, dos materiais existentes, dos pontos de contato e dos sinais de desalinhamento visual.
                 </p>
               </div>
@@ -512,8 +512,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 <Compass className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Direção de identidade</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Direção de identidade</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Definição de caminhos visuais, referências, tom estético e critérios para orientar a construção da identidade.
                 </p>
               </div>
@@ -524,8 +524,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 <Palette className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Sistema visual</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Sistema visual</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Organização de cores, tipografia, elementos gráficos, imagens, hierarquia e aplicações para dar consistência à marca.
                 </p>
               </div>
@@ -536,8 +536,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 <Layers className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Aplicações da marca</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Aplicações da marca</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Desenvolvimento de materiais para redes sociais, apresentações, propostas, papelaria, site ou outros pontos de contato relevantes.
                 </p>
               </div>
@@ -548,8 +548,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 <CheckCircle className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Guia de uso</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Guia de uso</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Registro das principais regras e orientações para que a identidade possa ser aplicada com mais clareza e continuidade.
                 </p>
               </div>
@@ -562,15 +562,15 @@ export default function Branding({ onNavigate }: BrandingProps) {
       <section className="px-4 sm:px-6 md:px-8 py-10 border-b border-white/[0.04] bg-charcoal-900/40 text-left">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 max-w-3xl">
-            <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
               CRITÉRIOS DE CONFIANÇA
             </span>
-            <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">O que sustenta uma identidade mais consistente.</h4>
+            <h4 className="text-white font-display font-black text-sm tracking-tight">O que sustenta uma identidade mais consistente.</h4>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed">
               Uma identidade visual funciona melhor quando existe direção, sistema, aplicação e continuidade. O objetivo não é parecer maior do que a marca é, mas comunicar melhor o valor que ela já entrega.
             </p>
           </div>
-          <span className="font-mono text-[8.5px] text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
+          <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
             DIREÇÃO VISUAL // TAG08
           </span>
         </div>
@@ -594,12 +594,12 @@ export default function Branding({ onNavigate }: BrandingProps) {
               <button
                 type="button"
                 onClick={handleBadgeClick}
-                className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block cursor-help select-none active:scale-95 transition-transform"
+                className="tag08-action text-xs text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block cursor-help select-none active:scale-95 transition-transform"
                 title="Área restrita de gestão. Clique 5 vezes para habilitar recursos ocultos."
               >
                     {isAdmin ? "PORTFÓLIO VISUAL // GESTÃO" : "PORTFÓLIO VISUAL // PINTEREST HUB"}
               </button>
-              <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase tracking-tight leading-none">
+              <h2 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight leading-none">
                 Aplicações que mostram a identidade em uso.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans font-medium max-w-2xl leading-relaxed">
@@ -614,7 +614,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
               <div className="lg:col-span-4 flex justify-start lg:justify-end">
                 <button
                   onClick={() => setFormOpen(!formOpen)}
-                  className={`group flex items-center gap-2 p-3 rounded-xl font-mono text-[10px] uppercase tracking-widest font-semibold transition-all border ${
+                  className={`group flex items-center gap-2 p-3 rounded-xl tag08-meta text-xs uppercase tracking-widest font-semibold transition-all border ${
                     formOpen
                       ? "bg-rose-500/10 text-rose-400 border-rose-500/20"
                       : "bg-brand-secondary/10 text-brand-secondary border-brand-secondary/20 hover:bg-brand-secondary hover:text-black hover:shadow-[0_4px_20px_rgba(var(--color-brand-secondary-rgb),0.15)]"
@@ -645,10 +645,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 className="overflow-hidden"
               >
                 <div className="p-6 sm:p-8 bg-charcoal-900 border border-white/[0.08] rounded-3xl space-y-6 relative">
-                  <div className="absolute top-4 right-4 font-mono text-[8px] text-zinc-600">SYS // PIN_LINK_STRATEGY</div>
+                  <div className="absolute top-4 right-4 font-sans text-xs text-zinc-600">SYS // PIN_LINK_STRATEGY</div>
 
                   <div className="space-y-1">
-                    <h3 className="text-white font-display font-bold text-sm uppercase flex items-center gap-2">
+                    <h3 className="text-white font-display font-bold text-sm flex items-center gap-2">
                       <Link2 className="w-4 h-4 text-brand" />
                       Adicionar nova marca ao portfólio visual
                     </h3>
@@ -659,7 +659,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
                   <form onSubmit={handleAddPinterestWork} className="grid grid-cols-1 md:grid-cols-12 gap-5">
                     <div className="md:col-span-4 space-y-1">
-                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Título da marca / cliente</label>
+                      <label className="block tag08-meta text-xs uppercase text-zinc-500 tracking-wider font-bold">Título da marca / cliente</label>
                       <input
                         type="text"
                         required
@@ -671,7 +671,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     </div>
 
                     <div className="md:col-span-4 space-y-1">
-                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Setor / categoria de marca</label>
+                      <label className="block tag08-meta text-xs uppercase text-zinc-500 tracking-wider font-bold">Setor / categoria de marca</label>
                       <select
                         value={newCategory}
                         onChange={(e) => setNewCategory(e.target.value)}
@@ -687,7 +687,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     </div>
 
                     <div className="md:col-span-4 space-y-1">
-                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Pinterest link de origem</label>
+                      <label className="block tag08-meta text-xs uppercase text-zinc-500 tracking-wider font-bold">Pinterest link de origem</label>
                       <input
                         type="url"
                         required
@@ -699,7 +699,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     </div>
 
                     <div className="md:col-span-8 space-y-1">
-                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Descrição curta conceitual</label>
+                      <label className="block tag08-meta text-xs uppercase text-zinc-500 tracking-wider font-bold">Descrição curta conceitual</label>
                       <input
                         type="text"
                         placeholder="Descreva brevemente a direção visual e a aplicação da identidade..."
@@ -710,7 +710,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     </div>
 
                     <div className="md:col-span-4 space-y-1">
-                      <label className="block font-mono text-[9px] uppercase text-zinc-500 tracking-wider font-bold">Link da imagem de capa (opcional)</label>
+                      <label className="block tag08-meta text-xs uppercase text-zinc-500 tracking-wider font-bold">Link da imagem de capa (opcional)</label>
                       <input
                         type="url"
                         placeholder="Vazio para gerar capa estética minimalista"
@@ -721,13 +721,13 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     </div>
 
                     <div className="md:col-span-12 flex justify-between items-center pt-3 border-t border-white/[0.04]">
-                      <span className="text-[10px] text-zinc-500 font-sans">
+                      <span className="text-xs text-zinc-500 font-sans">
                         *As marcas adicionadas serão salvas temporariamente no seu navegador usando LocalStorage.
                       </span>
 
                       <button
                         type="submit"
-                        className="bg-brand-secondary hover:bg-brand-dark text-black font-mono font-black text-[10px] uppercase tracking-widest py-3 px-6 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-lg"
+                        className="bg-brand-secondary hover:bg-brand-dark text-black font-sans font-black text-xs uppercase tracking-widest py-3 px-6 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-lg"
                       >
                         <CheckCircle className="w-3.5 h-3.5" />
                         <span>Publicar e incorporar no feed</span>
@@ -747,12 +747,12 @@ export default function Branding({ onNavigate }: BrandingProps) {
           </AnimatePresence>
 
           <div className="flex flex-wrap items-center gap-2 border-b border-white/[0.03] pb-4">
-            <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest block font-bold mr-3">FILTRAR PORTFÓLIO:</span>
+            <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold mr-3">FILTRAR PORTFÓLIO:</span>
             {["todos", ...Array.from(new Set(pinterestWorks.map(item => item.category)))].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilterCategory(cat)}
-                className={`font-mono text-[9px] uppercase tracking-wider px-3.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                className={`font-sans text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
                   filterCategory === cat
                     ? "bg-brand-secondary/10 text-brand-secondary border-brand-secondary/30 shadow-[0_2px_12px_rgba(var(--color-brand-secondary-rgb),0.08)] font-bold"
                     : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
@@ -798,7 +798,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-black/30 opacity-70 group-hover:opacity-60 transition-opacity pointer-events-none" />
 
                         <div className="absolute top-4 left-4 right-4 z-20 flex justify-between items-center">
-                          <span className="font-mono text-[8px] bg-black/60 backdrop-blur-md text-zinc-300 font-bold tracking-widest uppercase py-1 px-2.5 rounded-md border border-white/5 shadow-sm">
+                          <span className="tag08-meta text-xs bg-black/60 backdrop-blur-md text-zinc-300 font-bold tracking-widest uppercase py-1 px-2.5 rounded-md border border-white/5 shadow-sm">
                             {work.category}
                           </span>
 
@@ -828,14 +828,14 @@ export default function Branding({ onNavigate }: BrandingProps) {
                               e.stopPropagation();
                               setSelectedWork(work);
                             }}
-                            className="bg-brand-secondary hover:bg-white text-black font-mono text-[9px] uppercase tracking-widest font-black py-2.5 px-4 rounded-xl flex items-center gap-1.5 scale-90 group-hover:scale-100 transition-all duration-300 shadow-[0_4px_15px_rgba(var(--color-brand-secondary-rgb),0.3)]"
+                            className="bg-brand-secondary hover:bg-white text-black tag08-meta text-xs uppercase tracking-widest font-black py-2.5 px-4 rounded-xl flex items-center gap-1.5 scale-90 group-hover:scale-100 transition-all duration-300 shadow-[0_4px_15px_rgba(var(--color-brand-secondary-rgb),0.3)]"
                           >
                             <span>Ver referência no Pinterest</span>
                             <ArrowUpRight className="w-3.5 h-3.5" />
                           </button>
                         </div>
 
-                        <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-zinc-500 font-sans text-[7px] tracking-wider select-none pointer-events-none">
+                        <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-zinc-500 font-sans text-xs tracking-wider select-none pointer-events-none">
                           <span>CONCEPT_CASE_TAG08</span>
                           <span className="text-zinc-400 flex items-center gap-1">
                             <Heart className="w-2 h-2 text-red-500" />
@@ -846,10 +846,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
                       <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                         <div className="space-y-1.5">
-                          <h4 className="text-white font-display font-black text-sm uppercase group-hover:text-brand transition-colors text-left truncate">
+                          <h4 className="text-white font-display font-black text-sm group-hover:text-brand transition-colors text-left truncate">
                             {work.title}
                           </h4>
-                          <p className="text-zinc-400 text-[11px] leading-relaxed font-sans font-medium line-clamp-3 text-left">
+                          <p className="text-zinc-400 text-xs leading-relaxed font-sans font-medium line-clamp-3 text-left">
                             {work.description}
                           </p>
                         </div>
@@ -857,7 +857,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                         <div className="relative z-20 pt-3 border-t border-white/[0.04] flex items-center justify-between">
                           <button
                             onClick={() => setSelectedWork(work)}
-                            className="text-[10px] font-sans text-zinc-400 hover:text-brand flex items-center gap-1 group-hover:translate-x-0.5 transition-all text-left cursor-pointer"
+                            className="text-xs font-sans text-zinc-400 hover:text-brand flex items-center gap-1 group-hover:translate-x-0.5 transition-all text-left cursor-pointer"
                           >
                             <span>Aplicação da identidade</span>
                             <ArrowUpRight className="w-3.5 h-3.5 text-brand-secondary" />
@@ -887,8 +887,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
                   <Bookmark className="w-4 h-4 text-red-500" />
                 </div>
                 <div>
-                  <h5 className="text-white text-xs font-mono font-bold uppercase">Integração do portfólio visual TAG08</h5>
-                  <p className="text-zinc-400 text-[11px]">O Pinterest segue como acervo visual oficial para referências de identidade e aplicação.</p>
+                  <h5 className="text-white text-xs font-sans font-bold">Integração do portfólio visual TAG08</h5>
+                  <p className="text-zinc-400 text-xs">O Pinterest segue como acervo visual oficial para referências de identidade e aplicação.</p>
                 </div>
               </div>
               <a
@@ -896,7 +896,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => handleOutboundClick("Pinterest", TAG08_OFFICIAL_PINTEREST_URL, "branding-pinterest")}
-                className="text-[10px] font-mono font-bold text-red-500 uppercase tracking-widest hover:underline bg-red-500/5 px-3.5 py-2 rounded-xl border border-red-500/10"
+                className="text-xs tag08-meta font-bold text-red-500 uppercase tracking-widest hover:underline bg-red-500/5 px-3.5 py-2 rounded-xl border border-red-500/10"
               >
                 Ver acervo no Pinterest
               </a>
@@ -922,10 +922,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   Sistema de trabalho
                 </span>
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/40 tracking-wider">
                   TAG08
                 </span>
               </div>
@@ -938,10 +938,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 </div>
               </div>
               <div className="flex justify-between items-end">
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/40 tracking-wider">
                   Etapas definidas
                 </span>
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   Sem improviso
                 </span>
               </div>
@@ -954,14 +954,14 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 <div className="w-5 h-5 rounded-full bg-brand flex items-center justify-center">
                   <span className="w-2 h-2 rounded-full bg-black animate-ping" />
                 </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-brand">
+                <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-brand">
                   SISTEMA DE TRABALHO
                 </span>
               </div>
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter uppercase">
+              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter">
                 Como conduzimos um projeto de identidade.
               </h2>
-              <p className="text-zinc-300 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-semibold">
+              <p className="text-zinc-300 text-xs sm:text-xs max-w-lg leading-relaxed font-sans font-semibold">
                 A TAG08 organiza o processo de branding em etapas claras: entendimento do contexto, direção visual, criação do sistema, aplicações e orientações de uso para manter a identidade coerente depois da entrega.
               </p>
             </div>
@@ -989,10 +989,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
                   }
                 ].map((step, index) => (
                   <div key={step.title} className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
-                    <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-extrabold block">
+                    <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-extrabold block">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="text-white text-sm font-semibold uppercase tracking-tight">
+                    <h3 className="text-white text-sm font-semibold tracking-tight">
                       {step.title}
                     </h3>
                     <p className="text-white/70 text-xs leading-relaxed font-sans">
@@ -1008,7 +1008,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 </p>
                 <button
                   onClick={() => handleLinkClick("/contato")}
-                  className="group inline-flex items-center gap-2 bg-black text-brand font-mono font-black text-[10px] uppercase tracking-widest py-3.5 px-5 rounded-xl border border-black/10 hover:bg-white transition-all duration-300 cursor-pointer"
+                  className="group inline-flex items-center gap-2 bg-black text-brand font-sans font-black text-xs uppercase tracking-widest py-3.5 px-5 rounded-xl border border-black/10 hover:bg-white transition-all duration-300 cursor-pointer"
                 >
                   ORGANIZAR MINHA IDENTIDADE
                   <ArrowRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-1 transition-transform" />
@@ -1024,10 +1024,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
         <div className="max-w-7xl mx-auto space-y-20">
           <div className="space-y-12">
             <div className="space-y-3 max-w-3xl">
-              <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
                 Guias e critérios
               </span>
-              <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
+              <h2 className="font-display font-medium text-3xl text-white tracking-tight">
                 Branding precisa de critério para ser aplicado.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
@@ -1038,7 +1038,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
               <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 text-left">
                 <div className="space-y-4">
-                  <span className="font-mono text-[9.5px] text-zinc-500 uppercase tracking-widest font-bold block pb-2 border-b border-white/[0.05]">
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block pb-2 border-b border-white/[0.05]">
                     Escolha um guia
                   </span>
 
@@ -1076,8 +1076,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
                             : "bg-white/[0.01] border-white/5 text-zinc-400 hover:border-white/10"
                         }`}
                       >
-                        <h4 className="text-white text-xs sm:text-sm font-semibold uppercase leading-tight">{guide.name}</h4>
-                        <p className="text-zinc-500 text-[10px] mt-1 leading-snug">{guide.desc}</p>
+                        <h4 className="text-white text-xs sm:text-sm font-semibold leading-tight">{guide.name}</h4>
+                        <p className="text-zinc-500 text-xs mt-1 leading-snug">{guide.desc}</p>
                       </button>
                     );
                   })}
@@ -1092,7 +1092,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-brand-secondary/5 rounded-full blur-2xl pointer-events-none" />
 
                 <div className="space-y-4">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest font-bold block">
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
                     Preview da aplicação
                   </span>
 
@@ -1119,21 +1119,21 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
                     <div className="grid grid-cols-2 gap-4 border-t border-white/[0.05] pt-4 text-xs font-sans">
                       <div>
-                        <span className="text-zinc-500 text-[8px] block uppercase">O que cobre:</span>
-                        <p className="text-zinc-300 text-[10px] whitespace-pre-line mt-1 font-bold leading-normal">
+                        <span className="text-zinc-500 text-xs block uppercase">O que cobre:</span>
+                        <p className="text-zinc-300 text-xs whitespace-pre-line mt-1 font-bold leading-normal">
                           {guidePreview.values}
                         </p>
                       </div>
                       <div>
-                        <span className="text-zinc-500 text-[8px] block uppercase">Quando usar:</span>
-                        <p className="text-zinc-300 text-[10px] mt-1 leading-normal font-sans">
+                        <span className="text-zinc-500 text-xs block uppercase">Quando usar:</span>
+                        <p className="text-zinc-300 text-xs mt-1 leading-normal font-sans">
                           {guidePreview.fit}
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <p className="text-[10px] text-zinc-500 font-sans text-center pt-2">
+                  <p className="text-xs text-zinc-500 font-sans text-center pt-2">
                     A ideia aqui é simples: menos improviso, mais repetição consistente do que já foi decidido.
                   </p>
                 </div>
@@ -1143,10 +1143,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
           <div className="space-y-10">
             <div className="space-y-3">
-              <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
                 Os guias que sustentam o uso da marca
               </span>
-              <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
+              <h3 className="font-display font-medium text-3xl text-white tracking-tight">
                 O que precisa estar claro antes da marca entrar em circulação
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
@@ -1179,8 +1179,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
               ].map((item, iIdx) => (
                 <div key={iIdx} className="p-7 rounded-3xl bg-neutral-900/50 border border-white/[0.04] flex flex-col justify-between space-y-6 hover:border-brand-secondary/15 transition-all">
                   <div className="space-y-3">
-                    <span className="font-sans text-[9px] text-zinc-500 font-bold block">{item.focus}</span>
-                    <h4 className="text-white font-display font-bold text-sm sm:text-base uppercase tracking-tight flex items-center gap-2">
+                    <span className="font-sans text-xs text-zinc-500 font-bold block">{item.focus}</span>
+                    <h4 className="text-white font-display font-bold text-sm sm:text-base tracking-tight flex items-center gap-2">
                       {item.title}
                     </h4>
                     <p className="text-zinc-400 text-xs leading-relaxed font-sans">{item.desc}</p>
@@ -1193,8 +1193,8 @@ export default function Branding({ onNavigate }: BrandingProps) {
               <div className="absolute inset-0 bg-[radial-gradient(#ffffff01_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
 
               <div className="lg:col-span-8 space-y-3 relative z-10 text-left">
-                <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black block">Próximos passos</span>
-                <h4 className="text-white font-display font-medium text-lg uppercase">Como colocar a identidade em uso sem bagunçar o sistema</h4>
+                <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-black block">Próximos passos</span>
+                <h4 className="text-white font-display font-medium text-lg">Como colocar a identidade em uso sem bagunçar o sistema</h4>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-xl">
                   Primeiro define-se a base. Depois a identidade entra nas peças que mais aparecem. Em seguida, a TAG08 orienta ajustes e padronização para manter tudo consistente.
                 </p>
@@ -1203,7 +1203,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
               <div className="lg:col-span-4 flex justify-start lg:justify-end relative z-10">
                 <button
                   onClick={() => handleLinkClick("/contato")}
-                  className="group relative px-6 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0 overflow-hidden shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:-translate-y-0.5 relative z-10 cursor-pointer"
+                  className="group relative px-6 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0 overflow-hidden shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:-translate-y-0.5 relative z-10 cursor-pointer"
                 >
                   FALAR COM A TAG08 <ArrowRight className="w-4 h-4 ml-1.5 inline-block group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -1225,13 +1225,13 @@ export default function Branding({ onNavigate }: BrandingProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
             <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
                   Dúvidas sobre branding
                 </div>
-                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
+                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter">
                   Antes de criar uma identidade, entenda o que precisa ser organizado.
                 </h2>
-                <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-sm">
                   Branding não começa pela estética isolada. Começa pelo entendimento da marca, da percepção desejada, dos pontos de contato e dos critérios que precisam orientar o sistema visual.
                 </p>
               </div>
@@ -1253,7 +1253,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                         : 'bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10'
                     }`}
                   >
-                    <span className="font-mono text-xs font-black uppercase tracking-wider flex items-center gap-3">
+                    <span className="tag08-meta text-xs font-black uppercase tracking-wider flex items-center gap-3">
                       <span className={activeFaq === item.id ? 'text-black' : 'text-brand'}>
                         {String(item.id + 1).padStart(2, '0')}.
                       </span>
@@ -1281,12 +1281,12 @@ export default function Branding({ onNavigate }: BrandingProps) {
                   <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
                 </svg>
               </div>
-              <div className="absolute top-6 left-6 z-10 pointer-events-none font-mono text-[8px] text-white/20 uppercase tracking-widest leading-none">
+              <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
                 SYS // BRANDING
               </div>
 
               <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left">
-                <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
+                <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
                   {([
                     'Pergunta 01',
                     'Pergunta 02',
@@ -1306,7 +1306,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                   ])[activeFaq]}
                 </h4>
 
-                <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
+                <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
                     'Não. O logo identifica, mas a identidade precisa organizar cores, tipografia, elementos visuais, aplicações, linguagem e critérios de uso para sustentar uma presença mais coerente.',
                     'Quando a marca entrega valor, mas sua aparência, seus materiais ou seus canais ainda não comunicam isso com clareza e consistência.',
@@ -1321,7 +1321,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">GUIA DE IDENTIDADE</span>
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">GUIA DE IDENTIDADE</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">O que observar antes de fechar o escopo?</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     A clareza do projeto nasce de entender canais, materiais existentes e o que precisa ser organizado primeiro.
@@ -1338,9 +1338,9 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">FALE COM A TAG08</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Precisa de orientação para o próximo passo?</h4>
-                  <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
+                  <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">FALE COM A TAG08</span>
+                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">Precisa de orientação para o próximo passo?</h4>
+                  <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
                     A TAG08 pode ler o momento da marca e indicar como estruturar a identidade com mais clareza.
                   </p>
                 </div>
@@ -1359,10 +1359,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
       {/* SECTION 5 - ACTION TRIGGER FOOTER */}
       <section className="px-4 sm:px-6 md:px-8 py-20 text-center space-y-6 max-w-4xl mx-auto">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono mx-auto">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta mx-auto">
           Próximo passo
         </div>
-        <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
+        <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-none tracking-tighter">
           Vamos entender como sua marca precisa se apresentar?
         </h2>
         <p className="text-zinc-400 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">
@@ -1371,14 +1371,14 @@ export default function Branding({ onNavigate }: BrandingProps) {
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
           <button
             onClick={() => handleLinkClick('/contato')}
-            className="group bg-brand text-black font-mono font-black text-[10px] uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 justify-center"
+            className="group bg-brand text-black font-sans font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 justify-center"
           >
             <span>ORGANIZAR MINHA IDENTIDADE</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
           </button>
           <button
             onClick={() => handleLinkClick('/servicos')}
-            className="group border border-white/10 bg-white/[0.03] text-white font-mono font-black text-[10px] uppercase tracking-widest py-4 px-8 rounded-full hover:border-white/20 hover:bg-white/[0.06] duration-300 transition-all cursor-pointer flex items-center gap-2 justify-center"
+            className="group border border-white/10 bg-white/[0.03] text-white font-sans font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full hover:border-white/20 hover:bg-white/[0.06] duration-300 transition-all cursor-pointer flex items-center gap-2 justify-center"
           >
             <span>VER SOLUÇÕES</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -1414,12 +1414,12 @@ export default function Branding({ onNavigate }: BrandingProps) {
               <div className="md:w-[42%] bg-zinc-950 border-b md:border-b-0 md:border-r border-white/[0.04] p-6 flex flex-col justify-between relative shrink-0">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[8px] bg-white/[0.04] text-zinc-400 font-bold tracking-widest uppercase py-1 px-2.5 rounded-md border border-white/5 select-none">
+                    <span className="tag08-meta text-xs bg-white/[0.04] text-zinc-400 font-bold tracking-widest uppercase py-1 px-2.5 rounded-md border border-white/5 select-none">
                       PORTFÓLIO VISUAL // TAG08
                     </span>
                     
                     {/* Favorite Heart for interactive feedback */}
-                    <div className="flex items-center gap-1.5 font-sans text-[9px] text-zinc-400 select-none">
+                    <div className="flex items-center gap-1.5 font-sans text-xs text-zinc-400 select-none">
                       <button
                         type="button"
                         aria-label={likedItems[selectedWork.id] ? `Remover ${selectedWork.title} dos favoritos` : `Adicionar ${selectedWork.title} aos favoritos`}
@@ -1465,7 +1465,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     href={selectedWork.pinterestUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full bg-red-600 hover:bg-red-700 text-white font-mono text-[9px] uppercase tracking-widest font-black py-3 px-4 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-[0_4px_15px_rgba(220,38,38,0.25)] hover:scale-[1.01]"
+                    className="w-full bg-red-600 hover:bg-red-700 text-white tag08-action text-xs uppercase tracking-widest font-black py-3 px-4 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-[0_4px_15px_rgba(220,38,38,0.25)] hover:scale-[1.01]"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
                     <span>Ver acervo no Pinterest</span>
@@ -1481,7 +1481,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                   <div className="flex items-center justify-between border-b border-white/[0.04] pb-4">
                     <div className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                      <span className="font-mono text-[9px] text-brand tracking-widest uppercase font-extrabold">{selectedWork.category}</span>
+                      <span className="tag08-meta text-xs text-brand tracking-widest uppercase font-extrabold">{selectedWork.category}</span>
                     </div>
                     
                     <button
@@ -1494,7 +1494,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
                   {/* Main Copy Area */}
                   <div className="space-y-4">
-                    <h3 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight leading-none">
+                    <h3 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight leading-none">
                       {selectedWork.title}
                     </h3>
                     <p className="text-zinc-400 text-xs leading-relaxed font-sans font-medium">
@@ -1507,7 +1507,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     
                     {/* O Desafio */}
                     <div className="space-y-1.5 text-left bg-white/[0.01] border border-white/[0.03] p-4 rounded-xl">
-                      <h4 className="font-mono text-[10px] text-zinc-400 uppercase tracking-widest font-extrabold flex items-center gap-2">
+                      <h4 className="tag08-meta text-xs text-zinc-400 tracking-widest font-extrabold flex items-center gap-2">
                         <Briefcase className="w-3.5 h-3.5 text-brand" />
                         Contexto da marca
                       </h4>
@@ -1518,7 +1518,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
                     {/* A Solução */}
                     <div className="space-y-1.5 text-left bg-white/[0.01] border border-white/[0.03] p-4 rounded-xl">
-                      <h4 className="font-mono text-[10px] text-zinc-400 uppercase tracking-widest font-extrabold flex items-center gap-2">
+                      <h4 className="tag08-meta text-xs text-zinc-400 tracking-widest font-extrabold flex items-center gap-2">
                         <Sparkles className="w-3.5 h-3.5 text-brand" />
                         Direção visual
                       </h4>
@@ -1532,7 +1532,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                       
                       {/* Color Palette area */}
                       <div className="space-y-2 bg-white/[0.01] border border-white/[0.03] p-4 rounded-xl text-left">
-                        <h4 className="font-mono text-[10px] text-zinc-400 uppercase tracking-widest font-extrabold flex items-center gap-2">
+                        <h4 className="tag08-meta text-xs text-zinc-400 tracking-widest font-extrabold flex items-center gap-2">
                           <Palette className="w-3.5 h-3.5 text-brand" />
                           Paleta de Cores
                         </h4>
@@ -1543,7 +1543,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                               <button
                                 type="button"
                                 key={col} 
-                                className="group/chip flex items-center gap-1.5 bg-black/40 border border-white/5 py-1 px-2.5 rounded-lg text-[9px] font-sans text-zinc-300 relative cursor-pointer active:scale-95 transition-all"
+                                className="group/chip flex items-center gap-1.5 bg-black/40 border border-white/5 py-1 px-2.5 rounded-lg text-xs font-sans text-zinc-300 relative cursor-pointer active:scale-95 transition-all"
                                 onClick={() => {
                                   navigator.clipboard.writeText(col);
                                 }}
@@ -1559,11 +1559,11 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
                       {/* Typography selection */}
                       <div className="space-y-2 bg-white/[0.01] border border-white/[0.03] p-4 rounded-xl text-left flex flex-col justify-center">
-                        <h4 className="font-mono text-[10px] text-zinc-400 uppercase tracking-widest font-extrabold flex items-center gap-2">
+                        <h4 className="tag08-meta text-xs text-zinc-400 tracking-widest font-extrabold flex items-center gap-2">
                           <Type className="w-3.5 h-3.5 text-brand" />
                           Tipografia aplicada
                         </h4>
-                        <p className="text-brand font-display font-black text-[13px] uppercase tracking-wide pt-0.5">
+                        <p className="text-brand font-display font-black text-xs uppercase tracking-wide pt-0.5">
                           {selectedWork.typography || "Space Grotesk & Inter Modern"}
                         </p>
                       </div>
@@ -1572,10 +1572,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
                     {/* Success / Metric Indicators */}
                     <div className="bg-brand/[0.03] border border-brand-secondary/15 p-4 rounded-xl text-left space-y-1">
-                      <span className="font-mono text-[9px] bg-brand-secondary/10 text-brand-secondary uppercase tracking-widest font-black px-2.5 py-0.5 rounded border border-brand-secondary/10 inline-block">
+                      <span className="tag08-meta text-xs bg-brand-secondary/10 text-brand-secondary uppercase tracking-widest font-black px-2.5 py-0.5 rounded border border-brand-secondary/10 inline-block">
                         CRITÉRIO VISUAL
                       </span>
-                      <p className="text-zinc-200 text-[11px] font-sans font-medium flex items-center gap-1.5 pt-1">
+                      <p className="text-zinc-200 text-xs font-sans font-medium flex items-center gap-1.5 pt-1">
                         <TrendingUp className="w-4 h-4 text-brand shrink-0" />
                         {selectedWork.achievement || "Mais coerência entre marca, linguagem e aplicação."}
                       </p>
@@ -1583,10 +1583,10 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
                     {/* Deliverables lists */}
                     <div className="text-left space-y-2">
-                      <h5 className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-extrabold">Aplicações da marca:</h5>
+                      <h5 className="tag08-meta text-xs text-zinc-500 tracking-widest font-extrabold">Aplicações da marca:</h5>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                         {(selectedWork.deliverables || ["Diretrizes visuais", "Aplicações digitais", "Peças de marca", "Guia de uso"]).map((deliv, idx) => (
-                          <div key={idx} className="flex items-center gap-2 text-[10.5px] text-zinc-400 font-sans font-medium">
+                          <div key={idx} className="flex items-center gap-2 text-xs text-zinc-400 font-sans font-medium">
                             <CheckCircle className="w-3.5 h-3.5 text-brand shrink-0 stroke-[2.5]" />
                             <span>{deliv}</span>
                           </div>
@@ -1605,7 +1605,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     target="_blank"
                     rel="noreferrer"
                     onClick={() => handleOutboundClick("WhatsApp", buildBrazilWhatsAppUrl(`Ol%C3%A1%20TAG08!%20Estava%20analisando%20o%20portf%C3%B3lio%20de%20Branding%20e%20gostaria%20de%20entender%20como%20a%20TAG08%20pode%20organizar%20a%20identidade%20da%20minha%20marca%20a%20partir%20deste%20case%20"${encodeURIComponent(selectedWork.title)}".`), "branding-work-case-br")}
-                    className="w-full sm:flex-1 bg-brand hover:bg-brand-dark text-black font-mono text-[10px] uppercase tracking-widest font-black py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all shadow-[0_4px_22px_rgba(var(--color-brand-secondary-rgb),0.2)] hover:scale-[1.01] hover:shadow-[0_4px_30px_rgba(var(--color-brand-secondary-rgb),0.3)] cursor-pointer text-center"
+                    className="w-full sm:flex-1 bg-brand hover:bg-brand-dark text-black font-sans text-xs uppercase tracking-widest font-black py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all shadow-[0_4px_22px_rgba(var(--color-brand-secondary-rgb),0.2)] hover:scale-[1.01] hover:shadow-[0_4px_30px_rgba(var(--color-brand-secondary-rgb),0.3)] cursor-pointer text-center"
                   >
                     <span>Organizar minha identidade</span>
                     <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -1613,7 +1613,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
                   <button
                     onClick={() => setSelectedWork(null)}
-                    className="w-full sm:w-auto font-mono text-[9px] uppercase tracking-wider text-zinc-500 hover:text-white border border-white/5 py-4 px-6 rounded-xl cursor-pointer"
+                    className="w-full sm:w-auto font-sans text-xs uppercase tracking-wider text-zinc-500 hover:text-white border border-white/5 py-4 px-6 rounded-xl cursor-pointer"
                   >
                     Fechar modal
                   </button>

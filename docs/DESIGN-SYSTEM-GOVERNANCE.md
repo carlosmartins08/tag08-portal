@@ -30,10 +30,10 @@ Garantir que a regra 60/30/10 seja aplicada de forma consistente, sem dispersar 
 
 ## Typography tokens
 
-- Primary family: `Darker Grotesque`
+- Primary family: `Manrope`
 - Secondary family: `Manrope`
 - Support family: `JetBrains Mono`
-- `font-display` maps to primary family
+- `font-display` maps to the primary heading role, not a second visual family
 - `font-sans` maps to secondary family
 - `font-mono` stays as support family
 - `font-primary` and `font-secondary` are semantic aliases available for new work

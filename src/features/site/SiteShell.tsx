@@ -84,26 +84,33 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
       return;
     }
 
-    const lenis = new Lenis({
-      duration: 1.1,
-      easing: (value) => Math.min(1, 1.001 - Math.pow(2, -10 * value)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.25
-    });
-
-    lenisRef.current = lenis;
     let frameId = 0;
-    const update = (time: number) => {
-      lenis.raf(time);
+    let lenis: Lenis | null = null;
+    // Smooth scrolling is ornamental. Starting its animation loop during LCP delays every route's first paint.
+    const startLenis = () => {
+      lenis = new Lenis({
+        duration: 1.1,
+        easing: (value) => Math.min(1, 1.001 - Math.pow(2, -10 * value)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 1.25
+      });
+
+      lenisRef.current = lenis;
+      const update = (time: number) => {
+        lenis?.raf(time);
+        frameId = requestAnimationFrame(update);
+      };
       frameId = requestAnimationFrame(update);
     };
-    frameId = requestAnimationFrame(update);
+    const startupTimer = window.setTimeout(startLenis, 5000);
 
     return () => {
-      lenis.destroy();
+      window.clearTimeout(startupTimer);
+      lenis?.destroy();
+      lenisRef.current = null;
       cancelAnimationFrame(frameId);
     };
   }, []);
@@ -285,7 +292,8 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
         <AnimatePresence mode="wait">
           <motion.div
             key={`${locale}:${path}`}
-            initial={{ opacity: 0, y: 15 }}
+            // The server-rendered page must be paintable before hydration. Entry motion here was delaying LCP on every route.
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}

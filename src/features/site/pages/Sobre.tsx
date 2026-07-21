@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { ArrowUpRight, Star, ArrowRight, Zap, Target, Users, Settings, BookOpen, FileCheck2, Sparkles, Cpu, Award, Shield, Check, MessageSquare, Activity, Triangle, Layers, Linkedin } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import ResilientImage from "../../../components/ResilientImage";
@@ -223,17 +223,17 @@ export default function Sobre({ onNavigate }: SobreProps) {
         <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
             <div className="lg:col-span-7 space-y-3">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start font-bold">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta self-start font-bold">
                 Sobre a TAG08
               </div>
-              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase">
+              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter">
                 Direção para construir presença. <br />
                 <span className="text-brand">Estrutura para sustentar crescimento.</span>
               </h1>
             </div>
 
             <div className="lg:col-span-5">
-              <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
+              <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-medium">
                 A TAG08 é uma consultoria criativa, estratégica e operacional que conecta comunicação, design, tecnologia e processos para ajudar marcas a saírem do improviso e construírem uma presença digital mais clara, consistente e responsável.
               </p>
             </div>
@@ -254,7 +254,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
             <div className="absolute inset-0 flex items-center justify-center">
               <button
                 onClick={() => handleLinkClick("/contato")}
-                className="group bg-brand-secondary text-black font-mono font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
+                className="group bg-brand-secondary text-black font-sans font-black text-xs sm:text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
               >
                 <span>FALAR COM A TAG08</span>
                 <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -263,11 +263,11 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
             <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10">
               <div className="space-y-1">
-                <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-bold">TAG08 LAB CONSOLE</span>
-                <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Presença com direção</h4>
+                <span className="tag08-meta text-xs text-brand-secondary tracking-widest block uppercase font-bold">TAG08 LAB CONSOLE</span>
+                <h4 className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Presença com direção</h4>
               </div>
 
-              <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
+              <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-xs text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
                 <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
                 <span>TAG08 // DIREÇÃO</span>
               </div>
@@ -277,27 +277,27 @@ export default function Sobre({ onNavigate }: SobreProps) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Clareza</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Entendimento do momento<br />da marca</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Entendimento do momento<br />da marca</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Método</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Direção antes da execução</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Direção antes da execução</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Estrutura</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Comunicação, design e operação<br />organizados com critério</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Comunicação, design e operação<br />organizados com critério</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Execução responsável</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Entrega acompanhada<br />e sustentada no tempo</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Entrega acompanhada<br />e sustentada no tempo</span>
             </div>
           </div>
 
           <div className="pt-12 sm:pt-16 border-t border-white/[0.04] space-y-8 text-left font-sans">
             <div className="space-y-2">
-              <span className="font-mono text-[8px] text-brand tracking-widest block uppercase font-bold">ENTENDIMENTO E DIREÇÃO</span>
-              <h3 className="font-display font-black text-white text-xl sm:text-2xl uppercase tracking-tight">Conversas diretas com quem pensa e executa.</h3>
-              <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-2xl font-medium">
+              <span className="tag08-meta text-xs text-brand tracking-widest block uppercase font-bold">ENTENDIMENTO E DIREÇÃO</span>
+              <h3 className="font-display font-black text-white text-xl sm:text-2xl tracking-tight">Conversas diretas com quem pensa e executa.</h3>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed max-w-2xl font-medium">
                 Você conversa com quem participa da direção do trabalho, sem prometer atalhos e sem intermediários que diluem o contexto.
               </p>
             </div>
@@ -319,18 +319,18 @@ export default function Sobre({ onNavigate }: SobreProps) {
                 <div className="relative z-10 flex items-center justify-between">
                   <div className="flex items-center gap-1.5 bg-brand-secondary/10 backdrop-blur-md px-3 py-1 rounded-full border border-brand-secondary/20 shadow-md">
                     <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary animate-pulse" />
-                    <span className="font-sans text-[7.5px] text-brand-secondary font-extrabold uppercase tracking-widest">{TILES_HERO[0].badge}</span>
+                    <span className="font-sans text-xs text-brand-secondary font-extrabold uppercase tracking-widest">{TILES_HERO[0].badge}</span>
                   </div>
 
-                  <span className="font-mono text-[8px] text-zinc-500 font-bold uppercase tracking-wider">TAG08 // DIREÇÃO</span>
+                  <span className="tag08-meta text-xs text-zinc-500 font-bold uppercase tracking-wider">TAG08 // DIREÇÃO</span>
                 </div>
 
                 <div className="relative z-10 space-y-4 mt-auto">
                   <div className="space-y-1">
-                    <span className="font-mono text-[8.5px] text-brand block uppercase font-bold">EQUIPE E DIREÇÃO</span>
-                    <h4 className="font-display font-black text-2xl sm:text-3xl text-white uppercase leading-none tracking-tight">{TILES_HERO[0].name}</h4>
+                    <span className="font-sans text-xs text-brand block uppercase font-bold">EQUIPE E DIREÇÃO</span>
+                    <h4 className="font-display font-black text-2xl sm:text-3xl text-white leading-none tracking-tight">{TILES_HERO[0].name}</h4>
                     <p className="text-zinc-300 text-xs font-sans font-medium">{TILES_HERO[0].role}</p>
-                    <p className="text-brand-secondary text-[8.5px] font-mono uppercase tracking-wider pt-1">{TILES_HERO[0].connections} // {TILES_HERO[0].focus}</p>
+                    <p className="text-brand-secondary text-xs tag08-meta uppercase tracking-wider pt-1">{TILES_HERO[0].connections} // {TILES_HERO[0].focus}</p>
                     <p className="text-zinc-400 text-xs leading-relaxed max-w-sm pt-2 italic">
                       A TAG08 conecta estratégia, comunicação, design, tecnologia e processos para ajudar marcas a saírem do improviso e construírem uma presença digital mais clara, consistente e responsável.
                     </p>
@@ -340,7 +340,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                     href={TILES_HERO[0].linkedin}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-brand-secondary hover:bg-white text-black font-sans font-bold text-[9.5px] uppercase tracking-widest rounded-xl transition-all duration-300 shadow-lg hover:-translate-y-0.5 cursor-pointer max-w-max"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-brand-secondary hover:bg-white text-black font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-lg hover:-translate-y-0.5 cursor-pointer max-w-max"
                   >
                     <Linkedin className="w-3.5 h-3.5 fill-black stroke-none" />
                     <span>Conhecer perfil</span>
@@ -370,27 +370,27 @@ export default function Sobre({ onNavigate }: SobreProps) {
                     <div className="relative z-10 flex items-center justify-between">
                       <div className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/5">
                         <span className="w-1.5 h-1.5 rounded-full bg-brand" />
-                        <span className="font-sans text-[7px] text-zinc-300 font-bold">{member.badge}</span>
+                        <span className="font-sans text-xs text-zinc-300 font-bold">{member.badge}</span>
                       </div>
 
-                      <span className="font-sans text-[7.5px] text-brand-secondary bg-brand-secondary/10 border border-brand-secondary/20 px-2 py-0.5 rounded-full font-black uppercase">
+                      <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/10 border border-brand-secondary/20 px-2 py-0.5 rounded-full font-black uppercase">
                         {member.status}
                       </span>
                     </div>
 
                     <div className="relative z-10 space-y-3.5 mt-auto">
                       <div className="space-y-1">
-                        <span className="font-mono text-[8px] text-brand block uppercase font-bold">{member.tag}</span>
-                        <h4 className="font-display font-black text-white text-base sm:text-lg uppercase leading-none tracking-tight">{member.name}</h4>
+                        <span className="font-sans text-xs text-brand block uppercase font-bold">{member.tag}</span>
+                        <h4 className="font-display font-black text-white text-base sm:text-lg leading-none tracking-tight">{member.name}</h4>
                         <p className="text-zinc-350 text-xs font-sans font-medium leading-tight">{member.role}</p>
-                        <p className="text-brand-secondary text-[7.5px] font-sans uppercase tracking-wider pb-1">{member.connections} // {member.focus}</p>
+                        <p className="text-brand-secondary text-xs font-sans uppercase tracking-wider pb-1">{member.connections} // {member.focus}</p>
                       </div>
 
                       <a
                         href={member.linkedin}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white/5 hover:bg-brand-secondary hover:text-black hover:font-bold border border-white/10 hover:border-transparent text-zinc-300 rounded-xl text-[9px] font-mono tracking-widest transition-all duration-300 uppercase self-start"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white/5 hover:bg-brand-secondary hover:text-black hover:font-bold border border-white/10 hover:border-transparent text-zinc-300 rounded-xl text-xs tag08-action tracking-widest transition-all duration-300 uppercase self-start"
                       >
                         <Linkedin className="w-3 h-3 fill-current stroke-none" />
                         <span>Ver perfil</span>
@@ -406,10 +406,10 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
                 <div className="lg:col-span-8 space-y-3">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-brand-secondary/10 border border-brand-secondary/20 text-brand-secondary font-mono text-[8px] lg:text-[9.5px] font-black tracking-widest uppercase">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-brand-secondary/10 border border-brand-secondary/20 text-brand-secondary tag08-meta text-xs lg:text-xs font-black tracking-widest uppercase">
                     <span>Rede de contexto e direção</span>
                   </div>
-                  <h4 className="font-display font-black text-white text-lg sm:text-2xl uppercase tracking-tight leading-none">Acompanhe a TAG08 no LinkedIn</h4>
+                  <h4 className="font-display font-black text-white text-lg sm:text-2xl tracking-tight leading-none">Acompanhe a TAG08 no LinkedIn</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed max-w-2xl font-medium">
                     Publicamos referências, bastidores e atualizações do que estamos construindo, sempre com foco em direção, método e aprendizagem aplicada.
                   </p>
@@ -418,11 +418,11 @@ export default function Sobre({ onNavigate }: SobreProps) {
                 <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end w-full">
                   <div className="bg-black/45 border border-white/5 rounded-2xl p-4 text-center sm:text-left lg:text-left flex-1">
                     <span className="block font-display font-black text-xl text-brand-secondary">Direção</span>
-                    <span className="block text-zinc-500 font-mono text-[8px] uppercase tracking-wider">Linha editorial e critério</span>
+                    <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-wider">Linha editorial e critério</span>
                   </div>
                   <div className="bg-black/45 border border-white/5 rounded-2xl p-4 text-center sm:text-left lg:text-left flex-1">
                     <span className="block font-display font-black text-xl text-white">Método</span>
-                    <span className="block text-zinc-500 font-mono text-[8px] uppercase tracking-wider">Processo, postura e entrega</span>
+                    <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-wider">Processo, postura e entrega</span>
                   </div>
                 </div>
               </div>
@@ -438,13 +438,13 @@ export default function Sobre({ onNavigate }: SobreProps) {
           
           {/* Logo Title Block */}
           <div className="text-center space-y-3">
-            <span className="font-mono text-[9px] text-brand-secondary font-black uppercase tracking-widest bg-brand/5 border border-brand/10 px-3 py-1 rounded-full inline-block">
+            <span className="tag08-meta text-xs text-brand-secondary font-black uppercase tracking-widest bg-brand/5 border border-brand/10 px-3 py-1 rounded-full inline-block">
               Confiança construída com método
             </span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-white uppercase leading-none tracking-tighter max-w-4xl mx-auto">
+            <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-white leading-none tracking-tighter max-w-4xl mx-auto">
               A confiança vem da forma como o trabalho é conduzido.
             </h2>
-            <p className="font-sans text-xs sm:text-[13px] text-zinc-400 leading-relaxed max-w-3xl mx-auto">
+            <p className="font-sans text-xs sm:text-xs text-zinc-400 leading-relaxed max-w-3xl mx-auto">
               A TAG08 constrói relações a partir de diagnóstico, clareza de escopo, comunicação objetiva e execução responsável. Mais do que parecer grande, o trabalho precisa fazer sentido para o momento real da marca.
             </p>
             {/* Infinite Logo Marquee Carousel */}
@@ -464,10 +464,10 @@ export default function Sobre({ onNavigate }: SobreProps) {
                       {brand.icon}
                     </div>
                     <div className="text-left">
-                      <div className="font-display font-black text-[11px] sm:text-[12px] tracking-wider text-zinc-300 group-hover:text-white transition-colors uppercase leading-none">
+                      <div className="font-display font-black text-xs sm:text-xs tracking-wider text-zinc-300 group-hover:text-white transition-colors uppercase leading-none">
                         {brand.name}
                       </div>
-                      <span className="font-mono text-[8px] text-zinc-500 block uppercase tracking-widest mt-1">
+                      <span className="tag08-meta text-xs text-zinc-500 block uppercase tracking-widest mt-1">
                         {brand.tagline}
                       </span>
                     </div>
@@ -484,10 +484,10 @@ export default function Sobre({ onNavigate }: SobreProps) {
                       {brand.icon}
                     </div>
                     <div className="text-left">
-                      <div className="font-display font-black text-[11px] sm:text-[12px] tracking-wider text-zinc-300 group-hover:text-white transition-colors uppercase leading-none">
+                      <div className="font-display font-black text-xs sm:text-xs tracking-wider text-zinc-300 group-hover:text-white transition-colors uppercase leading-none">
                         {brand.name}
                       </div>
-                      <span className="font-mono text-[8px] text-zinc-500 block uppercase tracking-widest mt-1">
+                      <span className="tag08-meta text-xs text-zinc-500 block uppercase tracking-widest mt-1">
                         {brand.tagline}
                       </span>
                     </div>
@@ -499,11 +499,11 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
           {/* Section Divider Concept Title */}
           <div className="max-w-3xl text-left space-y-3 pt-6">
-            <span className="font-mono text-xs text-brand uppercase tracking-widest block font-bold">Diferenciais TAG08</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-white uppercase leading-none tracking-tighter">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest block font-bold">Diferenciais TAG08</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-white leading-none tracking-tighter">
               Quatro critérios que orientam a entrega.
             </h2>
-            <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-2xl">
+            <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed max-w-2xl">
               A TAG08 organiza estratégia, escopo, coordenação e revisão para evitar ruído e manter o trabalho coerente com o momento real da marca.
             </p>
           </div>
@@ -523,16 +523,16 @@ export default function Sobre({ onNavigate }: SobreProps) {
                 </div>
 
                 {/* Top badge or pill info */}
-                <span className={`font-mono text-[8px] font-black tracking-widest uppercase ${tile.iconColor} bg-white/[0.02] border border-white/5 px-2.5 py-1 rounded-md self-start mb-4`}>
+                <span className={`tag08-meta text-xs font-black tracking-widest uppercase ${tile.iconColor} bg-white/[0.02] border border-white/5 px-2.5 py-1 rounded-md self-start mb-4`}>
                   {tile.badge}
                 </span>
 
                 {/* Text Title & body */}
                 <div className="space-y-2 mt-auto">
-                  <h3 className="font-display font-black text-sm text-white uppercase tracking-tight leading-snug group-hover:text-white transition-colors">
+                  <h3 className="font-display font-black text-sm text-white tracking-tight leading-snug group-hover:text-white transition-colors">
                     {tile.title}
                   </h3>
-                  <p className="text-zinc-400 group-hover:text-zinc-300 transition-colors text-[11px] leading-relaxed font-sans font-medium">
+                  <p className="text-zinc-400 group-hover:text-zinc-300 transition-colors text-xs leading-relaxed font-sans font-medium">
                     {tile.desc}
                   </p>
                 </div>
@@ -548,10 +548,10 @@ export default function Sobre({ onNavigate }: SobreProps) {
         <div className="max-w-7xl mx-auto space-y-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
-              <span className="font-mono text-[9px] tracking-widest text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/15 px-3 py-1 rounded-full uppercase inline-block">
+              <span className="tag08-meta text-xs tracking-widest text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/15 px-3 py-1 rounded-full uppercase inline-block">
                 O que acreditamos na prática
               </span>
-              <h2 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase leading-tight tracking-tight">
+              <h2 className="font-display font-medium text-3xl sm:text-4xl text-white leading-tight tracking-tight">
                 Presença digital precisa de direção, não de improviso.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-md">
@@ -559,7 +559,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
               </p>
 
               <div className="p-5 rounded-2xl bg-charcoal-900 border border-white/[0.03] space-y-2.5">
-                <span className="font-mono text-[8px] text-zinc-500 block uppercase">CRITÉRIO DE BASE</span>
+                <span className="font-sans text-xs text-zinc-500 block uppercase">CRITÉRIO DE BASE</span>
                 <p className="text-zinc-300 text-xs font-sans leading-relaxed">
                   A TAG08 não busca parecer maior do que é. Busca construir caminhos mais claros, coerentes e sustentáveis para cada marca.
                 </p>
@@ -581,11 +581,11 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
                 <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10">
                   <div className="space-y-1">
-                    <span className="font-mono text-[9px] text-brand-secondary font-black uppercase tracking-widest block">TAG08 LAB CONSOLE</span>
-                    <h4 className="font-display font-black text-white text-sm sm:text-base uppercase tracking-tight leading-none">Direção aplicada</h4>
+                    <span className="tag08-meta text-xs text-brand-secondary font-black uppercase tracking-widest block">TAG08 LAB CONSOLE</span>
+                    <h4 className="font-display font-black text-white text-sm sm:text-base tracking-tight leading-none">Direção aplicada</h4>
                   </div>
 
-                  <div className="bg-black/80 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none">
+                  <div className="bg-black/80 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-xl font-sans text-xs text-zinc-400 flex items-center gap-1.5 select-none">
                     <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
                     <span>Método // prática</span>
                   </div>
@@ -622,9 +622,9 @@ export default function Sobre({ onNavigate }: SobreProps) {
                   <div className="w-8 h-8 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center text-brand">
                     {item.icon}
                   </div>
-                  <h3 className="text-white text-xs sm:text-sm font-display font-bold uppercase tracking-tight">{item.title}</h3>
+                  <h3 className="text-white text-xs sm:text-sm font-display font-bold tracking-tight">{item.title}</h3>
                 </div>
-                <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans">
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans">
                   {item.desc}
                 </p>
               </div>
@@ -634,8 +634,8 @@ export default function Sobre({ onNavigate }: SobreProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-8 border-t border-white/[0.04]">
             <div className="lg:col-span-7 space-y-8 bg-charcoal-900/40 p-8 rounded-3xl border border-white/[0.04]">
               <div className="space-y-2">
-                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-wider">FECHAMENTO OPERACIONAL</span>
-                <h3 className="font-display font-medium text-xl sm:text-2xl text-white uppercase tracking-tight">
+                <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-wider">FECHAMENTO OPERACIONAL</span>
+                <h3 className="font-display font-medium text-xl sm:text-2xl text-white tracking-tight">
                   O que acreditamos vira critério de entrega.
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
@@ -651,9 +651,9 @@ export default function Sobre({ onNavigate }: SobreProps) {
                   { title: "Continuidade", desc: "Revisar, ajustar e seguir com próximos passos mais claros." }
                 ].map((point, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-brand/[0.01] border border-brand/5 space-y-1.5 hover:border-brand/20 transition-all">
-                    <span className="font-mono text-[9px] text-brand font-bold">0{idx + 1}</span>
-                    <h4 className="text-white text-xs font-display font-bold uppercase tracking-tight">{point.title}</h4>
-                    <p className="text-zinc-400 text-[11px] leading-relaxed font-sans">{point.desc}</p>
+                    <span className="font-sans text-xs text-brand font-bold">0{idx + 1}</span>
+                    <h4 className="text-white text-xs font-display font-bold tracking-tight">{point.title}</h4>
+                    <p className="text-zinc-400 text-xs leading-relaxed font-sans">{point.desc}</p>
                   </div>
                 ))}
               </div>
@@ -663,32 +663,32 @@ export default function Sobre({ onNavigate }: SobreProps) {
               <div className="p-6 rounded-3xl bg-neutral-900/50 border border-white/[0.06] relative overflow-hidden text-left">
                 <div className="absolute inset-0 bg-[radial-gradient(#ffffff03_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
                 <div className="relative z-10 space-y-2">
-                  <h4 className="text-white font-display font-semibold text-lg uppercase tracking-tight">Próximo passo com clareza</h4>
+                  <h4 className="text-white font-display font-semibold text-lg tracking-tight">Próximo passo com clareza</h4>
                   <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-xl leading-relaxed">
                     Antes de transformar qualquer demanda em execução, a TAG08 ajuda a organizar prioridades, identificar gargalos e indicar um caminho coerente.
                   </p>
                 </div>
                 <button
                   onClick={() => handleLinkClick("/servicos")}
-                  className="mt-6 group relative px-6 py-3.5 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0 overflow-hidden shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:-translate-y-0.5"
+                  className="mt-6 group relative px-6 py-3.5 bg-brand-secondary hover:bg-brand-dark text-black text-xs tag08-meta font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0 overflow-hidden shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:-translate-y-0.5"
                 >
                   CONHECER SOLUÇÕES
                 </button>
               </div>
 
               <div className="p-6 rounded-3xl bg-charcoal-900/40 border border-white/[0.04] space-y-4">
-                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-wider">APRENDIZADO EM PRÁTICA</span>
+                <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-wider">APRENDIZADO EM PRÁTICA</span>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
                   O trabalho não termina na publicação. Acompanhamos aprendizados, ajustamos rotas e organizamos próximos passos.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.03]">
                     <span className="block text-white text-xs font-display font-bold uppercase tracking-tight">Clareza</span>
-                    <span className="block text-zinc-500 text-[11px] mt-1">A leitura vem antes da pressa.</span>
+                    <span className="block text-zinc-500 text-xs mt-1">A leitura vem antes da pressa.</span>
                   </div>
                   <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.03]">
                     <span className="block text-white text-xs font-display font-bold uppercase tracking-tight">Continuidade</span>
-                    <span className="block text-zinc-500 text-[11px] mt-1">A execução sustenta o que foi acordado.</span>
+                    <span className="block text-zinc-500 text-xs mt-1">A execução sustenta o que foi acordado.</span>
                   </div>
                 </div>
               </div>
@@ -703,11 +703,11 @@ export default function Sobre({ onNavigate }: SobreProps) {
           
           {/* Section Header */}
           <div className="max-w-3xl text-left space-y-3">
-            <span className="font-mono text-xs text-brand uppercase tracking-widest block font-bold">CULTURA E COLABORAÇÃO</span>
-            <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest block font-bold">CULTURA E COLABORAÇÃO</span>
+            <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-none tracking-tighter">
               Trabalhar com a TAG08 exige critério, clareza e responsabilidade.
             </h2>
-            <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed max-w-2xl font-medium">
+            <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed max-w-2xl font-medium">
               A TAG08 valoriza pessoas que sabem pensar antes de executar, respeitam processo, cuidam da qualidade e entendem que criatividade também precisa de método.
             </p>
           </div>
@@ -731,19 +731,19 @@ export default function Sobre({ onNavigate }: SobreProps) {
                   {/* Main content block */}
                   <div className="space-y-5 relative z-10">
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-[8.5px] text-zinc-500 font-bold uppercase tracking-widest block">
+                      <span className="tag08-meta text-xs text-zinc-500 font-bold uppercase tracking-widest block">
                         {vaga.area}
                       </span>
-                      <span className="font-sans text-[8px] text-brand bg-brand/5 border border-brand/20 px-2 py-0.5 rounded font-black">
+                      <span className="font-sans text-xs text-brand bg-brand/5 border border-brand/20 px-2 py-0.5 rounded font-black">
                         {vaga.tempo}
                       </span>
                     </div>
 
                     <div className="space-y-1.5">
-                      <h3 className="font-display font-black text-white text-base sm:text-lg uppercase leading-tight tracking-tight">
+                      <h3 className="font-display font-black text-white text-base sm:text-lg leading-tight tracking-tight">
                         {vaga.title}
                       </h3>
-                      <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans">
+                      <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                         {vaga.desc}
                       </p>
                     </div>
@@ -758,7 +758,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                           transition={{ duration: 0.25 }}
                           className="pt-4 border-t border-white/[0.05] space-y-2.5"
                         >
-                          <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-black block">PRINCÍPIOS ESSENCIAIS:</span>
+                          <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-black block">PRINCÍPIOS ESSENCIAIS:</span>
                           <div className="space-y-1.5">
                             {vaga.requirements.map((req, rIdx) => (
                               <div key={rIdx} className="flex gap-2 text-xs text-zinc-300 items-start leading-relaxed font-sans font-medium">
@@ -774,13 +774,13 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
                   {/* Footer interaction trigger */}
                   <div className="relative z-10 pt-6 border-t border-white/[0.05] mt-6 flex items-center justify-between">
-                    <span className="font-mono text-[8.5px] text-white/30 uppercase tracking-widest">
+                    <span className="tag08-meta text-xs text-white/30 uppercase tracking-widest">
                       TAG08 // CULTURA
                     </span>
 
                     <button
                       onClick={() => setSelectedVaga(isOpen ? null : vaga.id)}
-                      className={`font-mono text-[9px] font-black uppercase px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer select-none ${
+                      className={`font-sans text-xs font-black uppercase px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer select-none ${
                         isOpen 
                           ? "bg-brand text-black" 
                           : "bg-white/[0.01] border border-white/10 hover:border-brand/40 text-zinc-300 hover:text-white"
@@ -801,7 +801,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
             <div className="absolute top-0 right-0 w-32 h-32 bg-brand/[0.015] rounded-full blur-2xl pointer-events-none" />
             
             <div className="space-y-1.5 max-w-xl">
-              <h4 className="text-white font-display font-black text-sm sm:text-base uppercase">QUER FAZER PARTE DO JEITO TAG08 DE TRABALHAR?</h4>
+              <h4 className="text-white font-display font-black text-sm sm:text-base">QUER FAZER PARTE DO JEITO TAG08 DE TRABALHAR?</h4>
               <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                 Se você se identifica com pensamento estratégico, cuidado com a entrega e responsabilidade com o processo, vale conhecer nosso espaço de colaboração.
               </p>
@@ -809,7 +809,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
             
             <button
               onClick={() => handleLinkClick("/trabalhe-conosco")}
-              className="bg-brand-secondary hover:bg-brand-dark text-black font-mono font-black text-[10px] uppercase tracking-wider px-6 py-4 rounded-xl shadow-lg transition-all flex items-center gap-1.5 shrink-0 hover:scale-[1.02] cursor-pointer"
+              className="bg-brand-secondary hover:bg-brand-dark text-black font-sans font-black text-xs uppercase tracking-wider px-6 py-4 rounded-xl shadow-lg transition-all flex items-center gap-1.5 shrink-0 hover:scale-[1.02] cursor-pointer"
             >
               <span>CONHECER O TRABALHE CONOSCO</span>
               <ArrowUpRight className="w-4 h-4 text-black stroke-[2.5]" />
@@ -822,11 +822,11 @@ export default function Sobre({ onNavigate }: SobreProps) {
       {/* SECTION 5 - ACTION FOOT CTA */}
       <section className="px-4 sm:px-6 md:px-8 py-20 bg-[radial-gradient(circle_at_right_top,_rgba(var(--color-brand-rgb),0.035),_transparent_55%)]">
         <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-secondary/10 border border-brand-secondary/30 text-brand font-black text-[9px] rounded-lg uppercase tracking-widest font-mono">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-secondary/10 border border-brand-secondary/30 text-brand font-black text-xs rounded-lg uppercase tracking-widest tag08-meta">
             Pr?ximo passo
           </div>
 
-          <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white uppercase tracking-tight max-w-2xl mx-auto leading-none">
+          <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight max-w-2xl mx-auto leading-none">
             Vamos entender como a TAG08 pode ajudar sua marca?
           </h2>
 
@@ -837,7 +837,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
           <div className="pt-4">
             <button
               onClick={() => handleLinkClick("/contato")}
-              className="bg-brand hover:bg-brand-dark text-black font-mono font-black text-[10px] uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-300 shadow-[0_12px_45px_rgba(var(--color-brand-secondary-rgb),0.18)] flex items-center gap-1.5 mx-auto hover:scale-[1.02] cursor-pointer"
+              className="bg-brand hover:bg-brand-dark text-black font-sans font-black text-xs uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-300 shadow-[0_12px_45px_rgba(var(--color-brand-secondary-rgb),0.18)] flex items-center gap-1.5 mx-auto hover:scale-[1.02] cursor-pointer"
             >
               <span>FALAR COM A TAG08</span>
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />

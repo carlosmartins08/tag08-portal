@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { 
@@ -173,16 +173,16 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
                 Produção Audiovisual
               </div>
-              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
+              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter font-display">
                 Narrativa audiovisual com <br />
                 <span className="text-brand">presença e função estratégica.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
-              <p className="text-zinc-400 text-xs sm:text-sm md:text-[15px] leading-relaxed font-sans font-medium">
+              <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-medium">
                 A TAG08 transforma presença, fala, ambiente, bastidores e eventos em conteúdo com clareza, estética e função estratégica. Antes de gravar, entendemos o contexto da marca, os usos do material e os formatos que precisam sustentar comunicação, portfólio e relacionamento.
               </p>
             </div>
@@ -206,7 +206,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(50px)" }}>
                 <a
                   href="#planner"
-                  className="bg-brand-secondary text-black font-mono font-black text-[9.5px] sm:text-[10.5px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.3)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
+                  className="bg-brand-secondary text-black font-sans font-black text-xs sm:text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.3)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
                 >
                   <span>PLANEJAR MEU AUDIOVISUAL</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -216,11 +216,11 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               {/* Bottom detail row */}
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
-                  <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-bold">TAG08 AUDIOVISUAL</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Narrativa, presença e conteúdo com direção</h4>
+                  <span className="tag08-meta text-xs text-brand-secondary tracking-widest block uppercase font-bold">TAG08 AUDIOVISUAL</span>
+                  <h4 className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Narrativa, presença e conteúdo com direção</h4>
                 </div>
 
-                <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8.5px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
+                <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-xs text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
                   <div className="w-1.5 h-1.5 rounded-full bg-brand animate-ping" />
                   <span>Captação, edição e distribuição para uso recorrente</span>
                 </div>
@@ -232,19 +232,19 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-2 text-left border-t border-white/[0.04]">
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Narrativa</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Capta fala, bastidores e ambiente<br/>com intenção editorial</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Capta fala, bastidores e ambiente<br/>com intenção editorial</span>
             </div>
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Clareza</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Organiza o material para apoiar<br/>apresentação, redes e site</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Organiza o material para apoiar<br/>apresentação, redes e site</span>
             </div>
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Aplicação</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Peças pensadas para uso recorrente<br/>e consistente</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Peças pensadas para uso recorrente<br/>e consistente</span>
             </div>
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Continuidade</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Conteúdo útil depois da gravação<br/>e da edição</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Conteúdo útil depois da gravação<br/>e da edição</span>
             </div>
           </div>
 
@@ -259,10 +259,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 max-w-5xl">
             <div className="space-y-3">
-              <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
                 Sinais de desalinhamento audiovisual
               </span>
-              <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white uppercase tracking-tighter">
+              <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white tracking-tighter">
                 Quando o vídeo existe, mas não constrói presença.
               </h2>
             </div>
@@ -298,13 +298,13 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 key={idx}
                 className="bg-charcoal-900 border border-white/[0.04] rounded-2xl p-6 sm:p-7 space-y-3 hover:border-red-500/20 transition-all duration-300"
               >
-                <div className="w-10 h-10 rounded-xl bg-red-500/5 text-red-400 border border-red-500/10 flex items-center justify-center font-sans text-[10px] font-bold">
+                <div className="w-10 h-10 rounded-xl bg-red-500/5 text-red-400 border border-red-500/10 flex items-center justify-center font-sans text-xs font-bold">
                   SINAL {String(idx + 1).padStart(2, '0')}
                 </div>
-                <h4 className="text-white text-base sm:text-lg font-display font-semibold uppercase tracking-tight">
+                <h4 className="text-white text-base sm:text-lg font-display font-semibold tracking-tight">
                   {item.title}
                 </h4>
-                <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed">
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
                   {item.desc}
                 </p>
               </div>
@@ -321,10 +321,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
         <div className="max-w-7xl mx-auto space-y-14 text-center">
           
           <div className="max-w-2xl mx-auto space-y-3 text-center">
-            <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
               CONTEXTOS DE APLICAÇÃO // TAG08
             </span>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
               Para marcas que precisam transformar presença em conteúdo.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
@@ -370,14 +370,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                     <div className="p-2.5 bg-white/[0.03] text-zinc-400 group-hover:text-brand group-hover:bg-brand/10 rounded-xl transition-all w-10 h-10 flex items-center justify-center">
                       <AudienceIcon className="w-5 h-5" />
                     </div>
-                    <h3 className="text-white text-base sm:text-lg font-display font-semibold uppercase tracking-tight group-hover:text-brand transition-colors">
+                    <h3 className="text-white text-base sm:text-lg font-display font-semibold tracking-tight group-hover:text-brand transition-colors">
                       {audience.title}
                     </h3>
-                    <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed">
+                    <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
                       {audience.desc}
                     </p>
                   </div>
-                  <div className="text-[9.5px] font-mono text-zinc-500 uppercase tracking-widest select-none">
+                  <div className="text-xs tag08-meta text-zinc-500 uppercase tracking-widest select-none">
                     DIRECIONAMENTO // COD_0{idx + 1}
                   </div>
                 </div>
@@ -395,10 +395,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
         <div className="max-w-7xl mx-auto space-y-16">
           
           <div className="text-left space-y-3 max-w-2xl">
-            <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
               FRENTES AUDIOVISUAIS // TAG08
             </span>
-            <h2 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tighter">
+            <h2 className="font-display font-medium text-3xl sm:text-4xl text-white tracking-tighter">
               Frentes audiovisuais com função clara.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
@@ -452,17 +452,17 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 <div className="absolute top-0 right-0 w-32 h-32 bg-brand/[0.015] rounded-full blur-2xl pointer-events-none" />
                 
                 <div className="space-y-2">
-                  <span className="font-mono text-[9px] text-brand-secondary font-black uppercase tracking-widest">{frente.num}</span>
-                  <h3 className="font-display font-medium text-lg sm:text-xl text-white uppercase leading-snug">
+                  <span className="tag08-meta text-xs text-brand-secondary font-black uppercase tracking-widest">{frente.num}</span>
+                  <h3 className="font-display font-medium text-lg sm:text-xl text-white leading-snug">
                     {frente.title}
                   </h3>
-                  <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed">
+                  <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
                     {frente.desc}
                   </p>
                 </div>
 
                 <div className="space-y-3.5 pt-4 border-t border-white/[0.04]">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">FORMATOS POSSÍVEIS:</span>
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">FORMATOS POSSÍVEIS:</span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {frente.list.map((item, itemIdx) => (
                       <div key={itemIdx} className="flex gap-2.5 items-center">
@@ -485,10 +485,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
       <section className="px-6 md:px-8 py-20 border-b border-white/[0.04] bg-black/35 text-left relative z-10">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-3 max-w-2xl">
-            <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
               FORMATOS AUDIOVISUAIS // TAG08
             </span>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
               Conteúdos recentes publicados no canal.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
@@ -526,12 +526,12 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
                   <div className="absolute top-4 left-4 z-10">
-                    <span className="inline-flex items-center rounded-full border border-white/10 bg-black/45 px-2.5 py-1 font-mono text-[8px] uppercase tracking-widest text-white/75 backdrop-blur-sm">
+                    <span className="inline-flex items-center rounded-full border border-white/10 bg-black/45 px-2.5 py-1 tag08-meta text-xs uppercase tracking-widest text-white/75 backdrop-blur-sm">
                       CONTEÚDO RECENTE
                     </span>
                   </div>
                   <div className="absolute top-4 right-4 z-10">
-                    <span className="inline-flex items-center rounded-full border border-brand-secondary/15 bg-brand-secondary/10 px-2.5 py-1 font-mono text-[8px] uppercase tracking-widest text-brand-secondary backdrop-blur-sm">
+                    <span className="inline-flex items-center rounded-full border border-brand-secondary/15 bg-brand-secondary/10 px-2.5 py-1 tag08-meta text-xs uppercase tracking-widest text-brand-secondary backdrop-blur-sm">
                       YOUTUBE
                     </span>
                   </div>
@@ -543,14 +543,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 </div>
 
                 <div className="space-y-4 p-5 sm:p-6">
-                  <h3 className="text-sm sm:text-[15px] font-semibold leading-snug text-white">
+                  <h3 className="text-sm sm:text-sm font-semibold leading-snug text-white">
                     {video.title}
                   </h3>
                   <div className="flex items-center justify-between border-t border-white/[0.05] pt-3">
-                    <span className="font-mono text-[8.5px] uppercase tracking-widest text-zinc-500">
+                    <span className="tag08-meta text-xs uppercase tracking-widest text-zinc-500">
                       Publicado no canal
                     </span>
-                    <span className="inline-flex items-center gap-1 font-mono text-[9px] font-bold uppercase tracking-widest text-brand-secondary">
+                    <span className="inline-flex items-center gap-1 tag08-meta text-xs font-bold uppercase tracking-widest text-brand-secondary">
                       Assistir
                       <ArrowUpRight className="h-3.5 w-3.5" />
                     </span>
@@ -570,14 +570,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 max-w-5xl">
             <div className="space-y-2.5 sm:space-y-3">
-              <span className="font-mono text-[8px] sm:text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs sm:text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
                 DIAGNÓSTICO DE FORMATO AUDIOVISUAL
               </span>
-              <h2 className="font-display font-black text-[1.55rem] sm:text-3xl md:text-4xl text-white uppercase tracking-tighter leading-[0.95]">
+              <h2 className="font-display font-black text-[1.55rem] sm:text-3xl md:text-4xl text-white tracking-tighter leading-[0.95]">
                 Entenda qual tipo de conteúdo faz mais sentido para o seu momento.
               </h2>
             </div>
-            <p className="text-zinc-400 text-[13px] sm:text-sm leading-relaxed max-w-sm">
+            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm">
               Responda a partir do contexto da sua marca para identificar se faz mais sentido registrar, apresentar, explicar, reaproveitar ou alimentar canais com mais consistência.
             </p>
           </div>
@@ -589,7 +589,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               
               {/* Formatos Buttons Selector */}
               <div className="space-y-3 sm:space-y-4">
-                <span className="font-mono text-[8px] sm:text-[9.5px] text-zinc-500 uppercase tracking-widest font-bold block">1. ESCOLHA O FORMATO QUE FAZ MAIS SENTIDO</span>
+                <span className="tag08-meta text-xs sm:text-xs text-zinc-500 uppercase tracking-widest font-bold block">1. ESCOLHA O FORMATO QUE FAZ MAIS SENTIDO</span>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
                   {FORMATOS.map((f) => (
                     <button
@@ -608,8 +608,8 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                           : "bg-white/[0.01] border-white/5 text-zinc-400 hover:border-white/10"
                       }`}
                     >
-                      <span className="font-sans text-[8px] sm:text-[7px] text-brand block mb-1 font-black uppercase tracking-wider">{f.tag}</span>
-                      <h4 className="text-white text-[13px] sm:text-sm font-semibold uppercase leading-tight">{f.name}</h4>
+                      <span className="font-sans text-xs sm:text-xs text-brand block mb-1 font-black uppercase tracking-wider">{f.tag}</span>
+                      <h4 className="text-white text-xs sm:text-sm font-semibold leading-tight">{f.name}</h4>
                     </button>
                   ))}
                 </div>
@@ -617,7 +617,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
               {/* Deliverables Grid selector */}
               <div className="space-y-3 sm:space-y-4">
-                <span className="font-mono text-[8px] sm:text-[9.5px] text-zinc-500 uppercase tracking-widest font-bold block">2. MARQUE O QUE PODE SER PRODUZIDO</span>
+                <span className="tag08-meta text-xs sm:text-xs text-zinc-500 uppercase tracking-widest font-bold block">2. MARQUE O QUE PODE SER PRODUZIDO</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3">
                   {DELIVERABLES.map((del) => {
                     const isSelected = selectedTools.includes(del.id);
@@ -632,16 +632,16 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                         }`}
                       >
                         <div className="space-y-1 text-left">
-                          <h5 className={`text-[13px] sm:text-xs uppercase font-semibold font-display tracking-tight leading-snug group-hover:text-white transition-colors ${isSelected ? "text-black group-hover:text-black" : "text-white"}`}>
+                          <h5 className={`text-xs sm:text-xs uppercase font-semibold font-display tracking-tight leading-snug group-hover:text-white transition-colors ${isSelected ? "text-black group-hover:text-black" : "text-white"}`}>
                             {del.name}
                           </h5>
-                          <p className={`text-[11px] sm:text-[10px] leading-relaxed line-clamp-2 sm:line-clamp-3 font-medium transition-colors ${isSelected ? "text-black/75" : "text-zinc-500 group-hover:text-zinc-400"}`}>
+                          <p className={`text-xs sm:text-xs leading-relaxed line-clamp-2 sm:line-clamp-3 font-medium transition-colors ${isSelected ? "text-black/75" : "text-zinc-500 group-hover:text-zinc-400"}`}>
                             {del.desc}
                           </p>
                         </div>
                         
                         <div className="flex justify-between items-center w-full pt-2 border-t border-black/5">
-                          <span className={`font-sans text-[7px] font-bold uppercase ${isSelected ? "text-black/60" : "text-zinc-400"}`}>{del.category} material</span>
+                          <span className={`font-sans text-xs font-bold uppercase ${isSelected ? "text-black/60" : "text-zinc-400"}`}>{del.category} material</span>
                           <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${isSelected ? "bg-black text-brand border-black" : "border-zinc-700 text-zinc-500"}`}>
                             {isSelected ? <Check className="w-2.5 h-2.5 stroke-[3]" /> : <Plus className="w-2.5 h-2.5" />}
                           </div>
@@ -662,30 +662,30 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   <div className="flex justify-between items-center gap-3 border-b border-white/[0.04] pb-3 sm:pb-4">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-                    <span className="font-mono text-[8px] sm:text-[9px] text-brand uppercase tracking-wider font-extrabold">RESUMO DO FORMATO AUDIOVISUAL</span>
+                    <span className="tag08-meta text-xs sm:text-xs text-brand uppercase tracking-wider font-extrabold">RESUMO DO FORMATO AUDIOVISUAL</span>
                     </div>
-                  <span className="font-mono text-[8px] sm:text-[9px] text-zinc-500">TAG08_AUDIOVISUAL</span>
+                  <span className="font-sans text-xs sm:text-xs text-zinc-500">TAG08_AUDIOVISUAL</span>
                   </div>
 
                 {/* Setup selected details */}
                 <div className="space-y-3 sm:space-y-4">
                   <div className="space-y-1.5">
-                    <span className="font-mono text-[8px] sm:text-[9px] text-zinc-500 uppercase font-black block">FORMATO AVALIADO:</span>
-                    <h4 className="font-display font-medium text-base sm:text-lg text-brand-secondary uppercase tracking-tight leading-none">
+                    <span className="font-sans text-xs sm:text-xs text-zinc-500 uppercase font-black block">FORMATO AVALIADO:</span>
+                    <h4 className="font-display font-medium text-base sm:text-lg text-brand-secondary tracking-tight leading-none">
                       {currentFormatDetails.name}
                     </h4>
-                    <p className="text-zinc-400 text-[13px] sm:text-xs leading-normal">
+                    <p className="text-zinc-400 text-xs sm:text-xs leading-normal">
                       {currentFormatDetails.desc}
                     </p>
                   </div>
 
                   <div className="pt-3 sm:pt-4 border-t border-white/[0.04] space-y-2.5 text-left">
-                    <span className="font-mono text-[8px] sm:text-[9px] text-zinc-500 uppercase font-black block">O QUE ESSE FORMATO AJUDA A ORGANIZAR:</span>
+                    <span className="font-sans text-xs sm:text-xs text-zinc-500 uppercase font-black block">O QUE ESSE FORMATO AJUDA A ORGANIZAR:</span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {currentFormatDetails.features.map((feat, fidx) => (
                         <div key={fidx} className="flex gap-2 items-center">
                           <Check className="w-3 h-3 text-brand text-xs shrink-0" />
-                          <span className="text-zinc-300 text-[11px] sm:text-[11px] font-medium font-sans">{feat}</span>
+                          <span className="text-zinc-300 text-xs sm:text-xs font-medium font-sans">{feat}</span>
                         </div>
                       ))}
                     </div>
@@ -693,14 +693,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
                   {/* Chosen tools list output */}
                     <div className="pt-3 sm:pt-4 border-t border-white/[0.04] space-y-2.5">
-                      <span className="font-mono text-[8px] sm:text-[9px] text-zinc-500 uppercase font-black block">MATERIAIS RELACIONADOS ({selectedTools.length}):</span>
+                      <span className="font-sans text-xs sm:text-xs text-zinc-500 uppercase font-black block">MATERIAIS RELACIONADOS ({selectedTools.length}):</span>
                       {hasSelectedTools ? (
                         <div className="flex flex-wrap gap-2 text-left max-h-40 overflow-y-auto pr-1">
                           {selectedTools.map((tId) => {
                             const dl = DELIVERABLES.find(d => d.id === tId);
                             if (!dl) return null;
                             return (
-                              <span key={tId} className="px-2.5 py-1 bg-white/[0.03] border border-white/5 text-zinc-300 text-[10px] rounded-lg font-sans font-medium hover:border-brand/40 transition-colors">
+                              <span key={tId} className="px-2.5 py-1 bg-white/[0.03] border border-white/5 text-zinc-300 text-xs rounded-lg font-sans font-medium hover:border-brand/40 transition-colors">
                                 {dl.name}
                               </span>
                             );
@@ -709,7 +709,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                       ) : (
                         <div className="rounded-2xl border border-dashed border-white/8 bg-white/[0.02] px-4 py-4 sm:py-5 space-y-2">
                           <h5 className="text-sm sm:text-sm font-semibold text-white">Nenhum material selecionado ainda.</h5>
-                          <p className="text-[11px] leading-relaxed text-zinc-400 max-w-md">
+                          <p className="text-xs leading-relaxed text-zinc-400 max-w-md">
                             Marque ao menos um item para visualizar possibilidades de desdobramento para esse formato audiovisual.
                           </p>
                         </div>
@@ -724,12 +724,12 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                     onClick={() => trackSimulator("cta_clicked")}
                     target="_blank"
                     rel="noreferrer"
-                    className="block w-full bg-brand-secondary hover:bg-brand hover:shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.22)] text-black text-[10px] sm:text-xs font-mono font-black uppercase tracking-widest py-3.5 sm:py-4 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.15)]"
+                    className="block w-full bg-brand-secondary hover:bg-brand hover:shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.22)] text-black text-xs sm:text-xs font-sans font-black uppercase tracking-widest py-3.5 sm:py-4 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.15)]"
                   >
                     <MessageSquare className="w-4 h-4 text-black" />
                     <span>CONVERSAR SOBRE MEU FORMATO AUDIOVISUAL</span>
                   </a>
-                  <span className="block text-center font-mono text-[7px] sm:text-[8px] text-zinc-500 uppercase leading-none select-none">
+                  <span className="block text-center font-sans text-xs sm:text-xs text-zinc-500 uppercase leading-none select-none">
                     USE ESTE RESUMO COMO PONTO DE PARTIDA PARA A CONVERSA
                   </span>
                 </div>
@@ -749,10 +749,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
         <div className="max-w-7xl mx-auto space-y-16">
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
               METODOLOGIA DE PRODUÇÃO // TAG08
             </span>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
               Um processo pensado antes, durante e depois da gravação.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm mx-auto">
@@ -814,12 +814,12 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                     <span className="font-display font-black text-2xl text-zinc-800 group-hover:text-brand transition-colors select-none">
                       {step.num}.
                     </span>
-                    <span className="font-mono text-[8px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded uppercase font-black uppercase">
+                    <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded uppercase font-black uppercase">
                       {step.tag}
                     </span>
                   </div>
 
-                  <h3 className="font-display font-bold text-lg text-white uppercase tracking-tight group-hover:text-brand transition-colors leading-[1.25]">
+                  <h3 className="font-display font-bold text-lg text-white tracking-tight group-hover:text-brand transition-colors leading-[1.25]">
                     {step.title}
                   </h3>
 
@@ -827,7 +827,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                     {step.list.map((item, idxx) => (
                       <li key={idxx} className="flex gap-2.5 items-start">
                         <Check className="w-3.5 h-3.5 text-brand shrink-0 stroke-[2.5] mt-0.5" />
-                        <span className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed group-hover:text-zinc-300">
+                        <span className="text-zinc-400 text-xs sm:text-xs leading-relaxed group-hover:text-zinc-300">
                           {item}
                         </span>
                       </li>
@@ -835,7 +835,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   </ul>
                 </div>
 
-                <div className="pt-4 border-t border-white/[0.04] text-[9.5px] font-mono text-zinc-500 uppercase tracking-widest flex justify-between">
+                <div className="pt-4 border-t border-white/[0.04] text-xs tag08-meta text-zinc-500 uppercase tracking-widest flex justify-between">
                   <span>PROCESSO ATIVO</span>
                   <span className="text-brand font-bold select-none">TAG08_PROCESS_0{idx + 1}</span>
                 </div>
@@ -853,10 +853,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
         <div className="max-w-7xl mx-auto space-y-12">
           
           <div className="text-left space-y-3 max-w-2xl">
-            <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
               INCLUSÕES E COMPLEMENTOS // TAG08
             </span>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
               O escopo precisa acompanhar o uso do material.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
@@ -868,7 +868,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             {/* ITENS DEFINIDOS NO ESCOPO */}
             <div className="bg-charcoal-900 border border-white/[0.06] rounded-2.5xl p-6 sm:p-9 space-y-6 flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-2 text-brand font-mono text-[9px] uppercase tracking-widest font-black pb-4 border-b border-white/[0.04]">
+                <div className="flex items-center gap-2 text-brand tag08-meta text-xs uppercase tracking-widest font-black pb-4 border-b border-white/[0.04]">
                   <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
                   <span>MATERIAIS DE APOIO // ESCOPOS DEFINIDOS</span>
                 </div>
@@ -882,18 +882,18 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                     { title: "Cobertura de bastidores", desc: "Registro complementar de equipe, ambiente, preparação, rotina e detalhes que ajudam a aproximar a marca do público." }
                   ].map((inc, iIdx) => (
                     <div key={iIdx} className="flex gap-3 text-left">
-                      <div className="w-5 h-5 rounded-md bg-brand/10 text-brand flex items-center justify-center font-bold text-[10px] shrink-0 font-sans mt-0.5">
+                      <div className="w-5 h-5 rounded-md bg-brand/10 text-brand flex items-center justify-center font-bold text-xs shrink-0 font-sans mt-0.5">
                         {iIdx + 1}
                       </div>
                       <div className="space-y-0.5">
-                        <h4 className="text-white text-xs sm:text-sm font-semibold uppercase">{inc.title}</h4>
+                        <h4 className="text-white text-xs sm:text-sm font-semibold">{inc.title}</h4>
                         <p className="text-zinc-400 text-xs leading-normal">{inc.desc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="pt-6 border-t border-white/[0.04] text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
+              <div className="pt-6 border-t border-white/[0.04] text-xs tag08-meta text-zinc-500 uppercase tracking-widest">
                 ESCOPOS DEFINIDOS CONFORME USO REAL
               </div>
             </div>
@@ -901,7 +901,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             {/* COMPLEMENTOS POSSÍVEIS */}
             <div className="bg-white/[0.01] border border-white/[0.04] rounded-2.5xl p-6 sm:p-9 space-y-6 flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-2 text-zinc-500 font-mono text-[9px] uppercase tracking-widest font-bold pb-4 border-b border-white/[0.04]">
+                <div className="flex items-center gap-2 text-zinc-500 tag08-meta text-xs uppercase tracking-widest font-bold pb-4 border-b border-white/[0.04]">
                   <span className="w-1.5 h-1.5 rounded-full bg-zinc-650" />
                   <span>COMPLEMENTOS POSSÍVEIS // DEFINIDOS CONFORME ESCOPO</span>
                 </div>
@@ -915,18 +915,18 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                     { title: "Desdobramentos para canais da marca", desc: "Versões e cortes organizados para apoiar comunicação institucional, social ou comercial." }
                   ].map((opt, oIdx) => (
                     <div key={oIdx} className="flex gap-3 text-left">
-                      <div className="w-5 h-5 rounded-md bg-white/5 text-zinc-400 border border-white/5 flex items-center justify-center font-bold text-[10px] shrink-0 font-sans mt-0.5">
+                      <div className="w-5 h-5 rounded-md bg-white/5 text-zinc-400 border border-white/5 flex items-center justify-center font-bold text-xs shrink-0 font-sans mt-0.5">
                         +{oIdx + 1}
                       </div>
                       <div className="space-y-0.5">
-                        <h4 className="text-zinc-300 text-xs sm:text-sm font-semibold uppercase">{opt.title}</h4>
+                        <h4 className="text-zinc-300 text-xs sm:text-sm font-semibold">{opt.title}</h4>
                         <p className="text-zinc-500 text-xs leading-normal">{opt.desc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="pt-6 border-t border-white/[0.04] text-[9.5px] font-mono text-zinc-500 uppercase tracking-widest">
+              <div className="pt-6 border-t border-white/[0.04] text-xs tag08-meta text-zinc-500 uppercase tracking-widest">
                 ITENS DEFINIDOS CONFORME ESCOPO
               </div>
             </div>
@@ -942,10 +942,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
         <div className="max-w-7xl mx-auto space-y-16">
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
               INTEGRAÇÃO ENTRE FRENTES // TAG08
             </span>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
               Audiovisual não precisa ficar isolado.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm mx-auto">
@@ -985,8 +985,8 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 className="bg-charcoal-900 border border-white/[0.05] rounded-2xl p-6.5 sm:p-7 hover:border-brand/40 transition-colors duration-300 flex flex-col justify-between h-72 group"
               >
                 <div className="space-y-4">
-                  <span className="font-mono text-[8.5px] text-brand-secondary font-black uppercase tracking-widest block">SINERGIA {String(idx + 1).padStart(2, '0')}</span>
-                  <h3 className="text-white text-base sm:text-lg font-display font-semibold uppercase tracking-tight group-hover:text-brand transition-colors leading-[1.2]">
+                  <span className="tag08-meta text-xs text-brand-secondary font-black uppercase tracking-widest block">SINERGIA {String(idx + 1).padStart(2, '0')}</span>
+                  <h3 className="text-white text-base sm:text-lg font-display font-semibold tracking-tight group-hover:text-brand transition-colors leading-[1.2]">
                     {syn.title}
                   </h3>
                   <p className="text-zinc-400 text-xs leading-relaxed">
@@ -998,7 +998,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   onClick={() => handleLinkClick(syn.page)}
                   className="group flex items-center justify-between text-xs font-sans font-bold text-zinc-500 hover:text-brand cursor-pointer select-none pt-3 border-t border-white/5 w-full focus:outline-none"
                 >
-                  <span className="uppercase text-[10px] tracking-widest">{syn.cta}</span>
+                  <span className="uppercase text-xs tracking-widest">{syn.cta}</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
@@ -1034,10 +1034,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
-                <span className="font-mono text-[9px] text-white/60 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-black border border-white/5">
+                <span className="tag08-meta text-xs text-white/60 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-black border border-white/5">
                   AUDIOVISUAL
                 </span>
-                <span className="font-mono text-[9px] text-white/50 tracking-wider font-extrabold">
+                <span className="font-sans text-xs text-white/50 tracking-wider font-extrabold">
                   TAG08
                 </span>
               </div>
@@ -1050,10 +1050,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 </div>
               </div>
               <div className="flex justify-between items-end">
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/40 tracking-wider">
                   PROCESSO ORGANIZADO
                 </span>
-                <span className="font-mono text-[9px] text-white/60 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-black border border-white/5">
+                <span className="tag08-meta text-xs text-white/60 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-black border border-white/5">
                   CONTEXTO DEFINIDO
                 </span>
               </div>
@@ -1067,15 +1067,15 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
                   <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
                 </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
+                <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-black/90">
                   CONVERSA CONSULTIVA
                 </span>
               </div>
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
+              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter font-display">
                 Vamos entender qual produção <br />
                 faz sentido para o seu momento?
               </h2>
-              <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
+              <p className="text-black/85 text-xs sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
                 Conte um pouco sobre o que você precisa comunicar, registrar ou transformar em conteúdo. A partir disso, avaliamos o formato mais coerente: institucional, evento, bastidores, depoimentos, conteúdo recorrente ou material de apoio para canais digitais.
               </p>
             </div>
@@ -1086,7 +1086,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   <ArrowUpRight className="w-5 h-5 rotate-45 stroke-[2.5] text-black" />
                 </div>
                 <div className="space-y-0.5">
-                  <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
+                  <span className="tag08-meta text-xs text-brand uppercase tracking-wider font-extrabold block">
                     CONVERSA CONSULTIVA
                   </span>
                   <p className="text-white text-xs leading-snug font-sans font-semibold">
@@ -1106,18 +1106,18 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full bg-brand/10 flex items-center justify-center text-brand shrink-0 group-hover:bg-brand group-hover:text-black transition-all">
-                        <span className="text-[9px] font-mono font-black tracking-tight text-brand group-hover:text-black">BR</span>
+                        <span className="text-xs font-sans font-black tracking-tight text-brand group-hover:text-black">BR</span>
                       </div>
                       <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                        <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                           CONVERSAR SOBRE MEU AUDIOVISUAL
                         </span>
-                        <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
+                        <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                           +55 83 9.9886-8882
                         </span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-brand font-mono font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
+                    <span className="text-xs text-brand tag08-meta font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
                       INICIAR CONVERSA
                     </span>
                   </div>
@@ -1127,11 +1127,11 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 text-xs font-sans select-none">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-brand animate-pulse" />
-                  <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest font-extrabold">
+                  <span className="tag08-meta text-xs text-white/50 uppercase tracking-widest font-extrabold">
                     TAG08 AUDIOVISUAL
                   </span>
                 </div>
-                <span className="font-mono text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/25 px-2 py-0.5 rounded uppercase leading-none">
+                <span className="font-sans text-xs text-brand font-bold bg-brand/10 border border-brand/25 px-2 py-0.5 rounded uppercase leading-none">
                   PRÓXIMO PASSO
                 </span>
               </div>
@@ -1154,13 +1154,13 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             {/* Left Side: Accordion Category selector */}
             <div className="lg:col-span-5 flex flex-col justify-between space-y-5 sm:space-y-8 text-left">
               <div className="space-y-3 sm:space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[8px] sm:text-[9px] rounded-lg uppercase tracking-widest font-mono">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs sm:text-xs rounded-lg uppercase tracking-widest tag08-meta">
                   FAQ // ENCONTRE RESPOSTAS
                 </div>
-                <h2 className="font-display font-black text-[1.6rem] sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
+                <h2 className="font-display font-black text-[1.6rem] sm:text-4xl text-white leading-[0.95] tracking-tighter">
                   Dúvidas comuns sobre produção audiovisual
                 </h2>
-                <p className="text-zinc-400 text-[13px] sm:text-[13px] leading-relaxed font-sans max-w-sm">
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-sm">
                   Antes de gravar, é importante entender objetivo, contexto, formato e uso posterior do material. Essas respostas ajudam a esclarecer como a TAG08 conduz esse processo.
                 </p>
               </div>
@@ -1176,7 +1176,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                         : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
                     }`}
                   >
-                    <span className="font-mono text-[11px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-2.5 sm:gap-3">
+                    <span className="tag08-meta text-xs sm:text-xs font-black uppercase tracking-wider flex items-center gap-2.5 sm:gap-3">
                       <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
                         {String(item.id + 1).padStart(2, '0')}.
                       </span>
@@ -1205,20 +1205,20 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
                 </svg>
               </div>
-              <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10 pointer-events-none font-mono text-[7px] sm:text-[8px] text-white/20 uppercase tracking-widest leading-none">
+              <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10 pointer-events-none tag08-meta text-xs sm:text-xs text-white/20 uppercase tracking-widest leading-none">
                 SYS // BROADCAST_FAQ
               </div>
 
               <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-4 sm:p-5 rounded-2xl space-y-2.5 sm:space-y-3 shadow-2xl text-left font-sans">
-                <span className="font-mono text-[8px] sm:text-[8.5px] text-brand uppercase tracking-widest font-black block">
+                <span className="tag08-meta text-xs sm:text-xs text-brand uppercase tracking-widest font-black block">
                   {faqCategories[activeFaq].title}
                 </span>
                 
-                <h4 className="text-white font-semibold text-[13px] sm:text-sm leading-tight border-b border-white/5 pb-2">
+                <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
                   {faqQuestions[activeFaq]}
                 </h4>
                 
-                <p className="text-zinc-300 text-[13px] sm:text-[12.5px] leading-relaxed font-sans font-medium">
+                <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {faqAnswers[activeFaq]}
                 </p>
               </div>
@@ -1228,7 +1228,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             <div className="lg:col-span-3 flex flex-col justify-between gap-3 sm:gap-4">
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-4 sm:p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-3 sm:space-y-4 flex-1">
                 <div className="space-y-1.5 sm:space-y-2">
-                  <span className="font-mono text-[8px] sm:text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">SERVIÇOS &amp; FORMATOS</span>
+                  <span className="tag08-meta text-xs sm:text-xs text-zinc-500 uppercase tracking-widest block font-bold">SERVIÇOS &amp; FORMATOS</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">Planejamento e clareza</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     O processo começa entendendo o contexto da marca, a função do material e o uso esperado depois da gravação.
@@ -1245,9 +1245,9 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
               <div className="bg-brand text-black rounded-2xl p-4 sm:p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-3 sm:space-y-4 flex-1">
                 <div className="space-y-1.5 sm:space-y-2">
-                  <span className="font-mono text-[8px] sm:text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">CONVERSA CONSULTIVA</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer conversar sobre seu audiovisual?</h4>
-                  <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-sans">
+                  <span className="tag08-meta text-xs sm:text-xs text-black/60 uppercase tracking-widest block font-extrabold">CONVERSA CONSULTIVA</span>
+                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">Quer conversar sobre seu audiovisual?</h4>
+                  <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
                     Sem pacote pronto. Primeiro entendemos contexto, objetivo e uso do material.
                   </p>
                 </div>

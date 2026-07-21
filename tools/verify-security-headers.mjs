@@ -1,4 +1,4 @@
-const baseUrl = (process.env.VERIFY_BASE_URL ?? process.env.E2E_BASE_URL ?? "http://127.0.0.1:3000").replace(/\/$/, "");
+const baseUrl = (process.env.BASE_URL ?? "http://127.0.0.1:3000").replace(/\/$/, "");
 
 const requiredHeaders = {
   "x-content-type-options": /nosniff/i,

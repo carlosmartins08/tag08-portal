@@ -56,6 +56,10 @@ npm run worker:retention
 
 Agende integracoes em intervalo curto e retencao uma vez ao dia. O primeiro usa lease, retries e idempotencia; o segundo remove apenas registros vencidos que nao estejam em processamento.
 
+## Pacote de staging
+
+O staging da hospedagem Node.js usa o servidor standalone e um PostgreSQL exclusivo. Copie somente os nomes de variaveis de `.env.staging.example` para o painel, preenchendo os valores reais diretamente no ambiente remoto. O procedimento de publicacao, cron e rollback esta em `docs/STAGING-HOSTING-CHECKLIST.md`.
+
 ## Regras de manutencao
 
 - Nao crie rotas fora de `routeRegistry.ts`.

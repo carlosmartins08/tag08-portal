@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import ResilientImage from "../../../components/ResilientImage";
 import { AlertCircle, ArrowUpRight, ArrowRight, BarChart, Workflow, FileText, Server, Layers, Cpu, CheckCircle, MessageSquare } from "lucide-react";
 import { motion } from "motion/react";
@@ -43,16 +43,16 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           {/* 1. Header Typography block (Ref Style: Expert guidance / tailored solution) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta self-start">
                 DIVIsão DE PROCESSOS E ESTRUTURAS // TAG08
               </div>
-              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
+              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter font-display">
                 Process Intelligence <br />
                 <span className="text-brand">para transformar caos operacional em clareza para crescer.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
-              <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
+              <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-medium">
                 Sua empresa atende bem, mas sofre com fricção ou desorganização interna? Mapeamos, diagnosticamos e estruturamos todos os seus departamentos em wikis organizadas e fluxos táticos claros para que seu negócio ganhe autonomia de crescimento contínuo.
               </p>
             </div>
@@ -66,6 +66,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1600"
                 alt="Mapeamento de Processos TAG08"
                 sizes="100vw"
+                preload
                 className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
               />
@@ -77,7 +78,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(45px)" }}>
                 <button
                   onClick={() => handleLinkClick("/contato")}
-                  className="group bg-brand-secondary text-black font-mono font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
+                  className="group bg-brand-secondary text-black font-sans font-black text-xs sm:text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
                 >
                   <span>RESERVAR AUDITORIA</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -87,11 +88,11 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               {/* Absolute indicator tags on corners */}
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
-                  <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-bold">TAG08 DIAGNOSTIC CONSOLE</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Mapeamento Técnico de Fluxo de Produção</h4>
+                  <span className="tag08-meta text-xs text-brand-secondary tracking-widest block uppercase font-bold">TAG08 DIAGNOSTIC CONSOLE</span>
+                  <h4 className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Mapeamento Técnico de Fluxo de Produção</h4>
                 </div>
 
-                <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
+                <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-xs text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
                   <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
                   <span>PROC_INTELLIGENCE // ENGAGED</span>
                 </div>
@@ -103,19 +104,19 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">4 Semanas</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Mapeamento de Diagnóstico<br/>e Entrega dos Playbooks</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Mapeamento de Diagnóstico<br/>e Entrega dos Playbooks</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">-50%</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Reduaao em Atividades e<br/>Reuniões Caaticas Secundarias</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Reduaao em Atividades e<br/>Reuniões Caaticas Secundarias</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Wiki</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Centralização das Senhas,<br/>Materiais e Diretrizes de Equipe</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Centralização das Senhas,<br/>Materiais e Diretrizes de Equipe</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">3x</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Mais Rapidez de Treinamento<br/>para Novos Integrantes</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Mais Rapidez de Treinamento<br/>para Novos Integrantes</span>
             </div>
           </div>
 
@@ -129,10 +130,10 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
         <div className="max-w-7xl mx-auto space-y-24 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-4">
-              <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
               PATOLOGIAS OPERACIONAIS // DIAGNÓSTICO
               </span>
-              <h2 className="font-display font-medium text-3xl sm:text-4xl text-white leading-tight uppercase">
+              <h2 className="font-display font-medium text-3xl sm:text-4xl text-white leading-tight">
                 Sinais invisaveis de "Caos Organizado" na sua empresa
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
@@ -150,7 +151,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 { title: "Refação Constantemente Ativa", desc: "A mesma tarefa precisa ser refeita múltiplas vezes porque os critérios de qualidade e padrões nunca foram formalizados." }
               ].map((item, idx) => (
                 <div key={idx} className="p-4 rounded-xl bg-charcoal-900 border border-white/[0.04] space-y-1">
-                  <h4 className="text-white text-xs sm:text-sm font-display font-medium uppercase tracking-tight flex items-center gap-2">
+                  <h4 className="text-white text-xs sm:text-sm font-display font-medium tracking-tight flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary" /> {item.title}
                   </h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">{item.desc}</p>
@@ -165,8 +166,8 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
       <section className="px-4 sm:px-6 md:px-8 py-16 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-2 max-w-2xl">
-            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">ATIVOS TANGaVEIS ENTREGUES DE IMEDIATO</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">O QUE ENTREGAMOS NA NOSSA ASSESSORIA</h2>
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">ATIVOS TANGaVEIS ENTREGUES DE IMEDIATO</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">O QUE ENTREGAMOS NA NOSSA ASSESSORIA</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
               Não fazemos relatórios tearicos de 300 páginas que ninguam la. Entregamos ativos de processos prontos para rodar na rotina pratica do seu negócio.
             </p>
@@ -178,8 +179,8 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 <BarChart className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                      <h4 className="text-white font-display font-black text-sm uppercase">Diagnóstico Amplo</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                      <h4 className="text-white font-display font-black text-sm">Diagnóstico Amplo</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Auditoria de ferramentas, entrevistas em detalhes com os colaboradores atuais, mensuração estruturada dos pontos cegos e desperdacio de retrabalho corporativo por falta de precedancia.
                 </p>
               </div>
@@ -190,8 +191,8 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 <Workflow className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Mapeamento de Fluxos</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Mapeamento de Fluxos</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Organização dos organogramas de setores de forma visual no Miro ou Figma. Deixamos transparente o exato fluxo de cada tarefa no comita de decisaes de rotina.
                 </p>
               </div>
@@ -202,8 +203,8 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 <FileText className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Playbooks Práticos</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Playbooks Práticos</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Manuais operacionais escritos por departamento (Onboarding, Comercial, Entrega, Suporte) em linguagem extremamente compreensível para treinamento ágil.
                 </p>
               </div>
@@ -214,8 +215,8 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 <Server className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Base No Notion</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Base No Notion</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Construção de uma wiki corporativa integrada unificando senhas seguras, manuais em vídeo, contatos críticos e links recorrentes para a equipe consultar rápido sem perguntar em e-mails.
                 </p>
               </div>
@@ -228,8 +229,8 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
       <section className="px-4 sm:px-6 md:px-8 py-16 border-b border-white/[0.04] bg-charcoal-900/10 text-left">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="space-y-2 max-w-2xl">
-            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">INTEGRIDADE DE CONSTRUaaO DE ATIVOS</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">COMO DESENHAMOS SEUS PROCESSOS</h2>
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">INTEGRIDADE DE CONSTRUaaO DE ATIVOS</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">COMO DESENHAMOS SEUS PROCESSOS</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
               Nossa intervenaao técnica a estruturada em blocos seguros sem causar paralisações operacionais no seu faturamento diario.
             </p>
@@ -238,24 +239,24 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-4">
                     <span className="font-sans text-brand text-xs font-black">FASE A // DIAGNÓSTICO PROFUNDO</span>
-              <h4 className="text-white font-display font-black text-base uppercase leading-none">Mergulho no Cotidiano</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+              <h4 className="text-white font-display font-black text-base leading-none">Mergulho no Cotidiano</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Analise direta do ecossistema de produtividade, gargalos técnicos e vazamento produtivo por parte da equipe atual através de entrevistas e alocação de tempo real de tarefas.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-4">
               <span className="font-sans text-brand text-xs font-black">FASE B // REDESENHO DE FLUXOS</span>
-              <h4 className="text-white font-display font-black text-base uppercase leading-none">A Engenharia do Workflow</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+              <h4 className="text-white font-display font-black text-base leading-none">A Engenharia do Workflow</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Organizamos organogramas e precedancias visuais claras, extinguindo redundancias ou esperas longas de validação que paralisam o cronograma de entrega B2B das suas divisaes.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-4">
               <span className="font-sans text-brand text-xs font-black">FASE C // ENTREGA E CENTRALIZação</span>
-              <h4 className="text-white font-display font-black text-base uppercase leading-none">Os Playbooks e Wikis Ativos</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+              <h4 className="text-white font-display font-black text-base leading-none">Os Playbooks e Wikis Ativos</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Montagem e refinamento no Notion ou Wiki prapria contendo senhas organizadas, canais, contatos e os playbooks escritos especificamente em linguagem acessavel e legavel de usar.
               </p>
             </div>
@@ -269,10 +270,10 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
         
         <div className="max-w-7xl mx-auto space-y-12 relative z-10">
           <div className="space-y-3 max-w-3xl">
-            <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
                   DIAGNÓSTICO FINANCEIRO // CALCULADORA DE DESPERDÍCIO
             </span>
-            <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
+            <h2 className="font-display font-medium text-3xl text-white tracking-tight">
               Calculadora de Desperdacio Operacional e ROI de Processos
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
@@ -284,14 +285,14 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
             {/* Controles de Entrada */}
             <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-6">
-                <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block pb-3 border-b border-white/[0.05]">
+                <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block pb-3 border-b border-white/[0.05]">
                   Mapeamento da sua Operação:
                 </span>
 
                 {/* Slider 1: Colaboradores */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label htmlFor="process-intelligence-collaborators" className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">
+                    <label htmlFor="process-intelligence-collaborators" className="text-xs tag08-meta text-zinc-300 font-bold uppercase tracking-wider">
                       Colaboradores Afetados:
                     </label>
                     <span className="text-sm font-sans text-brand-secondary font-black bg-brand-secondary/10 px-2.5 py-0.5 rounded-lg border border-brand-secondary/20">
@@ -308,7 +309,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                     onChange={(event) => { trackSimulator("input_changed"); setCollaborators(Number(event.target.value)); }}
                     className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-brand-secondary"
                   />
-                  <div className="flex items-center justify-between text-[9px] font-sans text-zinc-500">
+                  <div className="flex items-center justify-between text-xs font-sans text-zinc-500">
                     <span>1 pessoa</span>
                     <span>20 pessoas</span>
                     <span>40 pessoas+</span>
@@ -318,7 +319,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 {/* Slider 2: Horas Gastas */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label htmlFor="process-intelligence-hours-per-day" className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">
+                    <label htmlFor="process-intelligence-hours-per-day" className="text-xs tag08-meta text-zinc-300 font-bold uppercase tracking-wider">
                       Tempo perdido por pessoa/dia:
                     </label>
                     <span className="text-sm font-sans text-white font-semibold">
@@ -335,7 +336,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                     onChange={(event) => { trackSimulator("input_changed"); setHoursPerDay(Number(event.target.value)); }}
                     className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-white"
                   />
-                  <div className="flex items-center justify-between text-[9px] font-sans text-zinc-500">
+                  <div className="flex items-center justify-between text-xs font-sans text-zinc-500">
                     <span>30 min (Toleravel)</span>
                     <span>4 horas (Grave)</span>
                     <span>8 horas (Totalmente manual)</span>
@@ -345,7 +346,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 {/* Slider 3: Salario Madio */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label htmlFor="process-intelligence-monthly-salary" className="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">
+                    <label htmlFor="process-intelligence-monthly-salary" className="text-xs tag08-meta text-zinc-300 font-bold uppercase tracking-wider">
                       Salario Madio Mensal (R$):
                     </label>
                     <span className="text-sm font-sans text-white font-semibold">
@@ -362,7 +363,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                     onChange={(event) => { trackSimulator("input_changed"); setMonthlySalary(Number(event.target.value)); }}
                     className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-white"
                   />
-                  <div className="flex items-center justify-between text-[9px] font-sans text-zinc-500">
+                  <div className="flex items-center justify-between text-xs font-sans text-zinc-500">
                     <span>R$ 2.000</span>
                     <span>R$ 8.500</span>
                     <span>R$ 15.000+</span>
@@ -373,9 +374,9 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] space-y-2">
                 <div className="flex items-center gap-2 text-brand">
                   <AlertCircle className="w-4 h-4 shrink-0" />
-                  <span className="text-[10px] font-mono font-black uppercase tracking-wider">A Gargula do Trabalho Invisavel</span>
+                  <span className="text-xs tag08-meta font-black uppercase tracking-wider">A Gargula do Trabalho Invisavel</span>
                 </div>
-                <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
+                <p className="text-xs text-zinc-400 leading-relaxed font-sans">
                   Quando um funcionário gasta 2 horas copiando dados de um site para o CRM, gerando PDFs manuais ou formatando propostas de forma desestruturada, o faturamento da empresa perde falado comercial ativo por falta de foco.
                 </p>
               </div>
@@ -386,32 +387,32 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
 
               <div className="space-y-6 w-full">
-                <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block">
+                <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
                   Perda Produtiva e ROI Operacional Projetado:
                 </span>
 
                 {/* Results Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
-                    <span className="font-mono text-[8px] text-zinc-500 uppercase font-black block">Horas Desperdiaadas / Ano</span>
+                    <span className="font-sans text-xs text-zinc-500 uppercase font-black block">Horas Desperdiaadas / Ano</span>
                     <p className="text-3xl font-display font-black text-white">{waste.annualWasteHours.toLocaleString("pt-BR")}h</p>
-                    <span className="text-[9px] text-zinc-400 block leading-tight font-sans">
+                    <span className="text-xs text-zinc-400 block leading-tight font-sans">
                       Peraodo total do time gasto em tarefas robaticas.
                     </span>
                   </div>
 
                   <div className="p-5 rounded-2xl bg-brand-secondary/[0.02] border border-brand-secondary/10 space-y-1">
-                    <span className="font-mono text-[8px] text-brand-secondary/80 uppercase font-black block">Custo do Desperdacio / Ano</span>
+                    <span className="font-sans text-xs text-brand-secondary/80 uppercase font-black block">Custo do Desperdacio / Ano</span>
                     <p className="text-2xl sm:text-3xl font-display font-black text-brand-secondary">R$ {waste.annualWasteCost.toLocaleString("pt-BR")}</p>
-                    <span className="text-[9px] text-zinc-400 block leading-tight font-sans">
+                    <span className="text-xs text-zinc-400 block leading-tight font-sans">
                       Dinheiro direto perdido pagando tempo improdutivo.
                     </span>
                   </div>
 
                   <div className="p-5 rounded-2xl bg-emerald-500/[0.02] border border-emerald-500/10 space-y-1">
-                    <span className="font-mono text-[8px] text-emerald-500/80 uppercase font-black block">Horas Recuperaveis (Anual)</span>
+                    <span className="font-sans text-xs text-emerald-500/80 uppercase font-black block">Horas Recuperaveis (Anual)</span>
                     <p className="text-3xl font-display font-black text-emerald-500">{waste.recoverableHours.toLocaleString("pt-BR")}h</p>
-                    <span className="text-[9px] text-zinc-400 block leading-tight font-sans">
+                    <span className="text-xs text-zinc-400 block leading-tight font-sans">
                       Tempo recuperado para direcionar a atividades de alta receita.
                     </span>
                   </div>
@@ -419,49 +420,49 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
 
                 {/* Where is this time going? (Progress breakdown) */}
                 <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-5 space-y-4 text-xs">
-                  <span className="font-mono text-[9px] text-zinc-500 uppercase font-bold block">Gargalos Classicos de Perda Operacional</span>
+                  <span className="font-sans text-xs text-zinc-500 uppercase font-bold block">Gargalos Classicos de Perda Operacional</span>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-zinc-400">
                     <div className="space-y-1 bg-white/[0.01] p-3 rounded-xl border border-white/[0.02]">
-                      <div className="flex items-center justify-between text-[10px] font-sans">
+                      <div className="flex items-center justify-between text-xs font-sans">
                         <span className="text-white font-bold">1. Atualização Manual de CRM</span>
                         <span>35% do desperdacio</span>
                       </div>
-                      <p className="text-[9.5px] leading-tight text-zinc-500">Equipe digitando e colando nomes de leads e telefones de planilhas.</p>
+                      <p className="text-xs leading-tight text-zinc-500">Equipe digitando e colando nomes de leads e telefones de planilhas.</p>
                     </div>
 
                     <div className="space-y-1 bg-white/[0.01] p-3 rounded-xl border border-white/[0.02]">
-                      <div className="flex items-center justify-between text-[10px] font-sans">
+                      <div className="flex items-center justify-between text-xs font-sans">
                         <span className="text-white font-bold">2. Criação de PDFs e Contratos</span>
                         <span>25% do desperdacio</span>
                       </div>
-                      <p className="text-[9.5px] leading-tight text-zinc-500">Escrever contratos copiando dados antigos no Word um por um.</p>
+                      <p className="text-xs leading-tight text-zinc-500">Escrever contratos copiando dados antigos no Word um por um.</p>
                     </div>
 
                     <div className="space-y-1 bg-white/[0.01] p-3 rounded-xl border border-white/[0.02]">
-                      <div className="flex items-center justify-between text-[10px] font-sans">
+                      <div className="flex items-center justify-between text-xs font-sans">
                         <span className="text-white font-bold">3. Avisos & Follow-ups Soltos</span>
                         <span>20% do desperdacio</span>
                       </div>
-                      <p className="text-[9.5px] leading-tight text-zinc-500">Esquecer de cobrar propostas por falta de lembretes integrados e automáticos.</p>
+                      <p className="text-xs leading-tight text-zinc-500">Esquecer de cobrar propostas por falta de lembretes integrados e automáticos.</p>
                     </div>
 
                     <div className="space-y-1 bg-white/[0.01] p-3 rounded-xl border border-white/[0.02]">
-                      <div className="flex items-center justify-between text-[10px] font-sans">
+                      <div className="flex items-center justify-between text-xs font-sans">
                         <span className="text-white font-bold">4. Transferancia de Arquivos</span>
                         <span>20% do desperdacio</span>
                       </div>
-                      <p className="text-[9.5px] leading-tight text-zinc-500">Mover propostas do Drive para o e-mail ou WhatsApp manualmente.</p>
+                      <p className="text-xs leading-tight text-zinc-500">Mover propostas do Drive para o e-mail ou WhatsApp manualmente.</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 mt-6">
-                <span className="font-sans text-[8px] text-zinc-600">MÉTRICAS BASEADAS EM DIAGNÓSTICOS DE EMPRESAS B2B REALIZADOS // 2026</span>
+                <span className="font-sans text-xs text-zinc-600">MÉTRICAS BASEADAS EM DIAGNÓSTICOS DE EMPRESAS B2B REALIZADOS // 2026</span>
                 <button 
                   onClick={() => onNavigate("/contato")}
-                  className="text-xs font-mono text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
+                  className="text-xs font-sans text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
                 >
                   Mapear Meus Gargalos <ArrowRight className="w-3.5 h-3.5" />
                 </button>
@@ -475,12 +476,12 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
       <section className="px-4 sm:px-6 md:px-8 py-10 border-b border-white/[0.04] bg-charcoal-900/40 text-left">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 max-w-3xl">
-                      <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">AUTONOMIA OPERACIONAL E GOVERNANÇA DE VERDADE</h4>
+                      <h4 className="text-white font-display font-black text-sm tracking-tight">AUTONOMIA OPERACIONAL E GOVERNANÇA DE VERDADE</h4>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed">
               O objetivo final a fazer com que sua empresa ganhe autonomia real, permitindo que a equipe execute as entregas sob o mesmo nível rigoroso de qualidade sem que os fundadores precisem ficar vigiando ou ditando cada passo das tarefas.
             </p>
           </div>
-          <span className="font-mono text-[8.5px] text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
+          <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
             PROCESS INTELLIGENCE // TAG08
           </span>
         </div>
@@ -517,10 +518,10 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   OPERATIONAL CORE
                 </span>
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/40 tracking-wider">
                   TAG08.v3
                 </span>
               </div>
@@ -533,10 +534,10 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 </div>
               </div>
               <div className="flex justify-between items-end">
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/40 tracking-wider">
                   LATENCY: 12MS
                 </span>
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   SÊNIOR SECURITY
                 </span>
               </div>
@@ -550,15 +551,15 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
                   <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
                 </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
+                <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-black/90">
                   CONFIRA NOSSO SISTEMA DE TRABALHO
                 </span>
               </div>
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
+              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter font-display">
                 DESENHAMOS FLUXOS <br />
                 E PROTOCOLOS SaRIOS!
               </h2>
-              <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
+              <p className="text-black/85 text-xs sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase">
                 ACABE COM A DESORGANIZação DE informações E EQUIPE. DOCUMENTAMOS PLAYBOOKS CIRaRGICOS, REDESENHAMOS WORKFLOWS NO NOTION E LIBERAMOS SUA EMPRESA DA DEPENDaNCIA DE PESSOAS-CHAVE.
               </p>
             </div>
@@ -570,7 +571,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                   <Workflow className="w-5 h-5 stroke-[2.5] text-black" />
                 </div>
                 <div className="space-y-0.5">
-                  <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
+                  <span className="tag08-meta text-xs text-brand uppercase tracking-wider font-extrabold block">
                     GOVERNANÇA PLENA
                   </span>
                   <p className="text-white text-xs leading-snug font-sans font-semibold">
@@ -591,18 +592,18 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full bg-brand/10 flex items-center justify-center text-brand shrink-0 group-hover:bg-brand group-hover:text-black transition-all duration-200">
-                        <span className="text-[9px] font-mono font-black tracking-tight text-brand group-hover:text-black">BR</span>
+                        <span className="text-xs font-sans font-black tracking-tight text-brand group-hover:text-black">BR</span>
                       </div>
                       <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                        <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                           PROPRIETaRIO DIRETO (WhatsApp)
                         </span>
-                        <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
+                        <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                           +55 83 9.9886-8882
                         </span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-brand font-mono font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
+                    <span className="text-xs text-brand tag08-meta font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
                       CONECTAR
                     </span>
                   </div>
@@ -617,18 +618,18 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0 group-hover:bg-brand-secondary group-hover:text-black transition-all duration-200">
-                        <span className="text-[9px] font-mono font-black tracking-tight text-brand-secondary group-hover:text-black">INT</span>
+                        <span className="text-xs font-sans font-black tracking-tight text-brand-secondary group-hover:text-black">INT</span>
                       </div>
                       <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                        <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                           INTERNATIONAL DIRECT (WhatsApp)
                         </span>
-                        <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand-secondary transition-colors mt-0.5">
+                        <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand-secondary transition-colors mt-0.5">
                           +56 9 9793 7611
                         </span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-brand-secondary font-mono font-bold uppercase tracking-wider bg-brand-secondary/10 py-1 px-2.5 rounded-lg group-hover:bg-brand-secondary group-hover:text-black transition-all">
+                    <span className="text-xs text-brand-secondary tag08-meta font-bold uppercase tracking-wider bg-brand-secondary/10 py-1 px-2.5 rounded-lg group-hover:bg-brand-secondary group-hover:text-black transition-all">
                       CONECTAR
                     </span>
                   </div>
@@ -638,11 +639,11 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 text-xs">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-brand animate-pulse" />
-                  <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest font-extrabold">
+                  <span className="tag08-meta text-xs text-white/50 uppercase tracking-widest font-extrabold">
                     AGaNCIA TAG08
                   </span>
                 </div>
-                <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
+                <span className="font-sans text-xs text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
                   OPERação ATIVA 100% online
                 </span>
               </div>
@@ -660,7 +661,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           {/* areas Estruturadas pelo Projeto */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start pt-10 border-t border-white/[0.04]">
             <div className="lg:col-span-5 space-y-4">
-              <span className="font-mono text-[10px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
                 ESCOPO DE MAPEAMENTO
               </span>
               <h3 className="font-display font-medium text-2xl text-white">
@@ -679,7 +680,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 { title: "Administrativo & Financeiro", desc: "Rotinas semanais de faturamento corporativo, cobranças automáticas de inadimplência e conciliações." }
               ].map((area, aIdx) => (
                 <div key={aIdx} className="p-5 rounded-2xl bg-charcoal-900 border border-white/[0.04] space-y-1.5">
-                  <h4 className="text-white font-display font-bold uppercase tracking-tight text-xs sm:text-sm text-brand">{area.title}</h4>
+                  <h4 className="text-white font-display font-bold tracking-tight text-xs sm:text-sm text-brand">{area.title}</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">{area.desc}</p>
                 </div>
               ))}
@@ -689,7 +690,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           {/* O que precisamos de você (Insumo do Cliente) */}
           <div className="space-y-8 pt-10 border-t border-white/[0.04]">
             <div className="space-y-2">
-              <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
                 ALIANÇA DE TRABALHO // REQUISITOS DE CONTA
               </span>
               <h3 className="font-display font-medium text-2xl text-white">
@@ -708,7 +709,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
               ].map((ins, idx) => (
                 <div key={idx} className="p-6 rounded-2xl bg-[#0c0c0e] border border-white/[0.04] space-y-3 relative overflow-hidden">
                   <div className="absolute top-2 right-4 font-sans font-black text-white/5 text-4xl">{ins.step}</div>
-                  <h4 className="text-white font-display font-bold text-xs sm:text-sm uppercase tracking-tight leading-tight">{ins.title}</h4>
+                  <h4 className="text-white font-display font-bold text-xs sm:text-sm tracking-tight leading-tight">{ins.title}</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">{ins.desc}</p>
                 </div>
               ))}
@@ -718,7 +719,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           {/* O que resta depois do projeto de Processos */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-10 border-t border-white/[0.04]">
             <div className="lg:col-span-5 space-y-4">
-              <span className="font-mono text-[10px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
                 PATRIMaNIO INTELECTUAL // LEGADO REAL
               </span>
               <h3 className="font-display font-medium text-2xl text-white">
@@ -737,7 +738,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 { title: "Checklists Operacionais de Rotina", desc: "Listagem diaria para guiar os operadores, deixando as obrigações absolutamente claras no inacio de cada manha." }
               ].map((item, idx) => (
                 <div key={idx} className="p-4 rounded-xl bg-white/[0.01] border border-white/[0.03] space-y-1">
-                  <h4 className="text-white font-display font-bold uppercase tracking-tight text-xs sm:text-sm">{item.title}</h4>
+                  <h4 className="text-white font-display font-bold tracking-tight text-xs sm:text-sm">{item.title}</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">{item.desc}</p>
                 </div>
               ))}
@@ -757,7 +758,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 onNavigate("/servicos/process-activation");
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="px-6 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0"
+              className="px-6 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs tag08-meta font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0"
             >
               Conhecer Process Activation
             </button>
@@ -776,14 +777,14 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
             <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
                   FAQ // ENCONTRE RESPOSTAS
                 </div>
-                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
+                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter">
                   DaVIDAS &amp; <br />
                   INTELIGaNCIA
                 </h2>
-                <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-sm">
                   Esclareça as principais dúvidas sobre nossa auditoria e mapeamento de inteligência estrutural para sua equipe tática.
                 </p>
               </div>
@@ -804,7 +805,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                         : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
                     }`}
                   >
-                    <span className="font-mono text-xs font-black uppercase tracking-wider flex items-center gap-3">
+                    <span className="tag08-meta text-xs font-black uppercase tracking-wider flex items-center gap-3">
                       <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
                         {String(item.id + 1).padStart(2, '0')}.
                       </span>
@@ -832,12 +833,12 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                   <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
                 </svg>
               </div>
-              <div className="absolute top-6 left-6 z-10 pointer-events-none font-mono text-[8px] text-white/20 uppercase tracking-widest leading-none">
+              <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
                 SYS // PROCESS_INTEL
               </div>
 
               <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left">
-                <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
+                <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
                   {([
                     "AUDITORIA DE ROTINA",
                     "ENTREGA DE WIKIS",
@@ -855,7 +856,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                   ])[activeFaq]}
                 </h4>
                 
-                <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
+                <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
                     "Realizamos um mergulho assistido por meio de entrevistas sigilosas focadas e inspeções cotidianas junto aos responsáveis de setores da sua empresa, identificando redundâncias, vazamento de energia e ruídos internos de comunicação.",
                     "Entregamos uma Wiki Corporativa personalizada e organizada de forma integrada (geralmente estruturada no Notion ou central da empresa) contendo todos os organogramas interativos de faturamento e manuais práticos de playbooks escritos.",
@@ -869,7 +870,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">Como agimos de forma organizada?</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     Eliminamos redundancias de tarefas e ruídos diarios internos. Blindamos suas decisaes comerciais.
@@ -886,9 +887,9 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
 
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer desenhar uma estratégia sob medida?</h4>
-                  <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
+                  <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
+                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">Quer desenhar uma estratégia sob medida?</h4>
+                  <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
                     Fale diretamente com os tomadores de decisão da TAG08 via WhatsApp para avaliar a viabilidade de alocação de equipe.
                   </p>
                 </div>
@@ -909,7 +910,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
 
       {/* SECTION 6 - ACTION TRIGGER FOOTER */}
       <section className="px-4 sm:px-6 md:px-8 py-20 text-center space-y-6 max-w-4xl mx-auto">
-        <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
+        <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-none tracking-tighter">
           CONSTRUA UMA ESTRUTURA AUT?NOMA <br />
           <span className="text-brand">QUE OPERA CUMPRINDO PROTOCOLOS SÁBIOS.</span>
         </h2>
@@ -919,7 +920,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
         <div className="pt-4">
           <button
             onClick={() => handleLinkClick("/contato")}
-            className="group bg-brand text-black font-mono font-black text-[10px] uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
+            className="group bg-brand text-black font-sans font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
           >
             <span>ESTRUTURAR MINHA ROTINA OPERACIONAL</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />

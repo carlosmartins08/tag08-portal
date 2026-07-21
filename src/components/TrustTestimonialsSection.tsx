@@ -33,27 +33,27 @@ export default function TrustTestimonialsSection() {
     currentReview.source === "google-business-profile" ? "Google Meu Negocio" : "Depoimento interno";
 
   return (
-    <section className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/20 relative overflow-hidden">
+    <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/20 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10 w-full">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 border-b border-white/[0.05] pb-6">
-          <div className="space-y-4 text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand/10 bg-brand/5 font-mono text-[9px] uppercase tracking-widest text-brand-secondary font-black">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-12 border-b border-white/[0.05] pb-8">
+          <div className="tag08-section__header text-left">
+            <div className="tag08-kicker">
               <span className={`w-1.5 h-1.5 rounded-full bg-brand-secondary ${prefersReducedMotion ? "" : "animate-pulse"}`} />
               Confianca construida na pratica
             </div>
 
-            <h2 className="font-display font-black text-3xl sm:text-4xl text-gradient uppercase leading-none tracking-tighter">
+            <h2 className="tag08-section__heading font-display font-black text-3xl sm:text-4xl text-gradient">
               Experiencias acompanhadas com clareza
             </h2>
 
-            <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl">
+            <p className="tag08-section__copy text-zinc-400 text-xs sm:text-sm font-sans">
               Quando o trabalho tem diagnostico, clareza e acompanhamento, o cliente entende melhor o caminho, participa das decisoes e percebe mais coerencia entre estrategia e entrega.
             </p>
           </div>
 
-          <div className="bg-charcoal-900 border border-white/[0.08] rounded-2xl p-4 flex items-center gap-4 shrink-0 shadow-lg text-left">
+          <div className="tag08-card p-5 flex items-center gap-4 shrink-0 text-left max-w-xl">
             <div className="w-12 h-12 bg-white/[0.03] rounded-xl flex items-center justify-center border border-white/[0.05]">
               <div className="flex items-center gap-0.5">
                 {[...Array(5)].map((_, i) => (
@@ -63,12 +63,12 @@ export default function TrustTestimonialsSection() {
             </div>
             <div>
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="font-display font-black text-2xl text-white tracking-tight leading-none">DEPOIMENTOS</span>
-                <span className="font-mono text-[8px] uppercase tracking-widest text-brand-secondary bg-brand-secondary/10 border border-brand-secondary/15 px-2 py-0.5 rounded font-black">
+                <span className="font-display font-bold text-xl text-white tracking-tight leading-none">Depoimentos</span>
+                <span className="tag08-meta text-brand-secondary">
                   {currentSourceLabel}
                 </span>
               </div>
-              <p className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest mt-1 font-bold">
+              <p className="tag08-meta text-zinc-500 mt-1">
                 A confianca se sustenta no acompanhamento, na clareza e na coerencia da entrega.
               </p>
             </div>
@@ -125,25 +125,21 @@ export default function TrustTestimonialsSection() {
           </div>
 
           <div className="lg:col-span-9 flex flex-col justify-center">
-            <AnimatePresence mode="wait">
+            <AnimatePresence initial={false} mode="wait">
             <motion.div
               key={activeReview}
-              initial={{ opacity: 0, x: 20, scale: 0.99 }}
+              initial={false}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: -20, scale: 0.99 }}
               transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.35, ease: "easeOut" }}
-              className="bg-charcoal-900/90 border border-white/[0.06] p-5 sm:p-8 lg:p-10 rounded-[28px] sm:rounded-[36px] relative overflow-hidden text-left shadow-2xl flex flex-col justify-between min-h-[340px] w-full group/card"
+              className="tag08-card tag08-surface-card p-6 sm:p-8 lg:p-10 relative overflow-hidden text-left flex flex-col justify-between min-h-[340px] w-full group/card"
             >
-                <span className="font-display text-[180px] sm:text-[230px] text-brand-secondary/[0.03] absolute right-6 sm:right-10 -top-8 sm:-top-12 leading-none select-none pointer-events-none font-black italic">
-                  "
-                </span>
-
                 <div className="space-y-5 relative z-10 flex-1 flex flex-col justify-center">
                   <h3 className="font-display font-medium text-lg sm:text-2xl lg:text-[28px] text-white leading-normal tracking-tight max-w-[95%]">
                     {currentReview.tagline}
                   </h3>
 
-                  <p className="text-zinc-400 text-xs sm:text-sm md:text-[15px] leading-[1.55] font-sans font-normal">
+                  <p className="tag08-section__copy text-zinc-400 text-xs sm:text-sm md:text-sm font-sans font-normal">
                     {currentReview.text}
                   </p>
                 </div>
@@ -175,8 +171,8 @@ export default function TrustTestimonialsSection() {
                           <Star key={i} className="w-4 h-4 fill-brand-secondary text-brand-secondary" />
                         ))}
                       </div>
-                      <span className="font-sans text-[7.5px] uppercase tracking-widest text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded">
-                        {currentSourceLabel.toUpperCase()}
+                      <span className="tag08-meta text-brand-secondary">
+                        {currentSourceLabel}
                       </span>
                     </div>
                   </div>
@@ -186,7 +182,7 @@ export default function TrustTestimonialsSection() {
           </div>
         </div>
 
-          <div className="mt-10 p-4 sm:p-5 bg-charcoal-900 border border-white/[0.05] rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-4 text-left select-none">
+          <div className="tag08-card mt-10 p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-left select-none">
           <div className="flex items-center gap-3">
             <span className={`w-2 h-2 rounded-full bg-[#34A853] shrink-0 ${prefersReducedMotion ? "" : "animate-pulse"}`} />
             <p className="text-xs text-zinc-300 font-sans">
@@ -195,7 +191,7 @@ export default function TrustTestimonialsSection() {
           </div>
           <a
             href="/contato"
-            className="inline-flex items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-[10px] text-white font-mono font-bold uppercase tracking-widest py-2.5 px-5 rounded-xl transition-all duration-300 shrink-0 cursor-pointer"
+            className="inline-flex items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-white tag08-action py-2.5 px-5 rounded-xl transition-colors duration-200 shrink-0 cursor-pointer"
           >
             <span>FALAR COM A TAG08</span>
             <ArrowUpRight className="w-3.5 h-3.5" />

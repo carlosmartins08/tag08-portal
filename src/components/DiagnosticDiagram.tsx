@@ -57,18 +57,18 @@ export default function DiagnosticDiagram() {
 
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
         <div className="space-y-5 text-left lg:col-span-4">
-          <span className="inline-flex items-center rounded-md border border-brand/20 bg-brand/10 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-wider text-brand">
+          <span className="inline-flex items-center rounded-md border border-brand/20 bg-brand/10 px-2.5 py-1 tag08-meta text-xs font-bold uppercase tracking-wider text-brand">
             Nível de maturidade
           </span>
           <div className="space-y-3">
-            <h3 className="font-display text-3xl font-bold uppercase leading-tight tracking-tight text-white">
+            <h3 className="font-display text-3xl font-bold leading-tight tracking-tight text-white">
               O diagnóstico<br />da realidade
             </h3>
-            <p className="max-w-sm font-sans text-xs leading-relaxed text-zinc-400 sm:text-[13px]">
+            <p className="max-w-sm font-sans text-xs leading-relaxed text-zinc-400 sm:text-xs">
               Uma análise de eficiência sobre os três pilares estratégicos da presença corporativa.
             </p>
           </div>
-          <p className="border-t border-white/5 pt-4 font-mono text-[10px] uppercase tracking-wider text-zinc-500">
+          <p className="border-t border-white/5 pt-4 tag08-meta text-xs uppercase tracking-wider text-zinc-500">
             Selecione um pilar para ver o contexto.
           </p>
         </div>
@@ -92,7 +92,7 @@ export default function DiagnosticDiagram() {
             </svg>
 
             <div className="relative z-10 flex h-[172px] w-[172px] flex-col items-center justify-center rounded-full border border-white/[0.05] bg-[#0a0a0c] px-5 text-center shadow-xl">
-              <span className="font-mono text-[8px] font-black uppercase tracking-widest text-zinc-500">
+              <span className="tag08-meta text-xs font-black uppercase tracking-widest text-zinc-500">
                 {activePillar.label}
               </span>
               <motion.div
@@ -104,7 +104,7 @@ export default function DiagnosticDiagram() {
               >
                 {activePillar.score}<span className="text-xl leading-none text-brand">%</span>
               </motion.div>
-              <p className="mt-2 font-mono text-[8px] font-bold uppercase tracking-wider text-zinc-500">Índice médio</p>
+              <p className="mt-2 tag08-meta text-xs font-bold uppercase tracking-wider text-zinc-500">Índice médio</p>
             </div>
           </div>
         </div>
@@ -135,11 +135,11 @@ export default function DiagnosticDiagram() {
                       <span className={`font-sans text-xs font-bold uppercase tracking-wide ${isActive ? "text-brand" : "text-zinc-300"}`}>
                         {pillar.name}
                       </span>
-                      <span className={`rounded px-1.5 py-0.5 font-sans text-[9px] font-bold ${isActive ? "bg-brand/15 text-brand" : "bg-white/5 text-zinc-500"}`}>
+                      <span className={`rounded px-1.5 py-0.5 font-sans text-xs font-bold ${isActive ? "bg-brand/15 text-brand" : "bg-white/5 text-zinc-500"}`}>
                         {pillar.score}%
                       </span>
                     </span>
-                    <span className={`mt-1 block text-[11px] leading-relaxed ${isActive ? "text-zinc-400" : "line-clamp-1 text-zinc-600"}`}>
+                    <span className={`mt-1 block text-xs leading-relaxed ${isActive ? "text-zinc-400" : "line-clamp-1 text-zinc-600"}`}>
                       {pillar.description}
                     </span>
                   </span>

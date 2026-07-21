@@ -131,22 +131,22 @@ export default function MiniCases({
   return (
     <section 
       id="mini-cases-section" 
-      className="w-full py-16 sm:py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/20 text-left font-sans"
+      className="tag08-section w-full px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/20 text-left font-sans"
     >
       <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
         
         {/* Header Block and Text Summary */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline">
-          <div className="lg:col-span-7 space-y-3">
-            <span className="font-mono text-[9px] text-brand font-black uppercase tracking-widest block bg-brand/5 border border-brand/15 px-2.5 py-1 rounded w-max">
+          <div className="lg:col-span-7 tag08-section__header">
+            <span className="tag08-kicker">
               {badge}
             </span>
-            <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase tracking-tight leading-none">
+            <h2 className="tag08-section__heading font-display font-black text-3xl sm:text-4xl text-white">
               {title}
             </h2>
           </div>
           <div className="lg:col-span-5">
-            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-medium">
+            <p className="tag08-section__copy text-zinc-400 text-xs sm:text-sm font-medium">
               {subtitle}
             </p>
           </div>
@@ -167,7 +167,7 @@ export default function MiniCases({
               <motion.div
                 key={`${logo.name}-${idx}`}
                 variants={prefersReducedMotion ? undefined : itemVariants}
-                className="bg-charcoal-900 border border-white/[0.06] hover:border-brand/40 rounded-3xl p-6 flex flex-col justify-between h-[180px] group transition-all duration-300 relative overflow-hidden"
+                className="tag08-card tag08-card--interactive p-6 flex flex-col justify-between min-h-[180px] group relative overflow-hidden"
               >
                 {/* Micro Ambient Glow in background */}
                 <div className="absolute top-0 right-0 w-24 h-24 bg-brand/[0.015] blur-3xl rounded-full group-hover:bg-brand/[0.035] transition-all duration-500 pointer-events-none" />
@@ -190,10 +190,10 @@ export default function MiniCases({
                       )}
                     </div>
                     <div className="space-y-0.5">
-                      <h4 className="font-display font-black text-white text-base uppercase tracking-tight leading-none group-hover:text-brand transition-colors duration-300">
+                      <h4 className="font-display font-black text-white text-base tracking-tight leading-none group-hover:text-brand transition-colors duration-300">
                         {logo.name}
                       </h4>
-                      <p className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest">
+                      <p className="tag08-meta text-zinc-500">
                         {logo.industry || "Empresa Clientes"}
                       </p>
                     </div>
@@ -210,18 +210,18 @@ export default function MiniCases({
                       <span className="block font-display font-black text-xl text-brand leading-none tracking-tight">
                         {logo.metric}
                       </span>
-                      <span className="block text-zinc-500 font-mono text-[8px] uppercase tracking-wider leading-none">
+                      <span className="block text-zinc-500 tag08-meta leading-none">
                         {logo.metricLabel || "Indicador de Sucesso"}
                       </span>
                     </div>
                   ) : (
-                    <div className="flex items-center gap-1.5 text-zinc-500 font-mono text-[8px] uppercase tracking-wider">
+                    <div className="flex items-center gap-1.5 text-zinc-500 tag08-meta">
                       <CheckCircle2 className="w-3.5 h-3.5 text-brand stroke-[2]" />
-                      <span>Projeto Atregado &amp; Homologado</span>
+                    <span>Projeto entregue e homologado</span>
                     </div>
                   )}
 
-                    <span className="font-sans text-[7px] text-zinc-600 uppercase group-hover:text-zinc-400 transition-colors duration-300 flex items-center gap-1">
+                    <span className="tag08-meta text-zinc-600 group-hover:text-zinc-400 transition-colors duration-300 flex items-center gap-1">
                     Ativo <ArrowUpRight className="w-3 h-3 text-brand" />
                   </span>
                 </div>
@@ -235,13 +235,13 @@ export default function MiniCases({
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-white/[0.04]">
             <div className="flex items-center gap-2.5">
               <Award className="w-4 h-4 text-brand" />
-              <p className="text-zinc-500 text-[10.5px] uppercase font-mono tracking-wide text-left">
+              <p className="text-zinc-500 tag08-meta text-left">
                 Gostaria de ver sua marca gerando este nível de autoridade e retenção?
               </p>
             </div>
             <button
               onClick={handleCtaClick}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-brand text-zinc-300 hover:text-black hover:font-bold border border-white/10 hover:border-transparent rounded-xl text-[10px] font-mono tracking-widest transition-all duration-300 uppercase cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-brand text-zinc-300 hover:text-black border border-white/10 hover:border-transparent rounded-xl tag08-action transition-colors duration-200 cursor-pointer"
             >
               <span>Solicitar Diagnóstico de Posicionamento</span>
               <ArrowUpRight className="w-3.5 h-3.5" />

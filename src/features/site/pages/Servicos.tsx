@@ -1,4 +1,4 @@
-﻿import { Check, ArrowRight, ArrowUpRight, ShieldCheck, Cpu, Sparkles, Settings2, Share2, TrendingUp, BarChart3, Award, Copy, Star, Calendar, Video } from "lucide-react";
+import { Check, ArrowRight, ArrowUpRight, ShieldCheck, Cpu, Sparkles, Settings2, Share2, TrendingUp, BarChart3, Award, Copy, Star, Calendar, Video } from "lucide-react";
 import { useState } from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
@@ -181,10 +181,10 @@ export default function Servicos({ onNavigate }: ServicosProps) {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
             <div className="lg:col-span-7 space-y-6 text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
                 Serviços TAG08
               </div>
-              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase">
+              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter">
                 Soluções para organizar presença, posicionamento e crescimento com direção.
               </h1>
               <p className="text-zinc-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl">
@@ -199,7 +199,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 {["Estratégia", "Conteúdo", "Tecnologia", "Processos"].map((tag, idx) => (
                   <span
                     key={idx}
-                    className="font-mono text-[9px] tracking-wider uppercase px-3 py-1.5 border border-white/5 rounded-full bg-white/[0.02] text-zinc-300 hover:border-brand/40 hover:text-brand transition-colors cursor-default"
+                    className="tag08-meta text-xs tracking-wider uppercase px-3 py-1.5 border border-white/5 rounded-full bg-white/[0.02] text-zinc-300 hover:border-brand/40 hover:text-brand transition-colors cursor-default"
                   >
                     {tag}
                   </span>
@@ -209,7 +209,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <button
                   onClick={() => handleLinkClick("/contato")}
-                  className="inline-flex items-center justify-center gap-2 bg-brand text-black hover:bg-brand-dark font-mono font-black text-[10px] uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
+                  className="inline-flex items-center justify-center gap-2 bg-brand text-black hover:bg-brand-dark tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
                 >
                   QUERO ENTENDER MEU MELHOR CAMINHO
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -223,7 +223,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                     }
                     handleLinkClick("/servicos");
                   }}
-                  className="inline-flex items-center justify-center gap-2 bg-black/5 border border-black/10 text-black hover:bg-black/10 font-mono font-black text-[10px] uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
+                  className="inline-flex items-center justify-center gap-2 bg-black/5 border border-black/10 text-black hover:bg-black/10 tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
                 >
                   VER SOLUÇÕES
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -240,15 +240,15 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   <div className="flex items-center justify-between border-b border-white/[0.04] pb-4">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-                      <span className="font-mono text-[9px] uppercase tracking-widest text-brand-secondary">MAPA DE SOLUÇÕES</span>
+                      <span className="tag08-meta text-xs uppercase tracking-widest text-brand-secondary">MAPA DE SOLUÇÕES</span>
                     </div>
-                    <span className="font-mono text-[9px] text-zinc-600">TAG08_BOARD</span>
+                    <span className="font-sans text-xs text-zinc-600">TAG08_BOARD</span>
                   </div>
 
                   <div className="space-y-5">
                     <div className="flex items-baseline justify-between">
                       <div>
-                        <h4 className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">Estratégia</h4>
+                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Estratégia</h4>
                         <p className="text-zinc-300 text-xs mt-0.5">Clareza para decidir o que vem antes da execução.</p>
                       </div>
                       <span className="font-display font-black text-3xl text-white">Estratégia</span>
@@ -256,7 +256,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                     <div className="flex items-baseline justify-between border-t border-white/[0.04] pt-4">
                       <div>
-                        <h4 className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">Conteúdo</h4>
+                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Conteúdo</h4>
                         <p className="text-zinc-300 text-xs mt-0.5">Linha editorial para construir presença com intenção.</p>
                       </div>
                       <span className="font-display font-black text-3xl text-brand-secondary">Conteúdo</span>
@@ -264,7 +264,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                     <div className="flex items-baseline justify-between border-t border-white/[0.04] pt-4">
                       <div>
-                        <h4 className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">Tecnologia</h4>
+                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Tecnologia</h4>
                         <p className="text-zinc-300 text-xs mt-0.5">Estruturas digitais para apoiar comunicação e operação.</p>
                       </div>
                       <span className="font-display font-black text-3xl text-brand">Tecnologia</span>
@@ -276,8 +276,8 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                       <Award className="w-4.5 h-4.5" />
                     </div>
                     <div>
-                      <h5 className="font-mono text-[9px] font-bold text-white uppercase tracking-wider leading-none">Processos</h5>
-                      <p className="text-zinc-400 text-[9.5px] mt-1 leading-relaxed">Organização para reduzir improviso e sustentar crescimento.</p>
+                      <h5 className="tag08-meta text-xs font-bold text-white tracking-wider leading-none">Processos</h5>
+                      <p className="text-zinc-400 text-xs mt-1 leading-relaxed">Organização para reduzir improviso e sustentar crescimento.</p>
                     </div>
                   </div>
                 </div>
@@ -291,7 +291,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
           INFINITE ROTATING MARQUEE BAR WITH TAGS
          =========================================*/}
       <div className="py-5 border-y border-white/[0.04] bg-charcoal-900/40 relative z-20 overflow-hidden select-none">
-        <div className="animate-marquee whitespace-nowrap flex items-center gap-12 text-xs font-mono font-bold uppercase tracking-widest text-zinc-400">
+        <div className="animate-marquee whitespace-nowrap flex items-center gap-12 text-xs tag08-meta font-bold uppercase tracking-widest text-zinc-400">
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PRESENÒ⬡A DIGITAL INTELIGENTE</span>
           <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> ENGENHARIA WEB INSTANTNEA</span>
           <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> CONTROL OPERATIONAL SYSTEMS</span>
@@ -318,10 +318,10 @@ export default function Servicos({ onNavigate }: ServicosProps) {
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 max-w-5xl">
             <div className="space-y-3">
-              <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
                 Diagnóstico por necessidade
               </span>
-              <h3 className="font-display font-bold text-3xl sm:text-4xl text-white uppercase tracking-tighter">
+              <h3 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
                 O que sua marca precisa organizar agora?
               </h3>
             </div>
@@ -334,7 +334,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             <div className="absolute inset-0 bg-[#000]/10" />
             <div className="absolute inset-0 bg-[radial-gradient(#ffffff01_1.2px,transparent_1.2px)] [background-size:24px_24px] pointer-events-none" />
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 p-5 font-mono text-[9px] text-zinc-500 uppercase tracking-widest bg-charcoal-900/60 font-semibold relative z-10 select-none">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 p-5 tag08-meta text-xs text-zinc-500 uppercase tracking-widest bg-charcoal-900/60 font-semibold relative z-10 select-none">
               <div className="md:col-span-6">SINAL DE NECESSIDADE</div>
               <div className="md:col-span-4">PONTO DE PARTIDA TAG08</div>
               <div className="md:col-span-2 text-right hidden md:block">CAMINHO</div>
@@ -377,7 +377,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 className="grid grid-cols-1 md:grid-cols-12 gap-4 p-6 sm:p-7 items-center hover:bg-white/[0.015] transition-all duration-300 relative z-10 group"
               >
                 <div className="md:col-span-6 flex gap-4 items-start">
-                  <span className="font-sans text-[10px] text-zinc-600 mt-1 font-bold">[{idx + 1}]</span>
+                  <span className="font-sans text-xs text-zinc-600 mt-1 font-bold">[{idx + 1}]</span>
                   <div className="space-y-2">
                     <p className="text-zinc-100 text-xs sm:text-sm font-sans font-semibold leading-relaxed group-hover:text-white transition-colors">
                       {item.problem}
@@ -389,7 +389,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 </div>
 
                 <div className="md:col-span-4">
-                  <span className="inline-flex px-3 py-1.5 rounded-xl bg-brand/5 border border-brand/10 text-brand text-xs font-mono font-bold uppercase tracking-tight group-hover:bg-brand group-hover:text-black transition-all duration-300">
+                  <span className="inline-flex px-3 py-1.5 rounded-xl bg-brand/5 border border-brand/10 text-brand text-xs tag08-meta font-bold uppercase tracking-tight group-hover:bg-brand group-hover:text-black transition-all duration-300">
                     {item.label}
                   </span>
                 </div>
@@ -397,7 +397,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 <div className="md:col-span-2 md:text-right">
                   <button
                     onClick={() => handleLinkClick(item.slug)}
-                    className="text-white hover:text-brand-secondary font-mono text-[9px] font-bold uppercase tracking-widest inline-flex items-center gap-1.5 group/btn transition-colors cursor-pointer"
+                    className="text-white hover:text-brand-secondary font-sans text-xs font-bold uppercase tracking-widest inline-flex items-center gap-1.5 group/btn transition-colors cursor-pointer"
                   >
                     VER CAMINHO <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform text-brand-secondary" />
                   </button>
@@ -415,10 +415,10 @@ export default function Servicos({ onNavigate }: ServicosProps) {
         <div className="max-w-7xl mx-auto space-y-16">
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-semibold bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-semibold bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
               Mapa de soluções
             </span>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-white uppercase tracking-tighter leading-none">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-white tracking-tighter leading-none">
               Escolha o caminho pelo momento da sua marca.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-lg mx-auto">
@@ -442,7 +442,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                     <span className="font-display font-black text-3xl sm:text-4xl text-zinc-800 group-hover:text-brand-secondary transition-colors uppercase">
                       {domain.num}.
                     </span>
-                    <div className="flex items-center gap-1.5 font-mono text-[8px] text-zinc-500 uppercase tracking-widest">
+                    <div className="flex items-center gap-1.5 tag08-meta text-xs text-zinc-500 uppercase tracking-widest">
                       <span>CAMINHO ATIVO // {domain.slug}</span>
                       <div className="w-1.5 h-1.5 rounded-full bg-brand-secondary/40" />
                     </div>
@@ -454,7 +454,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                     {/* Left Column: Scope, Title, and details */}
                     <div className="lg:col-span-6 space-y-6 text-left">
                       <div className="space-y-3">
-                        <h3 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight group-hover:text-brand-secondary transition-colors leading-[1.1]">
+                        <h3 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight group-hover:text-brand-secondary transition-colors leading-[1.1]">
                           {domain.title}
                         </h3>
                         
@@ -463,7 +463,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                           {domain.tags.map((tag, tagIdx) => (
                             <span 
                               key={tagIdx}
-                              className="text-[9px] font-sans font-medium tracking-wide border border-brand-secondary/10 text-brand bg-brand-secondary/[0.02] py-0.5 px-2 rounded-md"
+                              className="text-xs font-sans font-medium tracking-wide border border-brand-secondary/10 text-brand bg-brand-secondary/[0.02] py-0.5 px-2 rounded-md"
                             >
                               {tag}
                             </span>
@@ -477,7 +477,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                       {/* Scope Deliverables Bullet List */}
                       <div className="space-y-4 pt-4 border-t border-white/[0.04]">
-                        <p className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest leading-none font-bold">
+                        <p className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest leading-none font-bold">
                           Entregas e escopo:
                         </p>
                         <div className="grid gap-3.5 pl-1">
@@ -488,7 +488,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                               </div>
                               <div>
                                 <h4 className="text-white text-xs font-semibold">{sub.name}</h4>
-                                <p className="text-zinc-400 text-[11px] mt-0.5 leading-relaxed">{sub.desc}</p>
+                                <p className="text-zinc-400 text-xs mt-0.5 leading-relaxed">{sub.desc}</p>
                               </div>
                             </div>
                           ))}
@@ -499,7 +499,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                       <div className="pt-6 flex flex-wrap gap-3 items-center">
                         <button
                           onClick={() => handleLinkClick(domain.ctaPage)}
-                          className="inline-flex items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-xs text-white font-mono font-semibold uppercase tracking-widest py-3 px-6 rounded-xl transition-all duration-300 group/btn shrink-0"
+                          className="inline-flex items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-xs text-white tag08-meta font-semibold uppercase tracking-widest py-3 px-6 rounded-xl transition-all duration-300 group/btn shrink-0"
                         >
                           <span>ENTENDER SOLUÇÃO</span>
                           <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform" />
@@ -508,17 +508,17 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                         <button
                           type="button"
                           onClick={() => handleCopyDomainScope(domain)}
-                          className="inline-flex items-center gap-2 bg-white/[0.02] hover:bg-white/[0.08] border border-white/[0.05] hover:border-white/20 text-xs text-zinc-300 hover:text-white font-mono font-medium uppercase tracking-widest py-3 px-5 rounded-xl transition-all duration-300 shrink-0 select-none cursor-pointer"
+                          className="inline-flex items-center gap-2 bg-white/[0.02] hover:bg-white/[0.08] border border-white/[0.05] hover:border-white/20 text-xs text-zinc-300 hover:text-white font-sans font-medium uppercase tracking-widest py-3 px-5 rounded-xl transition-all duration-300 shrink-0 select-none cursor-pointer"
                         >
                           {copiedDomainSlug === domain.slug ? (
                             <>
                               <Check className="w-3.5 h-3.5 text-brand" />
-                              <span className="text-brand text-[11px]">Escopo Copiado</span>
+                              <span className="text-brand text-xs">Escopo Copiado</span>
                             </>
                           ) : (
                             <>
                               <Copy className="w-3.5 h-3.5" />
-                              <span className="text-[11px]">Copiar Escopo</span>
+                              <span className="text-xs">Copiar Escopo</span>
                             </>
                           )}
                         </button>
@@ -540,7 +540,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                           />
                           {/* Rich overlays */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent pointer-events-none" />
-                          <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-2.5 py-1.5 rounded-lg text-zinc-400 font-sans text-[8px] flex items-center gap-1">
+                          <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-2.5 py-1.5 rounded-lg text-zinc-400 font-sans text-xs flex items-center gap-1">
                             <span className="w-1 h-1 rounded-full bg-brand" />
                             <span>TAG08_MAP</span>
                           </div>
@@ -563,10 +563,10 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       <section id="servicos-principais" className="px-4 sm:px-6 md:px-8 py-20 relative z-10 border-b border-white/[0.04] bg-neutral-900/10">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="space-y-3 text-left max-w-2xl">
-            <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
               Combinação de frentes
             </span>
-            <h3 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tighter leading-none">
+            <h3 className="font-display font-medium text-3xl sm:text-4xl text-white tracking-tighter leading-none">
               Nem todo projeto precisa de tudo. Mas algumas soluções funcionam melhor juntas.
             </h3>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
@@ -610,12 +610,12 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                 <div className="space-y-4 relative z-10">
                   <div className="flex items-center justify-between gap-3">
-                    <span className="font-mono text-[8.5px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-0.5 rounded font-black tracking-widest">
+                    <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-0.5 rounded font-black tracking-widest">
                       {item.tag}
                     </span>
-                    <span className="font-sans text-[9px] text-zinc-600">0{idx + 1}</span>
+                    <span className="font-sans text-xs text-zinc-600">0{idx + 1}</span>
                   </div>
-                  <h4 className="text-white text-base sm:text-lg font-display font-bold uppercase tracking-tight group-hover:text-brand-secondary transition-colors">
+                  <h4 className="text-white text-base sm:text-lg font-display font-bold tracking-tight group-hover:text-brand-secondary transition-colors">
                     {item.title}
                   </h4>
                   <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
@@ -648,10 +648,10 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   ACORDO CLARO
                 </span>
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/40 tracking-wider">
                   TAG08.v3
                 </span>
               </div>
@@ -664,10 +664,10 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 </div>
               </div>
               <div className="flex justify-between items-end">
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/40 tracking-wider">
                   ETAPAS CLARAS
                 </span>
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   PROCESSO ATIVO
                 </span>
               </div>
@@ -680,14 +680,14 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
                   <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
                 </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
+                <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-black/90">
                   Como conduzimos o trabalho
                 </span>
               </div>
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
+              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter font-display">
                 Da recomendação ao acompanhamento.
               </h2>
-              <p className="text-black/85 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase font-bold">
+              <p className="text-black/85 text-xs sm:text-xs max-w-lg leading-relaxed font-sans font-extrabold uppercase font-bold">
                 A TAG08 organiza cada projeto com escopo claro, responsáveis definidos, etapas visíveis e revisões necessárias para que a execução não dependa de improviso.
               </p>
             </div>
@@ -715,7 +715,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 ].map((step, idx) => (
                   <div key={idx} className="rounded-2xl border border-white/5 bg-white/[0.02] p-4 space-y-2">
                     <div className="flex items-center justify-between gap-3">
-                      <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold">
+                      <span className="tag08-meta text-xs text-brand uppercase tracking-wider font-extrabold">
                         0{idx + 1}
                       </span>
                       <span className="w-2 h-2 rounded-full bg-brand-secondary/50" />
@@ -729,14 +729,14 @@ export default function Servicos({ onNavigate }: ServicosProps) {
               <div className="flex flex-col sm:flex-row gap-3 pt-2 relative z-10">
                 <button
                   onClick={() => handleLinkClick("/contato")}
-                  className="inline-flex items-center justify-center gap-2 bg-brand text-black hover:bg-brand-dark font-mono font-black text-[10px] uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
+                  className="inline-flex items-center justify-center gap-2 bg-brand text-black hover:bg-brand-dark tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
                 >
                   FALAR COM A TAG08
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={() => handleLinkClick("/servicos")}
-                  className="inline-flex items-center justify-center gap-2 bg-black/5 border border-black/10 text-black hover:bg-black/10 font-mono font-black text-[10px] uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
+                  className="inline-flex items-center justify-center gap-2 bg-black/5 border border-black/10 text-black hover:bg-black/10 tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
                 >
                   VER SOLUÇÕES
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -758,14 +758,14 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             {/* Left Column: Title & FAQ Buttons list */}
             <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
                   Dúvidas antes de escolher
                 </div>
-                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
+                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter">
                   Entenda como escolher <br />
                   a solução certa.
                 </h2>
-                <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-sm">
                   A página de Serviços existe para orientar o ponto de partida. A recomendação final depende do momento da marca, dos gargalos atuais e da capacidade de execução.
                 </p>
               </div>
@@ -787,7 +787,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                         : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
                     }`}
                   >
-                    <span className="font-mono text-xs font-black uppercase tracking-wider flex items-center gap-3">
+                    <span className="tag08-meta text-xs font-black uppercase tracking-wider flex items-center gap-3">
                       <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
                         {String(item.id + 1).padStart(2, '0')}.
                       </span>
@@ -816,12 +816,12 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
                 </svg>
               </div>
-              <div className="absolute top-6 left-6 z-10 pointer-events-none font-mono text-[8px] text-white/20 uppercase tracking-widest leading-none">
+              <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
                 SYS // INTEGRATIONS
               </div>
 
               <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left font-sans">
-                <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
+                <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
                   {([
                     "PONTO DE PARTIDA",
                     "PACOTES",
@@ -841,7 +841,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   ])[activeFaq]}
                 </h4>
 
-                <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
+                <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
                     "Não. O primeiro passo é entender o momento da sua marca. A partir do diagnóstico, indicamos se faz mais sentido começar por estratégia, conteúdo, identidade, site, audiovisual, processos ou manutenção.",
                     "Temos soluções estruturadas, mas a recomendação não é automática. O escopo depende do problema real, da maturidade da marca, da urgência e da estrutura disponível para executar.",
@@ -857,7 +857,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">ORIENTAÇÃO</span>
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">ORIENTAÇÃO</span>
                   <h4 className="text-white font-semibold text-sm leading-snug font-display">Escolha melhor antes de avançar</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     A TAG08 organiza o ponto de partida para evitar escolhas apressadas e escopos desalinhados.
@@ -874,9 +874,9 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">PRÓXIMO PASSO</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer entender o melhor caminho?</h4>
-                  <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
+                  <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">PRÓXIMO PASSO</span>
+                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">Quer entender o melhor caminho?</h4>
+                  <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
                     Antes de propor qualquer solução, a TAG08 entende seu momento, seus desafios e suas prioridades.
                   </p>
                 </div>
@@ -903,10 +903,10 @@ export default function Servicos({ onNavigate }: ServicosProps) {
           <div className="absolute inset-0 bg-gradient-to-r from-brand-secondary/[0.01] via-transparent to-transparent pointer-events-none" />
           
           <div className="space-y-2">
-            <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-semibold bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-semibold bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
               Próximo passo
             </span>
-            <h3 className="font-display font-medium text-xl sm:text-2xl text-white uppercase tracking-tight leading-none">
+            <h3 className="font-display font-medium text-xl sm:text-2xl text-white tracking-tight leading-none">
               Vamos entender qual solução faz sentido para a sua marca?
             </h3>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">

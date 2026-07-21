@@ -1,4 +1,4 @@
-﻿import { ArrowLeft, Compass, Globe, MessageSquare, ArrowUpRight, ShieldAlert } from "lucide-react";
+import { ArrowLeft, Compass, Globe, MessageSquare, ArrowUpRight, ShieldAlert } from "lucide-react";
 import { motion } from "motion/react";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
 
@@ -38,7 +38,7 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
               </div>
               <div className="absolute top-2 left-1 text-[120px] sm:text-[150px] md:text-[160px] font-display font-black leading-none text-white tracking-tighter opacity-15 select-none pointer-events-none blur-[1px]" />
               <div className="absolute -bottom-1 -right-1.5 px-3 py-1 bg-white/5 border border-white/10 rounded-lg backdrop-blur-md">
-                <span className="font-mono text-[9px] text-zinc-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
+                <span className="tag08-meta text-xs text-zinc-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
                   <ShieldAlert className="w-3 h-3 text-brand-secondary" />
                   SYS_DESALINHADO
                 </span>
@@ -46,10 +46,10 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
             </motion.div>
 
             <div className="pt-2 text-center md:text-left space-y-2">
-              <span className="font-mono text-[9.5px] text-zinc-500 uppercase tracking-widest font-black block">
+              <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-black block">
                 DIREÇÃO & GOVERNANÇA DE ATIVOS
               </span>
-              <p className="text-zinc-500 text-[11px] leading-relaxed font-sans max-w-xs mx-auto md:mx-0 select-none">
+              <p className="text-zinc-500 text-xs leading-relaxed font-sans max-w-xs mx-auto md:mx-0 select-none">
                 O endereço referenciado não reside sob o mapeamento técnico da agência TAG08.
               </p>
             </div>
@@ -57,10 +57,10 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
 
           <div className="md:col-span-7 space-y-8 text-left">
             <div className="space-y-3.5">
-              <span className="font-mono text-[10px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-3 py-1 rounded w-max block">
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-3 py-1 rounded w-max block">
                 ROTA INTERROMPIDA
               </span>
-              <h1 className="font-display font-black text-3xl sm:text-4xl text-white uppercase tracking-tight leading-none text-left">
+              <h1 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight leading-none text-left">
                 Oops, Parecemos Fora de Rumo!
               </h1>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-lg">
@@ -83,7 +83,7 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
                     <span>Voltar ao Início</span>
                     <ArrowLeft className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 duration-200 text-brand" />
                   </h4>
-                  <p className="text-zinc-500 text-[11px] leading-snug">
+                  <p className="text-zinc-500 text-xs leading-snug">
                     Retorne para a governança central e explore toda a nossa apresentação corporativa.
                   </p>
                 </div>
@@ -103,7 +103,7 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
                     <span>Nossas Soluções</span>
                     <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 duration-200 text-brand" />
                   </h4>
-                  <p className="text-zinc-500 text-[11px] leading-snug">
+                  <p className="text-zinc-500 text-xs leading-snug">
                     Descubra nossos ecossistemas de Branding, Desenvolvimento Web e Processos Sênior.
                   </p>
                 </div>
@@ -116,7 +116,7 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
                   <MessageSquare className="w-4 h-4 text-brand-secondary" />
                 </div>
                 <div className="space-y-0.5">
-                  <span className="font-mono text-[8px] text-black/60 uppercase tracking-wider font-extrabold block">
+                  <span className="tag08-meta text-xs text-black/60 uppercase tracking-wider font-extrabold block">
                     SUPORTE E VIABILIDADE
                   </span>
                   <p className="text-black font-semibold text-xs leading-none font-sans">
@@ -129,7 +129,7 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
                 href={buildBrazilWhatsAppUrl("Olá,%20acabei%20de%20encontrar%2520uma%2520rota%2520404%2520no%2520portal%2520da%2520TAG08!")}
                 target="_blank"
                 rel="noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-1 bg-black hover:bg-neutral-900 border border-black text-white px-4 py-2.5 rounded-xl font-mono text-[10px] uppercase font-black tracking-widest hover:scale-[1.02] transition-all cursor-pointer whitespace-nowrap"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1 bg-black hover:bg-neutral-900 border border-black text-white px-4 py-2.5 rounded-xl font-sans text-xs uppercase font-black tracking-widest hover:scale-[1.02] transition-all cursor-pointer whitespace-nowrap"
               >
                 <span>Chamar suporte</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-brand-secondary" />

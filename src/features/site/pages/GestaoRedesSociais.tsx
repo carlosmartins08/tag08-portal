@@ -1,4 +1,4 @@
-﻿import { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { MessageSquare, Sparkles, TrendingUp, ArrowUpRight, ArrowRight, Users, Plus, Minus } from "lucide-react";
@@ -459,20 +459,20 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
       <Subtle3DCanvas intensity={1.3} className="absolute right-[-8%] top-[5%] w-[480px] h-[480px] opacity-[0.35] mix-blend-screen hidden lg:block" />
 
       {/* SECTION 1 - HERO: THE EDITORIAL SYSTEM (Synchronized Style) */}
-      <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-20 border-b border-white/[0.04]">
+      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta self-start">
                 GESTÃO DE REDES SOCIAIS // TAG08
               </div>
-              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display">
+              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter font-display">
                 Redes sociais <br />
                 <span className="text-brand">com direção, linha editorial e consistência.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
-              <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
+              <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-medium">
                 A TAG08 organiza a presença da marca nas redes sociais com estratégia, narrativa, calendário, formatos e acompanhamento para que o conteúdo deixe de ser postagem solta e passe a cumprir uma função clara.
               </p>
             </div>
@@ -485,6 +485,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                 sizes="100vw"
                 src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1600"
                 alt="Presença com direção TAG08"
+                preload
                 className="object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
               />
@@ -494,7 +495,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(45px)" }}>
                 <button
                   onClick={() => handleLinkClick("/servicos/producao-audiovisual")}
-                  className="group bg-brand-secondary text-black font-mono font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
+                  className="group bg-brand-secondary text-black font-sans font-black text-xs sm:text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
                 >
                   <span>CONHECER PRODUCAO AUDIOVISUAL</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -503,11 +504,11 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
 
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
-                  <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-bold">FORMATOS EM USO // TAG08</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Recortes com direção e revisão</h4>
+                  <span className="tag08-meta text-xs text-brand-secondary tracking-widest block uppercase font-bold">FORMATOS EM USO // TAG08</span>
+                  <h4 className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Recortes com direção e revisão</h4>
                 </div>
 
-                <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
+                <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-xs text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
                   <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
                   <span>CONTEUDO EM ANDAMENTO</span>
                 </div>
@@ -518,30 +519,30 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Linha editorial</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Temas, formatos e prioridades<br/>organizados com intenção</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Temas, formatos e prioridades<br/>organizados com intenção</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Frequência possível</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Cadência pensada para a<br/>realidade da operação</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Cadência pensada para a<br/>realidade da operação</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Narrativa de marca</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Mensagem coerente entre feed,<br/>legenda e conversa</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Mensagem coerente entre feed,<br/>legenda e conversa</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Acompanhamento</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Revisão contínua para ajustar<br/>a direção quando preciso</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Revisão contínua para ajustar<br/>a direção quando preciso</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* SECTION 2 - SEGMENTATION / QUANDO INVESTIR IN SOCIAL MEDIA */}
-      <section className="px-4 sm:px-6 md:px-8 py-16 border-b border-white/[0.04] bg-charcoal-900/10 text-left">
+      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/10 text-left">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           <div className="lg:col-span-4 space-y-4">
-            <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block font-bold">Sinais de desalinhamento</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase leading-none tracking-tight">
+            <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">Sinais de desalinhamento</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white leading-none tracking-tight">
               Quando as redes sociais <span className="text-brand">deixam de construir presença.</span>
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
@@ -550,37 +551,37 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
           </div>
 
           <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Postagens sem direção</span>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+            <div className="tag08-surface-card p-6 border hover:border-brand/40 duration-300 rounded-3xl space-y-3 transition-all">
+              <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">Postagens sem direção</span>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Os conteúdos saem, mas não parecem construir uma narrativa clara sobre a marca, seus diferenciais ou sua forma de gerar valor.
               </p>
             </div>
 
-            <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Calendário sem prioridade</span>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+            <div className="tag08-surface-card p-6 border hover:border-brand/40 duration-300 rounded-3xl space-y-3 transition-all">
+              <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">Calendário sem prioridade</span>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 A rotina existe, mas os temas sóo definidos por urgência, tendência ou improviso, sem conexão com uma estratégia maior.
               </p>
             </div>
 
-            <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Visual sem consistência</span>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+            <div className="tag08-surface-card p-6 border hover:border-brand/40 duration-300 rounded-3xl space-y-3 transition-all">
+              <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">Visual sem consistência</span>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Cada peça parece seguir uma lógica diferente, enfraquecendo reconhecimento, confiança e percepção profissional.
               </p>
             </div>
 
-            <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Pouca conexão com o comercial</span>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+            <div className="tag08-surface-card p-6 border hover:border-brand/40 duration-300 rounded-3xl space-y-3 transition-all">
+              <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">Pouca conexão com o comercial</span>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 O conteúdo até movimenta a página, mas não ajuda o público a entender melhor a oferta, o processo ou o próximo passo.
               </p>
             </div>
 
-            <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl space-y-2 transition-all sm:col-span-2">
-              <span className="font-mono text-[10px] text-brand uppercase font-black tracking-wider block">Produção difícil de sustentar</span>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+            <div className="tag08-surface-card p-6 border hover:border-brand/40 duration-300 rounded-3xl space-y-3 transition-all sm:col-span-2">
+              <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">Produção difícil de sustentar</span>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 A marca depende de esforço pontual, ideias soltas e aprovações demoradas, tornando a presença instável.
               </p>
             </div>
@@ -588,11 +589,11 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
         </div>
       </section>
       {/* SECTION 3 - DELIVERABLES (The "What" with Clean Features Grid) */}
-      <section className="px-4 sm:px-6 md:px-8 py-16 border-b border-white/[0.04]">
+      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-2 max-w-2xl">
-            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">O que organizamos</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">O que organizamos</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">
               Gestão de redes não é só calendário. É direção editorial.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
@@ -601,61 +602,61 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
-            <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
+            <div className="tag08-surface-card border hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
               <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Linha editorial</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Linha editorial</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Definição de temas, mensagens, pilares de conteúdo e prioridades para orientar a comunicação da marca.
                 </p>
               </div>
             </div>
 
-            <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
+            <div className="tag08-surface-card border hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
               <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
                 <MessageSquare className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Calendário possível</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Calendário possível</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Organização de uma rotina de publicação compatével com o momento, a equipe, os canais e a capacidade de aprovação.
                 </p>
               </div>
             </div>
 
-            <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
+            <div className="tag08-surface-card border hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
               <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
                 <TrendingUp className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Criação de conteúdo</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Criação de conteúdo</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Desenvolvimento de legendas, peças, roteiros e formatos alinhados ao posicionamento e ao objetivo de cada publicação.
                 </p>
               </div>
             </div>
 
-            <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
+            <div className="tag08-surface-card border hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
               <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
                 <Users className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Direção visual</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Direção visual</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Aplicação de identidade, estética, hierarquia e consistência visual para fortalecer reconhecimento e percepção profissional.
                 </p>
               </div>
             </div>
 
-            <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
+            <div className="tag08-surface-card border hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
               <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Acompanhamento e revisão</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Acompanhamento e revisão</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Leitura do que precisa evoluir, ajustes de rota, organização de feedbacks e melhoria contínua do processo editorial.
                 </p>
               </div>
@@ -664,15 +665,15 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
         </div>
       </section>
       {/* SECTION 4 - PLANOS DISPONaVEIS & COPES (Immediate Action Offerings) */}
-      <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-neutral-900/10 text-left">
-        <div className="max-w-7xl mx-auto space-y-28">
+      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-neutral-900/10 text-left">
+        <div className="max-w-7xl mx-auto space-y-16 lg:space-y-20">
           
           {/* SECTION 4 - PLANOS DISPONIVEIS */}
           <div className="space-y-3 max-w-3xl">
-            <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
               Níveis de escopo
             </span>
-            <h2 className="font-display font-medium text-3xl sm:text-4xl text-white leading-tight uppercase">
+            <h2 className="font-display font-medium text-3xl sm:text-4xl text-white leading-tight">
               Escolha o escopo pelo momento da sua presença digital.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
@@ -708,14 +709,14 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               >
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
-                    <span className="font-sans text-[9px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black max-w-max">
+                    <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black max-w-max">
                       {plan.badge}
                     </span>
-                    <span className="font-sans text-[9px] text-zinc-500 font-bold">ESCOPO</span>
+                    <span className="font-sans text-xs text-zinc-500 font-bold">ESCOPO</span>
                   </div>
 
-                  <h3 className="text-white font-display font-medium text-xl uppercase tracking-tight leading-none pt-2">{plan.name}</h3>
-                  <p className="text-brand-secondary text-[10px] font-black uppercase tracking-[0.22em]">{plan.subtitle}</p>
+                  <h3 className="text-white font-display font-medium text-xl tracking-tight leading-none pt-2">{plan.name}</h3>
+                  <p className="text-brand-secondary text-xs font-black uppercase tracking-[0.22em]">{plan.subtitle}</p>
                   <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">{plan.desc}</p>
                 </div>
 
@@ -723,7 +724,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                   <button
                     type="button"
                     onClick={() => handleLinkClick("/contato")}
-                    className="group inline-flex items-center justify-center gap-2 rounded-full border border-brand-secondary/20 bg-brand-secondary/10 px-4 py-2 text-[9px] font-black uppercase tracking-widest text-brand-secondary transition-all duration-300 hover:bg-brand-secondary hover:text-black"
+                    className="group inline-flex items-center justify-center gap-2 rounded-full border border-brand-secondary/20 bg-brand-secondary/10 px-4 py-2 text-xs font-black uppercase tracking-widest text-brand-secondary transition-all duration-300 hover:bg-brand-secondary hover:text-black"
                   >
                     <span>ENTENDER ESCOPO</span>
                   </button>
@@ -736,10 +737,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
             
             {/* Left intro details column */}
             <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-24">
-              <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
                 ALINHAMENTO DE EXPECTATIVAS // TRANSPARÊNCIA
               </span>
-              <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
+              <h3 className="font-display font-medium text-3xl text-white tracking-tight">
                 O que garantimos (e o que foca em outras areas)
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
@@ -757,7 +758,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               {/* Incluso */}
               <div className="bg-charcoal-900 border border-white/[0.05] p-7 rounded-3xl space-y-5 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-brand/30" />
-                <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded font-black uppercase inline-block">
+                <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded font-black uppercase inline-block">
                   INCLUSO NO ESCOPO MENSAL
                 </span>
                 
@@ -780,7 +781,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               {/* Não incluso */}
               <div className="bg-charcoal-900 border border-white/[0.05] p-7 rounded-3xl space-y-5 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-zinc-600/30" />
-                <span className="font-mono text-[9px] text-zinc-500 bg-white/[0.02] border border-white/5 px-2.5 py-1 rounded font-black uppercase inline-block">
+                <span className="font-sans text-xs text-zinc-500 bg-white/[0.02] border border-white/5 px-2.5 py-1 rounded font-black uppercase inline-block">
                   NÃO INCLUÍDO NESTA DIVISÃO
                 </span>
                 
@@ -799,7 +800,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                   ))}
                 </div>
                 
-                <p className="text-[10px] text-zinc-500 font-mono leading-normal pt-2 border-t border-white/[0.03] uppercase">
+                <p className="text-xs text-zinc-500 font-sans leading-normal pt-2 border-t border-white/[0.03] uppercase">
                   * Disponaveis em outras frentes integradas do ecossistema.
                 </p>
               </div>
@@ -809,10 +810,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
           {/* Ciclo Mensal de Operação - CHRONOLOGICAL TIMELINE */}
           <div className="space-y-10 pt-12 border-t border-white/[0.04]">
             <div className="space-y-3">
-              <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
                 METODOLOGIA DE FLUXO
               </span>
-              <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
+              <h3 className="font-display font-medium text-3xl text-white tracking-tight">
                 Nosso Ciclo Mensal Sistemático
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
@@ -828,11 +829,11 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                 { title: "Acompanhamento contínuo", desc: "Revisamos a rotina e os aprendizados para ajustar temas, formatos e frequência quando necessório." }
               ].map((step, sIdx) => (
                 <div key={sIdx} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-2xl text-left space-y-4 hover:border-brand/10 transition-all duration-300">
-                  <div className="font-sans text-[10px] font-black text-brand-secondary bg-brand-secondary/5 w-8 h-8 rounded-lg flex items-center justify-center border border-brand-secondary/10 shadow-[0_4px_10px_rgba(var(--color-brand-secondary-rgb),0.05)]">
+                  <div className="font-sans text-xs font-black text-brand-secondary bg-brand-secondary/5 w-8 h-8 rounded-lg flex items-center justify-center border border-brand-secondary/10 shadow-[0_4px_10px_rgba(var(--color-brand-secondary-rgb),0.05)]">
                     0{sIdx + 1}
                   </div>
                   <div className="space-y-1">
-                    <h4 className="text-white font-display font-bold text-xs sm:text-sm uppercase tracking-tight">{step.title}</h4>
+                    <h4 className="text-white font-display font-bold text-xs sm:text-sm tracking-tight">{step.title}</h4>
                     <p className="text-zinc-400 text-xs leading-relaxed font-sans">{step.desc}</p>
                   </div>
                 </div>
@@ -843,10 +844,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
           {/* Relatórios e Aprendizados - ACTIVE DASHBOARD PREVIEW */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-12 border-t border-white/[0.04]">
             <div className="lg:col-span-5 space-y-4">
-              <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+              <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
                 CULTURE OF METRICS MENSAL
               </span>
-              <h3 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
+              <h3 className="font-display font-medium text-3xl text-white tracking-tight">
                 Acompanhamos a presença para melhorar a consistência editorial
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
@@ -863,7 +864,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               ].map((item, iIdx) => (
                 <div key={iIdx} className="p-5 rounded-2xl bg-charcoal-900/60 border border-white/[0.03] space-y-1.5 text-left hover:border-brand/10 transition-colors">
                   <div className="w-2 h-2 rounded-full bg-brand-secondary" />
-                  <h4 className="text-white text-xs sm:text-sm font-display font-bold uppercase tracking-tight">{item.title}</h4>
+                  <h4 className="text-white text-xs sm:text-sm font-display font-bold tracking-tight">{item.title}</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">{item.desc}</p>
                 </div>
               ))}
@@ -877,10 +878,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
       <section className="px-4 sm:px-6 md:px-8 py-10 border-b border-white/[0.04] bg-charcoal-900/40 text-left">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
           <div className="space-y-2 max-w-3xl">
-            <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
               Critérios de confiança
             </span>
-            <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">
+            <h4 className="text-white font-display font-black text-sm tracking-tight">
               O que sustenta uma presença mais consistente.
             </h4>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed max-w-2xl">
@@ -890,20 +891,20 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
 
           <div className="grid grid-cols-2 gap-3 w-full max-w-xl">
             <div className="rounded-2xl border border-white/[0.06] bg-black/20 px-4 py-3 space-y-1">
-              <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Linha editorial</span>
-              <p className="text-[11px] leading-relaxed text-zinc-300">Temas, mensagens e formatos organizados antes da produção.</p>
+              <span className="block text-xs font-black uppercase tracking-widest text-brand-secondary">Linha editorial</span>
+              <p className="text-xs leading-relaxed text-zinc-300">Temas, mensagens e formatos organizados antes da produção.</p>
             </div>
             <div className="rounded-2xl border border-white/[0.06] bg-black/20 px-4 py-3 space-y-1">
-              <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Rotina possível</span>
-              <p className="text-[11px] leading-relaxed text-zinc-300">Frequência compatével com a estrutura real da marca.</p>
+              <span className="block text-xs font-black uppercase tracking-widest text-brand-secondary">Rotina possível</span>
+              <p className="text-xs leading-relaxed text-zinc-300">Frequência compatével com a estrutura real da marca.</p>
             </div>
             <div className="rounded-2xl border border-white/[0.06] bg-black/20 px-4 py-3 space-y-1">
-              <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Consistência visual</span>
-              <p className="text-[11px] leading-relaxed text-zinc-300">Peças alinhadas à identidade, estética e percepção desejada.</p>
+              <span className="block text-xs font-black uppercase tracking-widest text-brand-secondary">Consistência visual</span>
+              <p className="text-xs leading-relaxed text-zinc-300">Peças alinhadas à identidade, estética e percepção desejada.</p>
             </div>
             <div className="rounded-2xl border border-white/[0.06] bg-black/20 px-4 py-3 space-y-1">
-              <span className="block text-[9px] font-black uppercase tracking-widest text-brand-secondary">Acompanhamento</span>
-              <p className="text-[11px] leading-relaxed text-zinc-300">Revisão, aprendizados e ajustes para manter a presença em evolução.</p>
+              <span className="block text-xs font-black uppercase tracking-widest text-brand-secondary">Acompanhamento</span>
+              <p className="text-xs leading-relaxed text-zinc-300">Revisão, aprendizados e ajustes para manter a presença em evolução.</p>
             </div>
           </div>
         </div>
@@ -928,10 +929,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
 
         <div className="max-w-7xl mx-auto space-y-12 relative z-10">
           <div className="space-y-3 max-w-3xl">
-            <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
               Diagnóstico editorial
             </span>
-            <h2 className="font-display font-medium text-3xl text-white uppercase tracking-tight">
+            <h2 className="font-display font-medium text-3xl text-white tracking-tight">
               O que está travando sua presença nas redes?
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
@@ -943,10 +944,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
             <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-5">
                 <div className="flex items-center justify-between gap-3 border-b border-white/[0.05] pb-3">
-                  <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold block">
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
                     Pré-qualificação editorial
                   </span>
-                  <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
+                  <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
                     {answeredCount}/{EDITORIAL_DIAGNOSTIC_QUESTIONS.length} respostas
                   </span>
                 </div>
@@ -972,18 +973,18 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div className="space-y-1.5">
-                            <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-black block">
+                            <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-black block">
                               {question.step}
                             </span>
-                            <p className="text-xs font-mono text-zinc-200 font-bold uppercase tracking-wider block">
+                            <p className="text-xs tag08-meta text-zinc-200 font-bold uppercase tracking-wider block">
                               {question.title}
                             </p>
-                            <p className="text-[11px] text-zinc-400 leading-relaxed">
+                            <p className="text-xs text-zinc-400 leading-relaxed">
                               {question.helper}
                             </p>
                           </div>
                           {hasSelection && (
-                            <span className="inline-flex shrink-0 items-center rounded-full border border-brand/20 bg-brand/5 px-2.5 py-1 font-mono text-[8px] uppercase tracking-widest text-brand">
+                            <span className="inline-flex shrink-0 items-center rounded-full border border-brand/20 bg-brand/5 px-2.5 py-1 tag08-meta text-xs uppercase tracking-widest text-brand">
                               OK
                             </span>
                           )}
@@ -998,7 +999,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                                 type="button"
                                 aria-pressed={isActive}
                                 onClick={() => handleDiagnosticAnswerSelect(question, option.value)}
-                                className={`rounded-xl border px-3 py-3 text-left transition-all duration-200 cursor-pointer text-xs sm:text-[13px] leading-snug hover:-translate-y-0.5 ${
+                                className={`rounded-xl border px-3 py-3 text-left transition-all duration-200 cursor-pointer text-xs sm:text-xs leading-snug hover:-translate-y-0.5 ${
                                   isActive
                                     ? "bg-brand-secondary/10 border-brand-secondary text-brand-secondary"
                                     : "bg-white/[0.01] border-white/10 text-zinc-300 hover:text-white hover:border-white/20"
@@ -1011,7 +1012,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                         </div>
 
                         {hasSelection && (
-                          <p className="text-[10px] text-brand-secondary font-mono uppercase tracking-widest leading-relaxed">
+                          <p className="text-xs text-brand-secondary tag08-meta uppercase tracking-widest leading-relaxed">
                             Seleção atual: {selectedLabels}
                           </p>
                         )}
@@ -1022,7 +1023,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <label className="space-y-2 rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 text-left">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-bold block">
+                    <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
                       Nome
                     </span>
                     <input
@@ -1035,7 +1036,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                   </label>
 
                   <label className="space-y-2 rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 text-left">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-bold block">
+                    <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
                       WhatsApp
                     </span>
                     <input
@@ -1056,10 +1057,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                     className="mt-1 h-4 w-4 rounded border-white/20 bg-black/40 accent-brand"
                   />
                   <span className="space-y-1">
-                    <span className="block font-mono text-[9px] text-zinc-300 font-bold uppercase tracking-widest">
+                    <span className="block tag08-meta text-xs text-zinc-300 font-bold uppercase tracking-widest">
                       Consentimento LGPD
                     </span>
-                    <span className="block text-[11px] text-zinc-400 leading-relaxed">
+                    <span className="block text-xs text-zinc-400 leading-relaxed">
                       Autorizo a TAG08 a usar essas respostas para continuar o atendimento por WhatsApp e evitar que eu repita tudo depois.
                     </span>
                   </span>
@@ -1069,11 +1070,11 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] space-y-2">
                 <div className="flex items-center gap-2 text-brand">
                   <Sparkles className="w-4 h-4 shrink-0" />
-                  <span className="text-[10px] font-mono font-black uppercase tracking-wider">
+                  <span className="text-xs tag08-meta font-black uppercase tracking-wider">
                     Resumo útil para atendimento
                   </span>
                 </div>
-                <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
+                <p className="text-xs text-zinc-400 leading-relaxed font-sans">
                   As respostas viram uma leitura organizada que a equipe pode abrir já com contexto. O objetivo é reduzir repetição e acelerar a conversa certa.
                 </p>
               </div>
@@ -1085,10 +1086,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               <div className="space-y-6 w-full">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div className="space-y-2 max-w-2xl">
-                    <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
+                    <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
                       Seu diagnóstico editorial
                     </span>
-                    <h3 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
+                    <h3 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">
                       Resumo pronto para enviar
                     </h3>
                     <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
@@ -1097,7 +1098,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                   </div>
 
                   <div className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-3 min-w-[120px]">
-                    <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-bold block">
+                    <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
                       Progresso
                     </span>
                     <p className="text-2xl font-display font-black text-white leading-none mt-1">
@@ -1116,10 +1117,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {diagnosticSummaryCards.map((card) => (
                     <div key={card.label} className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-4 space-y-1.5">
-                      <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-bold block">
+                      <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
                         {card.label}
                       </span>
-                      <p className="text-sm sm:text-[15px] text-white font-semibold leading-snug">
+                      <p className="text-sm sm:text-sm text-white font-semibold leading-snug">
                         {card.value}
                       </p>
                     </div>
@@ -1128,7 +1129,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 space-y-1.5">
-                    <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-bold block">
+                    <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
                       Contato recebido
                     </span>
                     <p className="text-sm text-white font-semibold leading-snug">
@@ -1136,7 +1137,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                     </p>
                   </div>
                   <div className="rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 space-y-1.5">
-                    <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-bold block">
+                    <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
                       WhatsApp informado
                     </span>
                     <p className="text-sm text-white font-semibold leading-snug">
@@ -1147,10 +1148,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
 
                 <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-5 space-y-3">
                   <div className="flex items-center justify-between gap-3">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase font-bold block">
+                    <span className="font-sans text-xs text-zinc-500 uppercase font-bold block">
                       Leitura da TAG08
                     </span>
-                    <span className={`font-mono text-[8px] uppercase tracking-widest font-black px-2.5 py-1 rounded-md border ${
+                    <span className={`tag08-meta text-xs uppercase tracking-widest font-black px-2.5 py-1 rounded-md border ${
                       diagnosticConsent
                         ? "text-brand-secondary border-brand-secondary/20 bg-brand-secondary/5"
                         : "text-zinc-500 border-white/[0.05] bg-white/[0.01]"
@@ -1169,7 +1170,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
 
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-t border-white/[0.05] pt-4 mt-6">
                 <div className="space-y-1.5 max-w-md">
-                  <span className="font-mono text-[8px] text-zinc-600 uppercase tracking-widest font-bold block">
+                  <span className="tag08-meta text-xs text-zinc-600 uppercase tracking-widest font-bold block">
                     Antes de compartilhar
                   </span>
                   <p className="text-zinc-400 text-xs leading-relaxed">
@@ -1191,7 +1192,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                       trackSimulator("cta_clicked");
                     }
                   }}
-                  className={`group inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-mono text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
+                  className={`group inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 tag08-meta text-xs font-black uppercase tracking-widest transition-all duration-300 ${
                     diagnosticReady
                       ? "bg-brand text-black hover:bg-brand-dark shadow-[0_12px_35px_rgba(var(--color-brand-secondary-rgb),0.2)]"
                       : "cursor-not-allowed bg-white/[0.05] text-zinc-500 border border-white/[0.06]"
@@ -1214,10 +1215,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-end">
             <div className="lg:col-span-7 space-y-3">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-secondary/15 border border-brand-secondary/20 text-brand-secondary font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-secondary/15 border border-brand-secondary/20 text-brand-secondary font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
                 FORMATOS AUDIOVISUAIS // TAG08
               </div>
-              <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white leading-none tracking-tighter uppercase">
+              <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white leading-none tracking-tighter">
                 Conteúdos recentes do canal com função editorial.
               </h2>
             </div>
@@ -1259,25 +1260,25 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-black/25" />
 
                   <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/60 px-3 py-1.5 backdrop-blur-md">
-                    <span className="font-mono text-[9px] font-black uppercase tracking-[0.24em] text-brand-secondary">
+                    <span className="tag08-meta text-xs font-black uppercase tracking-[0.24em] text-brand-secondary">
                       CONTEÚDO RECENTE
                     </span>
                   </div>
 
                   <div className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/60 px-3 py-1.5 backdrop-blur-md">
-                    <span className="font-mono text-[9px] font-black uppercase tracking-[0.24em] text-zinc-200">
+                    <span className="tag08-meta text-xs font-black uppercase tracking-[0.24em] text-zinc-200">
                       YouTube oficial
                     </span>
                   </div>
 
                   <div className="absolute inset-x-4 bottom-4 space-y-2">
-                    <span className="font-mono text-[9px] font-black uppercase tracking-[0.28em] text-brand-secondary/90">
+                    <span className="tag08-meta text-xs font-black uppercase tracking-[0.28em] text-brand-secondary/90">
                       {video.category}
                     </span>
-                    <h3 className="font-display text-lg leading-tight font-black text-white uppercase">
+                    <h3 className="font-display text-lg leading-tight font-black text-white">
                       {video.title}
                     </h3>
-                    <div className="flex items-center justify-between gap-3 border-t border-white/10 pt-3 text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-zinc-200">
+                    <div className="flex items-center justify-between gap-3 border-t border-white/10 pt-3 text-xs tag08-meta font-bold uppercase tracking-[0.18em] text-zinc-200">
                       <span>Assistir no YouTube</span>
                       <ArrowUpRight className="h-4 w-4 stroke-[2.5] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                     </div>
@@ -1288,7 +1289,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
           </div>
 
           <div className="flex flex-col gap-2 border border-white/[0.05] bg-white/[0.02] rounded-[24px] p-5 sm:p-6">
-            <span className="font-mono text-[9px] font-black uppercase tracking-[0.28em] text-brand-secondary">
+            <span className="tag08-meta text-xs font-black uppercase tracking-[0.28em] text-brand-secondary">
               Fonte oficial
             </span>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
@@ -1317,10 +1318,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   SISTEMA DE TRABALHO
                 </span>
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/40 tracking-wider">
                   TAG08
                 </span>
               </div>
@@ -1333,10 +1334,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                 </div>
               </div>
               <div className="flex justify-between items-end">
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/40 tracking-wider">
                   fluxo editorial
                 </span>
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   acompanhamento
                 </span>
               </div>
@@ -1350,15 +1351,15 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                 <div className="w-5 h-5 rounded-full bg-brand flex items-center justify-center">
                   <span className="w-2 h-2 rounded-full bg-black animate-ping" />
                 </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-brand">
+                <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-brand">
                   SISTEMA DE TRABALHO
                 </span>
               </div>
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter uppercase font-display">
+              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter font-display">
                 COMO CONDUZIMOS A <br />
                     GESTÃO DE REDES SOCIAIS.
               </h2>
-              <p className="text-zinc-300 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
+              <p className="text-zinc-300 text-xs sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
                 A TAG08 organiza a presenca nas redes com planejamento editorial, producao alinhada, revisao, publicacao e acompanhamento. O objetivo e reduzir improviso e manter a comunicacao coerente com o posicionamento da marca.
               </p>
             </div>
@@ -1370,7 +1371,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                   <ArrowUpRight className="w-5 h-5 rotate-45 stroke-[2.5]" />
                 </div>
                 <div className="space-y-0.5">
-                  <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
+                  <span className="tag08-meta text-xs text-brand uppercase tracking-wider font-extrabold block">
                     PLANEJAMENTO EDITORIAL
                   </span>
                   <p className="text-white text-xs leading-snug font-sans font-semibold">
@@ -1389,18 +1390,18 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full bg-brand/10 flex items-center justify-center text-brand shrink-0 group-hover:bg-brand group-hover:text-black transition-all duration-200">
-                        <span className="text-[9px] font-mono font-black tracking-tight text-brand group-hover:text-black">BR</span>
+                        <span className="text-xs font-sans font-black tracking-tight text-brand group-hover:text-black">BR</span>
                       </div>
                       <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                        <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                           WHATSAPP OFICIAL
                         </span>
-                        <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
+                        <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                           +55 83 9.9886-8882
                         </span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-brand font-mono font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
+                    <span className="text-xs text-brand tag08-meta font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
                       FALAR COM A TAG08
                     </span>
                   </div>
@@ -1415,18 +1416,18 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0 group-hover:bg-brand-secondary group-hover:text-black transition-all duration-200">
-                        <span className="text-[9px] font-mono font-black tracking-tight text-brand-secondary group-hover:text-black">INT</span>
+                        <span className="text-xs font-sans font-black tracking-tight text-brand-secondary group-hover:text-black">INT</span>
                       </div>
                       <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                        <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                           WHATSAPP INTERNACIONAL
                         </span>
-                        <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand-secondary transition-colors mt-0.5">
+                        <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand-secondary transition-colors mt-0.5">
                           +56 9 9793 7611
                         </span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-brand-secondary font-mono font-bold uppercase tracking-wider bg-brand-secondary/10 py-1 px-2.5 rounded-lg group-hover:bg-brand-secondary group-hover:text-black transition-all">
+                    <span className="text-xs text-brand-secondary tag08-meta font-bold uppercase tracking-wider bg-brand-secondary/10 py-1 px-2.5 rounded-lg group-hover:bg-brand-secondary group-hover:text-black transition-all">
                       FALAR COM A TAG08
                     </span>
                   </div>
@@ -1436,11 +1437,11 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 text-xs">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-brand animate-pulse" />
-                  <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest font-extrabold">
+                  <span className="tag08-meta text-xs text-white/50 uppercase tracking-widest font-extrabold">
                     TAG08
                   </span>
                 </div>
-                <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
+                <span className="font-sans text-xs text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
                   ATENDIMENTO ONLINE
                 </span>
               </div>
@@ -1456,8 +1457,8 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
             <div className="absolute inset-0 bg-[radial-gradient(#ffffff03_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
             
             <div className="relative z-10 space-y-2 max-w-2xl">
-              <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 px-2.5 py-0.5 rounded border border-brand-secondary/10 uppercase tracking-widest font-black">PRÓXIMO PASSO</span>
-              <h3 className="font-display font-semibold text-xl sm:text-2xl text-white uppercase tracking-tight">Vamos organizar a presença da sua marca nas redes?</h3>
+              <span className="tag08-meta text-xs text-brand-secondary bg-brand-secondary/5 px-2.5 py-0.5 rounded border border-brand-secondary/10 uppercase tracking-widest font-black">PRÓXIMO PASSO</span>
+              <h3 className="font-display font-semibold text-xl sm:text-2xl text-white tracking-tight">Vamos organizar a presença da sua marca nas redes?</h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans font-medium">
                 Antes de propor uma rotina de conteúdo, a TAG08 entende seu posicionamento, seus canais, sua frequência possível e os gargalos que hoje dificultam uma presença mais consistente.
               </p>
@@ -1468,7 +1469,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                 onNavigate("/contato");
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="group relative px-6 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0 overflow-hidden shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:-translate-y-0.5 relative z-10 cursor-pointer"
+              className="group relative px-6 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0 overflow-hidden shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:-translate-y-0.5 relative z-10 cursor-pointer"
             >
               ORGANIZAR MINHA PRESENÇA <ArrowRight className="w-4 h-4 ml-1.5 inline-block group-hover:translate-x-1 transition-transform" />
             </button>
@@ -1488,14 +1489,14 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
             <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
                   Dúvidas sobre gestão de redes
                 </div>
-                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
+                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter">
                   Antes de contratar, <br />
                   entenda como a gestão funciona.
                 </h2>
-                <p className="text-zinc-300 font-medium text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
+                <p className="text-zinc-300 font-medium text-xs sm:text-xs leading-relaxed font-sans max-w-sm">
                   A gestão de redes sociais da TAG08 organiza linha editorial, frequência, formatos, criação, revisão e acompanhamento para construir uma presença mais clara e consistente.
                 </p>
               </div>
@@ -1516,7 +1517,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                           : "bg-white/[0.015] border-white/10 text-zinc-300 hover:text-white hover:border-white/20 hover:bg-white/[0.03]"
                       }`}
                     >
-                      <span className="min-w-0 font-mono text-xs font-semibold uppercase tracking-wider flex items-center gap-3">
+                      <span className="min-w-0 tag08-meta text-xs font-semibold uppercase tracking-wider flex items-center gap-3">
                         <span className={isActive ? "shrink-0 text-black" : "shrink-0 text-brand"}>
                           {String(item.id + 1).padStart(2, "0")}.
                         </span>
@@ -1552,7 +1553,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                   <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
                 </svg>
               </div>
-              <div className="absolute top-6 left-6 z-10 pointer-events-none font-mono text-[8px] text-white/20 uppercase tracking-widest leading-none">
+              <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
                 SYS // SOCIAL_MGMT
               </div>
 
@@ -1560,7 +1561,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                 id={`faq-panel-${activeFaqItem.id}`}
                 className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left"
               >
-                <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
+                <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
                   {activeFaqItem.eyebrow}
                 </span>
 
@@ -1568,7 +1569,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                   {activeFaqItem.question}
                 </h4>
 
-                <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
+                <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {activeFaqItem.answer}
                 </p>
               </div>
@@ -1577,7 +1578,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 hover:-translate-y-0.5 transition-all duration-200 text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">Como agimos</span>
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">Como agimos</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">Linha editorial, frequência possível e revisão constante.</h4>
                   <p className="text-zinc-300 text-xs leading-relaxed font-sans">
                     Evitamos improviso e mantemos a presença coerente com o posicionamento da marca.
@@ -1594,9 +1595,9 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
 
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all duration-200 text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">Próximo passo</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer entender o melhor caminho para sua marca?</h4>
-                  <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
+                  <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">Próximo passo</span>
+                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">Quer entender o melhor caminho para sua marca?</h4>
+                  <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
                     Fale com a TAG08 para entender se gestão de redes, conteúdo, audiovisual ou outro caminho faz mais sentido agora.
                   </p>
                 </div>
@@ -1617,7 +1618,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
 
       {/* SECTION 5 - ACTION TRIGGER FOOTER */}
       <section className="px-4 sm:px-6 md:px-8 py-14 sm:py-16 text-center space-y-4 sm:space-y-5 max-w-4xl mx-auto">
-        <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-white uppercase leading-tight tracking-tighter">
+        <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-white leading-tight tracking-tighter">
           Organize uma presença mais clara nas redes. <br />
           <span className="text-brand">A TAG08 ajuda a estruturar linha editorial, frequência, formatos e revisão para publicar com mais critério.</span>
         </h2>
@@ -1627,7 +1628,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
         <div className="pt-2 sm:pt-3">
           <button
             onClick={() => handleLinkClick("/contato")}
-            className="group bg-brand text-black font-mono font-black text-[10px] uppercase tracking-widest py-3.5 px-7 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
+            className="group bg-brand text-black font-sans font-black text-xs uppercase tracking-widest py-3.5 px-7 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
           >
             <span>ORGANIZAR MINHA PRESENÇA</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />

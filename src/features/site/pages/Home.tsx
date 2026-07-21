@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowUpRight, Check, CheckCircle2, TrendingUp, Cpu, Sparkles, Award, Shield, UserCheck, Play, HelpCircle, ArrowRight, MessageSquare, Activity, X, Wifi, Plus, Star, Layers, Zap, ArrowDown, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { SERVICES, PLANS } from "../../../data";
@@ -8,10 +8,10 @@ import { getVideoDescriptionPreview, type OfficialContentApiResponse } from "../
 import { trackOutboundClick, trackVideoEvent } from "../../../lib/analytics";
 import { activateOnKeyboard } from "../../../lib/keyboard";
 import { COOKIE_CONSENT_EVENT, grantMarketingConsent, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
-import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
+import HeroEditorialStage from "../../../components/HeroEditorialStage";
 import { Suspense, lazy } from "react";
 
-import heroCyberMannequin from "../../../assets/images/hero_cyber_mannequin_1780448864545.jpg";
+import heroTag08StrategyStage from "../../../assets/images/hero_tag08_strategy-stage.webp";
 import creativeLeaderPortrait from "../../../assets/images/creative_leader_portrait_1780449653164.jpg";
 import moodyClientPortrait from "../../../assets/images/moody_client_portrait_1780449811793.jpg";
 import clientAlanRocha from "../../../assets/images/client_alan_rocha_1780449828496.jpg";
@@ -610,10 +610,10 @@ function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
               <div className="w-10 h-10 rounded-full bg-white/[0.02] border border-white/5 flex items-center justify-center mb-1">
                 <CardIcon className="w-5 h-5 text-zinc-500 stroke-[1.2]" />
               </div>
-              <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-semibold">
+              <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-semibold">
                 {proofMode ? "Método em prática" : item.client}
               </span>
-              <p className="font-sans text-[10px] text-zinc-600 max-w-[190px] leading-tight line-clamp-2">
+              <p className="font-sans text-xs text-zinc-600 max-w-[190px] leading-tight line-clamp-2">
                 {proofMode ? (item.proofDescription ?? item.challenge ?? "") : `${item.category} // DIAGNÓSTICO ATIVO`}
               </p>
             </div>
@@ -631,13 +631,13 @@ function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
         )}
         
         {proofMode ? (
-          <span className="absolute top-4 left-4 z-20 bg-black/75 backdrop-blur-sm border border-white/[0.08] px-3 py-1 text-[9px] font-mono text-zinc-300 uppercase tracking-wider rounded-full">
+          <span className="absolute top-4 left-4 z-20 bg-black/75 backdrop-blur-sm border border-white/[0.08] px-3 py-1 text-xs tag08-meta text-zinc-300 uppercase tracking-wider rounded-full">
             Método em prática
           </span>
         ) : (
           <>
             {/* Floating category tag top-left */}
-            <span className="absolute top-4 left-4 z-20 bg-black/75 backdrop-blur-sm border border-white/[0.08] px-3 py-1 text-[9px] font-mono text-zinc-300 uppercase tracking-wider rounded-full">
+            <span className="absolute top-4 left-4 z-20 bg-black/75 backdrop-blur-sm border border-white/[0.08] px-3 py-1 text-xs tag08-meta text-zinc-300 uppercase tracking-wider rounded-full">
               {item.category}
             </span>
 
@@ -658,7 +658,7 @@ function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
       {/* Content under the image container */}
       <div className="pt-6 px-1 flex-1 flex flex-col justify-between text-left">
         <div className="space-y-2">
-          <span className="font-mono text-[9px] text-brand tracking-widest uppercase font-black block">
+          <span className="tag08-meta text-xs text-brand tracking-widest uppercase font-black block">
             {proofMode ? "MÉTODO APLICADO" : item.client}
           </span>
           <h3 className="font-display font-semibold text-base sm:text-lg text-white leading-snug group-hover:text-brand transition-colors">
@@ -669,7 +669,7 @@ function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
           </p>
         </div>
 
-        <div className="pt-6 mt-4 border-t border-white/[0.03] flex items-center gap-1.5 text-xs text-brand font-mono uppercase tracking-widest font-extrabold group-hover:underline">
+        <div className="pt-6 mt-4 border-t border-white/[0.03] flex items-center gap-1.5 text-xs text-brand tag08-meta uppercase tracking-widest font-extrabold group-hover:underline">
           <span>{proofMode ? "Solicitar Estudo de Caso" : "Ver Detalhes do Case"}</span>
           <ArrowUpRight className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
         </div>
@@ -683,8 +683,6 @@ interface HomeProps {
 }
 
 export default function Home({ onNavigate }: HomeProps) {
-  const [scrollY, setScrollY] = useState(0);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeServiceTab, setActiveServiceTab] = useState(0);
   const [selectedEditorialPlan, setSelectedEditorialPlan] = useState<"start" | "base" | "performance">("base");
@@ -892,25 +890,6 @@ export default function Home({ onNavigate }: HomeProps) {
     return () => clearInterval(interval);
   }, [isHoveringGmb]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5 range
-    const y = (e.clientY - rect.top) / rect.height - 0.5; // -0.5 to 0.5 range
-    setMousePos({ x, y });
-  };
-
-  const handleMouseLeave = () => {
-    setMousePos({ x: 0, y: 0 });
-  };
-
   const handleLinkClick = (page: string) => {
     onNavigate(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -937,14 +916,9 @@ export default function Home({ onNavigate }: HomeProps) {
       {/* SECTION 1 - NEW ADVANCED HIGH-DESCRIPTIVE HERO */}
       <section id="hero" className="relative min-h-screen flex items-center pt-28 pb-16 px-4 sm:px-6 md:px-8">
         {/* Full neon floating frame container styled exactly like reference image */}
-        <div className="w-full max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden flex flex-col justify-between min-h-[74vh] lg:min-h-[72vh] shadow-[0_30px_80px_rgba(var(--color-brand-rgb),0.22)] border border-white/10 select-none">
-          
-          {/* Subtle neon tech grid background effect inside the lime container */}
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.1)_1px,transparent_1px)] [background-size:16px_16px] opacity-25 pointer-events-none" />
-          
-          {/* Deep glowing background ambient circles for tech contrast */}
-          <div className="absolute right-[10%] top-[10%] w-[320px] h-[320px] bg-black/10 rounded-full blur-[80px] pointer-events-none" />
-          <div className="absolute left-[5%] bottom-[15%] w-[250px] h-[250px] bg-brand-secondary/20 rounded-full blur-[60px] pointer-events-none" />
+        <div className="w-full max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-[#070707] text-white p-6 sm:p-10 lg:p-16 relative overflow-hidden flex flex-col justify-between min-h-[74vh] lg:min-h-[72vh] shadow-[0_30px_80px_rgba(var(--color-brand-rgb),0.12)] border border-white/10 select-none">
+          <HeroEditorialStage image={heroTag08StrategyStage} />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/25 pointer-events-none z-10" />
 
           {/* CORE GRAPHICAL CONTENT & CONTROLS GRID */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center relative z-20 w-full my-auto">
@@ -954,18 +928,18 @@ export default function Home({ onNavigate }: HomeProps) {
               
               {/* Upper statement badge */}
               <div className="space-y-3">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/5 border border-black/10">
-                  <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
-                  <span className="font-mono text-[9px] tracking-widest uppercase font-bold text-black/70">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] border border-white/15 backdrop-blur-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
+                  <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-white/80">
                     Estratégia, conteúdo, tecnologia e processos
                   </span>
                 </div>
                 
-                <h1 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-black leading-[1.0] tracking-tighter uppercase">
+                <h1 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white leading-[1.0] tracking-tighter">
                   Presença digital com direção para negócios que querem crescer sem improviso.
                 </h1>
                 
-                <p className="text-black/75 text-xs sm:text-sm max-w-sm leading-relaxed font-sans font-medium">
+                <p className="text-white/72 text-xs sm:text-sm max-w-sm leading-relaxed font-sans font-medium">
                   A TAG08 ajuda empresas, profissionais e marcas a organizarem posicionamento, comunicação, conteúdo, tecnologia e operação para construir uma presença digital mais clara, consistente e estratégica.
                 </p>
               </div>
@@ -977,14 +951,14 @@ export default function Home({ onNavigate }: HomeProps) {
                 role="link"
                 tabIndex={0}
                 aria-label="Ir para contato e solicitar diagnóstico"
-                className="bg-black/5 hover:bg-black/10 transition-all duration-300 border border-black/10 p-5 rounded-2xl flex flex-col gap-4 max-w-sm cursor-pointer shadow-sm group"
+                className="bg-black/35 hover:bg-black/55 transition-all duration-300 border border-white/15 p-5 rounded-2xl flex flex-col gap-4 max-w-sm cursor-pointer shadow-sm backdrop-blur-sm group"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand animate-ping" />
+                    <span className="w-5 h-5 rounded-full bg-brand flex items-center justify-center">
+                    <span className="w-1.5 h-1.5 rounded-full bg-black animate-ping" />
                   </span>
-                  <span className="font-mono text-[9px] text-black font-bold uppercase tracking-wider">
+                  <span className="tag08-meta text-xs text-white font-bold uppercase tracking-wider">
                       Diagnóstico antes da execução
                   </span>
                   </div>
@@ -994,15 +968,15 @@ export default function Home({ onNavigate }: HomeProps) {
                     {[12, 24, 16, 28, 20, 26, 14, 18, 24, 10, 16, 20].map((height, i) => (
                       <span 
                         key={i} 
-                        className="w-0.5 bg-black rounded-full transition-all duration-500 origin-bottom" 
+                        className="w-0.5 bg-brand rounded-full transition-all duration-500 origin-bottom"
                         style={{ height: `${height}px` }} 
                       />
                     ))}
                   </div>
                 </div>
 
-                <div className="w-full bg-black/10 rounded-xl py-3 px-4 flex items-center justify-between group-hover:bg-black group-hover:text-brand transition-all duration-300">
-                  <span className="font-mono text-[10px] font-extrabold tracking-wider uppercase">
+                <div className="w-full bg-brand text-black rounded-xl py-3 px-4 flex items-center justify-between group-hover:bg-brand-dark group-hover:text-white transition-all duration-300">
+                  <span className="tag08-meta text-xs font-extrabold tracking-wider uppercase">
                     QUERO ENTENDER MEU MELHOR CAMINHO
                   </span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -1010,71 +984,26 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
             </div>
 
-            {/* MIDDLE COLUMN: GLOSSY OBSIDIAN CYBER MANNEQUIN ASSET (Z-30 FOR BEAUTIFUL OVERLAY OVER THE TEXT + ACTIVE PARALLAX DEPTH & TILT) */}
-            <div className="lg:col-span-4 flex justify-center items-center z-35 relative order-1 lg:order-2 px-4">
-              <div 
-                className="relative w-full max-w-[340px] aspect-square flex items-center justify-center"
-                style={{ perspective: 1000 }}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-              >
-                {/* Subtle Interactive 3D Canvas rendering a rotating icosahedron and floating particles */}
-                <Subtle3DCanvas intensity={1.2} className="absolute inset-0 z-20 scale-95" />
-
-                {/* Dynamic backlight that responds as the pointer tilts the perspective */}
-                <div 
-                  className="absolute inset-0 bg-black/20 blur-3xl rounded-full scale-110 pointer-events-none transition-transform duration-300"
-                  style={{
-                    transform: `translate(${mousePos.x * 35}px, ${mousePos.y * 35}px) scale(${1 + scrollY * 0.0002})`,
-                  }}
-                />
-                
-                <motion.div
-                  style={{
-                    y: scrollY * 0.28,
-                    rotate: scrollY * 0.03,
-                    rotateX: mousePos.y * -25,
-                    rotateY: mousePos.x * 25,
-                    opacity: Math.max(1 - scrollY / 600, 0.15),
-                    scale: 1 + Math.sin(scrollY * 0.003) * 0.03,
-                  }}
-                  transition={{ type: "spring", stiffness: 150, damping: 25 }}
-                  className="relative z-30 flex items-center justify-center pointer-events-none select-none"
-                >
-                    <Image
-                      src={heroCyberMannequin}
-                      alt="TAG08 Cyborg Assistant"
-                      preload
-                      sizes="(max-width: 639px) 298px, (max-width: 1023px) 400px, 420px"
-                      className="h-[320px] sm:h-[400px] lg:h-[420px] w-auto object-contain drop-shadow-[0_25px_60px_rgba(0,0,0,0.65)]"
-                    />
-
-                  {/* Subtle telemetry indicator */}
-                  <div className="absolute inset-x-0 -bottom-8 flex justify-between px-4 font-mono text-[8px] text-black/45 tracking-widest uppercase">
-                    <span>Z-POS: +{Math.round(scrollY * 0.28)}PX</span>
-                    <span>TILT: {Math.round(mousePos.y * -25)}°</span>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
+            {/* The image is now the stage itself; this column preserves the editorial reading space. */}
+            <div className="hidden lg:block lg:col-span-4" aria-hidden="true" />
 
             {/* RIGHT COLUMN: BRAND SOCIAL AUDIENCE AND BUSINESS AREA CATEGORY CAPSULES (ROCK PILLS LOOKALIKES) */}
             <div className="lg:col-span-3 flex flex-col justify-between space-y-8 text-left lg:text-right order-3 z-20">
               
               {/* Trust banner */}
               <div className="space-y-2 flex flex-col lg:items-end">
-                <span className="font-sans font-extrabold text-sm text-black leading-tight max-w-[180px] lg:text-right">
+                <span className="font-sans font-extrabold text-sm text-white leading-tight max-w-[180px] lg:text-right">
                   Método, clareza e execução responsável
                 </span>
                 
-                <p className="text-black/60 font-mono text-[9px] uppercase tracking-wide font-bold">
+                <p className="text-white/55 tag08-meta text-xs uppercase tracking-wide font-bold">
                   DIREÇÃO PARA CONSTRUIR. ESTRUTURA PARA CRESCER.
                 </p>
               </div>
 
               {/* Categorical tag widgets styled exactly like punk-rock and disco buttons in reference panel */}
               <div className="space-y-3">
-                <div className="font-mono text-[9px] text-black/60 uppercase tracking-widest font-extrabold block lg:text-right">
+                <div className="tag08-meta text-xs text-brand uppercase tracking-widest font-extrabold block lg:text-right">
                   O QUE ORGANIZAMOS:
                 </div>
                 
@@ -1082,11 +1011,11 @@ export default function Home({ onNavigate }: HomeProps) {
                   {tagCategories.map((tag) => {
                     let pillClasses = "";
                     if (tag.style === "filled-neon") {
-                      pillClasses = "bg-black text-brand font-extrabold border border-black text-[9px] tracking-wider px-3 py-1.5 rounded-full shadow-sm hover:scale-105 transition-transform duration-200";
+                      pillClasses = "bg-brand text-black font-extrabold border border-brand text-xs tracking-wider px-3 py-1.5 rounded-full shadow-sm hover:scale-105 transition-transform duration-200";
                     } else if (tag.style === "filled-white") {
-                      pillClasses = "bg-charcoal-900 text-white font-semibold border border-charcoal-800 text-[9px] tracking-wider px-3 py-1.5 rounded-full shadow-sm hover:scale-105 transition-transform duration-200";
+                      pillClasses = "bg-white/10 text-white font-semibold border border-white/20 text-xs tracking-wider px-3 py-1.5 rounded-full shadow-sm hover:scale-105 transition-transform duration-200";
                     } else {
-                      pillClasses = "border border-black/30 bg-transparent text-black font-bold text-[9px] tracking-wider px-3 py-1.5 rounded-full hover:bg-black/5 hover:border-black transition-all duration-200";
+                      pillClasses = "border border-white/35 bg-black/20 text-white font-bold text-xs tracking-wider px-3 py-1.5 rounded-full hover:bg-white/10 hover:border-brand transition-all duration-200";
                     }
 
                     return (
@@ -1109,22 +1038,22 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* SECTION 2 - PROBLEMA */}
-      <section id="problema" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-900/10">
+      <section id="problema" className="tag08-section px-4 sm:px-6 border-b border-white/[0.04] bg-charcoal-900/10">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 35 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-120px" }}
             transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-2xl space-y-4 mb-16 text-left"
+            className="tag08-section__header mb-16 text-left"
           >
-            <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-semibold">
               O diagnóstico da realidade
             </span>
-            <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient">
+            <h2 className="tag08-section__heading font-display font-medium text-3xl sm:text-4xl text-gradient">
               O problema nem sempre é falta de marketing. Muitas vezes é falta de direção.
             </h2>
-            <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
+            <p className="tag08-section__copy text-zinc-400 text-sm sm:text-base">
               Muitas empresas postam, anunciam, fazem vídeos, criam sites e tentam aparecer mais. Mas, quando não existe clareza de posicionamento, consistência de comunicação e estrutura mínima de operação, o digital vira um conjunto de ações soltas.
             </p>
           </motion.div>
@@ -1159,7 +1088,7 @@ export default function Home({ onNavigate }: HomeProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="mt-12 p-8 rounded-3xl bg-neutral-900/60 border border-white/[0.05] relative overflow-hidden text-left"
+            className="tag08-card mt-12 p-8 relative overflow-hidden text-left"
           >
             {/* Design accents */}
             <div className="absolute inset-0 bg-[radial-gradient(#ffffff04_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
@@ -1167,13 +1096,13 @@ export default function Home({ onNavigate }: HomeProps) {
             
             <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
               <div className="space-y-3 max-w-2xl">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-                  <span className="font-mono text-[9px] uppercase tracking-widest text-brand font-black bg-brand/5 border border-brand/10 px-2 py-0.5 rounded">
+                <div className="tag08-kicker">
+                  <span className="sr-only">Destaque:</span>
+                  <span>
                     SESSÃO DIAGNÓSTICA EXCLUSIVA
                   </span>
                 </div>
-                <h3 className="font-display font-medium text-xl sm:text-2xl text-white leading-tight uppercase">
+                <h3 className="font-display font-medium text-xl sm:text-2xl text-white leading-tight">
                   A questão não é fazer mais. É fazer com direção.
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
@@ -1186,7 +1115,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   onNavigate("/contato");
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className="group relative px-7 py-4 bg-brand text-black text-xs font-mono font-semibold uppercase tracking-widest rounded-xl transition-all duration-300 shrink-0 overflow-hidden shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:shadow-[0_8px_35px_rgba(var(--color-brand-secondary-rgb),0.3)] hover:-translate-y-1"
+                className="group relative px-7 py-4 bg-brand text-black tag08-action rounded-xl transition-all duration-300 shrink-0 overflow-hidden shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:shadow-[0_8px_35px_rgba(var(--color-brand-secondary-rgb),0.3)] hover:-translate-y-1"
               >
                 <div className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full skew-x-12 group-hover:translate-x-full transition-transform duration-1000 ease-out" />
                 <span className="relative z-10 flex items-center gap-2">
@@ -1197,15 +1126,15 @@ export default function Home({ onNavigate }: HomeProps) {
           </motion.div>
 
           {/* NOVO BLOCO: BENTO GRID DE DIRECIONAMENTO E MATURIDADE */}
-          <div className="mt-32 space-y-12 text-left animate-fade-in">
-            <div className="space-y-4 max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand/10 bg-brand/5 font-mono text-[10px] uppercase tracking-widest text-brand-secondary font-black">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary" /> Diagnóstico por momento
+          <div className="mt-24 sm:mt-32 space-y-12 text-left animate-fade-in">
+            <div className="tag08-section__header max-w-3xl">
+              <div className="tag08-kicker">
+                Diagnóstico por momento
               </div>
-              <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient uppercase tracking-tight leading-none">
+              <h2 className="tag08-section__heading font-display font-medium text-3xl sm:text-4xl text-gradient">
                 Em qual momento sua marca está hoje?
               </h2>
-              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
+              <p className="tag08-section__copy text-zinc-400 text-xs sm:text-sm font-sans">
                 A solução certa depende da fase, da maturidade e da estrutura disponível para sustentar o crescimento. Antes de indicar qualquer serviço, a TAG08 entende o momento da marca e organiza o caminho mais coerente.
               </p>
             </div>
@@ -1229,7 +1158,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   role="link"
                   tabIndex={0}
                   aria-label="Conhecer Branding e Identidade"
-                  className="relative group overflow-hidden rounded-3xl border border-white/[0.10] hover:border-brand-secondary/40 h-[260px] bg-charcoal-900 cursor-pointer transition-all duration-300"
+                  className="tag08-card tag08-card--interactive relative group overflow-hidden h-[220px] sm:h-[260px] bg-charcoal-900 cursor-pointer"
                 >
                   <Image
                     fill
@@ -1241,15 +1170,15 @@ export default function Home({ onNavigate }: HomeProps) {
                   />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-6 sm:p-8 text-left">
                       <div className="flex items-center justify-between w-full">
-                        <span className="font-mono text-[8px] font-black tracking-widest text-brand uppercase bg-brand/5 border border-brand/10 px-2.5 py-0.5 rounded">
+                        <span className="tag08-kicker">
                           M-02 // BRANDING ATIVO
                         </span>
                       <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-brand transition-colors" />
                     </div>
-                    <h3 className="font-display font-bold text-lg text-white uppercase tracking-tight mt-1.5 group-hover:text-brand transition-colors">
+                    <h3 className="font-display font-bold text-lg text-white tracking-tight mt-1.5 group-hover:text-brand transition-colors">
                       Começando com pouca clareza
                     </h3>
-                    <p className="text-zinc-400 text-[11px] font-sans max-w-md mt-1 leading-relaxed">
+                    <p className="text-zinc-400 text-xs font-sans max-w-md mt-1 leading-relaxed">
                       Você sabe que precisa aparecer melhor, mas ainda não tem linha visual, rotina de conteúdo ou direção de comunicação.
                     </p>
                   </div>
@@ -1274,57 +1203,57 @@ export default function Home({ onNavigate }: HomeProps) {
                       role="link"
                       tabIndex={0}
                       aria-label="Conhecer Gestão de Redes Sociais"
-                      className="bg-charcoal-900 border border-white/[0.10] hover:border-brand-secondary/35 p-6 sm:p-8 rounded-3xl flex flex-col justify-between min-h-[190px] relative overflow-hidden text-left group cursor-pointer transition-all duration-300"
+                      className="tag08-card tag08-card--interactive p-6 sm:p-8 flex flex-col justify-between min-h-[194px] relative overflow-hidden text-left group cursor-pointer"
                     >
                       <div>
                         <div className="flex items-center justify-between w-full">
-                        <span className="font-mono text-[8px] text-brand uppercase tracking-widest bg-brand/5 border border-brand/10 px-2.5 py-0.5 rounded font-black">
+                        <span className="tag08-kicker">
                           M-01 // PRESENÇA DIGITAL
                         </span>
                           <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-brand transition-colors" />
                         </div>
-                        <h4 className="text-white font-display font-semibold text-xs sm:text-sm uppercase leading-tight group-hover:text-brand transition-colors mt-2">
+                        <h4 className="text-white font-display font-semibold text-xs sm:text-sm leading-tight group-hover:text-brand transition-colors mt-2">
                           Já existe, mas comunica de forma irregular
                         </h4>
-                        <p className="text-zinc-400 text-[10px] font-sans leading-normal mt-1.5">
+                        <p className="text-zinc-400 text-xs font-sans leading-normal mt-1.5">
                           Sua empresa já vende, tem público e entrega valor, mas a presença digital não mostra isso com consistência.
                         </p>
                       </div>
                       
                       {/* Social Grid placeholder items with premium visual micro interactions */}
                       <div className="flex gap-2 mt-2 pt-2 border-t border-white/[0.03]">
-                        <span className="w-6 h-6 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center text-[7.5px] text-brand-secondary font-sans group-hover:bg-brand-secondary/10 transition-colors">in</span>
-                        <span className="w-6 h-6 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center text-[7.5px] text-brand-secondary font-sans group-hover:bg-brand-secondary/10 transition-colors">ig</span>
-                        <span className="w-6 h-6 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center text-[7.5px] text-brand-secondary font-sans group-hover:bg-brand-secondary/10 transition-colors">wa</span>
+                        <span className="w-6 h-6 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center text-xs text-brand-secondary font-sans group-hover:bg-brand-secondary/10 transition-colors">in</span>
+                        <span className="w-6 h-6 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center text-xs text-brand-secondary font-sans group-hover:bg-brand-secondary/10 transition-colors">ig</span>
+                        <span className="w-6 h-6 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center text-xs text-brand-secondary font-sans group-hover:bg-brand-secondary/10 transition-colors">wa</span>
                       </div>
                     </div>
 
-                    {/* Card M-03: EVOLUÇÃO DE MARCA */}
+                    {/* Card M-03: PRODUÇÃO AUDIOVISUAL */}
                     <div 
                       onClick={() => {
-                        onNavigate("/servicos/branding-identidade");
+                        onNavigate("/servicos/producao-audiovisual");
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
                       onKeyDown={(event) => activateOnKeyboard(event, () => {
-                        onNavigate("/servicos/branding-identidade");
+                        onNavigate("/servicos/producao-audiovisual");
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       })}
                       role="link"
                       tabIndex={0}
-                      aria-label="Conhecer evolução de marca"
-                      className="bg-charcoal-900 border border-white/[0.10] hover:border-brand-secondary/35 p-6 sm:p-8 rounded-3xl flex flex-col justify-between min-h-[190px] relative overflow-hidden text-left cursor-pointer group transition-all duration-300"
+                      aria-label="Conhecer Produção Audiovisual"
+                      className="tag08-card tag08-card--interactive p-6 sm:p-8 flex flex-col justify-between min-h-[194px] relative overflow-hidden text-left cursor-pointer group"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-mono text-[8.5px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/15 px-2 py-0.5 rounded tracking-widest font-bold">M-03</span>
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-semibold">EVOLUÇÃO DE MARCA</span>
+                        <span className="tag08-kicker">M-03</span>
+                        <span className="tag08-meta text-zinc-500">Produção audiovisual</span>
                       </div>
                       
                       <div>
-                        <h4 className="text-white font-display font-semibold text-xs sm:text-sm uppercase leading-tight group-hover:text-brand transition-colors">
-                          Precisa crescer com mais autoridade
+                        <h4 className="text-white font-display font-semibold text-xs sm:text-sm leading-tight group-hover:text-brand transition-colors">
+                          Precisa transformar repertório em presença
                         </h4>
-                        <p className="text-zinc-400 text-[10px] font-sans leading-relaxed mt-1.5">
-                          Sua marca quer fortalecer percepção, gravar mais vídeos, aparecer melhor e transformar conhecimento em conteúdo estratégico.
+                        <p className="text-zinc-400 text-xs font-sans leading-relaxed mt-1.5">
+                          Sua marca já tem repertório, mas precisa de imagem, fala e bastidores que transmitam valor com clareza.
                         </p>
                       </div>
                     </div>
@@ -1344,23 +1273,23 @@ export default function Home({ onNavigate }: HomeProps) {
                     role="link"
                     tabIndex={0}
                     aria-label="Conhecer Desenvolvimento Web Estratégico"
-                    className="bg-charcoal-900 text-white p-8 rounded-3xl border border-brand-secondary/70 ring-1 ring-brand-secondary/25 flex flex-col justify-between h-[412px] text-left relative overflow-hidden group cursor-pointer transition-all duration-500 hover:border-brand-secondary hover:shadow-lg hover:shadow-brand-secondary/10"
+                    className="tag08-card tag08-card--interactive tag08-card--featured text-white p-8 flex flex-col justify-between h-[412px] text-left relative overflow-hidden group cursor-pointer"
                   >
                     <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-brand-secondary/15 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700 pointer-events-none" />
                     
                     <div>
                       <div className="flex items-center justify-between w-full">
-                        <span className="font-mono text-[9px] font-black uppercase tracking-widest text-brand-secondary bg-brand-secondary/10 border border-brand-secondary/25 px-3 py-1 rounded-full block w-fit">
+                        <span className="tag08-kicker">
                           M-04 // DESENVOLVIMENTO WEB ESTRATÉGICO
                         </span>
                         <ArrowUpRight className="w-4 h-4 text-brand-secondary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </div>
-                      <h3 className="font-display font-black text-5xl text-white tracking-tighter mt-6 leading-none">M-04</h3>
+                      <h3 className="font-display font-bold text-3xl text-white tracking-tighter mt-6 leading-none">M-04</h3>
                     </div>
 
                     <div className="space-y-2 relative z-10">
-                      <h4 className="font-display font-extrabold text-white text-sm uppercase tracking-tight">Desejo converter mais com meu site</h4>
-                      <p className="text-zinc-400 text-[11px] font-sans leading-relaxed">
+                      <h4 className="font-display font-extrabold text-white text-sm tracking-tight">Desejo converter mais com meu site</h4>
+                      <p className="text-zinc-400 text-xs font-sans leading-relaxed">
                         Nossos anúncios gastam verba ativa, mas as páginas lentas ou confusas falham em colher leads qualificados diariamente.
                       </p>
                     </div>
@@ -1389,23 +1318,23 @@ export default function Home({ onNavigate }: HomeProps) {
                     role="link"
                     tabIndex={0}
                     aria-label="Conhecer Process Intelligence"
-                    className="bg-zinc-950 border border-white/[0.08] hover:border-brand/35 p-8 rounded-3xl flex flex-col justify-between h-[340px] text-left relative overflow-hidden group cursor-pointer transition-all duration-300"
+                    className="tag08-card tag08-card--interactive p-8 flex flex-col justify-between h-[340px] text-left relative overflow-hidden group cursor-pointer"
                   >
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-brand/5 rounded-full blur-3xl pointer-events-none" />
                     
                     <div>
                       <div className="flex items-center justify-between w-full">
-                        <span className="font-mono text-[9px] font-black uppercase tracking-widest text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-3 py-1 rounded-full block w-fit">
+                        <span className="tag08-kicker">
                           M-05 // INTELIGÊNCIA OPERACIONAL
                         </span>
                         <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-brand transition-colors" />
                       </div>
-                      <h3 className="font-display font-black text-5xl text-white tracking-tighter mt-6 leading-none">M-05</h3>
+                      <h3 className="font-display font-bold text-3xl text-white tracking-tighter mt-6 leading-none">M-05</h3>
                     </div>
 
                     <div className="space-y-2 relative z-10">
-                      <h4 className="font-display font-extrabold text-white text-sm uppercase tracking-tight group-hover:text-brand transition-colors">Cresceu, mas a operação ficou pesada</h4>
-                      <p className="text-zinc-400 text-[11px] font-sans leading-relaxed">
+                      <h4 className="font-display font-extrabold text-white text-sm tracking-tight group-hover:text-brand transition-colors">Cresceu, mas a operação ficou pesada</h4>
+                      <p className="text-zinc-400 text-xs font-sans leading-relaxed">
                         As demandas aumentaram, a equipe depende de poucas pessoas e decisões importantes ainda acontecem no improviso.
                       </p>
                     </div>
@@ -1427,16 +1356,16 @@ export default function Home({ onNavigate }: HomeProps) {
                       role="link"
                       tabIndex={0}
                       aria-label="Conhecer Process Activation"
-                      className="bg-zinc-100 text-charcoal-950 p-6 rounded-3xl flex flex-col justify-between h-[158px] text-left relative group overflow-hidden cursor-pointer hover:bg-zinc-200 transition-all duration-300"
+                      className="tag08-card tag08-card--interactive text-white p-6 flex flex-col justify-between h-[158px] text-left relative group overflow-hidden cursor-pointer"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-semibold">M-06</span>
-                        <span className="font-mono text-[8.5px] text-zinc-500 tracking-widest font-black">GOVERNANÇA &amp; AUDITORIA</span>
+                        <span className="tag08-kicker">M-06</span>
+                        <span className="tag08-meta text-zinc-500">Ativação de processos</span>
                       </div>
                       
                       <div>
-                        <h4 className="font-display font-extrabold text-xs uppercase tracking-tight leading-none text-black group-hover:text-brand transition-colors">Temos processos, mas ninguém cumpre</h4>
-                        <p className="text-zinc-600 text-[9.5px] font-sans leading-normal mt-1.5">
+                        <h4 className="font-display font-bold text-sm tracking-tight leading-none text-white group-hover:text-brand transition-colors">Temos processos, mas ninguém cumpre</h4>
+                        <p className="text-zinc-400 text-xs font-sans leading-normal mt-1.5">
                           Nossos playbooks e wikis viraram links esquecidos e os operadores continuam executando em desordem.
                         </p>
                       </div>
@@ -1457,16 +1386,16 @@ export default function Home({ onNavigate }: HomeProps) {
                       role="button"
                       tabIndex={0}
                       aria-label="Abrir diagnóstico"
-                      className="bg-zinc-100 text-charcoal-950 p-6 rounded-3xl flex flex-col justify-between h-[158px] text-left relative group overflow-hidden cursor-pointer hover:bg-zinc-200 transition-all duration-300"
+                      className="tag08-card tag08-card--interactive text-white p-6 flex flex-col justify-between h-[158px] text-left relative group overflow-hidden cursor-pointer"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-display font-black text-2xl text-zinc-700 leading-none">FREE</span>
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-semibold">Diagnóstico Imediato</span>
+                        <span className="tag08-kicker">Próximo passo</span>
+                        <span className="tag08-meta text-zinc-500">Diagnóstico imediato</span>
                       </div>
                       
                       <div>
-                        <h4 className="font-display font-extrabold text-xs uppercase tracking-tight leading-none text-black">QUERO IDENTIFICAR MEU MOMENTO</h4>
-                        <p className="text-zinc-600 text-[9.5px] font-sans leading-relaxed mt-1.5">
+                        <h4 className="font-display font-bold text-sm tracking-tight leading-none text-white">Quero identificar meu momento</h4>
+                        <p className="text-zinc-400 text-xs font-sans leading-relaxed mt-1.5">
                           Fale com o nosso estrategista sênior para descobrir a fase certa para sua marca.
                         </p>
                       </div>
@@ -1491,7 +1420,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   role="button"
                   tabIndex={0}
                   aria-label="Iniciar diagnóstico"
-                  className="relative group overflow-hidden rounded-3xl border border-white/[0.05] hover:border-brand-secondary/20 h-[260px] bg-charcoal-900 cursor-pointer transition-all duration-300"
+                  className="tag08-card tag08-card--interactive relative group overflow-hidden h-[332px] bg-charcoal-900 cursor-pointer"
                 >
                   <Image
                     fill
@@ -1502,14 +1431,14 @@ export default function Home({ onNavigate }: HomeProps) {
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-6 text-left">
-                    <span className="font-mono text-[8px] tracking-widest text-brand-secondary uppercase font-black">
-                      ESTADO DA ARTE // DESIGN SYSTEM
+                    <span className="tag08-kicker">
+                      M-07 // Assessoria estratégica
                     </span>
-                    <h3 className="font-display font-bold text-lg text-white uppercase tracking-tight mt-1 group-hover:text-brand transition-colors">
-                      Infraestrutura Excepcional
+                    <h3 className="font-display font-bold text-lg text-white tracking-tight mt-1 group-hover:text-brand transition-colors">
+                      Preciso de direção para decidir o próximo movimento
                     </h3>
-                    <p className="text-zinc-400 text-[11px] font-sans max-w-md mt-1 leading-relaxed">
-                      Estruturas limpas com carregamentos imediatos. A postura ideal para apresentar sua marca ao mercado.
+                    <p className="text-zinc-400 text-xs font-sans max-w-md mt-1 leading-relaxed">
+                      Quando a prioridade ainda não está clara, organizamos cenário, escolhas e uma rota possível de execução.
                     </p>
                   </div>
                 </div>
@@ -1524,7 +1453,7 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* INDEPENDENT SECTION 2.1: SINAIS DE DESALINHAMENTO */}
-      <section id="diagnostico" className="py-28 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
+      <section id="diagnostico" className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
         {/* Subtle grid decor */}
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff01_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none" />
         <div className="absolute top-1/4 left-0 w-[450px] h-[450px] bg-brand-secondary/[0.01] rounded-full blur-[140px] pointer-events-none" />
@@ -1533,14 +1462,14 @@ export default function Home({ onNavigate }: HomeProps) {
         <div className="max-w-7xl mx-auto relative z-10 space-y-16">
           
           {/* Section Introduction */}
-          <div className="max-w-2xl text-left space-y-4">
-            <span className="font-mono text-[9px] tracking-widest text-brand bg-brand/5 border border-brand/15 px-3 py-1 rounded-full uppercase font-bold inline-block">
+          <div className="tag08-section__header text-left">
+            <span className="tag08-kicker">
               Sinais de desalinhamento
             </span>
-            <h2 className="font-display font-medium text-3xl sm:text-4xl text-white tracking-tight leading-none">
+            <h2 className="tag08-section__heading font-display font-medium text-3xl sm:text-4xl text-white tracking-tight">
               Sinais de desgaste quando o digital cresce sem estrutura.
             </h2>
-            <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
+            <p className="tag08-section__copy text-zinc-400 text-xs sm:text-sm font-sans">
               Quando a presença digital cresce sem clareza, alguns sintomas começam a aparecer: decisões soltas, urgências constantes, conteúdo sem direção, retrabalho e dificuldade de transformar esforço em percepção real de valor. A TAG08 usa essa leitura para separar o que é problema de comunicação, o que é problema de posicionamento e o que é problema de operação. Sem esse diagnóstico, qualquer execução corre o risco de apenas acelerar a desorganização.
             </p>
           </div>
@@ -1617,7 +1546,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       <div className="flex items-center justify-between pb-4 border-b border-white/[0.03]">
                         <div className="flex items-center gap-1.5">
                           <span className={`w-1.5 h-1.5 rounded-full transition-transform duration-300 ${isPhaseSelected ? "bg-brand-secondary scale-125 shadow-[0_0_8px_var(--color-brand-secondary)]" : "bg-zinc-700"}`} />
-                          <span className={`text-[9px] font-mono font-black uppercase tracking-widest ${isPhaseSelected ? "text-brand-secondary" : "text-zinc-500"}`}>
+                          <span className={`text-xs tag08-meta font-black uppercase tracking-widest ${isPhaseSelected ? "text-brand-secondary" : "text-zinc-500"}`}>
                             {phase.badge}
                           </span>
                         </div>
@@ -1626,10 +1555,10 @@ export default function Home({ onNavigate }: HomeProps) {
 
                       {/* Phase Info */}
                       <div className="mt-4">
-                        <h4 className="font-display font-bold text-base text-white uppercase tracking-tight">
+                        <h4 className="font-display font-bold text-base text-white tracking-tight">
                           {phase.title}
                         </h4>
-                        <p className="text-zinc-500 text-[11px] font-sans mt-1">
+                        <p className="text-zinc-500 text-xs font-sans mt-1">
                           {phase.desc}
                         </p>
                       </div>
@@ -1637,7 +1566,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
                     {/* Tactics Pills inside the column */}
                     <div className="mt-6 space-y-2 relative z-20">
-                      <span className="text-[8px] font-mono text-zinc-600 uppercase tracking-widest block font-bold">
+                      <span className="text-xs tag08-meta text-zinc-600 uppercase tracking-widest block font-bold">
                         PÍLULAS DE ATUAÇÃO:
                       </span>
                       <div className="flex flex-wrap gap-1.5">
@@ -1657,7 +1586,7 @@ export default function Home({ onNavigate }: HomeProps) {
                                 setActiveDiagPhase(phase.id as any);
                                 setHoveredPill(p.id);
                               }}
-                              className={`px-3 py-1.5 rounded-lg text-[9px] font-mono uppercase tracking-wider transition-all border text-left cursor-pointer ${
+                              className={`px-3 py-1.5 rounded-lg text-xs font-sans uppercase tracking-wider transition-all border text-left cursor-pointer ${
                                 isPillActive
                                   ? "bg-brand-secondary border-brand-secondary text-black font-bold shadow-[0_2px_8px_rgba(var(--color-brand-secondary-rgb),0.15)]"
                                   : isPhaseSelected && hoveredPill === null
@@ -1711,23 +1640,23 @@ export default function Home({ onNavigate }: HomeProps) {
                       <div className="space-y-4">
                         <div className="flex items-center gap-2">
                           <span className="w-2 h-2 rounded-full bg-brand-secondary animate-pulse" />
-                          <span className="font-mono text-[8.5px] text-brand-secondary font-bold tracking-widest uppercase pb-0.5">
+                          <span className="tag08-meta text-xs text-brand-secondary font-bold tracking-widest uppercase pb-0.5">
                             FASE PRINCIPAL // MONITOR DE ALARME
                           </span>
                         </div>
                         
-                        <h4 className="font-display font-medium text-xl text-white uppercase tracking-tight">
+                        <h4 className="font-display font-medium text-xl text-white tracking-tight">
                           {currentPhaseInfo.title.split(" // ")[0]}
                         </h4>
                         
-                        <p className="text-zinc-500 font-sans text-[11px] leading-relaxed">
+                        <p className="text-zinc-500 font-sans text-xs leading-relaxed">
                           {currentPhaseInfo.desc}
                         </p>
                       </div>
 
                       {/* Severity Metrics indicator */}
                       <div className="space-y-3 pt-6 border-t border-white/[0.03] mt-2">
-                        <div className="flex justify-between items-center text-[10px] font-sans">
+                        <div className="flex justify-between items-center text-xs font-sans">
                           <span className="text-zinc-500 uppercase tracking-widest">SINAL DE DESALINHAMENTO</span>
                           <span className="text-brand-secondary font-semibold">{currentPhaseInfo.rating}</span>
                         </div>
@@ -1740,7 +1669,7 @@ export default function Home({ onNavigate }: HomeProps) {
                             className="bg-gradient-to-r from-red-600 via-orange-500 to-brand-secondary h-full rounded-full shadow-[0_0_8px_rgba(var(--color-brand-secondary-rgb),0.3)]"
                           />
                         </div>
-                        <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-tight">
+                        <p className="text-xs tag08-meta text-zinc-600 uppercase tracking-tight">
                           Quando o digital cresce sem estrutura, o esforço aumenta mais rápido que a clareza.
                         </p>
                       </div>
@@ -1750,7 +1679,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     <div className="col-span-12 lg:col-span-8 border-t lg:border-t-0 lg:border-l border-white/[0.04] pt-6 lg:pt-0 lg:pl-8 flex flex-col justify-between space-y-6 relative z-10 text-left">
                       
                       <div className="space-y-4">
-                        <span className="font-mono text-[8.5px] text-zinc-500 font-bold tracking-widest uppercase block border-b border-white/[0.03] pb-2">
+                        <span className="tag08-meta text-xs text-zinc-500 font-bold tracking-widest uppercase block border-b border-white/[0.03] pb-2">
                           DIAGNÓSTICO DETALHADO DOS SINTOMAS TÁTICOS ATIVOS
                         </span>
 
@@ -1781,7 +1710,7 @@ export default function Home({ onNavigate }: HomeProps) {
                                 <div className="space-y-2">
                                   {/* Symptom title & Status header */}
                                   <div className="flex items-center justify-between gap-2">
-                                    <span className={`font-mono text-[9px] font-bold uppercase ${isThisSymptomActive ? "text-brand-secondary" : "text-zinc-500"}`}>
+                                    <span className={`font-sans text-xs font-bold uppercase ${isThisSymptomActive ? "text-brand-secondary" : "text-zinc-500"}`}>
                                       GARGALOS // {symptom.label}
                                     </span>
                                     <div className={`w-2 h-2 rounded-full ${isThisSymptomActive ? "bg-brand-secondary shadow-[0_0_8px_var(--color-brand-secondary)] animate-pulse" : "bg-red-500/40"}`} />
@@ -1794,8 +1723,8 @@ export default function Home({ onNavigate }: HomeProps) {
 
                                 {/* Consequences quote */}
                                 <div className="pt-3 border-t border-white/[0.02] space-y-1.5">
-                                  <span className="font-sans text-[7.5px] text-zinc-500 uppercase tracking-widest block">GRAVIDADE / CONSEQUÊNCIA OPERACIONAL</span>
-                                  <p className={`text-[10px] font-sans leading-relaxed italic border-l-2 pl-2.5 py-0.5 rounded ${
+                                  <span className="font-sans text-xs text-zinc-500 uppercase tracking-widest block">GRAVIDADE / CONSEQUÊNCIA OPERACIONAL</span>
+                                  <p className={`text-xs font-sans leading-relaxed italic border-l-2 pl-2.5 py-0.5 rounded ${
                                     isThisSymptomActive 
                                       ? "bg-red-950/10 border-red-500/35 text-red-300" 
                                       : "bg-zinc-900/10 border-zinc-700/30 text-zinc-400"
@@ -1813,7 +1742,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       <div className="pt-6 border-t border-white/[0.03] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div className="flex items-center gap-2">
                           <span className="w-1.5 h-1.5 rounded-full bg-brand animate-ping" />
-                          <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest">
+                          <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">
                             PAINEL INTERATIVO TAG08
                           </span>
                         </div>
@@ -1846,22 +1775,21 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* INDEPENDENT SECTION 2.2: SUTILEZA OPERACIONAL // DIREÇÃO SÊNIOR */}
-      <section id="metodologia-preview" className="py-28 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
+      <section id="metodologia-preview" className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
         {/* Glow corner decors */}
         <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-brand-secondary/[0.01] rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-white/[0.01] rounded-full blur-[140px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto space-y-16">
           {/* Header */}
-          <div className="max-w-3xl text-left space-y-4">
-            <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary" />
+          <div className="tag08-section__header text-left">
+            <span className="tag08-kicker">
               Da análise à execução
             </span>
-            <h2 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tight leading-tight">
+            <h2 className="tag08-section__heading font-display font-medium text-3xl sm:text-4xl text-white tracking-tight">
               Depois do diagnóstico, a execução precisa de método.
             </h2>
-            <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
+            <p className="tag08-section__copy text-zinc-400 text-xs sm:text-sm font-sans">
               A TAG08 organiza o caminho antes de produzir: entende o cenário, define prioridades, estrutura entregas, acompanha a ativação e ajusta o que precisa evoluir.
             </p>
           </div>
@@ -1870,23 +1798,22 @@ export default function Home({ onNavigate }: HomeProps) {
 
             <motion.div 
               whileHover={{ y: -3, scale: 1.01 }}
-              className="bg-[#121214] border border-white/[0.05] p-8 sm:p-10 rounded-[28px] min-h-[220px] flex flex-col justify-between text-left group transition-all duration-300 relative overflow-hidden"
+              className="tag08-card tag08-card--interactive p-8 sm:p-10 min-h-[220px] flex flex-col justify-between text-left group relative overflow-hidden"
             >
               <div className="flex items-center justify-between w-full">
-                <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black bg-white/[0.03] border border-white/10 px-2 py-0.5 rounded">PROTOCOLO 01</span>
-                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-bold">Diagnóstico</span>
+                <span className="tag08-kicker">01 · Diagnóstico</span>
               </div>
               
               <div className="space-y-2 mt-8">
-                <h3 className="font-display font-bold text-base sm:text-lg text-white uppercase tracking-tight">
+                <h3 className="font-display font-bold text-base sm:text-lg text-white tracking-tight">
                   Diagnóstico
                 </h3>
-                <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans font-medium">
+                <p className="text-zinc-400 text-xs leading-relaxed font-sans font-medium">
                   Entendemos o momento da marca, seus canais, gargalos, objetivos e capacidade real de execução.
                 </p>
               </div>
 
-              <div className="pt-6 border-t border-white/[0.04] mt-8 flex items-center justify-between w-full text-zinc-500 font-mono text-[9px] uppercase tracking-wider">
+              <div className="pt-6 border-t border-white/[0.04] mt-8 flex items-center justify-between w-full text-zinc-500 tag08-meta text-xs uppercase tracking-wider">
                 <span>01 // INÍCIO</span>
                 <ArrowRight className="w-4 h-4 text-brand-secondary" />
               </div>
@@ -1894,23 +1821,22 @@ export default function Home({ onNavigate }: HomeProps) {
 
             <motion.div 
               whileHover={{ y: -3, scale: 1.01 }}
-              className="bg-[#121214] border border-white/[0.05] p-8 sm:p-10 rounded-[28px] min-h-[220px] flex flex-col justify-between text-left group transition-all duration-300 relative overflow-hidden"
+              className="tag08-card tag08-card--interactive p-8 sm:p-10 min-h-[220px] flex flex-col justify-between text-left group relative overflow-hidden"
             >
               <div className="flex items-center justify-between w-full">
-                <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black bg-white/[0.03] border border-white/10 px-2 py-0.5 rounded">PROTOCOLO 02</span>
-                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-bold">Estratégia</span>
+                <span className="tag08-kicker">02 · Estratégia</span>
               </div>
               
               <div className="space-y-2 mt-8">
-                <h3 className="font-display font-bold text-base sm:text-lg text-white uppercase tracking-tight">
+                <h3 className="font-display font-bold text-base sm:text-lg text-white tracking-tight">
                   Estratégia
                 </h3>
-                <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans font-medium">
+                <p className="text-zinc-400 text-xs leading-relaxed font-sans font-medium">
                   Definimos prioridades, mensagens, escopo e direção para que a execução tenha critério.
                 </p>
               </div>
 
-              <div className="pt-6 border-t border-white/[0.04] mt-8 flex items-center justify-between w-full text-zinc-500 font-mono text-[9px] uppercase tracking-wider">
+              <div className="pt-6 border-t border-white/[0.04] mt-8 flex items-center justify-between w-full text-zinc-500 tag08-meta text-xs uppercase tracking-wider">
                 <span>02 // ANÁLISE ATIVA</span>
                 <ArrowRight className="w-4 h-4 text-brand-secondary" />
               </div>
@@ -1918,23 +1844,22 @@ export default function Home({ onNavigate }: HomeProps) {
 
             <motion.div 
               whileHover={{ y: -3, scale: 1.01 }}
-              className="bg-[#121214] border border-white/[0.05] p-8 sm:p-10 rounded-[28px] rounded-tr-[90px] min-h-[220px] flex flex-col justify-between text-left group transition-all duration-300 relative overflow-hidden"
+              className="tag08-card tag08-card--interactive p-8 sm:p-10 min-h-[220px] flex flex-col justify-between text-left group relative overflow-hidden"
             >
               <div className="flex items-center justify-between w-full">
-                <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black bg-white/[0.03] border border-white/10 px-2 py-0.5 rounded">PROTOCOLO 03</span>
-                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-bold">Produção</span>
+                <span className="tag08-kicker">03 · Produção</span>
               </div>
               
               <div className="space-y-2 mt-8 max-w-[85%]">
-                <h3 className="font-display font-bold text-base sm:text-lg text-white uppercase tracking-tight">
+                <h3 className="font-display font-bold text-base sm:text-lg text-white tracking-tight">
                   Produção
                 </h3>
-                <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans font-medium">
+                <p className="text-zinc-400 text-xs leading-relaxed font-sans font-medium">
                   Transformamos a direção aprovada em conteúdo, design, site, campanhas, processos ou materiais aplicáveis.
                 </p>
               </div>
 
-              <div className="pt-6 border-t border-white/[0.04] mt-8 flex items-center justify-between w-full text-zinc-500 font-mono text-[9px] uppercase tracking-wider">
+              <div className="pt-6 border-t border-white/[0.04] mt-8 flex items-center justify-between w-full text-zinc-500 tag08-meta text-xs uppercase tracking-wider">
                 <span>03 // TRIAGEM SELETIVA</span>
                 <ArrowDown className="w-4 h-4 text-brand-secondary" />
               </div>
@@ -1945,24 +1870,23 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Step 05: Definitive Destination Banner (Occupies 2 columns on desktop) */}
             <motion.div 
               whileHover={{ y: -3, scale: 1.01 }}
-              className="bg-[#121214] border border-brand-secondary/45 text-white p-8 sm:p-10 rounded-[28px] rounded-r-[90px] md:col-span-1 lg:col-span-2 min-h-[240px] flex flex-col justify-between text-left group transition-all duration-500 relative overflow-hidden shadow-[0_20px_55px_rgba(var(--color-brand-secondary-rgb),0.08)]"
+              className="tag08-card tag08-card--interactive tag08-card--featured text-white p-8 sm:p-10 md:col-span-1 lg:col-span-2 min-h-[240px] flex flex-col justify-between text-left group relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-brand-secondary/10 via-transparent to-transparent pointer-events-none" />
               <div className="flex items-center justify-between w-full">
-                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/10 border border-brand-secondary/25 px-2.5 py-0.5 rounded">DESTINO FINAL 05</span>
-                <span className="text-brand-secondary">Ativação acompanhada</span>
+                <span className="tag08-kicker">05 · Ativação acompanhada</span>
               </div>
               
               <div className="space-y-2 mt-8 max-w-[90%]">
-                <h3 className="font-display font-black text-xl sm:text-2xl text-white uppercase tracking-tight leading-none">
+                <h3 className="font-display font-black text-xl sm:text-2xl text-white tracking-tight leading-none">
                   Ativação
                 </h3>
-                <p className="text-zinc-300 text-xs sm:text-[13px] leading-relaxed font-sans font-semibold">
+                <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-semibold">
                   Colocamos as entregas em uso, acompanhando ajustes necessários e pontos de atenção.
                 </p>
               </div>
 
-              <div className="pt-6 border-t border-brand-secondary/20 mt-8 flex items-center justify-between w-full text-zinc-500 font-mono text-[9.5px] uppercase tracking-widest">
+              <div className="pt-6 border-t border-brand-secondary/20 mt-8 flex items-center justify-between w-full text-zinc-500 tag08-meta text-xs uppercase tracking-widest">
                 05 // EVOLUÇÃO
                 <button
                   onClick={() => {
@@ -1974,7 +1898,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }
                   }}
-                  className="bg-brand-secondary text-black hover:bg-brand-secondary/90 text-[10px] font-semibold px-4 py-2 font-mono uppercase rounded-xl transition-all flex items-center gap-2 group/btn shadow-md"
+                  className="bg-brand text-black hover:bg-brand-dark tag08-action px-4 py-2 rounded-xl transition-colors flex items-center gap-2 group/btn"
                 >
                   FALAR COM A TAG08 <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
                 </button>
@@ -1984,23 +1908,22 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Step 04: Recomendação responsável (with bottom-right curved border mimicking Reference 1 card!) */}
             <motion.div 
               whileHover={{ y: -3, scale: 1.01 }}
-              className="bg-[#121214] border border-white/[0.05] p-8 sm:p-10 rounded-[28px] rounded-br-[90px] min-h-[220px] flex flex-col justify-between text-left group transition-all duration-300 relative overflow-hidden"
+              className="tag08-card tag08-card--interactive p-8 sm:p-10 min-h-[220px] flex flex-col justify-between text-left group relative overflow-hidden"
             >
               <div className="flex items-center justify-between w-full">
-                <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-black bg-white/[0.03] border border-white/10 px-2 py-0.5 rounded">PROTOCOLO 04</span>
-                <span className="font-mono text-brand-secondary text-[10px] uppercase font-black tracking-widest">Próximo passo claro</span>
+                <span className="tag08-kicker">04 · Próximo passo claro</span>
               </div>
               
               <div className="space-y-2 mt-8 max-w-[85%]">
-                <h3 className="font-display font-bold text-base sm:text-lg text-white uppercase tracking-tight">
+                <h3 className="font-display font-bold text-base sm:text-lg text-white tracking-tight">
                   Recomendação responsável
                 </h3>
-                <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans font-medium">
+                <p className="text-zinc-400 text-xs leading-relaxed font-sans font-medium">
                   A recomendação final não busca empurrar o serviço mais caro ou mais completo. Ela busca indicar o caminho que faz sentido para o momento, o orçamento, a operação e a expectativa.
                 </p>
               </div>
 
-              <div className="pt-6 border-t border-brand-secondary/10 mt-8 flex items-center justify-between w-full text-zinc-500 font-mono text-[9px] uppercase tracking-wider">
+              <div className="pt-6 border-t border-brand-secondary/10 mt-8 flex items-center justify-between w-full text-zinc-500 tag08-meta text-xs uppercase tracking-wider">
                 <span>04 // EVOLUÇÃO</span>
                 <ArrowLeft className="w-4 h-4 text-brand-secondary hidden lg:block" />
                 <ArrowDown className="w-4 h-4 text-brand-secondary lg:hidden" />
@@ -2021,11 +1944,11 @@ export default function Home({ onNavigate }: HomeProps) {
           
           {/* Header Block of the Advantages Section */}
           <div className="max-w-3xl text-left space-y-4 mb-16">
-            <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold flex items-center gap-2">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-semibold flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary" />
               Por que escolher a TAG08
             </span>
-            <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient leading-tight uppercase">
+            <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient leading-tight">
               Por que marcas em evolução escolhem a TAG08.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-2xl">
@@ -2048,11 +1971,11 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="w-9 h-9 rounded-full bg-white/[0.03] border border-white/[0.08] text-brand-secondary flex items-center justify-center">
                     <Star className="w-4 h-4 fill-current text-brand" />
                   </div>
-                  <span className="font-mono text-[9px] text-brand-secondary tracking-wider uppercase font-bold opacity-60">ESCUTA</span>
+                  <span className="tag08-meta text-xs text-brand-secondary tracking-wider uppercase font-bold opacity-60">ESCUTA</span>
                 </div>
                 <div className="mt-4 space-y-1">
-                  <h4 className="font-display font-black text-xs sm:text-sm text-white uppercase tracking-tight">Diagnóstico antes da execução</h4>
-                  <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed">
+                  <h4 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">Diagnóstico antes da execução</h4>
+                  <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
                     Antes de produzir, entendemos o momento da marca, os objetivos, os gargalos e a estrutura disponível para sustentar o trabalho.
                   </p>
                 </div>
@@ -2067,11 +1990,11 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="w-9 h-9 rounded-full bg-white/[0.03] border border-white/[0.08] text-white flex items-center justify-center">
                     <Plus className="w-4 h-4 text-white font-black" />
                   </div>
-                  <span className="font-mono text-[9px] text-zinc-500 tracking-wider uppercase font-bold">ENTREGA</span>
+                  <span className="tag08-meta text-xs text-zinc-500 tracking-wider uppercase font-bold">ENTREGA</span>
                 </div>
                 <div className="mt-4 space-y-1">
-                  <h4 className="font-display font-black text-xs sm:text-sm text-white uppercase tracking-tight">Estratégia com entrega</h4>
-                  <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed">
+                  <h4 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">Estratégia com entrega</h4>
+                  <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
                     A TAG08 não fica apenas no discurso estratégico. Organizamos direção, escopo, conteúdo, design, tecnologia e operação para tirar o plano do papel.
                   </p>
                 </div>
@@ -2084,13 +2007,13 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="bg-brand-secondary border border-black/10 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[135px] shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.1)] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute top-[-20px] right-[-20px] w-16 h-16 bg-white/20 rounded-full blur-xl pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-mono text-[8px] font-black uppercase text-black/60 bg-black/5 px-2 py-0.5 rounded border border-black/5">01 // UNIFICADO</span>
-                    <span className="font-sans text-[9px] font-bold text-black/70">MÉTODO</span>
+                    <span className="font-sans text-xs font-black uppercase text-black/60 bg-black/5 px-2 py-0.5 rounded border border-black/5">01 // UNIFICADO</span>
+                    <span className="font-sans text-xs font-bold text-black/70">MÉTODO</span>
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
                     <span className="font-display font-black text-3xl text-black tracking-tighter block leading-none">QUATRO FRENTES</span>
-                    <p className="text-black font-display font-bold text-[10px] uppercase tracking-wider">ESTRATÉGIA INTEGRADA</p>
-                    <p className="text-black/60 text-[9.5px] leading-snug font-medium">Conteúdo, design, tecnologia e operação trabalhando no mesmo sentido.</p>
+                    <p className="text-black font-display font-bold text-xs uppercase tracking-wider">ESTRATÉGIA INTEGRADA</p>
+                    <p className="text-black/60 text-xs leading-snug font-medium">Conteúdo, design, tecnologia e operação trabalhando no mesmo sentido.</p>
                   </div>
                 </div>
 
@@ -2098,13 +2021,13 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[135px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl group-hover:bg-brand-secondary/[0.02] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-mono text-[8px] font-black uppercase text-brand-secondary bg-brand-secondary/5 px-2 py-0.5 rounded border border-brand-secondary/10">02 // IMPACTO</span>
+                    <span className="font-sans text-xs font-black uppercase text-brand-secondary bg-brand-secondary/5 px-2 py-0.5 rounded border border-brand-secondary/10">02 // IMPACTO</span>
                     <Zap className="w-3 h-3 text-brand-secondary" />
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
                     <span className="font-display font-black text-3xl text-white tracking-tighter block leading-none">CLAREZA</span>
-                    <p className="text-white font-display font-bold text-[10px] uppercase tracking-wider">ESCOLHAS MELHORES</p>
-                    <p className="text-zinc-500 text-[9.5px] leading-snug font-medium">Cada entrega respeita contexto, escopo e capacidade real da operação.</p>
+                    <p className="text-white font-display font-bold text-xs uppercase tracking-wider">ESCOLHAS MELHORES</p>
+                    <p className="text-zinc-500 text-xs leading-snug font-medium">Cada entrega respeita contexto, escopo e capacidade real da operação.</p>
                   </div>
                 </div>
 
@@ -2126,10 +2049,10 @@ export default function Home({ onNavigate }: HomeProps) {
 
                 {/* Header tag */}
                 <div className="relative z-10 flex justify-between items-center w-full">
-                  <span className="font-mono text-[9px] text-brand-secondary tracking-widest uppercase font-extrabold bg-brand-secondary/10 px-2.5 py-1 rounded-full">
+                  <span className="tag08-meta text-xs text-brand-secondary tracking-widest uppercase font-extrabold bg-brand-secondary/10 px-2.5 py-1 rounded-full">
                     Estúdio Operacional
                   </span>
-                  <span className="text-zinc-500 font-mono text-[8px]">SÃO PAULO / BR</span>
+                  <span className="text-zinc-500 font-sans text-xs">SÃO PAULO / BR</span>
                 </div>
 
                 {/* HERO DIGITAL ".T" CENTERING */}
@@ -2142,14 +2065,14 @@ export default function Home({ onNavigate }: HomeProps) {
                     .T
                   </span>
                   
-                  <span className="text-white font-mono text-[10px] tracking-widest font-black uppercase mt-4">
+                  <span className="text-white tag08-meta text-xs tracking-widest font-black uppercase mt-4">
                     TAG08 CONSÓRCIO
                   </span>
                 </div>
 
                 {/* Bottom detailed description */}
                 <div className="relative z-10 pt-4 border-t border-white/5 space-y-2">
-                  <h3 className="text-white font-display font-bold text-xs uppercase tracking-wider">Centro de método</h3>
+                  <h3 className="text-white font-display font-bold text-xs tracking-wider">Centro de método</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed">
                     Nossa equipe conecta contexto, prioridade e entrega para que a decisão não fique solta depois da reunião.
                   </p>
@@ -2167,13 +2090,13 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[135px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl group-hover:bg-brand-secondary/[0.02] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-mono text-[8px] font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">03 // FLOW</span>
+                    <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">03 // FLOW</span>
                     <Wifi className="w-3.5 h-3.5 text-zinc-400 group-hover:text-brand-secondary transition-colors" />
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
                     <span className="font-display font-black text-2xl text-white tracking-tighter block leading-none">ASSÍNCRONO</span>
-                    <p className="text-white font-display font-bold text-[10px] uppercase tracking-wider">Sincronia Total</p>
-                    <p className="text-zinc-500 text-[9.5px] leading-snug font-medium">Controle total via canais diretos e limpos.</p>
+                    <p className="text-white font-display font-bold text-xs uppercase tracking-wider">Sincronia Total</p>
+                    <p className="text-zinc-500 text-xs leading-snug font-medium">Controle total via canais diretos e limpos.</p>
                   </div>
                 </div>
 
@@ -2181,13 +2104,13 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[135px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl group-hover:bg-brand-secondary/[0.02] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-mono text-[8px] font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">04 // TECH</span>
+                    <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">04 // TECH</span>
                     <Layers className="w-3.5 h-3.5 text-zinc-400 group-hover:text-brand transition-colors" />
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
                     <span className="font-display font-black text-2xl text-white tracking-tighter block leading-none">ZERO NO-CODE</span>
-                    <p className="text-white font-display font-bold text-[10px] uppercase tracking-wider">TECNOLOGIA LIMPA</p>
-                    <p className="text-zinc-500 text-[9.5px] leading-snug font-medium">Código limpo, leve e rápido.</p>
+                    <p className="text-white font-display font-bold text-xs uppercase tracking-wider">TECNOLOGIA LIMPA</p>
+                    <p className="text-zinc-500 text-xs leading-snug font-medium">Código limpo, leve e rápido.</p>
                   </div>
                 </div>
 
@@ -2202,11 +2125,11 @@ export default function Home({ onNavigate }: HomeProps) {
                   <div className="w-9 h-9 rounded-full bg-white/[0.03] border border-white/[0.08] text-zinc-300 flex items-center justify-center group-hover:text-brand-secondary group-hover:border-brand-secondary/30 transition-all">
                     <Activity className="w-4 h-4 animate-pulse text-brand" />
                   </div>
-                  <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-extrabold">ANALYTICS ATIVO</span>
+                  <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-extrabold">ANALYTICS ATIVO</span>
                 </div>
                 <div className="mt-4 space-y-1">
-                  <h4 className="font-display font-black text-xs sm:text-sm text-white uppercase tracking-tight">Decisões Guiadas por Dados</h4>
-                  <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed">
+                  <h4 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">Decisões Guiadas por Dados</h4>
+                  <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
                     Evitamos suposições estéreis. Fornecemos dashboards dinâmicos traduzindo cada tráfego, lead e conversão em crescimento tático palpável.
                   </p>
                 </div>
@@ -2219,13 +2142,13 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[140px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute top-0 right-0 w-16 h-16 bg-white/[0.01] rounded-full blur-md group-hover:bg-brand-secondary/[0.01] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-sans text-[7px] font-black uppercase text-brand-secondary bg-brand-secondary/5 px-1.5 py-0.5 rounded">PROVA</span>
+                    <span className="font-sans text-xs font-black uppercase text-brand-secondary bg-brand-secondary/5 px-1.5 py-0.5 rounded">PROVA</span>
                     <TrendingUp className="w-3.5 h-3.5 text-zinc-500" />
                   </div>
                   <div className="mt-3 relative z-10 text-left">
                     <span className="font-display font-black text-2xl sm:text-3xl text-white tracking-tighter leading-none block">CLAREZA</span>
-                    <p className="text-white font-display font-bold text-[9.5px] uppercase tracking-wider mt-0.5">NO DIAGNÓSTICO</p>
-                    <p className="text-zinc-500 text-[9px] leading-snug">A confiança não vem de promessa pronta. Vem de clareza no diagnóstico, coerência na estratégia e responsabilidade na execução.</p>
+                    <p className="text-white font-display font-bold text-xs uppercase tracking-wider mt-0.5">NO DIAGNÓSTICO</p>
+                    <p className="text-zinc-500 text-xs leading-snug">A confiança não vem de promessa pronta. Vem de clareza no diagnóstico, coerência na estratégia e responsabilidade na execução.</p>
                   </div>
                 </div>
 
@@ -2233,7 +2156,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[140px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute bottom-[-20px] right-[-20px] w-20 h-20 bg-brand/[0.015] rounded-full blur-xl group-hover:bg-brand-secondary/[0.03] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-sans text-[7px] font-black uppercase text-zinc-400 bg-white/5 px-1.5 py-0.5 rounded">CONTINUIDADE</span>
+                    <span className="font-sans text-xs font-black uppercase text-zinc-400 bg-white/5 px-1.5 py-0.5 rounded">CONTINUIDADE</span>
                     <div className="flex -space-x-1.5">
                       <Image width={16} height={16} className="w-4 h-4 rounded-full ring-1 ring-black object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=50" alt="" />
                       <Image width={16} height={16} className="w-4 h-4 rounded-full ring-1 ring-black object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=50" alt="" />
@@ -2242,8 +2165,8 @@ export default function Home({ onNavigate }: HomeProps) {
                   </div>
                   <div className="mt-3 relative z-10 text-left">
                     <span className="font-display font-black text-2xl sm:text-3xl text-brand-secondary tracking-tighter leading-none block">MÉTODO</span>
-                    <p className="text-white font-display font-bold text-[9.5px] uppercase tracking-wider mt-0.5">COERÊNCIA</p>
-                    <p className="text-zinc-500 text-[9px] leading-snug">Confiança se constrói com clareza, método e entrega coerente.</p>
+                    <p className="text-white font-display font-bold text-xs uppercase tracking-wider mt-0.5">COERÊNCIA</p>
+                    <p className="text-zinc-500 text-xs leading-snug">Confiança se constrói com clareza, método e entrega coerente.</p>
                   </div>
                 </div>
 
@@ -2257,7 +2180,7 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="mt-16 text-center border-t border-white/[0.04] pt-8">
             <button
               onClick={() => handleLinkClick("/contato")}
-              className="text-white/60 hover:text-brand-secondary font-mono text-[10px] sm:text-xs font-black uppercase tracking-widest inline-flex items-center gap-2 group transition-colors cursor-pointer"
+              className="text-white/60 hover:text-brand-secondary font-sans text-xs sm:text-xs font-black uppercase tracking-widest inline-flex items-center gap-2 group transition-colors cursor-pointer"
             >
               FALAR COM A TAG08 &rarr;
             </button>
@@ -2321,7 +2244,7 @@ export default function Home({ onNavigate }: HomeProps) {
       ];
 
       */}
-      <section id="servicos-principais" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
+      <section id="servicos-principais" className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         
         {/* Ambient background decoration */}
         <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-brand-secondary/5 rounded-full blur-[200px] pointer-events-none" />
@@ -2329,7 +2252,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
         <div className="max-w-7xl mx-auto">
           {/* Main tablet content card in pure high fashion white */}
-          <div className="bg-white text-black p-6 sm:p-14 lg:p-16 rounded-[44px] sm:rounded-[56px] border border-black/10 shadow-[0_45px_100px_rgba(0,0,0,0.9)] overflow-hidden relative">
+          <div className="bg-white text-black p-6 sm:p-12 lg:p-16 rounded-[36px] sm:rounded-[48px] border border-black/[0.08] shadow-[0_28px_72px_rgba(0,0,0,0.55)] overflow-hidden relative">
             
             {/* Design Grid lines simulating print outline */}
             <div className="absolute inset-0 grid grid-cols-4 sm:grid-cols-8 h-full opacity-[0.02] pointer-events-none">
@@ -2363,24 +2286,33 @@ export default function Home({ onNavigate }: HomeProps) {
             </div>            {/* GIANT EDITORIAL HEADLINE BLOCK */}
             <div className="relative z-10 pt-10 pb-8 flex flex-col xl:flex-row xl:items-end justify-between gap-6">
               <div className="text-left space-y-2 max-w-3xl">
-                <p className="font-mono text-[10px] text-zinc-500 tracking-widest uppercase font-extrabold block">
+                <p className="tag08-meta text-xs text-zinc-500 tracking-widest uppercase font-extrabold block">
                   Mapa de soluções
                 </p>
-                <h2 className="font-display font-black text-4xl sm:text-7xl lg:text-[76px] leading-[0.85] tracking-tighter text-black">
+                <h2 className="font-display font-black text-4xl sm:text-7xl lg:text-[76px] leading-[0.9] tracking-tighter text-black text-balance">
                   Soluções para cada momento da sua marca.
                 </h2>
               </div>
-              <p className="text-zinc-600 text-xs sm:text-sm font-sans font-medium tracking-tight leading-relaxed max-w-sm text-left xl:text-right xl:pb-2">
+              <p className="text-zinc-600 text-xs sm:text-sm font-sans font-medium tracking-tight leading-relaxed max-w-md text-left xl:text-right xl:pb-2">
                 A TAG08 não começa oferecendo um pacote pronto. Primeiro entendemos o momento do negócio. Depois indicamos a estrutura mais adequada para organizar presença, posicionamento, conteúdo, tecnologia ou operação.
               </p>
             </div>
 
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8 my-6">
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 auto-rows-fr items-stretch gap-6 sm:gap-8 my-6">
               {MAPA_SOLUCOES_DATA.map((service, index) => {
-                const wideCard = index === 0 || index === 4;
                 const darkCard = index === 2 || index === 5;
                 const accentCard = index === 6;
-                const gridClass = wideCard ? "lg:col-span-6" : "lg:col-span-4";
+                // The desktop rhythm is deliberately balanced: 6+3+3, 3+6+3, then a final full-width moment.
+                // Tablet keeps equal cards so a wide card never leaves a stranded half-row.
+                const gridClass = [
+                  "lg:col-span-6",
+                  "lg:col-span-3",
+                  "lg:col-span-3",
+                  "lg:col-span-3",
+                  "lg:col-span-6",
+                  "lg:col-span-3",
+                  "md:col-span-2 lg:col-span-12"
+                ][index] ?? "lg:col-span-3";
                 const cardBg = darkCard
                   ? "bg-zinc-900 border border-white/5"
                   : accentCard
@@ -2393,9 +2325,10 @@ export default function Home({ onNavigate }: HomeProps) {
                 return (
                   <motion.div
                     key={service.id}
+                    data-testid="solution-map-card"
                     whileHover={{ y: -4, scale: 1.01 }}
                     transition={{ duration: 0.3 }}
-                    className={`${gridClass} ${cardBg} ${textColor} rounded-[32px] p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[280px]`}
+                    className={`${gridClass} ${cardBg} ${textColor} rounded-[32px] p-6 sm:p-8 lg:p-9 text-left relative overflow-hidden group h-full min-h-[21rem] sm:min-h-[22rem] flex flex-col`}
                   >
                     {!darkCard && (
                       <div className="absolute inset-0 grid grid-cols-3 h-full opacity-[0.015] pointer-events-none">
@@ -2405,36 +2338,36 @@ export default function Home({ onNavigate }: HomeProps) {
                       </div>
                     )}
 
-                    <div className="space-y-4 relative z-10">
-                      <div className="flex items-center justify-between border-b pb-3 border-current/10">
-                        <span className={`font-mono text-[9px] tracking-widest uppercase font-bold ${labelColor}`}>
+                    <div className="relative z-10 flex min-h-0 flex-1 flex-col">
+                      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3 border-b border-current/10 pb-4">
+                        <span className={`tag08-meta text-xs tracking-widest uppercase font-bold leading-relaxed ${labelColor}`}>
                           Momento {String(index + 1).padStart(2, "0")}
                         </span>
-                        <span className="font-mono text-[9px] uppercase tracking-widest opacity-60">
+                        <span className="max-w-[11rem] text-right tag08-meta text-xs uppercase leading-relaxed tracking-widest opacity-60">
                           {service.subtitle}
                         </span>
                       </div>
 
-                      <div className="space-y-3">
-                        <h3 className="font-display font-black text-xl sm:text-2xl leading-none tracking-tight">
+                      <div className="flex flex-1 flex-col pt-5">
+                        <h3 className="min-h-[3.9rem] font-display text-xl font-black leading-[0.95] tracking-tight sm:text-2xl">
                           {service.title}
                         </h3>
-                        <p className={`text-xs sm:text-sm font-sans leading-relaxed ${subColor}`}>
+                        <p className={`mt-4 min-h-[5.25rem] text-xs font-sans leading-relaxed sm:text-sm ${subColor}`}>
                           {service.desc}
                         </p>
                       </div>
-                    </div>
 
-                    <div className="pt-6 border-t border-current/10 mt-6 relative z-10 w-full flex items-center justify-between gap-4">
-                      <button
-                        onClick={() => handleLinkClick(service.slug)}
-                        className={`font-mono text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 cursor-pointer hover:underline ${darkCard ? "text-white" : "text-black"}`}
-                      >
-                        Ver solução
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
-                      <div className={`text-[10px] font-mono uppercase tracking-widest ${labelColor}`}>
-                        {String(index + 1).padStart(2, "0")}
+                      <div className="mt-8 flex w-full items-center justify-between gap-4 border-t border-current/10 pt-5">
+                        <button
+                          onClick={() => handleLinkClick(service.slug)}
+                          className={`flex items-center gap-1.5 font-sans text-xs font-black uppercase tracking-widest cursor-pointer hover:underline ${darkCard ? "text-white" : "text-black"}`}
+                        >
+                          Ver solução
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                        <div className={`text-xs tag08-meta uppercase tracking-widest ${labelColor}`}>
+                          {String(index + 1).padStart(2, "0")}
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -2445,7 +2378,7 @@ export default function Home({ onNavigate }: HomeProps) {
             <div className="relative z-10 flex justify-start mt-2">
               <button
                 onClick={() => handleLinkClick("/servicos")}
-                className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-black text-white px-5 py-3 text-[10px] font-mono font-black tracking-widest uppercase hover:bg-zinc-800 transition-colors"
+                className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-black text-white px-5 py-3 text-xs tag08-meta font-black tracking-widest uppercase hover:bg-zinc-800 transition-colors"
               >
                 CONHECER SOLUÇÕES
                 <ArrowRight className="w-4 h-4" />
@@ -2459,7 +2392,7 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* SECTION 4.5 - RESULTADOS E CASES (MÉTODOS COM RESULTADO COMPROVADOS NA PRÁTICA) */}
-      <section id="resultados-cases" className="py-24 px-6 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
+      <section id="resultados-cases" className="tag08-section px-4 sm:px-6 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
         {/* Ambient background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -2468,10 +2401,10 @@ export default function Home({ onNavigate }: HomeProps) {
           {/* Mockup Header line spacing and structure */}
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 text-left">
             <div className="space-y-2">
-              <span className="font-mono text-[10px] text-brand-secondary uppercase tracking-widest font-black block">
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black block">
                 Método em prática
               </span>
-              <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient uppercase tracking-tight leading-none">
+              <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient tracking-tight leading-none">
                 Projetos que mostram direção aplicada.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
@@ -2480,7 +2413,7 @@ export default function Home({ onNavigate }: HomeProps) {
             </div>
             <button
               onClick={() => handleLinkClick("/contato")}
-              className="text-xs font-mono text-brand-secondary hover:underline font-bold flex items-center justify-start md:justify-end gap-1.5 shrink-0 uppercase tracking-widest cursor-pointer"
+              className="text-xs font-sans text-brand-secondary hover:underline font-bold flex items-center justify-start md:justify-end gap-1.5 shrink-0 uppercase tracking-widest cursor-pointer"
             >
               Solicitar Estudo de Caso <ArrowRight className="w-3.5 h-3.5" />
             </button>
@@ -2521,10 +2454,10 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Styled aesthetic watermark overlays mimicking the design language */}
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   CONTEÚDO COM DIREÇÃO
                 </span>
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/40 tracking-wider">
                   PRESENÇA EDITORIAL
                 </span>
               </div>
@@ -2540,10 +2473,10 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
 
               <div className="flex justify-between items-end">
-                <span className="font-mono text-[9px] text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/40 tracking-wider">
                   FREQUÊNCIA POSSÍVEL
                 </span>
-                <span className="font-mono text-[9px] text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   ALINHAMENTO EDITORIAL
                 </span>
               </div>
@@ -2559,18 +2492,18 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
                   <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
                 </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
+                <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-black/90">
                   Conteúdo com direção
                 </span>
               </div>
 
               {/* Massive Bold Heading mirroring reference design */}
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.95] tracking-tighter uppercase">
+              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.95] tracking-tighter">
                 Conteúdo que organiza narrativa, presença e relacionamento.
               </h2>
 
               {/* Description Paragraph with high contrast block typeface layout */}
-              <p className="text-black/85 text-[11px] sm:text-xs max-w-2xl leading-relaxed font-sans font-extrabold uppercase">
+              <p className="text-black/85 text-xs sm:text-xs max-w-2xl leading-relaxed font-sans font-extrabold uppercase">
                 A TAG08 estrutura pautas, formatos e linhas editoriais para que a marca deixe de publicar por obrigação e passe a comunicar com intenção, consistência e clareza comercial.
               </p>
             </div>
@@ -2586,7 +2519,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   <button
                     key={plan}
                     onClick={() => setSelectedEditorialPlan(plan)}
-                    className={`flex-1 text-center py-2 px-1 rounded-lg font-mono text-[9px] uppercase tracking-wider font-extrabold transition-all cursor-pointer ${
+                    className={`flex-1 text-center py-2 px-1 rounded-lg font-sans text-xs uppercase tracking-wider font-extrabold transition-all cursor-pointer ${
                       selectedEditorialPlan === plan
                         ? "bg-brand text-black shadow-md shadow-brand-secondary/15"
                         : "text-zinc-400 hover:text-white"
@@ -2603,7 +2536,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   <span className="font-display font-black text-4xl text-brand tracking-tighter">
                     {selectedEditorialPlan === "start" ? "01" : selectedEditorialPlan === "base" ? "02" : "03"}
                   </span>
-                  <span className="font-mono text-[9.5px] font-black uppercase text-brand tracking-widest bg-brand/10 border border-brand/20 px-2 py-0.5 rounded">
+                  <span className="tag08-meta text-xs font-black uppercase text-brand tracking-widest bg-brand/10 border border-brand/20 px-2 py-0.5 rounded">
                     {selectedEditorialPlan === "start" ? "DIAGNÓSTICO" : selectedEditorialPlan === "base" ? "LINHA EDITORIAL" : "CONSISTÊNCIA"}
                   </span>
                 </div>
@@ -2636,7 +2569,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   ]).map((tag, idx) => (
                     <span 
                       key={idx} 
-                      className={`font-mono text-[8.5px] px-2.5 py-1 rounded-lg uppercase tracking-wider ${
+                      className={`tag08-meta text-xs px-2.5 py-1 rounded-lg uppercase tracking-wider ${
                         selectedEditorialPlan === "base"
                           ? "bg-brand/10 border border-brand/20 text-brand font-bold"
                           : "bg-white/[0.04] border border-white/[0.08] text-white"
@@ -2654,7 +2587,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   <ArrowRight className="w-5 h-5 rotate-[-45deg] stroke-[2.5]" />
                 </div>
                 <div className="space-y-0.5">
-                  <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
+                  <span className="tag08-meta text-xs text-brand uppercase tracking-wider font-extrabold block">
                     ORGANIZAR MINHA LINHA EDITORIAL
                   </span>
                   <a href="/contato" className="text-white text-xs leading-snug font-sans font-semibold hover:underline">
@@ -2675,18 +2608,18 @@ export default function Home({ onNavigate }: HomeProps) {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full bg-brand/10 flex items-center justify-center text-brand shrink-0 group-hover:bg-brand group-hover:text-black transition-all duration-200">
-                        <span className="text-[9px] font-mono font-black tracking-tight text-brand group-hover:text-black">BR</span>
+                        <span className="text-xs font-sans font-black tracking-tight text-brand group-hover:text-black">BR</span>
                       </div>
                       <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                        <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                           WhatsApp Brasil
                         </span>
-                        <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
+                        <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                           +55 83 9.9886-8882
                         </span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-brand font-mono font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
+                    <span className="text-xs text-brand tag08-meta font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
                       CONECTAR
                     </span>
                   </div>
@@ -2702,18 +2635,18 @@ export default function Home({ onNavigate }: HomeProps) {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0 group-hover:bg-brand-secondary group-hover:text-black transition-all duration-200">
-                        <span className="text-[9px] font-mono font-black tracking-tight text-brand-secondary group-hover:text-black">INT</span>
+                        <span className="text-xs font-sans font-black tracking-tight text-brand-secondary group-hover:text-black">INT</span>
                       </div>
                       <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                        <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                           WhatsApp internacional
                         </span>
-                        <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand-secondary transition-colors mt-0.5">
+                        <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand-secondary transition-colors mt-0.5">
                           +56 9 9793 7611
                         </span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-brand-secondary font-mono font-bold uppercase tracking-wider bg-brand-secondary/10 py-1 px-2.5 rounded-lg group-hover:bg-brand-secondary group-hover:text-black transition-all">
+                    <span className="text-xs text-brand-secondary tag08-meta font-bold uppercase tracking-wider bg-brand-secondary/10 py-1 px-2.5 rounded-lg group-hover:bg-brand-secondary group-hover:text-black transition-all">
                       CONECTAR
                     </span>
                   </div>
@@ -2724,11 +2657,11 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 text-xs">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-brand animate-pulse" />
-                  <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest font-extrabold">
+                  <span className="tag08-meta text-xs text-white/50 uppercase tracking-widest font-extrabold">
                     TAG08
                   </span>
                 </div>
-                <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
+                <span className="font-sans text-xs text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
                   PROCESSO EDITORIAL ATIVO
                 </span>
               </div>
@@ -2744,7 +2677,7 @@ export default function Home({ onNavigate }: HomeProps) {
       <section id="metodologia" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-900/10 relative">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto space-y-4 mb-20">
-            <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-semibold">
               Da análise à execução
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient">
@@ -2760,7 +2693,7 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Step 1 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">01 // DIAGNÓSTICO</div>
+              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">01 // DIAGNÓSTICO</div>
               <h4 className="font-display font-semibold text-white">Diagnóstico</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
                 Entendemos o momento da marca, seus canais, gargalos, objetivos e capacidade real de execução.
@@ -2770,7 +2703,7 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Step 2 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">02 // ESTRATÉGIA</div>
+              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">02 // ESTRATÉGIA</div>
               <h4 className="font-display font-semibold text-white">Estratégia</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
                 Definimos prioridades, mensagens, escopo e direção para que a execução tenha critério.
@@ -2780,7 +2713,7 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Step 3 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">03 // PRODUÇÃO</div>
+              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">03 // PRODUÇÃO</div>
               <h4 className="font-display font-semibold text-white">Produção</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
                 Transformamos a direção aprovada em conteúdo, design, site, campanhas, processos ou materiais aplicáveis.
@@ -2790,7 +2723,7 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Step 4 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">04 // ATIVAÇÃO</div>
+              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">04 // ATIVAÇÃO</div>
               <h4 className="font-display font-semibold text-white">Ativação</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
                 Colocamos as entregas em uso, acompanhando ajustes necessários e pontos de atenção.
@@ -2800,7 +2733,7 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Step 5 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">05 // EVOLUÇÃO</div>
+              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">05 // EVOLUÇÃO</div>
               <h4 className="font-display font-semibold text-white">Evolução</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
                 Revisamos aprendizados, identificamos melhorias e organizamos próximos passos com responsabilidade.
@@ -2825,16 +2758,16 @@ export default function Home({ onNavigate }: HomeProps) {
           
           {/* Section Header with top badge and clean typography */}
           <div className="max-w-3xl text-left space-y-4 mb-16">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
               Produção audiovisual
             </div>
             
-            <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white leading-[0.9] tracking-tighter uppercase">
+            <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white leading-[0.9] tracking-tighter">
               Vídeos, bastidores e narrativas
               com intenção de marca.
             </h2>
             
-            <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-2xl">
+            <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-2xl">
               A TAG08 produz conteúdos audiovisuais para marcas, especialistas e eventos que precisam transformar presença, fala, ambiente e bastidores em materiais com clareza, estética e função estratégica.
             </p>
           </div>
@@ -2869,7 +2802,7 @@ export default function Home({ onNavigate }: HomeProps) {
                         });
                         setIsPlayingVideo(false);
                       }}
-                      className="absolute top-4 right-4 z-40 bg-black/80 hover:bg-black border border-white/20 text-white hover:text-brand font-mono text-[9px] font-black tracking-widest px-3 py-1.5 rounded-full uppercase transition-all flex items-center gap-1.5 cursor-pointer"
+                      className="absolute top-4 right-4 z-40 bg-black/80 hover:bg-black border border-white/20 text-white hover:text-brand font-sans text-xs font-black tracking-widest px-3 py-1.5 rounded-full uppercase transition-all flex items-center gap-1.5 cursor-pointer"
                     >
                       <X className="w-3 h-3 text-brand" />
                       <span>FECHAR PLAYER</span>
@@ -2910,13 +2843,13 @@ export default function Home({ onNavigate }: HomeProps) {
                         <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center text-black shadow-md shrink-0">
                           <Star className="w-3 h-3 fill-black text-black" />
                         </div>
-                        <span className="font-mono text-[9px] text-white/95 uppercase tracking-widest font-black">
+                        <span className="tag08-meta text-xs text-white/95 uppercase tracking-widest font-black">
                           TAG08 AUDIOVISUAL
                         </span>
                       </div>
 
                       {/* Video Stats/Views label or menu points mimicking Ref 1 */}
-                      <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/10 border border-brand-secondary/30 px-3 py-1.5 rounded-full uppercase font-black tracking-widest shadow-sm">
+                      <span className="tag08-meta text-xs text-brand-secondary bg-brand-secondary/10 border border-brand-secondary/30 px-3 py-1.5 rounded-full uppercase font-black tracking-widest shadow-sm">
                         {visibleYoutubeVideos[activeVideoIndex].views}
                       </span>
                     </div>
@@ -2934,7 +2867,7 @@ export default function Home({ onNavigate }: HomeProps) {
                         <span className="absolute -inset-2 rounded-full border border-brand/15 animate-pulse pointer-events-none" />
                         <Play className="w-7 h-7 sm:w-9 sm:h-9 text-black fill-current translate-x-0.5 ml-0.5" />
                       </button>
-                      <span className="font-mono text-[9.5px] text-zinc-300 uppercase tracking-widest font-black mt-3 transition-colors group-hover:text-brand">
+                      <span className="tag08-meta text-xs text-zinc-300 uppercase tracking-widest font-black mt-3 transition-colors group-hover:text-brand">
                         ASSISTIR
                       </span>
                       {showYoutubeConsentPrompt ? (
@@ -2946,14 +2879,14 @@ export default function Home({ onNavigate }: HomeProps) {
                             <button
                               type="button"
                               onClick={() => setShowYoutubeConsentPrompt(false)}
-                              className="rounded-lg border border-white/15 px-3 py-2 text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-300"
+                              className="rounded-lg border border-white/15 px-3 py-2 text-xs tag08-meta font-bold uppercase tracking-wider text-zinc-300"
                             >
                               Agora não
                             </button>
                             <button
                               type="button"
                               onClick={acceptYoutubeConsentAndPlay}
-                              className="rounded-lg bg-brand px-3 py-2 text-[10px] font-mono font-black uppercase tracking-wider text-black"
+                              className="rounded-lg bg-brand px-3 py-2 text-xs tag08-action font-black uppercase tracking-wider text-black"
                             >
                               Permitir e assistir
                             </button>
@@ -2965,21 +2898,21 @@ export default function Home({ onNavigate }: HomeProps) {
                     {/* BOTTOM TEXT BLOCK OVERLAYS */}
                     <div className="relative z-10 space-y-3 pt-6 border-b border-white/[0.04] pb-4">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black">
+                        <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black">
                           {visibleYoutubeVideos[activeVideoIndex].category}
                         </span>
                         <span className="text-white/20 text-xs">//</span>
-                        <span className="font-mono text-[9px] text-zinc-400 font-bold uppercase tracking-wider">
+                        <span className="tag08-meta text-xs text-zinc-400 font-bold uppercase tracking-wider">
                           DURAÇÃO: {visibleYoutubeVideos[activeVideoIndex].duration} MIN
                         </span>
                       </div>
                       
-                      <h3 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tighter uppercase leading-none">
+                      <h3 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tighter leading-none">
                         {visibleYoutubeVideos[activeVideoIndex].title}
                       </h3>
                       
-                      <p className="max-w-[66ch] text-zinc-300 text-xs sm:text-[13px] font-sans leading-relaxed font-medium line-clamp-4">
-                        <span className="mb-1 block font-mono text-[8px] font-black uppercase tracking-[0.18em] text-zinc-500">
+                      <p className="max-w-[66ch] text-zinc-300 text-xs sm:text-xs font-sans leading-relaxed font-medium line-clamp-4">
+                        <span className="mb-1 block tag08-meta text-xs font-black uppercase tracking-[0.18em] text-zinc-500">
                           Sobre este vídeo
                         </span>
                         {getVideoDescriptionPreview(visibleYoutubeVideos[activeVideoIndex].description)}
@@ -2988,10 +2921,10 @@ export default function Home({ onNavigate }: HomeProps) {
 
                     {/* LOWER ACCURACY WATERMARKS (Meticulously structured) */}
                     <div className="relative z-10 flex items-center justify-between pt-1">
-                      <span className="font-mono text-[8px] text-white/30 uppercase tracking-widest">
+                      <span className="tag08-meta text-xs text-white/30 uppercase tracking-widest">
                         PORTFÓLIO // TAG08
                       </span>
-                      <div className="flex items-center gap-1.5 font-mono text-[8.5px] text-brand-secondary font-black bg-white/[0.02] border border-white/5 py-1 px-3 rounded-lg uppercase">
+                      <div className="flex items-center gap-1.5 font-sans text-xs text-brand-secondary font-black bg-white/[0.02] border border-white/5 py-1 px-3 rounded-lg uppercase">
                         <span>#</span>
                         <span>{visibleYoutubeVideos[activeVideoIndex].tagline}</span>
                       </div>
@@ -3010,7 +2943,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 {/* Sidebar Title */}
                 <div className="flex items-center justify-between border-b border-white/[0.06] pb-4 mb-2">
                   <div className="flex flex-col text-left">
-                    <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-bold">PORTFÓLIO AUDIOVISUAL</span>
+                    <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-bold">PORTFÓLIO AUDIOVISUAL</span>
                     <span className="font-display font-black text-lg text-white uppercase tracking-tight mt-1">FORMATOS</span>
                   </div>
                   
@@ -3054,7 +2987,7 @@ export default function Home({ onNavigate }: HomeProps) {
                           <div className="absolute inset-0 bg-black/25" />
                           
                           {/* Duration Tag overlay */}
-                          <span className="absolute bottom-1 right-1 font-sans text-[7.5px] bg-black/80 border border-white/10 px-1 rounded text-white font-extrabold">
+                          <span className="absolute bottom-1 right-1 font-sans text-xs bg-black/80 border border-white/10 px-1 rounded text-white font-extrabold">
                             {item.duration}
                           </span>
                         </div>
@@ -3063,10 +2996,10 @@ export default function Home({ onNavigate }: HomeProps) {
                         <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5 text-left">
                           <div className="space-y-0.5">
                             <div className="flex items-center justify-between">
-                              <span className={`font-sans text-[8px] font-bold ${isActive ? "text-black/60" : "text-brand"}`}>
+                              <span className={`font-sans text-xs font-bold ${isActive ? "text-black/60" : "text-brand"}`}>
                                 EPISÓDIO {String(idx + 1).padStart(2, '0')}
                               </span>
-                              <span className={`font-sans text-[8px] ${isActive ? "text-black/60" : "text-zinc-500"}`}>
+                              <span className={`font-sans text-xs ${isActive ? "text-black/60" : "text-zinc-500"}`}>
                                 {item.date}
                               </span>
                             </div>
@@ -3075,7 +3008,7 @@ export default function Home({ onNavigate }: HomeProps) {
                             </h4>
                           </div>
 
-                          <div className="flex items-center justify-between pt-1 font-sans text-[8.5px]">
+                          <div className="flex items-center justify-between pt-1 font-sans text-xs">
                             <span className={isActive ? "text-black/80 font-semibold" : "text-zinc-500"}>
                               {item.views}
                             </span>
@@ -3093,9 +3026,9 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="absolute top-0 right-0 w-16 h-16 bg-red-600/[0.03] rounded-full blur-xl pointer-events-none" />
                 
                 <div className="space-y-1">
-                  <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest block font-bold">PORTFÓLIO AUDIOVISUAL // {contentSources.youtube === "live" ? "CURADORIA ATIVA" : "CURADORIA INTERNA"}</span>
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">PORTFÓLIO AUDIOVISUAL // {contentSources.youtube === "live" ? "CURADORIA ATIVA" : "CURADORIA INTERNA"}</span>
                   <h4 className="text-white font-semibold text-xs leading-tight">Quer conhecer a produção audiovisual da TAG08?</h4>
-                  <p className="text-zinc-400 text-[11px] leading-relaxed">
+                  <p className="text-zinc-400 text-xs leading-relaxed">
                     Veja como a TAG08 organiza imagem, fala e bastidores em entregas com clareza, estética e função de marca.
                   </p>
                 </div>
@@ -3103,7 +3036,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <a
                   href="/servicos/producao-audiovisual"
                   onClick={(e) => { e.preventDefault(); handleLinkClick("/servicos/producao-audiovisual"); }}
-                  className="group w-full flex items-center justify-between bg-red-600 hover:bg-red-700 text-white font-mono font-black text-[9.5px] uppercase tracking-wider py-3 px-4 rounded-xl shadow-lg transition-all text-center cursor-pointer select-none"
+                  className="group w-full flex items-center justify-between bg-red-600 hover:bg-red-700 text-white font-sans font-black text-xs uppercase tracking-wider py-3 px-4 rounded-xl shadow-lg transition-all text-center cursor-pointer select-none"
                 >
                   <span className="flex items-center gap-1.5">
                     CONHECER PRODUÇÃO AUDIOVISUAL
@@ -3123,7 +3056,7 @@ export default function Home({ onNavigate }: HomeProps) {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-5 text-left space-y-4">
-              <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold">
+              <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-semibold">
                 Diferenciais TAG08
               </span>
               <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient leading-tight">
@@ -3196,7 +3129,7 @@ export default function Home({ onNavigate }: HomeProps) {
           </div>
 
           <div className="lg:col-span-6 text-left space-y-6">
-            <span className="font-mono text-xs text-brand uppercase tracking-widest font-semibold">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-semibold">
               Sobre a TAG08
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient">
@@ -3246,10 +3179,10 @@ export default function Home({ onNavigate }: HomeProps) {
           {/* Main Section Title */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2 border-b border-white/[0.08]">
             <div className="text-left space-y-3">
-              <span className="font-mono text-xs text-brand uppercase tracking-widest font-extrabold block">
+              <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-extrabold block">
                 CASES & POSICIONAMENTO DIGITAL
               </span>
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter uppercase">
+              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter">
                 O CLIENTE DICTA <br />
                 A REVOLUÇÃO_
               </h2>
@@ -3268,7 +3201,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <ArrowRight className="w-5 h-5 fill-current" />
               </div>
               <div className="flex flex-col text-left font-sans">
-                <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-bold">Contato direto</span>
+                <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold">Contato direto</span>
                 <span className="text-white text-xs font-semibold group-hover:text-brand transition-colors flex items-center gap-1.5 font-sans">
                   FALAR COM A TAG08 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </span>
@@ -3282,10 +3215,10 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Left Hand: Sleek list of Cases with detailed info and indicators */}
             <div className="lg:col-span-4 flex flex-col justify-start space-y-4">
               <div className="border-b border-white/[0.05] pb-4 mb-2">
-                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black block">
+                <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black block">
                   CRAFTSMANSHIP FILE // SELECTOR
                 </span>
-                <span className="font-sans text-[11px] text-zinc-500 uppercase tracking-widest font-bold block mt-1">
+                <span className="font-sans text-xs text-zinc-500 uppercase tracking-widest font-bold block mt-1">
                   Selecione pauta editorial e marque a diferença executiva:
                 </span>
               </div>
@@ -3309,7 +3242,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       )}
 
                       <div className="flex items-center gap-3">
-                        <span className={`font-mono text-[10px] font-black uppercase ${isActive ? "text-black/60" : "text-brand"}`}>
+                        <span className={`font-sans text-xs font-black uppercase ${isActive ? "text-black/60" : "text-brand"}`}>
                           {String(index + 1).padStart(2, '0')}.
                         </span>
                         
@@ -3317,7 +3250,7 @@ export default function Home({ onNavigate }: HomeProps) {
                           <h4 className={`font-display font-black text-sm uppercase tracking-tight truncate ${isActive ? "text-black" : "text-white"}`}>
                             {cc.name}
                           </h4>
-                          <p className={`font-sans text-[9px] truncate ${isActive ? "text-black/80" : "text-zinc-500"}`}>
+                          <p className={`font-sans text-xs truncate ${isActive ? "text-black/80" : "text-zinc-500"}`}>
                             {cc.handle}
                           </p>
                         </div>
@@ -3332,7 +3265,7 @@ export default function Home({ onNavigate }: HomeProps) {
                         {cc.categoryTags.slice(0, 2).map((tag) => (
                           <span
                             key={tag}
-                            className={`font-mono text-[8px] px-1.5 py-0.5 rounded uppercase tracking-wider font-bold ${
+                            className={`tag08-meta text-xs px-1.5 py-0.5 rounded uppercase tracking-wider font-bold ${
                               isActive 
                               ? "bg-black/10 border border-black/10 text-black/90" 
                                 : "bg-white/[0.02] border border-white/[0.05] text-zinc-500"
@@ -3351,11 +3284,11 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="hidden lg:flex items-center justify-between bg-charcoal-900/35 border border-white/[0.05] p-3 rounded-2xl">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-                  <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest font-extrabold">
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-extrabold">
                     MÁXIMA RETENÇÃO VISUAL
                   </span>
                 </div>
-                <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/5 border border-brand/10 px-1.5 rounded">
+                <span className="font-sans text-xs text-brand font-bold bg-brand/5 border border-brand/10 px-1.5 rounded">
                   DIREÇÃO DE FLUXO TOTAL
                 </span>
               </div>
@@ -3405,7 +3338,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       {CLIENT_CASES[activeSlide].categoryTags.map((tag) => (
                         <span 
                           key={tag} 
-                          className="font-mono text-[9px] tracking-widest text-brand border border-brand/30 px-3 py-1 rounded-full uppercase font-bold bg-black/60 backdrop-blur-sm shadow-sm"
+                          className="tag08-meta text-xs tracking-widest text-brand border border-brand/30 px-3 py-1 rounded-full uppercase font-bold bg-black/60 backdrop-blur-sm shadow-sm"
                         >
                           {tag}
                         </span>
@@ -3439,11 +3372,11 @@ export default function Home({ onNavigate }: HomeProps) {
 
                   {/* MIDDLE QUOTE & POSITIONING HEADER (Using layered curved details cards) */}
                   <div className="relative z-10 space-y-4 max-w-2xl mt-auto pt-4">
-                    <span className="font-mono text-[10px] text-brand tracking-widest uppercase font-extrabold block">
+                    <span className="tag08-meta text-xs text-brand tracking-widest uppercase font-extrabold block">
                       {CLIENT_CASES[activeSlide].caseName}
                     </span>
                     
-                    <h3 className="font-display font-black text-2.5xl sm:text-4xl md:text-[40px] text-brand leading-[0.95] tracking-tighter uppercase mb-2">
+                    <h3 className="font-display font-black text-2.5xl sm:text-4xl md:text-[40px] text-brand leading-[0.95] tracking-tighter mb-2">
                       {CLIENT_CASES[activeSlide].tagline}
                     </h3>
 
@@ -3456,7 +3389,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
                   {/* BOTTOM PROFILE WRAPPER MATCHING USER MOCKUP */}
                   <div className="relative z-10 flex items-center justify-between border-t border-white/[0.08] pt-4 mt-5">
-                    <div className="font-mono text-[9px] text-white/40 tracking-widest font-extrabold uppercase hidden sm:block">
+                    <div className="tag08-meta text-xs text-white/40 tracking-widest font-extrabold uppercase hidden sm:block">
                       VERIFICADO // CO-PILOTO TAG08
                     </div>
 
@@ -3471,10 +3404,10 @@ export default function Home({ onNavigate }: HomeProps) {
                         referrerPolicy="no-referrer"
                       />
                       <div className="flex flex-col text-left">
-                        <span className="text-white text-[11px] font-bold leading-tight uppercase font-sans">
+                        <span className="text-white text-xs font-bold leading-tight uppercase font-sans">
                           {CLIENT_CASES[activeSlide].name}
                         </span>
-                        <span className="text-brand font-mono text-[8.5px] tracking-wider font-semibold">
+                        <span className="text-brand font-sans text-xs tracking-wider font-semibold">
                           {CLIENT_CASES[activeSlide].handle}
                         </span>
                       </div>
@@ -3499,11 +3432,11 @@ export default function Home({ onNavigate }: HomeProps) {
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 border-b border-white/[0.05] pb-8">
             <div className="space-y-4 text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand/10 bg-brand/5 font-mono text-[9px] uppercase tracking-widest text-brand-secondary font-black">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand/10 bg-brand/5 tag08-meta text-xs uppercase tracking-widest text-brand-secondary font-black">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary animate-pulse" /> Confiança construída na prática
               </div>
               
-              <h2 className="font-display font-black text-3xl sm:text-4xl text-gradient uppercase leading-none tracking-tighter">
+              <h2 className="font-display font-black text-3xl sm:text-4xl text-gradient leading-none tracking-tighter">
                 Experiências acompanhadas com clareza
               </h2>
               
@@ -3529,7 +3462,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     ))}
                   </div>
                 </div>
-                <p className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest mt-1 font-bold">
+                <p className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest mt-1 font-bold">
                   Avaliações ajudam a registrar percepções, mas a confiança se sustenta no acompanhamento, na clareza e na coerência da entrega.
                 </p>
               </div>
@@ -3611,7 +3544,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     </h3>
 
                     {/* Supporting comprehensive details text (the body of the review) */}
-                    <p className="text-zinc-400 text-xs sm:text-sm md:text-[15px] leading-relaxed font-sans font-normal">
+                    <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-normal">
                       {visibleGmbReviews[activeReview].text}
                     </p>
                   </div>
@@ -3645,7 +3578,7 @@ export default function Home({ onNavigate }: HomeProps) {
                             <Star key={i} className="w-4 h-4 fill-brand-secondary text-brand-secondary" />
                           ))}
                         </div>
-                        <span className="font-sans text-[7.5px] uppercase tracking-widest text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded">
+                        <span className="font-sans text-xs uppercase tracking-widest text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded">
                           {visibleGmbReviews[activeReview].category} // GOOGLE VERIFIED
                         </span>
                       </div>
@@ -3671,7 +3604,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 e.preventDefault();
                 handleLinkClick("/contato");
               }}
-              className="inline-flex items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-[10px] text-white font-mono font-bold uppercase tracking-widest py-2.5 px-5 rounded-xl transition-all duration-300 shrink-0 cursor-pointer"
+              className="inline-flex items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-xs text-white font-sans font-bold uppercase tracking-widest py-2.5 px-5 rounded-xl transition-all duration-300 shrink-0 cursor-pointer"
             >
               <span>FALAR COM A TAG08</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -3703,7 +3636,7 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Styled aesthetic watermark overlays mimicking reference image */}
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
-                <span className="font-mono text-[9px] text-white/65 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/10">
+                <span className="tag08-meta text-xs text-white/65 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/10">
                   Núcleo operacional
                 </span>
               </div>
@@ -3720,19 +3653,19 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="w-5 h-5 rounded-full bg-brand flex items-center justify-center">
                   <span className="w-2 h-2 rounded-full bg-black animate-ping" />
                 </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-brand">
+                <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-brand">
                   Próximo passo com clareza
                 </span>
               </div>
 
                 {/* Massive Bold Heading mirroring reference */}
-                <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter uppercase">
+                <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter">
                 Antes de avançar, <br />
                 entenda o que sua marca realmente precisa.
                 </h2>
 
                 {/* Description Paragraph with high contrast block typeface layout */}
-              <p className="text-zinc-300 text-[11px] sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
+              <p className="text-zinc-300 text-xs sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
                 A TAG08 ajuda a organizar prioridades, identificar gargalos e indicar um caminho coerente antes de transformar qualquer demanda em execução.
               </p>
             </div>
@@ -3748,7 +3681,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   <ArrowUpRight className="w-5 h-5 rotate-45 stroke-[2.5]" />
                 </div>
                 <div className="space-y-0.5">
-                    <span className="font-mono text-[8px] text-brand uppercase tracking-wider font-extrabold block">
+                    <span className="tag08-meta text-xs text-brand uppercase tracking-wider font-extrabold block">
                     Método aplicado
                     </span>
                     <p className="text-white text-xs leading-snug font-sans font-semibold">
@@ -3767,18 +3700,18 @@ export default function Home({ onNavigate }: HomeProps) {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full bg-brand/10 flex items-center justify-center text-brand shrink-0 group-hover:bg-brand group-hover:text-black transition-all duration-200">
-                        <span className="text-[9px] font-mono font-black tracking-tight text-brand group-hover:text-black">BR</span>
+                        <span className="text-xs font-sans font-black tracking-tight text-brand group-hover:text-black">BR</span>
                       </div>
                       <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                        <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                           DIRETO NO WHATSAPP
                         </span>
-                        <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
+                        <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                           +55 83 9.9886-8882
                         </span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-brand font-mono font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
+                    <span className="text-xs text-brand tag08-meta font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
                       FALAR COM A TAG08
                     </span>
                   </div>
@@ -3792,18 +3725,18 @@ export default function Home({ onNavigate }: HomeProps) {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0 group-hover:bg-brand-secondary group-hover:text-black transition-all duration-200">
-                        <span className="text-[9px] font-mono font-black tracking-tight text-brand-secondary group-hover:text-black">INT</span>
+                        <span className="text-xs font-sans font-black tracking-tight text-brand-secondary group-hover:text-black">INT</span>
                       </div>
                       <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                        <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                           INTERNATIONAL DIRECT
                         </span>
-                        <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand-secondary transition-colors mt-0.5">
+                        <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand-secondary transition-colors mt-0.5">
                           +56 9 9793 7611
                         </span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-brand-secondary font-mono font-bold uppercase tracking-wider bg-brand-secondary/10 py-1 px-2.5 rounded-lg group-hover:bg-brand-secondary group-hover:text-black transition-all">
+                    <span className="text-xs text-brand-secondary tag08-meta font-bold uppercase tracking-wider bg-brand-secondary/10 py-1 px-2.5 rounded-lg group-hover:bg-brand-secondary group-hover:text-black transition-all">
                       FALAR COM A TAG08
                     </span>
                   </div>
@@ -3814,11 +3747,11 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 text-xs">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-brand animate-pulse" />
-                  <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest font-extrabold">
+                  <span className="tag08-meta text-xs text-white/50 uppercase tracking-widest font-extrabold">
                     TAG08
                   </span>
                 </div>
-                <span className="font-sans text-[8.5px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
+                <span className="font-sans text-xs text-brand font-bold bg-brand/10 border border-brand/20 px-2 rounded">
                   OPERAÇÃO ATIVA
                 </span>
               </div>
@@ -3847,17 +3780,17 @@ export default function Home({ onNavigate }: HomeProps) {
             <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-4">
                 {/* Visual upper badge */}
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
                   Dúvidas antes do próximo passo
                 </div>
                 
                 {/* Section titles */}
-                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
+                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter">
                   Antes de escolher uma solução, <br />
                   entenda o caminho.
                 </h2>
                 
-                <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-sm">
                   Reunimos respostas para ajudar você a entender como a TAG08 trabalha, quando faz sentido iniciar um projeto e por que o diagnóstico vem antes da proposta.
                 </p>
               </div>
@@ -3880,7 +3813,7 @@ export default function Home({ onNavigate }: HomeProps) {
                         : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
                     }`}
                   >
-                    <span className="font-mono text-xs font-black uppercase tracking-wider flex items-center gap-3">
+                    <span className="tag08-meta text-xs font-black uppercase tracking-wider flex items-center gap-3">
                       <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
                         {String(item.id + 1).padStart(2, '0')}.
                       </span>
@@ -3914,13 +3847,13 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
 
               {/* Watermark in portrait */}
-              <div className="absolute top-6 left-6 z-10 pointer-events-none font-mono text-[8px] text-white/20 uppercase tracking-widest leading-none">
+              <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
                 SYS // OPERATIONS_CORE
               </div>
 
               {/* Dynamic Answer panel floating bottom-aligned inside the picture card */}
               <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left">
-                <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
+                <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
                   {([
                     "ENTENDIMENTO",
                     "DIAGNÓSTICO",
@@ -3940,7 +3873,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   ])[activeFaq]}
                 </h4>
                 
-                <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
+                <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
                     "A TAG08 atua com estratégia, comunicação, design, tecnologia e processos. Em alguns casos executamos entregas típicas de marketing, mas o trabalho começa pelo entendimento do momento da marca e pela definição do caminho mais coerente.",
                     "Não. O primeiro passo é entender o momento da sua marca. A partir do diagnóstico, indicamos se faz mais sentido começar por posicionamento, conteúdo, site, identidade, audiovisual, processos ou outra frente.",
@@ -3957,7 +3890,7 @@ export default function Home({ onNavigate }: HomeProps) {
               {/* Card 1: Dark gray background elegant option panel */}
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">COMO A TAG08 TRABALHA</span>
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">COMO A TAG08 TRABALHA</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">Diagnóstico antes da proposta.</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     Organizamos entendimento, prioridades e escopo antes de iniciar qualquer entrega.
@@ -3975,9 +3908,9 @@ export default function Home({ onNavigate }: HomeProps) {
               {/* Card 2: Bright Neon / Brand color block */}
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">PRÓXIMO PASSO</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Vamos entender o melhor caminho para a sua marca?</h4>
-                  <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
+                  <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">PRÓXIMO PASSO</span>
+                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">Vamos entender o melhor caminho para a sua marca?</h4>
+                  <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
                     Antes de propor qualquer solução, a TAG08 entende seu momento, seus desafios e suas prioridades para indicar um caminho mais claro e responsável.
                   </p>
                 </div>

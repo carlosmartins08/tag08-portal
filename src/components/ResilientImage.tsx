@@ -21,7 +21,7 @@ export default function ResilientImage({ fallbackLabel, alt, className, sizes, .
         <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--color-brand-secondary-rgb),0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--color-brand-secondary-rgb),0.06)_1px,transparent_1px)] bg-[size:28px_28px] opacity-45" />
         <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-brand-secondary/10 blur-3xl" />
         <div className="absolute inset-0 flex items-end p-6 sm:p-8">
-          <span className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-brand-secondary/80">
+          <span className="tag08-meta text-xs font-bold uppercase tracking-[0.18em] text-brand-secondary/80">
             {fallbackLabel}
           </span>
         </div>

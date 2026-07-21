@@ -110,7 +110,7 @@ export default function Breadcrumbs({ currentPage, onNavigate, language }: Bread
         {isServicePage && (
           <div className="flex items-center gap-3 self-start md:self-auto">
             <div className="hidden lg:flex items-center gap-1 bg-white/[0.03] border border-white/[0.06] p-1 rounded-lg mr-2">
-              <span className="text-[10px] font-mono uppercase text-zinc-500 px-2 flex items-center gap-1">
+              <span className="text-xs font-sans uppercase text-zinc-500 px-2 flex items-center gap-1">
                 <Layers className="w-3 h-3 text-brand" /> {copy.shortcutLabel}
               </span>
               {services.map((svc) => {

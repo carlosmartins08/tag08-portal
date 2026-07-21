@@ -391,7 +391,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                 height={36}
                 className="h-9 w-auto max-w-[190px]"
               />
-              <p className="text-zinc-400 text-xs font-mono tracking-widest mt-2 uppercase">
+              <p className="text-zinc-400 text-xs tag08-meta tracking-widest mt-2 uppercase">
                 Agência Estratégica
               </p>
             </div>
@@ -464,7 +464,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                 </a>
               </div>
               <div>
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-zinc-400 text-[11px] font-sans">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-zinc-400 text-xs font-sans">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" /> {copy.badge}
               </span>
               </div>
@@ -565,11 +565,11 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   <li className="flex items-start gap-3">
                     <Mail className="w-4 h-4 text-brand mt-0.5" />
                     <div>
-                      <p className="text-[11px] text-zinc-500 uppercase font-sans tracking-wider">{copy.contactEmailTitle}</p>
+                      <p className="text-xs text-zinc-500 uppercase font-sans tracking-wider">{copy.contactEmailTitle}</p>
                       <a
                         href="mailto:contato@tag08.com.br"
                         onClick={() => handleOutboundClick("contato@tag08.com.br", "mailto:contato@tag08.com.br", "footer-contact-email")}
-                        className="text-white hover:text-brand transition-colors font-sans text-[13px]"
+                        className="text-white hover:text-brand transition-colors font-sans text-xs"
                       >
                         contato@tag08.com.br
                       </a>
@@ -578,8 +578,8 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   <li className="flex items-start gap-3">
                     <Phone className="w-4 h-4 text-brand mt-0.5" />
                     <div>
-                      <p className="text-[11px] text-zinc-500 uppercase font-sans tracking-wider">{copy.contactPhoneTitle}</p>
-                      <div className="space-y-2 mt-1 font-mono text-[13px]">
+                      <p className="text-xs text-zinc-500 uppercase font-sans tracking-wider">{copy.contactPhoneTitle}</p>
+                      <div className="space-y-2 mt-1 font-sans text-xs">
                         {TAG08_WHATSAPP_CONTACTS.map((contact) => (
                           <div key={contact.key}>
                             <a
@@ -605,7 +605,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   <li className="flex items-start gap-3">
                     <MapPin className="w-4 h-4 text-brand mt-0.5" />
                     <div>
-                      <p className="text-[11px] text-zinc-500 uppercase font-sans tracking-wider">{copy.locationTitle}</p>
+                      <p className="text-xs text-zinc-500 uppercase font-sans tracking-wider">{copy.locationTitle}</p>
                       <a
                         href={officialContact.googleBusinessUrl}
                         target="_blank"
@@ -621,13 +621,13 @@ export default function Footer({ onNavigate, language }: FooterProps) {
         </div>
 
         {/* Brand statement / certifications */}
-        <div className="py-8 border-t border-b border-white/[0.04] grid grid-cols-1 md:grid-cols-2 gap-6 items-center font-sans text-[11px] text-zinc-500">
+        <div className="py-8 border-t border-b border-white/[0.04] grid grid-cols-1 md:grid-cols-2 gap-6 items-center font-sans text-xs text-zinc-500">
           <div className="flex flex-wrap items-center gap-4">
-            <span className="text-zinc-400 uppercase tracking-widest text-[10px]">TAG08 ACADEMY &amp; PROCESS:</span>
-            <span className="flex items-center gap-1 text-zinc-450 uppercase text-[10px]"><CheckCircle className="w-3.5 h-3.5 text-brand" /> Atendimento Consultivo</span>
-            <span className="flex items-center gap-1 text-zinc-450 uppercase text-[10px]"><CheckCircle className="w-3.5 h-3.5 text-brand" /> Entrega sistêmica</span>
+            <span className="text-zinc-400 uppercase tracking-widest text-xs">TAG08 ACADEMY &amp; PROCESS:</span>
+            <span className="flex items-center gap-1 text-zinc-450 uppercase text-xs"><CheckCircle className="w-3.5 h-3.5 text-brand" /> Atendimento Consultivo</span>
+            <span className="flex items-center gap-1 text-zinc-450 uppercase text-xs"><CheckCircle className="w-3.5 h-3.5 text-brand" /> Entrega sistêmica</span>
           </div>
-          <div className="md:text-right uppercase tracking-widest text-[10px] text-zinc-500">
+          <div className="md:text-right uppercase tracking-widest text-xs text-zinc-500">
             TAG08 CONSULTORIA E MARKETING LTDA &bull; CNPJ: 26.828.685/0001-52 &bull; Registrado e Desenvolvido de Forma Estratégica
           </div>
         </div>
@@ -693,14 +693,14 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                     </p>
 
                     <div className="border-l-2 border-brand-secondary pl-3.5 space-y-2 py-1">
-                      <h4 className="font-semibold text-white text-xs uppercase tracking-wider text-brand">1. O QUE COLETAMOS E POR QU?</h4>
+                      <h4 className="font-semibold text-white text-xs tracking-wider text-brand">1. O QUE COLETAMOS E POR QU?</h4>
                       <p className="text-xs">
                         Coletamos apenas dados voluntariamente fornecidos pelo titular em nossos formulários (Nome, E-mail, Empresa e WhatsApp) ou cookies de navegação autorizados. O tratamento possui base legal fundamentada no <strong>Artigo 7, Inciso V (Execução de Contrato/Procedimentos Preliminares)</strong> ou no <strong>Artigo 7, Inciso I (Consentimento)</strong> da LGPD.
                       </p>
                     </div>
 
                     <div className="border-l-2 border-brand-secondary pl-3.5 space-y-2 py-1">
-                      <h4 className="font-semibold text-white text-xs uppercase tracking-wider text-brand">2. SEUS DIREITOS COMO TITULAR (ART. 18 LGPD)</h4>
+                      <h4 className="font-semibold text-white text-xs tracking-wider text-brand">2. SEUS DIREITOS COMO TITULAR (ART. 18 LGPD)</h4>
                       <p className="text-xs">
                         Você possui controle total sobre suas informações. A qualquer momento, você pode nos solicitar:
                       </p>
@@ -716,7 +716,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                     <div className="bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 space-y-3">
                       <div className="flex items-center gap-2">
                         <Cookie className="w-4 h-4 text-brand" />
-                        <h4 className="font-semibold text-white text-xs uppercase tracking-wider">Configurações de Privacidade do Navegador</h4>
+                        <h4 className="font-semibold text-white text-xs tracking-wider">Configurações de Privacidade do Navegador</h4>
                       </div>
                       <p className="text-xs text-zinc-400">
                         Ative ou desative categorias de cookies abaixo. Cookies estritamente necessários não podem ser desligados, pois garantem a segurança do portal.
@@ -725,20 +725,20 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                         <div className="flex items-center justify-between text-xs bg-black/20 p-2.5 rounded border border-white/[0.03]">
                           <div>
                             <span className="font-semibold text-white block">Cookies Essenciais (obrigatórios)</span>
-                        <span className="text-[10px] text-zinc-500">Parâmetros de contraste, segurança do formulário e temas.</span>
+                        <span className="text-xs text-zinc-500">Parâmetros de contraste, segurança do formulário e temas.</span>
                           </div>
-                          <span className="text-[10px] text-brand bg-brand/10 border border-brand/20 px-2 py-0.5 rounded uppercase font-mono">Sempre Ativo</span>
+                          <span className="text-xs text-brand bg-brand/10 border border-brand/20 px-2 py-0.5 rounded uppercase font-sans">Sempre Ativo</span>
                         </div>
 
                         <div className="flex items-center justify-between text-xs bg-black/20 p-2.5 rounded border border-white/[0.03]">
                           <div>
                             <span className="font-semibold text-white block">Estatísticas &amp; Análise de Desempenho</span>
-                          <span className="text-[10px] text-zinc-500">Análise de cliques e tempo de permanência de forma animada.</span>
+                          <span className="text-xs text-zinc-500">Análise de cliques e tempo de permanência de forma animada.</span>
                           </div>
                           <button
                             aria-label={cookiePreferences.performance ? "Desativar cookies de desempenho" : "Ativar cookies de desempenho"}
                             onClick={() => setCookiePreferences(prev => ({ ...prev, performance: !prev.performance }))}
-                            className={`px-3 py-1 rounded text-[10px] font-sans transition-all font-black ${
+                            className={`px-3 py-1 rounded text-xs font-sans transition-all font-black ${
                               cookiePreferences.performance 
                                 ? "bg-brand-secondary text-black hover:bg-white" 
                                 : "bg-white/5 text-zinc-400 hover:bg-white/10"
@@ -751,12 +751,12 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                         <div className="flex items-center justify-between text-xs bg-black/20 p-2.5 rounded border border-white/[0.03]">
                           <div>
                             <span className="font-semibold text-white block">Marketing &amp; Redes Sociais</span>
-                            <span className="text-[10px] text-zinc-500">Direcionamento inteligente e conteúdos incorporados do Facebook/YouTube.</span>
+                            <span className="text-xs text-zinc-500">Direcionamento inteligente e conteúdos incorporados do Facebook/YouTube.</span>
                           </div>
                           <button
                             aria-label={cookiePreferences.marketing ? "Desativar cookies de marketing" : "Ativar cookies de marketing"}
                             onClick={() => setCookiePreferences(prev => ({ ...prev, marketing: !prev.marketing }))}
-                            className={`px-3 py-1 rounded text-[10px] font-sans transition-all font-black ${
+                            className={`px-3 py-1 rounded text-xs font-sans transition-all font-black ${
                               cookiePreferences.marketing 
                                 ? "bg-brand-secondary text-black hover:bg-white" 
                                 : "bg-white/5 text-zinc-400 hover:bg-white/10"
@@ -769,7 +769,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                       <div className="pt-2 text-right">
                         <button aria-label="Salvar preferências de privacidade"
                           onClick={handleSaveCookiePreferences}
-                          className="text-[11px] font-sans font-bold text-black bg-brand-secondary hover:bg-white px-3 py-1.5 rounded transition-all shrink-0 cursor-pointer"
+                          className="text-xs font-sans font-bold text-black bg-brand-secondary hover:bg-white px-3 py-1.5 rounded transition-all shrink-0 cursor-pointer"
                         >
                           Salvar Preferências de Privacidade
                         </button>
@@ -781,7 +781,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Scale className="w-4 h-4 text-brand-secondary" />
-                          <h4 className="font-semibold text-white text-xs uppercase tracking-wider">Canal LGPD - Exercer Meus Direitos</h4>
+                          <h4 className="font-semibold text-white text-xs tracking-wider">Canal LGPD - Exercer Meus Direitos</h4>
                         </div>
                         <button
                           onClick={() => {
@@ -791,7 +791,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                               setShowLgpdForm(true);
                             }
                           }}
-                          className="text-[10px] font-sans text-brand-secondary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 cursor-pointer"
+                          className="text-xs font-sans text-brand-secondary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 cursor-pointer"
                         >
                           {showLgpdForm ? "[ Recolher Formulário ]" : "[ Abrir Pedido de Direitos ]"}
                         </button>
@@ -812,7 +812,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                               <p className="text-zinc-300 leading-relaxed">
                                 Em conformidade com o Artigo 19 da LGPD, iniciamos os procedimentos para analisar e processar sua demanda. Um retorno formal contendo o comprovante da execução de sua solicitação será enviado para o e-mail cadastrado em até <strong>15 dias</strong>, conforme prazo legal preconizado pela Autoridade Nacional de Proteção de Dados (ANPD).
                               </p>
-                              <div className="p-2.5 bg-black/50 border border-white/5 rounded font-sans text-[10px] text-zinc-400 flex justify-between items-center">
+                              <div className="p-2.5 bg-black/50 border border-white/5 rounded font-sans text-xs text-zinc-400 flex justify-between items-center">
                                 <span>Protocolo de Pedido:</span>
                                 <span className="text-brand-secondary font-black">#LGPD-{Math.floor(102500 + Math.random() * 885000)}</span>
                               </div>
@@ -821,7 +821,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                                   aria-label="Fechar mensagem de sucesso"
                                   type="button"
                                   onClick={handleResetLgpdForm}
-                                  className="text-[10px] font-sans text-zinc-400 hover:text-white underline cursor-pointer"
+                                  className="text-xs font-sans text-zinc-400 hover:text-white underline cursor-pointer"
                                 >
                                   Fazer nova solicitação
                                 </button>
@@ -829,12 +829,12 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                             </motion.div>
                           ) : (
                             <form onSubmit={handleLgpdSubmit} className="space-y-3 text-xs">
-                              <p className="text-zinc-400 text-[11px]">
+                              <p className="text-zinc-400 text-xs">
                                 Preencha o Formulário abaixo para enviar um pedido formal de tratamento de dados ao nosso Encarregado de Dados (DPO) através do e-mail oficial <strong className="text-white">contato@tag08.com.br</strong>:
                               </p>
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div>
-                                  <label className="block text-zinc-400 text-[10px] uppercase font-mono mb-1">Seu Nome Completo *</label>
+                                  <label className="block text-zinc-400 text-xs uppercase font-sans mb-1">Seu Nome Completo *</label>
                                   <input
                                     required
                                     type="text"
@@ -845,7 +845,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                                   />
                                 </div>
                                 <div>
-                                  <label className="block text-zinc-400 text-[10px] uppercase font-mono mb-1">Seu E-mail Cadastrado *</label>
+                                  <label className="block text-zinc-400 text-xs uppercase font-sans mb-1">Seu E-mail Cadastrado *</label>
                                   <input
                                     required
                                     type="email"
@@ -858,7 +858,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                               </div>
 
                               <div>
-                                <label className="block text-zinc-400 text-[10px] uppercase font-mono mb-1">Qual direito deseja exercer? *</label>
+                                <label className="block text-zinc-400 text-xs uppercase font-sans mb-1">Qual direito deseja exercer? *</label>
                                 <select
                                   value={lgpdRequestType}
                                   onChange={(e) => setLgpdRequestType(e.target.value as any)}
@@ -871,7 +871,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                               </div>
 
                               <div>
-                                <label className="block text-zinc-400 text-[10px] uppercase font-mono mb-1 font-mono">Observações / Detalhes Adicionais</label>
+                                <label className="block text-zinc-400 text-xs uppercase font-sans mb-1 font-sans">Observações / Detalhes Adicionais</label>
                                 <textarea
                                   rows={2}
                                   value={lgpdRequestDetails}
@@ -884,7 +884,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                               <button
                                 type="submit"
                                 disabled={lgpdRequestLoading}
-                                className="w-full bg-brand-secondary text-black text-[11px] font-mono font-black uppercase tracking-wider py-2 rounded shadow hover:bg-white transition-all disabled:opacity-50 cursor-pointer"
+                                className="w-full bg-brand-secondary text-black text-xs font-sans font-black uppercase tracking-wider py-2 rounded shadow hover:bg-white transition-all disabled:opacity-50 cursor-pointer"
                               >
                                 {lgpdRequestLoading ? "Processando e gerando protocolo..." : "Enviar Solicitação Legal TAG08"}
                               </button>
@@ -894,7 +894,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                       )}
                     </div>
 
-                    <div className="text-[11px] bg-white/[0.02] border border-white/5 rounded-lg p-3 text-zinc-400">
+                    <div className="text-xs bg-white/[0.02] border border-white/5 rounded-lg p-3 text-zinc-400">
                       <strong>Encarregado pelo Tratamento de Dados Pessoais (DPO):</strong> Carlos Eduardo &bull; Qualquer dúvida ou solicitação direta de alteração legal de consentimento em lote pode ser direcionada ao e-mail de governança <strong className="text-white">contato@tag08.com.br</strong>.
                     </div>
                   </div>
@@ -964,7 +964,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   <h4 className="text-sm font-display font-semibold text-white flex items-center gap-2">
                     Privacidade &amp; Cookies (LGPD)
                   </h4>
-                  <p className="text-xs text-zinc-300 leading-relaxed font-mono">
+                  <p className="text-xs text-zinc-300 leading-relaxed font-sans">
                     Valorizamos sua privacidade. Com a TAG08 e nossos parceiros (Facebook, YouTube, Google) operamos cookies para analisar o tráfego do portal e otimizar recursos de acordo com seus interesses, em conformidade com a LGPD brasileira (Lei n 13.709/18).
                   </p>
                 </div>
@@ -976,14 +976,14 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   animate={{ opacity: 1, height: "auto" }}
                   className="bg-black/30 rounded-lg p-3 space-y-2 border border-white/[0.04] text-xs font-sans text-left"
                 >
-                  <p className="text-[11px] text-zinc-400 mb-2 font-sans">Configure suas preferências de cookies abaixo:</p>
+                  <p className="text-xs text-zinc-400 mb-2 font-sans">Configure suas preferências de cookies abaixo:</p>
                   
                   <div className="flex items-center justify-between">
                     <div>
                       <span className="font-semibold text-white block">Essenciais</span>
-                      <span className="text-[10px] text-zinc-500">Tema do portal e formulários seguros.</span>
+                      <span className="text-xs text-zinc-500">Tema do portal e formulários seguros.</span>
                     </div>
-                    <span className="text-[10px] text-brand-secondary/80 font-mono">OBRIGATÓRIO</span>
+                    <span className="text-xs text-brand-secondary/80 font-sans">OBRIGATÓRIO</span>
                   </div>
 
                   <hr className="border-white/[0.04] my-1" />
@@ -991,12 +991,12 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   <div className="flex items-center justify-between">
                     <div>
                       <span className="font-semibold text-white block">Desempenho &amp; Estatísticas</span>
-                      <span className="text-[10px] text-zinc-500">Google Analytics anônimo.</span>
+                      <span className="text-xs text-zinc-500">Google Analytics anônimo.</span>
                     </div>
                     <button
                       type="button"
                       onClick={() => setCookiePreferences(prev => ({ ...prev, performance: !prev.performance }))}
-                      className={`text-[10px] font-sans px-2 py-0.5 rounded font-black ${
+                      className={`text-xs font-sans px-2 py-0.5 rounded font-black ${
                         cookiePreferences.performance ? "bg-brand-secondary text-black" : "bg-white/5 text-zinc-400"
                       }`}
                     >
@@ -1009,12 +1009,12 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   <div className="flex items-center justify-between">
                     <div>
                       <span className="font-semibold text-white block">Marketing &amp; Redes Sociais</span>
-                      <span className="text-[10px] text-zinc-500">Youtube, Facebook e links externos.</span>
+                      <span className="text-xs text-zinc-500">Youtube, Facebook e links externos.</span>
                     </div>
                     <button
                       type="button"
                       onClick={() => setCookiePreferences(prev => ({ ...prev, marketing: !prev.marketing }))}
-                      className={`text-[10px] font-sans px-2 py-0.5 rounded font-black ${
+                      className={`text-xs font-sans px-2 py-0.5 rounded font-black ${
                         cookiePreferences.marketing ? "bg-brand-secondary text-black" : "bg-white/5 text-zinc-400"
                       }`}
                     >

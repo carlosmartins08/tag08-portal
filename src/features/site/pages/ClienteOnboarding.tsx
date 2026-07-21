@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { 
   Building2, 
   User, 
@@ -1537,14 +1537,14 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     return (
       <div className="bg-neutral-900/45 border border-white/[0.04] p-5 rounded-3xl space-y-5 text-left text-xs sticky top-32">
         <div className="flex items-center justify-between border-b border-white/[0.03] pb-3">
-          <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-wider">{t("sidebar_title")}</span>
-          <span className="font-sans text-[9px] text-brand-secondary bg-brand-secondary/5 px-2 py-0.5 rounded border border-brand-secondary/15">{t("live_state")}</span>
+          <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-wider">{t("sidebar_title")}</span>
+          <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 px-2 py-0.5 rounded border border-brand-secondary/15">{t("live_state")}</span>
         </div>
 
         <div className="space-y-4">
           {/* Empresa item */}
           <div className="space-y-1">
-            <span className="text-zinc-500 font-sans text-[9px] block">{t("sidebar_org")}</span>
+            <span className="text-zinc-500 font-sans text-xs block">{t("sidebar_org")}</span>
             {companyName ? (
               <p className="text-white font-medium flex items-center gap-1.5 break-all">
                 <Building2 className="w-3.5 h-3.5 text-brand-secondary shrink-0" /> {companyName}
@@ -1553,7 +1553,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
               <p className="text-zinc-600 italic">{t("sidebar_pending")}</p>
             )}
             <div className="flex gap-1 pt-1">
-              <span className="px-1.5 py-0.5 bg-white/[0.04] border border-white/[0.06] text-[8.5px] rounded text-zinc-300 font-mono uppercase">
+              <span className="px-1.5 py-0.5 bg-white/[0.04] border border-white/[0.06] text-xs rounded text-zinc-300 font-sans uppercase">
                 {t("sidebar_lang_val")}: {preferredLanguage === "pt" ? "Português" : preferredLanguage === "en" ? "English" : "Español"}
               </span>
             </div>
@@ -1561,7 +1561,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
           {/* Contato item */}
           <div className="space-y-1 flex flex-col">
-            <span className="text-zinc-500 font-sans text-[9px] block text-left">{t("sidebar_rep")}</span>
+            <span className="text-zinc-500 font-sans text-xs block text-left">{t("sidebar_rep")}</span>
             {responsibleName ? (
               <span className="text-white font-medium flex items-center gap-1.5 break-all">
                 <User className="w-3.5 h-3.5 text-brand-secondary shrink-0" /> {responsibleName}
@@ -1573,7 +1573,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
           {/* Radar Item */}
           <div className="space-y-1">
-            <span className="text-zinc-500 font-sans text-[9px] block">{t("sidebar_moment")}</span>
+            <span className="text-zinc-500 font-sans text-xs block">{t("sidebar_moment")}</span>
             {businessMoment ? (
               <p className="text-zinc-300 line-clamp-2 leading-snug">{businessMoment}</p>
             ) : (
@@ -1583,11 +1583,11 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
           {/* Serviços contratados */}
           <div className="space-y-1">
-            <span className="text-zinc-500 font-sans text-[9px] block">{t("sidebar_scope")}</span>
+            <span className="text-zinc-500 font-sans text-xs block">{t("sidebar_scope")}</span>
             {selectedServices.length > 0 ? (
               <div className="flex flex-wrap gap-1.5 pt-1">
                 {selectedServices.map((srv, index) => (
-                  <span key={index} className="px-2 py-0.5 bg-white/[0.04] border border-white/[0.06] text-[10px] rounded text-zinc-300">
+                  <span key={index} className="px-2 py-0.5 bg-white/[0.04] border border-white/[0.06] text-xs rounded text-zinc-300">
                     {srv}
                   </span>
                 ))}
@@ -1600,13 +1600,13 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
           {/* Expectations metadata brief */}
           {goodResult90Days && (
             <div className="space-y-1 pt-1 border-t border-white/[0.03]">
-              <span className="text-zinc-500 font-sans text-[9px] block">{t("sidebar_target_90")}</span>
+              <span className="text-zinc-500 font-sans text-xs block">{t("sidebar_target_90")}</span>
               <p className="text-zinc-300 line-clamp-3 leading-relaxed">{goodResult90Days}</p>
             </div>
           )}
         </div>
 
-        <div className="pt-3 border-t border-white/[0.03] flex items-center gap-2 text-[9.5px] text-zinc-500 font-sans">
+        <div className="pt-3 border-t border-white/[0.03] flex items-center gap-2 text-xs text-zinc-500 font-sans">
           <Lock className="w-3.5 h-3.5 text-zinc-600" />
           <span>{t("senior_info")}</span>
         </div>
@@ -1668,7 +1668,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
               <span className="w-1.5 h-1.5 bg-brand rounded-full animate-pulse" />
               <span>{t("op_tool")}</span>
             </div>
-            <h1 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tight">
+            <h1 className="font-display font-medium text-3xl sm:text-4xl text-white tracking-tight">
               {t("title_prefix")} <span className="text-brand-secondary">TAG08</span>
             </h1>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
@@ -1678,7 +1678,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
           {/* Quick Language Toggle */}
             <div className="flex items-center justify-center gap-1.5 self-center md:self-end bg-neutral-900/60 p-1.5 rounded-xl border border-white/[0.06] shrink-0">
-            <span className="text-[10px] font-mono text-zinc-500 uppercase px-2 hidden sm:inline">Idioma / Language:</span>
+            <span className="text-xs font-sans text-zinc-500 uppercase px-2 hidden sm:inline">Idioma / Language:</span>
             {[
               { code: "pt", label: "PT", title: "Português" },
               { code: "en", label: "EN", title: "English" },
@@ -1688,7 +1688,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                 key={lang.code}
                 type="button"
                 onClick={() => setPreferredLanguage(lang.code)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold uppercase transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-sans font-bold uppercase transition-all ${
                   preferredLanguage === lang.code
                     ? "bg-brand-secondary text-black shadow-[0_4px_12px_rgba(var(--color-brand-secondary-rgb),0.15)]"
                     : "text-zinc-400 hover:text-white hover:bg-white/[0.03]"
@@ -1705,7 +1705,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
         {currentStep > 0 && currentStep < 9 && (
           <div className="mb-12 space-y-3">
             <div className="flex items-center justify-between text-xs font-sans text-zinc-500">
-              <span className="uppercase tracking-widest text-brand-secondary font-semibold text-[10px]">
+              <span className="uppercase tracking-widest text-brand-secondary font-semibold text-xs">
                 {t("step_label")} {currentStep} {t("step_of")} {steps.length - 1} : {steps[currentStep].title}
               </span>
               <span>{Math.round((currentStep / (steps.length - 1)) * 100)}% {t("completed")}</span>
@@ -1734,12 +1734,12 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
               </motion.div>
             ) : currentStep === 0 ? (
               <div className="p-6 rounded-3xl bg-neutral-900/30 border border-white/[0.04] text-left space-y-5">
-                <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-wider font-bold block">{t("privacy_title")}</span>
+                <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-wider font-bold block">{t("privacy_title")}</span>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                   {t("privacy_desc")}
                 </p>
-                <div className="p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] space-y-2 text-[11px] text-zinc-400">
-                  <span className="text-white font-mono uppercase text-[9px] font-black block">{t("privacy_indicators")}</span>
+                <div className="p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] space-y-2 text-xs text-zinc-400">
+                  <span className="text-white font-sans uppercase text-xs font-black block">{t("privacy_indicators")}</span>
                   <p>{t("privacy_p1")}</p>
                   <p>{t("privacy_p2")}</p>
                   <p>{t("privacy_p3")}</p>
@@ -1774,7 +1774,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         08
                       </div>
                       <div className="space-y-1">
-                        <span className="font-mono text-[9px] text-brand-secondary uppercase tracking-widest font-black block">{t("chat_header_assistant")}</span>
+                        <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black block">{t("chat_header_assistant")}</span>
                         <p className="text-zinc-200 text-xs sm:text-sm font-sans font-medium leading-relaxed font-sans">
                           "{getAssistantSpeak()}"
                         </p>
@@ -1786,11 +1786,11 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                   {currentStep === 0 && (
                     <div className="space-y-8 py-4">
                       <div className="space-y-4">
-                        <div className="flex items-center gap-2 px-3 py-1 bg-brand-secondary/10 border border-brand-secondary/20 rounded-full text-brand-secondary text-[9px] font-mono tracking-widest uppercase w-fit select-none">
+                        <div className="flex items-center gap-2 px-3 py-1 bg-brand-secondary/10 border border-brand-secondary/20 rounded-full text-brand-secondary text-xs tag08-meta tracking-widest uppercase w-fit select-none">
                           <Sparkles className="w-3 h-3 text-brand-secondary animate-pulse shrink-0" />
                         </div>
                         <h2 
-                          className="font-display font-medium text-2xl sm:text-3.5xl text-gradient tracking-tight leading-none uppercase text-white font-semibold"
+                          className="font-display font-medium text-2xl sm:text-3.5xl text-gradient tracking-tight leading-none text-white font-semibold"
                           dangerouslySetInnerHTML={{ __html: t("welcome_title") }}
                         />
                         <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-3xl">
@@ -1810,16 +1810,16 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                             >
                               <div className="absolute top-[-25px] right-[-25px] w-16 h-16 bg-white/20 rounded-full blur-xl pointer-events-none" />
                               <div className="flex items-center justify-between relative z-10">
-                                <span className="font-mono text-[8px] font-black uppercase text-black/60 bg-black/5 px-2 py-0.5 rounded border border-black/5">
+                                <span className="font-sans text-xs font-black uppercase text-black/60 bg-black/5 px-2 py-0.5 rounded border border-black/5">
                                   {item.phase}
                                 </span>
                                 <IconComp className="w-3.5 h-3.5 text-black/70 animate-bounce" />
                               </div>
                               <div className="space-y-1 relative z-10 mt-4 text-left">
-                                <h4 className="font-display font-black text-sm text-black uppercase tracking-tight leading-none">
+                                <h4 className="font-display font-black text-sm text-black tracking-tight leading-none">
                                   {item.title}
                                 </h4>
-                                <p className="text-black/70 text-[10.5px] leading-snug font-medium">
+                                <p className="text-black/70 text-xs leading-snug font-medium">
                                   {item.desc}
                                 </p>
                               </div>
@@ -1832,16 +1832,16 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                             >
                               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl pointer-events-none" />
                               <div className="flex items-center justify-between relative z-10">
-                                <span className="font-mono text-[8px] font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">
+                                <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">
                                   {item.phase}
                                 </span>
                                 <IconComp className="w-3.5 h-3.5 text-zinc-500" />
                               </div>
                               <div className="space-y-1 relative z-10 mt-4 text-left">
-                                <h4 className="font-display font-black text-sm text-white uppercase tracking-tight leading-none">
+                                <h4 className="font-display font-black text-sm text-white tracking-tight leading-none">
                                   {item.title}
                                 </h4>
-                                <p className="text-zinc-500 text-[10.5px] leading-snug font-medium">
+                                <p className="text-zinc-500 text-xs leading-snug font-medium">
                                   {item.desc}
                                 </p>
                               </div>
@@ -1852,7 +1852,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-4">
                         <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] hover:border-white/[0.08] transition-colors space-y-1.5 font-sans text-left">
-                          <div className="flex items-center gap-2 text-zinc-400 font-bold text-xs uppercase font-mono">
+                          <div className="flex items-center gap-2 text-zinc-400 font-bold text-xs uppercase font-sans">
                             <Clock className="w-4 h-4 text-brand-secondary" /> {t("est_time")}
                           </div>
                           <p className="text-zinc-500 text-xs leading-relaxed font-medium">
@@ -1861,7 +1861,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         </div>
 
                         <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] hover:border-white/[0.08] transition-colors space-y-1.5 font-sans text-left">
-                          <div className="flex items-center gap-2 text-zinc-400 font-bold text-xs uppercase font-mono">
+                          <div className="flex items-center gap-2 text-zinc-400 font-bold text-xs uppercase font-sans">
                             <ShieldAlert className="w-4 h-4 text-brand" /> {t("pass_guideline")}
                           </div>
                           <p className="text-red-300 text-xs leading-relaxed font-semibold">
@@ -1874,7 +1874,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         <button
                           type="button"
                           onClick={() => setCurrentStep(1)}
-                          className="px-7 py-4.5 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center gap-2.5 cursor-pointer shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.18)] hover:-translate-y-0.5"
+                          className="px-7 py-4.5 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center gap-2.5 cursor-pointer shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.18)] hover:-translate-y-0.5"
                         >
                           {t("btn_start")} <ArrowRight className="w-4.5 h-4.5" />
                         </button>
@@ -1887,7 +1887,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                     <div className="space-y-6 py-2">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                          <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                             {t("empresa_label_name")}
                           </label>
                           <div className="relative">
@@ -1904,7 +1904,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         </div>
 
                         <div className="space-y-2">
-                          <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                             {t("empresa_label_cnpj")}
                           </label>
                           <input
@@ -1919,7 +1919,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                          <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                             {t("empresa_label_city")}
                           </label>
                           <div className="relative">
@@ -1935,7 +1935,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         </div>
 
                         <div className="space-y-2">
-                          <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                             {t("empresa_label_site")}
                           </label>
                           <div className="relative">
@@ -1953,7 +1953,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-2">
                         <div className="space-y-2">
-                          <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                             {t("empresa_label_insta")}
                           </label>
                           <div className="relative">
@@ -1969,7 +1969,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         </div>
 
                         <div className="space-y-2">
-                          <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                             {t("empresa_label_linkedin")}
                           </label>
                           <div className="relative">
@@ -1988,10 +1988,10 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* IDIOMA PREFERENCIAL DE ATENDIMENTO */}
                       <div className="space-y-4 pt-4 border-t border-white/[0.04]">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                          <h4 className="text-xs font-mono text-zinc-300 uppercase tracking-wider font-bold">
+                          <h4 className="text-xs tag08-meta text-zinc-300 tracking-wider font-bold">
                             {t("empresa_lang_title")}
                           </h4>
-                          <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/10 border border-brand-secondary/20 px-2.5 py-0.5 rounded uppercase font-black shrink-0 self-start">
+                          <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/10 border border-brand-secondary/20 px-2.5 py-0.5 rounded uppercase font-black shrink-0 self-start">
                             {t("empresa_lang_badge")}
                           </span>
                         </div>
@@ -2015,13 +2015,13 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                                   : "bg-zinc-950/40 border-white/[0.08] hover:border-white/[0.18] text-zinc-300"
                               }`}
                             >
-                              <div className="font-mono text-xs font-extrabold uppercase flex items-center justify-between">
+                              <div className="font-sans text-xs font-extrabold uppercase flex items-center justify-between">
                                 <span>{lang.title}</span>
                                 {preferredLanguage === lang.value && (
                                   <div className="w-1.5 h-1.5 rounded-full bg-brand-secondary" />
                                 )}
                               </div>
-                              <span className="text-[10px] text-zinc-400 block mt-1 leading-normal font-sans">{lang.desc}</span>
+                              <span className="text-xs text-zinc-400 block mt-1 leading-normal font-sans">{lang.desc}</span>
                             </button>
                           ))}
                         </div>
@@ -2034,7 +2034,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                     <div className="space-y-6 py-2">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                          <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                             {t("equipe_label_name")}
                           </label>
                           <div className="relative">
@@ -2051,7 +2051,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         </div>
 
                         <div className="space-y-2">
-                          <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                             {t("equipe_label_role")}
                           </label>
                           <input
@@ -2066,7 +2066,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                          <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                             {t("equipe_label_email")}
                           </label>
                           <div className="relative">
@@ -2083,7 +2083,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         </div>
 
                         <div className="space-y-2">
-                          <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                             {t("equipe_label_whatsapp")}
                           </label>
                           <div className="relative">
@@ -2101,11 +2101,11 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       </div>
 
                       <div className="border-t border-white/[0.04] pt-4 space-y-4">
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 font-bold block">{t("equipe_section_focal")}</span>
+                        <span className="text-xs tag08-meta uppercase tracking-widest text-zinc-500 font-bold block">{t("equipe_section_focal")}</span>
                         
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                           <div className="space-y-1.5">
-                            <label className="text-[10px] font-mono text-zinc-400 uppercase">{t("equipe_label_ti")}</label>
+                            <label className="text-xs font-sans text-zinc-400 uppercase">{t("equipe_label_ti")}</label>
                             <input
                               type="text"
                               value={focalPointText}
@@ -2116,7 +2116,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="text-[10px] font-mono text-zinc-400 uppercase">{t("equipe_label_approver")}</label>
+                            <label className="text-xs font-sans text-zinc-400 uppercase">{t("equipe_label_approver")}</label>
                             <input
                               type="text"
                               value={approverText}
@@ -2127,7 +2127,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="text-[10px] font-mono text-zinc-400 uppercase">{t("equipe_label_finance")}</label>
+                            <label className="text-xs font-sans text-zinc-400 uppercase">{t("equipe_label_finance")}</label>
                             <input
                               type="text"
                               value={financePointText}
@@ -2145,7 +2145,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                   {currentStep === 3 && (
                     <div className="space-y-6 py-2">
                       <div className="space-y-3">
-                        <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider block">
+                        <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider block">
                           {t("radar_label_moment")}
                         </label>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5" role="radiogroup" aria-label={t("radar_label_moment")}>
@@ -2166,7 +2166,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                               <p className="text-zinc-200 text-xs font-sans leading-relaxed flex-grow">
                                 {opt.label}
                               </p>
-                              <div className="flex items-center justify-between pt-2 border-t border-white/[0.02] text-[9px] font-sans text-zinc-500">
+                              <div className="flex items-center justify-between pt-2 border-t border-white/[0.02] text-xs font-sans text-zinc-500">
                                 <span>{preferredLanguage === "en" ? "OPTION CODE" : preferredLanguage === "es" ? "OPCIÓN CÓD" : "OPÇÃO COD"} {idx+1}</span>
                                 {businessMoment === opt.value && <span className="text-brand-secondary font-extrabold font-sans">{preferredLanguage === "en" ? "SELECTED" : preferredLanguage === "es" ? "SELECCIONADO" : "SELECIONADO"}</span>}
                               </div>
@@ -2176,7 +2176,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       </div>
 
                       <div className="space-y-3 pt-2">
-                        <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider block">
+                        <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider block">
                           {t("radar_label_priority")}
                         </label>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3" role="radiogroup" aria-label={t("radar_label_priority")}>
@@ -2202,7 +2202,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                       <div className="space-y-3 pt-4 border-t border-white/[0.03]">
                         <div className="flex items-center justify-between">
-                          <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                             {t("radar_label_term")}
                           </label>
                           <span className="font-sans text-xs text-brand-secondary font-semibold">
@@ -2222,7 +2222,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                             onChange={(e) => setMaturityScore(parseInt(e.target.value))}
                             className="w-full h-1 bg-white/[0.06] rounded-lg appearance-none cursor-pointer accent-brand-secondary"
                           />
-                          <div className="grid grid-cols-5 text-center text-[9px] font-sans text-zinc-500">
+                          <div className="grid grid-cols-5 text-center text-xs font-sans text-zinc-500">
                             <div className="whitespace-pre-line">{t("radar_term_n1")}</div>
                             <div className="whitespace-pre-line">{t("radar_term_n2")}</div>
                             <div className="whitespace-pre-line">{t("radar_term_n3")}</div>
@@ -2238,7 +2238,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                   {currentStep === 4 && (
                     <div className="space-y-6 py-2">
                       <div className="space-y-2">
-                        <span className="text-xs font-mono text-zinc-500 uppercase">{t("escopo_title")}</span>
+                        <span className="text-xs font-sans text-zinc-500 uppercase">{t("escopo_title")}</span>
                         <h3 className="text-white font-display text-sm font-semibold">
                           {t("escopo_heading")}
                         </h3>
@@ -2282,7 +2282,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                                 <p className={`text-xs font-display uppercase tracking-tight font-bold ${active ? "text-white" : "text-zinc-300"}`}>
                                   {opt.label}
                                 </p>
-                                <span className="text-[8.5px] font-mono text-zinc-500 uppercase">SYS MODULE</span>
+                                <span className="text-xs font-sans text-zinc-500 uppercase">SYS MODULE</span>
                               </div>
                             </div>
                           );
@@ -2291,7 +2291,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                       {isSelected("Outro") && (
                         <div className="space-y-2 p-4 bg-white/[0.01] border border-white/[0.04] rounded-2xl">
-                          <label className="text-xs font-mono text-zinc-400 uppercase tracking-wider block">
+                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider block">
                             {t("escopo_label_custom")}
                           </label>
                           <input
@@ -2310,7 +2310,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                   {currentStep === 5 && (
                     <div className="space-y-6 py-2 overflow-y-auto max-h-[500px] pr-2">
                       <div className="space-y-2 bg-neutral-950 p-4 rounded-xl border border-white/[0.03] mb-4">
-                        <span className="font-mono text-[9px] text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black uppercase inline-block">MÓDULO CUSTOMIZADO ATIVO</span>
+                        <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black uppercase inline-block">MÓDULO CUSTOMIZADO ATIVO</span>
                         <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                           Sua empresa contratou <strong>{selectedServices.join(", ")}</strong>. Responda abaixo os detalhes operacionais que ditou nossa produção técnica:
                         </p>
@@ -2319,7 +2319,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* 5a. GESTO DE REDES SOCIAIS BRIEFING */}
                       {isSelected("Gestão de Redes Sociais") && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 p-5 rounded-2xl border border-white/[0.05] bg-neutral-900/30 text-left">
-                          <h4 className="text-brand-secondary font-mono text-xs uppercase font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
+                          <h4 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-brand-secondary" /> Redes Sociais & Conteúdo
                           </h4>
 
@@ -2364,15 +2364,15 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
                             <div className="space-y-1">
-                              <label className="text-[11px] text-zinc-400">Quem gravar os vídeos?</label>
+                              <label className="text-xs text-zinc-400">Quem gravar os vídeos?</label>
                               <input type="text" value={smRecordsVideos} onChange={(e) => setSmRecordsVideos(e.target.value)} placeholder="Dr. Fernando Guedes" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white" />
                             </div>
                             <div className="space-y-1 font-sans">
-                              <label className="text-[11px] text-zinc-400">Quem aprova temas?</label>
+                              <label className="text-xs text-zinc-400">Quem aprova temas?</label>
                               <input type="text" value={smApprovesContent} onChange={(e) => setSmApprovesContent(e.target.value)} placeholder="..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white" />
                             </div>
                             <div className="space-y-1 font-sans">
-                              <label className="text-[11px] text-zinc-400">Temas proibidos/bloqueados</label>
+                              <label className="text-xs text-zinc-400">Temas proibidos/bloqueados</label>
                               <input type="text" value={smForbiddenTopics} onChange={(e) => setSmForbiddenTopics(e.target.value)} placeholder="..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white" />
                             </div>
                           </div>
@@ -2382,7 +2382,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* 5b. BRANDING BRIEFING */}
                       {isSelected("Branding & Identidade") && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 p-5 rounded-2xl border border-white/[0.05] bg-neutral-900/30 text-left">
-                          <h4 className="text-brand-secondary font-mono text-xs uppercase font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
+                          <h4 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-brand-secondary" /> Branding &amp; Identidade Visual
                           </h4>
 
@@ -2407,33 +2407,33 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
                             <div className="space-y-1">
-                              <label className="text-[11px] text-zinc-400">Marcas referência</label>
+                              <label className="text-xs text-zinc-400">Marcas referência</label>
                               <input type="text" value={brReferencesLink} onChange={(e) => setBrReferencesLink(e.target.value)} placeholder="Ex: Apple" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white" />
                             </div>
                             <div className="space-y-1 font-sans">
-                              <label className="text-[11px] text-zinc-400">Marcas a evitar</label>
+                              <label className="text-xs text-zinc-400">Marcas a evitar</label>
                               <input type="text" value={brAvoidBrands} onChange={(e) => setBrAvoidBrands(e.target.value)} placeholder="..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white" />
                             </div>
                             <div className="space-y-1 font-sans">
-                              <label className="text-[11px] text-zinc-400">O que nunca deve parecer?</label>
+                              <label className="text-xs text-zinc-400">O que nunca deve parecer?</label>
                               <input type="text" value={brBrandNeverBeLike} onChange={(e) => setBrBrandNeverBeLike(e.target.value)} placeholder="Ex: Amador ou espalhafatoso" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white" />
                             </div>
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
                             <div className="space-y-1">
-                              <label className="text-[11px] text-zinc-400">Nome já está definido?</label>
+                              <label className="text-xs text-zinc-400">Nome já está definido?</label>
                               <select value={brHasNameSelected} onChange={(e) => setBrHasNameSelected(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
                                 <option value="sim">Sim, definitivo</option>
                                 <option value="não">Não, necessito Naming</option>
                               </select>
                             </div>
                             <div className="space-y-1 font-sans">
-                              <label className="text-[11px] text-zinc-400">Existe Slogan/Assinatura?</label>
+                              <label className="text-xs text-zinc-400">Existe Slogan/Assinatura?</label>
                               <input type="text" value={brHasSloganText} onChange={(e) => setBrHasSloganText(e.target.value)} placeholder="Slogan atual" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white" />
                             </div>
                             <div className="space-y-1 font-sans">
-                              <label className="text-[11px] text-zinc-400">Aplicações necessárias (.doc, sacolas, fardas)</label>
+                              <label className="text-xs text-zinc-400">Aplicações necessárias (.doc, sacolas, fardas)</label>
                               <input type="text" value={brRequiredApplications} onChange={(e) => setBrRequiredApplications(e.target.value)} placeholder="Ex: Receituários, Assinatura de Email" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white" />
                             </div>
                           </div>
@@ -2443,7 +2443,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* 5c. WEB DEVELOPMENT BRIEFING */}
                       {isSelected("Desenvolvimento Web") && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 p-5 rounded-2xl border border-white/[0.05] bg-neutral-900/30 text-left">
-                          <h4 className="text-brand-secondary font-mono text-xs uppercase font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
+                          <h4 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-brand-secondary" /> Engenharia Web & Sites
                           </h4>
 
@@ -2482,21 +2482,21 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
                             <div className="space-y-1">
-                              <label className="text-[11px] text-zinc-400">Identidade de marca pronta?</label>
+                              <label className="text-xs text-zinc-400">Identidade de marca pronta?</label>
                               <select value={webHasBrandIdentity} onChange={(e) => setWebHasBrandIdentity(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
                                 <option value="sim">Sim, possuo assets e vetor</option>
                                 <option value="não">Não, necessitamos branding previo</option>
                               </select>
                             </div>
                             <div className="space-y-1">
-                              <label className="text-[11px] text-zinc-400">O material impresso/textos já estão prontos?</label>
+                              <label className="text-xs text-zinc-400">O material impresso/textos já estão prontos?</label>
                               <select value={webHasTextsReady} onChange={(e) => setWebHasTextsReady(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
                                 <option value="sim">Sim, textos finais redigidos</option>
                                 <option value="não">Não, criaremos sob copy da TAG08</option>
                               </select>
                             </div>
                             <div className="space-y-1 font-sans">
-                              <label className="text-[11px] text-zinc-400">Temos acervo real corporativo?</label>
+                              <label className="text-xs text-zinc-400">Temos acervo real corporativo?</label>
                               <select value={webHasFilesReady} onChange={(e) => setWebHasFilesReady(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
                                 <option value="sim">Sim, fotos de excelente qualidade</option>
                                 <option value="não">Não, usaremos banco premium</option>
@@ -2505,7 +2505,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           </div>
 
                           <div className="space-y-2 border-t border-white/[0.03] pt-3 font-sans">
-                            <span className="text-[11px] font-sans uppercase tracking-widest text-zinc-500 font-bold block">Integrações desejadas:</span>
+                            <span className="text-xs font-sans uppercase tracking-widest text-zinc-500 font-bold block">Integrações desejadas:</span>
                             <div className="flex flex-wrap gap-4 pt-1">
                               <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
                                 <input type="checkbox" checked={webIntegrateWhatsApp} onChange={(e) => setWebIntegrateWhatsApp(e.target.checked)} className="accent-brand-secondary bg-zinc-950 border-white/[0.1] rounded" /> WhatsApp Fluido
@@ -2532,7 +2532,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* 5d. PROCESS INTELLIGENCE BRIEFING */}
                       {isSelected("Process Intelligence") && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 p-5 rounded-2xl border border-white/[0.05] bg-neutral-900/30 text-left">
-                          <h4 className="text-brand-secondary font-mono text-xs uppercase font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
+                          <h4 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-brand-secondary" /> Process Intelligence
                           </h4>
 
@@ -2571,21 +2571,21 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
                             <div className="space-y-1">
-                              <label className="text-[11px] text-zinc-400">Há documentação prévia?</label>
+                              <label className="text-xs text-zinc-400">Há documentação prévia?</label>
                               <select value={piHasDocumentation} onChange={(e) => setPiHasDocumentation(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
                                 <option value="não">Não, operamos no intuitivo</option>
                                 <option value="sim">Sim, temos manuais básicos</option>
                               </select>
                             </div>
                             <div className="space-y-1 font-sans">
-                              <label className="text-[11px] text-zinc-400">Dispõe de Organograma?</label>
+                              <label className="text-xs text-zinc-400">Dispõe de Organograma?</label>
                               <select value={piHasOrgChart} onChange={(e) => setPiHasOrgChart(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
                                 <option value="não">Não, organograma inconsistente</option>
                                 <option value="sim">Sim, desenhado definitivo</option>
                               </select>
                             </div>
                             <div className="space-y-1 font-sans">
-                              <label className="text-[11px] text-zinc-400">Há rotina semanal de reuniões?</label>
+                              <label className="text-xs text-zinc-400">Há rotina semanal de reuniões?</label>
                               <select value={piHasMeetings} onChange={(e) => setPiHasMeetings(e.target.value)} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white">
                                 <option value="não">Não, apenas esporádico</option>
                                 <option value="sim">Sim, de checkpoint diário/semanal</option>
@@ -2603,7 +2603,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* 5e. PROCESS ACTIVATION BRIEFING */}
                       {isSelected("Process Activation") && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 p-5 rounded-2xl border border-white/[0.05] bg-neutral-900/30 text-left">
-                          <h4 className="text-brand-secondary font-mono text-xs uppercase font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
+                          <h4 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-brand-secondary" /> Governança &amp; Process Activation
                           </h4>
 
@@ -2667,11 +2667,11 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                   {currentStep === 6 && (
                     <div className="space-y-6 py-2">
                        <div className="space-y-1">
-                        <span className="text-xs font-mono text-zinc-500 uppercase">{t("materiais_title")}</span>
+                        <span className="text-xs font-sans text-zinc-500 uppercase">{t("materiais_title")}</span>
                         <p className="text-zinc-400 text-xs font-sans leading-relaxed">
                           {t("materiais_desc")}
                         </p>
-                        <div className="text-[10px] text-amber-300 font-semibold flex items-center gap-1 font-sans pt-1">
+                        <div className="text-xs text-amber-300 font-semibold flex items-center gap-1 font-sans pt-1">
                           <AlertCircle className="w-3.5 h-3.5" /> 
                           <span>{t("materiais_warning")}</span>
                         </div>
@@ -2701,15 +2701,15 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
                         <div className="space-y-1 text-left">
-                          <label className="text-[11px] text-zinc-400">{t("materiais_label_references")}</label>
+                          <label className="text-xs text-zinc-400">{t("materiais_label_references")}</label>
                           <input type="url" value={linkReferences} onChange={(e) => setLinkReferences(e.target.value)} placeholder="https://..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white font-sans" />
                         </div>
                         <div className="space-y-1 font-sans">
-                          <label className="text-[11px] text-zinc-400">{t("materiais_label_documents")}</label>
+                          <label className="text-xs text-zinc-400">{t("materiais_label_documents")}</label>
                           <input type="url" value={linkDocuments} onChange={(e) => setLinkDocuments(e.target.value)} placeholder="https://..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white font-sans" />
                         </div>
                         <div className="space-y-1 font-sans">
-                          <label className="text-[11px] text-zinc-400">{t("materiais_label_commercial")}</label>
+                          <label className="text-xs text-zinc-400">{t("materiais_label_commercial")}</label>
                           <input type="url" value={linkCommercial} onChange={(e) => setLinkCommercial(e.target.value)} placeholder="https://..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white font-sans" />
                         </div>
                       </div>
@@ -2763,7 +2763,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                   {currentStep === 8 && (
                     <div className="space-y-6 py-2 font-sans">
                       <div className="p-5 rounded-2xl bg-brand-secondary/[0.01] border border-brand-secondary/10 space-y-4">
-                        <div className="flex items-center gap-2.5 text-brand-secondary font-mono text-xs uppercase font-extrabold pb-2 border-b border-white/[0.03]">
+                        <div className="flex items-center gap-2.5 text-brand-secondary font-sans text-xs uppercase font-extrabold pb-2 border-b border-white/[0.03]">
                           <Lock className="w-4.5 h-4.5" /> {t("consent_title")}
                         </div>
                         
@@ -2819,8 +2819,8 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         <div className="w-16 h-16 rounded-3xl bg-brand-secondary/10 border border-brand-secondary/20 text-brand-secondary flex items-center justify-center shadow-xl mb-4">
                           <ClipboardCheck className="w-8 h-8" />
                         </div>
-                      <span className="font-mono text-[9px] text-brand-secondary uppercase font-black tracking-widest block">{t("finalized_badge")}</span>
-                        <h2 className="font-display font-medium text-2xl sm:text-3xl text-white uppercase tracking-tight leading-tight">
+                      <span className="tag08-meta text-xs text-brand-secondary uppercase font-black tracking-widest block">{t("finalized_badge")}</span>
+                        <h2 className="font-display font-medium text-2xl sm:text-3xl text-white tracking-tight leading-tight">
                           {t("finalized_title")}
                         </h2>
                         <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">
@@ -2830,7 +2830,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           <p className="text-xs text-brand-secondary leading-relaxed">{deliveryMessage}</p>
                         ) : null}
                         {deliveryState === "queued" && pendingQueueCount > 0 ? (
-                          <p className="text-[11px] text-zinc-400">
+                          <p className="text-xs text-zinc-400">
                             {t("status_queue_summary").replace("{count}", String(pendingQueueCount))}
                           </p>
                         ) : null}
@@ -2838,21 +2838,21 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                       {/* Onboarding automatic system checks */}
                       <div className="p-5 rounded-2xl bg-neutral-950 border border-white/[0.03] space-y-4 text-left">
-                        <span className="font-mono text-[9px] text-brand-secondary uppercase font-black block">
+                        <span className="font-sans text-xs text-brand-secondary uppercase font-black block">
                           {preferredLanguage === "en" ? "RECEIPT CHECKLIST // SYSTEM INDICATORS" : preferredLanguage === "es" ? "LISTA DE RECEPCIÓN // INDICADORES DEL SISTEMA" : "CHECKLIST DE RECEBIMENTO // SINALIZADORES SISTÊMICOS"}
                         </span>
                         
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300">
-                            <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-[9px]"><Check className="w-3 h-3" /></div>
+                            <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-xs"><Check className="w-3 h-3" /></div>
                             <span>{preferredLanguage === "en" ? "Registration data received" : preferredLanguage === "es" ? "Datos de registro recibidos" : "Dados cadastrais recebidos"}</span>
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300">
-                            <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-[9px]"><Check className="w-3 h-3" /></div>
+                            <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-xs"><Check className="w-3 h-3" /></div>
                             <span>{preferredLanguage === "en" ? "Production briefing registered" : preferredLanguage === "es" ? "Briefing de producción registrado" : "Briefing de produção registrado"}</span>
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300">
-                            <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-[9px]"><Check className="w-3 h-3" /></div>
+                            <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-xs"><Check className="w-3 h-3" /></div>
                             <span>{preferredLanguage === "en" ? "Notification sent to TAG08 board" : preferredLanguage === "es" ? "Notificación enviada a la directiva" : "Notificação enviada à diretoria TAG08"}</span>
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300 animate-pulse">
@@ -2863,7 +2863,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       </div>
 
                       <div className="space-y-4 p-5 rounded-2xl bg-white/[0.01] border border-white/[0.04] text-left">
-                        <span className="font-mono text-[9px] text-zinc-500 uppercase font-black block mb-1">
+                        <span className="font-sans text-xs text-zinc-500 uppercase font-black block mb-1">
                           {preferredLanguage === "en" ? "DURING THIS INTERVAL, YOU CAN PREPARE:" : preferredLanguage === "es" ? "DURANTE ESTE INTERVALO, PUEDE PREPARAR:" : "DURANTE ESSE INTERVALO, VOC? PODE SEPARAR:"}
                         </span>
                         
@@ -2883,7 +2883,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         </span>
                         <button 
                           onClick={() => setShowDevPayload(!showDevPayload)} 
-                          className="text-brand-secondary bg-brand-secondary/5 px-2.5 py-1 rounded border border-brand-secondary/15 hover:bg-brand-secondary/10 transition-colors uppercase text-[10px]"
+                          className="text-brand-secondary bg-brand-secondary/5 px-2.5 py-1 rounded border border-brand-secondary/15 hover:bg-brand-secondary/10 transition-colors uppercase text-xs"
                         >
                           {showDevPayload 
                             ? (preferredLanguage === "en" ? "Hide Structure" : preferredLanguage === "es" ? "Ocultar Estructura" : "Ocultar Estrutura") 
@@ -2895,7 +2895,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         <motion.div 
                           initial={{ opacity: 0, height: 0 }} 
                           animate={{ opacity: 1, height: "auto" }}
-                          className="bg-zinc-950 border border-white/[0.06] p-4 rounded-xl font-sans text-[10px] text-zinc-400 overflow-x-auto text-left space-y-3"
+                          className="bg-zinc-950 border border-white/[0.06] p-4 rounded-xl font-sans text-xs text-zinc-400 overflow-x-auto text-left space-y-3"
                         >
                           <div>
                             <span className="text-brand-secondary font-bold block mb-1 uppercase tracking-widest">// SHEETS INSTANT MAPPING PAYLOAD</span>
@@ -2916,7 +2916,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         <button
                           type="button"
                           onClick={() => onNavigate("/")}
-                          className="font-sans text-[11px] text-zinc-500 hover:text-white uppercase tracking-wider transition-colors pt-1.5"
+                          className="font-sans text-xs text-zinc-500 hover:text-white uppercase tracking-wider transition-colors pt-1.5"
                         >
                           &larr; {preferredLanguage === "en" ? "Back to home" : preferredLanguage === "es" ? "Volver al inicio" : "Voltar para o início"}
                         </button>
@@ -2924,7 +2924,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         <button
                           type="button"
                           onClick={handleLaunchWhatsAppOnboardingFastTrack}
-                          className="px-6 py-4 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-[0_8px_30px_rgba(16,185,129,0.15)] hover:-translate-y-0.5"
+                          className="px-6 py-4 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-[0_8px_30px_rgba(16,185,129,0.15)] hover:-translate-y-0.5"
                         >
                           <MessageCircle className="w-4.5 h-4.5" /> {preferredLanguage === "en" ? "Talk to TAG08 on WhatsApp" : preferredLanguage === "es" ? "Hablar con TAG08 en WhatsApp" : "Falar com a TAG08 no WhatsApp"}
                         </button>
@@ -2938,13 +2938,13 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       <button
                         type="button"
                         onClick={handlePrev}
-                        className="px-5 py-3 border border-white/[0.08] hover:border-white/[0.18] hover:bg-white/[0.01] rounded-xl text-xs font-mono uppercase tracking-wider text-zinc-400 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer"
+                        className="px-5 py-3 border border-white/[0.08] hover:border-white/[0.18] hover:bg-white/[0.01] rounded-xl text-xs font-sans uppercase tracking-wider text-zinc-400 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer"
                       >
                         <ArrowLeft className="w-4 h-4" /> Voltar
                       </button>
 
                       {currentErrors.length > 0 && (
-                        <div className="hidden sm:flex text-red-400 text-[11px] items-center gap-1 max-w-[50%] font-medium">
+                        <div className="hidden sm:flex text-red-400 text-xs items-center gap-1 max-w-[50%] font-medium">
                           <AlertCircle className="w-4 h-4 shrink-0" />
                           <span>{currentErrors[0]}</span>
                         </div>
@@ -2954,7 +2954,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         <button
                           type="button"
                           onClick={handleNext}
-                          className="px-6 py-3.5 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center gap-1.5 cursor-pointer shadow-[0_4px_20px_rgba(var(--color-brand-secondary-rgb),0.12)] hover:-translate-y-0.5"
+                          className="px-6 py-3.5 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center gap-1.5 cursor-pointer shadow-[0_4px_20px_rgba(var(--color-brand-secondary-rgb),0.12)] hover:-translate-y-0.5"
                         >
                           Avançar <ArrowRight className="w-4 h-4" />
                         </button>
@@ -2963,7 +2963,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           type="button"
                           onClick={handleSubmit}
                           disabled={isSubmitting}
-                          className="px-6 py-4 bg-brand hover:bg-brand-dark text-black text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_25px_rgba(var(--color-brand-rgb),0.15)]"
+                          className="px-6 py-4 bg-brand hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_25px_rgba(var(--color-brand-rgb),0.15)]"
                         >
                           {isSubmitting ? (
                             <>
@@ -2982,7 +2982,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                   {/* Responsive Error Warning for smaller layout viewports */}
                   {currentErrors.length > 0 && (
-                    <div className="flex sm:hidden p-3.5 rounded-xl bg-red-950/20 border border-red-500/30 text-red-300 text-[11px] items-start gap-2 max-w-full font-medium">
+                    <div className="flex sm:hidden p-3.5 rounded-xl bg-red-950/20 border border-red-500/30 text-red-300 text-xs items-start gap-2 max-w-full font-medium">
                       <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                       <span>{currentErrors[0]}</span>
                     </div>

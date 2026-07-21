@@ -21,6 +21,9 @@ const patterns = [
   { label: "font-display", regex: /\bfont-display\b/g },
   { label: "font-sans", regex: /\bfont-sans\b/g },
   { label: "font-mono", regex: /\bfont-mono\b/g },
+  { label: "tag08-meta", regex: /\btag08-meta\b/g },
+  { label: "tag08-eyebrow", regex: /\btag08-eyebrow\b/g },
+  { label: "tag08-system", regex: /\btag08-system\b/g },
   { label: "font-heading (legacy)", regex: /\bfont-heading\b/g },
   { label: "direct font-family outside index.css", regex: /font-family\s*:/g, exclude: /src[\\/]+index\.css$/i },
 ];
@@ -48,3 +51,22 @@ for (const pattern of patterns) {
   console.log("");
 }
 
+const smallArbitrarySize = /\btext-\[(?:7|7\.5|8|8\.5|9|9\.5|10|10\.5)px\]/g;
+const smallSizeHits = [];
+let smallSizeCount = 0;
+
+for (const file of files) {
+  if (/src[\\/]+index\.css$/i.test(file)) continue;
+  const content = fs.readFileSync(file, "utf8");
+  const matches = content.match(smallArbitrarySize);
+  if (!matches?.length) continue;
+  smallSizeCount += matches.length;
+  smallSizeHits.push({ file, count: matches.length });
+}
+
+smallSizeHits.sort((a, b) => b.count - a.count || a.file.localeCompare(b.file));
+console.log(`legacy microcopy below 11px: ${smallSizeCount}`);
+for (const hit of smallSizeHits.slice(0, 10)) {
+  console.log(`  ${hit.count.toString().padStart(3, " ")}  ${path.relative(process.cwd(), hit.file)}`);
+}
+console.log("");

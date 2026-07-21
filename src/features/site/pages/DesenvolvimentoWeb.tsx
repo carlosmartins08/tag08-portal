@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { Check, Cpu, Code2, Smartphone, LineChart, ShieldCheck, ArrowUpRight, ArrowRight, Layers, Award, MessageSquare, Globe, Laptop, ExternalLink, Eye, Activity, Sparkles, X, Server, CheckCircle2, Monitor, Database, Zap, Briefcase } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
@@ -244,16 +244,16 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           {/* 1. Header Typography block (Ref Style: Expert guidance / tailored solution) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono self-start">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta self-start">
                 Desenvolvimento Web
               </div>
-              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter uppercase font-display font-black">
+              <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter font-display font-black">
                 Sites e estruturas digitais <br />
                 <span className="text-brand">com dire&ccedil;&atilde;o, clareza e fun&ccedil;&atilde;o comercial.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
-              <p className="text-zinc-400 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans font-medium">
+              <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-medium">
                 A TAG08 desenvolve sites, landing pages, cat&aacute;logos e estruturas digitais para marcas que precisam apresentar melhor sua oferta, organizar informa&ccedil;&otilde;es, fortalecer credibilidade e apoiar o processo comercial.
               </p>
             </div>
@@ -278,7 +278,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(45px)" }}>
                 <button
                   onClick={() => handleLinkClick("/contato")}
-                  className="group bg-brand-secondary text-black font-mono font-black text-[10px] sm:text-[11px] uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
+                  className="group bg-brand-secondary text-black font-sans font-black text-xs sm:text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
                 >
                   <span>PLANEJAR MEU SITE</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -288,11 +288,11 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               {/* Absolute indicator tags on corners */}
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
-                  <span className="font-mono text-[8.5px] text-brand-secondary tracking-widest block uppercase font-bold">Sistema web TAG08</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm uppercase tracking-tight leading-none">Estrutura digital com dire&ccedil;&atilde;o e fun&ccedil;&atilde;o</h4>
+                  <span className="tag08-meta text-xs text-brand-secondary tracking-widest block uppercase font-bold">Sistema web TAG08</span>
+                  <h4 className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Estrutura digital com dire&ccedil;&atilde;o e fun&ccedil;&atilde;o</h4>
                 </div>
 
-                <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-[8px] text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
+                <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-xs text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
                   <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
                   <span>CLAREZA // CREDIBILIDADE</span>
                 </div>
@@ -304,19 +304,19 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Clareza</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Informa&ccedil;&atilde;o organizada de<br/>forma compreens&iacute;vel</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Informa&ccedil;&atilde;o organizada de<br/>forma compreens&iacute;vel</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Credibilidade</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Presen&ccedil;a digital com<br/>mais consist&ecirc;ncia</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Presen&ccedil;a digital com<br/>mais consist&ecirc;ncia</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Organiza&ccedil;&atilde;o</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">P&aacute;ginas, navega&ccedil;&atilde;o e<br/>conte&uacute;dos em ordem</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">P&aacute;ginas, navega&ccedil;&atilde;o e<br/>conte&uacute;dos em ordem</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Apoio comercial</span>
-              <span className="block text-zinc-500 font-mono text-[9px] uppercase tracking-widest leading-normal">Pr&oacute;ximo passo claro para<br/>conversa e contato</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Pr&oacute;ximo passo claro para<br/>conversa e contato</span>
             </div>
           </div>
 
@@ -329,10 +329,10 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           
           {/* Comparativo: Site Bonito x Site Estratégico */}
           <div className="space-y-6">
-            <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
               Sinais de desalinhamento digital
             </span>
-            <h3 className="font-display font-medium text-3xl sm:text-4xl text-white uppercase tracking-tight">
+            <h3 className="font-display font-medium text-3xl sm:text-4xl text-white tracking-tight">
               Quando o site deixa de ajudar a marca a ser entendida.
             </h3>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-xl">
@@ -341,7 +341,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           </div>
 
           <div className="border border-white/[0.06] rounded-3xl overflow-hidden divide-y divide-white/[0.06] bg-neutral-900/10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 font-mono text-[9px] text-zinc-500 uppercase tracking-widest bg-white/[0.01]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 tag08-meta text-xs text-zinc-500 uppercase tracking-widest bg-white/[0.01]">
               <div>Leitura da experi&ecirc;ncia atual</div>
               <div className="text-brand-secondary">Base digital TAG08</div>
             </div>
@@ -372,8 +372,8 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       <section className="px-4 sm:px-6 md:px-8 py-16 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-2 max-w-2xl">
-            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">O que estruturamos</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">Um site precisa organizar informa&ccedil;&atilde;o, confian&ccedil;a e pr&oacute;ximo passo.</h2>
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">O que estruturamos</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">Um site precisa organizar informa&ccedil;&atilde;o, confian&ccedil;a e pr&oacute;ximo passo.</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
               A TAG08 desenvolve estruturas digitais que ajudam a marca a apresentar melhor sua oferta, organizar conte&uacute;dos importantes, orientar a jornada do visitante e apoiar o processo comercial com mais clareza.
             </p>
@@ -385,8 +385,8 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 <Code2 className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Arquitetura da informa&ccedil;&atilde;o</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Arquitetura da informa&ccedil;&atilde;o</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Organiza&ccedil;&atilde;o das p&aacute;ginas, se&ccedil;&otilde;es, menus e conte&uacute;dos para que o visitante encontre o que precisa com menos esfor&ccedil;o.
                 </p>
               </div>
@@ -397,8 +397,8 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 <LineChart className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Design de interface</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Design de interface</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Constru&ccedil;&atilde;o visual das telas com hierarquia, clareza, responsividade e coer&ecirc;ncia com a identidade da marca.
                 </p>
               </div>
@@ -409,8 +409,8 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 <Smartphone className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Conte&uacute;do e narrativa</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Conte&uacute;do e narrativa</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Estrutura&ccedil;&atilde;o de textos, chamadas e blocos de informa&ccedil;&atilde;o para explicar melhor a oferta, o processo e os diferenciais da empresa.
                 </p>
               </div>
@@ -421,8 +421,8 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 <Layers className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm uppercase">Desenvolvimento t&eacute;cnico</h4>
-                <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+                <h4 className="text-white font-display font-black text-sm">Desenvolvimento t&eacute;cnico</h4>
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Implementa&ccedil;&atilde;o da estrutura web com aten&ccedil;&atilde;o a responsividade, estabilidade, organiza&ccedil;&atilde;o de c&oacute;digo e experi&ecirc;ncia de navega&ccedil;&atilde;o.
                 </p>
               </div>
@@ -435,8 +435,8 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       <section className="px-4 sm:px-6 md:px-8 py-16 border-b border-white/[0.04] bg-charcoal-900/10 text-left">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="space-y-2 max-w-2xl">
-            <span className="font-mono text-[10px] text-brand uppercase tracking-widest font-bold">Crit&eacute;rios t&eacute;cnicos e estrat&eacute;gicos</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">O que torna uma estrutura web mais confi&aacute;vel.</h2>
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">Crit&eacute;rios t&eacute;cnicos e estrat&eacute;gicos</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">O que torna uma estrutura web mais confi&aacute;vel.</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
               Um bom site n&atilde;o depende apenas de apar&ecirc;ncia. Ele precisa organizar informa&ccedil;&atilde;o, funcionar bem em diferentes dispositivos, conduzir o visitante com clareza e ser poss&iacute;vel de manter depois da publica&ccedil;&atilde;o.
             </p>
@@ -444,43 +444,43 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm uppercase">Clareza de navega&ccedil;&atilde;o</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+              <h4 className="text-white font-display font-black text-sm">Clareza de navega&ccedil;&atilde;o</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Menus, se&ccedil;&otilde;es e caminhos organizados para reduzir esfor&ccedil;o e orientar melhor o visitante.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm uppercase">Estrutura de conte&uacute;do</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+              <h4 className="text-white font-display font-black text-sm">Estrutura de conte&uacute;do</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Textos, chamadas e blocos organizados para explicar a oferta, a empresa e o pr&oacute;ximo passo.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm uppercase">Design responsivo</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+              <h4 className="text-white font-display font-black text-sm">Design responsivo</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Interfaces pensadas para funcionar bem em diferentes telas, mantendo legibilidade e hierarquia.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm uppercase">Base t&eacute;cnica organizada</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+              <h4 className="text-white font-display font-black text-sm">Base t&eacute;cnica organizada</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Implementa&ccedil;&atilde;o com aten&ccedil;&atilde;o a estabilidade, manuten&ccedil;&atilde;o, responsividade e boas pr&aacute;ticas de desenvolvimento.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm uppercase">Continuidade de uso</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+              <h4 className="text-white font-display font-black text-sm">Continuidade de uso</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 A estrutura permanece &uacute;til para ajustes, novas p&aacute;ginas e evolu&ccedil;&atilde;o do conte&uacute;do.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm uppercase">Acompanhamento de publica&ccedil;&atilde;o</h4>
-              <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed font-medium">
+              <h4 className="text-white font-display font-black text-sm">Acompanhamento de publica&ccedil;&atilde;o</h4>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Orienta&ccedil;&otilde;es para manter o site coerente depois da entrega e durante as primeiras atualiza&ccedil;&otilde;es.
               </p>
             </div>
@@ -491,12 +491,12 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       <section className="px-4 sm:px-6 md:px-8 py-10 border-b border-white/[0.04] bg-charcoal-900/40 text-left">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 max-w-3xl">
-            <h4 className="text-white font-display font-black text-sm uppercase tracking-tight">Crit&eacute;rios de confian&ccedil;a</h4>
+            <h4 className="text-white font-display font-black text-sm tracking-tight">Crit&eacute;rios de confian&ccedil;a</h4>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed">
               A estrutura web precisa ser clara para o visitante, coerente com a marca e funcional para a opera&ccedil;&atilde;o. O objetivo &eacute; criar uma base que possa ser usada, mantida e evolu&iacute;da com responsabilidade.
             </p>
           </div>
-          <span className="font-mono text-[8.5px] text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
+          <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
             BASE CONFI&Aacute;VEL // TAG08
           </span>
         </div>
@@ -531,10 +531,10 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
-                <span className="font-mono text-[9px] text-black/55 bg-black/20 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-black/10">
+                <span className="tag08-meta text-xs text-black/55 bg-black/20 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-black/10">
                   Sistema de trabalho
                 </span>
-                <span className="font-mono text-[9px] text-black/45 tracking-wider">
+                <span className="font-sans text-xs text-black/45 tracking-wider">
                   TAG08
                 </span>
               </div>
@@ -547,10 +547,10 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 </div>
               </div>
               <div className="flex justify-between items-end">
-                <span className="font-mono text-[9px] text-black/45 tracking-wider">
+                <span className="font-sans text-xs text-black/45 tracking-wider">
                   ETAPAS ORGANIZADAS
                 </span>
-                <span className="font-mono text-[9px] text-black/55 bg-black/20 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-black/10">
+                <span className="tag08-meta text-xs text-black/55 bg-black/20 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-black/10">
                   CONTEXTO, ESTRUTURA E PUBLICA&Ccedil;&Atilde;O
                 </span>
               </div>
@@ -563,14 +563,14 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
                   <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
                 </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-black/90">
+                <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-black/90">
                   Sistema de trabalho
                 </span>
               </div>
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter uppercase font-display">
+              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter font-display">
                 Como conduzimos um projeto web.
               </h2>
-              <p className="text-black/85 text-[11px] sm:text-xs max-w-2xl leading-relaxed font-sans font-semibold">
+              <p className="text-black/85 text-xs sm:text-xs max-w-2xl leading-relaxed font-sans font-semibold">
                 A TAG08 organiza o desenvolvimento web em etapas claras: entendimento do contexto, estrutura&ccedil;&atilde;o da informa&ccedil;&atilde;o, desenho da experi&ecirc;ncia, desenvolvimento, revis&atilde;o e publica&ccedil;&atilde;o acompanhada.
               </p>
             </div>
@@ -597,11 +597,11 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                   },
                 ].map((item) => (
                   <div key={item.title} className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
-                    <h3 className="text-white text-xs sm:text-sm font-display font-bold uppercase tracking-tight flex items-center gap-2">
+                    <h3 className="text-white text-xs sm:text-sm font-display font-bold tracking-tight flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary" />
                       {item.title}
                     </h3>
-                    <p className="text-zinc-300 text-[11px] sm:text-xs leading-relaxed font-sans">{item.text}</p>
+                    <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans">{item.text}</p>
                   </div>
                 ))}
               </div>
@@ -615,10 +615,10 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 >
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex flex-col text-left">
-                      <span className="font-mono text-[8px] text-zinc-500 uppercase font-black tracking-wider leading-none">
+                      <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
                         WhatsApp oficial
                       </span>
-                      <span className="text-white text-xs font-mono font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
+                      <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                         FALAR COM A TAG08
                       </span>
                     </div>
@@ -632,10 +632,10 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 >
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex flex-col text-left">
-                      <span className="font-mono text-[8px] text-black/55 uppercase font-black tracking-wider leading-none">
+                      <span className="tag08-meta text-xs text-black/55 uppercase font-black tracking-wider leading-none">
                         Pr&oacute;ximo passo
                       </span>
-                      <span className="text-black text-xs font-mono font-bold tracking-wider mt-0.5">
+                      <span className="text-black text-xs font-sans font-bold tracking-wider mt-0.5">
                         VER SOLU&Ccedil;&Otilde;ES
                       </span>
                     </div>
@@ -657,13 +657,13 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
             <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-[9px] rounded-lg uppercase tracking-widest font-mono">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
                   D&uacute;vidas sobre desenvolvimento web
                 </div>
-                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter uppercase">
+                <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter">
                   Antes de criar um site, entenda o que precisa ser estruturado.
                 </h2>
-                <p className="text-zinc-400 text-xs sm:text-[13px] leading-relaxed font-sans max-w-sm">
+                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-sm">
                   Um projeto web funciona melhor quando a marca entende qual papel o site precisa cumprir: apresentar, explicar, organizar, apoiar o comercial ou sustentar uma presen&ccedil;a digital pr&oacute;pria.
                 </p>
               </div>
@@ -686,7 +686,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                         : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
                     }`}
                   >
-                    <span className="font-mono text-xs font-black uppercase tracking-wider flex items-center gap-3">
+                    <span className="tag08-meta text-xs font-black uppercase tracking-wider flex items-center gap-3">
                       <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
                         {String(item.id + 1).padStart(2, '0')}.
                       </span>
@@ -714,12 +714,12 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                   <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
                 </svg>
               </div>
-              <div className="absolute top-6 left-6 z-10 pointer-events-none font-mono text-[8px] text-white/20 uppercase tracking-widest leading-none">
+              <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
                 SYS // STATIC_WEB
               </div>
 
               <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left">
-                <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">
+                <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
                   {([
                     "A TAG08 desenvolve apenas sites institucionais?",
                     "Preciso ter todo o conte&uacute;do pronto antes de come&ccedil;ar?",
@@ -741,7 +741,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                   ])[activeFaq]}
                 </h4>
 
-                <p className="text-zinc-300 text-xs sm:text-[12.5px] leading-relaxed font-sans font-medium">
+                <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
                     "N&atilde;o. Podemos desenvolver sites institucionais, landing pages, p&aacute;ginas de servi&ccedil;o, cat&aacute;logos digitais ou estruturas personalizadas, conforme o objetivo da marca e a jornada do usu&aacute;rio.",
                     "N&atilde;o necessariamente. A TAG08 pode ajudar a organizar a arquitetura da informa&ccedil;&atilde;o, os blocos de conte&uacute;do, as mensagens principais e os pontos que precisam ser explicados na p&aacute;gina.",
@@ -757,7 +757,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
                   <h4 className="text-white font-semibold text-sm leading-snug">O que o projeto precisa deixar claro?</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     A estrutura precisa deixar claro o papel da p&aacute;gina, a jornada do visitante e o pr&oacute;ximo passo esperado.
@@ -774,9 +774,9 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
 
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="font-mono text-[8.5px] text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
-                  <h4 className="text-black font-black text-sm uppercase leading-tight tracking-tight">Quer conversar sobre o seu site?</h4>
-                  <p className="text-black/85 text-[11.5px] font-semibold leading-relaxed font-mono">
+                  <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
+                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">Quer conversar sobre o seu site?</h4>
+                  <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
                     Fale com a TAG08 para entender o que precisa ser estruturado, o que entra no escopo e qual caminho faz mais sentido.
                   </p>
                 </div>
@@ -797,7 +797,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
 
       {/* SECTION 6 - ACTION TRIGGER FOOTER */}
       <section className="px-4 sm:px-6 md:px-8 py-20 text-center space-y-6 max-w-4xl mx-auto">
-        <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase leading-none tracking-tighter">
+        <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-none tracking-tighter">
           Vamos entender qual estrutura web sua marca precisa? <br />
           <span className="text-brand">PLANEJAR MEU SITE</span>
         </h2>
@@ -807,7 +807,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
         <div className="pt-4">
           <button
             onClick={() => handleLinkClick("/contato")}
-            className="group bg-brand text-black font-mono font-black text-[10px] uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
+            className="group bg-brand text-black font-sans font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
           >
             <span>PLANEJAR MEU SITE</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />

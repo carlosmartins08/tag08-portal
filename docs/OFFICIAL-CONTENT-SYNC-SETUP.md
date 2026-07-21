@@ -6,7 +6,7 @@
 - O bloco do YouTube continua abrindo o canal oficial.
 - O bloco do Google Meu Negócio continua abrindo o perfil e o Maps oficial.
 - Se o sync falhar, a interface não quebra.
-- O backend agora carrega automaticamente as variáveis do `.env` ao subir `npm run dev:backend`.
+- O servidor Next usa as variaveis do ambiente ao subir com `npm run dev` ou `npm start`.
 
 ## O que precisa para sincronização real
 
@@ -43,7 +43,7 @@ GOOGLE_BUSINESS_CLIENT_SECRET="client_secret"
 
 - Endpoint: `GET /api/official-content`
 - Fallback editorial: `src/lib/officialContent.ts`
-- Renderização da Home: `src/pages/Home.tsx`
+- Renderizacao da Home: `src/features/site/pages/Home.tsx`
 
 ## Regra prática
 
@@ -57,4 +57,4 @@ GOOGLE_BUSINESS_CLIENT_SECRET="client_secret"
 2. Preencha primeiro `YOUTUBE_API_KEY`.
 3. Depois preencha `GOOGLE_BUSINESS_LOCATION_NAME` e o fluxo OAuth.
 4. Rode `npm run build`.
-5. Se quiser desenvolvimento local com API real, rode o frontend e o backend juntos.
+5. Para desenvolvimento local com API real, use apenas `npm run dev`.

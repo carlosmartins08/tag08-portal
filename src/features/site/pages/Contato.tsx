@@ -270,14 +270,14 @@ export default function Contato() {
                   <Mail className="w-4.5 h-4.5" />
                 </div>
                 <div>
-                  <h4 className="text-white font-semibold text-xs uppercase tracking-wider font-mono">Diretoria Geral</h4>
+                  <h4 className="text-white font-semibold text-xs tracking-wider tag08-meta">Diretoria Geral</h4>
                   <p className="text-zinc-400 text-sm">contato@tag08.com.br</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => copyToClipboard("contato@tag08.com.br", "email")}
-                className="opacity-60 sm:opacity-0 group-hover/item:opacity-100 focus:opacity-100 transition-all duration-200 text-zinc-500 hover:text-brand p-2 rounded-lg hover:bg-brand/10 border border-transparent hover:border-brand/20 flex items-center gap-1.5 font-mono text-[9px] uppercase font-bold select-none cursor-pointer shrink-0"
+                className="opacity-60 sm:opacity-0 group-hover/item:opacity-100 focus:opacity-100 transition-all duration-200 text-zinc-500 hover:text-brand p-2 rounded-lg hover:bg-brand/10 border border-transparent hover:border-brand/20 flex items-center gap-1.5 font-sans text-xs uppercase font-bold select-none cursor-pointer shrink-0"
               >
                 {copiedStates["email"] ? (
                   <>
@@ -308,7 +308,7 @@ export default function Contato() {
                       <Phone className="w-4.5 h-4.5" />
                     </div>
                     <div>
-                      <h4 className="flex items-center gap-1.5 text-white font-semibold text-xs uppercase tracking-wider font-mono">
+                      <h4 className="flex items-center gap-1.5 text-white font-semibold text-xs tracking-wider tag08-meta">
                         <CountryFlag country={contact.country} className="text-sm leading-none" /> WhatsApp {contact.label}
                       </h4>
                       <p className={`text-sm font-sans font-medium ${
@@ -321,7 +321,7 @@ export default function Contato() {
                   <button
                     type="button"
                     onClick={() => copyToClipboard(contact.phoneE164.replace("+", ""), contact.key)}
-                    className={`opacity-60 sm:opacity-0 group-hover/item:opacity-100 focus:opacity-100 transition-all duration-200 p-2 rounded-lg border border-transparent flex items-center gap-1.5 font-mono text-[9px] uppercase font-bold select-none cursor-pointer shrink-0 ${
+                    className={`opacity-60 sm:opacity-0 group-hover/item:opacity-100 focus:opacity-100 transition-all duration-200 p-2 rounded-lg border border-transparent flex items-center gap-1.5 font-sans text-xs uppercase font-bold select-none cursor-pointer shrink-0 ${
                       contact.key === "brazil"
                         ? "text-zinc-500 hover:text-brand hover:bg-brand/10 hover:border-brand/20"
                         : "text-zinc-500 hover:text-brand-secondary hover:bg-brand-secondary/10 hover:border-brand-secondary/20"
@@ -350,14 +350,14 @@ export default function Contato() {
                   <MapPin className="w-4.5 h-4.5" />
                 </div>
                 <div>
-                  <h4 className="text-white font-semibold text-xs uppercase tracking-wider font-mono">Nosso Escritório</h4>
+                  <h4 className="text-white font-semibold text-xs tracking-wider tag08-meta">Nosso Escritório</h4>
                   <p className="text-zinc-400 text-sm">{TAG08_OFFICIAL_CONTACT.address}</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => copyToClipboard(TAG08_OFFICIAL_CONTACT.address, "address")}
-                className="opacity-60 sm:opacity-0 group-hover/item:opacity-100 focus:opacity-100 transition-all duration-200 text-zinc-500 hover:text-brand p-2 rounded-lg hover:bg-brand/10 border border-transparent hover:border-brand/20 flex items-center gap-1.5 font-mono text-[9px] uppercase font-bold select-none cursor-pointer shrink-0"
+                className="opacity-60 sm:opacity-0 group-hover/item:opacity-100 focus:opacity-100 transition-all duration-200 text-zinc-500 hover:text-brand p-2 rounded-lg hover:bg-brand/10 border border-transparent hover:border-brand/20 flex items-center gap-1.5 font-sans text-xs uppercase font-bold select-none cursor-pointer shrink-0"
               >
                 {copiedStates["address"] ? (
                   <>
@@ -376,7 +376,7 @@ export default function Contato() {
             <div className="rounded-2xl border border-white/[0.05] bg-black/20 overflow-hidden shadow-[0_12px_30px_rgba(0,0,0,0.24)]">
               <div className="flex items-center justify-between gap-4 px-4 pt-4">
                 <div className="space-y-1">
-                  <p className="text-[10px] uppercase tracking-widest font-mono text-brand font-black">Google Maps</p>
+                  <p className="text-xs uppercase tracking-widest tag08-meta text-brand font-black">Google Maps</p>
                   <h4 className="text-white text-sm font-semibold">Localização e avaliações da TAG08</h4>
                 </div>
                 <a
@@ -390,7 +390,7 @@ export default function Contato() {
                       surface: "contact-google-maps"
                     })
                   }
-                  className="inline-flex items-center gap-2 rounded-xl border border-brand/20 bg-brand/10 px-3 py-2 text-[10px] font-mono font-black uppercase tracking-widest text-brand transition-colors hover:bg-brand hover:text-black"
+                  className="inline-flex items-center gap-2 rounded-xl border border-brand/20 bg-brand/10 px-3 py-2 text-xs tag08-meta font-black uppercase tracking-widest text-brand transition-colors hover:bg-brand hover:text-black"
                 >
                   Abrir no Maps
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -417,7 +417,7 @@ export default function Contato() {
                         grantMarketingConsent();
                         setMarketingConsent(true);
                       }}
-                      className="rounded-xl border border-brand/30 bg-brand/10 px-4 py-2 text-[10px] font-mono font-black uppercase tracking-widest text-brand transition-colors hover:bg-brand hover:text-black"
+                      className="rounded-xl border border-brand/30 bg-brand/10 px-4 py-2 text-xs tag08-meta font-black uppercase tracking-widest text-brand transition-colors hover:bg-brand hover:text-black"
                     >
                       Carregar mapa
                     </button>
@@ -426,7 +426,7 @@ export default function Contato() {
               </div>
 
               <div className="px-4 pb-4 pt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                <p className="text-[11px] text-zinc-500 leading-relaxed max-w-lg">
+                <p className="text-xs text-zinc-500 leading-relaxed max-w-lg">
                   O mapa e o perfil do Google Business concentram rota, endereço oficial e as avaliações públicas que validam nossa presença local.
                 </p>
                 <a
@@ -440,7 +440,7 @@ export default function Contato() {
                       surface: "contact-google-business-profile"
                     })
                   }
-                  className="inline-flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-widest text-white hover:text-brand transition-colors"
+                  className="inline-flex items-center gap-2 text-xs tag08-meta font-black uppercase tracking-widest text-white hover:text-brand transition-colors"
                 >
                   Ver avaliações
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -452,7 +452,7 @@ export default function Contato() {
           <div className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-5 space-y-4">
             <div className="flex items-center gap-2">
               <MessageSquare className="w-4 h-4 text-brand" />
-              <h3 className="text-white font-semibold text-xs uppercase tracking-wider font-mono">
+              <h3 className="text-white font-semibold text-xs tracking-wider tag08-meta">
                 Canais oficiais da TAG08
               </h3>
             </div>
@@ -476,7 +476,7 @@ export default function Contato() {
                   >
                     <div>
                       <p className="text-sm text-white font-medium">{channel.label}</p>
-                      <p className="text-[11px] text-zinc-500">{host}</p>
+                      <p className="text-xs text-zinc-500">{host}</p>
                     </div>
                     <ArrowRight className="w-4 h-4 text-brand shrink-0" />
                   </a>
@@ -512,7 +512,7 @@ export default function Contato() {
                   {/* Row Name and company */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label htmlFor="form-name" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      <label htmlFor="form-name" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                         Qual o seu nome? *
                       </label>
                       <input
@@ -529,12 +529,12 @@ export default function Contato() {
                         placeholder="Ex: Fernando Guedes"
                       />
                       {errors.name && (
-                        <p id="form-name-error" className="text-[10px] text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.name}</p>
+                        <p id="form-name-error" className="text-xs text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.name}</p>
                       )}
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="form-company" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      <label htmlFor="form-company" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                         Nome da Empresa *
                       </label>
                       <input
@@ -551,7 +551,7 @@ export default function Contato() {
                         placeholder="Ex: Clínica Guedes Ltda"
                       />
                       {errors.company && (
-                        <p id="form-company-error" className="text-[10px] text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.company}</p>
+                        <p id="form-company-error" className="text-xs text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.company}</p>
                       )}
                     </div>
                   </div>
@@ -559,7 +559,7 @@ export default function Contato() {
                   {/* Row Whatsapp and email */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label htmlFor="form-whatsapp" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      <label htmlFor="form-whatsapp" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                         WhatsApp *
                       </label>
                       <input
@@ -576,12 +576,12 @@ export default function Contato() {
                         placeholder="Ex: (11) 99999-9999"
                       />
                       {errors.whatsapp && (
-                        <p id="form-whatsapp-error" className="text-[10px] text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.whatsapp}</p>
+                        <p id="form-whatsapp-error" className="text-xs text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.whatsapp}</p>
                       )}
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="form-email" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      <label htmlFor="form-email" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                         E-mail Corporativo *
                       </label>
                       <input
@@ -598,7 +598,7 @@ export default function Contato() {
                         placeholder="Ex: fernando@clinicaguedes.com"
                       />
                       {errors.email && (
-                        <p id="form-email-error" className="text-[10px] text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.email}</p>
+                        <p id="form-email-error" className="text-xs text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.email}</p>
                       )}
                     </div>
                   </div>
@@ -606,7 +606,7 @@ export default function Contato() {
                   {/* Dropdowns */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label htmlFor="form-service" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      <label htmlFor="form-service" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                         Serviço de maior interesse
                       </label>
                       <select
@@ -626,7 +626,7 @@ export default function Contato() {
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="form-stage" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      <label htmlFor="form-stage" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                         Momento Atual da Marca
                       </label>
                       <select
@@ -646,7 +646,7 @@ export default function Contato() {
 
                   {/* Message field */}
                   <div className="space-y-2">
-                    <label htmlFor="form-message" className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                    <label htmlFor="form-message" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                       Conte mais detalhes sobre suas metas corporativas
                     </label>
                     <textarea
@@ -668,13 +668,13 @@ export default function Contato() {
                       onChange={(event) => setConsent(event.target.checked)}
                       className="mt-0.5 h-4 w-4 accent-[var(--color-brand)]"
                     />
-                    <span className="text-[10px] text-zinc-300 leading-relaxed font-sans">
+                    <span className="text-xs text-zinc-300 leading-relaxed font-sans">
                       Autorizo o uso destes dados para retorno sobre esta solicitação, conforme o aviso de privacidade da TAG08.
                     </span>
                   </label>
                   <div className="flex items-start gap-2.5 px-4 py-3 rounded-xl bg-white/[0.02] border border-white/[0.05]">
                     <div className="w-1.5 h-1.5 rounded-full bg-brand shrink-0 mt-1.5 animate-pulse" />
-                    <p className="text-[10px] text-zinc-400 leading-relaxed font-sans">
+                    <p className="text-xs text-zinc-400 leading-relaxed font-sans">
                       <strong>Compromisso de Confidencialidade (LGPD):</strong> Seus dados corporativos e de contato estão 100% blindados sob camadas de criptografia. Nós nunca compartilhamos informações operacionais e não enviamos spam comercial.
                     </p>
                   </div>
@@ -687,7 +687,7 @@ export default function Contato() {
                       id="btn-form-submit"
                       type="submit"
                       disabled={loading}
-                      className="w-full bg-brand hover:bg-brand-dark text-black font-bold font-mono text-xs uppercase py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_25px_rgba(var(--color-brand-rgb),0.15)]"
+                      className="w-full bg-brand hover:bg-brand-dark text-black font-bold font-sans text-xs uppercase py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_25px_rgba(var(--color-brand-rgb),0.15)]"
                     >
                       {loading ? (
                         <span className="flex items-center gap-2">
@@ -726,7 +726,7 @@ export default function Contato() {
                   <div className="bg-zinc-950 p-6 rounded-xl border border-white/[0.04] space-y-4 max-w-md mx-auto">
                     <div className="flex justify-center items-center gap-2">
                       <Sparkles className="w-4.5 h-4.5 text-brand" />
-                      <span className="font-mono text-[10px] tracking-widest text-brand uppercase">Fast Track Recomendado</span>
+                      <span className="tag08-meta text-xs tracking-widest text-brand uppercase">Fast Track Recomendado</span>
                     </div>
                     <p className="text-xs text-zinc-300 leading-relaxed font-sans">
                       Deseja agilizar os passos e bater um papo imediato por WhatsApp com o consultor agora mesmo? Nosso sistema condensou suas respostas abaixo:
@@ -762,7 +762,7 @@ export default function Contato() {
         {/* Próximos Passos (Timeline) */}
         <div className="space-y-12 animate-fade-in">
           <div className="text-center md:text-left space-y-4">
-            <span className="font-mono text-[10px] tracking-widest text-brand uppercase bg-brand/5 border border-brand/20 px-3 py-1 rounded-full">
+            <span className="tag08-meta text-xs tracking-widest text-brand uppercase bg-brand/5 border border-brand/20 px-3 py-1 rounded-full">
               PROCESSO DE ANALISE // TRANSPARENCIA
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white">
@@ -785,7 +785,7 @@ export default function Contato() {
                   Estudamos os canais atuais de sua marca, concorrentes mapeados e velocidade de carregamento dos seus criativos e sites. Criamos hipóteses válidas antes de qualquer contato.
                 </p>
               </div>
-              <div className="flex items-center gap-1.5 pt-2 text-[10px] font-sans text-zinc-500">
+              <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-500">
                 <Clock className="w-3 h-3 text-brand animate-pulse" />
                 <span>Prazo: nas primeiras 2h úteis</span>
               </div>
@@ -802,7 +802,7 @@ export default function Contato() {
                   Enviamos as primeiras impressões táticas direto no seu WhatsApp de forma resumida e direta. Se houver fit de trabalho inicial, propomos uma agenda rápida de alinhamento.
                 </p>
               </div>
-              <div className="flex items-center gap-1.5 pt-2 text-[10px] font-sans text-zinc-500">
+              <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-500">
                 <MessageSquare className="w-3 h-3 text-brand" />
                 <span>Prazo: até 6h úteis totais</span>
               </div>
@@ -819,7 +819,7 @@ export default function Contato() {
                   Uma conversa de 15 minutos baseada em soluções técnicas. Sanamos suas dúvidas sobre nossos playbooks operacionais de processos e apresentamos o plano de expansão ideal.
                 </p>
               </div>
-              <div className="flex items-center gap-1.5 pt-2 text-[10px] font-sans text-zinc-500">
+              <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-500">
                 <CheckCircle className="w-3 h-3 text-brand" />
                 <span>Duração: Chamada ágil de 15 min</span>
               </div>
@@ -830,7 +830,7 @@ export default function Contato() {
         {/* FAQ de Alinhamento Comercial */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start bg-charcoal-900/40 p-8 sm:p-12 rounded-3xl border border-white/[0.04]">
           <div className="lg:col-span-5 space-y-4">
-            <span className="font-mono text-[10px] tracking-widest text-brand uppercase bg-brand/5 border border-brand/20 px-3 py-1 rounded-full col-span-1">
+            <span className="tag08-meta text-xs tracking-widest text-brand uppercase bg-brand/5 border border-brand/20 px-3 py-1 rounded-full col-span-1">
               AJUDA // PERGUNTAS FREQUENTES
             </span>
             <h2 className="font-display font-semibold text-3xl text-white leading-tight">

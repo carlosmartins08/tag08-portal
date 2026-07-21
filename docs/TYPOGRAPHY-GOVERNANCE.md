@@ -12,19 +12,19 @@ Keep typography consistent across the project by separating title voice from rea
 
 ## Font families
 
-- Primary family: `Darker Grotesque`
+- Primary family: `Manrope`
 - Secondary family: `Manrope`
 - Support family: `JetBrains Mono`
 
 ## Usage rule
 
-- Primary family is for titles, section headers, numeric highlights, badges with brand emphasis, and short attention-grabbers.
-- Secondary family is for subtitles, body copy, labels, helper text, descriptions, and long reading blocks.
+- The primary role is for titles, section headers, numeric highlights and short attention-grabbers. It uses the same Manrope family with a controlled weight and scale.
+- The secondary role is for subtitles, body copy, labels, helper text, descriptions, and long reading blocks.
 - Support family is for technical labels, counters, metadata, tables, and machine-like UI details.
 
 ## Semantic classes
 
-- `font-display` means primary family.
+- `font-display` means the primary heading role, not a second visual family.
 - `font-sans` means secondary family.
 - `font-mono` stays reserved for support/system usage.
 - `font-primary` and `font-secondary` are semantic aliases for future use.
@@ -42,4 +42,3 @@ Keep typography consistent across the project by separating title voice from rea
 2. Fix any dead or fake classes like `font-heading`.
 3. Review the most visible pages first.
 4. Validate on desktop and mobile.
-

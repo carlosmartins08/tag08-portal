@@ -7,9 +7,9 @@
 
 ## Fonte de verdade
 - Rotas e metadados: `src/config/routeRegistry.ts`
-- Atualização de SEO e `page_view`: `src/App.tsx`
+- Atualizacao de SEO e `page_view`: `src/features/site/SiteShell.tsx`
 - Instrumentação de eventos: `src/lib/analytics.ts`
-- Verificação Search Console por prefixo: `index.html`
+- Verificacao Search Console por prefixo: metadata gerada pelo App Router
 
 ## Variáveis de ambiente
 - `NEXT_PUBLIC_GA4_ID`
@@ -77,11 +77,11 @@
 - O token em `NEXT_PUBLIC_GSC_VERIFICATION` só faz sentido para a verificação por tag HTML.
 
 ## Implementação atual
-- `src/App.tsx` envia `page_view`, `scroll_depth` e `engagement_time`.
+- `src/features/site/SiteShell.tsx` envia `page_view`, `scroll_depth` e `engagement_time`.
 - `src/components/Header.tsx` envia `cta_click` para navegação e CTA principal.
 - `src/components/WhatsAppButton.tsx` envia clique de saída para WhatsApp.
-- `src/pages/Contato.tsx` envia início, erro e envio do formulário.
-- `src/pages/ClienteOnboarding.tsx` envia início, etapa e submit do onboarding.
+- `src/features/site/pages/Contato.tsx` envia inicio, erro e envio do formulario.
+- `src/features/site/pages/ClienteOnboarding.tsx` envia inicio, etapa e submit do onboarding.
 
 ## Checklist de operação
 1. Confirmar que `NEXT_PUBLIC_GA4_ID` usa o formato `G-...`.

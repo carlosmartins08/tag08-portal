@@ -290,12 +290,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
           
           {/* Left Hero Block */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand/10 border border-brand/20 text-brand font-bold text-[10px] rounded-lg tracking-widest uppercase font-mono">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand/10 border border-brand/20 text-brand font-bold text-xs rounded-lg tracking-widest uppercase tag08-meta">
               <Sparkles className="w-3.5 h-3.5 animate-pulse" />
               DIGITAL MARKETING SERVICES &amp; STRATEGY
             </div>
             
-            <h1 className="font-display font-black text-4xl sm:text-5xl text-white uppercase tracking-tighter leading-[1.0]">
+            <h1 className="font-display font-black text-4xl sm:text-5xl text-white tracking-tighter leading-[1.0]">
               Trabalhe com uma equipe que acredita em <br/>
               <span className="text-brand">direção, responsabilidade e evolução constante.</span>
             </h1>
@@ -307,13 +307,13 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
             <div className="flex flex-wrap gap-4 pt-2">
               <a 
                 href="#vagas-abertas-anchor" 
-                className="px-6 py-3 bg-brand text-black font-mono font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-brand-dark transition-all duration-300 shadow-[0_8px_25px_rgba(var(--color-brand-rgb),0.15)] flex items-center gap-2"
+                className="px-6 py-3 bg-brand text-black tag08-action font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-brand-dark transition-all duration-300 shadow-[0_8px_25px_rgba(var(--color-brand-rgb),0.15)] flex items-center gap-2"
               >
                 Ver Vagas Abertas <ArrowRight className="w-3.5 h-3.5" />
               </a>
               <a 
                 href="#aplicacao-direta-anchor" 
-                className="px-6 py-3 bg-white/5 text-zinc-300 font-mono text-xs uppercase tracking-widest rounded-xl border border-white/5 hover:border-white/12 hover:text-white transition-all"
+                className="px-6 py-3 bg-white/5 text-zinc-300 tag08-action text-xs uppercase tracking-widest rounded-xl border border-white/5 hover:border-white/12 hover:text-white transition-all"
               >
                 Banco de Talentos
               </a>
@@ -335,7 +335,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
               {/* Floating aesthetic widget over image */}
               <div className="absolute bottom-5 left-5 right-5 bg-black/75 backdrop-blur-md border border-white/15 p-4 rounded-2xl flex items-center justify-between">
                 <div>
-                  <p className="text-[10px] text-brand font-mono uppercase tracking-widest font-bold">POSICIONAMENTO SÊNIOR</p>
+                  <p className="text-xs text-brand tag08-meta uppercase tracking-widest font-bold">POSICIONAMENTO SÊNIOR</p>
                   <p className="text-white text-xs font-bold mt-0.5">Let's grow your brand!</p>
                 </div>
                 <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
@@ -355,7 +355,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
             
             {/* List column on left */}
             <div className="lg:col-span-3 space-y-4">
-              <p className="text-[10px] text-zinc-400 uppercase tracking-widest font-mono font-bold">DIRETRIZES // EXPERTISE</p>
+              <p className="text-xs text-zinc-400 uppercase tracking-widest tag08-meta font-bold">DIRETRIZES // EXPERTISE</p>
               <ul className="space-y-2.5 font-display text-sm font-bold text-zinc-800">
                 <li className="flex items-center gap-2 border-b border-zinc-50 pb-2 hover:translate-x-1 transition-transform cursor-default">
                   <span className="w-1.5 h-1.5 bg-brand border border-black/10 rounded-full" />
@@ -383,8 +383,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
             {/* Core culture central column */}
             <div className="lg:col-span-4 flex flex-col justify-between space-y-4 lg:border-l lg:border-zinc-100 lg:pl-10">
               <div className="space-y-2">
-                <p className="text-[10px] text-zinc-400 uppercase tracking-widest font-mono font-bold">VALORES EXTRAORDINÁRIOS</p>
-                <h3 className="font-display font-black text-xl text-zinc-900 uppercase tracking-tight">
+                <p className="text-xs text-zinc-400 uppercase tracking-widest tag08-meta font-bold">VALORES EXTRAORDINÁRIOS</p>
+                <h3 className="font-display font-black text-xl text-zinc-900 tracking-tight">
                   Social Media <br/>Management
                 </h3>
                 <p className="text-zinc-500 text-xs leading-relaxed font-sans">
@@ -393,7 +393,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
               </div>
               <a 
                 href="#vagas-abertas-anchor"
-                className="inline-flex self-start px-4 py-2 bg-zinc-950 text-white font-mono font-bold text-[9.5px] uppercase tracking-wider rounded-lg hover:bg-zinc-800 transition-colors"
+                className="inline-flex self-start px-4 py-2 bg-zinc-950 text-white tag08-action font-bold text-xs uppercase tracking-wider rounded-lg hover:bg-zinc-800 transition-colors"
               >
                 Conhecer Métodos
               </a>
@@ -403,8 +403,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
             <div className="lg:col-span-5 bg-zinc-950 text-white p-7 rounded-3xl flex flex-col justify-between space-y-6 shadow-xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-24 h-24 bg-brand/5 rounded-bl-full pointer-events-none" />
               <div className="space-y-2">
-                <p className="text-[9px] text-brand uppercase tracking-widest font-mono font-bold">TAG08 ECOSSISTEMA</p>
-                <h3 className="font-display font-black text-2xl uppercase tracking-tighter leading-none">
+                <p className="text-xs text-brand uppercase tracking-widest tag08-meta font-bold">TAG08 ECOSSISTEMA</p>
+                <h3 className="font-display font-black text-2xl tracking-tighter leading-none">
                   Let's grow your <br />Brand Together!
                 </h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans mt-2">
@@ -413,7 +413,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
               </div>
               <a 
                 href="#aplicacao-direta-anchor"
-                className="self-start px-4.5 py-2.5 bg-white text-zinc-950 hover:bg-brand font-mono font-bold text-[9.5px] uppercase tracking-widest rounded-xl transition-all duration-300"
+                className="self-start px-4.5 py-2.5 bg-white text-zinc-950 hover:bg-brand tag08-action font-bold text-xs uppercase tracking-widest rounded-xl transition-all duration-300"
               >
                 Iniciar Cadastro Exclusivo
               </a>
@@ -425,8 +425,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
           <div className="space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 font-sans">
               <div className="space-y-1 text-left">
-                <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-widest font-bold">INTERAÇÃO SOCIAL &amp; COMPANHEIRISMO</span>
-                <h2 className="font-display font-black text-2xl sm:text-3xl text-zinc-900 uppercase tracking-tight">
+                <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest font-bold">INTERAÇÃO SOCIAL &amp; COMPANHEIRISMO</span>
+                <h2 className="font-display font-black text-2xl sm:text-3xl text-zinc-900 tracking-tight">
                   Nosso Time &amp; Líderes <span className="text-brand drop-shadow-sm font-light font-sans">●</span>
                 </h2>
               </div>
@@ -454,7 +454,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 </div>
 
                 <div className="relative z-10 flex items-center justify-between">
-                  <div className="px-2.5 py-1 bg-brand/10 border border-brand/25 rounded text-brand text-[8px] font-mono uppercase tracking-widest font-bold">
+                  <div className="px-2.5 py-1 bg-brand/10 border border-brand/25 rounded text-brand text-xs tag08-meta uppercase tracking-widest font-bold">
                     FUNDADOR // CE
                   </div>
                   <span className="w-2 h-2 rounded-full bg-brand animate-pulse" />
@@ -462,9 +462,9 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                 <div className="relative z-10 space-y-4 mt-auto">
                   <div className="space-y-1">
-                    <span className="font-mono text-[8px] text-zinc-500 block uppercase font-bold">DIREÇÃO GERAL</span>
-                    <h3 className="font-display font-black text-xl text-white uppercase tracking-tight">Carlos Eduardo</h3>
-                    <p className="text-brand text-[10.5px] font-mono uppercase leading-none">Fundador &amp; Diretor de Criação</p>
+                    <span className="font-sans text-xs text-zinc-500 block uppercase font-bold">DIREÇÃO GERAL</span>
+                    <h3 className="font-display font-black text-xl text-white tracking-tight">Carlos Eduardo</h3>
+                    <p className="text-brand text-xs font-sans uppercase leading-none">Fundador &amp; Diretor de Criação</p>
                     <p className="text-zinc-400 text-xs leading-relaxed pt-2 italic">
                       "Conduz o posicionamento das marcas parceiras por meio de metodologias consistentes de design e estética refinada."
                     </p>
@@ -475,7 +475,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                     target="_blank"
                     rel="noreferrer"
                     onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/in/carlos-eduardo-tag08", "careers-profile-carlos")}
-                    className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-brand hover:bg-white text-zinc-950 font-sans font-bold text-[9.5px] uppercase tracking-widest rounded-xl transition-all duration-300 shadow-md hover:-translate-y-0.5 cursor-pointer max-w-max"
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-brand hover:bg-white text-zinc-950 font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-md hover:-translate-y-0.5 cursor-pointer max-w-max"
                   >
                     <Linkedin className="w-3.5 h-3.5 fill-current stroke-none" />
                     <span>Conectar no LinkedIn</span>
@@ -501,21 +501,21 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       />
                     </div>
                     <div className="space-y-1 text-left">
-                      <span className="font-sans text-[7.5px] text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">UI/UX &amp; Brand Director</span>
-                      <h4 className="font-display font-black text-base text-zinc-900 uppercase tracking-tight leading-none pt-0.5">Marina Fontes</h4>
-                      <p className="text-zinc-500 text-[11px] font-sans leading-snug pt-1">
+                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">UI/UX &amp; Brand Director</span>
+                      <h4 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Marina Fontes</h4>
+                      <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
                         Cria diretrizes estéticas e manuais gráficos para marcas com exigência alta de consistência visual.
                       </p>
                     </div>
                   </div>
-                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-[9px] font-mono text-zinc-400 uppercase">
+                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-400 uppercase">
                     <span className="flex items-center gap-1">ðŸ“ Joinville / SC</span>
                     <a 
                       href="https://www.linkedin.com/in/marina-fontes-tag08"
                       target="_blank"
                       rel="noreferrer"
                       onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/in/marina-fontes-tag08", "careers-profile-marina")}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-colors duration-205 text-[8.5px] tracking-wider uppercase font-mono cursor-pointer"
+                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-colors duration-205 text-xs tracking-wider uppercase font-sans cursor-pointer"
                     >
                       <Linkedin className="w-3 h-3 fill-current stroke-none" />
                       <span>LinkedIn</span>
@@ -537,21 +537,21 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       />
                     </div>
                     <div className="space-y-1 text-left">
-                      <span className="font-sans text-[7.5px] text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">Tech Lead Architect</span>
-                      <h4 className="font-display font-black text-base text-zinc-900 uppercase tracking-tight leading-none pt-0.5">Renato Silveira</h4>
-                      <p className="text-zinc-500 text-[11px] font-sans leading-snug pt-1">
+                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">Tech Lead Architect</span>
+                      <h4 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Renato Silveira</h4>
+                      <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
                         Responsável pela integridade técnica, empacotamento leve e SEO dos sites.
                       </p>
                     </div>
                   </div>
-                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-[9px] font-mono text-zinc-400 uppercase">
+                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-400 uppercase">
                     <span className="flex items-center gap-1">📍 São Paulo / SP</span>
                     <a 
                       href="https://www.linkedin.com/in/renato-silveira-tag08"
                       target="_blank"
                       rel="noreferrer"
                       onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/in/renato-silveira-tag08", "careers-profile-renato")}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-colors duration-205 text-[8.5px] tracking-wider uppercase font-mono cursor-pointer"
+                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-colors duration-205 text-xs tracking-wider uppercase font-sans cursor-pointer"
                     >
                       <Linkedin className="w-3 h-3 fill-current stroke-none" />
                       <span>LinkedIn</span>
@@ -573,21 +573,21 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       />
                     </div>
                     <div className="space-y-1 text-left">
-                      <span className="font-sans text-[7.5px] text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">Content Strategist</span>
-                      <h4 className="font-display font-black text-base text-zinc-900 uppercase tracking-tight leading-none pt-0.5">Amanda Reis</h4>
-                      <p className="text-zinc-500 text-[11px] font-sans leading-snug pt-1">
+                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">Content Strategist</span>
+                      <h4 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Amanda Reis</h4>
+                      <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
                         Domínio em roteiros, storytelling e manuais de voz para executivos.
                       </p>
                     </div>
                   </div>
-                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-[9px] font-mono text-zinc-400 uppercase">
+                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-400 uppercase">
                     <span className="flex items-center gap-1">ðŸ“ Remoto / Brasil</span>
                     <a 
                       href="https://www.linkedin.com/in/amanda-reis-tag08"
                       target="_blank"
                       rel="noreferrer"
                       onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/in/amanda-reis-tag08", "careers-profile-amanda")}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-colors duration-205 text-[8.5px] tracking-wider uppercase font-mono cursor-pointer"
+                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-colors duration-205 text-xs tracking-wider uppercase font-sans cursor-pointer"
                     >
                       <Linkedin className="w-3 h-3 fill-current stroke-none" />
                       <span>LinkedIn</span>
@@ -609,21 +609,21 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       />
                     </div>
                     <div className="space-y-1 text-left">
-                      <span className="font-sans text-[7.5px] text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">Performance Specialist</span>
-                      <h4 className="font-display font-black text-base text-zinc-900 uppercase tracking-tight leading-none pt-0.5">Lucas Mendes</h4>
-                      <p className="text-zinc-500 text-[11px] font-sans leading-snug pt-1">
+                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">Performance Specialist</span>
+                      <h4 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Lucas Mendes</h4>
+                      <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
                         Análise fria de CPA, LTV e otimização cirúrgica no Meta &amp; Google Ads.
                       </p>
                     </div>
                   </div>
-                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-[9px] font-mono text-zinc-400 uppercase">
+                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-400 uppercase">
                     <span className="flex items-center gap-1">📍 São Paulo / SP</span>
                     <a 
                       href="https://www.linkedin.com/in/lucas-mendes-tag08"
                       target="_blank"
                       rel="noreferrer"
                       onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/in/lucas-mendes-tag08", "careers-profile-lucas")}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-colors duration-205 text-[8.5px] tracking-wider uppercase font-mono cursor-pointer"
+                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-colors duration-205 text-xs tracking-wider uppercase font-sans cursor-pointer"
                     >
                       <Linkedin className="w-3 h-3 fill-current stroke-none" />
                       <span>LinkedIn</span>
@@ -641,11 +641,11 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
               
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 font-sans">
                 <div className="lg:col-span-8 space-y-3">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-zinc-950 text-brand font-mono text-[8px] lg:text-[9.5px] font-black tracking-widest uppercase">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-zinc-950 text-brand tag08-meta text-xs lg:text-xs font-black tracking-widest uppercase">
                     <Linkedin className="w-3.5 h-3.5 fill-brand stroke-none" />
                     <span>Inovação, Processos & Insights Diários</span>
                   </div>
-                  <h4 className="font-display font-black text-zinc-900 text-lg sm:text-xl uppercase tracking-tight leading-none">
+                  <h4 className="font-display font-black text-zinc-900 text-lg sm:text-xl tracking-tight leading-none">
                     Engaje com nossos diretores no LinkedIn
                   </h4>
                   <p className="text-zinc-500 text-xs leading-relaxed max-w-2xl font-medium">
@@ -656,11 +656,11 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end w-full">
                   <div className="bg-white border border-zinc-200 rounded-2xl p-4 text-center sm:text-left lg:text-left flex-1 shadow-sm">
                     <span className="block font-display font-black text-lg text-zinc-900">32k+ conexões</span>
-                    <span className="block text-zinc-400 font-mono text-[8px] uppercase tracking-wider mt-0.5">Autoridade de mercado unificada</span>
+                    <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-wider mt-0.5">Autoridade de mercado unificada</span>
                   </div>
                   <div className="bg-zinc-950 text-white rounded-2xl p-4 text-center sm:text-left lg:text-left flex-1 shadow-sm">
                     <span className="block font-display font-black text-lg text-brand">Insights Reais</span>
-                    <span className="block text-zinc-400 font-mono text-[8px] uppercase tracking-wider mt-0.5">Artigos e playbooks semanais</span>
+                    <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-wider mt-0.5">Artigos e playbooks semanais</span>
                   </div>
                 </div>
               </div>
@@ -672,12 +672,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
           <div id="vagas-abertas-anchor" className="space-y-10 pt-8 border-t border-zinc-100">
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-zinc-100 pb-5">
               <div className="text-left space-y-1">
-                <span className="font-mono text-[9px] text-brand bg-black px-2 py-0.5 rounded uppercase tracking-widest font-black">CARREIRA CORPORATIVA // SELEÇÃO RÍGIDA</span>
-                <h2 className="font-display font-black text-2xl sm:text-3xl text-zinc-900 uppercase tracking-tight">
+                <span className="tag08-meta text-xs text-brand bg-black px-2 py-0.5 rounded uppercase tracking-widest font-black">CARREIRA CORPORATIVA // SELEÇÃO RÍGIDA</span>
+                <h2 className="font-display font-black text-2xl sm:text-3xl text-zinc-900 tracking-tight">
                   Vagas em Aberto
                 </h2>
               </div>
-              <p className="text-zinc-400 text-xs font-mono uppercase tracking-widest">
+              <p className="text-zinc-400 text-xs tag08-meta uppercase tracking-widest">
                 {vacancies.length} POSIÇÕES DISPONÍVEIS
               </p>
             </div>
@@ -699,12 +699,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       }`}
                     >
                       <div className="flex items-center justify-between w-full">
-                        <span className={`font-mono text-[8.5px] font-bold px-2 py-0.5 rounded uppercase ${
+                        <span className={`font-sans text-xs font-bold px-2 py-0.5 rounded uppercase ${
                           isActive ? "bg-brand/20 text-brand" : "bg-zinc-200 text-zinc-600"
                         }`}>
                           {v.department}
                         </span>
-                        <span className={`text-[9.5px] font-sans ${isActive ? "text-zinc-400" : "text-zinc-500"}`}>
+                        <span className={`text-xs font-sans ${isActive ? "text-zinc-400" : "text-zinc-500"}`}>
                           {v.type}
                         </span>
                       </div>
@@ -721,10 +721,10 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 
                 <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-200/65 pb-5">
                   <div>
-                    <h3 className="font-display font-black text-xl sm:text-2xl text-zinc-900 uppercase tracking-tight leading-none">
+                    <h3 className="font-display font-black text-xl sm:text-2xl text-zinc-900 tracking-tight leading-none">
                       {activeVacancy.title}
                     </h3>
-                    <p className="text-zinc-400 font-mono text-[9px] uppercase tracking-wider mt-1">
+                    <p className="text-zinc-400 tag08-meta text-xs uppercase tracking-wider mt-1">
                       {activeVacancy.department} ⬢ {activeVacancy.type}
                     </p>
                   </div>
@@ -735,16 +735,16 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                 <div className="space-y-4">
                   <div>
-                    <h4 className="font-mono text-[9.5px] font-bold text-zinc-500 uppercase tracking-wider mb-1.5">
+                    <h4 className="tag08-meta text-xs font-bold text-zinc-500 tracking-wider mb-1.5">
                       Descrição do Escopo Técnico
                     </h4>
-                    <p className="text-zinc-600 text-xs sm:text-[13px] leading-relaxed">
+                    <p className="text-zinc-600 text-xs sm:text-xs leading-relaxed">
                       {activeVacancy.description}
                     </p>
                   </div>
 
                   <div className="space-y-2 pt-1">
-                    <h4 className="font-mono text-[9.5px] font-bold text-zinc-500 uppercase tracking-wider mb-2.5">
+                    <h4 className="tag08-meta text-xs font-bold text-zinc-500 tracking-wider mb-2.5">
                       Requisitos Desejáveis para Handoff Perfeito
                     </h4>
                     <div className="grid grid-cols-1 gap-2">
@@ -769,7 +769,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                     
                     <button
                       onClick={() => handleApply(activeVacancy.id)}
-                      className="px-4.5 py-2.5 bg-zinc-950 text-white font-mono font-bold text-[9.5px] uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-colors cursor-pointer flex items-center gap-1.5"
+                      className="px-4.5 py-2.5 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-colors cursor-pointer flex items-center gap-1.5"
                     >
                       Preencher Formulário <ArrowRight className="w-3.5 h-3.5 text-brand" />
                     </button>
@@ -787,10 +787,10 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
             {/* Cultura e Expectativas */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
               <div className="space-y-4">
-                <span className="font-mono text-[9px] text-brand bg-zinc-950 px-2.5 py-1 rounded font-black uppercase tracking-widest inline-block">
+                <span className="tag08-meta text-xs text-brand bg-zinc-950 px-2.5 py-1 rounded font-black uppercase tracking-widest inline-block">
                   NOSSO MANIFESTO INTERNO // RIGOR DE ENTREGA
                 </span>
-                <h3 className="font-display font-black text-2xl text-zinc-900 leading-tight uppercase">
+                <h3 className="font-display font-black text-2xl text-zinc-900 leading-tight">
                   O que esperamos do seu trabalho todos os dias
                 </h3>
                 <p className="text-zinc-500 text-xs sm:text-sm font-sans leading-relaxed">
@@ -806,8 +806,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                   { title: "Constância de Qualidade", desc: "Sua centésima entrega de arte, copy ou código deve conter o mesmo padrão de excelência clínica da primeira." }
                 ].map((item, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-zinc-50 border border-zinc-100 space-y-1.5">
-                    <h4 className="text-zinc-900 font-display font-bold text-xs uppercase tracking-tight">{item.title}</h4>
-                    <p className="text-zinc-500 text-[11px] leading-relaxed font-sans">{item.desc}</p>
+                    <h4 className="text-zinc-900 font-display font-bold text-xs tracking-tight">{item.title}</h4>
+                    <p className="text-zinc-500 text-xs leading-relaxed font-sans">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -816,8 +816,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
             {/* Tipos de Vínculos de Trabalho */}
             <div className="p-6 sm:p-8 rounded-3xl bg-zinc-950 text-white space-y-6">
               <div className="space-y-2">
-                <span className="font-mono text-[8.5px] text-brand uppercase tracking-widest font-black block">OPÇÕES DE PARCERIA // CONDIÇÕES CONTRATUAIS</span>
-                <h4 className="font-display font-black text-xl uppercase">Formatos de Contratação e Atuação Disponíveis</h4>
+                <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">OPÇÕES DE PARCERIA // CONDIÇÕES CONTRATUAIS</span>
+                <h4 className="font-display font-black text-xl">Formatos de Contratação e Atuação Disponíveis</h4>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans max-w-xl">
                   Estamos constantemente em busca das melhores mentes do mercado independente de sua preferência logística comercial de contratação:
                 </p>
@@ -831,11 +831,11 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                   { title: "Estágio de Criação", focus: "FORMAÇÃO OPERACIONAL", desc: "Para mentes promissoras acadêmicas dispostas a adotar nossa rigorosa cultura e metodologia de design e processos." }
                 ].map((bond, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2 text-left">
-                    <span className="font-mono text-[8.5px] text-brand border border-brand/15 bg-brand/5 px-2 py-0.5 rounded uppercase block w-max">
+                    <span className="font-sans text-xs text-brand border border-brand/15 bg-brand/5 px-2 py-0.5 rounded uppercase block w-max">
                       {bond.focus}
                     </span>
-                    <h5 className="text-white font-display font-bold text-xs uppercase">{bond.title}</h5>
-                    <p className="text-zinc-400 text-[11px] leading-relaxed font-sans">{bond.desc}</p>
+                    <h5 className="text-white font-display font-bold text-xs">{bond.title}</h5>
+                    <p className="text-zinc-400 text-xs leading-relaxed font-sans">{bond.desc}</p>
                   </div>
                 ))}
               </div>
@@ -844,8 +844,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
             {/* Etapas do Processo de Avaliação de Candidatos */}
             <div className="space-y-6 pt-6 border-t border-zinc-100">
               <div className="space-y-1">
-                <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-widest font-bold block">workflow seletivo // sem desvios</span>
-                <h4 className="font-display font-black text-xl text-zinc-900 uppercase">Como avaliamos e integramos novos talentos</h4>
+                <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest font-bold block">workflow seletivo // sem desvios</span>
+                <h4 className="font-display font-black text-xl text-zinc-900">Como avaliamos e integramos novos talentos</h4>
                 <p className="text-zinc-500 text-xs sm:text-sm font-sans leading-relaxed max-w-xl">
                   Nosso processo de recrutamento é transparente, rápido e focado em competência operacional técnica real:
                 </p>
@@ -861,8 +861,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                   <div key={sIdx} className="p-4 rounded-xl border border-zinc-100 bg-zinc-50/50 flex gap-4">
                     <div className="font-sans font-black text-zinc-300 text-2xl shrink-0 mt-0.5">{st.step}</div>
                     <div className="space-y-0.5 text-left">
-                      <h5 className="text-zinc-900 font-display font-bold text-xs uppercase tracking-tight">{st.title}</h5>
-                      <p className="text-zinc-500 text-[11px] leading-relaxed font-sans">{st.desc}</p>
+                      <h5 className="text-zinc-900 font-display font-bold text-xs tracking-tight">{st.title}</h5>
+                      <p className="text-zinc-500 text-xs leading-relaxed font-sans">{st.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -943,10 +943,10 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                   {/* Header text containing dynamic personalization */}
                   <div className="space-y-1 text-left">
-                    <span className="font-mono text-[9px] text-brand bg-black px-2 py-0.5 rounded font-black uppercase tracking-widest inline-block">
+                    <span className="tag08-meta text-xs text-brand bg-black px-2 py-0.5 rounded font-black uppercase tracking-widest inline-block">
                       ETAPA {currentStep} DE 3 " {currentStep === 1 ? "DADOS PESSOAIS" : currentStep === 2 ? "LINKS PROFISSIONAIS" : "CURRÍCULO & APRESENTAÇÃO"}
                     </span>
-                    <h2 className="font-display font-black text-2xl text-zinc-900 uppercase tracking-tight">
+                    <h2 className="font-display font-black text-2xl text-zinc-900 tracking-tight">
                       {currentStep === 1 ? "Identificação Primária" : currentStep === 2 ? "Presença na Web" : "Ficha & Conquistas"}
                     </h2>
                     <p className="text-zinc-500 text-xs">
@@ -978,7 +978,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                         className="space-y-4"
                       >
                         <div id="field-name" className="space-y-1.5 text-left">
-                          <label htmlFor="talent-name" className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
+                          <label htmlFor="talent-name" className="block text-xs uppercase tracking-widest font-bold text-zinc-500 tag08-meta">
                             Nome Completo *
                           </label>
                           <div className="relative">
@@ -994,12 +994,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                               }`}
                             />
                           </div>
-                          {errors.name && <span className="text-red-500 text-[10px] font-sans block mt-1">{errors.name}</span>}
+                          {errors.name && <span className="text-red-500 text-xs font-sans block mt-1">{errors.name}</span>}
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div id="field-email" className="space-y-1.5 text-left">
-                            <label htmlFor="talent-email" className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
+                            <label htmlFor="talent-email" className="block text-xs uppercase tracking-widest font-bold text-zinc-500 tag08-meta">
                               E-mail de Contato *
                             </label>
                             <div className="relative">
@@ -1015,11 +1015,11 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                                 }`}
                               />
                             </div>
-                            {errors.email && <span className="text-red-500 text-[10px] font-sans block mt-1">{errors.email}</span>}
+                            {errors.email && <span className="text-red-500 text-xs font-sans block mt-1">{errors.email}</span>}
                           </div>
 
                           <div id="field-phone" className="space-y-1.5 text-left">
-                            <label htmlFor="talent-phone" className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
+                            <label htmlFor="talent-phone" className="block text-xs uppercase tracking-widest font-bold text-zinc-500 tag08-meta">
                               WhatsApp de Contato *
                             </label>
                             <div className="relative">
@@ -1035,7 +1035,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                                 }`}
                               />
                             </div>
-                            {errors.phone && <span className="text-red-500 text-[10px] font-sans block mt-1">{errors.phone}</span>}
+                            {errors.phone && <span className="text-red-500 text-xs font-sans block mt-1">{errors.phone}</span>}
                           </div>
                         </div>
                       </motion.div>
@@ -1052,7 +1052,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                         className="space-y-4"
                       >
                         <div id="field-linkedin" className="space-y-1.5 text-left">
-                          <label htmlFor="talent-linkedin" className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
+                          <label htmlFor="talent-linkedin" className="block text-xs uppercase tracking-widest font-bold text-zinc-500 tag08-meta">
                             Perfil do LinkedIn *
                           </label>
                           <div className="relative">
@@ -1068,11 +1068,11 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                               }`}
                             />
                           </div>
-                          {errors.linkedin && <span className="text-red-500 text-[10px] font-sans block mt-1">{errors.linkedin}</span>}
+                          {errors.linkedin && <span className="text-red-500 text-xs font-sans block mt-1">{errors.linkedin}</span>}
                         </div>
 
                         <div className="space-y-1.5 text-left">
-                          <label htmlFor="talent-portfolio" className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
+                          <label htmlFor="talent-portfolio" className="block text-xs uppercase tracking-widest font-bold text-zinc-500 tag08-meta">
                             Link do Portfólio / GitHub (Opcional)
                           </label>
                           <div className="relative">
@@ -1086,7 +1086,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                               className="w-full bg-white border border-zinc-200 rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 font-sans"
                             />
                           </div>
-                          <p className="text-[10px] text-zinc-450 leading-tight">
+                          <p className="text-xs text-zinc-450 leading-tight">
                             Gostamos de analisar cases práticos. Recomendamos inserir seu portfólio para ganhar destaque preferencial na triagem.
                           </p>
                         </div>
@@ -1104,15 +1104,15 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                         className="space-y-4"
                       >
                         <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-left">
-                          <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-600">Currículo e evidências</p>
-                          <p className="mt-1 text-[11px] leading-relaxed text-zinc-500">
+                          <p className="text-xs tag08-meta font-bold uppercase tracking-widest text-zinc-600">Currículo e evidências</p>
+                          <p className="mt-1 text-xs leading-relaxed text-zinc-500">
                             Nesta etapa não recebemos arquivos. Inclua LinkedIn e portfólio no passo anterior para que a equipe avalie sua experiência com segurança.
                           </p>
                         </div>
 
                         {/* Miniature Pitch Letter */}
                         <div id="field-coverLetter" className="space-y-1.5 text-left">
-                          <label htmlFor="talent-cover-letter" className="block text-[9.5px] uppercase tracking-widest font-bold text-zinc-500 font-mono">
+                          <label htmlFor="talent-cover-letter" className="block text-xs uppercase tracking-widest font-bold text-zinc-500 tag08-meta">
                             Diferencial &amp; Foco em Resultados *
                           </label>
                           <textarea
@@ -1125,9 +1125,9 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                               errors.coverLetter ? "border-red-500" : "border-zinc-200"
                             }`}
                           />
-                          {errors.coverLetter && <span className="text-red-500 text-[10px] font-sans block mt-1">{errors.coverLetter}</span>}
+                          {errors.coverLetter && <span className="text-red-500 text-xs font-sans block mt-1">{errors.coverLetter}</span>}
                         </div>
-                        <label className="flex items-start gap-2 text-left text-[10px] text-zinc-500 cursor-pointer">
+                        <label className="flex items-start gap-2 text-left text-xs text-zinc-500 cursor-pointer">
                           <input
                             type="checkbox"
                             checked={consent}
@@ -1136,7 +1136,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                           />
                           <span>Autorizo o uso destes dados para a seleção e o Banco de Talentos da TAG08.</span>
                         </label>
-                        {submitError ? <p role="alert" className="text-[10px] text-red-500">{submitError}</p> : null}
+                        {submitError ? <p role="alert" className="text-xs text-red-500">{submitError}</p> : null}
                       </motion.div>
                     )}
 
@@ -1147,7 +1147,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
               {/* Step Navigation Controls bottom footer */}
               <div className="pt-6 border-t border-zinc-200/50 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p className="text-[10px] text-zinc-400 leading-tight flex items-center gap-1.5 self-start sm:self-center">
+                <p className="text-xs text-zinc-400 leading-tight flex items-center gap-1.5 self-start sm:self-center">
                   <Lock className="w-3.5 h-3.5 text-zinc-350 shrink-0" /> Gestão privativa de dados e cookies locais.
                 </p>
                 
@@ -1156,7 +1156,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                     <button
                       type="button"
                       onClick={handlePrevStep}
-                      className="px-5 py-3 border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-700 font-mono font-bold text-[10.5px] uppercase tracking-wider rounded-xl transition-all cursor-pointer flex items-center gap-1.5"
+                      className="px-5 py-3 border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-700 font-sans font-bold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer flex items-center gap-1.5"
                     >
                       Voltar
                     </button>
@@ -1166,7 +1166,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                     <button
                       type="button"
                       onClick={handleNextStep}
-                      className="w-full sm:w-auto px-6.5 py-3 bg-zinc-950 text-white font-mono font-bold text-[10.5px] uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                      className="w-full sm:w-auto px-6.5 py-3 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-all cursor-pointer flex items-center justify-center gap-1.5"
                     >
                       Continuar <ArrowRight className="w-3.5 h-3.5 text-brand" />
                     </button>
@@ -1175,7 +1175,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       type="button"
                       onClick={handleSubmit}
                       disabled={submitting}
-                      className="w-full sm:w-auto px-6.5 py-3 bg-brand hover:bg-brand-dark text-black font-mono font-bold text-[10.5px] uppercase tracking-widest rounded-xl transition-all shadow-[0_4px_12px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer flex items-center justify-center gap-1.5"
+                      className="w-full sm:w-auto px-6.5 py-3 bg-brand hover:bg-brand-dark text-black font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-[0_4px_12px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer flex items-center justify-center gap-1.5"
                     >
                       {submitting ? "Enviando..." : "Enviar Candidatura"} <Send className="w-3.5 h-3.5 shrink-0" />
                     </button>
@@ -1195,7 +1195,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                     <div className="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center mb-5 border border-green-150">
                       <CheckCircle2 className="w-8 h-8 animate-bounce" />
                     </div>
-                    <h3 className="font-display font-black text-xl text-zinc-900 uppercase tracking-tight">
+                    <h3 className="font-display font-black text-xl text-zinc-900 tracking-tight">
                       Candidatura Recebida!
                     </h3>
                     <p className="text-zinc-500 text-xs sm:text-sm mt-2 max-w-sm leading-relaxed">
@@ -1205,13 +1205,13 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                     <div className="mt-6 flex flex-wrap justify-center gap-3">
                       <button
                         onClick={() => setSubmitSuccess(false)}
-                        className="px-4.5 py-2.5 bg-zinc-950 text-white font-mono font-bold text-[10px] uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-colors cursor-pointer"
+                        className="px-4.5 py-2.5 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-colors cursor-pointer"
                       >
                         Enviar Outra Ficha
                       </button>
                       <button
                         onClick={() => onNavigate("/")}
-                        className="px-4.5 py-2.5 bg-zinc-100 text-zinc-800 border border-zinc-200 font-mono text-[10px] uppercase tracking-widest rounded-xl hover:bg-zinc-200 transition-all cursor-pointer"
+                        className="px-4.5 py-2.5 bg-zinc-100 text-zinc-800 border border-zinc-200 font-sans text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-200 transition-all cursor-pointer"
                       >
                         Página Inicial
                       </button>
@@ -1224,12 +1224,12 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
             {/* Application privacy notice */}
             <div className="lg:col-span-5 space-y-5">
               <div className="bg-zinc-50 border border-zinc-100 p-5 sm:p-6.5 rounded-3xl space-y-4">
-                <div className="flex items-center gap-2 font-mono text-[9px] text-brand bg-black px-2 py-0.5 rounded font-bold uppercase tracking-wider self-start inline-flex">
+                <div className="flex items-center gap-2 tag08-meta text-xs text-brand bg-black px-2 py-0.5 rounded font-bold uppercase tracking-wider self-start inline-flex">
                   <Terminal className="w-3.5 h-3.5 animate-pulse" />
                   Envio protegido
                 </div>
                 
-                <h3 className="font-display font-black text-lg text-zinc-900 uppercase tracking-tight leading-none">
+                <h3 className="font-display font-black text-lg text-zinc-900 tracking-tight leading-none">
                   Como funciona a candidatura
                 </h3>
                 <p className="text-zinc-500 text-xs leading-relaxed">
@@ -1238,22 +1238,22 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                 <div className="space-y-2.5 pt-1 border border-dashed border-zinc-200 rounded-2xl p-5 text-left">
                   <p className="text-zinc-700 text-xs font-semibold">1. Recebimento e confirmação</p>
-                  <p className="text-zinc-500 text-[11px] leading-relaxed">A candidatura é registrada antes da confirmação exibida na tela.</p>
+                  <p className="text-zinc-500 text-xs leading-relaxed">A candidatura é registrada antes da confirmação exibida na tela.</p>
                   <p className="text-zinc-700 text-xs font-semibold">2. Triagem interna</p>
-                  <p className="text-zinc-500 text-[11px] leading-relaxed">A equipe analisa o perfil no Banco de Talentos e entra em contato pelos canais informados, se houver aderência.</p>
+                  <p className="text-zinc-500 text-xs leading-relaxed">A equipe analisa o perfil no Banco de Talentos e entra em contato pelos canais informados, se houver aderência.</p>
                 </div>
               </div>
 
               {/* Cultural Banner */}
               <div className="bg-zinc-950 text-white p-6.5 rounded-3xl text-left space-y-3.5 shadow-md relative overflow-hidden">
                 <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
-                <div className="inline-flex px-2 py-0.5 bg-brand/10 text-brand font-mono text-[9px] font-black uppercase rounded-md">
+                <div className="inline-flex px-2 py-0.5 bg-brand/10 text-brand font-sans text-xs font-black uppercase rounded-md">
                   CULTURA TAG08
                 </div>
-                <h4 className="font-display font-bold text-white uppercase text-xs sm:text-sm">
+                <h4 className="font-display font-bold text-white text-xs sm:text-sm">
                   Pacto de Alinhamento de Valor
                 </h4>
-                <p className="text-zinc-400 text-[11.5px] leading-relaxed font-sans">
+                <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                   Desenvolvemos pessoas que gostam de processos independentes com metas claras de performance e transparência. Se você procura um lugar sem drama operacional com alto ticket B2B, faça sua candidatura.
                 </p>
               </div>

@@ -152,3 +152,85 @@ test.describe("acessibilidade das jornadas criticas", () => {
     });
   }
 });
+
+test.describe("mapa de solucoes da Home", () => {
+  const getCardBoxes = async (page: Page) => {
+    await page.goto("/#servicos-principais", { waitUntil: "domcontentloaded" });
+    const cards = page.getByTestId("solution-map-card");
+    await expect(cards).toHaveCount(7);
+    const boxes = await cards.evaluateAll((elements) =>
+      elements.map((element) => {
+        const { x, y, width, height } = element.getBoundingClientRect();
+        return { x, y, width, height };
+      })
+    );
+
+    expect(boxes.every((box) => box.width > 0 && box.height > 0)).toBeTruthy();
+    return boxes;
+  };
+
+  test("fecha linhas proporcionais no desktop", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    const cards = await getCardBoxes(page);
+
+    // 6+3+3, then 3+6+3, followed by the full-width final moment.
+    expect(Math.abs(cards[0].y - cards[1].y)).toBeLessThan(2);
+    expect(Math.abs(cards[1].y - cards[2].y)).toBeLessThan(2);
+    expect(Math.abs(cards[3].y - cards[4].y)).toBeLessThan(2);
+    expect(Math.abs(cards[4].y - cards[5].y)).toBeLessThan(2);
+    expect(cards[6].y).toBeGreaterThan(cards[5].y);
+    expect(cards[6].width).toBeGreaterThan(cards[0].width);
+    expect(Math.abs(cards[0].height - cards[1].height)).toBeLessThan(2);
+    expect(Math.abs(cards[3].height - cards[4].height)).toBeLessThan(2);
+  });
+
+  test("mantem pares equilibrados no tablet", async ({ page }) => {
+    await page.setViewportSize({ width: 768, height: 1024 });
+    const cards = await getCardBoxes(page);
+
+    for (const [left, right] of [[0, 1], [2, 3], [4, 5]]) {
+      expect(Math.abs(cards[left].y - cards[right].y)).toBeLessThan(2);
+      expect(Math.abs(cards[left].height - cards[right].height)).toBeLessThan(2);
+    }
+    expect(cards[6].width).toBeGreaterThan(cards[0].width * 1.9);
+  });
+
+  test("empilha os sete momentos sem deslocamento no mobile", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    const cards = await getCardBoxes(page);
+
+    for (let index = 1; index < cards.length; index += 1) {
+      expect(cards[index].y).toBeGreaterThan(cards[index - 1].y);
+      expect(Math.abs(cards[index].x - cards[0].x)).toBeLessThan(2);
+      expect(Math.abs(cards[index].width - cards[0].width)).toBeLessThan(2);
+    }
+  });
+});
+
+test.describe("palco editorial da Hero", () => {
+  test("reage a luz no desktop sem deslocar a composicao", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+
+    const visual = page.getByTestId("hero-editorial-stage");
+    await expect(visual).toBeVisible();
+    const stageBox = await visual.boundingBox();
+    if (!stageBox) throw new Error("O palco editorial precisa ter dimensoes renderizadas.");
+    expect(stageBox.width).toBeGreaterThan(900);
+    expect(stageBox.height).toBeGreaterThan(400);
+
+    await page.mouse.move(stageBox.x + 20, stageBox.y + 20);
+    await expect.poll(() => visual.evaluate((element) =>
+      element.style.getPropertyValue("--hero-stage-light-x")
+    )).not.toBe("72%");
+  });
+
+  test("respeita preferencia de reducao de movimento", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+
+    const visual = page.getByTestId("hero-editorial-stage");
+    await expect(visual).toBeVisible();
+    await expect(visual.locator(".hero-editorial-stage__drift")).toHaveCSS("animation-name", "none");
+  });
+});

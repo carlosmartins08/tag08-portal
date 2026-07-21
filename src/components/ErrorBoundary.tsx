@@ -21,7 +21,7 @@ function DefaultErrorFallback({ error, onRetry }: { error: Error; onRetry: () =>
           </div>
           <div className="space-y-3">
             <div>
-              <p className="text-xs font-mono uppercase tracking-[0.24em] text-brand/80">Falha de renderização</p>
+              <p className="text-xs tag08-meta uppercase tracking-[0.24em] text-brand/80">Falha de renderização</p>
               <h2 className="mt-2 text-2xl font-display font-bold text-white">A página encontrou um erro inesperado.</h2>
             </div>
             <p className="text-sm leading-relaxed text-zinc-300">
@@ -31,7 +31,7 @@ function DefaultErrorFallback({ error, onRetry }: { error: Error; onRetry: () =>
         </div>
 
         <div className="mt-6 rounded-2xl border border-white/5 bg-black/20 p-4">
-          <p className="text-[10px] font-mono uppercase tracking-[0.22em] text-zinc-500">Detalhe técnico</p>
+          <p className="text-xs tag08-meta uppercase tracking-[0.22em] text-zinc-500">Detalhe técnico</p>
           <p className="mt-2 text-sm text-zinc-200 break-words">{error.message}</p>
         </div>
 
