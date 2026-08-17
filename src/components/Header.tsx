@@ -16,10 +16,10 @@ interface HeaderProps {
 
 export default function Header({ currentPage, onNavigate, language, onLanguageChange }: HeaderProps) {
   const copy = i18n[language].header;
-  const languageOptions: Array<{ code: UiLanguage; label: string; name: string; available: boolean }> = [
-    { code: "pt", label: "PT", name: "Português", available: true },
-    { code: "en", label: "EN", name: "English", available: false },
-    { code: "es", label: "ES", name: "Español", available: false }
+  const languageOptions: Array<{ code: UiLanguage; label: string; name: string }> = [
+    { code: "pt", label: "PT", name: "Português" },
+    { code: "en", label: "EN", name: "English" },
+    { code: "es", label: "ES", name: "Español" }
   ];
   const serviceIcons = [Award, MessageSquare, Compass, Settings, Video, Briefcase, Users];
   const localizedServices = copy.servicePages.map((svc, index) => ({
@@ -74,7 +74,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
   };
 
   const handleLanguageSelection = (nextLanguage: UiLanguage, surface: string) => {
-    if (nextLanguage === language || !languageOptions.find((option) => option.code === nextLanguage)?.available) return;
+    if (nextLanguage === language) return;
 
     trackCtaClick({
       cta_name: `language_${nextLanguage}`,
@@ -274,13 +274,12 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
               <button
                 key={option.code}
                 type="button"
-                aria-label={option.available ? `Navegar em ${option.name}` : `${option.name} em revisão editorial`}
+                aria-label={`Navegar em ${option.name}`}
                 aria-pressed={language === option.code}
-                disabled={!option.available}
                 onClick={() => handleLanguageSelection(option.code, "header-language")}
-                title={option.available ? option.name : `${option.name}: conteúdo em revisão editorial`}
+                title={option.name}
                 className={`rounded-md px-2.5 py-1.5 font-sans text-xs font-black tracking-wider transition-colors ${
-                  language === option.code ? "bg-brand text-black" : option.available ? "text-zinc-400 hover:text-white" : "cursor-not-allowed text-zinc-700"
+                  language === option.code ? "bg-brand text-black" : "text-zinc-400 hover:text-white"
                 }`}
               >
                 {option.label}
@@ -358,16 +357,13 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                       key={option.code}
                       type="button"
                       aria-pressed={language === option.code}
-                      aria-label={option.available ? `Navegar em ${option.name}` : `${option.name} em revisão editorial`}
-                      disabled={!option.available}
+                      aria-label={`Navegar em ${option.name}`}
                       onClick={() => handleLanguageSelection(option.code, "mobile-language")}
-                      title={option.available ? option.name : `${option.name}: conteúdo em revisão editorial`}
+                      title={option.name}
                       className={`rounded-lg border px-3 py-2.5 text-xs font-sans font-bold transition-colors ${
                         language === option.code
                           ? "border-brand bg-brand text-black"
-                          : option.available
-                            ? "border-white/[0.07] bg-white/[0.02] text-zinc-400 hover:text-white"
-                            : "cursor-not-allowed border-white/[0.03] bg-white/[0.01] text-zinc-700"
+                          : "border-white/[0.07] bg-white/[0.02] text-zinc-400 hover:text-white"
                       }`}
                     >
                       {option.label}

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import ErrorBoundary from "../../components/ErrorBoundary";
 import { canonicalizeRoute, getLocalizedPath, getRouteByPath, type RouteLocale } from "../../config/routeRegistry";
+import LocalizedRoutePage from "./LocalizedRoutePage";
 
 const Home = dynamic(() => import("./pages/Home"));
 const Sobre = dynamic(() => import("./pages/Sobre"));
@@ -28,6 +29,17 @@ export default function RouteContent({ path, locale }: { path: string; locale: R
   const router = useRouter();
   const navigate = (targetPath: string) => router.push(getLocalizedPath(canonicalizeRoute(targetPath), locale));
   const route = getRouteByPath(path);
+
+  // Foreign-language routes use editorially localized content instead of
+  // rendering the Portuguese component beneath translated navigation/metadata.
+  // The onboarding wizard already owns its complete PT/EN/ES interaction copy.
+  if (locale !== "pt" && route && route.key !== "cliente-onboarding") {
+    return (
+      <ErrorBoundary boundaryName={`route:${path}:${locale}`}>
+        <LocalizedRoutePage routeKey={route.key} locale={locale} onNavigate={navigate} />
+      </ErrorBoundary>
+    );
+  }
 
   let page = null;
   if (route?.routeCategory === "case-study") page = <CaseStudyDetail caseId={path.replace("/casos/", "")} onNavigate={navigate} />;

@@ -35,10 +35,15 @@ Object.defineProperty(globalThis, "CustomEvent", {
 const { COOKIE_CONSENT_EVENT, grantMarketingConsent, readCookiePreferences, saveCookiePreferences } = await import("../src/lib/cookieConsent");
 
 test("cookie consent persists categories and only grants marketing explicitly", () => {
-  saveCookiePreferences({ essential: true, performance: true, marketing: false });
-  assert.deepEqual(readCookiePreferences(), { essential: true, performance: true, marketing: false });
+  saveCookiePreferences({ version: 2, essential: true, performance: true, marketing: false });
+  assert.deepEqual(readCookiePreferences(), { version: 2, essential: true, performance: true, marketing: false });
   assert.equal(events.at(-1)?.type, COOKIE_CONSENT_EVENT);
 
   grantMarketingConsent();
-  assert.deepEqual(readCookiePreferences(), { essential: true, performance: true, marketing: true });
+  assert.deepEqual(readCookiePreferences(), { version: 2, essential: true, performance: true, marketing: true });
+});
+
+test("legacy consent is invalidated when consent categories are versioned", () => {
+  storage.set("tag08_lgpd_consent", JSON.stringify({ essential: true, performance: true, marketing: true }));
+  assert.equal(readCookiePreferences(), null);
 });

@@ -30,20 +30,23 @@ const sitemap = await (await get("/sitemap.xml")).text();
 const urls = [...sitemap.matchAll(/<loc>(https:\/\/tag08\.com\.br[^<]*)<\/loc>/g)].map((match) => match[1]);
 assert.ok(urls.length > 0, "Sitemap has no canonical URLs");
 assert.equal(new Set(urls).size, urls.length, "Sitemap contains duplicate URLs");
-assert.ok(urls.every((url) => !/\/en(?:\/|$)|\/es(?:\/|$)/.test(new URL(url).pathname)), "Unreviewed locales must not appear in sitemap");
+assert.ok(urls.some((url) => /^\/en(?:\/|$)/.test(new URL(url).pathname)), "English routes must appear in sitemap");
+assert.ok(urls.some((url) => /^\/es(?:\/|$)/.test(new URL(url).pathname)), "Spanish routes must appear in sitemap");
 
 for (const canonicalUrl of urls) {
   const canonical = new URL(canonicalUrl);
   const response = await get(canonical.pathname);
   const html = await response.text();
+  const localizedPath = canonical.pathname.replace(/^\/(?:en|es)(?=\/|$)/, "") || "/";
   const expectedAlternates = {
-    "pt-BR": toLocalizedUrl(canonical.pathname, "pt-BR"),
-    en: toLocalizedUrl(canonical.pathname, "en"),
-    "es-ES": toLocalizedUrl(canonical.pathname, "es-ES"),
-    "x-default": toLocalizedUrl(canonical.pathname, "x-default")
+    "pt-BR": toLocalizedUrl(localizedPath, "pt-BR"),
+    en: toLocalizedUrl(localizedPath, "en"),
+    "es-ES": toLocalizedUrl(localizedPath, "es-ES"),
+    "x-default": toLocalizedUrl(localizedPath, "x-default")
   };
 
-  assert.match(html, /<html lang="pt-BR">/i, `${canonical.pathname} is missing pt-BR lang`);
+  const expectedLang = canonical.pathname === "/en" || canonical.pathname.startsWith("/en/") ? "en" : canonical.pathname === "/es" || canonical.pathname.startsWith("/es/") ? "es-ES" : "pt-BR";
+  assert.match(html, new RegExp(`<html lang="${expectedLang}">`, "i"), `${canonical.pathname} is missing ${expectedLang} lang`);
   assert.match(html, /<title>[^<]+<\/title>/i, `${canonical.pathname} is missing title`);
   assert.match(html, /<meta name="description" content="[^"]+"/i, `${canonical.pathname} is missing description`);
   assert.match(html, /<meta property="og:title" content="[^"]+"/i, `${canonical.pathname} is missing Open Graph title`);

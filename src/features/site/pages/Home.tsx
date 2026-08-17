@@ -985,7 +985,7 @@ export default function Home({ onNavigate }: HomeProps) {
             </div>
 
             {/* The image is now the stage itself; this column preserves the editorial reading space. */}
-            <div className="hidden lg:block lg:col-span-4" aria-hidden="true" />
+            <div className="hidden lg:order-2 lg:block lg:col-span-4" aria-hidden="true" />
 
             {/* RIGHT COLUMN: BRAND SOCIAL AUDIENCE AND BUSINESS AREA CATEGORY CAPSULES (ROCK PILLS LOOKALIKES) */}
             <div className="lg:col-span-3 flex flex-col justify-between space-y-8 text-left lg:text-right order-3 z-20">

@@ -3,8 +3,8 @@ import { CASE_STUDIES } from "../data";
 export const ROUTE_LOCALES = ["pt", "en", "es"] as const;
 export type RouteLocale = (typeof ROUTE_LOCALES)[number];
 
-// EN and ES remain available for review, but only reviewed locales may be indexed.
-export const INDEXABLE_LOCALES: readonly RouteLocale[] = ["pt"];
+// Every public route has localized editorial content in PT, EN and ES.
+export const INDEXABLE_LOCALES: readonly RouteLocale[] = ROUTE_LOCALES;
 
 export const isLocaleIndexable = (locale: RouteLocale): boolean => INDEXABLE_LOCALES.includes(locale);
 

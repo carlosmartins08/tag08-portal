@@ -12,7 +12,7 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 import { canonicalizeRoute, getLocalizedPath, getRouteByPath, type RouteLocale } from "../../config/routeRegistry";
 import { i18n, type UiLanguage } from "../../i18n/siteI18n";
 import { safeStorage } from "../../utils/storage";
-import { initializeGoogleAnalytics, trackEngagement, trackPageView, trackScrollDepth, trackWebVital, updateGoogleAnalyticsConsent } from "../../lib/analytics";
+import { initializeTagManager, trackEngagement, trackPageView, trackScrollDepth, trackWebVital, updateGoogleAnalyticsConsent } from "../../lib/analytics";
 import { COOKIE_CONSENT_EVENT, readCookiePreferences, type CookiePreferences } from "../../lib/cookieConsent";
 import { flushFormQueue } from "../../lib/formQueue";
 
@@ -45,11 +45,11 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
 
   useEffect(() => {
     const syncAnalyticsConsent = (preferences: CookiePreferences | null) => {
-      const enabled = preferences?.performance === true;
+      const enabled = preferences?.performance === true || preferences?.marketing === true;
       setAnalyticsEnabled(enabled);
-      updateGoogleAnalyticsConsent(enabled);
+      updateGoogleAnalyticsConsent();
       if (enabled) {
-        initializeGoogleAnalytics();
+        initializeTagManager();
       }
     };
 

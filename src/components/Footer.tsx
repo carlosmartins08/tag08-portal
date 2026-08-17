@@ -280,9 +280,10 @@ export default function Footer({ onNavigate, language }: FooterProps) {
   // LGPD & Cookie Privacy States
   const [showCookieBanner, setShowCookieBanner] = useState<boolean>(false);
   const [cookiePreferences, setCookiePreferences] = useState<CookiePreferences>({
+    version: 2,
     essential: true,
-    performance: true,
-    marketing: true
+    performance: false,
+    marketing: false
   });
   const [customizeCookies, setCustomizeCookies] = useState<boolean>(false);
 
@@ -330,14 +331,14 @@ export default function Footer({ onNavigate, language }: FooterProps) {
   }, []);
 
   const handleAcceptAllCookies = () => {
-    const preferences: CookiePreferences = { essential: true, performance: true, marketing: true };
+    const preferences: CookiePreferences = { version: 2, essential: true, performance: true, marketing: true };
     setCookiePreferences(preferences);
     saveCookiePreferences(preferences);
     setShowCookieBanner(false);
   };
 
   const handleRejectCookies = () => {
-    const preferences: CookiePreferences = { essential: true, performance: false, marketing: false };
+    const preferences: CookiePreferences = { version: 2, essential: true, performance: false, marketing: false };
     setCookiePreferences(preferences);
     saveCookiePreferences(preferences);
     setShowCookieBanner(false);
