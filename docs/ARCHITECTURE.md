@@ -8,6 +8,9 @@
 - Alias sao redirecionamentos permanentes. O registry continua sendo a unica fonte de verdade para canonicos, alias, casos e sitemap.
 - Metadata, canonical, hreflang, Open Graph e JSON-LD sao gerados no servidor em `src/lib/seo.ts`.
 - `src/features/site/SiteShell.tsx` contem apenas a experiencia cliente: navegacao, animacao, analytics, Lenis, formularios e normalizacao temporaria de hashes legados.
+- Publicacao multilingue e controlada por rota em `routeRegistry.ts`. Uma lingua so e publicada quando a pagina completa, seus fluxos de conversao e a revisao editorial existem naquele idioma. PT-BR e a lingua segura por padrao; o onboarding e a excecao atual com PT, EN e ES completos.
+- URLs de idiomas ainda nao publicados redirecionam para a pagina PT-BR canonica. Isso elimina paginas resumidas, evita conteudo enganoso e protege a paridade funcional.
+- `src/i18n/localizationReadiness.ts` e o segundo gate: registra o componente-fonte, o estado editorial e uma assinatura SHA-256. Uma mudanca no conteudo-fonte invalida a revisao EN/ES no CI ate que a traducoes sejam atualizadas e aprovadas.
 
 ## API e contratos
 

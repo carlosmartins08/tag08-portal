@@ -1,6 +1,6 @@
 import { CASE_STUDIES } from "../data";
 import { PRIMARY_SITE_DOMAIN, TAG08_OFFICIAL_CHANNELS, TAG08_OFFICIAL_CONTACT, TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
-import { getLocalizedPath, type RouteDefinition, type RouteLocale } from "../config/routeRegistry";
+import { getLocalizedPath, getPublishedLocales, getRouteByPath, type RouteDefinition, type RouteLocale } from "../config/routeRegistry";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
 
 const localeToUiLanguage: Record<RouteLocale, UiLanguage> = {
@@ -26,12 +26,19 @@ export const getUiLanguage = (locale: RouteLocale): UiLanguage => localeToUiLang
 export const getAbsoluteLocalizedUrl = (path: string, locale: RouteLocale): string =>
   `${PRIMARY_SITE_DOMAIN}${getLocalizedPath(path, locale)}`;
 
-export const getAlternates = (path: string) => ({
-  "pt-BR": getAbsoluteLocalizedUrl(path, "pt"),
-  en: getAbsoluteLocalizedUrl(path, "en"),
-  "es-ES": getAbsoluteLocalizedUrl(path, "es"),
-  "x-default": getAbsoluteLocalizedUrl(path, "pt")
-});
+export const getAlternates = (path: string) => {
+  const route = getRouteByPath(path);
+  const locales = route ? getPublishedLocales(route) : ["pt"] as const;
+  const alternates: Record<string, string> = {
+    "x-default": getAbsoluteLocalizedUrl(path, "pt")
+  };
+
+  locales.forEach((locale) => {
+    alternates[localeToHreflang[locale]] = getAbsoluteLocalizedUrl(path, locale);
+  });
+
+  return alternates;
+};
 
 export const getRouteSeo = (route: RouteDefinition, path: string, locale: RouteLocale) => {
   const language = getUiLanguage(locale);

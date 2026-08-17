@@ -1,10 +1,16 @@
 import { CASE_STUDIES } from "../data";
+import { isLocaleTranslationReady } from "../i18n/localizationReadiness";
 
 export const ROUTE_LOCALES = ["pt", "en", "es"] as const;
 export type RouteLocale = (typeof ROUTE_LOCALES)[number];
 
-// Every public route has localized editorial content in PT, EN and ES.
-export const INDEXABLE_LOCALES: readonly RouteLocale[] = ROUTE_LOCALES;
+// Supported URL locales. Publication is decided per route below.
+/**
+ * A locale is publishable only after the complete page and its conversion flows
+ * have been reviewed in that language. This prevents a translated shell or a
+ * shortened landing page from being indexed as if it were an equivalent page.
+ */
+export const INDEXABLE_LOCALES: readonly RouteLocale[] = ["pt"];
 
 export const isLocaleIndexable = (locale: RouteLocale): boolean => INDEXABLE_LOCALES.includes(locale);
 
@@ -47,6 +53,8 @@ export interface RouteDefinition {
   description: string;
   isServicePage?: boolean;
   dynamic?: boolean;
+  /** Locales with complete, reviewed page content. Defaults to Portuguese. */
+  publishedLocales?: readonly RouteLocale[];
 }
 
 export const routeRegistry: RouteDefinition[] = [
@@ -229,6 +237,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "monthly",
     priority: "0.4",
     title: "Assistente de Onboarding | TAG08",
+    // The onboarding flow owns and maintains complete PT, EN and ES copy.
+    publishedLocales: ROUTE_LOCALES,
     description: "Organize o início de seu projeto de forma leve, fluida e estratégica de forma rápida e conversacional."
   },
   {
@@ -383,6 +393,12 @@ export const getRouteByPath = (path: string): RouteDefinition | undefined => {
   return routeRegistry.find((route) => matchesDynamicRoute(normalizedPath, route));
 };
 
+export const getPublishedLocales = (route: RouteDefinition): readonly RouteLocale[] =>
+  (route.publishedLocales ?? INDEXABLE_LOCALES).filter((locale) => isLocaleTranslationReady(route.key, locale));
+
+export const isRouteLocalePublished = (route: RouteDefinition, locale: RouteLocale): boolean =>
+  getPublishedLocales(route).includes(locale);
+
 export const publicRoutePaths = routeRegistry.flatMap((route) => {
   if (!route.indexable) {
     return [];
@@ -412,12 +428,15 @@ export const staticRouteSegments = () => {
   const aliases = Object.keys(legacyAliases);
   const allPaths = Array.from(new Set([...canonicalPaths, ...aliases]));
 
-  return ROUTE_LOCALES.flatMap((locale) =>
-    allPaths.map((path) => {
+  return allPaths.flatMap((path) => {
+    const route = getRouteByPath(path);
+    if (!route) return [];
+
+    return getPublishedLocales(route).map((locale) => {
       const localizedPath = getLocalizedPath(path, locale);
       return localizedPath === "/" ? [] : localizedPath.slice(1).split("/");
-    })
-  );
+    });
+  });
 };
 
 export const indexedRoutePaths = routeRegistry.flatMap((route) => {

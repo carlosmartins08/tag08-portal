@@ -1,5 +1,14 @@
 # CHANGELOG - TAG08
 
+## 2026-08-17
+
+- Adicionada a matriz de prontidao de localizacao: idiomas estrangeiros publicados precisam de revisao aprovada vinculada a assinatura do conteudo-fonte.
+- Removida a pagina resumida que era apresentada como equivalente em EN/ES.
+- Adicionado controle de publicacao por rota e idioma em `routeRegistry.ts`.
+- URLs de idiomas sem pagina integralmente localizada agora retornam para o canonico PT-BR; sitemap, `hreflang` e indexacao respeitam a mesma regra.
+- Mantido o onboarding como fluxo multilíngue publicado, pois ele possui copia e interacao completas nos tres idiomas.
+- Adicionados testes de regressao para impedir o retorno de fallback resumido e a exposicao de idiomas nao aprovados.
+
 ## 2026-07-09
 
 - Criado `docs/AGENT_ROUTER.md` para decidir o agente principal antes da escolha de skill.

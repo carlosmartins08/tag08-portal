@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { ChevronDown, Menu, X, ArrowUpRight, MessageSquare, Briefcase, Compass, Settings, Users, Mail, Award, Activity, Video } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
+import { getRouteByPath, isRouteLocalePublished } from "../config/routeRegistry";
 import { TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
 import { trackCtaClick, trackOutboundClick } from "../lib/analytics";
 import CountryFlag from "./CountryFlag";
@@ -21,6 +22,9 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
     { code: "en", label: "EN", name: "English" },
     { code: "es", label: "ES", name: "Español" }
   ];
+  const currentRoute = getRouteByPath(currentPage);
+  const isLanguageAvailable = (candidate: UiLanguage) =>
+    !currentRoute || isRouteLocalePublished(currentRoute, candidate);
   const serviceIcons = [Award, MessageSquare, Compass, Settings, Video, Briefcase, Users];
   const localizedServices = copy.servicePages.map((svc, index) => ({
     ...svc,
@@ -74,7 +78,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
   };
 
   const handleLanguageSelection = (nextLanguage: UiLanguage, surface: string) => {
-    if (nextLanguage === language) return;
+    if (nextLanguage === language || !isLanguageAvailable(nextLanguage)) return;
 
     trackCtaClick({
       cta_name: `language_${nextLanguage}`,
@@ -276,10 +280,11 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                 type="button"
                 aria-label={`Navegar em ${option.name}`}
                 aria-pressed={language === option.code}
+                disabled={!isLanguageAvailable(option.code)}
                 onClick={() => handleLanguageSelection(option.code, "header-language")}
                 title={option.name}
                 className={`rounded-md px-2.5 py-1.5 font-sans text-xs font-black tracking-wider transition-colors ${
-                  language === option.code ? "bg-brand text-black" : "text-zinc-400 hover:text-white"
+                  language === option.code ? "bg-brand text-black" : isLanguageAvailable(option.code) ? "text-zinc-400 hover:text-white" : "cursor-not-allowed text-zinc-600 opacity-60"
                 }`}
               >
                 {option.label}
@@ -358,12 +363,15 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                       type="button"
                       aria-pressed={language === option.code}
                       aria-label={`Navegar em ${option.name}`}
+                      disabled={!isLanguageAvailable(option.code)}
                       onClick={() => handleLanguageSelection(option.code, "mobile-language")}
                       title={option.name}
                       className={`rounded-lg border px-3 py-2.5 text-xs font-sans font-bold transition-colors ${
                         language === option.code
                           ? "border-brand bg-brand text-black"
-                          : "border-white/[0.07] bg-white/[0.02] text-zinc-400 hover:text-white"
+                          : isLanguageAvailable(option.code)
+                            ? "border-white/[0.07] bg-white/[0.02] text-zinc-400 hover:text-white"
+                            : "cursor-not-allowed border-white/[0.04] bg-white/[0.01] text-zinc-600 opacity-60"
                       }`}
                     >
                       {option.label}

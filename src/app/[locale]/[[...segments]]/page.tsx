@@ -6,7 +6,7 @@ import {
   canonicalizeRoute,
   getLocalizedPath,
   getRouteByPath,
-  isLocaleIndexable,
+  isRouteLocalePublished,
   resolveLocalizedPath,
   staticRouteSegments,
   ROUTE_LOCALES,
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: RoutePageProps): Promise<Meta
       canonical: canonicalUrl,
       languages: getAlternates(canonicalPath)
     },
-    robots: route.indexable && isLocaleIndexable(locale) ? { index: true, follow: true } : { index: false, follow: true },
+    robots: route.indexable && isRouteLocalePublished(route, locale) ? { index: true, follow: true } : { index: false, follow: true },
     openGraph: {
       title: seo.title,
       description: seo.description,
@@ -90,6 +90,13 @@ export default async function RoutePage({ params }: RoutePageProps) {
 
   if (canonicalPath !== path) {
     permanentRedirect(getLocalizedPath(canonicalPath, locale as RouteLocale));
+  }
+
+  // Do not serve a shortened substitute under a language URL. A non-published
+  // locale returns visitors to the canonical Portuguese page until the complete
+  // translation (including interactions and legal copy) is approved.
+  if (!isRouteLocalePublished(route, locale)) {
+    permanentRedirect(getLocalizedPath(canonicalPath, "pt"));
   }
 
   const organizationSchema = buildOrganizationSchema();
