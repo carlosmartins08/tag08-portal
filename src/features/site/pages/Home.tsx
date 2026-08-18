@@ -4,10 +4,12 @@ import Image from "next/image";
 import { SERVICES, PLANS } from "../../../data";
 import { motion, AnimatePresence } from "motion/react";
 import { TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_YOUTUBE_URL, buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
-import { getVideoDescriptionPreview, type OfficialContentApiResponse } from "../../../lib/officialContent";
+import { getVideoDescriptionPreview, type OfficialContentApiResponse, type OfficialGoogleReview, type OfficialYouTubeVideo } from "../../../lib/officialContent";
 import { trackOutboundClick, trackVideoEvent } from "../../../lib/analytics";
 import { activateOnKeyboard } from "../../../lib/keyboard";
 import { COOKIE_CONSENT_EVENT, grantMarketingConsent, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
+import type { RouteLocale } from "../../../config/routeRegistry";
+import { externalContentCopy } from "../../../i18n/externalContent";
 import HeroEditorialStage from "../../../components/HeroEditorialStage";
 import { Suspense, lazy } from "react";
 
@@ -680,9 +682,10 @@ function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
 
 interface HomeProps {
   onNavigate: (page: string) => void;
+  locale?: RouteLocale;
 }
 
-export default function Home({ onNavigate }: HomeProps) {
+export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeServiceTab, setActiveServiceTab] = useState(0);
   const [selectedEditorialPlan, setSelectedEditorialPlan] = useState<"start" | "base" | "performance">("base");
@@ -692,12 +695,13 @@ export default function Home({ onNavigate }: HomeProps) {
   const [youtubeConsentGranted, setYoutubeConsentGranted] = useState(false);
   const [showYoutubeConsentPrompt, setShowYoutubeConsentPrompt] = useState(false);
   const [activeReview, setActiveReview] = useState(0);
+  const [showOriginalReview, setShowOriginalReview] = useState(false);
   const [isHoveringGmb, setIsHoveringGmb] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [activeDiagPhase, setActiveDiagPhase] = useState<"discovery" | "analysis" | "design">("discovery");
   const [hoveredPill, setHoveredPill] = useState<string | null>(null);
-  const [youtubeVideos, setYoutubeVideos] = useState(YOUTUBE_VIDEOS);
-  const [gmbReviews, setGmbReviews] = useState(GMB_REVIEWS);
+  const [youtubeVideos, setYoutubeVideos] = useState<OfficialYouTubeVideo[]>(YOUTUBE_VIDEOS);
+  const [gmbReviews, setGmbReviews] = useState<OfficialGoogleReview[]>(GMB_REVIEWS);
   const [contentSources, setContentSources] = useState<OfficialContentApiResponse["sources"]>({
     youtube: "fallback",
     googleBusiness: "fallback"
@@ -705,6 +709,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
   const visibleYoutubeVideos = youtubeVideos;
   const visibleGmbReviews = gmbReviews;
+  const externalCopy = externalContentCopy[locale];
 
   const PROOF_CASES_DATA = [
     {
@@ -828,7 +833,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
     const loadOfficialContent = async () => {
       try {
-        const response = await fetch("/api/official-content", {
+        const response = await fetch(`/api/official-content?locale=${locale}`, {
           signal: controller.signal,
           headers: {
             Accept: "application/json"
@@ -863,7 +868,11 @@ export default function Home({ onNavigate }: HomeProps) {
     void loadOfficialContent();
 
     return () => controller.abort();
-  }, []);
+  }, [locale]);
+
+  useEffect(() => {
+    setShowOriginalReview(false);
+  }, [activeReview]);
 
   const handleOutboundClick = (label: string, url: string, surface: string) => {
     trackOutboundClick({
@@ -3545,8 +3554,20 @@ export default function Home({ onNavigate }: HomeProps) {
 
                     {/* Supporting comprehensive details text (the body of the review) */}
                     <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-normal">
-                      {visibleGmbReviews[activeReview].text}
+                      {showOriginalReview ? visibleGmbReviews[activeReview].original?.text ?? visibleGmbReviews[activeReview].text : visibleGmbReviews[activeReview].text}
                     </p>
+                    {visibleGmbReviews[activeReview].machineTranslated ? (
+                      <div className="flex flex-wrap items-center gap-3 text-xs font-sans text-zinc-500">
+                        <span>{externalCopy.machineTranslationLabel}</span>
+                        <button
+                          type="button"
+                          onClick={() => setShowOriginalReview((current) => !current)}
+                          className="text-brand hover:underline"
+                        >
+                          {showOriginalReview ? externalCopy.hideOriginalLabel : externalCopy.showOriginalLabel}
+                        </button>
+                      </div>
+                    ) : null}
                   </div>
 
                   <div className="mt-8 pt-6 border-t border-dashed border-white/[0.08] relative z-10">

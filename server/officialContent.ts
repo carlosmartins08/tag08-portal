@@ -13,6 +13,8 @@ import {
   formatViewCount
 } from "../src/lib/officialContent";
 import { TAG08_OFFICIAL_YOUTUBE_HANDLE } from "../src/config/siteNetwork";
+import type { RouteLocale } from "../src/config/routeRegistry";
+import { localizeOfficialReviews, localizeOfficialVideos } from "./externalContentTranslation";
 
 type YoutubeChannelListResponse = {
   items?: Array<{
@@ -402,9 +404,15 @@ export const buildOfficialContentErrorResponse = (error: unknown): OfficialConte
   error: error instanceof Error ? error.message : String(error)
 });
 
-export const getOfficialContentResponse = async (): Promise<OfficialContentApiResponse> => {
+export const getOfficialContentResponse = async (locale: RouteLocale = "pt"): Promise<OfficialContentApiResponse> => {
   try {
-    return await buildOfficialContentSnapshot();
+    const snapshot = await buildOfficialContentSnapshot();
+    if (locale === "pt") return snapshot;
+    const [youtubeVideos, gmbReviews] = await Promise.all([
+      localizeOfficialVideos(snapshot.youtubeVideos, locale),
+      localizeOfficialReviews(snapshot.gmbReviews, locale)
+    ]);
+    return { ...snapshot, youtubeVideos, gmbReviews };
   } catch (error) {
     console.error("[official-content]", error);
     return buildOfficialContentFallbackResponse();

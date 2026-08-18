@@ -1,19 +1,18 @@
-import { ArrowLeft, Compass, Globe, MessageSquare, ArrowUpRight, ShieldAlert } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Compass, Globe, MessageSquare, ShieldAlert } from "lucide-react";
 import { motion } from "motion/react";
-import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
+import type { RouteLocale } from "../../../config/routeRegistry";
+import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
+import { getNotFoundCopy } from "../../../i18n/notFoundCopy";
 
 interface NotFoundProps {
+  locale: RouteLocale;
   onNavigate: (page: string) => void;
 }
 
-export default function NotFound({ onNavigate }: NotFoundProps) {
-  const handleBackToHome = () => {
-    onNavigate("/");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleNavigateToServices = () => {
-    onNavigate("/servicos");
+export default function NotFound({ locale, onNavigate }: NotFoundProps) {
+  const copy = getNotFoundCopy(locale);
+  const navigate = (path: string) => {
+    onNavigate(path);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -27,111 +26,59 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10 w-full">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
           <div className="md:col-span-5 flex flex-col justify-center items-center md:items-start space-y-4">
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="relative"
-            >
-              <div className="text-[120px] sm:text-[150px] md:text-[160px] font-display font-black leading-none text-brand-secondary tracking-tighter select-none animate-pulse opacity-95">
-                404
-              </div>
+            <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="relative">
+              <div className="text-[120px] sm:text-[150px] md:text-[160px] font-display font-black leading-none text-brand-secondary tracking-tighter select-none animate-pulse opacity-95">404</div>
               <div className="absolute top-2 left-1 text-[120px] sm:text-[150px] md:text-[160px] font-display font-black leading-none text-white tracking-tighter opacity-15 select-none pointer-events-none blur-[1px]" />
               <div className="absolute -bottom-1 -right-1.5 px-3 py-1 bg-white/5 border border-white/10 rounded-lg backdrop-blur-md">
                 <span className="tag08-meta text-xs text-zinc-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
                   <ShieldAlert className="w-3 h-3 text-brand-secondary" />
-                  SYS_DESALINHADO
+                  {copy.systemStatus}
                 </span>
               </div>
             </motion.div>
 
             <div className="pt-2 text-center md:text-left space-y-2">
-              <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-black block">
-                DIREÇÃO & GOVERNANÇA DE ATIVOS
-              </span>
-              <p className="text-zinc-500 text-xs leading-relaxed font-sans max-w-xs mx-auto md:mx-0 select-none">
-                O endereço referenciado não reside sob o mapeamento técnico da agência TAG08.
-              </p>
+              <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-black block">{copy.eyebrow}</span>
+              <p className="text-zinc-500 text-xs leading-relaxed font-sans max-w-xs mx-auto md:mx-0 select-none">{copy.technicalDescription}</p>
             </div>
           </div>
 
           <div className="md:col-span-7 space-y-8 text-left">
             <div className="space-y-3.5">
-              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-3 py-1 rounded w-max block">
-                ROTA INTERROMPIDA
-              </span>
-              <h1 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight leading-none text-left">
-                Oops, Parecemos Fora de Rumo!
-              </h1>
-              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-lg">
-                Assim como no marketing digital, rotas desalinhadas drenam energia e recursos. Vamos reconectar sua experiência com nossos principais pontos de ancoragem operacional sênior.
-              </p>
+              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-3 py-1 rounded w-max block">{copy.badge}</span>
+              <h1 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight leading-none text-left">{copy.title}</h1>
+              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-lg">{copy.description}</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <motion.button
-                onClick={handleBackToHome}
-                whileHover={{ scale: 1.01, y: -2 }}
-                transition={{ duration: 0.2 }}
-                className="bg-[#121214] hover:bg-[#161619] border border-white/5 hover:border-brand/20 p-5 rounded-2xl text-left space-y-3 group cursor-pointer transition-all duration-300"
-              >
-                <div className="w-8 h-8 rounded-lg bg-brand/10 border border-brand/20 flex items-center justify-center text-brand-secondary group-hover:bg-brand-secondary group-hover:text-black transition-all">
-                  <Compass className="w-4 h-4 stroke-[2.5]" />
-                </div>
+              <motion.button onClick={() => navigate("/")} whileHover={{ scale: 1.01, y: -2 }} transition={{ duration: 0.2 }} className="bg-[#121214] hover:bg-[#161619] border border-white/5 hover:border-brand/20 p-5 rounded-2xl text-left space-y-3 group cursor-pointer transition-all duration-300">
+                <div className="w-8 h-8 rounded-lg bg-brand/10 border border-brand/20 flex items-center justify-center text-brand-secondary group-hover:bg-brand-secondary group-hover:text-black transition-all"><Compass className="w-4 h-4 stroke-[2.5]" /></div>
                 <div className="space-y-1">
-                  <h4 className="text-white font-semibold text-xs sm:text-sm font-display flex items-center gap-1.5">
-                    <span>Voltar ao Início</span>
-                    <ArrowLeft className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 duration-200 text-brand" />
-                  </h4>
-                  <p className="text-zinc-500 text-xs leading-snug">
-                    Retorne para a governança central e explore toda a nossa apresentação corporativa.
-                  </p>
+                  <h4 className="text-white font-semibold text-xs sm:text-sm font-display flex items-center gap-1.5"><span>{copy.homeTitle}</span><ArrowLeft className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 duration-200 text-brand" /></h4>
+                  <p className="text-zinc-500 text-xs leading-snug">{copy.homeDescription}</p>
                 </div>
               </motion.button>
 
-              <motion.button
-                onClick={handleNavigateToServices}
-                whileHover={{ scale: 1.01, y: -2 }}
-                transition={{ duration: 0.2 }}
-                className="bg-[#121214] hover:bg-[#161619] border border-white/5 hover:border-brand-secondary/20 p-5 rounded-2xl text-left space-y-3 group cursor-pointer transition-all duration-300"
-              >
-                <div className="w-8 h-8 rounded-lg bg-brand-secondary/10 border border-brand-secondary/20 flex items-center justify-center text-brand-secondary group-hover:bg-brand-secondary group-hover:text-black transition-all">
-                  <Globe className="w-4 h-4 stroke-[2.5]" />
-                </div>
+              <motion.button onClick={() => navigate("/servicos")} whileHover={{ scale: 1.01, y: -2 }} transition={{ duration: 0.2 }} className="bg-[#121214] hover:bg-[#161619] border border-white/5 hover:border-brand-secondary/20 p-5 rounded-2xl text-left space-y-3 group cursor-pointer transition-all duration-300">
+                <div className="w-8 h-8 rounded-lg bg-brand-secondary/10 border border-brand-secondary/20 flex items-center justify-center text-brand-secondary group-hover:bg-brand-secondary group-hover:text-black transition-all"><Globe className="w-4 h-4 stroke-[2.5]" /></div>
                 <div className="space-y-1">
-                  <h4 className="text-white font-semibold text-xs sm:text-sm font-display flex items-center gap-1.5">
-                    <span>Nossas Soluções</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 duration-200 text-brand" />
-                  </h4>
-                  <p className="text-zinc-500 text-xs leading-snug">
-                    Descubra nossos ecossistemas de Branding, Desenvolvimento Web e Processos Sênior.
-                  </p>
+                  <h4 className="text-white font-semibold text-xs sm:text-sm font-display flex items-center gap-1.5"><span>{copy.servicesTitle}</span><ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 duration-200 text-brand" /></h4>
+                  <p className="text-zinc-500 text-xs leading-snug">{copy.servicesDescription}</p>
                 </div>
               </motion.button>
             </div>
 
             <div className="bg-brand-secondary text-black rounded-2xl p-5 flex flex-col sm:flex-row items-center sm:justify-between gap-4 shadow-xl">
               <div className="flex gap-3.5 items-center text-left">
-                <div className="w-9 h-9 rounded-full bg-black flex items-center justify-center text-brand-secondary shrink-0">
-                  <MessageSquare className="w-4 h-4 text-brand-secondary" />
-                </div>
+                <div className="w-9 h-9 rounded-full bg-black flex items-center justify-center text-brand-secondary shrink-0"><MessageSquare className="w-4 h-4 text-brand-secondary" /></div>
                 <div className="space-y-0.5">
-                  <span className="tag08-meta text-xs text-black/60 uppercase tracking-wider font-extrabold block">
-                    SUPORTE E VIABILIDADE
-                  </span>
-                  <p className="text-black font-semibold text-xs leading-none font-sans">
-                    Prefere reportar um erro ao Diretor de Tecnologia?
-                  </p>
+                  <span className="tag08-meta text-xs text-black/60 uppercase tracking-wider font-extrabold block">{copy.supportEyebrow}</span>
+                  <p className="text-black font-semibold text-xs leading-none font-sans">{copy.supportQuestion}</p>
                 </div>
               </div>
 
-              <a
-                href={buildBrazilWhatsAppUrl("Olá,%20acabei%20de%20encontrar%2520uma%2520rota%2520404%2520no%2520portal%2520da%2520TAG08!")}
-                target="_blank"
-                rel="noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-1 bg-black hover:bg-neutral-900 border border-black text-white px-4 py-2.5 rounded-xl font-sans text-xs uppercase font-black tracking-widest hover:scale-[1.02] transition-all cursor-pointer whitespace-nowrap"
-              >
-                <span>Chamar suporte</span>
+              <a href={buildBrazilWhatsAppUrl(copy.supportMessage)} target="_blank" rel="noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-1 bg-black hover:bg-neutral-900 border border-black text-white px-4 py-2.5 rounded-xl font-sans text-xs uppercase font-black tracking-widest hover:scale-[1.02] transition-all cursor-pointer whitespace-nowrap">
+                <span>{copy.supportAction}</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-brand-secondary" />
               </a>
             </div>

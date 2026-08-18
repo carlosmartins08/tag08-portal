@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "route": "not-found",
+  "locale": "en",
+  "sourceLocale": "pt",
+  "sourceHash": "c61a651e04dc52d458eeeb86fa610ce8326c6aaccd7fa3ec76bc3276ba341a81",
+  "engineVersion": "libretranslate-v1.8.4",
+  "generatedAt": "2026-08-18T01:08:12.821Z",
+  "segments": {
+    "systemStatus": "DESIGNED SYSTEM",
+    "eyebrow": "DIRECTORATE AND GOVERNANCE OF ASSETS",
+    "technicalDescription": "The referenced address does not reside under the technical mapping of the TAG08 agency.",
+    "badge": "INTERROMPID ROOT",
+    "title": "Oops, looks like we're off course.",
+    "description": "As in digital marketing, misaligned routes drain energy and resources. We will reconnect your experience to our main operational anchor points.",
+    "homeTitle": "Back to top",
+    "homeDescription": "Return to the main page and explore our corporate presentation.",
+    "servicesTitle": "Our solutions",
+    "servicesDescription": "Learn about our branding ecosystems, web development and processes.",
+    "supportEyebrow": "SUPPORT AND VIABILITY",
+    "supportQuestion": "Would you rather report this error to the technology director?",
+    "supportAction": "Call Support",
+    "supportMessage": "Hello, I just found a 404 route on the TAG08 portal!"
+  },
+  "catalog": {
+    "systemStatus": "DESIGNED SYSTEM",
+    "eyebrow": "DIRECTORATE AND GOVERNANCE OF ASSETS",
+    "technicalDescription": "The referenced address does not reside under the technical mapping of the TAG08 agency.",
+    "badge": "INTERROMPID ROOT",
+    "title": "Oops, looks like we're off course.",
+    "description": "As in digital marketing, misaligned routes drain energy and resources. We will reconnect your experience to our main operational anchor points.",
+    "homeTitle": "Back to top",
+    "homeDescription": "Return to the main page and explore our corporate presentation.",
+    "servicesTitle": "Our solutions",
+    "servicesDescription": "Learn about our branding ecosystems, web development and processes.",
+    "supportEyebrow": "SUPPORT AND VIABILITY",
+    "supportQuestion": "Would you rather report this error to the technology director?",
+    "supportAction": "Call Support",
+    "supportMessage": "Hello, I just found a 404 route on the TAG08 portal!"
+  },
+  "artifactHash": "b637194925a952d8aac93634b82a219d1765ce6e25b3270a1bd41e02fbb8618b"
+}

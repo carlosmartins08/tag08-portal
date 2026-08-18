@@ -18,6 +18,7 @@ Fonte obrigatoria: `src/config/routeRegistry.ts`.
 - Redirecionamento por `?lang=en|es`: `src/proxy.ts`
 - Sitemap: `src/app/sitemap.ts`
 - Robots: `src/app/robots.ts`
+- Status de traducao: `npm run i18n:status`
 
 ## Criterios de aceite
 

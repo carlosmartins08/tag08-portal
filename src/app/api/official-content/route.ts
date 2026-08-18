@@ -1,5 +1,6 @@
 import { buildOfficialContentFallbackResponse, getOfficialContentResponse } from "../../../../server/officialContent";
 import { jsonResponse, optionsResponse } from "../../../lib/api/response";
+import type { RouteLocale } from "../../../config/routeRegistry";
 
 export const runtime = "nodejs";
 
@@ -8,8 +9,11 @@ export async function OPTIONS(request: Request) {
 }
 
 export async function GET(request: Request) {
-  const response = await getOfficialContentResponse();
-  const requireLiveGoogleBusiness = new URL(request.url).searchParams.get("requireLive") === "googleBusiness";
+  const url = new URL(request.url);
+  const requestedLocale = url.searchParams.get("locale");
+  const locale: RouteLocale = requestedLocale === "en" || requestedLocale === "es" ? requestedLocale : "pt";
+  const response = await getOfficialContentResponse(locale);
+  const requireLiveGoogleBusiness = url.searchParams.get("requireLive") === "googleBusiness";
 
   // The public endpoint remains resilient and can render its editorial fallback.
   // Monitoring uses this explicit probe so a fallback is never mistaken for a

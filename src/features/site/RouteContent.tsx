@@ -31,7 +31,7 @@ export default function RouteContent({ path, locale }: { path: string; locale: R
 
   let page = null;
   if (route?.routeCategory === "case-study") page = <CaseStudyDetail caseId={path.replace("/casos/", "")} onNavigate={navigate} />;
-  else if (path === "/") page = <Home onNavigate={navigate} />;
+  else if (path === "/") page = <Home onNavigate={navigate} locale={locale} />;
   else if (path === "/sobre") page = <Sobre onNavigate={navigate} />;
   else if (path === "/servicos") page = <Servicos onNavigate={navigate} />;
   else if (path === "/servicos/process-intelligence") page = <ProcessIntelligence onNavigate={navigate} />;
@@ -40,8 +40,8 @@ export default function RouteContent({ path, locale }: { path: string; locale: R
   else if (path === "/servicos/branding-identidade") page = <Branding onNavigate={navigate} />;
   else if (path === "/servicos/gestao-de-redes-sociais") page = <GestaoRedesSociais onNavigate={navigate} />;
   else if (path === "/servicos/producao-audiovisual") page = <ProducaoAudiovisual onNavigate={navigate} />;
-  else if (path === "/contato") page = <Contato />;
-  else if (path === "/trabalhe-conosco") page = <TrabalheConosco onNavigate={navigate} />;
+  else if (path === "/contato") page = <Contato locale={locale} />;
+  else if (path === "/trabalhe-conosco") page = <TrabalheConosco onNavigate={navigate} locale={locale} />;
   else if (path === "/insights") page = <Insights onNavigate={navigate} />;
   else if (path === "/cliente/onboarding") page = <ClienteOnboarding onNavigate={navigate} />;
   else if (path === "/sebraetec-impulsionando-empreendedores") page = <Sebraetec onNavigate={navigate} />;

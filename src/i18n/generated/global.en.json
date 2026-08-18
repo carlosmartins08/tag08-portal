@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "route": "global",
+  "locale": "en",
+  "sourceLocale": "pt",
+  "sourceHash": "7b7e3c420b98b020ba0d1d90d9c849853c803b766bea9104e22c47498c449b5a",
+  "engineVersion": "libretranslate-v1.8.4",
+  "generatedAt": "2026-08-18T00:58:09.335Z",
+  "segments": {
+    "externalContent.machineTranslationLabel": "Automatic translation of the original in English",
+    "externalContent.showOriginalLabel": "See original in Portuguese",
+    "externalContent.hideOriginalLabel": "Hide Original in Portuguese",
+    "translation.unavailable": "The translation is still being prepared."
+  },
+  "catalog": {
+    "externalContent": {
+      "machineTranslationLabel": "Automatic translation of the original in English",
+      "showOriginalLabel": "See original in Portuguese",
+      "hideOriginalLabel": "Hide Original in Portuguese"
+    },
+    "translation": {
+      "unavailable": "The translation is still being prepared."
+    }
+  },
+  "artifactHash": "7642517e32fbc6c13ffc0985788085bfe70c0080117beef3737ffd8ee8bb6a70"
+}

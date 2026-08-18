@@ -14,7 +14,9 @@ export type OfficialYouTubeVideo = {
   videoUrl: string;
   views: string;
   tagline: string;
-  source: OfficialContentSourceStatus;
+  source?: OfficialContentSourceStatus;
+  original?: Pick<OfficialYouTubeVideo, "title" | "description" | "category" | "tagline">;
+  machineTranslated?: boolean;
 };
 
 export type OfficialGoogleReview = {
@@ -25,7 +27,9 @@ export type OfficialGoogleReview = {
   tagline: string;
   text: string;
   category: string;
-  source: OfficialContentSourceStatus;
+  source?: OfficialContentSourceStatus;
+  original?: Pick<OfficialGoogleReview, "role" | "time" | "tagline" | "text" | "category">;
+  machineTranslated?: boolean;
 };
 
 export type OfficialContentBundle = {

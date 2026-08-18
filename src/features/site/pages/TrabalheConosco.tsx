@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { trackFormError, trackFormStart, trackFormStep, trackFormSubmit, trackOutboundClick } from "../../../lib/analytics";
 import { queueFormSubmission } from "../../../lib/formQueue";
+import type { RouteLocale } from "../../../config/routeRegistry";
 
 interface Vacancy {
   id: string;
@@ -41,7 +42,7 @@ interface Vacancy {
   requirements: string[];
 }
 
-export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: string) => void }) {
+export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavigate: (page: string) => void; locale?: RouteLocale }) {
   const [selectedVacancy, setSelectedVacancy] = useState<string>("copywriter");
   const [formName, setFormName] = useState("");
   const [formEmail, setFormEmail] = useState("");
@@ -220,7 +221,6 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
     setSubmitting(true);
     try {
-      const locale = document.documentElement.lang.startsWith("en") ? "en" : document.documentElement.lang.startsWith("es") ? "es" : "pt";
       const idempotencyKey = crypto.randomUUID();
       const payload = {
         vacancyId: activeVacancy.id,

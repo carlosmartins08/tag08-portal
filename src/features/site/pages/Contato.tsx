@@ -23,8 +23,9 @@ import { trackFormError, trackFormStart, trackFormSubmit, trackLeadEvent, trackO
 import { queueFormSubmission } from "../../../lib/formQueue";
 import { COOKIE_CONSENT_EVENT, grantMarketingConsent, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
 import CountryFlag from "../../../components/CountryFlag";
+import type { RouteLocale } from "../../../config/routeRegistry";
 
-export default function Contato() {
+export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [copiedStates, setCopiedStates] = useState<Record<string, boolean>>({});
   const [marketingConsent, setMarketingConsent] = useState(false);
@@ -143,7 +144,6 @@ export default function Contato() {
     setLoading(true);
     setSubmitError("");
     try {
-      const locale = document.documentElement.lang.startsWith("en") ? "en" : document.documentElement.lang.startsWith("es") ? "es" : "pt";
       const searchParams = new URLSearchParams(window.location.search);
       const idempotencyKey = crypto.randomUUID();
       const payload = {
