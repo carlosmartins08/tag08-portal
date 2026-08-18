@@ -45,6 +45,7 @@
     "test": "npm run test:routes && npm run test:contracts",
     "audit:colors": "node tools/audit-brand-colors.mjs",
     "audit:typography": "node tools/audit-typography.mjs",
+    "audit:visual-contract": "node tools/audit-visual-contract.mjs",
     "audit:encoding": "node tools/audit-encoding.mjs",
     "audit:images": "node tools/audit-images.mjs",
     "audit:ux-matrix": "node tools/audit-ux-matrix.mjs",

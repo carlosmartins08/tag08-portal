@@ -1,8 +1,9 @@
-import { ChevronRight, Home, ArrowLeft, ArrowRight, Layers } from "lucide-react";
+import { ChevronRight, Home, ArrowLeft, ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 import { CASE_STUDIES } from "../data";
 import { getRouteByPath } from "../config/routeRegistry";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
+import { ContextNav } from "./VisualPrimitives";
 
 interface BreadcrumbsProps {
   currentPage: string;
@@ -108,30 +109,8 @@ export default function Breadcrumbs({ currentPage, onNavigate, language }: Bread
         </nav>
 
         {isServicePage && (
-          <div className="flex items-center gap-3 self-start md:self-auto">
-            <div className="hidden lg:flex items-center gap-1 bg-white/[0.03] border border-white/[0.06] p-1 rounded-lg mr-2">
-              <span className="text-xs font-sans uppercase text-zinc-500 px-2 flex items-center gap-1">
-                <Layers className="w-3 h-3 text-brand" /> {copy.shortcutLabel}
-              </span>
-              {services.map((svc) => {
-                const isActive = svc.path === currentPage;
-                return (
-                  <button
-                    key={svc.path}
-                    onClick={() => onNavigate(svc.path)}
-                    className={`px-2.5 py-1 rounded text-xs transition-all cursor-pointer font-medium ${
-                      isActive
-                        ? "bg-brand text-black font-semibold shadow"
-                        : "text-zinc-400 hover:text-white hover:bg-white/[0.05]"
-                    }`}
-                  >
-                    {svc.shortName}
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="flex items-center gap-2 bg-white/[0.02] border border-white/[0.05] p-1 rounded-lg">
+          <ContextNav className="flex items-center gap-3 self-start md:self-auto">
+            <div className="flex items-center gap-2">
               <button
                 onClick={handlePrevService}
                 className="p-1 px-2 text-zinc-400 hover:text-white hover:bg-white/[0.05] rounded transition-colors flex items-center gap-1 text-xs cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
@@ -150,7 +129,7 @@ export default function Breadcrumbs({ currentPage, onNavigate, language }: Bread
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
-          </div>
+          </ContextNav>
         )}
 
         {isCaseStudyPage && (

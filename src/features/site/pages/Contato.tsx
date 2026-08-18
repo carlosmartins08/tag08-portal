@@ -244,12 +244,12 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   };
 
   return (
-    <div className="bg-charcoal-950 text-white min-h-screen pt-16 pb-20">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+    <div className="tag08-contact bg-charcoal-950 text-white min-h-screen pt-16 pb-20">
+      <div className="tag08-contact__primary max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         
         {/* Left column info items */}
-        <div className="lg:col-span-5 space-y-8 text-left sticky top-32">
-          <div className="space-y-4">
+        <div className="tag08-contact__overview lg:col-span-5 space-y-8 text-left">
+          <div className="tag08-contact__intro space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand/5 border border-brand/20 rounded-full text-brand text-xs font-sans">
               <span>Sessão de Alinhamento</span>
             </div>
@@ -262,7 +262,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
             </p>
           </div>
 
-          <div className="space-y-4 border-t border-b border-white/[0.04] py-8 font-sans">
+          <div className="tag08-contact__directory space-y-4 border-t border-b border-white/[0.04] py-8 font-sans">
             {/* Email Contact Card */}
             <div className="flex gap-4 items-center justify-between group/item p-3 -mx-3 rounded-xl hover:bg-white/[0.02] border border-transparent hover:border-white/[0.03] transition-all duration-300">
               <div className="flex gap-4 items-start">
@@ -449,7 +449,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
             </div>
             </div>
 
-          <div className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-5 space-y-4">
+          <div className="tag08-contact__channels rounded-2xl border border-white/[0.05] bg-white/[0.02] p-5 space-y-4">
             <div className="flex items-center gap-2">
               <MessageSquare className="w-4 h-4 text-brand" />
               <h3 className="text-white font-semibold text-xs tracking-wider tag08-meta">
@@ -485,7 +485,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
             </div>
           </div>
 
-          <div className="bg-charcoal-900 border border-white/[0.04] p-5 rounded-lg flex items-start gap-3">
+          <div className="tag08-contact__response-note bg-charcoal-900 border border-white/[0.04] p-5 rounded-lg flex items-start gap-3">
             <ClipboardCheck className="w-5 h-5 text-brand shrink-0 mt-0.5" />
             <p className="text-xs text-zinc-400 leading-relaxed">
               <strong>Procedimento pós-envio:</strong> Respondemos em no máximo 6 horas úteis enviando uma prévia diagnóstica da presença da sua marca direto no seu número WhatsApp.
@@ -494,8 +494,8 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
         </div>
 
         {/* Right column form */}
-        <div className="lg:col-span-7">
-          <div className="bg-charcoal-900 border border-white/[0.06] rounded-2xl p-6 sm:p-10 shadow-xl backdrop-blur-md relative overflow-hidden">
+        <div className="tag08-contact__form-column lg:col-span-7">
+          <div className="tag08-contact__form bg-charcoal-900 border border-white/[0.06] rounded-2xl p-6 sm:p-10 shadow-xl backdrop-blur-md relative overflow-hidden">
             <AnimatePresence mode="wait">
               {!success ? (
                 <motion.form
@@ -505,6 +505,11 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   onSubmit={handleSubmit}
                   className="space-y-6 text-left"
                 >
+                  <div className="tag08-contact__form-intro">
+                    <span className="tag08-label">Diagnóstico inicial</span>
+                    <h2 className="font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl">Conte o que precisa mudar</h2>
+                    <p className="text-sm leading-relaxed text-zinc-400">Leva poucos minutos. Usaremos estas informações para preparar uma conversa que já comece no ponto certo.</p>
+                  </div>
                   <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
                     <label htmlFor="contact-website">Não preencha este campo</label>
                     <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" ref={honeypotRef} />
@@ -757,10 +762,10 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
       </div>
 
       {/* SECAO COMPLEMENTAR: ALINHAMENTO COM O PUBLICO ALVO */}
-      <div className="max-w-7xl mx-auto px-6 mt-24 pt-20 border-t border-white/[0.04] space-y-20 text-left">
+      <div className="tag08-contact__support max-w-7xl mx-auto px-6 mt-24 pt-20 border-t border-white/[0.04] space-y-20 text-left">
         
         {/* Próximos Passos (Timeline) */}
-        <div className="space-y-12 animate-fade-in">
+        <div className="tag08-contact__steps space-y-12 animate-fade-in">
           <div className="text-center md:text-left space-y-4">
             <span className="tag08-meta text-xs tracking-widest text-brand uppercase bg-brand/5 border border-brand/20 px-3 py-1 rounded-full">
               PROCESSO DE ANALISE // TRANSPARENCIA
@@ -828,7 +833,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
         </div>
 
         {/* FAQ de Alinhamento Comercial */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start bg-charcoal-900/40 p-8 sm:p-12 rounded-3xl border border-white/[0.04]">
+        <div className="tag08-contact__faq grid grid-cols-1 lg:grid-cols-12 gap-12 items-start bg-charcoal-900/40 p-8 sm:p-12 rounded-3xl border border-white/[0.04]">
           <div className="lg:col-span-5 space-y-4">
             <span className="tag08-meta text-xs tracking-widest text-brand uppercase bg-brand/5 border border-brand/20 px-3 py-1 rounded-full col-span-1">
               AJUDA // PERGUNTAS FREQUENTES

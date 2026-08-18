@@ -921,7 +921,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
   ];
 
   return (
-    <div className="bg-charcoal-950 text-white overflow-hidden">
+    <div className="tag08-home-flow bg-charcoal-950 text-white overflow-hidden">
       {/* SECTION 1 - NEW ADVANCED HIGH-DESCRIPTIVE HERO */}
       <section id="hero" className="relative min-h-screen flex items-center pt-28 pb-16 px-4 sm:px-6 md:px-8">
         {/* Full neon floating frame container styled exactly like reference image */}
