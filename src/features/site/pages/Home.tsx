@@ -740,49 +740,54 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       id: "estrategia-posicionamento",
       title: "Estratégia e posicionamento",
       subtitle: "Clareza antes da execução",
-      desc: "Para marcas que precisam entender melhor seu público, reorganizar sua mensagem e comunicar com mais clareza o valor que já possuem.",
+      desc: "Para empresas e profissionais cuja comunicação já não representa corretamente o valor, o público ou a fase atual do negócio.",
+      related: "Assessoria Estratégica, Reposicionamento Estratégico e Identidade de Marca.",
+      cta: "Conhecer estratégia e posicionamento",
       slug: "/servicos/assessoria-marketing-digital-estrategico"
     },
     {
       id: "conteudo-redes-sociais",
       title: "Conteúdo e redes sociais",
       subtitle: "Presença com linha editorial",
-      desc: "Para negócios que precisam sair da postagem solta e construir presença com frequência, narrativa, intenção comercial e consistência.",
+      desc: "Para negócios que precisam sair da produção solta e construir uma rotina de comunicação com temas, formatos, frequência e intenção definidos.",
+      related: "Start, Base, Performance, Gestão de Redes Sociais e Edição de Reels.",
+      cta: "Conhecer conteúdo e redes sociais",
       slug: "/servicos/gestao-de-redes-sociais"
     },
     {
       id: "producao-audiovisual",
       title: "Produção audiovisual",
-      subtitle: "Imagem, fala e bastidores com intenção",
-      desc: "Para empresas, especialistas e eventos que precisam transformar vídeo, presença e bastidores em conteúdo com valor de marca.",
+      subtitle: "Imagem, fala e bastidores com função",
+      desc: "Para empresas, especialistas e projetos que precisam transformar conhecimento, presença e acontecimentos em materiais úteis para comunicação e posicionamento.",
+      related: "Captação Audiovisual, Reels e produções específicas.",
+      cta: "Conhecer produção audiovisual",
       slug: "/servicos/producao-audiovisual"
     },
     {
-      id: "branding-identidade",
-      title: "Branding e identidade",
-      subtitle: "Percepção visual mais coerente",
-      desc: "Para marcas que precisam alinhar identidade visual, tom, estética e percepção ao momento atual do negócio.",
-      slug: "/servicos/branding-identidade"
-    },
-    {
       id: "desenvolvimento-web",
-      title: "Desenvolvimento web",
-      subtitle: "Canal próprio para apresentar e converter",
-      desc: "Para marcas que precisam de site, landing page, catálogo ou estrutura digital própria para gerar credibilidade e apoiar o comercial.",
+      title: "Web e estruturas digitais",
+      subtitle: "Um canal próprio com função clara",
+      desc: "Para marcas que precisam organizar informação, fortalecer credibilidade e facilitar o caminho entre interesse e contato.",
+      related: "Sites Estratégicos, Landing Pages e projetos web. E-commerce depende de diagnóstico de prontidão operacional.",
+      cta: "Conhecer desenvolvimento web",
       slug: "/servicos/desenvolvimento-web"
     },
     {
       id: "processos-operacao",
       title: "Processos e operação",
       subtitle: "Menos improviso, mais previsibilidade",
-      desc: "Para empresas que cresceram no esforço e agora precisam organizar rotina, responsabilidades, fluxo e tomada de decisão.",
+      desc: "Para empresas em que crescimento, demandas ou conhecimento começaram a depender demais de poucas pessoas, memória ou decisões informais.",
+      related: "Process Intelligence e Process Activation.",
+      cta: "Conhecer processos e operação",
       slug: "/servicos/process-intelligence"
     },
     {
       id: "hospedagem-manutencao",
-      title: "Hospedagem e manutenção",
-      subtitle: "Continuidade depois da entrega",
-      desc: "Para negócios que precisam manter seus sites ativos, seguros, atualizados e acompanhados depois da publicação.",
+      title: "Continuidade digital",
+      subtitle: "O projeto continua depois da publicação",
+      desc: "Para negócios que precisam manter estruturas digitais acompanhadas, atualizadas e tecnicamente sustentáveis ao longo do tempo.",
+      related: "Hospedagem e Manutenção.",
+      cta: "Conhecer continuidade digital",
       slug: "/hospedagem-manutencao-sites"
     }
   ];
@@ -949,7 +954,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 </h1>
                 
                 <p className="text-white/72 text-xs sm:text-sm max-w-sm leading-relaxed font-sans font-medium">
-                  A TAG08 ajuda empresas, profissionais e marcas a organizarem posicionamento, comunicação, conteúdo, tecnologia e operação para construir uma presença digital mais clara, consistente e estratégica.
+                  A TAG08 organiza posicionamento, comunicação, conteúdo, tecnologia e processos para transformar ações digitais dispersas em uma presença mais clara, consistente e útil ao negócio.
                 </p>
               </div>
 
@@ -986,7 +991,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
 
                 <div className="w-full bg-brand text-black rounded-xl py-3 px-4 flex items-center justify-between group-hover:bg-brand-dark group-hover:text-white transition-all duration-300">
                   <span className="tag08-meta text-xs font-extrabold tracking-wider uppercase">
-                    QUERO ENTENDER MEU MELHOR CAMINHO
+                    ENTENDER MEU MELHOR CAMINHO
                   </span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </div>
@@ -1057,13 +1062,13 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
             className="tag08-section__header mb-16 text-left"
           >
             <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-semibold">
-              O diagnóstico da realidade
+              Mais execução não corrige falta de direção
             </span>
             <h2 className="tag08-section__heading font-display font-medium text-3xl sm:text-4xl text-gradient">
-              O problema nem sempre é falta de marketing. Muitas vezes é falta de direção.
+              Mais execução não corrige falta de direção.
             </h2>
             <p className="tag08-section__copy text-zinc-400 text-sm sm:text-base">
-              Muitas empresas postam, anunciam, fazem vídeos, criam sites e tentam aparecer mais. Mas, quando não existe clareza de posicionamento, consistência de comunicação e estrutura mínima de operação, o digital vira um conjunto de ações soltas.
+              Uma empresa pode publicar, anunciar, produzir vídeos e ter um site sem que essas frentes construam a mesma percepção. Quando posicionamento, comunicação e operação seguem caminhos diferentes, o digital acumula ações, mas continua sem organizar a decisão do público ou da própria empresa. A TAG08 trabalha nesse ponto: identifica o que está desalinhado, organiza prioridades e conecta estratégia e execução ao momento real do negócio.
             </p>
           </motion.div>
 
@@ -1112,10 +1117,10 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   </span>
                 </div>
                 <h3 className="font-display font-medium text-xl sm:text-2xl text-white leading-tight">
-                  A questão não é fazer mais. É fazer com direção.
+                  Fazer mais nem sempre é avançar. Direção ajuda a entender o que realmente precisa ser feito.
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-                  A TAG08 entra para organizar esse caminho: entender o momento, identificar gargalos, definir prioridades e transformar presença digital em um ativo real para a marca.
+                  Conteúdo sem estratégia vira volume. Site sem função vira estrutura subutilizada. Tecnologia sem operação vira custo. Crescimento sem estrutura vira desgaste.
                 </p>
               </div>
 
@@ -1128,7 +1133,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               >
                 <div className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full skew-x-12 group-hover:translate-x-full transition-transform duration-1000 ease-out" />
                 <span className="relative z-10 flex items-center gap-2">
-                  Entender meu momento <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  Identificar meu momento <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
             </div>
@@ -1138,13 +1143,13 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
           <div className="mt-24 sm:mt-32 space-y-12 text-left animate-fade-in">
             <div className="tag08-section__header max-w-3xl">
               <div className="tag08-kicker">
-                Diagnóstico por momento
+                A estrutura certa depende do momento
               </div>
               <h2 className="tag08-section__heading font-display font-medium text-3xl sm:text-4xl text-gradient">
-                Em qual momento sua marca está hoje?
+                A estrutura certa depende do momento.
               </h2>
               <p className="tag08-section__copy text-zinc-400 text-xs sm:text-sm font-sans">
-                A solução certa depende da fase, da maturidade e da estrutura disponível para sustentar o crescimento. Antes de indicar qualquer serviço, a TAG08 entende o momento da marca e organiza o caminho mais coerente.
+                O plano mais completo não é automaticamente o melhor. O caminho adequado depende da maturidade da empresa e da capacidade de participar da execução.
               </p>
             </div>
 
@@ -1185,10 +1190,10 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                       <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-brand transition-colors" />
                     </div>
                     <h3 className="font-display font-bold text-lg text-white tracking-tight mt-1.5 group-hover:text-brand transition-colors">
-                      Começando com pouca clareza
+                      Começando com direção
                     </h3>
                     <p className="text-zinc-400 text-xs font-sans max-w-md mt-1 leading-relaxed">
-                      Você sabe que precisa aparecer melhor, mas ainda não tem linha visual, rotina de conteúdo ou direção de comunicação.
+                      Existe uma oferta minimamente clara, mas comunicação, identidade ou rotina digital ainda estão em construção. Caminhos possíveis: Start e Identidade Visual Digital.
                     </p>
                   </div>
                 </div>
@@ -1222,10 +1227,10 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                           <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-brand transition-colors" />
                         </div>
                         <h4 className="text-white font-display font-semibold text-xs sm:text-sm leading-tight group-hover:text-brand transition-colors mt-2">
-                          Já existe, mas comunica de forma irregular
+                          Presença ativa, mas inconsistente
                         </h4>
                         <p className="text-zinc-400 text-xs font-sans leading-normal mt-1.5">
-                          Sua empresa já vende, tem público e entrega valor, mas a presença digital não mostra isso com consistência.
+                          O negócio já funciona, porém comunicação, calendário e produção ainda dependem de decisões pontuais. Caminhos possíveis: Base, Desenvolvimento Web ou projeto complementar de marca.
                         </p>
                       </div>
                       
@@ -1259,10 +1264,10 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                       
                       <div>
                         <h4 className="text-white font-display font-semibold text-xs sm:text-sm leading-tight group-hover:text-brand transition-colors">
-                          Precisa transformar repertório em presença
+                          Marca em crescimento
                         </h4>
                         <p className="text-zinc-400 text-xs font-sans leading-relaxed mt-1.5">
-                          Sua marca já tem repertório, mas precisa de imagem, fala e bastidores que transmitam valor com clareza.
+                          Existe necessidade de integrar planejamento, vídeo, produção, publicação e acompanhamento com maior profundidade. Caminhos possíveis: Performance, Produção Audiovisual ou Reposicionamento Estratégico.
                         </p>
                       </div>
                     </div>
@@ -1297,9 +1302,9 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     </div>
 
                     <div className="space-y-2 relative z-10">
-                      <h4 className="font-display font-extrabold text-white text-sm tracking-tight">Desejo converter mais com meu site</h4>
+                      <h4 className="font-display font-extrabold text-white text-sm tracking-tight">Um canal próprio com função clara</h4>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
-                        Nossos anúncios gastam verba ativa, mas as páginas lentas ou confusas falham em colher leads qualificados diariamente.
+                        A estrutura web precisa organizar informação, fortalecer credibilidade e facilitar o caminho entre interesse e contato.
                       </p>
                     </div>
                   </div>
@@ -1342,9 +1347,9 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     </div>
 
                     <div className="space-y-2 relative z-10">
-                      <h4 className="font-display font-extrabold text-white text-sm tracking-tight group-hover:text-brand transition-colors">Cresceu, mas a operação ficou pesada</h4>
+                      <h4 className="font-display font-extrabold text-white text-sm tracking-tight group-hover:text-brand transition-colors">Operação pressionada pelo crescimento</h4>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
-                        As demandas aumentaram, a equipe depende de poucas pessoas e decisões importantes ainda acontecem no improviso.
+                        A empresa aumentou o volume, mas processos, responsabilidades ou conhecimento ainda dependem demais de improviso. Caminho possível: Process Intelligence.
                       </p>
                     </div>
                   </div>
@@ -1373,9 +1378,9 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                       </div>
                       
                       <div>
-                        <h4 className="font-display font-bold text-sm tracking-tight leading-none text-white group-hover:text-brand transition-colors">Temos processos, mas ninguém cumpre</h4>
+                        <h4 className="font-display font-bold text-sm tracking-tight leading-none text-white group-hover:text-brand transition-colors">Processos existentes, execução irregular</h4>
                         <p className="text-zinc-400 text-xs font-sans leading-normal mt-1.5">
-                          Nossos playbooks e wikis viraram links esquecidos e os operadores continuam executando em desordem.
+                          Quando a estrutura já existe, Process Activation ajuda a transformar definições em prática acompanhada.
                         </p>
                       </div>
                     </div>
@@ -1403,9 +1408,9 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                       </div>
                       
                       <div>
-                        <h4 className="font-display font-bold text-sm tracking-tight leading-none text-white">Quero identificar meu momento</h4>
+                        <h4 className="font-display font-bold text-sm tracking-tight leading-none text-white">Identificar meu momento</h4>
                         <p className="text-zinc-400 text-xs font-sans leading-relaxed mt-1.5">
-                          Fale com o nosso estrategista sênior para descobrir a fase certa para sua marca.
+                          A conversa inicial ajuda a avaliar contexto, fit, maturidade e prioridade, sem promessa pronta ou solução empurrada.
                         </p>
                       </div>
                     </div>
@@ -1793,13 +1798,13 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
           {/* Header */}
           <div className="tag08-section__header text-left">
             <span className="tag08-kicker">
-              Da análise à execução
+              Como a TAG08 trabalha
             </span>
             <h2 className="tag08-section__heading font-display font-medium text-3xl sm:text-4xl text-white tracking-tight">
-              Depois do diagnóstico, a execução precisa de método.
+              Como a TAG08 trabalha
             </h2>
             <p className="tag08-section__copy text-zinc-400 text-xs sm:text-sm font-sans">
-              A TAG08 organiza o caminho antes de produzir: entende o cenário, define prioridades, estrutura entregas, acompanha a ativação e ajusta o que precisa evoluir.
+              Um caminho que começa pela leitura do contexto e segue com direção, planejamento, execução e evolução.
             </p>
           </div>
 
@@ -2361,8 +2366,11 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                         <h3 className="min-h-[3.9rem] font-display text-xl font-black leading-[0.95] tracking-tight sm:text-2xl">
                           {service.title}
                         </h3>
-                        <p className={`mt-4 min-h-[5.25rem] text-xs font-sans leading-relaxed sm:text-sm ${subColor}`}>
+                        <p className={`mt-4 text-xs font-sans leading-relaxed sm:text-sm ${subColor}`}>
                           {service.desc}
+                        </p>
+                        <p className={`mt-3 text-xs font-sans leading-relaxed ${subColor}`}>
+                          <span className="font-bold">Relacionados:</span> {service.related}
                         </p>
                       </div>
 
@@ -2371,7 +2379,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                           onClick={() => handleLinkClick(service.slug)}
                           className={`flex items-center gap-1.5 font-sans text-xs font-black uppercase tracking-widest cursor-pointer hover:underline ${darkCard ? "text-white" : "text-black"}`}
                         >
-                          Ver solução
+                          {service.cta}
                           <ArrowRight className="w-3.5 h-3.5" />
                         </button>
                         <div className={`text-xs tag08-meta uppercase tracking-widest ${labelColor}`}>
@@ -2411,20 +2419,20 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 text-left">
             <div className="space-y-2">
               <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black block">
-                Método em prática
+                Prova precisa ser prova
               </span>
               <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient tracking-tight leading-none">
-                Projetos que mostram direção aplicada.
+                Projetos que mostram contexto, decisão e execução.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
-                A TAG08 atua para organizar posicionamento, comunicação, conteúdo, tecnologia e processos conforme o momento de cada marca. Mais do que prometer resultado, nosso foco é estruturar caminhos mais claros, coerentes e sustentáveis.
+                Projetos publicados nesta área devem mostrar contexto, problema, caminho adotado, entrega realizada e evidências que possam ser verificadas. Um case também tem valor quando demonstra qualidade de diagnóstico, coerência de decisão e capacidade de execução.
               </p>
             </div>
             <button
-              onClick={() => handleLinkClick("/contato")}
+              onClick={() => handleLinkClick("/casos/case-clinica-alphaville")}
               className="text-xs font-sans text-brand-secondary hover:underline font-bold flex items-center justify-start md:justify-end gap-1.5 shrink-0 uppercase tracking-widest cursor-pointer"
             >
-              Solicitar Estudo de Caso <ArrowRight className="w-3.5 h-3.5" />
+              Conhecer estudos de caso <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
@@ -2702,40 +2710,40 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
             {/* Step 1 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">01 // DIAGNÓSTICO</div>
-              <h4 className="font-display font-semibold text-white">Diagnóstico</h4>
+              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">01 // ENTENDIMENTO</div>
+              <h4 className="font-display font-semibold text-white">Entendimento</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Entendemos o momento da marca, seus canais, gargalos, objetivos e capacidade real de execução.
+                Leitura do negócio, objetivos, momento, comunicação, canais, estrutura e restrições relevantes.
               </p>
             </div>
 
             {/* Step 2 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">02 // ESTRATÉGIA</div>
-              <h4 className="font-display font-semibold text-white">Estratégia</h4>
+              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">02 // DIAGNÓSTICO E DIREÇÃO</div>
+              <h4 className="font-display font-semibold text-white">Diagnóstico e direção</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Definimos prioridades, mensagens, escopo e direção para que a execução tenha critério.
+                Separação entre sintomas e causas para definir prioridades e o caminho mais coerente.
               </p>
             </div>
 
             {/* Step 3 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">03 // PRODUÇÃO</div>
-              <h4 className="font-display font-semibold text-white">Produção</h4>
+              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">03 // PLANEJAMENTO</div>
+              <h4 className="font-display font-semibold text-white">Planejamento</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Transformamos a direção aprovada em conteúdo, design, site, campanhas, processos ou materiais aplicáveis.
+                Organização de escopo, sequência de execução, responsabilidades, dependências e critérios de aprovação.
               </p>
             </div>
 
             {/* Step 4 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">04 // ATIVAÇÃO</div>
-              <h4 className="font-display font-semibold text-white">Ativação</h4>
+              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">04 // EXECUÇÃO</div>
+              <h4 className="font-display font-semibold text-white">Execução</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Colocamos as entregas em uso, acompanhando ajustes necessários e pontos de atenção.
+                Produção e desenvolvimento alinhados à estratégia, à identidade, ao canal e à capacidade disponível.
               </p>
             </div>
 
@@ -2745,7 +2753,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">05 // EVOLUÇÃO</div>
               <h4 className="font-display font-semibold text-white">Evolução</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Revisamos aprendizados, identificamos melhorias e organizamos próximos passos com responsabilidade.
+                Análise de aprendizados, resultados e ajustes que precisam entrar no próximo ciclo.
               </p>
             </div>
           </div>
@@ -3675,19 +3683,19 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   <span className="w-2 h-2 rounded-full bg-black animate-ping" />
                 </div>
                 <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-brand">
-                  Próximo passo com clareza
+                  Presença com direção
                 </span>
               </div>
 
                 {/* Massive Bold Heading mirroring reference */}
                 <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter">
-                Antes de avançar, <br />
-                entenda o que sua marca realmente precisa.
+                Presença <br />
+                com direção.
                 </h2>
 
                 {/* Description Paragraph with high contrast block typeface layout */}
               <p className="text-zinc-300 text-xs sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
-                A TAG08 ajuda a organizar prioridades, identificar gargalos e indicar um caminho coerente antes de transformar qualquer demanda em execução.
+                Uma marca não precisa apenas aparecer. Precisa ser compreendida pelo público certo, apresentar seu valor com coerência e sustentar aquilo que comunica. Estratégia define escolhas. Conteúdo constrói entendimento. Tecnologia cria estrutura. Processo ajuda a sustentar a execução.
               </p>
             </div>
 
@@ -3703,10 +3711,10 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 </div>
                 <div className="space-y-0.5">
                     <span className="tag08-meta text-xs text-brand uppercase tracking-wider font-extrabold block">
-                    Método aplicado
+                    Presença sem direção vira ruído.
                     </span>
                     <p className="text-white text-xs leading-snug font-sans font-semibold">
-                    Entregas consistentes, úteis e coerentes com a marca.
+                    A conversa inicial começa pelo entendimento do momento atual.
                     </p>
                   </div>
                 </div>
@@ -3802,28 +3810,28 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               <div className="space-y-4">
                 {/* Visual upper badge */}
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
-                  Dúvidas antes do próximo passo
+                  Dúvidas importantes antes da conversa
                 </div>
                 
                 {/* Section titles */}
                 <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter">
-                  Antes de escolher uma solução, <br />
-                  entenda o caminho.
+                  Dúvidas importantes <br />
+                  antes da conversa.
                 </h2>
                 
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-sm">
-                  Reunimos respostas para ajudar você a entender como a TAG08 trabalha, quando faz sentido iniciar um projeto e por que o diagnóstico vem antes da proposta.
+                  Respostas para entender o papel da TAG08, a escolha do serviço, o escopo, o início e as expectativas de resultado.
                 </p>
               </div>
 
               {/* Vertical list of Accordion Triggers */}
               <div className="space-y-3 pt-4">
                 {([
-                  { id: 0, title: "A TAG08 é uma agência de marketing?" },
-                  { id: 1, title: "Preciso saber exatamente qual serviço contratar?" },
-                  { id: 2, title: "A TAG08 trabalha com pacotes prontos?" },
-                  { id: 3, title: "Quanto tempo leva para começar?" },
-                  { id: 4, title: "A TAG08 promete resultado?" }
+                  { id: 0, title: "Qual é o papel da TAG08?" },
+                  { id: 1, title: "Como escolhemos o serviço?" },
+                  { id: 2, title: "Como funcionam pacotes e escopo?" },
+                  { id: 3, title: "Quando o projeto pode começar?" },
+                  { id: 4, title: "Como a TAG08 trata resultados e expectativas?" }
                 ]).map((item) => (
                   <button
                     key={item.id}
@@ -3886,21 +3894,21 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 
                 <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
                   {([
-                    "A TAG08 é uma agência de marketing?",
-                    "Preciso saber exatamente qual serviço contratar?",
-                    "A TAG08 trabalha com pacotes prontos?",
-                    "Quanto tempo leva para começar?",
-                    "A TAG08 promete resultado?"
+                    "Qual é o papel da TAG08?",
+                    "Como escolhemos o serviço?",
+                    "Como funcionam pacotes e escopo?",
+                    "Quando o projeto pode começar?",
+                    "Como a TAG08 trata resultados e expectativas?"
                   ])[activeFaq]}
                 </h4>
                 
                 <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
-                    "A TAG08 atua com estratégia, comunicação, design, tecnologia e processos. Em alguns casos executamos entregas típicas de marketing, mas o trabalho começa pelo entendimento do momento da marca e pela definição do caminho mais coerente.",
-                    "Não. O primeiro passo é entender o momento da sua marca. A partir do diagnóstico, indicamos se faz mais sentido começar por posicionamento, conteúdo, site, identidade, audiovisual, processos ou outra frente.",
-                    "Temos soluções estruturadas, mas a recomendação depende do contexto, da maturidade, da urgência e da capacidade de execução da marca. O objetivo é evitar escopo errado e expectativa desalinhada.",
-                    "Depende do tipo de projeto e da disponibilidade de informações. Antes de iniciar a execução, alinhamos diagnóstico, prioridades, escopo, responsáveis e próximos passos.",
-                    "Não prometemos resultado artificial ou crescimento instantâneo. Trabalhamos para construir clareza, consistência, direção e melhoria contínua com responsabilidade."
+                    "A TAG08 atua com estratégia, comunicação, design, conteúdo, tecnologia e processos. Algumas entregas são típicas de uma agência de marketing; a diferença está na forma de diagnosticar e organizar o caminho antes da execução.",
+                    "Não é necessário chegar sabendo qual solução contratar. O contexto inicial ajuda a identificar se o problema está em posicionamento, conteúdo, identidade, audiovisual, web, processos ou na combinação entre essas frentes.",
+                    "Existem soluções estruturadas, mas a recomendação considera momento, maturidade, capacidade de investimento e participação necessária do cliente. O objetivo é preservar aderência entre problema, escopo e expectativa.",
+                    "O início depende do tipo de projeto, das informações necessárias, da capacidade operacional e das etapas de alinhamento. Diagnóstico, escopo, responsáveis e dependências são organizados antes da execução.",
+                    "A TAG08 não trabalha com promessa de crescimento instantâneo ou resultado garantido. O compromisso está em método, direção, execução responsável, acompanhamento e melhoria contínua."
                   ])[activeFaq]}
                 </p>
               </div>
@@ -3930,9 +3938,9 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">PRÓXIMO PASSO</span>
-                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">Vamos entender o melhor caminho para a sua marca?</h4>
+                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">O melhor caminho começa pelo entendimento do momento atual.</h4>
                   <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
-                    Antes de propor qualquer solução, a TAG08 entende seu momento, seus desafios e suas prioridades para indicar um caminho mais claro e responsável.
+                    Antes de uma proposta, a TAG08 organiza o contexto: o que a empresa quer construir, o que está travando esse avanço e qual estrutura consegue sustentar a próxima etapa.
                   </p>
                 </div>
                 <a
@@ -3943,7 +3951,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   }}
                   className="group flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-all"
                 >
-                  <span>QUERO ENTENDER MEU MELHOR CAMINHO</span>
+                  <span>ENTENDER MEU MELHOR CAMINHO</span>
                   <ArrowUpRight className="w-4 h-4 text-black stroke-[2.5]" />
                 </a>
               </div>
