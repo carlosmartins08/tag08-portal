@@ -12,7 +12,6 @@ import type { RouteLocale } from "../../../config/routeRegistry";
 import { externalContentCopy } from "../../../i18n/externalContent";
 import HeroEditorialStage from "../../../components/HeroEditorialStage";
 import { Suspense, lazy } from "react";
-
 import heroTag08StrategyStage from "../../../assets/images/hero_tag08_strategy-stage.webp";
 import creativeLeaderPortrait from "../../../assets/images/creative_leader_portrait_1780449653164.jpg";
 import moodyClientPortrait from "../../../assets/images/moody_client_portrait_1780449811793.jpg";
@@ -701,7 +700,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
   const [activeDiagPhase, setActiveDiagPhase] = useState<"discovery" | "analysis" | "design">("discovery");
   const [hoveredPill, setHoveredPill] = useState<string | null>(null);
   const [youtubeVideos, setYoutubeVideos] = useState<OfficialYouTubeVideo[]>(YOUTUBE_VIDEOS);
-  const [gmbReviews, setGmbReviews] = useState<OfficialGoogleReview[]>(GMB_REVIEWS);
+  const [gmbReviews, setGmbReviews] = useState<OfficialGoogleReview[]>([]);
   const [contentSources, setContentSources] = useState<OfficialContentApiResponse["sources"]>({
     youtube: "fallback",
     googleBusiness: "fallback"
@@ -790,6 +789,15 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       cta: "Conhecer continuidade digital",
       slug: "/hospedagem-manutencao-sites"
     }
+  ];
+
+  const PORTFOLIO_CANDIDATES = [
+    "LavarRoupa S.A.",
+    "Alugue por Temporada",
+    "Centro de Olhos",
+    "LeVisage",
+    "Luciana Gadelha",
+    "Espaço Glau Campos"
   ];
 
   useEffect(() => {
@@ -897,12 +905,12 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
   }, []);
 
   useEffect(() => {
-    if (isHoveringGmb) return;
+    if (isHoveringGmb || visibleGmbReviews.length === 0) return;
     const interval = setInterval(() => {
       setActiveReview((prev) => (prev + 1) % visibleGmbReviews.length);
     }, 8500);
     return () => clearInterval(interval);
-  }, [isHoveringGmb]);
+  }, [isHoveringGmb, visibleGmbReviews.length]);
 
   const handleLinkClick = (page: string) => {
     onNavigate(page);
@@ -1498,8 +1506,8 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 { 
                   id: "discovery", 
                   step: "01",
-                  title: "Discovery", 
-                  badge: "Aproximação",
+                  title: "Entendimento",
+                  badge: "Leitura do momento",
                   desc: "Entendimento do momento atual da marca, seus canais, sua comunicação, sua operação e os principais sinais de desalinhamento.",
                   pills: [
                     { id: "idea", label: "Clareza de contexto" },
@@ -1509,8 +1517,8 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 { 
                   id: "analysis", 
                   step: "02",
-                  title: "Analysis", 
-                  badge: "Triagem",
+                  title: "Diagnóstico",
+                  badge: "Leitura de causas",
                   desc: "Leitura dos gargalos encontrados para separar sintomas aparentes de causas reais. Nem todo problema de marketing se resolve com mais conteúdo.",
                   pills: [
                     { id: "bottlenecks", label: "Causa real" }
@@ -1519,8 +1527,8 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 { 
                   id: "design", 
                   step: "03",
-                  title: "Delivery", 
-                  badge: "Blindagem",
+                  title: "Direção",
+                  badge: "Próximos passos",
                   desc: "Recomendação do caminho mais coerente para o momento da marca, com prioridades, próximos passos e limites claros.",
                   pills: [
                     { id: "solutions", label: "Prioridades" },
@@ -1581,7 +1589,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     {/* Tactics Pills inside the column */}
                     <div className="mt-6 space-y-2 relative z-20">
                       <span className="text-xs tag08-meta text-zinc-600 uppercase tracking-widest block font-bold">
-                        PÍLULAS DE ATUAÇÃO:
+                        PONTOS DE LEITURA:
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {phase.pills.map((p) => {
@@ -1655,7 +1663,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                         <div className="flex items-center gap-2">
                           <span className="w-2 h-2 rounded-full bg-brand-secondary animate-pulse" />
                           <span className="tag08-meta text-xs text-brand-secondary font-bold tracking-widest uppercase pb-0.5">
-                            FASE PRINCIPAL // MONITOR DE ALARME
+                            LEITURA DO MOMENTO
                           </span>
                         </div>
                         
@@ -1694,7 +1702,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                       
                       <div className="space-y-4">
                         <span className="tag08-meta text-xs text-zinc-500 font-bold tracking-widest uppercase block border-b border-white/[0.03] pb-2">
-                          DIAGNÓSTICO DETALHADO DOS SINTOMAS TÁTICOS ATIVOS
+                          SINAIS OBSERVADOS
                         </span>
 
                         {/* Responsive grid of cards for each symptom in this phase */}
@@ -1725,7 +1733,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                                   {/* Symptom title & Status header */}
                                   <div className="flex items-center justify-between gap-2">
                                     <span className={`font-sans text-xs font-bold uppercase ${isThisSymptomActive ? "text-brand-secondary" : "text-zinc-500"}`}>
-                                      GARGALOS // {symptom.label}
+                                      SINAL // {symptom.label}
                                     </span>
                                     <div className={`w-2 h-2 rounded-full ${isThisSymptomActive ? "bg-brand-secondary shadow-[0_0_8px_var(--color-brand-secondary)] animate-pulse" : "bg-red-500/40"}`} />
                                   </div>
@@ -1737,7 +1745,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
 
                                 {/* Consequences quote */}
                                 <div className="pt-3 border-t border-white/[0.02] space-y-1.5">
-                                  <span className="font-sans text-xs text-zinc-500 uppercase tracking-widest block">GRAVIDADE / CONSEQUÊNCIA OPERACIONAL</span>
+                                  <span className="font-sans text-xs text-zinc-500 uppercase tracking-widest block">IMPACTO POSSÍVEL</span>
                                   <p className={`text-xs font-sans leading-relaxed italic border-l-2 pl-2.5 py-0.5 rounded ${
                                     isThisSymptomActive 
                                       ? "bg-red-950/10 border-red-500/35 text-red-300" 
@@ -1789,7 +1797,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       </section>
 
       {/* INDEPENDENT SECTION 2.2: SUTILEZA OPERACIONAL // DIREÇÃO SÊNIOR */}
-      <section id="metodologia-preview" className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
+      {false && <section id="metodologia-preview" className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
         {/* Glow corner decors */}
         <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-brand-secondary/[0.01] rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-white/[0.01] rounded-full blur-[140px] pointer-events-none" />
@@ -1946,7 +1954,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
 
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* SECTION 3 - NOSSO DIFERENCIAL (BENTO GRID PREMIUM INSPIRADO NO ACORDO VISUAL SELECIONADO) */}
       <section id="solucao" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
@@ -2064,9 +2072,8 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 {/* Header tag */}
                 <div className="relative z-10 flex justify-between items-center w-full">
                   <span className="tag08-meta text-xs text-brand-secondary tracking-widest uppercase font-extrabold bg-brand-secondary/10 px-2.5 py-1 rounded-full">
-                    Estúdio Operacional
+                    Centro de método
                   </span>
-                  <span className="text-zinc-500 font-sans text-xs">SÃO PAULO / BR</span>
                 </div>
 
                 {/* HERO DIGITAL ".T" CENTERING */}
@@ -2076,11 +2083,11 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   
                   {/* GIANT NEON BRANDING LETTER ".T" */}
                   <span className="font-display font-black text-9xl text-brand-secondary tracking-tighter drop-shadow-[0_15px_30px_rgba(var(--color-brand-secondary-rgb),0.35)] transform group-hover:scale-105 transition-transform duration-700">
-                    .T
+                    TAG08
                   </span>
                   
                   <span className="text-white tag08-meta text-xs tracking-widest font-black uppercase mt-4">
-                    TAG08 CONSÓRCIO
+                    Estratégia, conteúdo, tecnologia e processos
                   </span>
                 </div>
 
@@ -2088,7 +2095,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 <div className="relative z-10 pt-4 border-t border-white/5 space-y-2">
                   <h3 className="text-white font-display font-bold text-xs tracking-wider">Centro de método</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed">
-                    Nossa equipe conecta contexto, prioridade e entrega para que a decisão não fique solta depois da reunião.
+                    Direção clara para transformar contexto, prioridade e entrega em um caminho aplicável.
                   </p>
                 </div>
               </motion.div>
@@ -2104,13 +2111,13 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[135px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl group-hover:bg-brand-secondary/[0.02] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">03 // FLOW</span>
+                    <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">03 // PROCESSO</span>
                     <Wifi className="w-3.5 h-3.5 text-zinc-400 group-hover:text-brand-secondary transition-colors" />
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
-                    <span className="font-display font-black text-2xl text-white tracking-tighter block leading-none">ASSÍNCRONO</span>
-                    <p className="text-white font-display font-bold text-xs uppercase tracking-wider">Sincronia Total</p>
-                    <p className="text-zinc-500 text-xs leading-snug font-medium">Controle total via canais diretos e limpos.</p>
+                    <span className="font-display font-black text-2xl text-white tracking-tighter block leading-none">CONTINUIDADE</span>
+                    <p className="text-white font-display font-bold text-xs uppercase tracking-wider">PROCESSO E ACOMPANHAMENTO</p>
+                    <p className="text-zinc-500 text-xs leading-snug font-medium">Briefing, aprovação e documentação reduzem improviso ao longo do trabalho.</p>
                   </div>
                 </div>
 
@@ -2118,13 +2125,13 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[135px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl group-hover:bg-brand-secondary/[0.02] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">04 // TECH</span>
+                    <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">04 // TECNOLOGIA</span>
                     <Layers className="w-3.5 h-3.5 text-zinc-400 group-hover:text-brand transition-colors" />
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
-                    <span className="font-display font-black text-2xl text-white tracking-tighter block leading-none">ZERO NO-CODE</span>
-                    <p className="text-white font-display font-bold text-xs uppercase tracking-wider">TECNOLOGIA LIMPA</p>
-                    <p className="text-zinc-500 text-xs leading-snug font-medium">Código limpo, leve e rápido.</p>
+                    <span className="font-display font-black text-2xl text-white tracking-tighter block leading-none">FUNÇÃO CLARA</span>
+                    <p className="text-white font-display font-bold text-xs uppercase tracking-wider">TECNOLOGIA APLICADA</p>
+                    <p className="text-zinc-500 text-xs leading-snug font-medium">Ferramentas e desenvolvimento entram quando ajudam a cumprir uma função real.</p>
                   </div>
                 </div>
 
@@ -2139,12 +2146,12 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   <div className="w-9 h-9 rounded-full bg-white/[0.03] border border-white/[0.08] text-zinc-300 flex items-center justify-center group-hover:text-brand-secondary group-hover:border-brand-secondary/30 transition-all">
                     <Activity className="w-4 h-4 animate-pulse text-brand" />
                   </div>
-                  <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-extrabold">ANALYTICS ATIVO</span>
+                    <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-extrabold">ANÁLISE E AJUSTE</span>
                 </div>
                 <div className="mt-4 space-y-1">
-                  <h4 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">Decisões Guiadas por Dados</h4>
+                  <h4 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">Análise e melhoria contínua</h4>
                   <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
-                    Evitamos suposições estéreis. Fornecemos dashboards dinâmicos traduzindo cada tráfego, lead e conversão em crescimento tático palpável.
+                    Dados e aprendizados orientam ajustes, sem transformar uma métrica isolada em promessa de resultado.
                   </p>
                 </div>
               </motion.div>
@@ -2408,30 +2415,24 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 text-left">
             <div className="space-y-2">
               <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black block">
-                Prova precisa ser prova
+                Portfólio em validação editorial
               </span>
               <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient tracking-tight leading-none">
-                Projetos que mostram contexto, decisão e execução.
+                Repertório real, publicado com contexto e autorização.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
-                Projetos publicados nesta área devem mostrar contexto, problema, caminho adotado, entrega realizada e evidências que possam ser verificadas. Um case também tem valor quando demonstra qualidade de diagnóstico, coerência de decisão e capacidade de execução.
+                Cada case só entra nesta Home depois da validação de material, narrativa, direitos de uso e situação real do projeto. A curadoria evita transformar repertório em promessa.
               </p>
             </div>
-            <button
-              onClick={() => handleLinkClick("/casos/case-clinica-alphaville")}
-              className="text-xs font-sans text-brand-secondary hover:underline font-bold flex items-center justify-start md:justify-end gap-1.5 shrink-0 uppercase tracking-widest cursor-pointer"
-            >
-              Conhecer estudos de caso <ArrowRight className="w-3.5 h-3.5" />
-            </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PROOF_CASES_DATA.map((item) => (
-              <CaseStudyCard
-                key={item.id}
-                item={item}
-                onClick={() => handleLinkClick(`/casos/${item.id}`)}
-              />
+            {PORTFOLIO_CANDIDATES.map((name, index) => (
+              <article key={name} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-[28px] min-h-[180px] flex flex-col justify-between text-left">
+                <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black">{String(index + 1).padStart(2, "0")} // em validação</span>
+                <h3 className="font-display font-semibold text-lg text-white">{name}</h3>
+                <p className="text-zinc-500 text-xs leading-relaxed">Aguardando confirmação de material, direitos de publicação, narrativa e rota antes de ser apresentado como case.</p>
+              </article>
             ))}
           </div>
 
@@ -2439,7 +2440,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       </section>
 
       {/* SECTION 5 - TABELA DE PLANOS DE MÍDIAS SOCIAIS (REDESENHADA - INSPIRADO NO ACORDO VISUAL DO DEPOIMENTO DO CLIENTE) */}
-      <section id="planos-redes" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
+      {false && <section id="planos-redes" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
         {/* Luminous Container mimicking the uploaded design mockup but for Editorial strategy */}
         <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(var(--color-brand-rgb),0.18)] select-none">
           
@@ -2677,7 +2678,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
           </div>
 
         </div>
-      </section>
+      </section>}
 
       {/* SECTION 6 - METODOLOGIA */}
       <section id="metodologia" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-900/10 relative">
@@ -3058,7 +3059,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       </section>
 
       {/* SECTION 7 - DIFERENCIAIS */}
-      <section id="diferenciais" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-950">
+      {false && <section id="diferenciais" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-950">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-5 text-left space-y-4">
@@ -3116,7 +3117,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* SECTION 8 - INSTITUCIONAL CTA */}
       <section id="sobre-simples" className="border-b border-white/[0.04] bg-charcoal-900/10 px-6 py-16">
@@ -3141,7 +3142,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       </section>
 
       {/* PORTFÓLIO DE TESTEMUNHOS & CASOS DE CLIENTES (UNIFICADO - O CLIENTE DICTA A REVOLUÇÃO) */}
-      <section id="portfolio-marcas" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
+      {false && <section id="portfolio-marcas" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         
         {/* Editorial magazine background grid lines */}
         <div className="absolute inset-0 grid grid-cols-4 sm:grid-cols-8 h-full opacity-5 pointer-events-none">
@@ -3405,10 +3406,10 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
 
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* SECTION 8.5 - GOOGLE MY BUSINESS REVIEWS */}
-      <section id="avaliacoes-gmb" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-900/20 relative overflow-hidden">
+      {contentSources.googleBusiness === "live" && visibleGmbReviews.length > 0 && <section id="avaliacoes-gmb" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-900/20 relative overflow-hidden">
         {/* Subtle background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[120px] pointer-events-none" />
         
@@ -3609,7 +3610,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
           </div>
 
         </div>
-      </section>
+      </section>}
 
       {/* SECTION 9 - SEGURANÇA OPERACIONAL & DESIGNS HIGH-END (MATCHING USER REFERENCE DESIGN) */}
       <section id="prova" className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">

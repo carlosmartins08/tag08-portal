@@ -316,15 +316,15 @@ test.describe("regressões de responsividade e movimento", () => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBeTruthy();
   });
 
-  test("depoimentos não avançam sem interação explícita", async ({ page }) => {
+  test("diagnóstico não altera seleção sem interação explícita", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/servicos/gestao-de-redes-sociais", { waitUntil: "domcontentloaded" });
 
-    const selected = page.locator('button[aria-pressed="true"]').filter({ has: page.locator("img") }).first();
-    await selected.scrollIntoViewIfNeeded();
-    const before = await selected.getAttribute("aria-label");
+    const option = page.getByRole("button", { name: "Falta clareza", exact: true });
+    await option.scrollIntoViewIfNeeded();
+    await expect(option).toHaveAttribute("aria-pressed", "false");
     await page.waitForTimeout(7_000);
-    await expect(selected).toHaveAttribute("aria-label", before ?? "");
+    await expect(option).toHaveAttribute("aria-pressed", "false");
   });
 
   test("diagrama inicializa o traço sem aviso de valor indefinido", async ({ page }) => {

@@ -1,5 +1,24 @@
 # CHANGELOG - TAG08
 
+## 2026-09-02
+
+- Refinada `/servicos/gestao-de-redes-sociais` com as estruturas oficiais Start, Base e Performance, sem preços, volumes ou escopo universal.
+- Retiradas da rota as provas não validadas (`MiniCases` e `TrustTestimonialsSection`), o bloco stock de “especialista”, CTA intermediário e barra de confiança redundante.
+- Mantidos diagnóstico, tracking e WhatsApp; vídeo agora só exibe conteúdo oficial live e apresenta estado vazio neutro quando indisponível.
+- Revisados FAQ, limites de escopo, ciclo mensal, CTA final, encoding visível e metadados da rota.
+- Alinhado o hub `/servicos` ao Índice Oficial do portfólio: quatro categorias públicas substituíram a apresentação equivalente de oito ofertas históricas.
+- Retiradas apenas da promoção principal do hub as ofertas pendentes de validação comercial (Assessoria, Process Intelligence, Process Activation e Hospedagem); as rotas existentes foram preservadas.
+- Agrupados Reposicionamento Estratégico, Edição de Reels e Unidade Digital/E-commerce nas categorias públicas compatíveis, sem criar rotas, preços ou escopos novos.
+- Removidos marquee com texto corrompido, cópia de escopo, CTAs redundantes e `MiniCases` do hub por ausência de fonte de portfólio validada.
+- Atualizados FAQ, linguagem do método e metadados de `/servicos` para orientar a decisão antes da contratação.
+- Refinada a página `/sobre` sem redesign: equipe não validada foi convertida em competências conectadas; perfis, LinkedIns, marcas e marquee sem fonte institucional foram removidos.
+- Consolidada a seção de diferenciais, reduzida a parte inferior de crenças, corrigido o CTA final e atualizados os metadados de `/sobre`.
+- Removidos estados, handlers, constantes e imports sem consumidor em `Sobre.tsx`.
+- Consolidada a Home sem reconstrução visual: removidas da renderização as redundâncias de método, diferenciais, planos de redes e a segunda galeria de portfólio.
+- Ajustada a linguagem do diagnóstico e do bento de diferenciais para eliminar termos técnicos, promessas e estruturas institucionais não comprovadas.
+- Bloqueada a exibição de avaliações Google quando a integração não retorna conteúdo live; fallback editorial não é apresentado como prova real.
+- Registrado `docs/PROJECT_STATE.md` como checkpoint obrigatório para retomadas da Home e validação de cases.
+
 ## 2026-08-17
 
 - Adicionada a matriz de prontidao de localizacao: idiomas estrangeiros publicados precisam de revisao aprovada vinculada a assinatura do conteudo-fonte.

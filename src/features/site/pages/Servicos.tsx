@@ -1,18 +1,15 @@
-import { Check, ArrowRight, ArrowUpRight, ShieldCheck, Cpu, Sparkles, Settings2, Share2, TrendingUp, BarChart3, Award, Copy, Star, Calendar, Video } from "lucide-react";
+import { Check, ArrowRight, ArrowUpRight, Award } from "lucide-react";
 import { useState } from "react";
-import { motion } from "motion/react";
 import Image from "next/image";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
-import MiniCases from "../../../components/MiniCases";
 
 interface ServicosProps {
   onNavigate: (page: string) => void;
 }
 
 export default function Servicos({ onNavigate }: ServicosProps) {
-  const [copiedDomainSlug, setCopiedDomainSlug] = useState<string | null>(null);
   const [activeFaq, setActiveFaq] = useState(0);
 
   const handleLinkClick = (page: string) => {
@@ -20,147 +17,63 @@ export default function Servicos({ onNavigate }: ServicosProps) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleCopyDomainScope = (domain: any) => {
-    const scopeLines = domain.subservices.map((sub: any) => `- ${sub.name}: ${sub.desc}`).join("\n");
-    const textToCopy = `TAG08 - Escopo de Atendimento: ${domain.title}\n${domain.description}\n\nEntregáveis:\n${scopeLines}\n\nPara mais informações, fale com a nossa equipe em tag08.com.br`;
-    navigator.clipboard.writeText(textToCopy).then(() => {
-      setCopiedDomainSlug(domain.slug);
-      setTimeout(() => {
-        setCopiedDomainSlug(null);
-      }, 2000);
-    }).catch(err => {
-      console.warn("Clipboard copy failure: ", err);
-    });
-  };
-
   const SERVICE_DOMAINS = [
     {
       num: "01",
-      title: "Assessoria de Marketing Estratégico",
-      slug: "strategy",
-      icon: Award,
-      tags: ["Posicionamento", "Mensagem", "Prioridades", "Diagnóstico"],
-      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=1200",
+      title: "Presença Digital Recorrente",
+      tags: ["Start", "Base", "Performance", "Consistência"],
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
       subservices: [
-        { name: "Leitura do momento", desc: "Entendimento do cenário atual, gargalos e capacidade real de execução." },
-        { name: "Mensagem e proposta de valor", desc: "Organização da comunicação para deixar claro o que a marca faz e por que importa." },
-        { name: "Prioridades de ação", desc: "Definição do que vem primeiro para evitar dispersão e esforço sem direção." },
-        { name: "Direção de canais", desc: "Recomendação do melhor ponto de partida entre presença, conteúdo, site ou operação." }
+        { name: "Plano Start", desc: "Estrutura de entrada para quem precisa começar com direção e participa mais ativamente da execução." },
+        { name: "Plano Base", desc: "Planejamento e produção mensal para negócios ativos que precisam de consistência." },
+        { name: "Plano Performance", desc: "Operação recorrente mais integrada para marcas que precisam de maior profundidade em conteúdo, vídeo, publicação e acompanhamento." }
       ],
-      description: "Para marcas que precisam organizar posicionamento, mensagem e prioridades antes de investir em ações soltas.",
-      ctaPage: "/servicos/assessoria-marketing-digital-estrategico"
+      description: "Para profissionais e negócios que precisam organizar uma rotina de comunicação compatível com seu momento, sua maturidade e sua capacidade de participação.",
+      ctaLabel: "CONHECER PRESENÇA DIGITAL",
+      ctaPage: "/servicos/gestao-de-redes-sociais"
     },
     {
       num: "02",
-      title: "Gestão de Redes Sociais",
-      slug: "presence",
-      icon: Share2,
-      tags: ["Linha editorial", "Frequência", "Narrativa", "Consistência"],
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+      title: "Marca e Posicionamento",
+      tags: ["Identidade", "Reposicionamento", "Percepção", "Coerência"],
+      image: "https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?auto=format&fit=crop&q=80&w=1200",
       subservices: [
-        { name: "Linha editorial", desc: "Temas e mensagens definidos para sustentar a presença ao longo do tempo." },
-        { name: "Calendário possível", desc: "Organização de frequência com base na realidade operacional da marca." },
-        { name: "Narrativa de marca", desc: "Conteúdo com intenção e coerência entre o que se publica e o posicionamento." },
-        { name: "Acompanhamento de consistência", desc: "Ajustes contínuos para manter clareza e continuidade na comunicação." }
+        { name: "Identidade Visual Digital", desc: "Sistema visual para organizar a expressão da marca nos canais digitais." },
+        { name: "Reposicionamento Estratégico", desc: "Leitura e redefinição de percepção, público, proposta de valor, narrativa e direção quando o problema vai além da estética." },
+        { name: "Clareza de aplicação", desc: "Definição de critérios para que a direção construída consiga ser aplicada com consistência." }
       ],
-      description: "Para negócios que querem deixar de postar por obrigação e construir conteúdo com frequência, narrativa, intenção comercial e consistência.",
-      ctaPage: "/servicos/gestao-de-redes-sociais"
+      description: "Para marcas cuja expressão visual ou posicionamento já não representam adequadamente o valor, o público ou a fase atual do negócio.",
+      ctaLabel: "CONHECER MARCA E POSICIONAMENTO",
+      ctaPage: "/servicos/branding-identidade"
     },
     {
       num: "03",
       title: "Produção Audiovisual",
-      slug: "audiovisual",
-      icon: Video,
-      tags: ["Imagem", "Fala", "Bastidores", "Conteúdo"],
+      tags: ["Captação", "Reels", "Direção", "Conteúdo"],
       image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1200",
       subservices: [
-        { name: "Vídeos institucionais", desc: "Apresentação da marca, de sua história e dos diferenciais que sustentam seu valor." },
-        { name: "Cobertura de eventos", desc: "Registro de momentos, falas e bastidores para ampliar o valor do encontro depois que ele acontece." },
-        { name: "Conteúdo para especialistas", desc: "Captação e edição de falas, entrevistas e aulas com presença profissional." },
-        { name: "Formatos para redes", desc: "Cortes e vídeos curtos alinhados à linha editorial e ao posicionamento da marca." }
+        { name: "Captação Audiovisual Profissional", desc: "Planejamento e produção de imagens e falas com direção compatível com o uso previsto." },
+        { name: "Edição de Reels", desc: "Transformação de material bruto em conteúdo curto adequado à linha editorial e ao canal." },
+        { name: "Conteúdo para especialistas", desc: "Estrutura audiovisual para falas, entrevistas, aulas, bastidores ou conteúdo recorrente." }
       ],
-      description: "Para empresas, especialistas e eventos que precisam transformar presença, ambiente e conhecimento em vídeos com clareza e função estratégica.",
+      description: "Para empresas, especialistas e projetos que precisam transformar conhecimento, presença, ambiente ou material bruto em comunicação audiovisual com função definida.",
+      ctaLabel: "CONHECER AUDIOVISUAL",
       ctaPage: "/servicos/producao-audiovisual"
     },
     {
       num: "04",
-      title: "Branding e Identidade",
-      slug: "branding",
-      icon: Sparkles,
-      tags: ["Identidade visual", "Linguagem", "Estética", "Coerência"],
-      image: "https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?auto=format&fit=crop&q=80&w=1200",
-      subservices: [
-        { name: "Identidade visual", desc: "Organização de elementos visuais para refletir melhor o momento da marca." },
-        { name: "Linguagem e tom", desc: "Ajuste da forma de falar para ampliar clareza e confiança." },
-        { name: "Materiais de apoio", desc: "Piezas visuais para manter consistência em canais e apresentações." },
-        { name: "Percepção coerente", desc: "Ajustes para aproximar a aparência da marca do valor que ela entrega." }
-      ],
-      description: "Para marcas que precisam alinhar identidade, linguagem, estética e materiais ao momento atual do negócio.",
-      ctaPage: "/servicos/branding-identidade"
-    },
-    {
-      num: "05",
-      title: "Desenvolvimento Web",
-      slug: "web",
-      icon: Settings2,
-      tags: ["Site próprio", "Landing page", "Catálogo", "Credibilidade"],
+      title: "Web e Unidade Digital",
+      tags: ["Sites", "Landing pages", "E-commerce", "Estrutura digital"],
       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200",
       subservices: [
-        { name: "Site institucional", desc: "Estrutura digital para apresentar a marca com mais clareza e credibilidade." },
-        { name: "Landing pages", desc: "Páginas específicas para apoiar campanhas, ofertas e conversas comerciais." },
-        { name: "Catálogo e apresentação", desc: "Organização de informações para facilitar compreensão e navegação." },
-        { name: "Apoio ao comercial", desc: "Base digital pensada para sustentar o próximo passo de contato e conversão." }
+        { name: "Desenvolvimento Web Estratégico", desc: "Sites e páginas construídos a partir de objetivo, público, conteúdo, jornada e função." },
+        { name: "Landing pages", desc: "Estruturas específicas para campanhas, ofertas ou objetivos definidos." },
+        { name: "Unidade Digital e E-commerce", desc: "Diagnóstico e modelagem da operação antes do desenvolvimento quando a empresa pretende vender online." },
+        { name: "Prontidão operacional", desc: "Catálogo, estoque, logística, atendimento, políticas e responsabilidades precisam ser suficientemente claros antes da tecnologia." }
       ],
-      description: "Para negócios que precisam de site, landing page, catálogo ou estrutura digital para apresentar melhor, gerar credibilidade e apoiar o comercial.",
+      description: "Para negócios que precisam de um canal próprio para apresentar, gerar confiança, apoiar conversão ou estruturar uma operação digital.",
+      ctaLabel: "CONHECER WEB E UNIDADE DIGITAL",
       ctaPage: "/servicos/desenvolvimento-web"
-    },
-    {
-      num: "06",
-      title: "Process Intelligence",
-      slug: "intelligence",
-      icon: Cpu,
-      tags: ["Mapeamento", "Rotina", "Fluxos", "Gargalos"],
-      image: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=1200",
-      subservices: [
-        { name: "Mapeamento de rotinas", desc: "Leitura do que acontece hoje para entender onde o trabalho se perde." },
-        { name: "Gargalos e dependências", desc: "Identificação do que trava a operação e força improviso." },
-        { name: "Responsabilidades", desc: "Organização de quem faz o quê para reduzir ruído e retrabalho." },
-        { name: "Fluxos e decisões", desc: "Estruturação de caminhos para o time decidir com mais critério." }
-      ],
-      description: "Para empresas que precisam mapear rotinas, gargalos, responsabilidades, fluxos e decisões antes de propor melhorias ou automações.",
-      ctaPage: "/servicos/process-intelligence"
-    },
-    {
-      num: "07",
-      title: "Process Activation",
-      slug: "activation",
-      icon: BarChart3,
-      tags: ["Implantação", "Governança", "Ferramentas", "Acompanhamento"],
-      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=1200",
-      subservices: [
-        { name: "Implantação de processos", desc: "Transformação do diagnóstico em prática operacional." },
-        { name: "Rotina e ferramenta", desc: "Ajuste de cadência e recursos para que o processo saia do papel." },
-        { name: "Automação possível", desc: "Identificação do que pode ser automatizado sem romper a operação." },
-        { name: "Governança e revisão", desc: "Acompanhamento para sustentar o que foi implementado." }
-      ],
-      description: "Para negócios que já identificaram gargalos e precisam transformar diagnóstico em implantação, rotina, ferramenta, automação ou governança.",
-      ctaPage: "/servicos/process-activation"
-    },
-    {
-      num: "08",
-      title: "Hospedagem e Manutenção",
-      slug: "maintenance",
-      icon: ShieldCheck,
-      tags: ["Hospedagem", "Manutenção", "Atualização", "Monitoramento"],
-      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1200",
-      subservices: [
-        { name: "Hospedagem ativa", desc: "Estrutura estável para manter o site no ar com segurança." },
-        { name: "Manutenção técnica", desc: "Ajustes e cuidados recorrentes depois da publicação." },
-        { name: "Atualizações de segurança", desc: "Correções e atualizações para reduzir risco operacional." },
-        { name: "Monitoramento contínuo", desc: "Acompanhamento para manter disponibilidade e continuidade." }
-      ],
-      description: "Para marcas que precisam manter seus sites ativos, atualizados, monitorados e acompanhados com responsabilidade.",
-      ctaPage: "/hospedagem-manutencao-sites"
     }
   ];
 
@@ -188,15 +101,15 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 Soluções para organizar presença, posicionamento e crescimento com direção.
               </h1>
               <p className="text-zinc-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl">
-                A TAG08 estrutura serviços de estratégia, conteúdo, design, tecnologia e processos para marcas que precisam sair do improviso e construir uma presença digital mais clara, consistente e responsável.
+                A TAG08 organiza soluções de presença digital recorrente e projetos estratégicos de marca, conteúdo, audiovisual, web e unidade digital. A recomendação depende do gargalo, da maturidade e da capacidade de execução do negócio.
               </p>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-xl">
-                Antes de indicar qualquer solução, entendemos o momento do negócio, os gargalos atuais e a capacidade de execução para recomendar o caminho mais coerente.
+                Antes de indicar uma solução, a TAG08 procura entender o momento atual, o que está travando o avanço e qual estrutura consegue sustentar o próximo passo.
               </p>
 
               {/* Grid tags of our core expertise */}
               <div className="flex flex-wrap gap-2 pt-2">
-                {["Estratégia", "Conteúdo", "Tecnologia", "Processos"].map((tag, idx) => (
+                {["Presença", "Marca", "Audiovisual", "Web"].map((tag, idx) => (
                   <span
                     key={idx}
                     className="tag08-meta text-xs tracking-wider uppercase px-3 py-1.5 border border-white/5 rounded-full bg-white/[0.02] text-zinc-300 hover:border-brand/40 hover:text-brand transition-colors cursor-default"
@@ -223,7 +136,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                     }
                     handleLinkClick("/servicos");
                   }}
-                  className="inline-flex items-center justify-center gap-2 bg-black/5 border border-black/10 text-black hover:bg-black/10 tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
+                  className="inline-flex items-center justify-center gap-2 bg-white/[0.02] border border-white/10 text-white hover:bg-white/[0.08] tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
                 >
                   VER SOLUÇÕES
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -242,32 +155,40 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                       <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
                       <span className="tag08-meta text-xs uppercase tracking-widest text-brand-secondary">MAPA DE SOLUÇÕES</span>
                     </div>
-                    <span className="font-sans text-xs text-zinc-600">TAG08_BOARD</span>
+                    <span className="font-sans text-xs text-zinc-600">QUATRO CAMINHOS</span>
                   </div>
 
                   <div className="space-y-5">
                     <div className="flex items-baseline justify-between">
                       <div>
-                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Estratégia</h4>
-                        <p className="text-zinc-300 text-xs mt-0.5">Clareza para decidir o que vem antes da execução.</p>
+                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Presença</h4>
+                        <p className="text-zinc-300 text-xs mt-0.5">Rotina de comunicação compatível com o momento do negócio.</p>
                       </div>
-                      <span className="font-display font-black text-3xl text-white">Estratégia</span>
+                      <span className="font-display font-black text-3xl text-white">Presença</span>
                     </div>
 
                     <div className="flex items-baseline justify-between border-t border-white/[0.04] pt-4">
                       <div>
-                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Conteúdo</h4>
-                        <p className="text-zinc-300 text-xs mt-0.5">Linha editorial para construir presença com intenção.</p>
+                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Marca</h4>
+                        <p className="text-zinc-300 text-xs mt-0.5">Expressão e posicionamento coerentes com a fase atual.</p>
                       </div>
-                      <span className="font-display font-black text-3xl text-brand-secondary">Conteúdo</span>
+                      <span className="font-display font-black text-3xl text-brand-secondary">Marca</span>
                     </div>
 
                     <div className="flex items-baseline justify-between border-t border-white/[0.04] pt-4">
                       <div>
-                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Tecnologia</h4>
-                        <p className="text-zinc-300 text-xs mt-0.5">Estruturas digitais para apoiar comunicação e operação.</p>
+                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Audiovisual</h4>
+                        <p className="text-zinc-300 text-xs mt-0.5">Vídeo com direção e função definida para a comunicação.</p>
                       </div>
-                      <span className="font-display font-black text-3xl text-brand">Tecnologia</span>
+                      <span className="font-display font-black text-3xl text-brand">Audiovisual</span>
+                    </div>
+
+                    <div className="flex items-baseline justify-between border-t border-white/[0.04] pt-4">
+                      <div>
+                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Web</h4>
+                        <p className="text-zinc-300 text-xs mt-0.5">Canal próprio para apresentar, converter ou operar no digital.</p>
+                      </div>
+                      <span className="font-display font-black text-3xl text-white">Web</span>
                     </div>
                   </div>
 
@@ -276,8 +197,8 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                       <Award className="w-4.5 h-4.5" />
                     </div>
                     <div>
-                      <h5 className="tag08-meta text-xs font-bold text-white tracking-wider leading-none">Processos</h5>
-                      <p className="text-zinc-400 text-xs mt-1 leading-relaxed">Organização para reduzir improviso e sustentar crescimento.</p>
+                      <h5 className="tag08-meta text-xs font-bold text-white tracking-wider leading-none">Diagnóstico</h5>
+                      <p className="text-zinc-400 text-xs mt-1 leading-relaxed">O ponto de partida depende do problema real, não do serviço pedido inicialmente.</p>
                     </div>
                   </div>
                 </div>
@@ -286,30 +207,6 @@ export default function Servicos({ onNavigate }: ServicosProps) {
           </div>
         </div>
       </section>
-
-      {/*=========================================
-          INFINITE ROTATING MARQUEE BAR WITH TAGS
-         =========================================*/}
-      <div className="py-5 border-y border-white/[0.04] bg-charcoal-900/40 relative z-20 overflow-hidden select-none">
-        <div className="animate-marquee whitespace-nowrap flex items-center gap-12 text-xs tag08-meta font-bold uppercase tracking-widest text-zinc-400">
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PRESENÒ⬡A DIGITAL INTELIGENTE</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> ENGENHARIA WEB INSTANTNEA</span>
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> CONTROL OPERATIONAL SYSTEMS</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> DIRECIONAMENTO CONCEITUAL SÒBRIO</span>
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PROCESSOS E OPERAÇÃO</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> PRESENÇA COM DIREÇÃO</span>
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> BRANDING E IDENTIDADE</span>
-          
-          {/* Repeat once more to secure contiguous slide chain */}
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PRESENÒ⬡A DIGITAL INTELIGENTE</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> ENGENHARIA WEB INSTANTNEA</span>
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> CONTROL OPERATIONAL SYSTEMS</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> DIRECIONAMENTO CONCEITUAL SÒBRIO</span>
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> PROCESSOS E OPERAÇÃO</span>
-          <span className="flex items-center gap-3"><span className="text-brand-secondary font-black text-base">*</span> PRESENÇA COM DIREÇÃO</span>
-          <span className="flex items-center gap-3"><span className="text-brand font-black text-base">*</span> BRANDING E IDENTIDADE</span>
-        </div>
-      </div>
 
       {/*=========================================
           INTELLIGENT DIAGNOSTIC PROBLEM MATRIX
@@ -342,34 +239,34 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
             {[
               {
-                problem: "Minha marca comunica pouco ou comunica sem clareza",
-                solution: "Quando o valor existe, mas o público ainda não entende bem o que a marca faz, para quem faz e por que deveria confiar.",
-                slug: "/servicos/assessoria-marketing-digital-estrategico",
-                label: "Estratégia e posicionamento"
-              },
-              {
-                problem: "Tenho presença digital, mas falta consistência",
-                solution: "Quando a empresa posta, aparece e tenta manter canais ativos, mas a comunicação ainda não tem linha editorial clara.",
+                problem: "Preciso começar ou organizar uma presença digital recorrente.",
+                solution: "Quando a oferta existe, mas conteúdo, frequência, linha editorial e produção ainda dependem de improviso.",
                 slug: "/servicos/gestao-de-redes-sociais",
-                label: "Conteúdo e redes sociais"
+                label: "Presença digital recorrente"
               },
               {
-                problem: "Preciso melhorar percepção visual e autoridade",
-                solution: "Quando a marca precisa parecer mais alinhada ao valor que entrega, com identidade, linguagem e materiais mais coerentes.",
+                problem: "Minha marca já não representa bem o momento do negócio.",
+                solution: "Quando identidade, percepção, mensagem ou posicionamento precisam acompanhar uma nova fase, público ou proposta de valor.",
                 slug: "/servicos/branding-identidade",
-                label: "Branding e audiovisual"
+                label: "Marca e posicionamento"
+              },
+              {
+                problem: "Preciso transformar conhecimento, presença ou acontecimentos em vídeo.",
+                solution: "Quando captação, fala, bastidores ou material bruto precisam ganhar direção e formato para comunicação digital.",
+                slug: "/servicos/producao-audiovisual",
+                label: "Audiovisual"
               },
               {
                 problem: "Meu site ou estrutura digital não acompanha o negócio",
-                solution: "Quando a presença digital precisa de uma base própria para apresentar, converter, organizar informações ou apoiar o comercial.",
+                solution: "Quando a empresa precisa organizar apresentação, credibilidade, conversão ou validar uma estrutura própria para operar no digital.",
                 slug: "/servicos/desenvolvimento-web",
-                label: "Desenvolvimento web"
+                label: "Web e unidade digital"
               },
               {
-                problem: "A operação cresceu e ficou pesada",
-                solution: "Quando processos, responsabilidades, aprovações e decisões dependem de improviso, memória e esforço excessivo.",
-                slug: "/servicos/process-intelligence",
-                label: "Processos e operação"
+                problem: "Ainda não sei qual é o principal gargalo.",
+                solution: "Quando o problema aparece em várias frentes e ainda não está claro o que precisa vir primeiro.",
+                slug: "/contato",
+                label: "Diagnóstico inicial"
               }
             ].map((item, idx) => (
               <div
@@ -411,7 +308,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       {/*==========================================================
           THE HEROIC LIST: "DISCOVER OUR DIGITAL SOLUTIONS" (01 to 05)
          ==========================================================*/}
-      <section className="px-4 sm:px-6 md:px-8 py-20 relative z-10 border-b border-white/[0.04]">
+      <section id="servicos-principais" className="px-4 sm:px-6 md:px-8 py-20 relative z-10 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-16">
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
@@ -427,9 +324,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
           </div>
 
           <div className="space-y-12 max-w-5xl mx-auto">
-            {SERVICE_DOMAINS.map((domain, index) => {
-              const IconComponent = domain.icon;
-              return (
+            {SERVICE_DOMAINS.map((domain, index) => (
                 <div
                   key={index}
                   className="bg-charcoal-900 border border-white/[0.06] rounded-[24px] p-6 sm:p-8 lg:p-12 relative overflow-hidden group hover:border-brand-secondary/20 transition-all duration-300 shadow-xl flex flex-col justify-between"
@@ -443,7 +338,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                       {domain.num}.
                     </span>
                     <div className="flex items-center gap-1.5 tag08-meta text-xs text-zinc-500 uppercase tracking-widest">
-                      <span>CAMINHO ATIVO // {domain.slug}</span>
+                      <span>CAMINHO {domain.num}</span>
                       <div className="w-1.5 h-1.5 rounded-full bg-brand-secondary/40" />
                     </div>
                   </div>
@@ -478,7 +373,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                       {/* Scope Deliverables Bullet List */}
                       <div className="space-y-4 pt-4 border-t border-white/[0.04]">
                         <p className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest leading-none font-bold">
-                          Entregas e escopo:
+                          Caminhos dentro desta frente
                         </p>
                         <div className="grid gap-3.5 pl-1">
                           {domain.subservices.map((sub, subIdx) => (
@@ -501,26 +396,8 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                           onClick={() => handleLinkClick(domain.ctaPage)}
                           className="inline-flex items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-xs text-white tag08-meta font-semibold uppercase tracking-widest py-3 px-6 rounded-xl transition-all duration-300 group/btn shrink-0"
                         >
-                          <span>ENTENDER SOLUÇÃO</span>
+                          <span>{domain.ctaLabel}</span>
                           <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform" />
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => handleCopyDomainScope(domain)}
-                          className="inline-flex items-center gap-2 bg-white/[0.02] hover:bg-white/[0.08] border border-white/[0.05] hover:border-white/20 text-xs text-zinc-300 hover:text-white font-sans font-medium uppercase tracking-widest py-3 px-5 rounded-xl transition-all duration-300 shrink-0 select-none cursor-pointer"
-                        >
-                          {copiedDomainSlug === domain.slug ? (
-                            <>
-                              <Check className="w-3.5 h-3.5 text-brand" />
-                              <span className="text-brand text-xs">Escopo Copiado</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="w-3.5 h-3.5" />
-                              <span className="text-xs">Copiar Escopo</span>
-                            </>
-                          )}
                         </button>
                       </div>
 
@@ -534,7 +411,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                             fill
                             sizes="(max-width: 1024px) 100vw, 50vw"
                             src={domain.image}
-                            alt={domain.title}
+                            alt=""
                             className="object-cover grayscale brightness-[0.4] group-hover/img:scale-105 group-hover/img:grayscale-0 group-hover/img:brightness-[0.6] transition-all duration-700 ease-out"
                             referrerPolicy="no-referrer"
                           />
@@ -542,7 +419,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent pointer-events-none" />
                           <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-2.5 py-1.5 rounded-lg text-zinc-400 font-sans text-xs flex items-center gap-1">
                             <span className="w-1 h-1 rounded-full bg-brand" />
-                            <span>TAG08_MAP</span>
+                            <span>SOLUÇÃO TAG08</span>
                           </div>
                         </div>
                       </ThreeDimensionalTilt>
@@ -550,8 +427,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                   </div>
                 </div>
-              );
-            })}
+            ))}
           </div>
 
         </div>
@@ -560,46 +436,36 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       {/*==========================================================
           THE STRATEGIC MATRIX OF COMBINED VALUE (User Screen 2 Style)
          ==========================================================*/}
-      <section id="servicos-principais" className="px-4 sm:px-6 md:px-8 py-20 relative z-10 border-b border-white/[0.04] bg-neutral-900/10">
+      <section className="px-4 sm:px-6 md:px-8 py-20 relative z-10 border-b border-white/[0.04] bg-neutral-900/10">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="space-y-3 text-left max-w-2xl">
             <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
               Combinação de frentes
             </span>
             <h3 className="font-display font-medium text-3xl sm:text-4xl text-white tracking-tighter leading-none">
-              Nem todo projeto precisa de tudo. Mas algumas soluções funcionam melhor juntas.
+              Alguns problemas atravessam mais de uma frente.
             </h3>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Depois do diagnóstico, a TAG08 identifica quais frentes precisam atuar em conjunto para resolver o problema real da marca. A combinação certa evita escopo excessivo, retrabalho e investimento fora de prioridade.
+              Uma única solução pode ser suficiente. Quando o problema envolve mais de uma dimensão, a combinação precisa nascer do diagnóstico — não da tentativa de ampliar o escopo.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
             {[
               {
-                title: "Posicionamento + Conteúdo",
-                desc: "Quando a marca precisa organizar mensagem, temas, linha editorial e presença recorrente.",
-                tag: "Combinação útil"
+                title: "Posicionamento + presença recorrente",
+                desc: "Quando a marca precisa organizar mensagem e percepção antes de sustentar uma rotina de comunicação.",
+                tag: "Quando fizer sentido"
               },
               {
-                title: "Branding + Desenvolvimento Web",
-                desc: "Quando a percepção visual e a estrutura digital precisam transmitir mais clareza e confiança.",
-                tag: "Base e aparência"
+                title: "Identidade + web",
+                desc: "Quando expressão visual e estrutura digital precisam evoluir de forma coerente.",
+                tag: "Quando fizer sentido"
               },
               {
-                title: "Audiovisual + Redes Sociais",
-                desc: "Quando imagem, fala, bastidores e conteúdo precisam ganhar frequência e intenção editorial.",
-                tag: "Conteúdo aplicado"
-              },
-              {
-                title: "Process Intelligence + Process Activation",
-                desc: "Quando a empresa precisa entender gargalos e transformar diagnóstico em rotina, ferramenta ou governança.",
-                tag: "Operação organizada"
-              },
-              {
-                title: "Estratégia + Operação",
-                desc: "Quando o desafio não é apenas comunicar melhor, mas organizar prioridades, decisões e execução.",
-                tag: "Direção completa"
+                title: "Audiovisual + presença recorrente",
+                desc: "Quando vídeo precisa fazer parte de uma linha editorial contínua, e não funcionar como produção isolada.",
+                tag: "Quando fizer sentido"
               }
             ].map((item, idx) => (
               <div
@@ -628,9 +494,6 @@ export default function Servicos({ onNavigate }: ServicosProps) {
         </div>
       </section>
 
-      {/* Trust validation client logos section */}
-      <MiniCases onNavigate={onNavigate} />
-
       {/* SECTION - WORK SYSTEM (WhatsApp Neon Callout inspired by screenshot) */}
       <section className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
         <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(var(--color-brand-rgb),0.18)] select-none">
@@ -642,33 +505,33 @@ export default function Servicos({ onNavigate }: ServicosProps) {
               fill
               sizes="(max-width: 1024px) 100vw, 42vw"
               src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800"
-              alt="TAG08 Directors Partnership"
+              alt=""
               className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
                 <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
-                  ACORDO CLARO
+                  CONTEXTO
                 </span>
                 <span className="font-sans text-xs text-white/40 tracking-wider">
-                  TAG08.v3
+                  DIREÇÃO TAG08
                 </span>
               </div>
               <div className="space-y-1.5 opacity-30 select-none">
                 <div className="font-display font-extrabold text-[1.8rem] text-white/40 tracking-widest leading-none uppercase select-none">
-                  alinhamento_claro
+                  escopo definido
                 </div>
                 <div className="font-display font-extrabold text-[1.5rem] text-white/20 tracking-widest leading-none uppercase select-none pl-6">
-                  execucao_visivel
+                  execução acompanhada
                 </div>
               </div>
               <div className="flex justify-between items-end">
                 <span className="font-sans text-xs text-white/40 tracking-wider">
-                  ETAPAS CLARAS
+                  EXECUÇÃO
                 </span>
                 <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
-                  PROCESSO ATIVO
+                  ACOMPANHAMENTO
                 </span>
               </div>
             </div>
@@ -726,20 +589,13 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 ))}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 pt-2 relative z-10">
+              <div className="flex pt-2 relative z-10">
                 <button
                   onClick={() => handleLinkClick("/contato")}
                   className="inline-flex items-center justify-center gap-2 bg-brand text-black hover:bg-brand-dark tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
                 >
                   FALAR COM A TAG08
                   <ArrowUpRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => handleLinkClick("/servicos")}
-                  className="inline-flex items-center justify-center gap-2 bg-black/5 border border-black/10 text-black hover:bg-black/10 tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
-                >
-                  VER SOLUÇÕES
-                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -773,10 +629,10 @@ export default function Servicos({ onNavigate }: ServicosProps) {
               <div className="space-y-3 pt-4">
                 {([
                   { id: 0, title: "PONTO DE PARTIDA" },
-                  { id: 1, title: "PACOTES" },
+                  { id: 1, title: "SOLUÇÕES" },
                   { id: 2, title: "COMBINAÇÃO" },
-                  { id: 3, title: "TEMPO" },
-                  { id: 4, title: "RESULTADO" }
+                  { id: 3, title: "PROCESSO" },
+                  { id: 4, title: "RESULTADOS" }
                 ]).map((item) => (
                   <button
                     key={item.id}
@@ -807,7 +663,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 fill
                 sizes="(max-width: 1024px) 100vw, 34vw"
                 src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800"
-                alt="TAG08 Meeting"
+                alt=""
                 className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
               />
               <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
@@ -817,37 +673,37 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 </svg>
               </div>
               <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
-                SYS // INTEGRATIONS
+                ORIENTAÇÃO
               </div>
 
               <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left font-sans">
                 <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
                   {([
                     "PONTO DE PARTIDA",
-                    "PACOTES",
+                    "SOLUÇÕES",
                     "COMBINAÇÃO",
-                    "TEMPO",
-                    "RESULTADO"
+                    "PROCESSO",
+                    "RESULTADOS"
                   ])[activeFaq]}
                 </span>
 
                 <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
                   {([
                     "Preciso saber qual serviço contratar antes de falar com a TAG08?",
-                    "A TAG08 trabalha com pacotes prontos?",
-                    "Posso contratar apenas uma solução específica?",
+                    "A TAG08 trabalha com estruturas prontas?",
+                    "Posso contratar apenas uma solução?",
                     "Por que o diagnóstico vem antes da proposta?",
-                    "A TAG08 promete resultado com os serviços?"
+                    "A TAG08 garante resultados?"
                   ])[activeFaq]}
                 </h4>
 
                 <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
-                    "Não. O primeiro passo é entender o momento da sua marca. A partir do diagnóstico, indicamos se faz mais sentido começar por estratégia, conteúdo, identidade, site, audiovisual, processos ou manutenção.",
-                    "Temos soluções estruturadas, mas a recomendação não é automática. O escopo depende do problema real, da maturidade da marca, da urgência e da estrutura disponível para executar.",
-                    "Sim. Quando a necessidade está clara, uma frente específica pode ser suficiente. Quando o problema envolve várias áreas, a TAG08 pode recomendar uma combinação de soluções.",
-                    "Porque nem todo problema de presença digital se resolve com mais conteúdo, mais design, mais mídia ou mais tecnologia. O diagnóstico evita escopo errado, expectativa desalinhada e investimento fora de prioridade.",
-                    "Não prometemos crescimento instantâneo ou resultado artificial. Trabalhamos para construir clareza, consistência, direção e melhoria contínua com responsabilidade."
+                    "Não. O primeiro passo é entender o momento do negócio e o principal gargalo. A partir disso, a TAG08 avalia se o caminho envolve presença recorrente, marca e posicionamento, audiovisual, web, unidade digital ou uma combinação coerente.",
+                    "Existem soluções e produtos definidos, mas a recomendação não é automática. Momento, maturidade, capacidade de investimento e participação necessária do cliente influenciam a indicação.",
+                    "Sim. Quando uma única frente resolve o problema identificado, não há motivo para ampliar o escopo. Combinações só fazem sentido quando o diagnóstico mostra dependência entre diferentes necessidades.",
+                    "Porque o pedido inicial nem sempre corresponde ao problema real. Diagnóstico reduz risco de escopo errado, expectativa desalinhada e investimento fora de prioridade.",
+                    "Não. A TAG08 trabalha com método, direção e execução responsável. Resultado comercial também depende de oferta, mercado, atendimento, operação, investimento e outras variáveis que não estão sob controle de uma única empresa."
                   ])[activeFaq]}
                 </p>
               </div>
@@ -857,27 +713,20 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">ORIENTAÇÃO</span>
-                  <h4 className="text-white font-semibold text-sm leading-snug font-display">Escolha melhor antes de avançar</h4>
+                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">CRITÉRIO</span>
+                  <h4 className="text-white font-semibold text-sm leading-snug font-display">A solução vem depois do entendimento.</h4>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    A TAG08 organiza o ponto de partida para evitar escolhas apressadas e escopos desalinhados.
+                    O hub apresenta caminhos possíveis. A recomendação final depende de contexto, maturidade e capacidade de execução.
                   </p>
                 </div>
-                <button
-                  onClick={() => handleLinkClick("/")}
-                  className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
-                >
-                  <span>VOLTAR</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                </button>
               </div>
 
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">PRÓXIMO PASSO</span>
-                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">Quer entender o melhor caminho?</h4>
+                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">O melhor caminho começa pelo entendimento do momento atual.</h4>
                   <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
-                    Antes de propor qualquer solução, a TAG08 entende seu momento, seus desafios e suas prioridades.
+                    A conversa inicial organiza contexto, prioridade e fit antes da proposta.
                   </p>
                 </div>
                 <a
@@ -907,32 +756,19 @@ export default function Servicos({ onNavigate }: ServicosProps) {
               Próximo passo
             </span>
             <h3 className="font-display font-medium text-xl sm:text-2xl text-white tracking-tight leading-none">
-              Vamos entender qual solução faz sentido para a sua marca?
+              A solução certa precisa fazer sentido antes da contratação.
             </h3>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Antes de propor um serviço, a TAG08 entende seu momento, seus desafios e suas prioridades para indicar um caminho mais claro, coerente e responsável.
+              A TAG08 procura entender contexto, maturidade, prioridade e capacidade de execução antes de recomendar uma solução.
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+          <div className="flex shrink-0">
             <button
               onClick={() => handleLinkClick("/contato")}
               className="bg-brand-secondary hover:bg-brand hover:scale-105 duration-300 text-black font-black text-xs font-sans px-7 py-4 rounded-xl transition-all shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.15)] cursor-pointer"
             >
               QUERO ENTENDER MEU MELHOR CAMINHO
-            </button>
-            <button
-              onClick={() => {
-                const target = document.getElementById("servicos-principais");
-                if (target) {
-                  target.scrollIntoView({ behavior: "smooth" });
-                  return;
-                }
-                handleLinkClick("/servicos");
-              }}
-              className="bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black text-xs font-sans px-7 py-4 rounded-xl transition-all shrink-0 cursor-pointer"
-            >
-              VOLTAR PARA SOLUÇÕES
             </button>
           </div>
         </div>

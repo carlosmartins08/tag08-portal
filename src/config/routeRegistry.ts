@@ -66,9 +66,9 @@ export const routeRegistry: RouteDefinition[] = [
     includeInSitemap: true,
     changefreq: "daily",
     priority: "1.0",
-    title: "TAG08 | Marketing Estratégico, Posicionamento e Performance",
+    title: "TAG08 | Estratégia Digital, Conteúdo, Web e Processos",
     description:
-      "Agência de marketing estratégico focada em posicionamento, estruturação de processos e performance. Transformamos presença digital de marcas que querem crescer com direção."
+      "A TAG08 ajuda empresas a organizar posicionamento, conteúdo, redes sociais, sites e processos para crescer no digital com clareza, método e execução responsável."
   },
   {
     key: "sobre",
@@ -78,9 +78,9 @@ export const routeRegistry: RouteDefinition[] = [
     includeInSitemap: true,
     changefreq: "weekly",
     priority: "0.8",
-    title: "Sobre a TAG08 | Clareza e Estratégia para Marcas com Propósito",
+    title: "Sobre a TAG08 | Estratégia, método e execução responsável",
     description:
-      "Conheça a TAG08. Trazemos clareza, direção e consistência para marcas comprometidas com seu próprio propósito de crescimento sustentável."
+      "Conheça a TAG08, empresa que conecta estratégia, conteúdo, tecnologia e processos para organizar presença digital com clareza, método e execução responsável."
   },
   {
     key: "servicos",
@@ -90,9 +90,9 @@ export const routeRegistry: RouteDefinition[] = [
     includeInSitemap: true,
     changefreq: "weekly",
     priority: "0.9",
-    title: "Soluções e Serviços | TAG08 Marketing Estratégico",
+    title: "Serviços TAG08 | Redes Sociais, Marca, Vídeo e Web",
     description:
-      "Descubra como transformar presença digital em posicionamento, estrutura e performance através de nossas soluções integradas.",
+      "Conheça as soluções da TAG08 para presença digital recorrente, identidade e reposicionamento, audiovisual, sites e unidade digital.",
     isServicePage: true
   },
   {
@@ -160,9 +160,9 @@ export const routeRegistry: RouteDefinition[] = [
     includeInSitemap: true,
     changefreq: "weekly",
     priority: "0.8",
-    title: "Gestão de Redes Sociais | Conteúdo, Estratégia e Posicionamento - TAG08",
+    title: "Gestão de Redes Sociais Estratégica | TAG08",
     description:
-      "Desenvolvemos o posicionamento ideal para sua marca nas redes sociais com planejamento editorial estratégico e narrativas autorais que engajam e convertem.",
+      "Planejamento editorial, conteúdo, Reels e acompanhamento para marcas que precisam de presença digital consistente, organizada e com menos improviso.",
     isServicePage: true
   },
   {
