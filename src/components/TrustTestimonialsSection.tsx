@@ -6,7 +6,6 @@ import { TRUST_REVIEWS } from "../content/googleReviews";
 
 export default function TrustTestimonialsSection() {
   const [activeReview, setActiveReview] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
   const [viewportWidth, setViewportWidth] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
@@ -16,16 +15,6 @@ export default function TrustTestimonialsSection() {
     window.addEventListener("resize", updateViewportWidth);
     return () => window.removeEventListener("resize", updateViewportWidth);
   }, []);
-
-  useEffect(() => {
-    if (isHovering || prefersReducedMotion) return;
-
-    const interval = window.setInterval(() => {
-      setActiveReview((prev) => (prev + 1) % TRUST_REVIEWS.length);
-    }, 6500);
-
-    return () => window.clearInterval(interval);
-  }, [isHovering, prefersReducedMotion]);
 
   const isLargeScreen = viewportWidth >= 1024;
   const currentReview = TRUST_REVIEWS[activeReview];
@@ -68,18 +57,14 @@ export default function TrustTestimonialsSection() {
                   {currentSourceLabel}
                 </span>
               </div>
-              <p className="tag08-meta text-zinc-500 mt-1">
+              <p className="tag08-meta text-zinc-400 mt-1">
                 A confianca se sustenta no acompanhamento, na clareza e na coerencia da entrega.
               </p>
             </div>
           </div>
         </div>
 
-        <div
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pt-4"
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pt-4">
           <div className="lg:col-span-3 w-full overflow-hidden h-[170px] sm:h-[195px] lg:h-[500px] relative flex items-center lg:items-start select-none">
             <motion.div
               animate={
@@ -100,6 +85,8 @@ export default function TrustTestimonialsSection() {
                     key={review.name}
                     type="button"
                     onClick={() => setActiveReview(index)}
+                    aria-pressed={isActive}
+                    aria-label={`Selecionar depoimento de ${review.name}`}
                     className={`shrink-0 cursor-pointer transition-all duration-500 overflow-hidden relative rounded-2xl sm:rounded-[22px] flex items-center justify-center ${
                       isActive
                         ? "w-[105px] h-[140px] sm:w-[120px] sm:h-[160px] lg:w-[135px] lg:h-[180px] border-2 border-brand-secondary shadow-[0_4px_30px_rgba(var(--color-brand-secondary-rgb),0.2)] scale-105 z-10 opacity-100 grayscale-0"
@@ -159,7 +146,7 @@ export default function TrustTestimonialsSection() {
                         <h4 className="text-white font-display font-semibold text-sm">
                           {currentReview.name}
                         </h4>
-                        <p className="text-zinc-500 font-sans text-xs mt-0.5">
+                        <p className="text-zinc-400 font-sans text-xs mt-0.5">
                           {currentReview.role} • {currentReview.time}
                         </p>
                       </div>

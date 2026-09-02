@@ -1,15 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
-import { 
-  Check, ArrowRight, ArrowUpRight, BarChart3, Users, Settings, 
-  ShieldCheck, Cpu, Sparkles, Clock, Zap, Award, Target, 
-  LineChart, ChevronDown, MessageSquare, LineChart as ChartIcon, Eye
-} from "lucide-react";
-import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
+import { ArrowRight, ArrowUpRight, Cpu, Sparkles, Zap, Target, LineChart, MessageSquare, Settings } from "lucide-react";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import MiniCases from "../../../components/MiniCases";
+import TrustTestimonialsSection from "../../../components/TrustTestimonialsSection";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
 import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
 
@@ -175,7 +171,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
   ];
 
   return (
-    <div className="bg-charcoal-950 text-white min-h-screen pt-28 pb-20 relative overflow-hidden">
+    <div className="bg-charcoal-950 text-white min-h-screen pb-20 relative overflow-hidden">
       {/* Dynamic Ambient Background Elements */}
       <div className="absolute top-[6%] left-[-15%] w-[620px] h-[620px] bg-brand/[0.015] rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-15%] w-[620px] h-[620px] bg-brand/[0.02] rounded-full blur-[150px] pointer-events-none" />
@@ -183,7 +179,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
       {/* Floating 3D Geometric mesh for tech authority decoration */}
       <Subtle3DCanvas intensity={1.4} className="absolute right-[-10%] top-[4%] w-[490px] h-[490px] opacity-[0.38] mix-blend-screen hidden lg:block" />
 
-      <section className="px-4 sm:px-6 md:px-8 pt-10 sm:pt-14 pb-16 sm:pb-20 border-b border-white/[0.04] text-left relative z-10">
+      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] text-left relative z-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
           <div className="lg:col-span-8 space-y-5">
             <span className="inline-flex items-center gap-2 rounded-full border border-brand-secondary/20 bg-brand-secondary/5 px-3 py-1.5 tag08-meta text-xs font-black uppercase tracking-widest text-brand-secondary">
@@ -202,6 +198,14 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                 </span>
               ))}
             </div>
+            <button
+              type="button"
+              onClick={() => handleLinkClick("/contato")}
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-brand px-5 py-3 text-xs tag08-meta font-black uppercase tracking-widest text-black transition-transform hover:-translate-y-0.5 hover:bg-brand-dark"
+            >
+              Solicitar diagnóstico
+              <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
 
           <div className="lg:col-span-4 rounded-3xl border border-white/[0.06] bg-charcoal-900/80 p-5 sm:p-6 space-y-4">
@@ -216,7 +220,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
               onClick={() => handleLinkClick('/contato')}
               className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 text-xs tag08-meta font-black uppercase tracking-widest text-black transition-colors hover:bg-brand-dark"
             >
-              Solicitar diagnóstico
+              Entender o melhor caminho
               <ArrowUpRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -226,7 +230,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
       {/*=========================================
           COMPARISON MATRIX
          =========================================*/}
-      <section className="px-6 md:px-8 py-20 bg-charcoal-900/15 border-b border-white/[0.04] text-left relative z-10">
+      <section className="tag08-section px-4 sm:px-6 md:px-8 bg-charcoal-900/15 border-b border-white/[0.04] text-left relative z-10">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-3 max-w-2xl">
             <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
@@ -288,148 +292,49 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
 
         </div>
       </section>
-      {/* INTERACTIVE INNOVATION: SIMULADOR DE SINERGIA DE CANAIS */}
-      <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-neutral-950 text-left relative overflow-hidden">
-        <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-brand/[0.015] rounded-full blur-[140px] pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto space-y-12 relative z-10">
-          <div className="space-y-3 max-w-3xl">
-            <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-semibold bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-              LEITURA DE PRIORIDADES
-            </span>
-            <h2 className="font-display font-medium text-3xl text-white tracking-tight">
-              Antes de combinar canais, entenda o que precisa ser priorizado.
+      {/* SECTION 3 - ESCOPO: a página explica a oferta antes de pedir dados. */}
+      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-neutral-950 text-left relative overflow-hidden">
+        <div className="absolute top-[20%] right-[-10%] h-[500px] w-[500px] rounded-full bg-brand/[0.015] blur-[140px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto space-y-10 relative z-10">
+          <div className="tag08-section__header">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">O que organizamos</span>
+            <h2 className="tag08-section__heading font-display font-black text-3xl sm:text-4xl text-white">
+              Antes de combinar canais, organizamos a base da decisão.
             </h2>
-            <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-              Nem toda marca precisa ativar todos os canais ao mesmo tempo. A assessoria ajuda a identificar quais frentes fazem sentido agora, quais podem esperar e quais dependem de estrutura antes da execução.
+            <p className="tag08-section__copy text-zinc-400 text-sm font-sans">
+              A assessoria conecta posicionamento, conteúdo, canais e operação. Nem toda frente precisa acontecer agora; a escolha depende do contexto e da capacidade real de execução.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-8 text-left">
-              <div className="space-y-6">
-                <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-semibold block pb-3 border-b border-white/[0.05]">
-                  MAPA DE PRIORIDADES DE MARKETING
-                </span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { icon: Target, title: "Posicionamento e mensagem", description: "Clareza sobre o que a marca faz, para quem faz e por que deve ser escolhida." },
+              { icon: MessageSquare, title: "Conteúdo e relacionamento", description: "Linha editorial e conversas que ajudam o público a entender a marca." },
+              { icon: LineChart, title: "Canais e conversão", description: "Site, redes, materiais e pontos de contato trabalhando com a mesma direção." },
+              { icon: Settings, title: "Operação e acompanhamento", description: "Responsáveis, revisão e rotina para sustentar a execução sem improviso." }
+            ].map((item) => {
+              const Icon = item.icon;
 
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs tag08-meta text-zinc-300 font-bold uppercase tracking-wider">
-                      Leitura inicial:
-                    </label>
-                    <span className="text-sm font-sans text-brand-secondary font-black bg-brand-secondary/10 px-2.5 py-0.5 rounded-lg border border-brand-secondary/20">
-                      Contexto
-                    </span>
+              return (
+                <article key={item.title} className="tag08-surface-card rounded-3xl border p-6 space-y-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/5 bg-zinc-950 text-brand">
+                    <Icon className="h-5 w-5" />
                   </div>
-                  <input 
-                    type="range" 
-                    id="adv-spend"
-                    aria-label="Investimento mensal em midia"
-                    min="2000" 
-                    max="50000" 
-                    step="1000" 
-                    defaultValue="5000"
-                    className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-brand-secondary"
-                  />
-                  <div className="flex items-center justify-between text-xs font-sans text-zinc-500">
-                    <span>Estrutura</span>
-                    <span>Direção</span>
-                    <span>Prioridade</span>
-                  </div>
-                </div>
-
-                <div className="space-y-3 pt-3 border-t border-white/[0.05]">
-                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">FRENTES AVALIADAS:</span>
-                  
                   <div className="space-y-2">
-                    {[
-                      { id: "positioning", label: "Posicionamento e mensagem" },
-                      { id: "content", label: "Conteúdo e relacionamento" },
-                      { id: "channels", label: "Canais e conversão" },
-                      { id: "operations", label: "Operação e acompanhamento" }
-                    ].map((pilar) => {
-                      return (
-                        <label key={pilar.id} className="flex items-center gap-3 p-3 bg-white/[0.01] border border-white/[0.04] rounded-xl cursor-pointer hover:bg-white/[0.02]">
-                          <input 
-                            type="checkbox" 
-                            id={`chk-${pilar.id}`}
-                            defaultChecked={pilar.id === "positioning"}
-                            className="rounded border-zinc-700 bg-zinc-900 text-brand focus:ring-brand"
-                          />
-                          <span className="text-xs text-zinc-300 font-sans font-medium">{pilar.label}</span>
-                        </label>
-                      );
-                    })}
+                    <h3 className="font-display text-sm font-black text-white">{item.title}</h3>
+                    <p className="text-xs leading-relaxed text-zinc-400">{item.description}</p>
                   </div>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] space-y-2">
-                <div className="flex items-center gap-2 text-brand">
-                  <Sparkles className="w-4 h-4 shrink-0" />
-                  <span className="text-xs tag08-meta font-black uppercase tracking-wider">LEITURA INICIAL</span>
-                </div>
-                <p className="text-xs text-zinc-400 leading-relaxed font-sans">
-                  O melhor caminho depende do equilíbrio entre clareza, estrutura e capacidade de execução.
-                </p>
-              </div>
-            </div>
-
-            <div className="lg:col-span-7 bg-[#09090b] border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
-
-              <div className="space-y-6 w-full">
-                <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
-                  Leitura qualitativa das frentes:
-                </span>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
-                    <span className="font-sans text-xs text-zinc-500 uppercase font-black block">Posicionamento e mensagem</span>
-                    <p className="text-white text-sm font-medium leading-relaxed">Quando a marca ainda precisa deixar mais claro o que faz, para quem faz e por que deve ser escolhida.</p>
-                  </div>
-
-                  <div className="p-5 rounded-2xl bg-brand-secondary/[0.02] border border-brand-secondary/10 space-y-1">
-                    <span className="font-sans text-xs text-brand-secondary/80 uppercase font-black block">Conteúdo e relacionamento</span>
-                    <p className="text-zinc-300 text-sm leading-relaxed">Quando a presença digital precisa de frequência, linha editorial e conexão com o público certo.</p>
-                  </div>
-
-                  <div className="p-5 rounded-2xl bg-emerald-500/[0.02] border border-emerald-500/10 space-y-1">
-                    <span className="font-sans text-xs text-emerald-500/80 uppercase font-black block">Canais e conversão</span>
-                    <p className="text-zinc-300 text-sm leading-relaxed">Quando site, landing page, WhatsApp, redes sociais ou materiais comerciais precisam trabalhar de forma mais integrada.</p>
-                  </div>
-
-                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
-                    <span className="font-sans text-xs text-zinc-500 uppercase font-black block">Operação e acompanhamento</span>
-                    <p className="text-zinc-300 text-sm leading-relaxed">Quando a execução depende de processo, responsáveis, revisão e melhoria contínua.</p>
-                  </div>
-                </div>
-
-                <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-5 space-y-4">
-                  <span className="font-sans text-xs text-zinc-500 uppercase font-bold block">Leitura inicial</span>
-                  <p className="text-zinc-300 text-sm leading-relaxed">
-                    Leitura inicial: o melhor caminho depende do equilíbrio entre clareza, estrutura e capacidade de execução.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 mt-6">
-                <span className="font-sans text-xs text-zinc-600">MAPA ORIENTADO POR PRIORIDADES // TAG08</span>
-                <button 
-                  onClick={() => onNavigate("/contato")}
-                  className="text-xs font-sans text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
-                >
-                  SOLICITAR LEITURA ESTRATÉGICA <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
       {/*=========================================
           THE 4 STRATEGIC MARKETING PILLARS
          =========================================*/}
-      <section className="px-6 md:px-8 py-20 border-b border-white/[0.04] relative z-10">
+      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] relative z-10">
         <div className="max-w-7xl mx-auto space-y-16">
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
@@ -511,7 +416,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
       {/*=========================================
           INTERACTIVE MARKETING AUDIT SIMULATOR
          =========================================*/}
-      <section id="diagnostic-audit" className="px-6 md:px-8 py-20 bg-charcoal-900/25 border-b border-white/[0.04] text-left relative z-10 scroll-mt-24">
+      <section id="diagnostic-audit" className="tag08-section px-4 sm:px-6 md:px-8 bg-charcoal-900/25 border-b border-white/[0.04] text-left relative z-10 scroll-mt-24">
         <div className="max-w-7xl mx-auto space-y-12">
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 max-w-5xl">
@@ -671,10 +576,12 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
       {/* MiniCases Validation block */}
       <MiniCases onNavigate={onNavigate} />
 
+      <TrustTestimonialsSection />
+
       {/*=========================================
           CTA FINAL + FAQ
          =========================================*/}
-      <section className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
+      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="rounded-[32px] sm:rounded-[40px] border border-white/[0.06] bg-black/45 overflow-hidden shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-12">
@@ -761,7 +668,10 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   {faqCategories.map((item) => (
                     <button
                       key={item.id}
+                      type="button"
                       onClick={() => setActiveFaq(item.id)}
+                      aria-expanded={activeFaq === item.id}
+                      aria-controls="assessoria-faq-panel"
                       className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all text-left group cursor-pointer ${
                         activeFaq === item.id
                           ? "bg-brand text-black border-brand shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.12)]"
@@ -798,7 +708,12 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   TAG08 // ASSESSORIA
                 </div>
 
-                <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left font-sans">
+                <div
+                  id="assessoria-faq-panel"
+                  role="region"
+                  aria-live="polite"
+                  className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left font-sans"
+                >
                   <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
                     {faqCategories[activeFaq].title}
                   </span>

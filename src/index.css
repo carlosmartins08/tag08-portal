@@ -144,31 +144,33 @@ h6 {
  * Public-facing headings use one family and real weights. The previous
  * display face made equivalent section titles look unrelated across pages.
  */
-main h1 {
-  font-family: var(--font-sans) !important;
-  font-size: clamp(2.75rem, 2rem + 2.2vw, 4.75rem) !important;
-  font-weight: 750 !important;
-  letter-spacing: -0.055em !important;
-  line-height: 0.98 !important;
-}
+@layer base {
+  main h1 {
+    font-family: var(--font-sans);
+    font-size: clamp(2.75rem, 2rem + 2.2vw, 4.75rem);
+    font-weight: 750;
+    letter-spacing: -0.055em;
+    line-height: 0.98;
+  }
 
-main h2 {
-  font-family: var(--font-sans) !important;
-  font-size: clamp(2rem, 1.55rem + 1.3vw, 2.875rem) !important;
-  font-weight: 700 !important;
-  letter-spacing: -0.045em !important;
-  line-height: 1.04 !important;
-}
+  main h2 {
+    font-family: var(--font-sans);
+    font-size: clamp(2rem, 1.55rem + 1.3vw, 2.875rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 1.04;
+  }
 
-main h3,
-main h4,
-main h5,
-main h6 {
-  font-family: var(--font-sans) !important;
-  font-synthesis: none;
-  font-weight: 700 !important;
-  letter-spacing: -0.025em !important;
-  line-height: 1.15 !important;
+  main h3,
+  main h4,
+  main h5,
+  main h6 {
+    font-family: var(--font-sans);
+    font-synthesis: none;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
 }
 
 /* Anchor targets must stop below the fixed navigation, not behind it. */
@@ -182,12 +184,12 @@ main section[id] {
  * keep the visual language coherent while legacy page markup is consolidated.
  */
 .tag08-meta {
-  font-family: var(--font-sans) !important;
-  font-size: var(--type-meta-size) !important;
+  font-family: var(--font-sans);
+  font-size: var(--type-meta-size);
   font-weight: 700;
-  line-height: var(--type-meta-leading) !important;
-  letter-spacing: 0.045em !important;
-  text-transform: none !important;
+  line-height: var(--type-meta-leading);
+  letter-spacing: 0.045em;
+  text-transform: none;
 }
 
 .tag08-system {
@@ -409,12 +411,6 @@ main section[id] {
 /* Resting scale shrinks a pointer target below the accessibility floor. */
 .tag08-page :is(button, a)[class*="scale-"] {
   transform: none !important;
-}
-
-.tag08-page .tag08-meta {
-  font-size: 0.75rem !important;
-  letter-spacing: 0.025em !important;
-  line-height: 1.45 !important;
 }
 
 .tag08-label {

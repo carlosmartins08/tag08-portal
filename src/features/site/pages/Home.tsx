@@ -2315,26 +2315,15 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 auto-rows-fr items-stretch gap-6 sm:gap-8 my-6">
               {MAPA_SOLUCOES_DATA.map((service, index) => {
                 const darkCard = index === 2 || index === 5;
-                const accentCard = index === 6;
-                // The desktop rhythm is deliberately balanced: 6+3+3, 3+6+3, then a final full-width moment.
-                // Tablet keeps equal cards so a wide card never leaves a stranded half-row.
-                const gridClass = [
-                  "lg:col-span-6",
-                  "lg:col-span-3",
-                  "lg:col-span-3",
-                  "lg:col-span-3",
-                  "lg:col-span-6",
-                  "lg:col-span-3",
-                  "md:col-span-2 lg:col-span-12"
-                ][index] ?? "lg:col-span-3";
+                // Six moments read best as three balanced pairs. The old 7-card rhythm
+                // left wide cards under-filled and narrow cards visually compressed.
+                const gridClass = "lg:col-span-6";
                 const cardBg = darkCard
                   ? "bg-zinc-900 border border-white/5"
-                  : accentCard
-                    ? "bg-brand-secondary/10 border border-brand-secondary/20"
-                    : "bg-zinc-50 border border-black/10";
+                  : "bg-zinc-50 border border-black/10";
                 const textColor = darkCard ? "text-white" : "text-black";
                 const subColor = darkCard ? "text-zinc-300" : "text-zinc-600";
-                const labelColor = darkCard ? "text-brand-secondary" : accentCard ? "text-zinc-700" : "text-zinc-500";
+                const labelColor = darkCard ? "text-brand-secondary" : "text-zinc-500";
 
                 return (
                   <motion.div
@@ -2342,7 +2331,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     data-testid="solution-map-card"
                     whileHover={{ y: -4, scale: 1.01 }}
                     transition={{ duration: 0.3 }}
-                    className={`${gridClass} ${cardBg} ${textColor} rounded-[32px] p-6 sm:p-8 lg:p-9 text-left relative overflow-hidden group h-full min-h-[21rem] sm:min-h-[22rem] flex flex-col`}
+                    className={`${gridClass} ${cardBg} ${textColor} rounded-[32px] p-6 sm:p-8 lg:p-9 text-left relative overflow-hidden group h-full min-h-[18rem] sm:min-h-[19rem] flex flex-col`}
                   >
                     {!darkCard && (
                       <div className="absolute inset-0 grid grid-cols-3 h-full opacity-[0.015] pointer-events-none">
@@ -2374,7 +2363,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                         </p>
                       </div>
 
-                      <div className="mt-8 flex w-full items-center justify-between gap-4 border-t border-current/10 pt-5">
+                      <div className="mt-6 flex w-full items-center justify-between gap-4 border-t border-current/10 pt-5">
                         <button
                           onClick={() => handleLinkClick(service.slug)}
                           className={`flex items-center gap-1.5 font-sans text-xs font-black uppercase tracking-widest cursor-pointer hover:underline ${darkCard ? "text-white" : "text-black"}`}
@@ -3129,46 +3118,25 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
         </div>
       </section>
 
-      {/* SECTION 8 - SOBRE A TAG08 */}
-      <section id="sobre-simples" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-900/10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6 relative">
-            <div className="absolute inset-0 bg-brand/5 blur-3xl rounded-full" />
-            <Image
-              width={600}
-              height={400}
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600"
-              alt="Reunião estratégica de equipe TAG08"
-              className="rounded-2xl border border-white/[0.08] shadow-2xl relative z-10 w-full h-auto"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-
-          <div className="lg:col-span-6 text-left space-y-6">
-            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-semibold">
-              Sobre a TAG08
-            </span>
-            <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient">
-              Direção para construir. Estrutura para crescer.
-            </h2>
-            <div className="text-zinc-300 text-sm sm:text-base space-y-4 leading-relaxed font-sans">
-              <p>
-                A TAG08 conecta estratégia, comunicação, design, tecnologia e processos para ajudar marcas a saírem do improviso e construírem uma presença digital mais clara, consistente e responsável.
-              </p>
-              <p className="text-zinc-400">
-                Nosso trabalho começa pelo entendimento do momento da marca e avança para soluções que organizam posicionamento, conteúdo, canais, sistemas e operação.
-              </p>
-            </div>
-            <div className="pt-2">
-              <button
-                onClick={() => handleLinkClick("/sobre")}
-                className="bg-brand text-black font-semibold text-xs font-sans px-6 py-3.5 rounded-lg hover:bg-brand-dark transition-all duration-200"
-              >
-                CONHECER A TAG08
-              </button>
-            </div>
-          </div>
+      {/* SECTION 8 - INSTITUCIONAL CTA */}
+      <section id="sobre-simples" className="border-b border-white/[0.04] bg-charcoal-900/10 px-6 py-16">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="tag08-meta text-xs font-semibold uppercase tracking-widest text-brand">
+            Sobre a TAG08
+          </span>
+          <h2 className="mt-3 font-display text-3xl font-medium text-gradient sm:text-4xl">
+            Conheça quem está por trás do trabalho.
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-zinc-400">
+            Veja a história, a equipe e os critérios que orientam as decisões da TAG08.
+          </p>
+          <button
+            type="button"
+            onClick={() => handleLinkClick("/sobre")}
+            className="mt-6 rounded-lg bg-brand px-6 py-3.5 font-sans text-xs font-semibold text-black transition-all duration-200 hover:bg-brand-dark"
+          >
+            CONHECER A TAG08
+          </button>
         </div>
       </section>
 
