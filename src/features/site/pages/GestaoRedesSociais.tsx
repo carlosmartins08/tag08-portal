@@ -166,6 +166,7 @@ interface SocialMediaProps {
 
 export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
   const [activeFaq, setActiveFaq] = useState(0);
+  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [diagnosticAnswers, setDiagnosticAnswers] = useState<Record<DiagnosticKey, DiagnosticAnswer>>({
     challenge: "",
     routine: "",
@@ -238,6 +239,7 @@ Canais usados: ${channelsLabel}
 Prioridade editorial: ${priorityLabel}
 Formatos desejados: ${formatsLabel}
 Momento da marca: ${momentLabel}
+Plano de interesse sinalizado: ${selectedPlan ?? "Ainda não indicado"}
 Nome: ${diagnosticName.trim()}
 WhatsApp: ${diagnosticWhatsapp.trim()}
 Consentimento: ${diagnosticConsent ? "Autorizado" : "Não autorizado"}
@@ -561,10 +563,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               Estruturas recorrentes
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white leading-tight">
-              Três estruturas para diferentes momentos da presença digital.
+              Escolha a estrutura que sua rotina consegue sustentar.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
-              Start, Base e Performance respondem a necessidades e níveis de participação diferentes. A indicação depende da maturidade da marca, da rotina necessária e da capacidade de sustentar o processo.
+              Start, Base e Performance respondem a necessidades e níveis de participação diferentes. O diagnóstico confirma a aderência antes da proposta.
             </p>
           </div>
 
@@ -573,23 +575,41 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               {
                 name: "Plano Start",
                 eyebrow: "ENTRADA ESTRATÉGICA",
+                stage: "INÍCIO ORIENTADO",
                 subtitle: "Para começar com direção e maior participação do cliente.",
                 desc: "Estrutura indicada para profissionais e pequenos negócios que precisam organizar uma presença inicial, mas conseguem assumir parte da rotina e normalmente a publicação.",
-                support: "Começar menor não significa começar sem critério."
+                includes: [
+                  "Direção inicial e linha editorial",
+                  "Produção prevista para o ciclo",
+                  "Participação do cliente em aprovações e publicação"
+                ],
+                support: "Evolua quando a rotina pedir produção e acompanhamento mais constantes."
               },
               {
                 name: "Plano Base",
                 eyebrow: "CONSISTÊNCIA MENSAL",
+                stage: "ROTINA CONSOLIDADA",
                 subtitle: "Para negócios ativos que precisam transformar comunicação improvisada em rotina.",
                 desc: "A TAG08 organiza planejamento e produção mensal para marcas que já possuem uma oferta ativa e precisam de consistência, linha editorial e continuidade.",
-                support: "Base não significa execução básica. Significa uma estrutura proporcional ao momento do negócio."
+                includes: [
+                  "Planejamento e produção mensal",
+                  "Linha editorial e rotina de revisão",
+                  "Acompanhamento conforme o escopo contratado"
+                ],
+                support: "Evolua quando mais canais e frentes exigirem coordenação."
               },
               {
                 name: "Plano Performance",
                 eyebrow: "OPERAÇÃO INTEGRADA",
+                stage: "COORDENAÇÃO AMPLIADA",
                 subtitle: "Para marcas em crescimento que precisam de maior coordenação entre planejamento e execução.",
                 desc: "Estrutura recorrente mais completa, indicada quando existe necessidade real de integrar conteúdo, vídeo, publicação, acompanhamento e análise com maior profundidade.",
-                support: "Performance não significa excesso de entrega. Significa maior integração, responsabilidade e profundidade operacional."
+                includes: [
+                  "Planejamento e produção integrados",
+                  "Conteúdo, vídeo e publicação quando previstos",
+                  "Coordenação e acompanhamento com maior profundidade"
+                ],
+                support: "A proposta confirma canais, capacidade e responsabilidades da operação."
               }
             ].map((plan) => (
               <motion.div
@@ -602,22 +622,37 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                     <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black max-w-max">
                       {plan.eyebrow}
                     </span>
-                    <span className="font-sans text-xs text-zinc-500 font-bold">PRESENÇA RECORRENTE</span>
+                    <span className="font-sans text-xs text-zinc-500 font-bold">{plan.stage}</span>
                   </div>
 
                   <h3 className="text-white font-display font-medium text-xl tracking-tight leading-none pt-2">{plan.name}</h3>
                   <p className="text-brand-secondary text-xs font-black uppercase tracking-[0.22em]">{plan.subtitle}</p>
                   <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">{plan.desc}</p>
+                  <div className="space-y-3 rounded-2xl border border-white/[0.04] bg-white/[0.01] p-4">
+                    <p className="tag08-meta text-xs font-black uppercase tracking-widest text-zinc-500">O que esta estrutura organiza</p>
+                    <ul className="space-y-2">
+                      {plan.includes.map((item) => (
+                        <li key={item} className="flex gap-2 text-xs font-sans leading-relaxed text-zinc-300">
+                          <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-secondary" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                   <p className="text-zinc-300 text-xs font-sans leading-relaxed border-l border-brand-secondary/30 pl-3">{plan.support}</p>
                 </div>
 
                 <div className="pt-6 border-t border-white/[0.04] mt-8">
                   <button
                     type="button"
-                    onClick={scrollToEditorialDiagnostic}
-                    className="group inline-flex items-center justify-center gap-2 rounded-full border border-brand-secondary/20 bg-brand-secondary/10 px-4 py-2 text-xs font-black uppercase tracking-widest text-brand-secondary transition-all duration-300 hover:bg-brand-secondary hover:text-black"
+                    onClick={() => {
+                      setSelectedPlan(plan.name);
+                      scrollToEditorialDiagnostic();
+                    }}
+                    aria-label={`Avaliar adequação ao ${plan.name}`}
+                    className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-brand-secondary/20 bg-brand-secondary/10 px-5 py-3 text-xs font-black uppercase tracking-widest text-brand-secondary transition-all duration-300 hover:bg-brand-secondary hover:text-black"
                   >
-                    <span>ENTENDER ADERÊNCIA</span>
+                    <span>AVALIAR {plan.name}</span>
                   </button>
                 </div>
               </motion.div>
@@ -792,6 +827,11 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
               Nem sempre o problema é postar pouco. Muitas vezes a presença digital trava por falta de linha editorial, frequência possível, clareza de mensagem, consistência visual ou processo de aprovação.
             </p>
+            {selectedPlan && (
+              <p className="border-l border-brand-secondary/40 pl-3 text-xs font-sans leading-relaxed text-zinc-300">
+                Você sinalizou interesse no <strong className="font-bold text-white">{selectedPlan}</strong>. O diagnóstico confirma se esta é a estrutura adequada ao momento da marca.
+              </p>
+            )}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">

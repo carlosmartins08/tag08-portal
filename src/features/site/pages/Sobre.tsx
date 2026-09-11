@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import { ArrowUpRight, ArrowRight, Target, Settings, BookOpen, FileCheck2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import ResilientImage from "../../../components/ResilientImage";
@@ -15,34 +16,67 @@ export default function Sobre({ onNavigate }: SobreProps) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-    const TILES_HERO = [
+  const TILES_HERO = [
     {
-      title: "Estratégia e direção",
-      description: "Diagnóstico, posicionamento, prioridades e coordenação ajudam a definir o que precisa acontecer antes da execução.",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
-      label: "DIREÇÃO",
-      support: "Contexto // decisão"
+      name: "Carlos Henrique Martins",
+      role: "Estrategista de negócios digitais",
+      title: "Estratégia e direção de negócio",
+      description: "Conecta objetivos comerciais, prioridades e soluções digitais para transformar o contexto do negócio em uma direção clara de projeto.",
+      image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=800",
+      photo: "/team/carlos-henrique-martins.jpg",
+      label: "ESTRATÉGIA",
+      support: "Negócios digitais // decisão"
     },
     {
-      title: "Conteúdo e expressão",
-      description: "Narrativa, redação, design e audiovisual transformam direção em comunicação compreensível e consistente.",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400",
+      name: "Ignacio Quiroz",
+      role: "Analista de marketing e comunicações",
+      title: "Marketing e comunicação",
+      description: "Organiza marca, segmentação e jornada do cliente para que a comunicação seja mais relevante, compreensível e orientada à conversão.",
+      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800",
+      photo: "/team/ignacio-quiroz.jpg",
       label: "COMUNICAÇÃO",
-      support: "Narrativa // presença"
+      support: "Marca // jornada // conversão"
     },
     {
-      title: "Tecnologia e experiência",
-      description: "Sites e estruturas digitais são construídos para cumprir uma função dentro da presença e da jornada do negócio.",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400",
+      name: "Pedro Félix",
+      role: "Analista de dados e desenvolvedor front-end",
+      title: "Dados e experiência digital",
+      description: "Une análise, planejamento e desenvolvimento front-end para transformar informação em decisões melhores e experiências digitais funcionais.",
+      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800",
+      photo: "/team/pedro-felix.jpg",
+      label: "DADOS & PRODUTO",
+      support: "Planejamento // front-end"
+    },
+    {
+      name: "Daniel Lopes",
+      role: "Gerente de infraestrutura de TI",
+      title: "Infraestrutura e continuidade",
+      description: "Apoia a base tecnológica com visão de operações, redes, servidores, nuvem e governança para dar segurança à entrega.",
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800",
+      photo: "/team/daniel-lopes.jpg",
       label: "TECNOLOGIA",
-      support: "Estrutura // experiência"
+      support: "Operações // governança"
+    }
+  ];
+
+  const COMPLEMENTARY_PROFILES = [
+    {
+      name: "Guilherme Gomes",
+      role: "Diretor de arte",
+      photo: "/team/guilherme-gomes.jpg",
+      description: "Define soluções visuais para campanhas e aplicações de marca, com atenção à hierarquia, estética e consistência das peças."
     },
     {
-      title: "Processos e continuidade",
-      description: "Fluxos, responsabilidades, documentação e acompanhamento ajudam a reduzir improviso e sustentar a execução.",
-      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400",
-      label: "OPERAÇÃO",
-      support: "Processo // continuidade"
+      name: "Amazing Design",
+      role: "Designer gráfico e motion designer",
+      photo: "/team/amazing-design.jpg",
+      description: "Desenvolve criativos para redes, mídia paga e motion, adaptando a linguagem visual ao formato e ao objetivo de cada peça."
+    },
+    {
+      name: "Andréia Braga",
+      role: "Colaboração de projeto",
+      photo: "/team/andreia-braga.jpg",
+      description: "Integra a rede de colaboradores acionada conforme a necessidade, o escopo e a etapa de cada projeto."
     }
   ];
 
@@ -199,9 +233,9 @@ export default function Sobre({ onNavigate }: SobreProps) {
           <div className="pt-12 sm:pt-16 border-t border-white/[0.04] space-y-8 text-left font-sans">
             <div className="space-y-2">
               <span className="tag08-meta text-xs text-brand tracking-widest block uppercase font-bold">COMPETÊNCIAS CONECTADAS</span>
-              <h3 className="font-display font-black text-white text-xl sm:text-2xl tracking-tight">Diferentes especialidades trabalham na mesma direção.</h3>
+              <h3 className="font-display font-black text-white text-xl sm:text-2xl tracking-tight">Pessoas com especialidades distintas, reunidas pela necessidade real de cada projeto.</h3>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed max-w-2xl font-medium">
-                A estrutura de cada projeto é organizada de acordo com o problema, o escopo e a capacidade necessária para diagnosticar, produzir, revisar e sustentar a entrega.
+                A composição não é fixa: estratégia, comunicação, dados, infraestrutura e criação entram quando ajudam a resolver o problema, produzir melhor e sustentar a entrega.
               </p>
             </div>
 
@@ -225,12 +259,21 @@ export default function Sobre({ onNavigate }: SobreProps) {
                     <span className="font-sans text-xs text-brand-secondary font-extrabold uppercase tracking-widest">{TILES_HERO[0].label}</span>
                   </div>
 
-                  <span className="tag08-meta text-xs text-zinc-500 font-bold uppercase tracking-wider">DIREÇÃO TAG08</span>
+                  <div className="flex items-center gap-2.5">
+                    <span className="tag08-meta text-xs text-zinc-500 font-bold uppercase tracking-wider hidden sm:block">{TILES_HERO[0].name}</span>
+                    <Image
+                      src={TILES_HERO[0].photo}
+                      alt={`Retrato de ${TILES_HERO[0].name}`}
+                      width={48}
+                      height={48}
+                      className="h-12 w-12 rounded-full border border-white/20 object-cover grayscale opacity-80 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100"
+                    />
+                  </div>
                 </div>
 
                 <div className="relative z-10 space-y-4 mt-auto">
                   <div className="space-y-1">
-                    <span className="font-sans text-xs text-brand block uppercase font-bold">{TILES_HERO[0].label}</span>
+                    <span className="font-sans text-xs text-brand block uppercase font-bold">{TILES_HERO[0].role}</span>
                     <h4 className="font-display font-black text-2xl sm:text-3xl text-white leading-none tracking-tight">{TILES_HERO[0].title}</h4>
                     <p className="text-brand-secondary text-xs tag08-meta uppercase tracking-wider pt-1">{TILES_HERO[0].support}</p>
                     <p className="text-zinc-400 text-xs leading-relaxed max-w-sm pt-2 italic">
@@ -264,19 +307,50 @@ export default function Sobre({ onNavigate }: SobreProps) {
                         <span className="w-1.5 h-1.5 rounded-full bg-brand" />
                         <span className="font-sans text-xs text-zinc-300 font-bold">{member.label}</span>
                       </div>
+                      <Image
+                        src={member.photo}
+                        alt={`Retrato de ${member.name}`}
+                        width={44}
+                        height={44}
+                        className="h-11 w-11 rounded-full border border-white/20 object-cover grayscale opacity-80 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100"
+                      />
 
                     </div>
 
                     <div className="relative z-10 space-y-3.5 mt-auto">
                       <div className="space-y-1">
-                        <span className="font-sans text-xs text-brand block uppercase font-bold">{member.label}</span>
-                        <h4 className="font-display font-black text-white text-base sm:text-lg leading-none tracking-tight">{member.title}</h4>
+                        <span className="font-sans text-xs text-brand block uppercase font-bold">{member.role}</span>
+                        <h4 className="font-display font-black text-white text-base sm:text-lg leading-none tracking-tight">{member.name}</h4>
                         <p className="text-zinc-350 text-xs font-sans font-medium leading-relaxed">{member.description}</p>
                         <p className="text-brand-secondary text-xs font-sans uppercase tracking-wider pb-1">{member.support}</p>
                       </div>
 
                     </div>
                   </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-white/[0.04] pt-6 sm:pt-8">
+              <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block mb-4">Especialidades complementares</span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {COMPLEMENTARY_PROFILES.map((profile) => (
+                  <article key={profile.name} className="rounded-2xl border border-white/[0.06] bg-white/[0.01] p-5 space-y-3">
+                    <div className="flex items-center gap-3">
+                      <Image
+                        src={profile.photo}
+                        alt={`Retrato de ${profile.name}`}
+                        width={44}
+                        height={44}
+                        className="h-11 w-11 shrink-0 rounded-full border border-white/15 object-cover grayscale opacity-75 transition-all duration-300 hover:grayscale-0 hover:opacity-100"
+                      />
+                      <div className="space-y-1">
+                        <p className="font-sans text-xs text-brand uppercase tracking-wider font-bold">{profile.role}</p>
+                        <h4 className="font-display font-black text-base text-white tracking-tight">{profile.name}</h4>
+                      </div>
+                    </div>
+                    <p className="text-zinc-400 text-xs leading-relaxed">{profile.description}</p>
+                  </article>
                 ))}
               </div>
             </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { ArrowRight, ArrowUpRight, Cpu, Sparkles, Zap, Target, LineChart, MessageSquare, Settings } from "lucide-react";
+import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import MiniCases from "../../../components/MiniCases";
@@ -146,6 +147,10 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const scrollToDiagnostic = () => {
+    document.getElementById("diagnostic-audit")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const faqCategories = [
     { id: 0, title: "O QUE É" },
     { id: 1, title: "ESCOPO" },
@@ -179,50 +184,87 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
       {/* Floating 3D Geometric mesh for tech authority decoration */}
       <Subtle3DCanvas intensity={1.4} className="absolute right-[-10%] top-[4%] w-[490px] h-[490px] opacity-[0.38] mix-blend-screen hidden lg:block" />
 
-      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] text-left relative z-10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
-          <div className="lg:col-span-8 space-y-5">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-secondary/20 bg-brand-secondary/5 px-3 py-1.5 tag08-meta text-xs font-black uppercase tracking-widest text-brand-secondary">
-              Assessoria de marketing estratégico
-            </span>
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black leading-[0.92] tracking-tighter text-white">
-              Direção de marketing antes de ampliar a execução.
-            </h1>
-            <p className="max-w-3xl text-sm sm:text-base leading-relaxed text-zinc-400">
-              A assessoria organiza contexto, prioridades, mensagem e próximos passos para que a marca pare de reagir por urgência e passe a decidir com mais critério.
-            </p>
-            <div className="flex flex-wrap gap-2 text-xs tag08-meta font-bold uppercase tracking-widest text-zinc-300">
-              {['Diagnóstico', 'Prioridades', 'Acompanhamento'].map((item) => (
-                <span key={item} className="rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1.5">
-                  {item}
-                </span>
-              ))}
+      {/* SECTION 1 - HERO: base compartilhada pelas páginas de serviço */}
+      <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-20 border-b border-white/[0.04] relative z-10">
+        <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center text-left">
+            <div className="lg:col-span-7 space-y-4">
+              <span className="inline-flex w-fit items-center rounded-lg bg-brand px-3 py-1 tag08-meta text-xs font-bold uppercase tracking-widest text-black">
+                Assessoria de marketing estratégico
+              </span>
+              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black leading-[0.98] tracking-tighter text-white">
+                Direção de marketing <span className="text-brand">antes de ampliar a execução.</span>
+              </h1>
             </div>
-            <button
-              type="button"
-              onClick={() => handleLinkClick("/contato")}
-              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-brand px-5 py-3 text-xs tag08-meta font-black uppercase tracking-widest text-black transition-transform hover:-translate-y-0.5 hover:bg-brand-dark"
-            >
-              Solicitar diagnóstico
-              <ArrowRight className="h-4 w-4" />
-            </button>
+            <div className="lg:col-span-5 space-y-5">
+              <p className="text-zinc-400 text-sm sm:text-base leading-relaxed font-sans">
+                A assessoria organiza contexto, prioridades, mensagem e próximos passos para que a marca pare de reagir por urgência e passe a decidir com mais critério.
+              </p>
+              <button
+                type="button"
+                onClick={scrollToDiagnostic}
+                className="inline-flex min-h-11 items-center gap-2 rounded-full bg-brand px-5 py-3 text-xs tag08-meta font-black uppercase tracking-widest text-black transition-transform hover:-translate-y-0.5 hover:bg-brand-dark"
+              >
+                Iniciar diagnóstico estratégico
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
           </div>
 
-          <div className="lg:col-span-4 rounded-3xl border border-white/[0.06] bg-charcoal-900/80 p-5 sm:p-6 space-y-4">
-            <div className="space-y-2">
-              <span className="tag08-meta text-xs font-black uppercase tracking-widest text-brand">Quando faz sentido</span>
-              <p className="text-sm leading-relaxed text-zinc-300">
-                Quando existem muitas frentes, mas ainda falta clareza sobre o que priorizar, comunicar e acompanhar.
-              </p>
+          <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px] overflow-visible">
+            <div className="relative aspect-[21/9] sm:aspect-[2.39/1] overflow-hidden rounded-[24px] sm:rounded-[36px] border border-white/[0.08] bg-charcoal-900 shadow-2xl group">
+              <Image
+                fill
+                sizes="100vw"
+                src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1600"
+                alt="Reunião de planejamento estratégico"
+                className="object-cover grayscale brightness-50 transition-transform duration-1000 group-hover:scale-[1.01]"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
+              <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="grid w-[58%] grid-cols-3 gap-3 opacity-45 sm:w-[46%]">
+                  {["Cenário", "Prioridades", "Plano"].map((label, index) => (
+                    <div key={label} className={`rounded-2xl border border-white/15 bg-black/30 p-3 backdrop-blur-sm ${index === 1 ? "translate-y-5" : ""}`}>
+                      <span className="block h-1.5 w-1.5 rounded-full bg-brand" />
+                      <span className="mt-5 block tag08-meta text-xs uppercase tracking-widest text-white/80">{label}</span>
+                      <span className="mt-2 block h-px w-full bg-white/25" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <button
+                  type="button"
+                  onClick={scrollToDiagnostic}
+                  className="inline-flex min-h-11 items-center gap-2 rounded-full border border-brand bg-brand px-6 py-3 text-xs tag08-meta font-black uppercase tracking-widest text-black transition-transform hover:scale-105 hover:bg-brand-dark"
+                >
+                  Entender meu momento atual
+                  <ArrowUpRight className="h-4 w-4 stroke-[2.5]" />
+                </button>
+              </div>
+              <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between gap-4 pointer-events-none">
+                <div className="space-y-1">
+                  <span className="tag08-meta text-xs font-bold uppercase tracking-widest text-brand">Assessoria TAG08</span>
+                  <p className="font-display text-xs sm:text-sm font-bold text-white">Diagnóstico, prioridades e direção de crescimento.</p>
+                </div>
+                <span className="hidden sm:inline-flex rounded-xl border border-white/10 bg-black/60 px-2.5 py-1.5 text-xs font-sans text-zinc-300">CLAREZA // PRIORIDADE</span>
+              </div>
             </div>
-            <button
-              type="button"
-              onClick={() => handleLinkClick('/contato')}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 text-xs tag08-meta font-black uppercase tracking-widest text-black transition-colors hover:bg-brand-dark"
-            >
-              Entender o melhor caminho
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </button>
+          </ThreeDimensionalTilt>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/[0.04] pt-6 pb-4 text-left">
+            {[
+              ["Diagnóstico", "Leitura do cenário, dos gargalos e das oportunidades."],
+              ["Prioridades", "Escolhas organizadas antes de multiplicar frentes."],
+              ["Direção", "Posicionamento, mensagem e canais em uma mesma lógica."],
+              ["Acompanhamento", "Decisões revisadas conforme a execução avança."]
+            ].map(([title, description], index) => (
+              <div key={title} className="space-y-2">
+                <span className={`block font-display text-2xl sm:text-3xl font-black ${index === 1 ? "text-brand" : "text-white"}`}>{title}</span>
+                <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">{description}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -246,9 +288,9 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-6 sm:p-8 space-y-6 relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-[1px] bg-red-500/10" />
+              <div className="absolute top-0 left-0 right-0 h-px bg-white/[0.08]" />
               <div className="flex items-center gap-2 text-zinc-500 tag08-meta text-xs uppercase tracking-widest">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-400/70" />
+                <span className="w-1.5 h-1.5 rounded-full bg-zinc-500" />
                 <span>Execução sem direção</span>
               </div>
               <h3 className="font-display font-bold text-lg sm:text-xl text-white leading-none">Quando tudo começa pela urgência</h3>
@@ -260,7 +302,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   "O esforço se espalha em várias frentes sem um critério claro de foco e sequência."
                 ].map((item, idx) => (
                   <li key={idx} className="flex gap-3 text-zinc-500 text-xs sm:text-sm leading-relaxed">
-                    <span className="text-red-400 font-bold font-sans">/ &times;</span>
+                    <span className="text-zinc-600 font-bold font-sans">/ &times;</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -331,21 +373,16 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
           </div>
         </div>
       </section>
-      {/*=========================================
-          THE 4 STRATEGIC MARKETING PILLARS
-         =========================================*/}
-      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] relative z-10">
-        <div className="max-w-7xl mx-auto space-y-16">
-          
-          <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-semibold bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-              MÉTODO DA ASSESSORIA
-            </span>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-white tracking-tighter leading-none">
-              Quatro frentes para transformar dúvida em direção.
+      {/* SECTION 4 - SISTEMA DE TRABALHO */}
+      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/10 text-left relative z-10">
+        <div className="max-w-7xl mx-auto space-y-12">
+          <div className="tag08-section__header">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">Sistema de trabalho</span>
+            <h2 className="tag08-section__heading font-display font-black text-3xl sm:text-4xl text-white">
+              Da leitura do cenário ao plano de ação.
             </h2>
-            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
-              A assessoria organiza o que a marca precisa entender, decidir, planejar e acompanhar antes de transformar marketing em execução.
+            <p className="tag08-section__copy text-zinc-400 text-sm font-sans">
+              A assessoria não começa com uma lista de entregas. Começa com contexto, organiza prioridades e define uma sequência possível de executar.
             </p>
           </div>
 
@@ -354,26 +391,26 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
               {
                 num: "01",
                 icon: Target,
-                title: "Diagnóstico do momento",
+                title: "Diagnóstico inicial",
                 desc: "Entendemos contexto, objetivos, gargalos, canais atuais e limitações reais antes de recomendar qualquer ação."
               },
               {
                 num: "02",
                 icon: Zap,
-                title: "Posicionamento e mensagem",
-                desc: "Organizamos como a marca deve se apresentar, quais mensagens precisam ser fortalecidas e o que precisa ficar mais claro para o público."
+                title: "Leitura de maturidade",
+                desc: "Identificamos onde existe desalinhamento entre posicionamento, oferta, canais, rotina e capacidade de execução."
               },
               {
                 num: "03",
                 icon: LineChart,
-                title: "Plano de prioridades",
+                title: "Priorização",
                 desc: "Definimos o que vem primeiro, o que pode esperar e quais frentes fazem sentido para o momento atual do negócio."
               },
               {
                 num: "04",
                 icon: Cpu,
-                title: "Acompanhamento da execução",
-                desc: "Apoiamos a leitura do processo, os ajustes necessários e a continuidade das decisões para evitar ações soltas."
+                title: "Plano e acompanhamento",
+                desc: "Transformamos decisões em um caminho de ação e, quando contratado, acompanhamos ajustes e aprendizados do processo."
               }
             ].map((pilar, idx) => {
               const PilarIcon = pilar.icon;
@@ -402,8 +439,8 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   </div>
 
                   <div className="pt-4 border-t border-white/[0.04] text-xs tag08-meta text-zinc-500 uppercase tracking-widest relative z-10 flex justify-between">
-                    <span>MÓDULO DE ASSESSORIA</span>
-                    <span className="text-brand font-semibold select-none">MÉTODO_0{idx + 1}</span>
+                    <span>ETAPA DA ASSESSORIA</span>
+                    <span className="text-brand font-semibold select-none">ETAPA_0{idx + 1}</span>
                   </div>
                 </div>
               );
@@ -582,8 +619,8 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
           CTA FINAL + FAQ
          =========================================*/}
       <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto space-y-8">
-          <div className="rounded-[32px] sm:rounded-[40px] border border-white/[0.06] bg-black/45 overflow-hidden shadow-2xl">
+        <div className="max-w-7xl mx-auto flex flex-col gap-8">
+          <div className="order-2 rounded-[32px] sm:rounded-[40px] border border-white/[0.06] bg-black/45 overflow-hidden shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-12">
               <div className="lg:col-span-5 min-h-[320px] sm:min-h-[380px] relative overflow-hidden">
                 <Image
@@ -648,7 +685,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
             </div>
           </div>
 
-          <div className="rounded-[32px] sm:rounded-[40px] bg-charcoal-950 border border-white/[0.05] p-6 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden">
+          <div className="order-1 rounded-[32px] sm:rounded-[40px] bg-charcoal-950 border border-white/[0.05] p-6 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.02)_1.2px,transparent_1.2px)] [background-size:24px_24px] pointer-events-none" />
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
               <div className="lg:col-span-4 flex flex-col justify-between space-y-8 text-left">
