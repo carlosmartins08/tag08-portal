@@ -5,7 +5,7 @@ import test from "node:test";
 import { routeRegistry } from "../src/config/routeRegistry";
 import { isLocaleTranslationReady, localizationReadiness } from "../src/i18n/localizationReadiness";
 
-const fingerprint = (file: string) => createHash("sha256").update(readFileSync(file)).digest("hex");
+const fingerprint = (file: string) => createHash("sha256").update(readFileSync(file, "utf8").replace(/\r\n/g, "\n")).digest("hex");
 
 test("every route has a localization ownership record", () => {
   for (const route of routeRegistry) {

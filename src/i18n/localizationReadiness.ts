@@ -49,10 +49,10 @@ export const localizationReadiness: Record<RouteKey, RouteLocalizationReadiness>
   "not-found": pending("src/features/site/pages/NotFound.tsx"),
   "cliente-onboarding": {
     sourceFile: "src/features/site/pages/ClienteOnboarding.tsx",
-    sourceFingerprint: "e7e710a7b368df18925a57baf3a24b2020549c78492f824251f755a65a90053c",
+    sourceFingerprint: "45a7a9830703bed6c1894ebd4fdd01391b8e66f2e54e39bf4012a5761e9607f2",
     locales: {
-      en: { state: "approved", sourceFingerprint: "e7e710a7b368df18925a57baf3a24b2020549c78492f824251f755a65a90053c" },
-      es: { state: "approved", sourceFingerprint: "e7e710a7b368df18925a57baf3a24b2020549c78492f824251f755a65a90053c" }
+      en: { state: "approved", sourceFingerprint: "45a7a9830703bed6c1894ebd4fdd01391b8e66f2e54e39bf4012a5761e9607f2" },
+      es: { state: "approved", sourceFingerprint: "45a7a9830703bed6c1894ebd4fdd01391b8e66f2e54e39bf4012a5761e9607f2" }
     }
   }
 };

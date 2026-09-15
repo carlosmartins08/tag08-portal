@@ -2,6 +2,7 @@
 
 ## 2026-09-15
 
+- Normalizada a assinatura de revisão do onboarding para que a mesma fonte não pareça alterada apenas por trocar `CRLF` por `LF` entre desenvolvimento local e CI.
 - Corrigido o gate de continuidade no CI: o checkout agora traz o histórico necessário para validar o commit-base da integração, sem desativar a checagem remota.
 - Aprovada e liberada a equipe em `/sobre`, além de mini-cases e depoimentos internos em `/servicos/assessoria-marketing-digital-estrategico`; a autorização é limitada a essas rotas. Home, portfólio e cases indexáveis continuam pendentes.
 - Transformada a continuidade em fluxo executável: `npm run continuity:status` valida branch, commit-base e checkpoint; os modos de desenvolvimento exibem essa checagem antes de iniciar e o hook de commit bloqueia alterações de comportamento sem atualização simultânea de estado e changelog.
