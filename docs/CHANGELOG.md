@@ -2,6 +2,7 @@
 
 ## 2026-09-15
 
+- Tornada autônoma a verificação HTTP de rotas: ela inicia e encerra o build de produção em porta isolada no CI/local, ou usa `BASE_URL` em staging. Isso elimina a dependência implícita de um servidor manual em `localhost:3000`.
 - Convertidos os retratos da equipe em `/sobre` para `next/image`, mantendo os mesmos assets, textos e critérios de publicação, para cumprir a auditoria de imagens no CI.
 - Feito o `lint` gerar o cliente Prisma antes da checagem de tipos. Isso elimina a divergência em que o CI, iniciado sem artefatos locais, tentava resolver imports gerados antes do build.
 - Normalizada a assinatura de revisão do onboarding para que a mesma fonte não pareça alterada apenas por trocar `CRLF` por `LF` entre desenvolvimento local e CI.

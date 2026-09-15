@@ -30,7 +30,7 @@
     "worker:integrations": "node --env-file-if-exists=.env server/integrationWorker.mjs",
     "worker:retention": "node --env-file-if-exists=.env server/retentionWorker.mjs",
     "preflight:deploy": "node tools/preflight-deploy.mjs",
-    "verify:routes": "tsx tools/verify-routes.ts",
+    "verify:routes": "node tools/verify-routes-live.mjs",
     "content:status": "tsx tools/content-status.ts",
     "i18n:status": "tsx tools/localization-status.ts",
     "i18n:health": "tsx tools/i18n-health.ts",

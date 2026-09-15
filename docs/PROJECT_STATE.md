@@ -12,13 +12,14 @@ Atualizado em: `2026-09-15`
 
 ## Checkpoint executável
 
-- Última missão concluída: publicação autorizada da equipe em `/sobre` e das provas internas em `/servicos/assessoria-marketing-digital-estrategico`, com gates de CI portáveis entre Windows e Linux; Home, portfólio e cases indexáveis permanecem pendentes.
-- Próxima missão autorizada: concluir a validação técnica da integração; a auditoria de imagens de `/sobre` foi alinhada ao uso obrigatório de `next/image`.
+- Última missão concluída: preparação técnica da integração, com geração Prisma antes do lint, imagens aprovadas de `/sobre` otimizadas e verificação de rotas autônoma; a esteira local completa passou. Home, portfólio e cases indexáveis permanecem pendentes.
+- Próxima missão autorizada: confirmar o CI remoto e integrar a PR em `main` somente com todos os gates verdes.
 - Antes de desenvolver: `npm run continuity:status`. O comando confere branch, commit-base, missão e itens locais isolados; `npm run dev` e `npm run dev:content-review` executam essa conferência automaticamente.
 - Antes de commitar: o hook local exige `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` no mesmo commit de qualquer alteração de comportamento. Para ativá-lo em uma instalação existente: `npm run setup:hooks`.
 - CI: o workflow busca o histórico completo para validar o commit-base, pois um checkout raso não permite provar a ancestralidade da branch.
 - Localização: as assinaturas de fonte são calculadas com quebras de linha normalizadas para evitar falso positivo entre Windows e Linux.
 - Tipos de dados: `npm run lint` gera o cliente Prisma antes do TypeScript. Assim, uma instalação limpa no CI valida os mesmos imports que o ambiente local, sem depender de arquivos gerados anteriormente.
+- Rotas HTTP: `npm run verify:routes` sobe o build de produção em uma porta isolada quando `BASE_URL` não é informado; em staging, a mesma variável aponta para o ambiente real. A checagem não depende mais de um servidor local esquecido em `:3000`.
 
 ## Alterações locais a preservar e separar
 
