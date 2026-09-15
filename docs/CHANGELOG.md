@@ -6,6 +6,7 @@
 - Criados `docs/DECISIONS.md` e `docs/ROADMAP.md` para separar decisão, estado e execução futura.
 - Atualizado `docs/PROJECT_STATE.md` com a relação real entre branches, alterações locais a preservar, mapa das fontes de conteúdo e conflitos editoriais pendentes.
 - Nenhuma página, rota, contrato, asset publicado ou integração foi removido ou alterado nesta etapa.
+- Publicado `/llms.txt` como rota estática do Next, com links derivados do registry, proteção contra reescrita pelo `proxy` e verificação de resposta no teste de rotas.
 
 ## 2026-09-02
 

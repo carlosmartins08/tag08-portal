@@ -11,7 +11,7 @@ Atualizado em: `2026-09-15`
 
 ## Alterações locais a preservar e separar
 
-- Discoverability: a implementação de `/llms.txt` está fora de commit e deve seguir em um commit focado. Ela substitui o antigo arquivo de raiz, corrige o `proxy` e atualiza a verificação de rotas.
+- Discoverability: `/llms.txt` é servido por uma rota estática do Next. O checkpoint focado inclui a remoção do arquivo de raiz, a exclusão no `proxy` e a verificação de rota.
 - Ativos de clientes: `public/clients/` está fora de rastreamento. Os arquivos não estão associados a uso público no código e exigem validação de marca/direito de uso antes de serem incluídos em qualquer página.
 
 ## Onde o conteúdo realmente vive
