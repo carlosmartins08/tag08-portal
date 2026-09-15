@@ -1,5 +1,12 @@
 # CHANGELOG - TAG08
 
+## 2026-09-15
+
+- Registrada a reconciliação de continuidade: `p0-routing-secret-containment` é a candidata à integração e `main` permanece o destino, sem merge direto nesta etapa.
+- Criados `docs/DECISIONS.md` e `docs/ROADMAP.md` para separar decisão, estado e execução futura.
+- Atualizado `docs/PROJECT_STATE.md` com a relação real entre branches, alterações locais a preservar, mapa das fontes de conteúdo e conflitos editoriais pendentes.
+- Nenhuma página, rota, contrato, asset publicado ou integração foi removido ou alterado nesta etapa.
+
 ## 2026-09-02
 
 - Refinada `/servicos/gestao-de-redes-sociais` com as estruturas oficiais Start, Base e Performance, sem preços, volumes ou escopo universal.
