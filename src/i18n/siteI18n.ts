@@ -484,7 +484,7 @@ export const i18n = {
     },
   },
   es: {
-    htmlLang: "es",
+    htmlLang: "es-ES",
     header: {
       brandSubtitle: "Estrategia & Performance",
       navHome: "Inicio",

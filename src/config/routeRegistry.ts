@@ -1,9 +1,16 @@
 import { CASE_STUDIES } from "../data";
+import { isContentReviewMode, isEvidenceVisible } from "../content/publicEvidence";
+import { isLocaleTranslationReady } from "../i18n/localizationReadiness";
 
 export const ROUTE_LOCALES = ["pt", "en", "es"] as const;
 export type RouteLocale = (typeof ROUTE_LOCALES)[number];
 
-// EN and ES remain available for review, but only reviewed locales may be indexed.
+// Supported URL locales. Publication is decided per route below.
+/**
+ * A locale is publishable only after the complete page and its conversion flows
+ * have been reviewed in that language. This prevents a translated shell or a
+ * shortened landing page from being indexed as if it were an equivalent page.
+ */
 export const INDEXABLE_LOCALES: readonly RouteLocale[] = ["pt"];
 
 export const isLocaleIndexable = (locale: RouteLocale): boolean => INDEXABLE_LOCALES.includes(locale);
@@ -47,6 +54,8 @@ export interface RouteDefinition {
   description: string;
   isServicePage?: boolean;
   dynamic?: boolean;
+  /** Locales with complete, reviewed page content. Defaults to Portuguese. */
+  publishedLocales?: readonly RouteLocale[];
 }
 
 export const routeRegistry: RouteDefinition[] = [
@@ -58,9 +67,9 @@ export const routeRegistry: RouteDefinition[] = [
     includeInSitemap: true,
     changefreq: "daily",
     priority: "1.0",
-    title: "TAG08 | Marketing Estratégico, Posicionamento e Performance",
+    title: "TAG08 | Estratégia Digital, Conteúdo, Web e Processos",
     description:
-      "Agência de marketing estratégico focada em posicionamento, estruturação de processos e performance. Transformamos presença digital de marcas que querem crescer com direção."
+      "A TAG08 ajuda empresas a organizar posicionamento, conteúdo, redes sociais, sites e processos para crescer no digital com clareza, método e execução responsável."
   },
   {
     key: "sobre",
@@ -70,9 +79,9 @@ export const routeRegistry: RouteDefinition[] = [
     includeInSitemap: true,
     changefreq: "weekly",
     priority: "0.8",
-    title: "Sobre a TAG08 | Clareza e Estratégia para Marcas com Propósito",
+    title: "Sobre a TAG08 | Estratégia, método e execução responsável",
     description:
-      "Conheça a TAG08. Trazemos clareza, direção e consistência para marcas comprometidas com seu próprio propósito de crescimento sustentável."
+      "Conheça a TAG08, empresa que conecta estratégia, conteúdo, tecnologia e processos para organizar presença digital com clareza, método e execução responsável."
   },
   {
     key: "servicos",
@@ -82,9 +91,9 @@ export const routeRegistry: RouteDefinition[] = [
     includeInSitemap: true,
     changefreq: "weekly",
     priority: "0.9",
-    title: "Soluções e Serviços | TAG08 Marketing Estratégico",
+    title: "Serviços TAG08 | Redes Sociais, Marca, Vídeo e Web",
     description:
-      "Descubra como transformar presença digital em posicionamento, estrutura e performance através de nossas soluções integradas.",
+      "Conheça as soluções da TAG08 para presença digital recorrente, identidade e reposicionamento, audiovisual, sites e unidade digital.",
     isServicePage: true
   },
   {
@@ -152,9 +161,9 @@ export const routeRegistry: RouteDefinition[] = [
     includeInSitemap: true,
     changefreq: "weekly",
     priority: "0.8",
-    title: "Gestão de Redes Sociais | Conteúdo, Estratégia e Posicionamento - TAG08",
+    title: "Gestão de Redes Sociais Estratégica | TAG08",
     description:
-      "Desenvolvemos o posicionamento ideal para sua marca nas redes sociais com planejamento editorial estratégico e narrativas autorais que engajam e convertem.",
+      "Planejamento editorial, conteúdo, Reels e acompanhamento para marcas que precisam de presença digital consistente, organizada e com menos improviso.",
     isServicePage: true
   },
   {
@@ -229,6 +238,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "monthly",
     priority: "0.4",
     title: "Assistente de Onboarding | TAG08",
+    // The onboarding flow owns and maintains complete PT, EN and ES copy.
+    publishedLocales: ROUTE_LOCALES,
     description: "Organize o início de seu projeto de forma leve, fluida e estratégica de forma rápida e conversacional."
   },
   {
@@ -295,7 +306,15 @@ export const routeRegistry: RouteDefinition[] = [
 ];
 
 const legacyAliases: Record<string, string> = {};
-const caseStudyPaths = new Set(CASE_STUDIES.map((caseStudy) => `/casos/${caseStudy.id}`));
+const publishedCaseStudies = CASE_STUDIES.filter((caseStudy) =>
+  isEvidenceVisible(`case-study/${caseStudy.id}`, `/casos/${caseStudy.id}`)
+);
+const caseStudyPaths = new Set(publishedCaseStudies.map((caseStudy) => `/casos/${caseStudy.id}`));
+const reviewCaseStudyPaths = new Set(
+  CASE_STUDIES
+    .filter((caseStudy) => isEvidenceVisible(`case-study/${caseStudy.id}`, `/casos/${caseStudy.id}`, "review"))
+    .map((caseStudy) => `/casos/${caseStudy.id}`)
+);
 
 routeRegistry.forEach((route) => {
   route.aliases?.forEach((alias) => {
@@ -383,6 +402,19 @@ export const getRouteByPath = (path: string): RouteDefinition | undefined => {
   return routeRegistry.find((route) => matchesDynamicRoute(normalizedPath, route));
 };
 
+/** Development-only route resolver for local review. It never contributes to public paths or the sitemap. */
+export const getContentReviewRouteByPath = (path: string): RouteDefinition | undefined => {
+  const normalizedPath = normalizePath(path);
+  if (!isContentReviewMode() || !reviewCaseStudyPaths.has(normalizedPath)) return undefined;
+  return routeRegistry.find((route) => route.dynamic && route.pathPattern === "/casos/:id");
+};
+
+export const getPublishedLocales = (route: RouteDefinition): readonly RouteLocale[] =>
+  (route.publishedLocales ?? INDEXABLE_LOCALES).filter((locale) => isLocaleTranslationReady(route.key, locale));
+
+export const isRouteLocalePublished = (route: RouteDefinition, locale: RouteLocale): boolean =>
+  getPublishedLocales(route).includes(locale);
+
 export const publicRoutePaths = routeRegistry.flatMap((route) => {
   if (!route.indexable) {
     return [];
@@ -412,12 +444,15 @@ export const staticRouteSegments = () => {
   const aliases = Object.keys(legacyAliases);
   const allPaths = Array.from(new Set([...canonicalPaths, ...aliases]));
 
-  return ROUTE_LOCALES.flatMap((locale) =>
-    allPaths.map((path) => {
+  return allPaths.flatMap((path) => {
+    const route = getRouteByPath(path);
+    if (!route) return [];
+
+    return getPublishedLocales(route).map((locale) => {
       const localizedPath = getLocalizedPath(path, locale);
       return localizedPath === "/" ? [] : localizedPath.slice(1).split("/");
-    })
-  );
+    });
+  });
 };
 
 export const indexedRoutePaths = routeRegistry.flatMap((route) => {
@@ -438,7 +473,7 @@ export const routeSitemapMeta = routeRegistry.flatMap((route) => {
   }
 
   if (route.dynamic && route.pathPattern === "/casos/:id") {
-    return CASE_STUDIES.map((caseStudy) => ({
+    return publishedCaseStudies.map((caseStudy) => ({
       path: `/casos/${caseStudy.id}`,
       changefreq: route.changefreq,
       priority: route.priority,

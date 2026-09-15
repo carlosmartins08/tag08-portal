@@ -4,17 +4,20 @@ import Image from "next/image";
 import { SERVICES, PLANS } from "../../../data";
 import { motion, AnimatePresence } from "motion/react";
 import { TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_YOUTUBE_URL, buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
-import { getVideoDescriptionPreview, type OfficialContentApiResponse } from "../../../lib/officialContent";
+import { getVideoDescriptionPreview, type OfficialContentApiResponse, type OfficialGoogleReview, type OfficialYouTubeVideo } from "../../../lib/officialContent";
 import { trackOutboundClick, trackVideoEvent } from "../../../lib/analytics";
 import { activateOnKeyboard } from "../../../lib/keyboard";
 import { COOKIE_CONSENT_EVENT, grantMarketingConsent, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
+import type { RouteLocale } from "../../../config/routeRegistry";
+import { externalContentCopy } from "../../../i18n/externalContent";
 import HeroEditorialStage from "../../../components/HeroEditorialStage";
 import { Suspense, lazy } from "react";
-
 import heroTag08StrategyStage from "../../../assets/images/hero_tag08_strategy-stage.webp";
 import creativeLeaderPortrait from "../../../assets/images/creative_leader_portrait_1780449653164.jpg";
 import moodyClientPortrait from "../../../assets/images/moody_client_portrait_1780449811793.jpg";
 import clientAlanRocha from "../../../assets/images/client_alan_rocha_1780449828496.jpg";
+import { getEvidenceVisibilityMode, getVisibleEvidence } from "../../../content/publicEvidence";
+import { EvidenceReviewBadge } from "../../../components/ContentReview";
 
 const DiagnosticDiagram = lazy(() => import("../../../components/DiagnosticDiagram"));
 
@@ -680,9 +683,10 @@ function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
 
 interface HomeProps {
   onNavigate: (page: string) => void;
+  locale?: RouteLocale;
 }
 
-export default function Home({ onNavigate }: HomeProps) {
+export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeServiceTab, setActiveServiceTab] = useState(0);
   const [selectedEditorialPlan, setSelectedEditorialPlan] = useState<"start" | "base" | "performance">("base");
@@ -692,12 +696,13 @@ export default function Home({ onNavigate }: HomeProps) {
   const [youtubeConsentGranted, setYoutubeConsentGranted] = useState(false);
   const [showYoutubeConsentPrompt, setShowYoutubeConsentPrompt] = useState(false);
   const [activeReview, setActiveReview] = useState(0);
+  const [showOriginalReview, setShowOriginalReview] = useState(false);
   const [isHoveringGmb, setIsHoveringGmb] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [activeDiagPhase, setActiveDiagPhase] = useState<"discovery" | "analysis" | "design">("discovery");
   const [hoveredPill, setHoveredPill] = useState<string | null>(null);
-  const [youtubeVideos, setYoutubeVideos] = useState(YOUTUBE_VIDEOS);
-  const [gmbReviews, setGmbReviews] = useState(GMB_REVIEWS);
+  const [youtubeVideos, setYoutubeVideos] = useState<OfficialYouTubeVideo[]>(YOUTUBE_VIDEOS);
+  const [gmbReviews, setGmbReviews] = useState<OfficialGoogleReview[]>([]);
   const [contentSources, setContentSources] = useState<OfficialContentApiResponse["sources"]>({
     youtube: "fallback",
     googleBusiness: "fallback"
@@ -705,6 +710,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
   const visibleYoutubeVideos = youtubeVideos;
   const visibleGmbReviews = gmbReviews;
+  const externalCopy = externalContentCopy[locale];
 
   const PROOF_CASES_DATA = [
     {
@@ -735,52 +741,74 @@ export default function Home({ onNavigate }: HomeProps) {
       id: "estrategia-posicionamento",
       title: "Estratégia e posicionamento",
       subtitle: "Clareza antes da execução",
-      desc: "Para marcas que precisam entender melhor seu público, reorganizar sua mensagem e comunicar com mais clareza o valor que já possuem.",
+      desc: "Para empresas e profissionais cuja comunicação já não representa corretamente o valor, o público ou a fase atual do negócio.",
+      related: "Assessoria Estratégica, Reposicionamento Estratégico e Identidade de Marca.",
+      cta: "Conhecer estratégia e posicionamento",
       slug: "/servicos/assessoria-marketing-digital-estrategico"
     },
     {
       id: "conteudo-redes-sociais",
       title: "Conteúdo e redes sociais",
       subtitle: "Presença com linha editorial",
-      desc: "Para negócios que precisam sair da postagem solta e construir presença com frequência, narrativa, intenção comercial e consistência.",
+      desc: "Para negócios que precisam sair da produção solta e construir uma rotina de comunicação com temas, formatos, frequência e intenção definidos.",
+      related: "Start, Base, Performance, Gestão de Redes Sociais e Edição de Reels.",
+      cta: "Conhecer conteúdo e redes sociais",
       slug: "/servicos/gestao-de-redes-sociais"
     },
     {
       id: "producao-audiovisual",
       title: "Produção audiovisual",
-      subtitle: "Imagem, fala e bastidores com intenção",
-      desc: "Para empresas, especialistas e eventos que precisam transformar vídeo, presença e bastidores em conteúdo com valor de marca.",
+      subtitle: "Imagem, fala e bastidores com função",
+      desc: "Para empresas, especialistas e projetos que precisam transformar conhecimento, presença e acontecimentos em materiais úteis para comunicação e posicionamento.",
+      related: "Captação Audiovisual, Reels e produções específicas.",
+      cta: "Conhecer produção audiovisual",
       slug: "/servicos/producao-audiovisual"
     },
     {
-      id: "branding-identidade",
-      title: "Branding e identidade",
-      subtitle: "Percepção visual mais coerente",
-      desc: "Para marcas que precisam alinhar identidade visual, tom, estética e percepção ao momento atual do negócio.",
-      slug: "/servicos/branding-identidade"
-    },
-    {
       id: "desenvolvimento-web",
-      title: "Desenvolvimento web",
-      subtitle: "Canal próprio para apresentar e converter",
-      desc: "Para marcas que precisam de site, landing page, catálogo ou estrutura digital própria para gerar credibilidade e apoiar o comercial.",
+      title: "Web e estruturas digitais",
+      subtitle: "Um canal próprio com função clara",
+      desc: "Para marcas que precisam organizar informação, fortalecer credibilidade e facilitar o caminho entre interesse e contato.",
+      related: "Sites Estratégicos, Landing Pages e projetos web. E-commerce depende de diagnóstico de prontidão operacional.",
+      cta: "Conhecer desenvolvimento web",
       slug: "/servicos/desenvolvimento-web"
     },
     {
       id: "processos-operacao",
       title: "Processos e operação",
       subtitle: "Menos improviso, mais previsibilidade",
-      desc: "Para empresas que cresceram no esforço e agora precisam organizar rotina, responsabilidades, fluxo e tomada de decisão.",
+      desc: "Para empresas em que crescimento, demandas ou conhecimento começaram a depender demais de poucas pessoas, memória ou decisões informais.",
+      related: "Process Intelligence e Process Activation.",
+      cta: "Conhecer processos e operação",
       slug: "/servicos/process-intelligence"
     },
     {
       id: "hospedagem-manutencao",
-      title: "Hospedagem e manutenção",
-      subtitle: "Continuidade depois da entrega",
-      desc: "Para negócios que precisam manter seus sites ativos, seguros, atualizados e acompanhados depois da publicação.",
+      title: "Continuidade digital",
+      subtitle: "O projeto continua depois da publicação",
+      desc: "Para negócios que precisam manter estruturas digitais acompanhadas, atualizadas e tecnicamente sustentáveis ao longo do tempo.",
+      related: "Hospedagem e Manutenção.",
+      cta: "Conhecer continuidade digital",
       slug: "/hospedagem-manutencao-sites"
     }
   ];
+
+  const PORTFOLIO_CANDIDATES = [
+    { id: "lavar-roupa", name: "LavarRoupa S.A." },
+    { id: "alugue-por-temporada", name: "Alugue por Temporada" },
+    { id: "centro-de-olhos", name: "Centro de Olhos" },
+    { id: "le-visage", name: "LeVisage" },
+    { id: "luciana-gadelha", name: "Luciana Gadelha" },
+    { id: "espaco-glau-campos", name: "Espaço Glau Campos" }
+  ];
+  const evidenceMode = getEvidenceVisibilityMode();
+  const visibleClientCases = getVisibleEvidence(CLIENT_CASES, (caseStudy) => `home-case/${caseStudy.id}`, "/", evidenceMode);
+  const visiblePortfolioCandidates = getVisibleEvidence(
+    PORTFOLIO_CANDIDATES,
+    (candidate) => `portfolio-candidate/${candidate.id}`,
+    "/",
+    evidenceMode
+  );
 
   useEffect(() => {
     const syncYoutubeConsent = (preferences: CookiePreferences | null) => {
@@ -828,7 +856,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
     const loadOfficialContent = async () => {
       try {
-        const response = await fetch("/api/official-content", {
+        const response = await fetch(`/api/official-content?locale=${locale}`, {
           signal: controller.signal,
           headers: {
             Accept: "application/json"
@@ -863,7 +891,11 @@ export default function Home({ onNavigate }: HomeProps) {
     void loadOfficialContent();
 
     return () => controller.abort();
-  }, []);
+  }, [locale]);
+
+  useEffect(() => {
+    setShowOriginalReview(false);
+  }, [activeReview]);
 
   const handleOutboundClick = (label: string, url: string, surface: string) => {
     trackOutboundClick({
@@ -883,12 +915,12 @@ export default function Home({ onNavigate }: HomeProps) {
   }, []);
 
   useEffect(() => {
-    if (isHoveringGmb) return;
+    if (isHoveringGmb || visibleGmbReviews.length === 0) return;
     const interval = setInterval(() => {
       setActiveReview((prev) => (prev + 1) % visibleGmbReviews.length);
     }, 8500);
     return () => clearInterval(interval);
-  }, [isHoveringGmb]);
+  }, [isHoveringGmb, visibleGmbReviews.length]);
 
   const handleLinkClick = (page: string) => {
     onNavigate(page);
@@ -912,7 +944,7 @@ export default function Home({ onNavigate }: HomeProps) {
   ];
 
   return (
-    <div className="bg-charcoal-950 text-white overflow-hidden">
+    <div className="tag08-home-flow bg-charcoal-950 text-white overflow-hidden">
       {/* SECTION 1 - NEW ADVANCED HIGH-DESCRIPTIVE HERO */}
       <section id="hero" className="relative min-h-screen flex items-center pt-28 pb-16 px-4 sm:px-6 md:px-8">
         {/* Full neon floating frame container styled exactly like reference image */}
@@ -940,7 +972,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 </h1>
                 
                 <p className="text-white/72 text-xs sm:text-sm max-w-sm leading-relaxed font-sans font-medium">
-                  A TAG08 ajuda empresas, profissionais e marcas a organizarem posicionamento, comunicação, conteúdo, tecnologia e operação para construir uma presença digital mais clara, consistente e estratégica.
+                  A TAG08 organiza posicionamento, comunicação, conteúdo, tecnologia e processos para transformar ações digitais dispersas em uma presença mais clara, consistente e útil ao negócio.
                 </p>
               </div>
 
@@ -977,7 +1009,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
                 <div className="w-full bg-brand text-black rounded-xl py-3 px-4 flex items-center justify-between group-hover:bg-brand-dark group-hover:text-white transition-all duration-300">
                   <span className="tag08-meta text-xs font-extrabold tracking-wider uppercase">
-                    QUERO ENTENDER MEU MELHOR CAMINHO
+                    ENTENDER MEU MELHOR CAMINHO
                   </span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </div>
@@ -985,7 +1017,7 @@ export default function Home({ onNavigate }: HomeProps) {
             </div>
 
             {/* The image is now the stage itself; this column preserves the editorial reading space. */}
-            <div className="hidden lg:block lg:col-span-4" aria-hidden="true" />
+            <div className="hidden lg:order-2 lg:block lg:col-span-4" aria-hidden="true" />
 
             {/* RIGHT COLUMN: BRAND SOCIAL AUDIENCE AND BUSINESS AREA CATEGORY CAPSULES (ROCK PILLS LOOKALIKES) */}
             <div className="lg:col-span-3 flex flex-col justify-between space-y-8 text-left lg:text-right order-3 z-20">
@@ -1048,13 +1080,13 @@ export default function Home({ onNavigate }: HomeProps) {
             className="tag08-section__header mb-16 text-left"
           >
             <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-semibold">
-              O diagnóstico da realidade
+              Mais execução não corrige falta de direção
             </span>
             <h2 className="tag08-section__heading font-display font-medium text-3xl sm:text-4xl text-gradient">
-              O problema nem sempre é falta de marketing. Muitas vezes é falta de direção.
+              Mais execução não corrige falta de direção.
             </h2>
             <p className="tag08-section__copy text-zinc-400 text-sm sm:text-base">
-              Muitas empresas postam, anunciam, fazem vídeos, criam sites e tentam aparecer mais. Mas, quando não existe clareza de posicionamento, consistência de comunicação e estrutura mínima de operação, o digital vira um conjunto de ações soltas.
+              Uma empresa pode publicar, anunciar, produzir vídeos e ter um site sem que essas frentes construam a mesma percepção. Quando posicionamento, comunicação e operação seguem caminhos diferentes, o digital acumula ações, mas continua sem organizar a decisão do público ou da própria empresa. A TAG08 trabalha nesse ponto: identifica o que está desalinhado, organiza prioridades e conecta estratégia e execução ao momento real do negócio.
             </p>
           </motion.div>
 
@@ -1103,10 +1135,10 @@ export default function Home({ onNavigate }: HomeProps) {
                   </span>
                 </div>
                 <h3 className="font-display font-medium text-xl sm:text-2xl text-white leading-tight">
-                  A questão não é fazer mais. É fazer com direção.
+                  Fazer mais nem sempre é avançar. Direção ajuda a entender o que realmente precisa ser feito.
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-                  A TAG08 entra para organizar esse caminho: entender o momento, identificar gargalos, definir prioridades e transformar presença digital em um ativo real para a marca.
+                  Conteúdo sem estratégia vira volume. Site sem função vira estrutura subutilizada. Tecnologia sem operação vira custo. Crescimento sem estrutura vira desgaste.
                 </p>
               </div>
 
@@ -1119,7 +1151,7 @@ export default function Home({ onNavigate }: HomeProps) {
               >
                 <div className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full skew-x-12 group-hover:translate-x-full transition-transform duration-1000 ease-out" />
                 <span className="relative z-10 flex items-center gap-2">
-                  Entender meu momento <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  Identificar meu momento <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
             </div>
@@ -1129,13 +1161,13 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="mt-24 sm:mt-32 space-y-12 text-left animate-fade-in">
             <div className="tag08-section__header max-w-3xl">
               <div className="tag08-kicker">
-                Diagnóstico por momento
+                A estrutura certa depende do momento
               </div>
               <h2 className="tag08-section__heading font-display font-medium text-3xl sm:text-4xl text-gradient">
-                Em qual momento sua marca está hoje?
+                A estrutura certa depende do momento.
               </h2>
               <p className="tag08-section__copy text-zinc-400 text-xs sm:text-sm font-sans">
-                A solução certa depende da fase, da maturidade e da estrutura disponível para sustentar o crescimento. Antes de indicar qualquer serviço, a TAG08 entende o momento da marca e organiza o caminho mais coerente.
+                O plano mais completo não é automaticamente o melhor. O caminho adequado depende da maturidade da empresa e da capacidade de participar da execução.
               </p>
             </div>
 
@@ -1176,10 +1208,10 @@ export default function Home({ onNavigate }: HomeProps) {
                       <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-brand transition-colors" />
                     </div>
                     <h3 className="font-display font-bold text-lg text-white tracking-tight mt-1.5 group-hover:text-brand transition-colors">
-                      Começando com pouca clareza
+                      Começando com direção
                     </h3>
                     <p className="text-zinc-400 text-xs font-sans max-w-md mt-1 leading-relaxed">
-                      Você sabe que precisa aparecer melhor, mas ainda não tem linha visual, rotina de conteúdo ou direção de comunicação.
+                      Existe uma oferta minimamente clara, mas comunicação, identidade ou rotina digital ainda estão em construção. Caminhos possíveis: Start e Identidade Visual Digital.
                     </p>
                   </div>
                 </div>
@@ -1213,10 +1245,10 @@ export default function Home({ onNavigate }: HomeProps) {
                           <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-brand transition-colors" />
                         </div>
                         <h4 className="text-white font-display font-semibold text-xs sm:text-sm leading-tight group-hover:text-brand transition-colors mt-2">
-                          Já existe, mas comunica de forma irregular
+                          Presença ativa, mas inconsistente
                         </h4>
                         <p className="text-zinc-400 text-xs font-sans leading-normal mt-1.5">
-                          Sua empresa já vende, tem público e entrega valor, mas a presença digital não mostra isso com consistência.
+                          O negócio já funciona, porém comunicação, calendário e produção ainda dependem de decisões pontuais. Caminhos possíveis: Base, Desenvolvimento Web ou projeto complementar de marca.
                         </p>
                       </div>
                       
@@ -1250,10 +1282,10 @@ export default function Home({ onNavigate }: HomeProps) {
                       
                       <div>
                         <h4 className="text-white font-display font-semibold text-xs sm:text-sm leading-tight group-hover:text-brand transition-colors">
-                          Precisa transformar repertório em presença
+                          Marca em crescimento
                         </h4>
                         <p className="text-zinc-400 text-xs font-sans leading-relaxed mt-1.5">
-                          Sua marca já tem repertório, mas precisa de imagem, fala e bastidores que transmitam valor com clareza.
+                          Existe necessidade de integrar planejamento, vídeo, produção, publicação e acompanhamento com maior profundidade. Caminhos possíveis: Performance, Produção Audiovisual ou Reposicionamento Estratégico.
                         </p>
                       </div>
                     </div>
@@ -1288,9 +1320,9 @@ export default function Home({ onNavigate }: HomeProps) {
                     </div>
 
                     <div className="space-y-2 relative z-10">
-                      <h4 className="font-display font-extrabold text-white text-sm tracking-tight">Desejo converter mais com meu site</h4>
+                      <h4 className="font-display font-extrabold text-white text-sm tracking-tight">Um canal próprio com função clara</h4>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
-                        Nossos anúncios gastam verba ativa, mas as páginas lentas ou confusas falham em colher leads qualificados diariamente.
+                        A estrutura web precisa organizar informação, fortalecer credibilidade e facilitar o caminho entre interesse e contato.
                       </p>
                     </div>
                   </div>
@@ -1333,9 +1365,9 @@ export default function Home({ onNavigate }: HomeProps) {
                     </div>
 
                     <div className="space-y-2 relative z-10">
-                      <h4 className="font-display font-extrabold text-white text-sm tracking-tight group-hover:text-brand transition-colors">Cresceu, mas a operação ficou pesada</h4>
+                      <h4 className="font-display font-extrabold text-white text-sm tracking-tight group-hover:text-brand transition-colors">Operação pressionada pelo crescimento</h4>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
-                        As demandas aumentaram, a equipe depende de poucas pessoas e decisões importantes ainda acontecem no improviso.
+                        A empresa aumentou o volume, mas processos, responsabilidades ou conhecimento ainda dependem demais de improviso. Caminho possível: Process Intelligence.
                       </p>
                     </div>
                   </div>
@@ -1364,9 +1396,9 @@ export default function Home({ onNavigate }: HomeProps) {
                       </div>
                       
                       <div>
-                        <h4 className="font-display font-bold text-sm tracking-tight leading-none text-white group-hover:text-brand transition-colors">Temos processos, mas ninguém cumpre</h4>
+                        <h4 className="font-display font-bold text-sm tracking-tight leading-none text-white group-hover:text-brand transition-colors">Processos existentes, execução irregular</h4>
                         <p className="text-zinc-400 text-xs font-sans leading-normal mt-1.5">
-                          Nossos playbooks e wikis viraram links esquecidos e os operadores continuam executando em desordem.
+                          Quando a estrutura já existe, Process Activation ajuda a transformar definições em prática acompanhada.
                         </p>
                       </div>
                     </div>
@@ -1394,9 +1426,9 @@ export default function Home({ onNavigate }: HomeProps) {
                       </div>
                       
                       <div>
-                        <h4 className="font-display font-bold text-sm tracking-tight leading-none text-white">Quero identificar meu momento</h4>
+                        <h4 className="font-display font-bold text-sm tracking-tight leading-none text-white">Identificar meu momento</h4>
                         <p className="text-zinc-400 text-xs font-sans leading-relaxed mt-1.5">
-                          Fale com o nosso estrategista sênior para descobrir a fase certa para sua marca.
+                          A conversa inicial ajuda a avaliar contexto, fit, maturidade e prioridade, sem promessa pronta ou solução empurrada.
                         </p>
                       </div>
                     </div>
@@ -1484,8 +1516,8 @@ export default function Home({ onNavigate }: HomeProps) {
                 { 
                   id: "discovery", 
                   step: "01",
-                  title: "Discovery", 
-                  badge: "Aproximação",
+                  title: "Entendimento",
+                  badge: "Leitura do momento",
                   desc: "Entendimento do momento atual da marca, seus canais, sua comunicação, sua operação e os principais sinais de desalinhamento.",
                   pills: [
                     { id: "idea", label: "Clareza de contexto" },
@@ -1495,8 +1527,8 @@ export default function Home({ onNavigate }: HomeProps) {
                 { 
                   id: "analysis", 
                   step: "02",
-                  title: "Analysis", 
-                  badge: "Triagem",
+                  title: "Diagnóstico",
+                  badge: "Leitura de causas",
                   desc: "Leitura dos gargalos encontrados para separar sintomas aparentes de causas reais. Nem todo problema de marketing se resolve com mais conteúdo.",
                   pills: [
                     { id: "bottlenecks", label: "Causa real" }
@@ -1505,8 +1537,8 @@ export default function Home({ onNavigate }: HomeProps) {
                 { 
                   id: "design", 
                   step: "03",
-                  title: "Delivery", 
-                  badge: "Blindagem",
+                  title: "Direção",
+                  badge: "Próximos passos",
                   desc: "Recomendação do caminho mais coerente para o momento da marca, com prioridades, próximos passos e limites claros.",
                   pills: [
                     { id: "solutions", label: "Prioridades" },
@@ -1567,7 +1599,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     {/* Tactics Pills inside the column */}
                     <div className="mt-6 space-y-2 relative z-20">
                       <span className="text-xs tag08-meta text-zinc-600 uppercase tracking-widest block font-bold">
-                        PÍLULAS DE ATUAÇÃO:
+                        PONTOS DE LEITURA:
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {phase.pills.map((p) => {
@@ -1641,7 +1673,7 @@ export default function Home({ onNavigate }: HomeProps) {
                         <div className="flex items-center gap-2">
                           <span className="w-2 h-2 rounded-full bg-brand-secondary animate-pulse" />
                           <span className="tag08-meta text-xs text-brand-secondary font-bold tracking-widest uppercase pb-0.5">
-                            FASE PRINCIPAL // MONITOR DE ALARME
+                            LEITURA DO MOMENTO
                           </span>
                         </div>
                         
@@ -1680,7 +1712,7 @@ export default function Home({ onNavigate }: HomeProps) {
                       
                       <div className="space-y-4">
                         <span className="tag08-meta text-xs text-zinc-500 font-bold tracking-widest uppercase block border-b border-white/[0.03] pb-2">
-                          DIAGNÓSTICO DETALHADO DOS SINTOMAS TÁTICOS ATIVOS
+                          SINAIS OBSERVADOS
                         </span>
 
                         {/* Responsive grid of cards for each symptom in this phase */}
@@ -1711,7 +1743,7 @@ export default function Home({ onNavigate }: HomeProps) {
                                   {/* Symptom title & Status header */}
                                   <div className="flex items-center justify-between gap-2">
                                     <span className={`font-sans text-xs font-bold uppercase ${isThisSymptomActive ? "text-brand-secondary" : "text-zinc-500"}`}>
-                                      GARGALOS // {symptom.label}
+                                      SINAL // {symptom.label}
                                     </span>
                                     <div className={`w-2 h-2 rounded-full ${isThisSymptomActive ? "bg-brand-secondary shadow-[0_0_8px_var(--color-brand-secondary)] animate-pulse" : "bg-red-500/40"}`} />
                                   </div>
@@ -1723,7 +1755,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
                                 {/* Consequences quote */}
                                 <div className="pt-3 border-t border-white/[0.02] space-y-1.5">
-                                  <span className="font-sans text-xs text-zinc-500 uppercase tracking-widest block">GRAVIDADE / CONSEQUÊNCIA OPERACIONAL</span>
+                                  <span className="font-sans text-xs text-zinc-500 uppercase tracking-widest block">IMPACTO POSSÍVEL</span>
                                   <p className={`text-xs font-sans leading-relaxed italic border-l-2 pl-2.5 py-0.5 rounded ${
                                     isThisSymptomActive 
                                       ? "bg-red-950/10 border-red-500/35 text-red-300" 
@@ -1775,7 +1807,7 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* INDEPENDENT SECTION 2.2: SUTILEZA OPERACIONAL // DIREÇÃO SÊNIOR */}
-      <section id="metodologia-preview" className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
+      {false && <section id="metodologia-preview" className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
         {/* Glow corner decors */}
         <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-brand-secondary/[0.01] rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-white/[0.01] rounded-full blur-[140px] pointer-events-none" />
@@ -1784,13 +1816,13 @@ export default function Home({ onNavigate }: HomeProps) {
           {/* Header */}
           <div className="tag08-section__header text-left">
             <span className="tag08-kicker">
-              Da análise à execução
+              Como a TAG08 trabalha
             </span>
             <h2 className="tag08-section__heading font-display font-medium text-3xl sm:text-4xl text-white tracking-tight">
-              Depois do diagnóstico, a execução precisa de método.
+              Como a TAG08 trabalha
             </h2>
             <p className="tag08-section__copy text-zinc-400 text-xs sm:text-sm font-sans">
-              A TAG08 organiza o caminho antes de produzir: entende o cenário, define prioridades, estrutura entregas, acompanha a ativação e ajusta o que precisa evoluir.
+              Um caminho que começa pela leitura do contexto e segue com direção, planejamento, execução e evolução.
             </p>
           </div>
 
@@ -1932,7 +1964,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* SECTION 3 - NOSSO DIFERENCIAL (BENTO GRID PREMIUM INSPIRADO NO ACORDO VISUAL SELECIONADO) */}
       <section id="solucao" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
@@ -2050,9 +2082,8 @@ export default function Home({ onNavigate }: HomeProps) {
                 {/* Header tag */}
                 <div className="relative z-10 flex justify-between items-center w-full">
                   <span className="tag08-meta text-xs text-brand-secondary tracking-widest uppercase font-extrabold bg-brand-secondary/10 px-2.5 py-1 rounded-full">
-                    Estúdio Operacional
+                    Centro de método
                   </span>
-                  <span className="text-zinc-500 font-sans text-xs">SÃO PAULO / BR</span>
                 </div>
 
                 {/* HERO DIGITAL ".T" CENTERING */}
@@ -2062,11 +2093,11 @@ export default function Home({ onNavigate }: HomeProps) {
                   
                   {/* GIANT NEON BRANDING LETTER ".T" */}
                   <span className="font-display font-black text-9xl text-brand-secondary tracking-tighter drop-shadow-[0_15px_30px_rgba(var(--color-brand-secondary-rgb),0.35)] transform group-hover:scale-105 transition-transform duration-700">
-                    .T
+                    TAG08
                   </span>
                   
                   <span className="text-white tag08-meta text-xs tracking-widest font-black uppercase mt-4">
-                    TAG08 CONSÓRCIO
+                    Estratégia, conteúdo, tecnologia e processos
                   </span>
                 </div>
 
@@ -2074,7 +2105,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="relative z-10 pt-4 border-t border-white/5 space-y-2">
                   <h3 className="text-white font-display font-bold text-xs tracking-wider">Centro de método</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed">
-                    Nossa equipe conecta contexto, prioridade e entrega para que a decisão não fique solta depois da reunião.
+                    Direção clara para transformar contexto, prioridade e entrega em um caminho aplicável.
                   </p>
                 </div>
               </motion.div>
@@ -2090,13 +2121,13 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[135px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl group-hover:bg-brand-secondary/[0.02] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">03 // FLOW</span>
+                    <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">03 // PROCESSO</span>
                     <Wifi className="w-3.5 h-3.5 text-zinc-400 group-hover:text-brand-secondary transition-colors" />
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
-                    <span className="font-display font-black text-2xl text-white tracking-tighter block leading-none">ASSÍNCRONO</span>
-                    <p className="text-white font-display font-bold text-xs uppercase tracking-wider">Sincronia Total</p>
-                    <p className="text-zinc-500 text-xs leading-snug font-medium">Controle total via canais diretos e limpos.</p>
+                    <span className="font-display font-black text-2xl text-white tracking-tighter block leading-none">CONTINUIDADE</span>
+                    <p className="text-white font-display font-bold text-xs uppercase tracking-wider">PROCESSO E ACOMPANHAMENTO</p>
+                    <p className="text-zinc-500 text-xs leading-snug font-medium">Briefing, aprovação e documentação reduzem improviso ao longo do trabalho.</p>
                   </div>
                 </div>
 
@@ -2104,13 +2135,13 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[135px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl group-hover:bg-brand-secondary/[0.02] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">04 // TECH</span>
+                    <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">04 // TECNOLOGIA</span>
                     <Layers className="w-3.5 h-3.5 text-zinc-400 group-hover:text-brand transition-colors" />
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
-                    <span className="font-display font-black text-2xl text-white tracking-tighter block leading-none">ZERO NO-CODE</span>
-                    <p className="text-white font-display font-bold text-xs uppercase tracking-wider">TECNOLOGIA LIMPA</p>
-                    <p className="text-zinc-500 text-xs leading-snug font-medium">Código limpo, leve e rápido.</p>
+                    <span className="font-display font-black text-2xl text-white tracking-tighter block leading-none">FUNÇÃO CLARA</span>
+                    <p className="text-white font-display font-bold text-xs uppercase tracking-wider">TECNOLOGIA APLICADA</p>
+                    <p className="text-zinc-500 text-xs leading-snug font-medium">Ferramentas e desenvolvimento entram quando ajudam a cumprir uma função real.</p>
                   </div>
                 </div>
 
@@ -2125,12 +2156,12 @@ export default function Home({ onNavigate }: HomeProps) {
                   <div className="w-9 h-9 rounded-full bg-white/[0.03] border border-white/[0.08] text-zinc-300 flex items-center justify-center group-hover:text-brand-secondary group-hover:border-brand-secondary/30 transition-all">
                     <Activity className="w-4 h-4 animate-pulse text-brand" />
                   </div>
-                  <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-extrabold">ANALYTICS ATIVO</span>
+                    <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-extrabold">ANÁLISE E AJUSTE</span>
                 </div>
                 <div className="mt-4 space-y-1">
-                  <h4 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">Decisões Guiadas por Dados</h4>
+                  <h4 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">Análise e melhoria contínua</h4>
                   <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
-                    Evitamos suposições estéreis. Fornecemos dashboards dinâmicos traduzindo cada tráfego, lead e conversão em crescimento tático palpável.
+                    Dados e aprendizados orientam ajustes, sem transformar uma métrica isolada em promessa de resultado.
                   </p>
                 </div>
               </motion.div>
@@ -2301,26 +2332,15 @@ export default function Home({ onNavigate }: HomeProps) {
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 auto-rows-fr items-stretch gap-6 sm:gap-8 my-6">
               {MAPA_SOLUCOES_DATA.map((service, index) => {
                 const darkCard = index === 2 || index === 5;
-                const accentCard = index === 6;
-                // The desktop rhythm is deliberately balanced: 6+3+3, 3+6+3, then a final full-width moment.
-                // Tablet keeps equal cards so a wide card never leaves a stranded half-row.
-                const gridClass = [
-                  "lg:col-span-6",
-                  "lg:col-span-3",
-                  "lg:col-span-3",
-                  "lg:col-span-3",
-                  "lg:col-span-6",
-                  "lg:col-span-3",
-                  "md:col-span-2 lg:col-span-12"
-                ][index] ?? "lg:col-span-3";
+                // Six moments read best as three balanced pairs. The old 7-card rhythm
+                // left wide cards under-filled and narrow cards visually compressed.
+                const gridClass = "lg:col-span-6";
                 const cardBg = darkCard
                   ? "bg-zinc-900 border border-white/5"
-                  : accentCard
-                    ? "bg-brand-secondary/10 border border-brand-secondary/20"
-                    : "bg-zinc-50 border border-black/10";
+                  : "bg-zinc-50 border border-black/10";
                 const textColor = darkCard ? "text-white" : "text-black";
                 const subColor = darkCard ? "text-zinc-300" : "text-zinc-600";
-                const labelColor = darkCard ? "text-brand-secondary" : accentCard ? "text-zinc-700" : "text-zinc-500";
+                const labelColor = darkCard ? "text-brand-secondary" : "text-zinc-500";
 
                 return (
                   <motion.div
@@ -2328,7 +2348,7 @@ export default function Home({ onNavigate }: HomeProps) {
                     data-testid="solution-map-card"
                     whileHover={{ y: -4, scale: 1.01 }}
                     transition={{ duration: 0.3 }}
-                    className={`${gridClass} ${cardBg} ${textColor} rounded-[32px] p-6 sm:p-8 lg:p-9 text-left relative overflow-hidden group h-full min-h-[21rem] sm:min-h-[22rem] flex flex-col`}
+                    className={`${gridClass} ${cardBg} ${textColor} rounded-[32px] p-6 sm:p-8 lg:p-9 text-left relative overflow-hidden group h-full min-h-[18rem] sm:min-h-[19rem] flex flex-col`}
                   >
                     {!darkCard && (
                       <div className="absolute inset-0 grid grid-cols-3 h-full opacity-[0.015] pointer-events-none">
@@ -2352,17 +2372,20 @@ export default function Home({ onNavigate }: HomeProps) {
                         <h3 className="min-h-[3.9rem] font-display text-xl font-black leading-[0.95] tracking-tight sm:text-2xl">
                           {service.title}
                         </h3>
-                        <p className={`mt-4 min-h-[5.25rem] text-xs font-sans leading-relaxed sm:text-sm ${subColor}`}>
+                        <p className={`mt-4 text-xs font-sans leading-relaxed sm:text-sm ${subColor}`}>
                           {service.desc}
+                        </p>
+                        <p className={`mt-3 text-xs font-sans leading-relaxed ${subColor}`}>
+                          <span className="font-bold">Relacionados:</span> {service.related}
                         </p>
                       </div>
 
-                      <div className="mt-8 flex w-full items-center justify-between gap-4 border-t border-current/10 pt-5">
+                      <div className="mt-6 flex w-full items-center justify-between gap-4 border-t border-current/10 pt-5">
                         <button
                           onClick={() => handleLinkClick(service.slug)}
                           className={`flex items-center gap-1.5 font-sans text-xs font-black uppercase tracking-widest cursor-pointer hover:underline ${darkCard ? "text-white" : "text-black"}`}
                         >
-                          Ver solução
+                          {service.cta}
                           <ArrowRight className="w-3.5 h-3.5" />
                         </button>
                         <div className={`text-xs tag08-meta uppercase tracking-widest ${labelColor}`}>
@@ -2392,7 +2415,7 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* SECTION 4.5 - RESULTADOS E CASES (MÉTODOS COM RESULTADO COMPROVADOS NA PRÁTICA) */}
-      <section id="resultados-cases" className="tag08-section px-4 sm:px-6 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
+      {visiblePortfolioCandidates.length > 0 && <section id="resultados-cases" data-testid="home-portfolio-candidates" className="tag08-section px-4 sm:px-6 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
         {/* Ambient background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -2402,38 +2425,33 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 text-left">
             <div className="space-y-2">
               <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black block">
-                Método em prática
+                Portfólio em validação editorial
               </span>
               <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient tracking-tight leading-none">
-                Projetos que mostram direção aplicada.
+                Repertório real, publicado com contexto e autorização.
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
-                A TAG08 atua para organizar posicionamento, comunicação, conteúdo, tecnologia e processos conforme o momento de cada marca. Mais do que prometer resultado, nosso foco é estruturar caminhos mais claros, coerentes e sustentáveis.
+                Cada case só entra nesta Home depois da validação de material, narrativa, direitos de uso e situação real do projeto. A curadoria evita transformar repertório em promessa.
               </p>
             </div>
-            <button
-              onClick={() => handleLinkClick("/contato")}
-              className="text-xs font-sans text-brand-secondary hover:underline font-bold flex items-center justify-start md:justify-end gap-1.5 shrink-0 uppercase tracking-widest cursor-pointer"
-            >
-              Solicitar Estudo de Caso <ArrowRight className="w-3.5 h-3.5" />
-            </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PROOF_CASES_DATA.map((item) => (
-              <CaseStudyCard
-                key={item.id}
-                item={item}
-                onClick={() => handleLinkClick(`/casos/${item.id}`)}
-              />
+            {visiblePortfolioCandidates.map((candidate, index) => (
+              <article key={candidate.id} data-evidence-key={`portfolio-candidate/${candidate.id}`} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-[28px] min-h-[180px] flex flex-col justify-between text-left">
+                <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black">{String(index + 1).padStart(2, "0")} // em validação</span>
+                <h3 className="font-display font-semibold text-lg text-white">{candidate.name}</h3>
+                <EvidenceReviewBadge evidenceKey={`portfolio-candidate/${candidate.id}`} />
+                <p className="text-zinc-500 text-xs leading-relaxed">Aguardando confirmação de material, direitos de publicação, narrativa e rota antes de ser apresentado como case.</p>
+              </article>
             ))}
           </div>
 
         </div>
-      </section>
+      </section>}
 
       {/* SECTION 5 - TABELA DE PLANOS DE MÍDIAS SOCIAIS (REDESENHADA - INSPIRADO NO ACORDO VISUAL DO DEPOIMENTO DO CLIENTE) */}
-      <section id="planos-redes" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
+      {false && <section id="planos-redes" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
         {/* Luminous Container mimicking the uploaded design mockup but for Editorial strategy */}
         <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(var(--color-brand-rgb),0.18)] select-none">
           
@@ -2671,7 +2689,7 @@ export default function Home({ onNavigate }: HomeProps) {
           </div>
 
         </div>
-      </section>
+      </section>}
 
       {/* SECTION 6 - METODOLOGIA */}
       <section id="metodologia" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-900/10 relative">
@@ -2693,40 +2711,40 @@ export default function Home({ onNavigate }: HomeProps) {
             {/* Step 1 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">01 // DIAGNÓSTICO</div>
-              <h4 className="font-display font-semibold text-white">Diagnóstico</h4>
+              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">01 // ENTENDIMENTO</div>
+              <h4 className="font-display font-semibold text-white">Entendimento</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Entendemos o momento da marca, seus canais, gargalos, objetivos e capacidade real de execução.
+                Leitura do negócio, objetivos, momento, comunicação, canais, estrutura e restrições relevantes.
               </p>
             </div>
 
             {/* Step 2 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">02 // ESTRATÉGIA</div>
-              <h4 className="font-display font-semibold text-white">Estratégia</h4>
+              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">02 // DIAGNÓSTICO E DIREÇÃO</div>
+              <h4 className="font-display font-semibold text-white">Diagnóstico e direção</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Definimos prioridades, mensagens, escopo e direção para que a execução tenha critério.
+                Separação entre sintomas e causas para definir prioridades e o caminho mais coerente.
               </p>
             </div>
 
             {/* Step 3 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">03 // PRODUÇÃO</div>
-              <h4 className="font-display font-semibold text-white">Produção</h4>
+              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">03 // PLANEJAMENTO</div>
+              <h4 className="font-display font-semibold text-white">Planejamento</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Transformamos a direção aprovada em conteúdo, design, site, campanhas, processos ou materiais aplicáveis.
+                Organização de escopo, sequência de execução, responsabilidades, dependências e critérios de aprovação.
               </p>
             </div>
 
             {/* Step 4 */}
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
-              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">04 // ATIVAÇÃO</div>
-              <h4 className="font-display font-semibold text-white">Ativação</h4>
+              <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">04 // EXECUÇÃO</div>
+              <h4 className="font-display font-semibold text-white">Execução</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Colocamos as entregas em uso, acompanhando ajustes necessários e pontos de atenção.
+                Produção e desenvolvimento alinhados à estratégia, à identidade, ao canal e à capacidade disponível.
               </p>
             </div>
 
@@ -2736,7 +2754,7 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">05 // EVOLUÇÃO</div>
               <h4 className="font-display font-semibold text-white">Evolução</h4>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Revisamos aprendizados, identificamos melhorias e organizamos próximos passos com responsabilidade.
+                Análise de aprendizados, resultados e ajustes que precisam entrar no próximo ciclo.
               </p>
             </div>
           </div>
@@ -3052,7 +3070,7 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* SECTION 7 - DIFERENCIAIS */}
-      <section id="diferenciais" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-950">
+      {false && <section id="diferenciais" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-950">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-5 text-left space-y-4">
@@ -3110,53 +3128,32 @@ export default function Home({ onNavigate }: HomeProps) {
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
-      {/* SECTION 8 - SOBRE A TAG08 */}
-      <section id="sobre-simples" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-900/10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6 relative">
-            <div className="absolute inset-0 bg-brand/5 blur-3xl rounded-full" />
-            <Image
-              width={600}
-              height={400}
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600"
-              alt="Reunião estratégica de equipe TAG08"
-              className="rounded-2xl border border-white/[0.08] shadow-2xl relative z-10 w-full h-auto"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-
-          <div className="lg:col-span-6 text-left space-y-6">
-            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-semibold">
-              Sobre a TAG08
-            </span>
-            <h2 className="font-display font-medium text-3xl sm:text-4xl text-gradient">
-              Direção para construir. Estrutura para crescer.
-            </h2>
-            <div className="text-zinc-300 text-sm sm:text-base space-y-4 leading-relaxed font-sans">
-              <p>
-                A TAG08 conecta estratégia, comunicação, design, tecnologia e processos para ajudar marcas a saírem do improviso e construírem uma presença digital mais clara, consistente e responsável.
-              </p>
-              <p className="text-zinc-400">
-                Nosso trabalho começa pelo entendimento do momento da marca e avança para soluções que organizam posicionamento, conteúdo, canais, sistemas e operação.
-              </p>
-            </div>
-            <div className="pt-2">
-              <button
-                onClick={() => handleLinkClick("/sobre")}
-                className="bg-brand text-black font-semibold text-xs font-sans px-6 py-3.5 rounded-lg hover:bg-brand-dark transition-all duration-200"
-              >
-                CONHECER A TAG08
-              </button>
-            </div>
-          </div>
+      {/* SECTION 8 - INSTITUCIONAL CTA */}
+      <section id="sobre-simples" className="border-b border-white/[0.04] bg-charcoal-900/10 px-6 py-16">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="tag08-meta text-xs font-semibold uppercase tracking-widest text-brand">
+            Sobre a TAG08
+          </span>
+          <h2 className="mt-3 font-display text-3xl font-medium text-gradient sm:text-4xl">
+            Conheça quem está por trás do trabalho.
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-zinc-400">
+            Veja a história, a equipe e os critérios que orientam as decisões da TAG08.
+          </p>
+          <button
+            type="button"
+            onClick={() => handleLinkClick("/sobre")}
+            className="mt-6 rounded-lg bg-brand px-6 py-3.5 font-sans text-xs font-semibold text-black transition-all duration-200 hover:bg-brand-dark"
+          >
+            CONHECER A TAG08
+          </button>
         </div>
       </section>
 
       {/* PORTFÓLIO DE TESTEMUNHOS & CASOS DE CLIENTES (UNIFICADO - O CLIENTE DICTA A REVOLUÇÃO) */}
-      <section id="portfolio-marcas" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
+      {visibleClientCases.length > 0 && <section id="portfolio-marcas" data-testid="home-client-cases" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         
         {/* Editorial magazine background grid lines */}
         <div className="absolute inset-0 grid grid-cols-4 sm:grid-cols-8 h-full opacity-5 pointer-events-none">
@@ -3224,11 +3221,12 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-                {CLIENT_CASES.map((cc, index) => {
+                {visibleClientCases.map((cc, index) => {
                   const isActive = index === activeSlide;
                   return (
                     <button
                       key={cc.id}
+                      data-evidence-key={`home-case/${cc.id}`}
                       onClick={() => setActiveSlide(index)}
                       className={`w-full text-left p-4 rounded-2xl border transition-all duration-300 relative overflow-hidden group cursor-pointer ${
                         isActive
@@ -3250,6 +3248,7 @@ export default function Home({ onNavigate }: HomeProps) {
                           <h4 className={`font-display font-black text-sm uppercase tracking-tight truncate ${isActive ? "text-black" : "text-white"}`}>
                             {cc.name}
                           </h4>
+                          <EvidenceReviewBadge evidenceKey={`home-case/${cc.id}`} />
                           <p className={`font-sans text-xs truncate ${isActive ? "text-black/80" : "text-zinc-500"}`}>
                             {cc.handle}
                           </p>
@@ -3309,8 +3308,8 @@ export default function Home({ onNavigate }: HomeProps) {
                   {/* Dynamic moody background image with custom style lighting */}
                   <div className="absolute inset-0 z-0 select-none pointer-events-none">
                     <Image
-                      src={CLIENT_CASES[activeSlide].backgroundImg} 
-                      alt={CLIENT_CASES[activeSlide].name} 
+                      src={visibleClientCases[activeSlide].backgroundImg}
+                      alt={visibleClientCases[activeSlide].name}
                       fill
                       sizes="(max-width: 768px) 100vw, 1200px"
                       className="w-full h-full object-cover opacity-80 group-hover:scale-[1.03] transition-transform duration-1000 ease-out brightness-[0.75] contrast-[1.1] grayscale-[10%]"
@@ -3335,7 +3334,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   {/* TOP HEADER LAYER: Editorial category tags & Rotating Neon Sunburst */}
                   <div className="relative z-10 flex items-center justify-between">
                     <div className="flex flex-wrap gap-2">
-                      {CLIENT_CASES[activeSlide].categoryTags.map((tag) => (
+                      {visibleClientCases[activeSlide].categoryTags.map((tag) => (
                         <span 
                           key={tag} 
                           className="tag08-meta text-xs tracking-widest text-brand border border-brand/30 px-3 py-1 rounded-full uppercase font-bold bg-black/60 backdrop-blur-sm shadow-sm"
@@ -3373,16 +3372,16 @@ export default function Home({ onNavigate }: HomeProps) {
                   {/* MIDDLE QUOTE & POSITIONING HEADER (Using layered curved details cards) */}
                   <div className="relative z-10 space-y-4 max-w-2xl mt-auto pt-4">
                     <span className="tag08-meta text-xs text-brand tracking-widest uppercase font-extrabold block">
-                      {CLIENT_CASES[activeSlide].caseName}
+                      {visibleClientCases[activeSlide].caseName}
                     </span>
                     
                     <h3 className="font-display font-black text-2.5xl sm:text-4xl md:text-[40px] text-brand leading-[0.95] tracking-tighter mb-2">
-                      {CLIENT_CASES[activeSlide].tagline}
+                      {visibleClientCases[activeSlide].tagline}
                     </h3>
 
                     <div className="bg-charcoal-950/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl relative shadow-2xl">
                       <p className="text-white text-sm sm:text-base font-sans font-medium tracking-tight leading-relaxed italic block">
-                        “{CLIENT_CASES[activeSlide].quote}”
+                        “{visibleClientCases[activeSlide].quote}”
                       </p>
                     </div>
                   </div>
@@ -3396,8 +3395,8 @@ export default function Home({ onNavigate }: HomeProps) {
                     {/* Profile card absolute design accuracy */}
                     <div className="flex items-center gap-3 bg-black/50 backdrop-blur-sm rounded-full py-1.5 pl-2 pr-4 border border-white/10 shadow-lg ml-auto">
                       <Image
-                        src={CLIENT_CASES[activeSlide].avatar} 
-                        alt={CLIENT_CASES[activeSlide].name} 
+                        src={visibleClientCases[activeSlide].avatar}
+                        alt={visibleClientCases[activeSlide].name}
                         width={32}
                         height={32}
                         className="w-8 h-8 rounded-full object-cover border-2 border-brand"
@@ -3405,10 +3404,10 @@ export default function Home({ onNavigate }: HomeProps) {
                       />
                       <div className="flex flex-col text-left">
                         <span className="text-white text-xs font-bold leading-tight uppercase font-sans">
-                          {CLIENT_CASES[activeSlide].name}
+                          {visibleClientCases[activeSlide].name}
                         </span>
                         <span className="text-brand font-sans text-xs tracking-wider font-semibold">
-                          {CLIENT_CASES[activeSlide].handle}
+                          {visibleClientCases[activeSlide].handle}
                         </span>
                       </div>
                     </div>
@@ -3420,10 +3419,10 @@ export default function Home({ onNavigate }: HomeProps) {
 
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* SECTION 8.5 - GOOGLE MY BUSINESS REVIEWS */}
-      <section id="avaliacoes-gmb" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-900/20 relative overflow-hidden">
+      {contentSources.googleBusiness === "live" && visibleGmbReviews.length > 0 && <section id="avaliacoes-gmb" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-900/20 relative overflow-hidden">
         {/* Subtle background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[120px] pointer-events-none" />
         
@@ -3545,8 +3544,20 @@ export default function Home({ onNavigate }: HomeProps) {
 
                     {/* Supporting comprehensive details text (the body of the review) */}
                     <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-normal">
-                      {visibleGmbReviews[activeReview].text}
+                      {showOriginalReview ? visibleGmbReviews[activeReview].original?.text ?? visibleGmbReviews[activeReview].text : visibleGmbReviews[activeReview].text}
                     </p>
+                    {visibleGmbReviews[activeReview].machineTranslated ? (
+                      <div className="flex flex-wrap items-center gap-3 text-xs font-sans text-zinc-500">
+                        <span>{externalCopy.machineTranslationLabel}</span>
+                        <button
+                          type="button"
+                          onClick={() => setShowOriginalReview((current) => !current)}
+                          className="text-brand hover:underline"
+                        >
+                          {showOriginalReview ? externalCopy.hideOriginalLabel : externalCopy.showOriginalLabel}
+                        </button>
+                      </div>
+                    ) : null}
                   </div>
 
                   <div className="mt-8 pt-6 border-t border-dashed border-white/[0.08] relative z-10">
@@ -3612,7 +3623,7 @@ export default function Home({ onNavigate }: HomeProps) {
           </div>
 
         </div>
-      </section>
+      </section>}
 
       {/* SECTION 9 - SEGURANÇA OPERACIONAL & DESIGNS HIGH-END (MATCHING USER REFERENCE DESIGN) */}
       <section id="prova" className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
@@ -3654,19 +3665,19 @@ export default function Home({ onNavigate }: HomeProps) {
                   <span className="w-2 h-2 rounded-full bg-black animate-ping" />
                 </div>
                 <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-brand">
-                  Próximo passo com clareza
+                  Presença com direção
                 </span>
               </div>
 
                 {/* Massive Bold Heading mirroring reference */}
                 <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter">
-                Antes de avançar, <br />
-                entenda o que sua marca realmente precisa.
+                Presença <br />
+                com direção.
                 </h2>
 
                 {/* Description Paragraph with high contrast block typeface layout */}
               <p className="text-zinc-300 text-xs sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
-                A TAG08 ajuda a organizar prioridades, identificar gargalos e indicar um caminho coerente antes de transformar qualquer demanda em execução.
+                Uma marca não precisa apenas aparecer. Precisa ser compreendida pelo público certo, apresentar seu valor com coerência e sustentar aquilo que comunica. Estratégia define escolhas. Conteúdo constrói entendimento. Tecnologia cria estrutura. Processo ajuda a sustentar a execução.
               </p>
             </div>
 
@@ -3682,10 +3693,10 @@ export default function Home({ onNavigate }: HomeProps) {
                 </div>
                 <div className="space-y-0.5">
                     <span className="tag08-meta text-xs text-brand uppercase tracking-wider font-extrabold block">
-                    Método aplicado
+                    Presença sem direção vira ruído.
                     </span>
                     <p className="text-white text-xs leading-snug font-sans font-semibold">
-                    Entregas consistentes, úteis e coerentes com a marca.
+                    A conversa inicial começa pelo entendimento do momento atual.
                     </p>
                   </div>
                 </div>
@@ -3781,28 +3792,28 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="space-y-4">
                 {/* Visual upper badge */}
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
-                  Dúvidas antes do próximo passo
+                  Dúvidas importantes antes da conversa
                 </div>
                 
                 {/* Section titles */}
                 <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter">
-                  Antes de escolher uma solução, <br />
-                  entenda o caminho.
+                  Dúvidas importantes <br />
+                  antes da conversa.
                 </h2>
                 
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-sm">
-                  Reunimos respostas para ajudar você a entender como a TAG08 trabalha, quando faz sentido iniciar um projeto e por que o diagnóstico vem antes da proposta.
+                  Respostas para entender o papel da TAG08, a escolha do serviço, o escopo, o início e as expectativas de resultado.
                 </p>
               </div>
 
               {/* Vertical list of Accordion Triggers */}
               <div className="space-y-3 pt-4">
                 {([
-                  { id: 0, title: "A TAG08 é uma agência de marketing?" },
-                  { id: 1, title: "Preciso saber exatamente qual serviço contratar?" },
-                  { id: 2, title: "A TAG08 trabalha com pacotes prontos?" },
-                  { id: 3, title: "Quanto tempo leva para começar?" },
-                  { id: 4, title: "A TAG08 promete resultado?" }
+                  { id: 0, title: "Qual é o papel da TAG08?" },
+                  { id: 1, title: "Como escolhemos o serviço?" },
+                  { id: 2, title: "Como funcionam pacotes e escopo?" },
+                  { id: 3, title: "Quando o projeto pode começar?" },
+                  { id: 4, title: "Como a TAG08 trata resultados e expectativas?" }
                 ]).map((item) => (
                   <button
                     key={item.id}
@@ -3865,21 +3876,21 @@ export default function Home({ onNavigate }: HomeProps) {
                 
                 <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
                   {([
-                    "A TAG08 é uma agência de marketing?",
-                    "Preciso saber exatamente qual serviço contratar?",
-                    "A TAG08 trabalha com pacotes prontos?",
-                    "Quanto tempo leva para começar?",
-                    "A TAG08 promete resultado?"
+                    "Qual é o papel da TAG08?",
+                    "Como escolhemos o serviço?",
+                    "Como funcionam pacotes e escopo?",
+                    "Quando o projeto pode começar?",
+                    "Como a TAG08 trata resultados e expectativas?"
                   ])[activeFaq]}
                 </h4>
                 
                 <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
-                    "A TAG08 atua com estratégia, comunicação, design, tecnologia e processos. Em alguns casos executamos entregas típicas de marketing, mas o trabalho começa pelo entendimento do momento da marca e pela definição do caminho mais coerente.",
-                    "Não. O primeiro passo é entender o momento da sua marca. A partir do diagnóstico, indicamos se faz mais sentido começar por posicionamento, conteúdo, site, identidade, audiovisual, processos ou outra frente.",
-                    "Temos soluções estruturadas, mas a recomendação depende do contexto, da maturidade, da urgência e da capacidade de execução da marca. O objetivo é evitar escopo errado e expectativa desalinhada.",
-                    "Depende do tipo de projeto e da disponibilidade de informações. Antes de iniciar a execução, alinhamos diagnóstico, prioridades, escopo, responsáveis e próximos passos.",
-                    "Não prometemos resultado artificial ou crescimento instantâneo. Trabalhamos para construir clareza, consistência, direção e melhoria contínua com responsabilidade."
+                    "A TAG08 atua com estratégia, comunicação, design, conteúdo, tecnologia e processos. Algumas entregas são típicas de uma agência de marketing; a diferença está na forma de diagnosticar e organizar o caminho antes da execução.",
+                    "Não é necessário chegar sabendo qual solução contratar. O contexto inicial ajuda a identificar se o problema está em posicionamento, conteúdo, identidade, audiovisual, web, processos ou na combinação entre essas frentes.",
+                    "Existem soluções estruturadas, mas a recomendação considera momento, maturidade, capacidade de investimento e participação necessária do cliente. O objetivo é preservar aderência entre problema, escopo e expectativa.",
+                    "O início depende do tipo de projeto, das informações necessárias, da capacidade operacional e das etapas de alinhamento. Diagnóstico, escopo, responsáveis e dependências são organizados antes da execução.",
+                    "A TAG08 não trabalha com promessa de crescimento instantâneo ou resultado garantido. O compromisso está em método, direção, execução responsável, acompanhamento e melhoria contínua."
                   ])[activeFaq]}
                 </p>
               </div>
@@ -3909,9 +3920,9 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">PRÓXIMO PASSO</span>
-                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">Vamos entender o melhor caminho para a sua marca?</h4>
+                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">O melhor caminho começa pelo entendimento do momento atual.</h4>
                   <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
-                    Antes de propor qualquer solução, a TAG08 entende seu momento, seus desafios e suas prioridades para indicar um caminho mais claro e responsável.
+                    Antes de uma proposta, a TAG08 organiza o contexto: o que a empresa quer construir, o que está travando esse avanço e qual estrutura consegue sustentar a próxima etapa.
                   </p>
                 </div>
                 <a
@@ -3922,7 +3933,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   }}
                   className="group flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-all"
                 >
-                  <span>QUERO ENTENDER MEU MELHOR CAMINHO</span>
+                  <span>ENTENDER MEU MELHOR CAMINHO</span>
                   <ArrowUpRight className="w-4 h-4 text-black stroke-[2.5]" />
                 </a>
               </div>

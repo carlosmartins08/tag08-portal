@@ -28,6 +28,14 @@ Garantir que a regra 60/30/10 seja aplicada de forma consistente, sem dispersar 
 - `brand-secondary` para apoio visual, não para dominar a tela
 - `accent-readable` para textos no modo claro quando o verde-limão puro comprometer contraste
 
+## Contrato de superfícies
+
+- Controle: `12px` de raio; usado em botões, campos, tabs e navegação contextual.
+- Card funcional: `16px` de raio; usado em escolhas, formulários e itens de lista.
+- Bloco editorial: `24px` de raio; usado em hero, prova, destaque e agrupamentos de seção.
+- Profundidade: somente `base` e `emphasis`. Sombras não devem criar uma nova categoria visual.
+- `brand-secondary` é alias legado de `brand`; não deve receber significado novo.
+
 ## Typography tokens
 
 - Primary family: `Manrope`
@@ -65,6 +73,12 @@ Garantir que a regra 60/30/10 seja aplicada de forma consistente, sem dispersar 
 2. Reusar componente ou classe semântica existente.
 3. Registrar exceção quando a cor não puder ser semanticamente substituída.
 4. Validar build e inspeção visual em desktop e mobile.
+
+## Responsividade e paridade entre serviços
+
+- Toda mudança de interface deve ser validada em mobile (`390px`), tablet (`768px`) e desktop (`1440px`). O critério não é apenas evitar overflow: a hierarquia, o CTA primário, os controles e a legibilidade precisam sobreviver à mudança de largura.
+- As páginas de serviço podem ter narrativa e conteúdos próprios, mas devem manter o mesmo padrão de acabamento: entrada clara, ação principal distinguível, superfícies do contrato, foco visível e alvo de toque de pelo menos `44px`.
+- Uma diferença de layout só é aceita quando expressa a natureza do serviço; não quando encobre ausência de hierarquia, estados ou refinamento.
 
 ## Auditoria
 

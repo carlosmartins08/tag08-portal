@@ -9,12 +9,14 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import WhatsAppButton from "../../components/WhatsAppButton";
 import Breadcrumbs from "../../components/Breadcrumbs";
+import { PageCanvas } from "../../components/VisualPrimitives";
 import { canonicalizeRoute, getLocalizedPath, getRouteByPath, type RouteLocale } from "../../config/routeRegistry";
 import { i18n, type UiLanguage } from "../../i18n/siteI18n";
 import { safeStorage } from "../../utils/storage";
-import { initializeGoogleAnalytics, trackEngagement, trackPageView, trackScrollDepth, trackWebVital, updateGoogleAnalyticsConsent } from "../../lib/analytics";
+import { initializeTagManager, trackEngagement, trackPageView, trackScrollDepth, trackWebVital, updateGoogleAnalyticsConsent } from "../../lib/analytics";
 import { COOKIE_CONSENT_EVENT, readCookiePreferences, type CookiePreferences } from "../../lib/cookieConsent";
 import { flushFormQueue } from "../../lib/formQueue";
+import { ContentReviewBanner } from "../../components/ContentReview";
 
 const localeToUiLanguage: Record<RouteLocale, UiLanguage> = {
   pt: "pt",
@@ -30,6 +32,7 @@ type SiteShellProps = {
 
 export default function SiteShell({ path, locale, children }: SiteShellProps) {
   const router = useRouter();
+  const currentRoute = getRouteByPath(path);
   const [language, setLanguage] = useState<UiLanguage>(localeToUiLanguage[locale]);
   const lenisRef = useRef<Lenis | null>(null);
   const scrollDepthMarksRef = useRef<Set<number>>(new Set());
@@ -45,11 +48,11 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
 
   useEffect(() => {
     const syncAnalyticsConsent = (preferences: CookiePreferences | null) => {
-      const enabled = preferences?.performance === true;
+      const enabled = preferences?.performance === true || preferences?.marketing === true;
       setAnalyticsEnabled(enabled);
-      updateGoogleAnalyticsConsent(enabled);
+      updateGoogleAnalyticsConsent();
       if (enabled) {
-        initializeGoogleAnalytics();
+        initializeTagManager();
       }
     };
 
@@ -222,7 +225,6 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
   };
 
   useEffect(() => {
-    const route = getRouteByPath(path);
     const pageTitle = document.title;
 
     trackPageView({
@@ -231,10 +233,10 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
       page_title: pageTitle,
       page_referrer: document.referrer || undefined,
       language,
-      route_type: route?.routeCategory ?? "aux",
-      route_key: route?.key,
-      page_group: route?.routeCategory ?? "aux",
-      is_service_page: Boolean(route?.isServicePage)
+      route_type: currentRoute?.routeCategory ?? "aux",
+      route_key: currentRoute?.key,
+      page_group: currentRoute?.routeCategory ?? "aux",
+      is_service_page: Boolean(currentRoute?.isServicePage)
     });
 
     scrollDepthMarksRef.current = new Set();
@@ -254,7 +256,7 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
             page_title: pageTitle,
             depth_percent: threshold,
             language,
-            route_type: route?.routeCategory ?? "aux"
+            route_type: currentRoute?.routeCategory ?? "aux"
           });
         }
       });
@@ -268,7 +270,7 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
         page_title: pageTitle,
         engaged_seconds: 30,
         language,
-        route_type: route?.routeCategory ?? "aux"
+        route_type: currentRoute?.routeCategory ?? "aux"
       });
     }, 30000);
 
@@ -279,18 +281,22 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
       window.clearTimeout(engagementTimer);
       window.removeEventListener("scroll", trackCurrentScrollDepth);
     };
-  }, [analyticsEnabled, language, path]);
+  }, [analyticsEnabled, currentRoute, language, path]);
 
   return (
-    <div className="min-h-screen bg-main text-primary font-sans flex flex-col justify-between selection:bg-brand selection:text-black relative overflow-x-hidden transition-colors duration-350">
+    <PageCanvas
+      className={`min-h-screen bg-main text-primary font-sans flex flex-col justify-between selection:bg-brand selection:text-black relative overflow-x-hidden transition-colors duration-350 ${currentRoute?.isServicePage ? "tag08-page--service" : "tag08-page--editorial"}`}
+      data-route-category={currentRoute?.routeCategory ?? "aux"}
+    >
       <div className="absolute inset-0 radial-grid opacity-[0.22] pointer-events-none z-0" />
       <div className="absolute top-[10%] left-[-5%] w-[380px] h-[380px] bg-brand/5 rounded-full blur-[130px] pointer-events-none z-0" />
       <div className="absolute bottom-[15%] right-[-5%] w-[480px] h-[480px] bg-brand/3 rounded-full blur-[150px] pointer-events-none z-0" />
       <Header currentPage={path} onNavigate={navigate} language={language} onLanguageChange={changeLanguage} />
       <Breadcrumbs currentPage={path} onNavigate={navigate} language={language} />
-      <main className="flex-grow relative z-10">
+      <main className="flex-grow relative z-10" data-route={path}>
         <AnimatePresence mode="wait">
           <motion.div
+            className="tag08-editorial-page"
             key={`${locale}:${path}`}
             // The server-rendered page must be paintable before hydration. Entry motion here was delaying LCP on every route.
             initial={false}
@@ -304,6 +310,7 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
       </main>
       <Footer onNavigate={navigate} language={language} />
       <WhatsAppButton language={language} currentPage={path} />
-    </div>
+      <ContentReviewBanner />
+    </PageCanvas>
   );
 }

@@ -17,11 +17,7 @@ const getAttribute = (html, tagPattern, attribute) => {
 };
 
 const normalizeUrl = (value) => new URL(value).toString();
-const toLocalizedUrl = (path, locale) => {
-  if (locale === "pt-BR" || locale === "x-default") return `${canonicalOrigin}${path === "/" ? "" : path}`;
-  const prefix = locale === "en" ? "/en" : "/es";
-  return `${canonicalOrigin}${prefix}${path === "/" ? "" : path}`;
-};
+const toLocalizedUrl = (path) => `${canonicalOrigin}${path === "/" ? "" : path}`;
 
 const robots = await (await get("/robots.txt")).text();
 assert.match(robots, /Sitemap:\s*https:\/\/tag08\.com\.br\/sitemap\.xml/i);
@@ -30,20 +26,20 @@ const sitemap = await (await get("/sitemap.xml")).text();
 const urls = [...sitemap.matchAll(/<loc>(https:\/\/tag08\.com\.br[^<]*)<\/loc>/g)].map((match) => match[1]);
 assert.ok(urls.length > 0, "Sitemap has no canonical URLs");
 assert.equal(new Set(urls).size, urls.length, "Sitemap contains duplicate URLs");
-assert.ok(urls.every((url) => !/\/en(?:\/|$)|\/es(?:\/|$)/.test(new URL(url).pathname)), "Unreviewed locales must not appear in sitemap");
+assert.ok(urls.every((url) => !/^\/(?:en|es)(?:\/|$)/.test(new URL(url).pathname)), "Only reviewed locale pages may appear in sitemap");
 
 for (const canonicalUrl of urls) {
   const canonical = new URL(canonicalUrl);
   const response = await get(canonical.pathname);
   const html = await response.text();
+  const localizedPath = canonical.pathname || "/";
   const expectedAlternates = {
-    "pt-BR": toLocalizedUrl(canonical.pathname, "pt-BR"),
-    en: toLocalizedUrl(canonical.pathname, "en"),
-    "es-ES": toLocalizedUrl(canonical.pathname, "es-ES"),
-    "x-default": toLocalizedUrl(canonical.pathname, "x-default")
+    "pt-BR": toLocalizedUrl(localizedPath),
+    "x-default": toLocalizedUrl(localizedPath)
   };
 
-  assert.match(html, /<html lang="pt-BR">/i, `${canonical.pathname} is missing pt-BR lang`);
+  const expectedLang = "pt-BR";
+  assert.match(html, new RegExp(`<html lang="${expectedLang}">`, "i"), `${canonical.pathname} is missing ${expectedLang} lang`);
   assert.match(html, /<title>[^<]+<\/title>/i, `${canonical.pathname} is missing title`);
   assert.match(html, /<meta name="description" content="[^"]+"/i, `${canonical.pathname} is missing description`);
   assert.match(html, /<meta property="og:title" content="[^"]+"/i, `${canonical.pathname} is missing Open Graph title`);
@@ -61,6 +57,8 @@ for (const canonicalUrl of urls) {
     assert.ok(alternateHref, `${canonical.pathname} is missing ${hreflang} alternate`);
     assert.equal(normalizeUrl(alternateHref), normalizeUrl(expectedUrl), `${canonical.pathname} has an invalid ${hreflang} alternate`);
   }
+
+  assert.doesNotMatch(html, /hrefLang="(?:en|es-ES)"/i, `${canonical.pathname} exposes an unpublished locale alternate`);
 }
 
 console.log(JSON.stringify({ event: "seo_verification_passed", routes: urls.length }));

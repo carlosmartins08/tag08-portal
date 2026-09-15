@@ -494,6 +494,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
       />
 
       <MiniCases 
+        route="/servicos/process-intelligence"
         onNavigate={onNavigate} 
         title="Eficiência Operacional Homologada"
         subtitle="Empresas de escala que reduziram retrabalho e liberaram os fundadores do caos diário com a inteligência de processos da TAG08."

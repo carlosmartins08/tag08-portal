@@ -53,8 +53,7 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
   const [showNotification, setShowNotification] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<UiLanguage>(language);
-  const [isLgpdBannerOpen, setIsLgpdBannerOpen] = useState(false);
-  const [isCustomOpen, setIsCustomOpen] = useState(false);
+  const [lgpdBannerHeight, setLgpdBannerHeight] = useState(0);
   const floatingRef = useRef<HTMLDivElement>(null);
 
   const copy = COPY[selectedLanguage] ?? COPY.pt;
@@ -74,9 +73,8 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
     };
 
     const handleLgpdChange = (e: Event) => {
-      const customEvent = e as CustomEvent<{ visible?: boolean; custom?: boolean }>;
-      setIsLgpdBannerOpen(Boolean(customEvent.detail?.visible));
-      setIsCustomOpen(Boolean(customEvent.detail?.custom));
+      const customEvent = e as CustomEvent<{ visible?: boolean; height?: number }>;
+      setLgpdBannerHeight(customEvent.detail?.visible ? Math.ceil(customEvent.detail.height ?? 0) : 0);
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -131,15 +129,13 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const bottomOffset = isLgpdBannerOpen
-    ? isCustomOpen
-      ? "bottom-[calc(425px+env(safe-area-inset-bottom))] sm:bottom-[425px]"
-      : "bottom-[calc(245px+env(safe-area-inset-bottom))] sm:bottom-[245px]"
-    : "bottom-[calc(0.75rem+env(safe-area-inset-bottom))] sm:bottom-6";
+  const bottomOffset = lgpdBannerHeight > 0
+    ? `calc(${lgpdBannerHeight}px + 1.75rem + env(safe-area-inset-bottom))`
+    : undefined;
 
   return (
     <>
-      <div className={`fixed left-4 sm:left-6 z-40 transition-all duration-500 ease-out ${bottomOffset}`}>
+      <div className="fixed bottom-3 left-4 z-40 transition-all duration-500 ease-out sm:bottom-6 sm:left-6" style={bottomOffset ? { bottom: bottomOffset } : undefined}>
         <AnimatePresence>
           {showScrollTop && (
             <motion.button
@@ -161,7 +157,7 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
         </AnimatePresence>
       </div>
 
-      <div ref={floatingRef} className={`fixed right-4 sm:right-6 z-40 flex flex-col items-end transition-all duration-500 ease-out ${bottomOffset}`}>
+      <div ref={floatingRef} className="fixed bottom-3 right-4 z-40 flex flex-col items-end transition-all duration-500 ease-out sm:bottom-6 sm:right-6" style={bottomOffset ? { bottom: bottomOffset } : undefined}>
         <AnimatePresence>
           {showNotification && !isOpen && (
             <motion.div

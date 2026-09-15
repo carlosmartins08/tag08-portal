@@ -1,4 +1,29 @@
 services:
+  translation:
+    image: libretranslate/libretranslate:v1.8.4
+    container_name: tag08-translation-local
+    restart: unless-stopped
+    command: ["--load-only", "pt,en,es", "--metrics"]
+    environment:
+      LT_UPDATE_MODELS: "true"
+    # Loopback is available only to local developer tooling. There is no public
+    # listener; production connects through its private service network.
+    ports:
+      - "127.0.0.1:5001:5000"
+    volumes:
+      - tag08_translation_models:/home/libretranslate/.local:rw
+    networks:
+      # Outbound-only access is needed once to download the selected language
+      # models. The service still has no public port and application traffic
+      # stays on translation_internal.
+      - default
+      - translation_internal
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"from urllib.request import urlopen; urlopen('http://127.0.0.1:5000/health', timeout=3)\""]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+
   postgres:
     image: postgres:16-alpine
     container_name: tag08-postgres
@@ -31,6 +56,8 @@ services:
     depends_on:
       migrate:
         condition: service_completed_successfully
+      translation:
+        condition: service_healthy
     environment:
       HOSTNAME: 0.0.0.0
       DATABASE_URL: postgresql://tag08:tag08_local_only@postgres:5432/tag08
@@ -42,6 +69,12 @@ services:
       YOUTUBE_API_KEY: ${YOUTUBE_API_KEY:-}
       YOUTUBE_CHANNEL_ID: ${YOUTUBE_CHANNEL_ID:-}
       YOUTUBE_CHANNEL_HANDLE: ${YOUTUBE_CHANNEL_HANDLE:-}
+      TRANSLATION_SERVICE_URL: http://translation:5000
+      TRANSLATION_SERVICE_TOKEN: ${TRANSLATION_SERVICE_TOKEN:-}
+      TRANSLATION_ENGINE_VERSION: libretranslate-v1.8.4
+    networks:
+      - default
+      - translation_internal
     ports:
       - "127.0.0.1:3000:3000"
     healthcheck:
@@ -102,3 +135,8 @@ services:
 
 volumes:
   tag08_postgres_data:
+  tag08_translation_models:
+
+networks:
+  translation_internal:
+    internal: true

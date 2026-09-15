@@ -578,6 +578,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
       {/* BRANDING CLIENTS LOGO SOCIAL PROOF */}
       <MiniCases 
+        route="/servicos/branding-identidade"
         onNavigate={onNavigate} 
         title="Projetos que mostram identidade com direção."
         subtitle="A prova de um projeto de identidade não está na direção visual, mas na coerência entre marca, linguagem, aplicação e percepção."
@@ -659,8 +660,9 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
                   <form onSubmit={handleAddPinterestWork} className="grid grid-cols-1 md:grid-cols-12 gap-5">
                     <div className="md:col-span-4 space-y-1">
-                      <label className="block tag08-meta text-xs uppercase text-zinc-500 tracking-wider font-bold">Título da marca / cliente</label>
+                      <label htmlFor="branding-title" className="block tag08-meta text-xs uppercase text-zinc-400 tracking-wider font-bold">Título da marca / cliente</label>
                       <input
+                        id="branding-title"
                         type="text"
                         required
                         placeholder="Ex: Arctica Concept"
@@ -671,8 +673,9 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     </div>
 
                     <div className="md:col-span-4 space-y-1">
-                      <label className="block tag08-meta text-xs uppercase text-zinc-500 tracking-wider font-bold">Setor / categoria de marca</label>
+                      <label htmlFor="branding-category" className="block tag08-meta text-xs uppercase text-zinc-400 tracking-wider font-bold">Setor / categoria de marca</label>
                       <select
+                        id="branding-category"
                         value={newCategory}
                         onChange={(e) => setNewCategory(e.target.value)}
                         className="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand font-medium tracking-wide transition-all"
@@ -687,8 +690,9 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     </div>
 
                     <div className="md:col-span-4 space-y-1">
-                      <label className="block tag08-meta text-xs uppercase text-zinc-500 tracking-wider font-bold">Pinterest link de origem</label>
+                      <label htmlFor="branding-pinterest-url" className="block tag08-meta text-xs uppercase text-zinc-400 tracking-wider font-bold">Pinterest link de origem</label>
                       <input
+                        id="branding-pinterest-url"
                         type="url"
                         required
                         placeholder="Ex: https://br.pinterest.com/pin/..."
@@ -699,8 +703,9 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     </div>
 
                     <div className="md:col-span-8 space-y-1">
-                      <label className="block tag08-meta text-xs uppercase text-zinc-500 tracking-wider font-bold">Descrição curta conceitual</label>
+                      <label htmlFor="branding-description" className="block tag08-meta text-xs uppercase text-zinc-400 tracking-wider font-bold">Descrição curta conceitual</label>
                       <input
+                        id="branding-description"
                         type="text"
                         placeholder="Descreva brevemente a direção visual e a aplicação da identidade..."
                         value={newDescription}
@@ -710,8 +715,9 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     </div>
 
                     <div className="md:col-span-4 space-y-1">
-                      <label className="block tag08-meta text-xs uppercase text-zinc-500 tracking-wider font-bold">Link da imagem de capa (opcional)</label>
+                      <label htmlFor="branding-image-url" className="block tag08-meta text-xs uppercase text-zinc-400 tracking-wider font-bold">Link da imagem de capa (opcional)</label>
                       <input
+                        id="branding-image-url"
                         type="url"
                         placeholder="Vazio para gerar capa estética minimalista"
                         value={newImageUrl}
@@ -721,7 +727,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                     </div>
 
                     <div className="md:col-span-12 flex justify-between items-center pt-3 border-t border-white/[0.04]">
-                      <span className="text-xs text-zinc-500 font-sans">
+                      <span className="text-xs text-zinc-400 font-sans">
                         *As marcas adicionadas serão salvas temporariamente no seu navegador usando LocalStorage.
                       </span>
 

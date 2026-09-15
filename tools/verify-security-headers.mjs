@@ -5,7 +5,7 @@ const requiredHeaders = {
   "referrer-policy": /strict-origin-when-cross-origin/i,
   "x-frame-options": /sameorigin/i,
   "permissions-policy": /camera=\(\)/i,
-  "content-security-policy-report-only": /default-src 'self'/i
+  [process.env.CSP_REPORT_ONLY === "true" ? "content-security-policy-report-only" : "content-security-policy"]: /default-src 'self'/i
 };
 
 const response = await fetch(`${baseUrl}/`, { redirect: "manual" });

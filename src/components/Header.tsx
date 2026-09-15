@@ -1,11 +1,13 @@
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronDown, Menu, X, ArrowUpRight, MessageSquare, Briefcase, Compass, Settings, Users, Mail, Award, Activity, Video } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
+import { getRouteByPath, isRouteLocalePublished } from "../config/routeRegistry";
 import { TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
 import { trackCtaClick, trackOutboundClick } from "../lib/analytics";
 import CountryFlag from "./CountryFlag";
+import FocusManagedDialog from "./FocusManagedDialog";
 
 interface HeaderProps {
   currentPage: string;
@@ -16,11 +18,14 @@ interface HeaderProps {
 
 export default function Header({ currentPage, onNavigate, language, onLanguageChange }: HeaderProps) {
   const copy = i18n[language].header;
-  const languageOptions: Array<{ code: UiLanguage; label: string; name: string; available: boolean }> = [
-    { code: "pt", label: "PT", name: "Português", available: true },
-    { code: "en", label: "EN", name: "English", available: false },
-    { code: "es", label: "ES", name: "Español", available: false }
+  const languageOptions: Array<{ code: UiLanguage; label: string; name: string }> = [
+    { code: "pt", label: "PT", name: "Português" },
+    { code: "en", label: "EN", name: "English" },
+    { code: "es", label: "ES", name: "Español" }
   ];
+  const currentRoute = getRouteByPath(currentPage);
+  const isLanguageAvailable = (candidate: UiLanguage) =>
+    !currentRoute || isRouteLocalePublished(currentRoute, candidate);
   const serviceIcons = [Award, MessageSquare, Compass, Settings, Video, Briefcase, Users];
   const localizedServices = copy.servicePages.map((svc, index) => ({
     ...svc,
@@ -37,6 +42,9 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
   const [scrolled, setScrolled] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const servicesTriggerRef = useRef<HTMLButtonElement>(null);
+  const firstServiceRef = useRef<HTMLButtonElement>(null);
+  const firstMobileLinkRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,6 +57,25 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setDropdownOpen(false);
+        servicesTriggerRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [dropdownOpen]);
+
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    const frame = window.requestAnimationFrame(() => firstServiceRef.current?.focus());
+    return () => window.cancelAnimationFrame(frame);
+  }, [dropdownOpen]);
 
   const handleLinkClick = (page: string, ctaName: string, ctaLocation: string, ctaType: string = "navigation") => {
     trackCtaClick({
@@ -74,7 +101,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
   };
 
   const handleLanguageSelection = (nextLanguage: UiLanguage, surface: string) => {
-    if (nextLanguage === language || !languageOptions.find((option) => option.code === nextLanguage)?.available) return;
+    if (nextLanguage === language || !isLanguageAvailable(nextLanguage)) return;
 
     trackCtaClick({
       cta_name: `language_${nextLanguage}`,
@@ -121,7 +148,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
             width={200}
             height={32}
             preload
-            className="h-8 w-auto max-w-[150px] sm:max-w-[200px] opacity-95 transition-opacity duration-300 group-hover:opacity-100"
+            className="h-auto w-[150px] sm:w-[200px] opacity-95 transition-opacity duration-300 group-hover:opacity-100"
           />
           <span className="sr-only">{copy.brandSubtitle}</span>
         </button>
@@ -140,14 +167,15 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                 <div
                   key={link.id}
                   className="relative"
-                  onMouseEnter={() => {
-                    setHoveredIndex(link.id);
-                    setDropdownOpen(true);
-                  }}
-                  onMouseLeave={() => setDropdownOpen(false)}
+                  onMouseEnter={() => setHoveredIndex(link.id)}
                 >
                   <button
-                    onClick={() => handleLinkClick("/servicos", link.label, "header-services-dropdown", "navigation")}
+                    ref={servicesTriggerRef}
+                    type="button"
+                    aria-expanded={dropdownOpen}
+                    aria-controls="desktop-services-panel"
+                    aria-haspopup="dialog"
+                    onClick={() => setDropdownOpen((open) => !open)}
                     className={`px-4 py-2 rounded-full text-xs font-semibold font-sans relative z-10 transition-colors duration-300 flex items-center gap-1 cursor-pointer ${
                       isActive ? "text-brand" : "text-white/70 hover:text-white"
                     }`}
@@ -159,6 +187,10 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                   <AnimatePresence>
                     {dropdownOpen && (
                       <motion.div
+                        id="desktop-services-panel"
+                        role="dialog"
+                        aria-label={copy.navTitleServices}
+                        aria-modal="false"
                         initial={{ opacity: 0, y: 15, scale: 0.97 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.97 }}
@@ -178,6 +210,8 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                             {localizedServices.map((svc) => (
                               <button
                                 key={svc.path}
+                                ref={svc.path === localizedServices[0]?.path ? firstServiceRef : undefined}
+                                type="button"
                                 onClick={() => handleLinkClick(svc.path, svc.name, "header-services-dropdown", "navigation")}
                                 className="group flex gap-3 text-left p-2 rounded-xl hover:bg-white/[0.04] transition-all duration-200"
                               >
@@ -189,7 +223,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                                     {svc.name}
                                     <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                                   </div>
-                                  <p className="text-zinc-500 text-xs leading-snug mt-0.5 truncate">{svc.desc}</p>
+                                  <p className="text-zinc-400 text-xs leading-snug mt-0.5 truncate">{svc.desc}</p>
                                 </div>
                               </button>
                             ))}
@@ -274,13 +308,13 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
               <button
                 key={option.code}
                 type="button"
-                aria-label={option.available ? `Navegar em ${option.name}` : `${option.name} em revisão editorial`}
+                aria-label={`Navegar em ${option.name}`}
                 aria-pressed={language === option.code}
-                disabled={!option.available}
+                disabled={!isLanguageAvailable(option.code)}
                 onClick={() => handleLanguageSelection(option.code, "header-language")}
-                title={option.available ? option.name : `${option.name}: conteúdo em revisão editorial`}
+                title={option.name}
                 className={`rounded-md px-2.5 py-1.5 font-sans text-xs font-black tracking-wider transition-colors ${
-                  language === option.code ? "bg-brand text-black" : option.available ? "text-zinc-400 hover:text-white" : "cursor-not-allowed text-zinc-700"
+                  language === option.code ? "bg-brand text-black" : isLanguageAvailable(option.code) ? "text-zinc-400 hover:text-white" : "cursor-not-allowed text-zinc-600 opacity-60"
                 }`}
               >
                 {option.label}
@@ -301,6 +335,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
         <div className="lg:hidden flex items-center gap-2.5">
           <button
             id="btn-toggle-mobile-menu"
+            type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
             aria-expanded={mobileMenuOpen}
@@ -315,18 +350,24 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
       {/* Modern Fullscreen/Drawer Mobile Navigation */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
+          <FocusManagedDialog
             id="mobile-navigation"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ type: "spring", duration: 0.4 }}
-            className="lg:hidden fixed inset-x-0 top-[65px] bg-charcoal-950/98 backdrop-blur-3xl border-b border-white/[0.08] shadow-3xl h-[calc(100vh-65px)] overflow-y-auto z-40 flex flex-col justify-between"
+            ariaLabel="Navegação principal"
+            initialFocusRef={firstMobileLinkRef}
+            onClose={() => setMobileMenuOpen(false)}
+            className="lg:hidden fixed inset-x-0 top-20 z-40 h-[calc(100vh-5rem)] overflow-y-auto bg-charcoal-950/98 backdrop-blur-3xl border-b border-white/[0.08] shadow-3xl"
           >
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ type: "spring", duration: 0.4 }}
+              className="flex min-h-full flex-col justify-between"
+            >
             <div className="px-6 py-8 space-y-8">
               {/* Primary list of navigation */}
               <div className="space-y-4">
-                <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-[0.2em] mb-2 font-bold">
+                <div className="tag08-meta text-xs text-zinc-400 uppercase tracking-[0.2em] mb-2 font-bold">
                   {copy.navMobileTitle}
                 </div>
                 
@@ -337,6 +378,8 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                     return (
                       <button
                         key={link.id}
+                        ref={link.id === 0 ? firstMobileLinkRef : undefined}
+                        type="button"
                         onClick={() => handleLinkClick(link.path, link.label, "mobile-nav", "navigation")}
                         className={`text-left text-xl font-display font-medium py-1 transition-all duration-300 flex items-center justify-between border-b border-white/[0.02] ${
                           isActive ? "text-brand pl-2" : "text-white/80 hover:text-white"
@@ -351,23 +394,23 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
               </div>
 
               <div className="space-y-3 border-t border-white/[0.05] pt-6">
-                <p className="tag08-meta text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">Idioma do portal</p>
+                <p className="tag08-meta text-xs font-bold uppercase tracking-[0.2em] text-zinc-400">Idioma do portal</p>
                 <div className="grid grid-cols-3 gap-2">
                   {languageOptions.map((option) => (
                     <button
                       key={option.code}
                       type="button"
                       aria-pressed={language === option.code}
-                      aria-label={option.available ? `Navegar em ${option.name}` : `${option.name} em revisão editorial`}
-                      disabled={!option.available}
+                      aria-label={`Navegar em ${option.name}`}
+                      disabled={!isLanguageAvailable(option.code)}
                       onClick={() => handleLanguageSelection(option.code, "mobile-language")}
-                      title={option.available ? option.name : `${option.name}: conteúdo em revisão editorial`}
+                      title={option.name}
                       className={`rounded-lg border px-3 py-2.5 text-xs font-sans font-bold transition-colors ${
                         language === option.code
                           ? "border-brand bg-brand text-black"
-                          : option.available
+                          : isLanguageAvailable(option.code)
                             ? "border-white/[0.07] bg-white/[0.02] text-zinc-400 hover:text-white"
-                            : "cursor-not-allowed border-white/[0.03] bg-white/[0.01] text-zinc-700"
+                            : "cursor-not-allowed border-white/[0.04] bg-white/[0.01] text-zinc-600 opacity-60"
                       }`}
                     >
                       {option.label}
@@ -385,6 +428,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                   {localizedServices.map((svc) => (
                     <button
                       key={svc.path}
+                      type="button"
                       onClick={() => handleLinkClick(svc.path, svc.name, "mobile-services", "navigation")}
                       className={`text-left p-3 rounded-xl border transition-all duration-300 text-xs flex gap-3 ${
                         currentPage === svc.path
@@ -397,12 +441,13 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                       </div>
                       <div>
                         <div className="font-semibold text-white">{svc.name}</div>
-                        <div className="text-xs text-zinc-500 leading-snug mt-0.5">{svc.desc}</div>
+                        <div className="text-xs text-zinc-400 leading-snug mt-0.5">{svc.desc}</div>
                       </div>
                     </button>
                   ))}
                 </div>
                 <button
+                  type="button"
                   onClick={() => handleLinkClick("/servicos", copy.navExploreAllServices, "mobile-services-cta", "navigation")}
                   className="w-full py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center text-xs font-sans font-semibold text-brand hover:bg-white/[0.06] transition-colors"
                 >
@@ -460,7 +505,8 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                 ))}
               </div>
             </div>
-          </motion.div>
+            </motion.div>
+          </FocusManagedDialog>
         )}
       </AnimatePresence>
       

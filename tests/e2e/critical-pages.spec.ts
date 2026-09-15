@@ -157,7 +157,7 @@ test.describe("mapa de solucoes da Home", () => {
   const getCardBoxes = async (page: Page) => {
     await page.goto("/#servicos-principais", { waitUntil: "domcontentloaded" });
     const cards = page.getByTestId("solution-map-card");
-    await expect(cards).toHaveCount(7);
+    await expect(cards).toHaveCount(6);
     const boxes = await cards.evaluateAll((elements) =>
       elements.map((element) => {
         const { x, y, width, height } = element.getBoundingClientRect();
@@ -173,15 +173,13 @@ test.describe("mapa de solucoes da Home", () => {
     await page.setViewportSize({ width: 1440, height: 900 });
     const cards = await getCardBoxes(page);
 
-    // 6+3+3, then 3+6+3, followed by the full-width final moment.
+    // Three equal pairs keep content density and visual weight consistent.
     expect(Math.abs(cards[0].y - cards[1].y)).toBeLessThan(2);
-    expect(Math.abs(cards[1].y - cards[2].y)).toBeLessThan(2);
-    expect(Math.abs(cards[3].y - cards[4].y)).toBeLessThan(2);
+    expect(Math.abs(cards[2].y - cards[3].y)).toBeLessThan(2);
     expect(Math.abs(cards[4].y - cards[5].y)).toBeLessThan(2);
-    expect(cards[6].y).toBeGreaterThan(cards[5].y);
-    expect(cards[6].width).toBeGreaterThan(cards[0].width);
-    expect(Math.abs(cards[0].height - cards[1].height)).toBeLessThan(2);
-    expect(Math.abs(cards[3].height - cards[4].height)).toBeLessThan(2);
+    expect(Math.abs(cards[0].width - cards[1].width)).toBeLessThan(2);
+    expect(Math.abs(cards[2].width - cards[3].width)).toBeLessThan(2);
+    expect(Math.abs(cards[4].width - cards[5].width)).toBeLessThan(2);
   });
 
   test("mantem pares equilibrados no tablet", async ({ page }) => {
@@ -192,10 +190,9 @@ test.describe("mapa de solucoes da Home", () => {
       expect(Math.abs(cards[left].y - cards[right].y)).toBeLessThan(2);
       expect(Math.abs(cards[left].height - cards[right].height)).toBeLessThan(2);
     }
-    expect(cards[6].width).toBeGreaterThan(cards[0].width * 1.9);
   });
 
-  test("empilha os sete momentos sem deslocamento no mobile", async ({ page }) => {
+  test("empilha os seis momentos sem deslocamento no mobile", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     const cards = await getCardBoxes(page);
 
@@ -211,6 +208,7 @@ test.describe("palco editorial da Hero", () => {
   test("reage a luz no desktop sem deslocar a composicao", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(750);
 
     const visual = page.getByTestId("hero-editorial-stage");
     await expect(visual).toBeVisible();
@@ -232,5 +230,111 @@ test.describe("palco editorial da Hero", () => {
     const visual = page.getByTestId("hero-editorial-stage");
     await expect(visual).toBeVisible();
     await expect(visual.locator(".hero-editorial-stage__drift")).toHaveCSS("animation-name", "none");
+  });
+});
+
+test.describe("navegação, sobreposições e controles acessíveis", () => {
+  test("abre Soluções por teclado e devolve o foco ao gatilho", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+
+    const trigger = page.locator("#desktop-nav").getByRole("button", { name: "Soluções", exact: true });
+    await trigger.focus();
+    await page.keyboard.press("Enter");
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    await expect(page.locator("#desktop-services-panel")).toBeVisible();
+    await expect(page.locator("#desktop-services-panel").getByRole("button").first()).toBeFocused();
+
+    await page.keyboard.press("Escape");
+    await expect(page.locator("#desktop-services-panel")).toBeHidden();
+    await expect(trigger).toBeFocused();
+  });
+
+  test("menu mobile é um diálogo fechado por Escape com retorno de foco", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(750);
+
+    const trigger = page.locator("#btn-toggle-mobile-menu");
+    await trigger.click();
+    const dialog = page.getByRole("dialog", { name: "Navegação principal" });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole("button", { name: "Início" })).toBeFocused();
+
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(trigger).toBeFocused();
+  });
+
+  test("modal legal tem semântica, foco contido e campos nomeados", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(750);
+
+    const trigger = page.getByRole("button", { name: "Abrir política de privacidade" });
+    await trigger.click();
+    const dialog = page.getByRole("dialog", { name: /Política de Privacidade/ });
+    await expect(dialog).toHaveAttribute("aria-modal", "true");
+    await expect(dialog.getByRole("button", { name: "Fechar modal", exact: true })).toBeFocused();
+
+    const focusable = dialog.locator("button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])");
+    await page.keyboard.press("Shift+Tab");
+    await expect(focusable.last()).toBeFocused();
+
+    await dialog.getByRole("button", { name: /Abrir Pedido de Direitos/ }).click();
+    await expect(dialog.getByLabel("Seu Nome Completo *")).toBeVisible();
+    await expect(dialog.getByLabel("Seu E-mail Cadastrado *")).toBeVisible();
+
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(trigger).toBeFocused();
+  });
+
+  test("preferências de cookies expõem estado pressionado", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await expect(page.getByRole("region", { name: "Privacidade & Cookies (LGPD)" })).toBeVisible({ timeout: 10_000 });
+
+    await page.getByRole("button", { name: /Abrir personalização de cookies/ }).click();
+    const performance = page.getByRole("button", { name: "Ativar cookies de desempenho" });
+    await expect(performance).toHaveAttribute("aria-pressed", "false");
+    await performance.click();
+    await expect(page.getByRole("button", { name: "Desativar cookies de desempenho" })).toHaveAttribute("aria-pressed", "true");
+  });
+});
+
+test.describe("regressões de responsividade e movimento", () => {
+  test("cards da equipe sofrem reflow em 320 px sem corte horizontal", async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 844 });
+    await page.goto("/trabalhe-conosco", { waitUntil: "domcontentloaded" });
+
+    const roleChip = page.getByText("UI/UX & Brand Director");
+    await roleChip.scrollIntoViewIfNeeded();
+    const box = await roleChip.boundingBox();
+    expect(box).not.toBeNull();
+    expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThanOrEqual(320);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBeTruthy();
+  });
+
+  test("diagnóstico não altera seleção sem interação explícita", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/servicos/gestao-de-redes-sociais", { waitUntil: "domcontentloaded" });
+
+    const option = page.getByRole("button", { name: "Falta clareza", exact: true });
+    await option.scrollIntoViewIfNeeded();
+    await expect(option).toHaveAttribute("aria-pressed", "false");
+    await page.waitForTimeout(7_000);
+    await expect(option).toHaveAttribute("aria-pressed", "false");
+  });
+
+  test("diagrama inicializa o traço sem aviso de valor indefinido", async ({ page }) => {
+    const warnings: string[] = [];
+    page.on("console", (message) => {
+      if (message.type() === "warning") warnings.push(message.text());
+    });
+
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(1_500);
+    expect(warnings.filter((warning) => warning.includes("strokeDashoffset"))).toEqual([]);
   });
 });

@@ -42,6 +42,7 @@ const clickUpEnabled = process.env.CLICKUP_ENABLED === "true";
 const processingLeaseSeconds = Number.parseInt(process.env.INTEGRATION_PROCESSING_LEASE_SECONDS || "900", 10);
 const deliveryIdFilter = process.env.INTEGRATION_DELIVERY_ID?.trim();
 const retentionAggregateIdFilter = process.env.RETENTION_AGGREGATE_ID?.trim();
+const translationsAutopublish = process.env.TRANSLATIONS_AUTOPUBLISH === "true";
 
 if (!Number.isSafeInteger(processingLeaseSeconds) || processingLeaseSeconds < 60) {
   invalid.push("INTEGRATION_PROCESSING_LEASE_SECONDS must be an integer of at least 60 seconds");
@@ -53,6 +54,24 @@ if (target === "production" && deliveryIdFilter) {
 
 if (target === "production" && retentionAggregateIdFilter) {
   invalid.push("RETENTION_AGGREGATE_ID is only allowed for controlled staging runs");
+}
+
+if (target === "production" && !translationsAutopublish) {
+  invalid.push("TRANSLATIONS_AUTOPUBLISH=true is required for production so generated locale artifacts are verified");
+}
+
+if (translationsAutopublish) {
+  for (const name of ["TRANSLATION_SERVICE_URL", "TRANSLATION_ENGINE_VERSION"]) requireValue(name);
+  if (present("TRANSLATION_SERVICE_URL")) {
+    try {
+      const translationUrl = new URL(process.env.TRANSLATION_SERVICE_URL);
+      if (!/^https?:$/.test(translationUrl.protocol) || ["localhost", "127.0.0.1"].includes(translationUrl.hostname)) {
+        invalid.push("TRANSLATION_SERVICE_URL must use the private production service hostname");
+      }
+    } catch {
+      invalid.push("TRANSLATION_SERVICE_URL is not a valid URL");
+    }
+  }
 }
 
 if ((sheetsEnabled || clickUpEnabled) && !integrationsEnabled) {
@@ -90,6 +109,7 @@ console.log(JSON.stringify({
   integrationsEnabled,
   sheetsEnabled,
   clickUpEnabled,
+  translationsAutopublish,
   processingLeaseSeconds,
   databaseSsl: process.env.DATABASE_SSL === "true"
 }));

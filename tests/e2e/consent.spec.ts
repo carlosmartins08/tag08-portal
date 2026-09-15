@@ -5,7 +5,7 @@ const clearConsent = () => {
 };
 
 test.describe("consentimento para terceiros", () => {
-  test("GA4 so e carregado depois do consentimento de desempenho", async ({ page }) => {
+test("GTM so e carregado depois do consentimento de desempenho", async ({ page }) => {
     const analyticsRequests: string[] = [];
 
     await page.addInitScript(clearConsent);

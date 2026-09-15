@@ -1,5 +1,56 @@
 # CHANGELOG - TAG08
 
+## 2026-09-15
+
+- Corrigida a prévia de conteúdo no CI: em checkout destacado ela usa o modo de continuidade próprio de CI, mas em desenvolvimento local ainda exige a branch registrada no checkpoint.
+- Isolados os testes públicos de navegador em porta própria, com servidor de produção obrigatório. Eles não reutilizam mais um servidor de desenvolvimento aberto em `:3000`, evitando validar uma versão diferente daquela em revisão.
+- Tornado semântico o teste de fallback de idioma: ele confirma URL, idioma e título da página canônica, em vez de congelar a quantidade de subtítulos. Os retratos locais de `/sobre` continuam em `next/image`, mas são servidos diretamente para não depender do otimizador em produção.
+- Tornada autônoma a verificação HTTP de rotas: ela inicia e encerra o build de produção em porta isolada no CI/local, ou usa `BASE_URL` em staging. Isso elimina a dependência implícita de um servidor manual em `localhost:3000`.
+- Convertidos os retratos da equipe em `/sobre` para `next/image`, mantendo os mesmos assets, textos e critérios de publicação, para cumprir a auditoria de imagens no CI.
+- Feito o `lint` gerar o cliente Prisma antes da checagem de tipos. Isso elimina a divergência em que o CI, iniciado sem artefatos locais, tentava resolver imports gerados antes do build.
+- Normalizada a assinatura de revisão do onboarding para que a mesma fonte não pareça alterada apenas por trocar `CRLF` por `LF` entre desenvolvimento local e CI.
+- Corrigido o gate de continuidade no CI: o checkout agora traz o histórico necessário para validar o commit-base da integração, sem desativar a checagem remota.
+- Aprovada e liberada a equipe em `/sobre`, além de mini-cases e depoimentos internos em `/servicos/assessoria-marketing-digital-estrategico`; a autorização é limitada a essas rotas. Home, portfólio e cases indexáveis continuam pendentes.
+- Transformada a continuidade em fluxo executável: `npm run continuity:status` valida branch, commit-base e checkpoint; os modos de desenvolvimento exibem essa checagem antes de iniciar e o hook de commit bloqueia alterações de comportamento sem atualização simultânea de estado e changelog.
+- Evoluído o gate de evidências para registro estruturado por item, contrato de publicação por rota, relatório `content:status` e prévia local identificada por `npm run dev:content-review`; produção continua excluindo itens pendentes e removidos.
+- Adicionados testes que impedem publicação indevida, validam os metadados de aprovação e verificam a diferença entre site público e prévia local.
+- Registrada a reconciliação de continuidade: `p0-routing-secret-containment` é a candidata à integração e `main` permanece o destino, sem merge direto nesta etapa.
+- Criados `docs/DECISIONS.md` e `docs/ROADMAP.md` para separar decisão, estado e execução futura.
+- Atualizado `docs/PROJECT_STATE.md` com a relação real entre branches, alterações locais a preservar, mapa das fontes de conteúdo e conflitos editoriais pendentes.
+- Nenhuma página, rota, contrato, asset publicado ou integração foi removido ou alterado nesta etapa.
+- Publicado `/llms.txt` como rota estática do Next, com links derivados do registry, proteção contra reescrita pelo `proxy` e verificação de resposta no teste de rotas.
+- Criado `docs/CONTENT_EVIDENCE_INVENTORY.md` para tornar rastreáveis pessoas, cases, depoimentos, logos, métricas e imagens que exigem prova antes de uma decisão pública.
+- Criado `docs/INTEGRATION_AUDIT.md` para separar os commits por risco e impedir que melhorias técnicas validem automaticamente conteúdo pendente.
+- Implementado `src/content/publicEvidence.ts`: equipe, cases, candidatos de portfólio, métricas, mini-cases e depoimentos pendentes permanecem preservados, mas não renderizam nem podem gerar rota ou sitemap até aprovação individual.
+
+## 2026-09-02
+
+- Refinada `/servicos/gestao-de-redes-sociais` com as estruturas oficiais Start, Base e Performance, sem preços, volumes ou escopo universal.
+- Retiradas da rota as provas não validadas (`MiniCases` e `TrustTestimonialsSection`), o bloco stock de “especialista”, CTA intermediário e barra de confiança redundante.
+- Mantidos diagnóstico, tracking e WhatsApp; vídeo agora só exibe conteúdo oficial live e apresenta estado vazio neutro quando indisponível.
+- Revisados FAQ, limites de escopo, ciclo mensal, CTA final, encoding visível e metadados da rota.
+- Alinhado o hub `/servicos` ao Índice Oficial do portfólio: quatro categorias públicas substituíram a apresentação equivalente de oito ofertas históricas.
+- Retiradas apenas da promoção principal do hub as ofertas pendentes de validação comercial (Assessoria, Process Intelligence, Process Activation e Hospedagem); as rotas existentes foram preservadas.
+- Agrupados Reposicionamento Estratégico, Edição de Reels e Unidade Digital/E-commerce nas categorias públicas compatíveis, sem criar rotas, preços ou escopos novos.
+- Removidos marquee com texto corrompido, cópia de escopo, CTAs redundantes e `MiniCases` do hub por ausência de fonte de portfólio validada.
+- Atualizados FAQ, linguagem do método e metadados de `/servicos` para orientar a decisão antes da contratação.
+- Refinada a página `/sobre` sem redesign: equipe não validada foi convertida em competências conectadas; perfis, LinkedIns, marcas e marquee sem fonte institucional foram removidos.
+- Consolidada a seção de diferenciais, reduzida a parte inferior de crenças, corrigido o CTA final e atualizados os metadados de `/sobre`.
+- Removidos estados, handlers, constantes e imports sem consumidor em `Sobre.tsx`.
+- Consolidada a Home sem reconstrução visual: removidas da renderização as redundâncias de método, diferenciais, planos de redes e a segunda galeria de portfólio.
+- Ajustada a linguagem do diagnóstico e do bento de diferenciais para eliminar termos técnicos, promessas e estruturas institucionais não comprovadas.
+- Bloqueada a exibição de avaliações Google quando a integração não retorna conteúdo live; fallback editorial não é apresentado como prova real.
+- Registrado `docs/PROJECT_STATE.md` como checkpoint obrigatório para retomadas da Home e validação de cases.
+
+## 2026-08-17
+
+- Adicionada a matriz de prontidao de localizacao: idiomas estrangeiros publicados precisam de revisao aprovada vinculada a assinatura do conteudo-fonte.
+- Removida a pagina resumida que era apresentada como equivalente em EN/ES.
+- Adicionado controle de publicacao por rota e idioma em `routeRegistry.ts`.
+- URLs de idiomas sem pagina integralmente localizada agora retornam para o canonico PT-BR; sitemap, `hreflang` e indexacao respeitam a mesma regra.
+- Mantido o onboarding como fluxo multilíngue publicado, pois ele possui copia e interacao completas nos tres idiomas.
+- Adicionados testes de regressao para impedir o retorno de fallback resumido e a exposicao de idiomas nao aprovados.
+
 ## 2026-07-09
 
 - Criado `docs/AGENT_ROUTER.md` para decidir o agente principal antes da escolha de skill.

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "route": "not-found",
+  "locale": "es",
+  "sourceLocale": "pt",
+  "sourceHash": "c61a651e04dc52d458eeeb86fa610ce8326c6aaccd7fa3ec76bc3276ba341a81",
+  "engineVersion": "libretranslate-v1.8.4",
+  "generatedAt": "2026-08-18T01:08:13.941Z",
+  "segments": {
+    "systemStatus": "SISTEMA DESALINADO",
+    "eyebrow": "DIRECIÓN Y GOBIERNO DE ATIVOS",
+    "technicalDescription": "La dirección referenciada no reside bajo el mapeo técnico de la agencia TAG08.",
+    "badge": "ROTA INTERROMPIDA",
+    "title": "Ops, parece que salimos de la ruta.",
+    "description": "Así como en el marketing digital, rutas desalineadas drenan energía y recursos. Vamos a reconectar su experiencia a nuestros principales puntos de anclaje operativo.",
+    "homeTitle": "Volver al principio",
+    "homeDescription": "Retorne para la página principal y explore nuestra presentación corporativa.",
+    "servicesTitle": "Nuestras soluciones",
+    "servicesDescription": "Conoce nuestros ecosistemas de marca, desarrollo web y procesos.",
+    "supportEyebrow": "SUPORTE Y VÍABILIDAD",
+    "supportQuestion": "¿Prefiere informar este error al director de tecnología?",
+    "supportAction": "Llamar soporte",
+    "supportMessage": "Hola, acabo de encontrar una ruta 404 en el portal de TAG08!"
+  },
+  "catalog": {
+    "systemStatus": "SISTEMA DESALINADO",
+    "eyebrow": "DIRECIÓN Y GOBIERNO DE ATIVOS",
+    "technicalDescription": "La dirección referenciada no reside bajo el mapeo técnico de la agencia TAG08.",
+    "badge": "ROTA INTERROMPIDA",
+    "title": "Ops, parece que salimos de la ruta.",
+    "description": "Así como en el marketing digital, rutas desalineadas drenan energía y recursos. Vamos a reconectar su experiencia a nuestros principales puntos de anclaje operativo.",
+    "homeTitle": "Volver al principio",
+    "homeDescription": "Retorne para la página principal y explore nuestra presentación corporativa.",
+    "servicesTitle": "Nuestras soluciones",
+    "servicesDescription": "Conoce nuestros ecosistemas de marca, desarrollo web y procesos.",
+    "supportEyebrow": "SUPORTE Y VÍABILIDAD",
+    "supportQuestion": "¿Prefiere informar este error al director de tecnología?",
+    "supportAction": "Llamar soporte",
+    "supportMessage": "Hola, acabo de encontrar una ruta 404 en el portal de TAG08!"
+  },
+  "artifactHash": "8d44e061522b5180f257d82243f3dabb9620b3dab4cc82708e0fcc06993cb2e4"
+}

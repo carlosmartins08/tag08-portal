@@ -20,6 +20,8 @@ Portal institucional TAG08 em Next.js App Router. As paginas publicas sao gerada
 ```bash
 npm ci
 npm run dev
+npm run continuity:status
+npm run setup:hooks
 npm run lint
 npm run build
 npm run start
@@ -29,9 +31,15 @@ npm run verify:seo
 npm run verify:persistence
 ```
 
+## Continuidade de trabalho
+
+Use `npm run continuity:status` antes de retomar uma missão. Ele mostra a branch esperada, o commit-base, a última entrega e alterações locais que precisam de classificação. `npm run dev` e `npm run dev:content-review` param se a branch não for a registrada em `docs/PROJECT_STATE.md`.
+
+O hook instalado por `npm run setup:hooks` bloqueia commits de código, testes, automação ou configuração quando `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` não acompanham a mesma mudança. A qualidade completa continua obrigatória no pull request.
+
 ## Variaveis locais
 
-Copie `.env.example` para `.env`. Use `NEXT_PUBLIC_GA4_ID` e `NEXT_PUBLIC_GSC_VERIFICATION` para analytics e Search Console; as demais variaveis preservam os contratos atuais de onboarding e conteudo oficial. Nunca versione `.env`.
+Copie `.env.example` para `.env`. Use `NEXT_PUBLIC_GTM_ID` e `NEXT_PUBLIC_GSC_VERIFICATION` para mensuração e Search Console. GA4, Meta Pixel, Pinterest Tag e LinkedIn Insight Tag são configurados somente no GTM; nunca duplique snippets no aplicativo. As demais variáveis preservam os contratos atuais de onboarding e conteúdo oficial. Nunca versione `.env`.
 
 ## Sequencia de deploy
 
@@ -45,7 +53,11 @@ npm run build
 npm run start
 ```
 
+`npm run dev` usa `.next-dev`, separado do artefato de producao `.next`. Nao execute `next dev` diretamente: use o script para limpar o cache de desenvolvimento antes de iniciar.
+
 Para producao, substitua o preflight por `npm run preflight:deploy -- --production`. Mantenha `INTEGRATIONS_ENABLED=false` no primeiro deploy. Em staging, rode `BASE_URL=https://seu-staging.example npm run verify:staging` para validar rotas, health do banco, protecao das metricas, SEO, os tres formularios, idempotencia e outbox com registros sinteticos removidos ao fim. Apos a aprovacao do staging, habilite um destino por vez e valide novamente com `npm run preflight:deploy -- --allow-integrations`.
+
+A Content Security Policy e aplicada por padrao. Antes de incluir uma nova origem externa, valide-a em staging com `CSP_REPORT_ONLY=true`, ajuste a allowlist em `next.config.ts` e volte a `false` antes da liberacao.
 
 Os jobs sao unitarios e devem ser acionados pelo agendador da hospedagem, nunca pelo processo web:
 

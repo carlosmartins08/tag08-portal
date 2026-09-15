@@ -4,9 +4,10 @@ import SiteShell from "../../../features/site/SiteShell";
 import RouteContent from "../../../features/site/RouteContent";
 import {
   canonicalizeRoute,
+  getContentReviewRouteByPath,
   getLocalizedPath,
   getRouteByPath,
-  isLocaleIndexable,
+  isRouteLocalePublished,
   resolveLocalizedPath,
   staticRouteSegments,
   ROUTE_LOCALES,
@@ -20,6 +21,7 @@ import {
   getOpenGraphLocale,
   getRouteSeo
 } from "../../../lib/seo";
+import { isContentReviewMode } from "../../../content/publicEvidence";
 
 type RoutePageProps = {
   params: Promise<{ locale: string; segments?: string[] }>;
@@ -32,7 +34,7 @@ const resolveRoute = async (params: RoutePageProps["params"]) => {
   const validLocale = ROUTE_LOCALES.includes(locale as RouteLocale);
   const path = segments.length ? `/${segments.join("/")}` : "/";
   const canonicalPath = canonicalizeRoute(path);
-  const route = getRouteByPath(canonicalPath);
+  const route = getRouteByPath(canonicalPath) ?? getContentReviewRouteByPath(canonicalPath);
 
   return { locale: (validLocale ? locale : "pt") as RouteLocale, path, validLocale, canonicalPath, route };
 };
@@ -63,7 +65,7 @@ export async function generateMetadata({ params }: RoutePageProps): Promise<Meta
       canonical: canonicalUrl,
       languages: getAlternates(canonicalPath)
     },
-    robots: route.indexable && isLocaleIndexable(locale) ? { index: true, follow: true } : { index: false, follow: true },
+    robots: !isContentReviewMode() && route.indexable && isRouteLocalePublished(route, locale) ? { index: true, follow: true } : { index: false, follow: true },
     openGraph: {
       title: seo.title,
       description: seo.description,
@@ -90,6 +92,13 @@ export default async function RoutePage({ params }: RoutePageProps) {
 
   if (canonicalPath !== path) {
     permanentRedirect(getLocalizedPath(canonicalPath, locale as RouteLocale));
+  }
+
+  // Do not serve a shortened substitute under a language URL. A non-published
+  // locale returns visitors to the canonical Portuguese page until the complete
+  // translation (including interactions and legal copy) is approved.
+  if (!isRouteLocalePublished(route, locale)) {
+    permanentRedirect(getLocalizedPath(canonicalPath, "pt"));
   }
 
   const organizationSchema = buildOrganizationSchema();

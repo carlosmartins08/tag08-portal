@@ -298,6 +298,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
 
       {/* OPERATIONS / PROCESS ACTIVATION CLIENTS LOGO SOCIAL PROOF */}
       <MiniCases 
+        route="/servicos/process-activation"
         onNavigate={onNavigate} 
         title="Garantia de Adesão e Disciplina Operacional"
         subtitle="Times integrados que atingiram 100% de conformidade com seus novos playbooks táticos sob a metodologia de ativação da TAG08."

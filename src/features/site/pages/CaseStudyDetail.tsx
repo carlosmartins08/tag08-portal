@@ -3,6 +3,8 @@ import { ArrowLeft, ArrowUpRight, CheckCircle2, TrendingUp, Award, Calendar, Che
 import { motion } from "motion/react";
 import Image from "next/image";
 import { CASE_STUDIES } from "../../../data";
+import { getEvidenceVisibilityMode, getVisibleEvidence } from "../../../content/publicEvidence";
+import { EvidenceReviewBadge } from "../../../components/ContentReview";
 
 interface CaseStudyDetailProps {
   caseId: string;
@@ -11,7 +13,8 @@ interface CaseStudyDetailProps {
 
 export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailProps) {
   const [copied, setCopied] = useState(false);
-  const selectedCase = CASE_STUDIES.find((cs) => cs.id === caseId);
+  const selectedCase = getVisibleEvidence(CASE_STUDIES, (caseStudy) => `case-study/${caseStudy.id}`, `/casos/${caseId}`, getEvidenceVisibilityMode())
+    .find((caseStudy) => caseStudy.id === caseId);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -42,7 +45,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
   };
 
   return (
-    <div className="w-full bg-[#070709] text-white font-sans min-h-screen pb-24 relative overflow-hidden select-none">
+    <div data-evidence-key={`case-study/${selectedCase.id}`} className="w-full bg-[#070709] text-white font-sans min-h-screen pb-24 relative overflow-hidden select-none">
       {/* Decorative architectural grids and background light overlays */}
       <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-brand/[0.03] via-transparent to-transparent pointer-events-none" />
       <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-brand/[0.012] rounded-full blur-[140px] pointer-events-none" />
@@ -113,6 +116,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                 <span className="text-zinc-500 tag08-meta text-xs tracking-wide uppercase">
                   Consórcio de Crescimento Ativo TAG08
                 </span>
+                <EvidenceReviewBadge evidenceKey={`case-study/${selectedCase.id}`} />
               </div>
 
               <h1 className="font-display font-black text-2xl sm:text-4xl text-white tracking-tight leading-[1.1] text-left">

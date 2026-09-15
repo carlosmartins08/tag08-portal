@@ -56,5 +56,6 @@ GOOGLE_BUSINESS_CLIENT_SECRET="client_secret"
 1. Copie `.env.example` para `.env`.
 2. Preencha primeiro `YOUTUBE_API_KEY`.
 3. Depois preencha `GOOGLE_BUSINESS_LOCATION_NAME` e o fluxo OAuth.
-4. Rode `npm run build`.
-5. Para desenvolvimento local com API real, use apenas `npm run dev`.
+4. Use o nome completo da localização: `accounts/{account}/locations/{location}`. Em produção, use OAuth com refresh token; access token manual é apenas contingência temporária.
+5. Rode `npm run build` e valide `GET /api/official-content?requireLive=googleBusiness`. O endpoint deve retornar `200` e `sources.googleBusiness: "live"`.
+6. Para desenvolvimento local com API real, use apenas `npm run dev`.

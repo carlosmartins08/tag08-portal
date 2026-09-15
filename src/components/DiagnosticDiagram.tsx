@@ -68,7 +68,7 @@ export default function DiagnosticDiagram() {
               Uma análise de eficiência sobre os três pilares estratégicos da presença corporativa.
             </p>
           </div>
-          <p className="border-t border-white/5 pt-4 tag08-meta text-xs uppercase tracking-wider text-zinc-500">
+          <p className="border-t border-white/5 pt-4 tag08-meta text-xs uppercase tracking-wider text-zinc-400">
             Selecione um pilar para ver o contexto.
           </p>
         </div>
@@ -85,6 +85,7 @@ export default function DiagnosticDiagram() {
                 strokeWidth="6"
                 fill="none"
                 strokeDasharray={circumference}
+                initial={{ strokeDashoffset: prefersReducedMotion ? dashOffset : circumference }}
                 animate={{ strokeDashoffset: dashOffset }}
                 transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.55, ease: "easeOut" }}
                 strokeLinecap="round"
@@ -92,7 +93,7 @@ export default function DiagnosticDiagram() {
             </svg>
 
             <div className="relative z-10 flex h-[172px] w-[172px] flex-col items-center justify-center rounded-full border border-white/[0.05] bg-[#0a0a0c] px-5 text-center shadow-xl">
-              <span className="tag08-meta text-xs font-black uppercase tracking-widest text-zinc-500">
+              <span className="tag08-meta text-xs font-black uppercase tracking-widest text-zinc-400">
                 {activePillar.label}
               </span>
               <motion.div
@@ -104,7 +105,7 @@ export default function DiagnosticDiagram() {
               >
                 {activePillar.score}<span className="text-xl leading-none text-brand">%</span>
               </motion.div>
-              <p className="mt-2 tag08-meta text-xs font-bold uppercase tracking-wider text-zinc-500">Índice médio</p>
+              <p className="mt-2 tag08-meta text-xs font-bold uppercase tracking-wider text-zinc-400">Índice médio</p>
             </div>
           </div>
         </div>
@@ -127,7 +128,7 @@ export default function DiagnosticDiagram() {
                 }`}
               >
                 <div className="flex items-start gap-3">
-                  <span className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${isActive ? "bg-brand/10 text-brand" : "bg-white/5 text-zinc-500"}`}>
+                  <span className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${isActive ? "bg-brand/10 text-brand" : "bg-white/5 text-zinc-400"}`}>
                     <Icon className="h-4 w-4" aria-hidden="true" />
                   </span>
                   <span className="min-w-0 flex-1">
@@ -135,7 +136,7 @@ export default function DiagnosticDiagram() {
                       <span className={`font-sans text-xs font-bold uppercase tracking-wide ${isActive ? "text-brand" : "text-zinc-300"}`}>
                         {pillar.name}
                       </span>
-                      <span className={`rounded px-1.5 py-0.5 font-sans text-xs font-bold ${isActive ? "bg-brand/15 text-brand" : "bg-white/5 text-zinc-500"}`}>
+                      <span className={`rounded px-1.5 py-0.5 font-sans text-xs font-bold ${isActive ? "bg-brand/15 text-brand" : "bg-white/5 text-zinc-400"}`}>
                         {pillar.score}%
                       </span>
                     </span>

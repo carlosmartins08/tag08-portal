@@ -8,6 +8,16 @@ test("proxy rewrites PT-BR root internally", () => {
   assert.equal(response.headers.get("x-middleware-rewrite"), "https://tag08.test/pt");
 });
 
+test("proxy does not redirect the internal PT-BR locale rewrite", () => {
+  const response = proxy(
+    new NextRequest("https://tag08.test/pt", {
+      headers: { "x-tag08-internal-locale-rewrite": "1" }
+    })
+  );
+
+  assert.equal(response.headers.get("x-middleware-next"), "1");
+});
+
 test("proxy redirects aliases and preserves language query semantics", () => {
   const alias = proxy(new NextRequest("https://tag08.test/blog"));
   assert.equal(alias.status, 308);

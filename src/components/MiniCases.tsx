@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
+import { getEvidenceVisibilityMode, getVisibleEvidence } from "../content/publicEvidence";
+import { EvidenceReviewBadge } from "./ContentReview";
 import { 
   Building2, 
   Heart, 
@@ -16,6 +18,7 @@ import {
 } from "lucide-react";
 
 export interface LogoItem {
+  evidenceKey?: string;
   name: string;
   industry?: string;
   metric?: string;
@@ -30,6 +33,7 @@ interface MiniCasesProps {
   badge?: string;
   logos?: LogoItem[];
   highlightColor?: string; // e.g. 'var(--color-brand)'
+  route: string;
   onNavigate?: (page: string) => void;
 }
 
@@ -47,6 +51,7 @@ const iconMap = {
 
 const DEFAULT_LOGOS: LogoItem[] = [
   {
+    evidenceKey: "mini-case/clinica-alphaville",
     name: "Clínica Alphaville",
     industry: "Saúde & Estética Estrita",
     metric: "+240%",
@@ -54,6 +59,7 @@ const DEFAULT_LOGOS: LogoItem[] = [
     iconName: "health"
   },
   {
+    evidenceKey: "mini-case/processflow-erp",
     name: "ProcessFlow ERP",
     industry: "SaaS Enterprise B2B",
     metric: "4.2x",
@@ -61,6 +67,7 @@ const DEFAULT_LOGOS: LogoItem[] = [
     iconName: "tech"
   },
   {
+    evidenceKey: "mini-case/nunes-associados",
     name: "Nunes & Associados",
     industry: "Advocacia Societária",
     metric: "18+",
@@ -68,6 +75,7 @@ const DEFAULT_LOGOS: LogoItem[] = [
     iconName: "law"
   },
   {
+    evidenceKey: "mini-case/grupo-medeiros",
     name: "Grupo Medeiros",
     industry: "Investimentos & Asset",
     metric: "R$ 12M+",
@@ -75,6 +83,7 @@ const DEFAULT_LOGOS: LogoItem[] = [
     iconName: "finance"
   },
   {
+    evidenceKey: "mini-case/zenith-corporativo",
     name: "Zenith Corporativo",
     industry: "Educação Integrada",
     metric: "98.7%",
@@ -82,6 +91,7 @@ const DEFAULT_LOGOS: LogoItem[] = [
     iconName: "education"
   },
   {
+    evidenceKey: "mini-case/vanguard-sec",
     name: "Vanguard Sec",
     industry: "Segurança de Dados",
     metric: "Zero",
@@ -96,9 +106,15 @@ export default function MiniCases({
   badge = "PORTFÓLIO DE PROVA SOCIAL // MARCAS PARCEIRAS",
   logos = DEFAULT_LOGOS,
   highlightColor = "var(--color-brand)",
+  route,
   onNavigate
 }: MiniCasesProps) {
   const prefersReducedMotion = useReducedMotion();
+  const visibleLogos = getVisibleEvidence(logos, (logo) => logo.evidenceKey || `mini-case/${logo.name}`, route, getEvidenceVisibilityMode());
+
+  if (visibleLogos.length === 0) {
+    return null;
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -131,6 +147,7 @@ export default function MiniCases({
   return (
     <section 
       id="mini-cases-section" 
+      data-testid="mini-cases"
       className="tag08-section w-full px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/20 text-left font-sans"
     >
       <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
@@ -160,12 +177,13 @@ export default function MiniCases({
           whileInView={prefersReducedMotion ? undefined : "visible"}
           viewport={prefersReducedMotion ? undefined : { once: true, margin: "-100px" }}
         >
-          {logos.map((logo, idx) => {
+          {visibleLogos.map((logo, idx) => {
             const IconComponent = logo.iconName ? iconMap[logo.iconName] : undefined;
 
             return (
               <motion.div
                 key={`${logo.name}-${idx}`}
+                data-evidence-key={logo.evidenceKey || `mini-case/${logo.name}`}
                 variants={prefersReducedMotion ? undefined : itemVariants}
                 className="tag08-card tag08-card--interactive p-6 flex flex-col justify-between min-h-[180px] group relative overflow-hidden"
               >
@@ -202,6 +220,7 @@ export default function MiniCases({
                   {/* Tiny action bullet or status indicator */}
                   <span className="w-1.5 h-1.5 rounded-full bg-zinc-700 group-hover:bg-brand transition-colors duration-300" />
                 </div>
+                <div className="relative z-10 pt-3"><EvidenceReviewBadge evidenceKey={logo.evidenceKey || `mini-case/${logo.name}`} /></div>
 
                 {/* Proof Metric Block at bottom */}
                 <div className="border-t border-white/[0.04] pt-4 mt-auto flex items-end justify-between relative z-10">

@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { trackFormError, trackFormStart, trackFormStep, trackFormSubmit, trackOutboundClick } from "../../../lib/analytics";
 import { queueFormSubmission } from "../../../lib/formQueue";
+import type { RouteLocale } from "../../../config/routeRegistry";
 
 interface Vacancy {
   id: string;
@@ -41,7 +42,7 @@ interface Vacancy {
   requirements: string[];
 }
 
-export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: string) => void }) {
+export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavigate: (page: string) => void; locale?: RouteLocale }) {
   const [selectedVacancy, setSelectedVacancy] = useState<string>("copywriter");
   const [formName, setFormName] = useState("");
   const [formEmail, setFormEmail] = useState("");
@@ -220,7 +221,6 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
     setSubmitting(true);
     try {
-      const locale = document.documentElement.lang.startsWith("en") ? "en" : document.documentElement.lang.startsWith("es") ? "es" : "pt";
       const idempotencyKey = crypto.randomUUID();
       const payload = {
         vacancyId: activeVacancy.id,
@@ -489,7 +489,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                 
                 {/* Leader Card 1 */}
                 <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
-                  <div className="flex gap-4 items-start">
+                  <div className="flex min-w-0 gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
                       <ResilientImage
                         fallbackLabel="Time TAG08"
@@ -500,8 +500,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                         referrerPolicy="no-referrer"
                       />
                     </div>
-                    <div className="space-y-1 text-left">
-                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">UI/UX &amp; Brand Director</span>
+                    <div className="min-w-0 flex-1 space-y-1 text-left">
+                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">UI/UX &amp; Brand Director</span>
                       <h4 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Marina Fontes</h4>
                       <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
                         Cria diretrizes estéticas e manuais gráficos para marcas com exigência alta de consistência visual.
@@ -525,7 +525,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                 {/* Leader Card 2 */}
                 <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
-                  <div className="flex gap-4 items-start">
+                  <div className="flex min-w-0 gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
                       <ResilientImage
                         fallbackLabel="Time TAG08"
@@ -536,8 +536,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                         referrerPolicy="no-referrer"
                       />
                     </div>
-                    <div className="space-y-1 text-left">
-                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">Tech Lead Architect</span>
+                    <div className="min-w-0 flex-1 space-y-1 text-left">
+                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">Tech Lead Architect</span>
                       <h4 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Renato Silveira</h4>
                       <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
                         Responsável pela integridade técnica, empacotamento leve e SEO dos sites.
@@ -561,7 +561,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                 {/* Leader Card 3 */}
                 <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
-                  <div className="flex gap-4 items-start">
+                  <div className="flex min-w-0 gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
                       <ResilientImage
                         fallbackLabel="Time TAG08"
@@ -572,8 +572,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                         referrerPolicy="no-referrer"
                       />
                     </div>
-                    <div className="space-y-1 text-left">
-                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">Content Strategist</span>
+                    <div className="min-w-0 flex-1 space-y-1 text-left">
+                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">Content Strategist</span>
                       <h4 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Amanda Reis</h4>
                       <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
                         Domínio em roteiros, storytelling e manuais de voz para executivos.
@@ -597,7 +597,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
 
                 {/* Leader Card 4 */}
                 <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
-                  <div className="flex gap-4 items-start">
+                  <div className="flex min-w-0 gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
                       <ResilientImage
                         fallbackLabel="Time TAG08"
@@ -608,8 +608,8 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                         referrerPolicy="no-referrer"
                       />
                     </div>
-                    <div className="space-y-1 text-left">
-                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest block bg-zinc-200/50 px-2 py-0.5 rounded w-max">Performance Specialist</span>
+                    <div className="min-w-0 flex-1 space-y-1 text-left">
+                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">Performance Specialist</span>
                       <h4 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Lucas Mendes</h4>
                       <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
                         Análise fria de CPA, LTV e otimização cirúrgica no Meta &amp; Google Ads.
@@ -989,12 +989,14 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                               placeholder="Ex: Carlos Silva"
                               value={formName}
                               onChange={(e) => setFormName(e.target.value)}
+                              aria-invalid={Boolean(errors.name)}
+                              aria-describedby={errors.name ? "talent-name-error" : undefined}
                               className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 font-sans ${
                                 errors.name ? "border-red-500 ring-1 ring-red-500/20" : "border-zinc-200"
                               }`}
                             />
                           </div>
-                          {errors.name && <span className="text-red-500 text-xs font-sans block mt-1">{errors.name}</span>}
+                          {errors.name && <span id="talent-name-error" role="alert" className="text-red-500 text-xs font-sans block mt-1">{errors.name}</span>}
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1010,12 +1012,14 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                                 placeholder="Ex: carlos@empresa.com"
                                 value={formEmail}
                                 onChange={(e) => setFormEmail(e.target.value)}
+                                aria-invalid={Boolean(errors.email)}
+                                aria-describedby={errors.email ? "talent-email-error" : undefined}
                                 className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 font-sans ${
                                   errors.email ? "border-red-500 ring-1 ring-red-500/20" : "border-zinc-200"
                                 }`}
                               />
                             </div>
-                            {errors.email && <span className="text-red-500 text-xs font-sans block mt-1">{errors.email}</span>}
+                            {errors.email && <span id="talent-email-error" role="alert" className="text-red-500 text-xs font-sans block mt-1">{errors.email}</span>}
                           </div>
 
                           <div id="field-phone" className="space-y-1.5 text-left">
@@ -1030,12 +1034,14 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                                 placeholder="Ex: (47) 99999-9999"
                                 value={formPhone}
                                 onChange={(e) => setFormPhone(e.target.value)}
+                                aria-invalid={Boolean(errors.phone)}
+                                aria-describedby={errors.phone ? "talent-phone-error" : undefined}
                                 className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 font-sans ${
                                   errors.phone ? "border-red-500" : "border-zinc-200"
                                 }`}
                               />
                             </div>
-                            {errors.phone && <span className="text-red-500 text-xs font-sans block mt-1">{errors.phone}</span>}
+                            {errors.phone && <span id="talent-phone-error" role="alert" className="text-red-500 text-xs font-sans block mt-1">{errors.phone}</span>}
                           </div>
                         </div>
                       </motion.div>
@@ -1063,12 +1069,14 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                               placeholder="Ex: linkedin.com/in/seunome"
                               value={formLinkedin}
                               onChange={(e) => setFormLinkedin(e.target.value)}
+                              aria-invalid={Boolean(errors.linkedin)}
+                              aria-describedby={errors.linkedin ? "talent-linkedin-error" : undefined}
                               className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 font-sans ${
                                 errors.linkedin ? "border-red-500" : "border-zinc-200"
                               }`}
                             />
                           </div>
-                          {errors.linkedin && <span className="text-red-500 text-xs font-sans block mt-1">{errors.linkedin}</span>}
+                          {errors.linkedin && <span id="talent-linkedin-error" role="alert" className="text-red-500 text-xs font-sans block mt-1">{errors.linkedin}</span>}
                         </div>
 
                         <div className="space-y-1.5 text-left">
@@ -1121,11 +1129,13 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                             placeholder="Conte em poucas linhas seus maiores cases de conversão sólida ou reestruturação estética..."
                             value={formCoverLetter}
                             onChange={(e) => setFormCoverLetter(e.target.value)}
+                            aria-invalid={Boolean(errors.coverLetter)}
+                            aria-describedby={errors.coverLetter ? "talent-cover-letter-error" : undefined}
                             className={`w-full bg-white border rounded-xl p-3 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 font-sans leading-relaxed ${
                               errors.coverLetter ? "border-red-500" : "border-zinc-200"
                             }`}
                           />
-                          {errors.coverLetter && <span className="text-red-500 text-xs font-sans block mt-1">{errors.coverLetter}</span>}
+                          {errors.coverLetter && <span id="talent-cover-letter-error" role="alert" className="text-red-500 text-xs font-sans block mt-1">{errors.coverLetter}</span>}
                         </div>
                         <label className="flex items-start gap-2 text-left text-xs text-zinc-500 cursor-pointer">
                           <input
@@ -1175,7 +1185,7 @@ export default function TrabalheConosco({ onNavigate }: { onNavigate: (page: str
                       type="button"
                       onClick={handleSubmit}
                       disabled={submitting}
-                      className="w-full sm:w-auto px-6.5 py-3 bg-brand hover:bg-brand-dark text-black font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-[0_4px_12px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer flex items-center justify-center gap-1.5"
+                      className="w-full sm:w-auto px-6.5 py-3 bg-brand hover:bg-brand-dark disabled:hover:bg-brand text-black font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-[0_4px_12px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center gap-1.5"
                     >
                       {submitting ? "Enviando..." : "Enviar Candidatura"} <Send className="w-3.5 h-3.5 shrink-0" />
                     </button>
