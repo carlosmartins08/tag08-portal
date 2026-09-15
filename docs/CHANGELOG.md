@@ -2,6 +2,7 @@
 
 ## 2026-09-15
 
+- Corrigida a prévia de conteúdo no CI: em checkout destacado ela usa o modo de continuidade próprio de CI, mas em desenvolvimento local ainda exige a branch registrada no checkpoint.
 - Isolados os testes públicos de navegador em porta própria, com servidor de produção obrigatório. Eles não reutilizam mais um servidor de desenvolvimento aberto em `:3000`, evitando validar uma versão diferente daquela em revisão.
 - Tornado semântico o teste de fallback de idioma: ele confirma URL, idioma e título da página canônica, em vez de congelar a quantidade de subtítulos. Os retratos locais de `/sobre` continuam em `next/image`, mas são servidos diretamente para não depender do otimizador em produção.
 - Tornada autônoma a verificação HTTP de rotas: ela inicia e encerra o build de produção em porta isolada no CI/local, ou usa `BASE_URL` em staging. Isso elimina a dependência implícita de um servidor manual em `localhost:3000`.

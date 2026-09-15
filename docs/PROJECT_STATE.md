@@ -13,7 +13,7 @@ Atualizado em: `2026-09-15`
 ## Checkpoint executável
 
 - Última missão concluída: preparação técnica da integração, com geração Prisma antes do lint, imagens aprovadas de `/sobre` otimizadas e verificação de rotas autônoma; a esteira local completa passou. Home, portfólio e cases indexáveis permanecem pendentes.
-- Próxima missão autorizada: confirmar o CI remoto e integrar a PR em `main` somente com todos os gates verdes.
+- Próxima missão autorizada: confirmar o CI remoto e integrar a PR em `main` somente com todos os gates verdes; a prévia local preserva a exigência de branch e aceita `detached HEAD` apenas no CI.
 - Antes de desenvolver: `npm run continuity:status`. O comando confere branch, commit-base, missão e itens locais isolados; `npm run dev` e `npm run dev:content-review` executam essa conferência automaticamente.
 - Antes de commitar: o hook local exige `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` no mesmo commit de qualquer alteração de comportamento. Para ativá-lo em uma instalação existente: `npm run setup:hooks`.
 - CI: o workflow busca o histórico completo para validar o commit-base, pois um checkout raso não permite provar a ancestralidade da branch.

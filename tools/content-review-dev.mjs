@@ -3,7 +3,11 @@ import { fileURLToPath } from "node:url";
 
 const port = process.env.PORT || "3101";
 const nextCli = fileURLToPath(new URL("../node_modules/next/dist/bin/next", import.meta.url));
-const continuity = spawnSync(process.execPath, ["tools/continuity-check.mjs"], { stdio: "inherit" });
+const continuityArgs = ["tools/continuity-check.mjs"];
+
+if (process.env.CI) continuityArgs.push("--ci");
+
+const continuity = spawnSync(process.execPath, continuityArgs, { stdio: "inherit" });
 
 if (continuity.status !== 0) {
   process.exit(continuity.status ?? 1);
