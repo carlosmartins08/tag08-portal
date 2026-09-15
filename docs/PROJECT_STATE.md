@@ -12,7 +12,7 @@ Atualizado em: `2026-09-15`
 
 ## Checkpoint executável
 
-- Última missão concluída: proteção executável de evidências públicas no commit `1bf2214`.
+- Última missão concluída: proteção executável de evidências públicas e aplicação dos checkpoints de continuidade.
 - Próxima missão autorizada: classificar uma evidência por vez ou concluir a validação técnica da integração.
 - Antes de desenvolver: `npm run continuity:status`. O comando confere branch, commit-base, missão e itens locais isolados; `npm run dev` e `npm run dev:content-review` executam essa conferência automaticamente.
 - Antes de commitar: o hook local exige `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` no mesmo commit de qualquer alteração de comportamento. Para ativá-lo em uma instalação existente: `npm run setup:hooks`.
