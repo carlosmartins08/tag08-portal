@@ -6,12 +6,14 @@ Objetivo: consolidar uma linha de evolução sem descartar melhorias técnicas n
 
 ## Fase 0 — Base segura
 
+- Concluída em `2026-09-15`: criados checkpoints separados para governança e `/llms.txt`; `public/clients/` permaneceu isolada, sem promoção para o site.
 - Separar alterações locais por objetivo: discoverability (`llms.txt`) e ativos de clientes.
 - Manter `p0-routing-secret-containment` como candidata à integração e `main` como destino; não fazer merge direto.
 - Critério de saída: `git status` compreensível e cada mudança com dono e destino definidos.
 
 ## Fase 1 — Reconciliação de decisão e conteúdo
 
+- Inventário inicial registrado em `docs/CONTENT_EVIDENCE_INVENTORY.md`; a classificação comercial e a evidência externa ainda são pendentes.
 - Criar inventário de equipe, cases, depoimentos, marcas, logos e métricas que aparecem no site.
 - Para cada item, registrar evidência, responsável e status: `aprovado`, `pendente` ou `remover`.
 - Resolver conflitos entre decisões de 02/09 e alterações posteriores, especialmente em `/sobre` e `/`.

@@ -7,6 +7,7 @@
 - Atualizado `docs/PROJECT_STATE.md` com a relação real entre branches, alterações locais a preservar, mapa das fontes de conteúdo e conflitos editoriais pendentes.
 - Nenhuma página, rota, contrato, asset publicado ou integração foi removido ou alterado nesta etapa.
 - Publicado `/llms.txt` como rota estática do Next, com links derivados do registry, proteção contra reescrita pelo `proxy` e verificação de resposta no teste de rotas.
+- Criado `docs/CONTENT_EVIDENCE_INVENTORY.md` para tornar rastreáveis pessoas, cases, depoimentos, logos, métricas e imagens que exigem prova antes de uma decisão pública.
 
 ## 2026-09-02
 
