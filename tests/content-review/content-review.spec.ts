@@ -1,11 +1,11 @@
 import { expect, test } from "@playwright/test";
 
-test("prévia local identifica equipe pendente sem publicá-la", async ({ page }) => {
+test("prévia local identifica o ambiente sem marcar equipe aprovada como pendente", async ({ page }) => {
   await page.goto("/sobre", { waitUntil: "domcontentloaded" });
   await expect(page.getByTestId("content-review-banner")).toBeVisible();
   await expect(page.getByTestId("team-profiles")).toBeVisible();
   await expect(page.getByTestId("team-profiles").locator("[data-evidence-key^='team/']")).toHaveCount(7);
-  await expect(page.getByTestId("team-profiles").getByText("Pendente — não publicado").first()).toBeVisible();
+  await expect(page.getByTestId("team-profiles").getByText("Pendente — não publicado")).toHaveCount(0);
 });
 
 test("prévia local abre case pendente sem adicioná-lo à produção", async ({ page }) => {

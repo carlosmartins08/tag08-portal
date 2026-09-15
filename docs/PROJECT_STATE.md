@@ -12,7 +12,7 @@ Atualizado em: `2026-09-15`
 
 ## Checkpoint executável
 
-- Última missão concluída: proteção executável de evidências públicas e aplicação dos checkpoints de continuidade.
+- Última missão concluída: publicação autorizada da equipe em `/sobre` e das provas internas em `/servicos/assessoria-marketing-digital-estrategico`; Home, portfólio e cases indexáveis permanecem pendentes.
 - Próxima missão autorizada: classificar uma evidência por vez ou concluir a validação técnica da integração.
 - Antes de desenvolver: `npm run continuity:status`. O comando confere branch, commit-base, missão e itens locais isolados; `npm run dev` e `npm run dev:content-review` executam essa conferência automaticamente.
 - Antes de commitar: o hook local exige `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` no mesmo commit de qualquer alteração de comportamento. Para ativá-lo em uma instalação existente: `npm run setup:hooks`.
@@ -21,7 +21,7 @@ Atualizado em: `2026-09-15`
 
 - Discoverability: `/llms.txt` é servido por uma rota estática do Next. O checkpoint focado inclui a remoção do arquivo de raiz, a exclusão no `proxy` e a verificação de rota.
 - Ativos de clientes: `public/clients/` está fora de rastreamento. Os arquivos não estão associados a uso público no código e exigem validação de marca/direito de uso antes de serem incluídos em qualquer página.
-- Evidências públicas pendentes: o gate em `src/content/publicEvidence.ts` preserva os dados, mas bloqueia a renderização de equipe, cases, métricas, mini-cases e depoimentos; cases pendentes também não geram rota ou sitemap. `npm run content:status` torna cada supressão visível e `npm run dev:content-review` permite revisão local identificada, sem publicação.
+- Evidências públicas: o gate em `src/content/publicEvidence.ts` libera apenas equipe em `/sobre`, mini-cases e depoimentos internos em Assessoria, conforme aprovação registrada. Home, portfólio e cases indexáveis continuam bloqueados; os cases pendentes também não geram rota ou sitemap. `npm run content:status` torna cada supressão visível e `npm run dev:content-review` permite revisão local identificada, sem publicação.
 
 ## Onde o conteúdo realmente vive
 
@@ -37,7 +37,7 @@ Atualizado em: `2026-09-15`
 
 ## Conflitos que exigem decisão de negócio
 
-- `/sobre`: o checkpoint de 02/09 descrevia competências sem pessoas; o commit de 11/09 reintroduziu sete perfis, cargos e fotos. O conteúdo permanece pendente de confirmação comercial e autorização de imagem.
+- `/sobre`: o checkpoint de 02/09 descrevia competências sem pessoas; o commit de 11/09 reintroduziu sete perfis, cargos e fotos. A publicação foi autorizada somente nesta rota.
 - `/`: há cases, citações e imagens que precisam ser confrontados com a regra de prova registrada em 02/09. Não presumir que estarem no código equivale a autorização de publicação.
 - Serviços históricos indexáveis: Assessoria, Process Intelligence, Process Activation e Hospedagem continuam no registry. A existência técnica da rota não confirma prioridade comercial atual.
 

@@ -28,15 +28,27 @@ const pending = (kind: PublicEvidenceKind, label: string, allowedRoutes: readonl
   reason: "Aguardando autorização e evidência verificável para publicação."
 });
 
+const approved = (kind: PublicEvidenceKind, label: string, allowedRoutes: readonly string[], reason: string): PublicEvidenceRecord => ({
+  kind,
+  label,
+  allowedRoutes,
+  status: "approved",
+  decisionOwner: "Carlos Henrique Martins",
+  decidedAt: "2026-09-15",
+  evidenceReference: "approval:conversation-2026-09-15-publication-scope",
+  validUntil: null,
+  reason
+});
+
 /** Fonte executável de publicação; referências nunca guardam documentos sensíveis no repositório. */
 export const PUBLIC_EVIDENCE = {
-  "team/carlos-henrique-martins": pending("team", "Carlos Henrique Martins", ["/sobre"]),
-  "team/ignacio-quiroz": pending("team", "Ignacio Quiroz", ["/sobre"]),
-  "team/pedro-felix": pending("team", "Pedro Félix", ["/sobre"]),
-  "team/daniel-lopes": pending("team", "Daniel Lopes", ["/sobre"]),
-  "team/guilherme-gomes": pending("team", "Guilherme Gomes", ["/sobre"]),
-  "team/amazing-design": pending("team", "Amazing Design", ["/sobre"]),
-  "team/andreia-braga": pending("team", "Andréia Braga", ["/sobre"]),
+  "team/carlos-henrique-martins": approved("team", "Carlos Henrique Martins", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
+  "team/ignacio-quiroz": approved("team", "Ignacio Quiroz", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
+  "team/pedro-felix": approved("team", "Pedro Félix", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
+  "team/daniel-lopes": approved("team", "Daniel Lopes", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
+  "team/guilherme-gomes": approved("team", "Guilherme Gomes", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
+  "team/amazing-design": approved("team", "Amazing Design", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
+  "team/andreia-braga": approved("team", "Andréia Braga", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
   "home-case/alan-rocha": pending("home-case", "Alan Rocha", ["/"]),
   "home-case/le-visage": pending("home-case", "Clínica Le Visage", ["/"]),
   "home-case/luciana-gadelha": pending("home-case", "Luciana Gadelha", ["/"]),
@@ -52,16 +64,16 @@ export const PUBLIC_EVIDENCE = {
   "case-study/case-clinica-alphaville": pending("case-study", "Clínica Médica Alphaville", ["/casos/case-clinica-alphaville"]),
   "case-study/case-saas-process": pending("case-study", "ProcessFlow SaaS", ["/casos/case-saas-process"]),
   "case-study/case-branding-advocacia": pending("case-study", "Nunes & Associados", ["/casos/case-branding-advocacia"]),
-  "mini-case/clinica-alphaville": pending("mini-case", "Clínica Alphaville", ["/servicos/assessoria-marketing-digital-estrategico", "/servicos/branding-identidade", "/servicos/desenvolvimento-web", "/servicos/producao-audiovisual", "/servicos/process-intelligence", "/servicos/process-activation"]),
-  "mini-case/processflow-erp": pending("mini-case", "ProcessFlow ERP", ["/servicos/assessoria-marketing-digital-estrategico", "/servicos/branding-identidade", "/servicos/desenvolvimento-web", "/servicos/producao-audiovisual", "/servicos/process-intelligence", "/servicos/process-activation"]),
-  "mini-case/nunes-associados": pending("mini-case", "Nunes & Associados", ["/servicos/assessoria-marketing-digital-estrategico", "/servicos/branding-identidade", "/servicos/desenvolvimento-web", "/servicos/producao-audiovisual", "/servicos/process-intelligence", "/servicos/process-activation"]),
-  "mini-case/grupo-medeiros": pending("mini-case", "Grupo Medeiros", ["/servicos/assessoria-marketing-digital-estrategico", "/servicos/branding-identidade", "/servicos/desenvolvimento-web", "/servicos/producao-audiovisual", "/servicos/process-intelligence", "/servicos/process-activation"]),
-  "mini-case/zenith-corporativo": pending("mini-case", "Zenith Corporativo", ["/servicos/assessoria-marketing-digital-estrategico", "/servicos/branding-identidade", "/servicos/desenvolvimento-web", "/servicos/producao-audiovisual", "/servicos/process-intelligence", "/servicos/process-activation"]),
-  "mini-case/vanguard-sec": pending("mini-case", "Vanguard Sec", ["/servicos/assessoria-marketing-digital-estrategico", "/servicos/branding-identidade", "/servicos/desenvolvimento-web", "/servicos/producao-audiovisual", "/servicos/process-intelligence", "/servicos/process-activation"]),
-  "internal-testimonial/roberta-chaves": pending("internal-testimonial", "Dra. Roberta Chaves", ["/servicos/assessoria-marketing-digital-estrategico"]),
-  "internal-testimonial/marcus-azevedo": pending("internal-testimonial", "Marcus Azevedo", ["/servicos/assessoria-marketing-digital-estrategico"]),
-  "internal-testimonial/juliana-reis": pending("internal-testimonial", "Juliana Reis", ["/servicos/assessoria-marketing-digital-estrategico"]),
-  "internal-testimonial/beatriz-nogueira": pending("internal-testimonial", "Beatriz Nogueira", ["/servicos/assessoria-marketing-digital-estrategico"])
+  "mini-case/clinica-alphaville": approved("mini-case", "Clínica Alphaville", ["/servicos/assessoria-marketing-digital-estrategico"], "Aprovado somente para a página de Assessoria de Marketing Estratégico."),
+  "mini-case/processflow-erp": approved("mini-case", "ProcessFlow ERP", ["/servicos/assessoria-marketing-digital-estrategico"], "Aprovado somente para a página de Assessoria de Marketing Estratégico."),
+  "mini-case/nunes-associados": approved("mini-case", "Nunes & Associados", ["/servicos/assessoria-marketing-digital-estrategico"], "Aprovado somente para a página de Assessoria de Marketing Estratégico."),
+  "mini-case/grupo-medeiros": approved("mini-case", "Grupo Medeiros", ["/servicos/assessoria-marketing-digital-estrategico"], "Aprovado somente para a página de Assessoria de Marketing Estratégico."),
+  "mini-case/zenith-corporativo": approved("mini-case", "Zenith Corporativo", ["/servicos/assessoria-marketing-digital-estrategico"], "Aprovado somente para a página de Assessoria de Marketing Estratégico."),
+  "mini-case/vanguard-sec": approved("mini-case", "Vanguard Sec", ["/servicos/assessoria-marketing-digital-estrategico"], "Aprovado somente para a página de Assessoria de Marketing Estratégico."),
+  "internal-testimonial/roberta-chaves": approved("internal-testimonial", "Dra. Roberta Chaves", ["/servicos/assessoria-marketing-digital-estrategico"], "Aprovado para os depoimentos internos da página de Assessoria."),
+  "internal-testimonial/marcus-azevedo": approved("internal-testimonial", "Marcus Azevedo", ["/servicos/assessoria-marketing-digital-estrategico"], "Aprovado para os depoimentos internos da página de Assessoria."),
+  "internal-testimonial/juliana-reis": approved("internal-testimonial", "Juliana Reis", ["/servicos/assessoria-marketing-digital-estrategico"], "Aprovado para os depoimentos internos da página de Assessoria."),
+  "internal-testimonial/beatriz-nogueira": approved("internal-testimonial", "Beatriz Nogueira", ["/servicos/assessoria-marketing-digital-estrategico"], "Aprovado para os depoimentos internos da página de Assessoria.")
 } as const satisfies Record<string, PublicEvidenceRecord>;
 
 export type PublicEvidenceKey = keyof typeof PUBLIC_EVIDENCE;
