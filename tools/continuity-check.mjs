@@ -46,6 +46,10 @@ function fail(messages) {
   process.exitCode = 1;
 }
 
+function isAllowedWorkBranch(branch, expectedBranch) {
+  return branch === expectedBranch || /^p\d+-[a-z0-9-]+$/i.test(branch);
+}
+
 try {
   const state = readState();
   const branch = git(["branch", "--show-current"]);
@@ -55,8 +59,8 @@ try {
   const unexpectedUntracked = untrackedPaths.filter((path) => !isKnownPreservedPath(path));
   const errors = [];
 
-  if (!isCi && branch !== state.expectedBranch) {
-    errors.push(`a branch atual é \`${branch}\`, mas o checkpoint exige \`${state.expectedBranch}\`. Atualize o checkpoint em uma missão explícita antes de continuar.`);
+  if (!isCi && !isAllowedWorkBranch(branch, state.expectedBranch)) {
+    errors.push(`a branch atual é \`${branch}\`, mas o checkpoint exige \`${state.expectedBranch}\` ou uma missão no padrão \`p<numero>-<tema>\`. Atualize o checkpoint em uma missão explícita antes de continuar.`);
   }
 
   try {
@@ -79,7 +83,7 @@ try {
   }
 
   console.log("\nTAG08 — checkpoint de continuidade");
-  console.log(`  branch: ${branch}${branch === state.expectedBranch ? " ✓" : ""}`);
+  console.log(`  branch: ${branch}${isAllowedWorkBranch(branch, state.expectedBranch) ? " ✓" : ""}`);
   console.log(`  base: ${state.integrationBase} ✓`);
   console.log(`  HEAD: ${head}`);
   console.log(`  última missão: ${state.lastMission}`);

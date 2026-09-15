@@ -4,16 +4,16 @@ Atualizado em: `2026-09-15`
 
 ## Estado de integração
 
-- Linha de trabalho esperada: `p0-routing-secret-containment`; o checkpoint de origem da reconciliação é `3314b39` (`2026-09-11`) e os checkpoints locais posteriores estão no histórico desta mesma linha.
-- Destino de integração: `main`, no commit `7d8aafd` (`2026-07-21`).
-- Commit-base de integração: `7d8aafd`.
-- Relação: a branch atual contém as dez evoluções inicialmente identificadas após a `main`, mais os checkpoints locais desta reconciliação. Não há divergência da `main`, mas ela ainda não recebeu essa evolução.
-- Regra ativa: não integrar por merge direto. Primeiro separar mudanças locais, classificar conflitos de conteúdo e executar as validações previstas em `docs/ROADMAP.md`.
+- Linha de trabalho esperada: `main`. Uma missão ativa deve usar uma branch curta no padrão `p<numero>-<tema>`, criada a partir desta base.
+- Destino de integração: `main`, no commit `5126504` (`2026-09-15`).
+- Commit-base de integração: `5126504`.
+- Relação: a reconciliação da `p0-routing-secret-containment` foi integrada por PR #1. A `p0` permanece preservada como trilha de auditoria; a `p1-publication-ops` parte do novo `main` apenas para fechar a continuidade pós-merge.
+- Regra ativa: não desenvolver diretamente em `main`. Cada missão começa em uma branch curta, passa pelos gates e volta por PR; o checkpoint aceita apenas `main` ou o padrão de missão registrado.
 
 ## Checkpoint executável
 
-- Última missão concluída: preparação técnica da integração, com geração Prisma antes do lint, imagens aprovadas de `/sobre` otimizadas e verificação de rotas autônoma; a esteira local completa passou. Home, portfólio e cases indexáveis permanecem pendentes.
-- Próxima missão autorizada: confirmar o CI remoto e integrar a PR em `main` somente com todos os gates verdes; a prévia local preserva a exigência de branch e aceita `detached HEAD` apenas no CI.
+- Última missão concluída: PR #1 integrada em `main` no commit `5126504`, após CI verde para build, rotas HTTP, relatório de conteúdo, 142 cenários públicos e 3 cenários da prévia local. Home, portfólio e cases indexáveis permanecem pendentes.
+- Próxima missão autorizada: configurar e validar um destino de staging/produção para o `main` integrado. A prévia local preserva a exigência de branch e aceita `detached HEAD` apenas no CI.
 - Antes de desenvolver: `npm run continuity:status`. O comando confere branch, commit-base, missão e itens locais isolados; `npm run dev` e `npm run dev:content-review` executam essa conferência automaticamente.
 - Antes de commitar: o hook local exige `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` no mesmo commit de qualquer alteração de comportamento. Para ativá-lo em uma instalação existente: `npm run setup:hooks`.
 - CI: o workflow busca o histórico completo para validar o commit-base, pois um checkout raso não permite provar a ancestralidade da branch.
