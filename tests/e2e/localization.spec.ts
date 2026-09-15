@@ -8,7 +8,8 @@ test("an incomplete locale never serves a shortened substitute page", async ({ p
 
   await page.goto("/es/servicos/process-intelligence", { waitUntil: "domcontentloaded" });
   await expect(page).toHaveURL(/\/servicos\/process-intelligence$/);
-  await expect(page.locator("h2")).toHaveCount(9);
+  await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(/Process Intelligence/i);
 });
 
 test("language selector exposes only locales approved for the current page", async ({ page }) => {

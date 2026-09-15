@@ -281,6 +281,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                       width={48}
                       height={48}
                       sizes="48px"
+                      unoptimized
                       className="h-12 w-12 rounded-full border border-white/20 object-cover grayscale opacity-80 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100"
                     />
                   </div>
@@ -330,6 +331,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                         width={44}
                         height={44}
                         sizes="44px"
+                        unoptimized
                         className="h-11 w-11 rounded-full border border-white/20 object-cover grayscale opacity-80 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100"
                       />
 
@@ -362,6 +364,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                         width={44}
                         height={44}
                         sizes="44px"
+                        unoptimized
                         className="h-11 w-11 shrink-0 rounded-full border border-white/15 object-cover grayscale opacity-75 transition-all duration-300 hover:grayscale-0 hover:opacity-100"
                       />
                       <div className="space-y-1">

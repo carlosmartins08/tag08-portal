@@ -3,7 +3,8 @@ import { defineConfig } from "@playwright/test";
 const chromeExecutable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE;
 const configuredWorkers = Number(process.env.PLAYWRIGHT_WORKERS);
 const workers = Number.isInteger(configuredWorkers) && configuredWorkers > 0 ? configuredWorkers : 1;
-const baseURL = process.env.E2E_BASE_URL ?? "http://127.0.0.1:3000";
+const localPort = process.env.E2E_PORT ?? "3211";
+const baseURL = process.env.E2E_BASE_URL ?? `http://127.0.0.1:${localPort}`;
 const usesExternalBaseUrl = Boolean(process.env.E2E_BASE_URL);
 
 export default defineConfig({
@@ -33,6 +34,7 @@ export default defineConfig({
         command: "npm run start",
         url: baseURL,
         timeout: 120_000,
-        reuseExistingServer: !process.env.CI
+        reuseExistingServer: false,
+        env: { ...process.env, PORT: localPort }
       }
 });
