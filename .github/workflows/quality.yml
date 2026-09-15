@@ -23,6 +23,7 @@ jobs:
 
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+      - run: npm run continuity:check
       - run: npm run verify:readiness
       - run: npm run content:status
       - run: npm run test:browser

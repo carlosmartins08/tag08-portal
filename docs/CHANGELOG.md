@@ -2,6 +2,7 @@
 
 ## 2026-09-15
 
+- Transformada a continuidade em fluxo executável: `npm run continuity:status` valida branch, commit-base e checkpoint; os modos de desenvolvimento exibem essa checagem antes de iniciar e o hook de commit bloqueia alterações de comportamento sem atualização simultânea de estado e changelog.
 - Evoluído o gate de evidências para registro estruturado por item, contrato de publicação por rota, relatório `content:status` e prévia local identificada por `npm run dev:content-review`; produção continua excluindo itens pendentes e removidos.
 - Adicionados testes que impedem publicação indevida, validam os metadados de aprovação e verificam a diferença entre site público e prévia local.
 - Registrada a reconciliação de continuidade: `p0-routing-secret-containment` é a candidata à integração e `main` permanece o destino, sem merge direto nesta etapa.

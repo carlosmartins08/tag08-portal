@@ -20,6 +20,8 @@ Portal institucional TAG08 em Next.js App Router. As paginas publicas sao gerada
 ```bash
 npm ci
 npm run dev
+npm run continuity:status
+npm run setup:hooks
 npm run lint
 npm run build
 npm run start
@@ -28,6 +30,12 @@ npm run verify:staging
 npm run verify:seo
 npm run verify:persistence
 ```
+
+## Continuidade de trabalho
+
+Use `npm run continuity:status` antes de retomar uma missão. Ele mostra a branch esperada, o commit-base, a última entrega e alterações locais que precisam de classificação. `npm run dev` e `npm run dev:content-review` param se a branch não for a registrada em `docs/PROJECT_STATE.md`.
+
+O hook instalado por `npm run setup:hooks` bloqueia commits de código, testes, automação ou configuração quando `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` não acompanham a mesma mudança. A qualidade completa continua obrigatória no pull request.
 
 ## Variaveis locais
 

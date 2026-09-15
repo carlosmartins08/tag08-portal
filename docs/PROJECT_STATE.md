@@ -4,10 +4,18 @@ Atualizado em: `2026-09-15`
 
 ## Estado de integração
 
-- Branch de trabalho atual: `p0-routing-secret-containment`; o checkpoint de origem da reconciliação é `3314b39` (`2026-09-11`) e os checkpoints locais posteriores estão no histórico desta mesma linha.
+- Linha de trabalho esperada: `p0-routing-secret-containment`; o checkpoint de origem da reconciliação é `3314b39` (`2026-09-11`) e os checkpoints locais posteriores estão no histórico desta mesma linha.
 - Destino de integração: `main`, no commit `7d8aafd` (`2026-07-21`).
+- Commit-base de integração: `7d8aafd`.
 - Relação: a branch atual contém as dez evoluções inicialmente identificadas após a `main`, mais os checkpoints locais desta reconciliação. Não há divergência da `main`, mas ela ainda não recebeu essa evolução.
 - Regra ativa: não integrar por merge direto. Primeiro separar mudanças locais, classificar conflitos de conteúdo e executar as validações previstas em `docs/ROADMAP.md`.
+
+## Checkpoint executável
+
+- Última missão concluída: proteção executável de evidências públicas no commit `1bf2214`.
+- Próxima missão autorizada: classificar uma evidência por vez ou concluir a validação técnica da integração.
+- Antes de desenvolver: `npm run continuity:status`. O comando confere branch, commit-base, missão e itens locais isolados; `npm run dev` e `npm run dev:content-review` executam essa conferência automaticamente.
+- Antes de commitar: o hook local exige `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` no mesmo commit de qualquer alteração de comportamento. Para ativá-lo em uma instalação existente: `npm run setup:hooks`.
 
 ## Alterações locais a preservar e separar
 

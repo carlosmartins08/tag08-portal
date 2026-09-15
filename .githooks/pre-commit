@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+node tools/continuity-check.mjs --staged
