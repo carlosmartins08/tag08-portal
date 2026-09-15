@@ -21,6 +21,7 @@ Objetivo: consolidar uma linha de evolução sem descartar melhorias técnicas n
 
 ## Fase 2 — Integração controlada
 
+- Auditoria dos commits registrada em `docs/INTEGRATION_AUDIT.md`; a política para conteúdo `pendente` bloqueia a criação da integração revisável.
 - Revisar os dez commits de `p0-routing-secret-containment` por domínio: plataforma, segurança, rotas/i18n, acessibilidade, interface e conteúdo.
 - Validar a base integrada com `npm run check`, testes de navegador pertinentes e verificações de rotas/SEO.
 - Integrar por PR ou sequência equivalente revisável, sem juntar conteúdo pendente com correções técnicas.

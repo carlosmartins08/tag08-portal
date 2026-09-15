@@ -37,6 +37,7 @@ Atualizado em: `2026-09-15`
 - Decisões ativas: `docs/DECISIONS.md`.
 - Próximas fases: `docs/ROADMAP.md`.
 - Inventário de evidências públicas: `docs/CONTENT_EVIDENCE_INVENTORY.md`.
+- Auditoria e sequência de integração: `docs/INTEGRATION_AUDIT.md`.
 - Rotas: `docs/ROUTES.md` e `src/config/routeRegistry.ts`.
 - Arquitetura e contratos: `docs/ARCHITECTURE.md` e `server/onboardingContract.ts`.
 
