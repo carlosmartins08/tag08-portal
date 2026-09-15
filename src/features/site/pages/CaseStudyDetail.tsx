@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowUpRight, CheckCircle2, TrendingUp, Award, Calendar, Che
 import { motion } from "motion/react";
 import Image from "next/image";
 import { CASE_STUDIES } from "../../../data";
+import { getApprovedEvidence } from "../../../content/publicEvidence";
 
 interface CaseStudyDetailProps {
   caseId: string;
@@ -11,7 +12,8 @@ interface CaseStudyDetailProps {
 
 export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailProps) {
   const [copied, setCopied] = useState(false);
-  const selectedCase = CASE_STUDIES.find((cs) => cs.id === caseId);
+  const selectedCase = getApprovedEvidence(CASE_STUDIES, (caseStudy) => `case-study/${caseStudy.id}`)
+    .find((caseStudy) => caseStudy.id === caseId);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });

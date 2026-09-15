@@ -1,4 +1,5 @@
 import { CASE_STUDIES } from "../data";
+import { getApprovedEvidence } from "../content/publicEvidence";
 import { isLocaleTranslationReady } from "../i18n/localizationReadiness";
 
 export const ROUTE_LOCALES = ["pt", "en", "es"] as const;
@@ -305,7 +306,8 @@ export const routeRegistry: RouteDefinition[] = [
 ];
 
 const legacyAliases: Record<string, string> = {};
-const caseStudyPaths = new Set(CASE_STUDIES.map((caseStudy) => `/casos/${caseStudy.id}`));
+const publishedCaseStudies = getApprovedEvidence(CASE_STUDIES, (caseStudy) => `case-study/${caseStudy.id}`);
+const caseStudyPaths = new Set(publishedCaseStudies.map((caseStudy) => `/casos/${caseStudy.id}`));
 
 routeRegistry.forEach((route) => {
   route.aliases?.forEach((alias) => {
@@ -457,7 +459,7 @@ export const routeSitemapMeta = routeRegistry.flatMap((route) => {
   }
 
   if (route.dynamic && route.pathPattern === "/casos/:id") {
-    return CASE_STUDIES.map((caseStudy) => ({
+    return publishedCaseStudies.map((caseStudy) => ({
       path: `/casos/${caseStudy.id}`,
       changefreq: route.changefreq,
       priority: route.priority,

@@ -9,7 +9,7 @@ Fonte obrigatoria: `src/config/routeRegistry.ts`.
 - `includeInSitemap=true` inclui a rota em `src/app/sitemap.ts` nos idiomas publicados para ela.
 - PT-BR nao tem prefixo. EN usa `/en/...`; ES usa `/es/...`.
 - Nao basta uma rota responder em EN ou ES: `publishedLocales` no registry precisa declarar que a pagina inteira foi localizada e revisada. Sem isso, o idioma estrangeiro redireciona para PT-BR e nao entra em sitemap, canonical alternativo ou indexacao.
-- Cases publicados usam `/casos/:id` e sao pregerados a partir de `CASE_STUDIES`.
+- Cases publicados usam `/casos/:id` e sao pregerados apenas quando sua chave em `src/content/publicEvidence.ts` estiver `aprovado`.
 - Rotas inexistentes retornam 404 sem indexacao.
 
 ## Pontos de implementacao

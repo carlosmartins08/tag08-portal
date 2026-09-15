@@ -6,6 +6,7 @@
 - Paginas publicas resolvidas por `src/app/[locale]/[[...segments]]/page.tsx` e pregeradas a partir de `src/config/routeRegistry.ts`.
 - PT-BR usa URLs sem prefixo e e reescrito internamente para `/pt` por `src/proxy.ts`; EN e ES usam `/en` e `/es`.
 - Alias sao redirecionamentos permanentes. O registry continua sendo a unica fonte de verdade para canonicos, alias, casos e sitemap.
+- Cases dependem de `src/content/publicEvidence.ts`: um item pendente nao pode resolver rota, ser pregerado ou entrar no sitemap, mesmo que seus dados permaneçam em `src/data.ts` para revisão.
 - Metadata, canonical, hreflang, Open Graph e JSON-LD sao gerados no servidor em `src/lib/seo.ts`.
 - `src/features/site/SiteShell.tsx` contem apenas a experiencia cliente: navegacao, animacao, analytics, Lenis, formularios e normalizacao temporaria de hashes legados.
 - Publicacao multilingue e controlada por rota em `routeRegistry.ts`. Uma lingua so e publicada quando a pagina completa, seus fluxos de conversao e a revisao editorial existem naquele idioma. PT-BR e a lingua segura por padrao; o onboarding e a excecao atual com PT, EN e ES completos.

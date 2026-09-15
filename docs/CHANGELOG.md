@@ -9,6 +9,7 @@
 - Publicado `/llms.txt` como rota estática do Next, com links derivados do registry, proteção contra reescrita pelo `proxy` e verificação de resposta no teste de rotas.
 - Criado `docs/CONTENT_EVIDENCE_INVENTORY.md` para tornar rastreáveis pessoas, cases, depoimentos, logos, métricas e imagens que exigem prova antes de uma decisão pública.
 - Criado `docs/INTEGRATION_AUDIT.md` para separar os commits por risco e impedir que melhorias técnicas validem automaticamente conteúdo pendente.
+- Implementado `src/content/publicEvidence.ts`: equipe, cases, candidatos de portfólio, métricas, mini-cases e depoimentos pendentes permanecem preservados, mas não renderizam nem podem gerar rota ou sitemap até aprovação individual.
 
 ## 2026-09-02
 

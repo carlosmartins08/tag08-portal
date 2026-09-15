@@ -16,6 +16,7 @@ import heroTag08StrategyStage from "../../../assets/images/hero_tag08_strategy-s
 import creativeLeaderPortrait from "../../../assets/images/creative_leader_portrait_1780449653164.jpg";
 import moodyClientPortrait from "../../../assets/images/moody_client_portrait_1780449811793.jpg";
 import clientAlanRocha from "../../../assets/images/client_alan_rocha_1780449828496.jpg";
+import { getApprovedEvidence } from "../../../content/publicEvidence";
 
 const DiagnosticDiagram = lazy(() => import("../../../components/DiagnosticDiagram"));
 
@@ -792,13 +793,18 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
   ];
 
   const PORTFOLIO_CANDIDATES = [
-    "LavarRoupa S.A.",
-    "Alugue por Temporada",
-    "Centro de Olhos",
-    "LeVisage",
-    "Luciana Gadelha",
-    "Espaço Glau Campos"
+    { id: "lavar-roupa", name: "LavarRoupa S.A." },
+    { id: "alugue-por-temporada", name: "Alugue por Temporada" },
+    { id: "centro-de-olhos", name: "Centro de Olhos" },
+    { id: "le-visage", name: "LeVisage" },
+    { id: "luciana-gadelha", name: "Luciana Gadelha" },
+    { id: "espaco-glau-campos", name: "Espaço Glau Campos" }
   ];
+  const visibleClientCases = getApprovedEvidence(CLIENT_CASES, (caseStudy) => `home-case/${caseStudy.id}`);
+  const visiblePortfolioCandidates = getApprovedEvidence(
+    PORTFOLIO_CANDIDATES,
+    (candidate) => `portfolio-candidate/${candidate.id}`
+  );
 
   useEffect(() => {
     const syncYoutubeConsent = (preferences: CookiePreferences | null) => {
@@ -2405,7 +2411,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       </section>
 
       {/* SECTION 4.5 - RESULTADOS E CASES (MÉTODOS COM RESULTADO COMPROVADOS NA PRÁTICA) */}
-      <section id="resultados-cases" className="tag08-section px-4 sm:px-6 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
+      {visiblePortfolioCandidates.length > 0 && <section id="resultados-cases" className="tag08-section px-4 sm:px-6 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
         {/* Ambient background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -2427,17 +2433,17 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PORTFOLIO_CANDIDATES.map((name, index) => (
-              <article key={name} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-[28px] min-h-[180px] flex flex-col justify-between text-left">
+            {visiblePortfolioCandidates.map((candidate, index) => (
+              <article key={candidate.id} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-[28px] min-h-[180px] flex flex-col justify-between text-left">
                 <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black">{String(index + 1).padStart(2, "0")} // em validação</span>
-                <h3 className="font-display font-semibold text-lg text-white">{name}</h3>
+                <h3 className="font-display font-semibold text-lg text-white">{candidate.name}</h3>
                 <p className="text-zinc-500 text-xs leading-relaxed">Aguardando confirmação de material, direitos de publicação, narrativa e rota antes de ser apresentado como case.</p>
               </article>
             ))}
           </div>
 
         </div>
-      </section>
+      </section>}
 
       {/* SECTION 5 - TABELA DE PLANOS DE MÍDIAS SOCIAIS (REDESENHADA - INSPIRADO NO ACORDO VISUAL DO DEPOIMENTO DO CLIENTE) */}
       {false && <section id="planos-redes" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
@@ -3142,7 +3148,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       </section>
 
       {/* PORTFÓLIO DE TESTEMUNHOS & CASOS DE CLIENTES (UNIFICADO - O CLIENTE DICTA A REVOLUÇÃO) */}
-      {false && <section id="portfolio-marcas" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
+      {visibleClientCases.length > 0 && <section id="portfolio-marcas" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         
         {/* Editorial magazine background grid lines */}
         <div className="absolute inset-0 grid grid-cols-4 sm:grid-cols-8 h-full opacity-5 pointer-events-none">
@@ -3210,7 +3216,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-                {CLIENT_CASES.map((cc, index) => {
+                {visibleClientCases.map((cc, index) => {
                   const isActive = index === activeSlide;
                   return (
                     <button
@@ -3295,8 +3301,8 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   {/* Dynamic moody background image with custom style lighting */}
                   <div className="absolute inset-0 z-0 select-none pointer-events-none">
                     <Image
-                      src={CLIENT_CASES[activeSlide].backgroundImg} 
-                      alt={CLIENT_CASES[activeSlide].name} 
+                      src={visibleClientCases[activeSlide].backgroundImg}
+                      alt={visibleClientCases[activeSlide].name}
                       fill
                       sizes="(max-width: 768px) 100vw, 1200px"
                       className="w-full h-full object-cover opacity-80 group-hover:scale-[1.03] transition-transform duration-1000 ease-out brightness-[0.75] contrast-[1.1] grayscale-[10%]"
@@ -3321,7 +3327,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   {/* TOP HEADER LAYER: Editorial category tags & Rotating Neon Sunburst */}
                   <div className="relative z-10 flex items-center justify-between">
                     <div className="flex flex-wrap gap-2">
-                      {CLIENT_CASES[activeSlide].categoryTags.map((tag) => (
+                      {visibleClientCases[activeSlide].categoryTags.map((tag) => (
                         <span 
                           key={tag} 
                           className="tag08-meta text-xs tracking-widest text-brand border border-brand/30 px-3 py-1 rounded-full uppercase font-bold bg-black/60 backdrop-blur-sm shadow-sm"
@@ -3359,16 +3365,16 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   {/* MIDDLE QUOTE & POSITIONING HEADER (Using layered curved details cards) */}
                   <div className="relative z-10 space-y-4 max-w-2xl mt-auto pt-4">
                     <span className="tag08-meta text-xs text-brand tracking-widest uppercase font-extrabold block">
-                      {CLIENT_CASES[activeSlide].caseName}
+                      {visibleClientCases[activeSlide].caseName}
                     </span>
                     
                     <h3 className="font-display font-black text-2.5xl sm:text-4xl md:text-[40px] text-brand leading-[0.95] tracking-tighter mb-2">
-                      {CLIENT_CASES[activeSlide].tagline}
+                      {visibleClientCases[activeSlide].tagline}
                     </h3>
 
                     <div className="bg-charcoal-950/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl relative shadow-2xl">
                       <p className="text-white text-sm sm:text-base font-sans font-medium tracking-tight leading-relaxed italic block">
-                        “{CLIENT_CASES[activeSlide].quote}”
+                        “{visibleClientCases[activeSlide].quote}”
                       </p>
                     </div>
                   </div>
@@ -3382,8 +3388,8 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     {/* Profile card absolute design accuracy */}
                     <div className="flex items-center gap-3 bg-black/50 backdrop-blur-sm rounded-full py-1.5 pl-2 pr-4 border border-white/10 shadow-lg ml-auto">
                       <Image
-                        src={CLIENT_CASES[activeSlide].avatar} 
-                        alt={CLIENT_CASES[activeSlide].name} 
+                        src={visibleClientCases[activeSlide].avatar}
+                        alt={visibleClientCases[activeSlide].name}
                         width={32}
                         height={32}
                         className="w-8 h-8 rounded-full object-cover border-2 border-brand"
@@ -3391,10 +3397,10 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                       />
                       <div className="flex flex-col text-left">
                         <span className="text-white text-xs font-bold leading-tight uppercase font-sans">
-                          {CLIENT_CASES[activeSlide].name}
+                          {visibleClientCases[activeSlide].name}
                         </span>
                         <span className="text-brand font-sans text-xs tracking-wider font-semibold">
-                          {CLIENT_CASES[activeSlide].handle}
+                          {visibleClientCases[activeSlide].handle}
                         </span>
                       </div>
                     </div>

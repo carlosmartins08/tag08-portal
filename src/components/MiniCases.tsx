@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
+import { getApprovedEvidence } from "../content/publicEvidence";
 import { 
   Building2, 
   Heart, 
@@ -16,6 +17,7 @@ import {
 } from "lucide-react";
 
 export interface LogoItem {
+  evidenceKey?: string;
   name: string;
   industry?: string;
   metric?: string;
@@ -47,6 +49,7 @@ const iconMap = {
 
 const DEFAULT_LOGOS: LogoItem[] = [
   {
+    evidenceKey: "mini-case/clinica-alphaville",
     name: "Clínica Alphaville",
     industry: "Saúde & Estética Estrita",
     metric: "+240%",
@@ -54,6 +57,7 @@ const DEFAULT_LOGOS: LogoItem[] = [
     iconName: "health"
   },
   {
+    evidenceKey: "mini-case/processflow-erp",
     name: "ProcessFlow ERP",
     industry: "SaaS Enterprise B2B",
     metric: "4.2x",
@@ -61,6 +65,7 @@ const DEFAULT_LOGOS: LogoItem[] = [
     iconName: "tech"
   },
   {
+    evidenceKey: "mini-case/nunes-associados",
     name: "Nunes & Associados",
     industry: "Advocacia Societária",
     metric: "18+",
@@ -68,6 +73,7 @@ const DEFAULT_LOGOS: LogoItem[] = [
     iconName: "law"
   },
   {
+    evidenceKey: "mini-case/grupo-medeiros",
     name: "Grupo Medeiros",
     industry: "Investimentos & Asset",
     metric: "R$ 12M+",
@@ -75,6 +81,7 @@ const DEFAULT_LOGOS: LogoItem[] = [
     iconName: "finance"
   },
   {
+    evidenceKey: "mini-case/zenith-corporativo",
     name: "Zenith Corporativo",
     industry: "Educação Integrada",
     metric: "98.7%",
@@ -82,6 +89,7 @@ const DEFAULT_LOGOS: LogoItem[] = [
     iconName: "education"
   },
   {
+    evidenceKey: "mini-case/vanguard-sec",
     name: "Vanguard Sec",
     industry: "Segurança de Dados",
     metric: "Zero",
@@ -99,6 +107,11 @@ export default function MiniCases({
   onNavigate
 }: MiniCasesProps) {
   const prefersReducedMotion = useReducedMotion();
+  const visibleLogos = getApprovedEvidence(logos, (logo) => logo.evidenceKey || `mini-case/${logo.name}`);
+
+  if (visibleLogos.length === 0) {
+    return null;
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -160,7 +173,7 @@ export default function MiniCases({
           whileInView={prefersReducedMotion ? undefined : "visible"}
           viewport={prefersReducedMotion ? undefined : { once: true, margin: "-100px" }}
         >
-          {logos.map((logo, idx) => {
+          {visibleLogos.map((logo, idx) => {
             const IconComponent = logo.iconName ? iconMap[logo.iconName] : undefined;
 
             return (

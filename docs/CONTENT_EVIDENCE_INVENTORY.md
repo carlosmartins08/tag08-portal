@@ -6,7 +6,7 @@ Atualizado em: `2026-09-15`
 
 Este inventário mapeia alegações, pessoas, marcas, cases, depoimentos, imagens e métricas que podem estar expostos publicamente. Ele não comprova a alegação: registra onde ela existe, o alcance técnico e a evidência que ainda precisa ser associada.
 
-Status inicial de todos os itens abaixo: `pendente`. A exceção é uma avaliação retornada ao vivo pela integração oficial do Google Business, que é `fonte externa identificada`, mas ainda deve respeitar a resposta real da API e os termos da plataforma.
+Status inicial de todos os itens abaixo: `pendente`. Desde `2026-09-15`, itens pendentes não renderizam, não geram rota e não entram no sitemap; continuam preservados para revisão. A exceção é uma avaliação retornada ao vivo pela integração oficial do Google Business, que é `fonte externa identificada`, mas ainda deve respeitar a resposta real da API e os termos da plataforma.
 
 | Status | Significado |
 | --- | --- |
@@ -20,6 +20,7 @@ Status inicial de todos os itens abaixo: `pendente`. A exceção é uma avaliaç
 | --- | --- | --- | --- | --- |
 | Equipe | Carlos Henrique Martins, Ignacio Quiroz, Pedro Félix, Daniel Lopes, Guilherme Gomes, Amazing Design e Andréia Braga | `src/features/site/pages/Sobre.tsx`; fotos em `public/team/` | `/sobre` | `pendente` | vínculo, cargo, texto biográfico e autorização de imagem de cada perfil |
 | Cases da Home | Alan Rocha, Clínica Le Visage, Luciana Gadelha, Doctor Play, Legal Lab e Squalis Educação | `CLIENT_CASES` em `src/features/site/pages/Home.tsx` | `/` | `pendente` | autorização de marca, pessoa, imagem, citação, data e escopo real; origem das imagens remotas |
+| Candidatos de portfólio da Home | LavarRoupa S.A., Alugue por Temporada, Centro de Olhos, LeVisage, Luciana Gadelha e Espaço Glau Campos | `PORTFOLIO_CANDIDATES` em `src/features/site/pages/Home.tsx` | `/` | `pendente` | autorização de marca e confirmação de que o projeto pode ser citado publicamente, mesmo como candidato |
 | Cases indexáveis | Clínica Médica Alphaville, ProcessFlow SaaS e Nunes & Associados | `CASE_STUDIES` em `src/data.ts`; renderização em `CaseStudyDetail.tsx`; paths derivados em `routeRegistry.ts` | `/casos/*`, sitemap e links internos | `pendente` | contrato/autorização de case, confirmação de dados, método de cálculo e direito de imagem |
 | Métricas de case | `+240%`, `4.2x`, `18`, redução de `40%`, conversão de `1.2%` a `5.8%` e demais resultados narrados | `src/data.ts`; `MiniCases.tsx` | Cases indexáveis e páginas de serviço | `pendente` | fonte, período, denominador, método de cálculo e aprovação de publicação |
 | Mini cases reutilizados | Clínica Alphaville, ProcessFlow ERP, Nunes & Associados, Grupo Medeiros, Zenith Corporativo e Vanguard Sec | `src/components/MiniCases.tsx` | Assessoria, Branding, Desenvolvimento Web, Produção Audiovisual, Process Intelligence e Process Activation | `pendente` | mesma prova de case; confirmação de que o nome e a métrica podem ser usados em cada contexto |
@@ -36,4 +37,4 @@ Status inicial de todos os itens abaixo: `pendente`. A exceção é uma avaliaç
 
 ## Decisão necessária por item
 
-Para cada linha, o responsável comercial deve registrar em um canal verificável: `aprovado`, `pendente` ou `remover`, com link para a evidência, titular da autorização, data de validade e rotas autorizadas. Sem isso, esta fase não autoriza promover, retirar ou reciclar a alegação.
+Para cada linha, o responsável comercial deve registrar em um canal verificável: `aprovado`, `pendente` ou `remover`, com link para a evidência, titular da autorização, data de validade e rotas autorizadas. Sem isso, esta fase não autoriza promover a alegação; o gate de publicação a mantém fora do site.

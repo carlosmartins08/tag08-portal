@@ -14,6 +14,7 @@ Objetivo: consolidar uma linha de evolução sem descartar melhorias técnicas n
 ## Fase 1 — Reconciliação de decisão e conteúdo
 
 - Inventário inicial registrado em `docs/CONTENT_EVIDENCE_INVENTORY.md`; a classificação comercial e a evidência externa ainda são pendentes.
+- Implementado o gate conservador de publicação: itens `pendente` continuam preservados, mas não são expostos em páginas, rotas ou sitemap.
 - Criar inventário de equipe, cases, depoimentos, marcas, logos e métricas que aparecem no site.
 - Para cada item, registrar evidência, responsável e status: `aprovado`, `pendente` ou `remover`.
 - Resolver conflitos entre decisões de 02/09 e alterações posteriores, especialmente em `/sobre` e `/`.
@@ -21,7 +22,7 @@ Objetivo: consolidar uma linha de evolução sem descartar melhorias técnicas n
 
 ## Fase 2 — Integração controlada
 
-- Auditoria dos commits registrada em `docs/INTEGRATION_AUDIT.md`; a política para conteúdo `pendente` bloqueia a criação da integração revisável.
+- Auditoria dos commits registrada em `docs/INTEGRATION_AUDIT.md`; o gate para conteúdo `pendente` elimina esse bloqueio de exposição pública, mas a integração ainda exige revisão técnica por bloco.
 - Revisar os dez commits de `p0-routing-secret-containment` por domínio: plataforma, segurança, rotas/i18n, acessibilidade, interface e conteúdo.
 - Validar a base integrada com `npm run check`, testes de navegador pertinentes e verificações de rotas/SEO.
 - Integrar por PR ou sequência equivalente revisável, sem juntar conteúdo pendente com correções técnicas.

@@ -1,6 +1,7 @@
 export type ReviewSource = "google-business-profile" | "internal";
 
 export type GoogleReview = {
+  evidenceKey: string;
   name: string;
   role: string;
   avatar: string;
@@ -13,6 +14,7 @@ export type GoogleReview = {
 
 export const TRUST_REVIEWS: GoogleReview[] = [
   {
+    evidenceKey: "internal-testimonial/roberta-chaves",
     name: "Dra. Roberta Chaves",
     role: "Clínica de Odontologia",
     avatar: "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=200",
@@ -23,6 +25,7 @@ export const TRUST_REVIEWS: GoogleReview[] = [
     source: "internal",
   },
   {
+    evidenceKey: "internal-testimonial/marcus-azevedo",
     name: "Marcus Azevedo",
     role: "CEO, Azevedo Asset",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
@@ -33,6 +36,7 @@ export const TRUST_REVIEWS: GoogleReview[] = [
     source: "internal",
   },
   {
+    evidenceKey: "internal-testimonial/juliana-reis",
     name: "Juliana Reis",
     role: "Sócia Fundadora, Le Visage Spa",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
@@ -43,6 +47,7 @@ export const TRUST_REVIEWS: GoogleReview[] = [
     source: "internal",
   },
   {
+    evidenceKey: "internal-testimonial/beatriz-nogueira",
     name: "Beatriz Nogueira",
     role: "Diretora de Marketing, Grupo BN",
     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200",

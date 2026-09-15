@@ -3,11 +3,13 @@ import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Star } from "lucide-react";
 import { TRUST_REVIEWS } from "../content/googleReviews";
+import { getApprovedEvidence } from "../content/publicEvidence";
 
 export default function TrustTestimonialsSection() {
   const [activeReview, setActiveReview] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(0);
   const prefersReducedMotion = useReducedMotion();
+  const visibleReviews = getApprovedEvidence(TRUST_REVIEWS, (review) => review.evidenceKey);
 
   useEffect(() => {
     const updateViewportWidth = () => setViewportWidth(window.innerWidth);
@@ -17,7 +19,12 @@ export default function TrustTestimonialsSection() {
   }, []);
 
   const isLargeScreen = viewportWidth >= 1024;
-  const currentReview = TRUST_REVIEWS[activeReview];
+  const currentReview = visibleReviews[activeReview] ?? visibleReviews[0];
+
+  if (!currentReview) {
+    return null;
+  }
+
   const currentSourceLabel =
     currentReview.source === "google-business-profile" ? "Google Meu Negocio" : "Depoimento interno";
 
@@ -77,7 +84,7 @@ export default function TrustTestimonialsSection() {
               transition={prefersReducedMotion ? { duration: 0 } : { type: "spring", stiffness: 140, damping: 22 }}
               className="flex flex-row lg:flex-col gap-4 absolute left-4 sm:left-6 lg:left-0 lg:top-0 h-[140px] sm:h-[160px] lg:h-auto items-center lg:items-center w-max lg:w-full py-2"
             >
-              {TRUST_REVIEWS.map((review, index) => {
+              {visibleReviews.map((review, index) => {
                 const isActive = index === activeReview;
 
                 return (

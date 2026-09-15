@@ -13,6 +13,7 @@ Atualizado em: `2026-09-15`
 
 - Discoverability: `/llms.txt` é servido por uma rota estática do Next. O checkpoint focado inclui a remoção do arquivo de raiz, a exclusão no `proxy` e a verificação de rota.
 - Ativos de clientes: `public/clients/` está fora de rastreamento. Os arquivos não estão associados a uso público no código e exigem validação de marca/direito de uso antes de serem incluídos em qualquer página.
+- Evidências públicas pendentes: o gate em `src/content/publicEvidence.ts` preserva os dados, mas bloqueia a renderização de equipe, cases, métricas, mini-cases e depoimentos; cases pendentes também não geram rota ou sitemap.
 
 ## Onde o conteúdo realmente vive
 

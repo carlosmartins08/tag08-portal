@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowUpRight, ArrowRight, Target, Settings, BookOpen, FileCheck2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import ResilientImage from "../../../components/ResilientImage";
+import { getApprovedEvidence } from "../../../content/publicEvidence";
 
 interface SobreProps {
   onNavigate: (page: string) => void;
@@ -18,6 +19,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
   const TILES_HERO = [
     {
+      evidenceKey: "team/carlos-henrique-martins",
       name: "Carlos Henrique Martins",
       role: "Estrategista de negócios digitais",
       title: "Estratégia e direção de negócio",
@@ -28,6 +30,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       support: "Negócios digitais // decisão"
     },
     {
+      evidenceKey: "team/ignacio-quiroz",
       name: "Ignacio Quiroz",
       role: "Analista de marketing e comunicações",
       title: "Marketing e comunicação",
@@ -38,6 +41,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       support: "Marca // jornada // conversão"
     },
     {
+      evidenceKey: "team/pedro-felix",
       name: "Pedro Félix",
       role: "Analista de dados e desenvolvedor front-end",
       title: "Dados e experiência digital",
@@ -48,6 +52,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       support: "Planejamento // front-end"
     },
     {
+      evidenceKey: "team/daniel-lopes",
       name: "Daniel Lopes",
       role: "Gerente de infraestrutura de TI",
       title: "Infraestrutura e continuidade",
@@ -61,24 +66,31 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
   const COMPLEMENTARY_PROFILES = [
     {
+      evidenceKey: "team/guilherme-gomes",
       name: "Guilherme Gomes",
       role: "Diretor de arte",
       photo: "/team/guilherme-gomes.jpg",
       description: "Define soluções visuais para campanhas e aplicações de marca, com atenção à hierarquia, estética e consistência das peças."
     },
     {
+      evidenceKey: "team/amazing-design",
       name: "Amazing Design",
       role: "Designer gráfico e motion designer",
       photo: "/team/amazing-design.jpg",
       description: "Desenvolve criativos para redes, mídia paga e motion, adaptando a linguagem visual ao formato e ao objetivo de cada peça."
     },
     {
+      evidenceKey: "team/andreia-braga",
       name: "Andréia Braga",
       role: "Colaboração de projeto",
       photo: "/team/andreia-braga.jpg",
       description: "Integra a rede de colaboradores acionada conforme a necessidade, o escopo e a etapa de cada projeto."
     }
   ];
+
+  const visiblePrimaryProfiles = getApprovedEvidence(TILES_HERO, (profile) => profile.evidenceKey);
+  const visibleComplementaryProfiles = getApprovedEvidence(COMPLEMENTARY_PROFILES, (profile) => profile.evidenceKey);
+  const hasPublicTeamProfiles = visiblePrimaryProfiles.length > 0 || visibleComplementaryProfiles.length > 0;
 
 
   const CORES_DIFERENCIAIS = [
@@ -230,7 +242,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
             </div>
           </div>
 
-          <div className="pt-12 sm:pt-16 border-t border-white/[0.04] space-y-8 text-left font-sans">
+          {hasPublicTeamProfiles && <div className="pt-12 sm:pt-16 border-t border-white/[0.04] space-y-8 text-left font-sans">
             <div className="space-y-2">
               <span className="tag08-meta text-xs text-brand tracking-widest block uppercase font-bold">COMPETÊNCIAS CONECTADAS</span>
               <h3 className="font-display font-black text-white text-xl sm:text-2xl tracking-tight">Pessoas com especialidades distintas, reunidas pela necessidade real de cada projeto.</h3>
@@ -239,13 +251,13 @@ export default function Sobre({ onNavigate }: SobreProps) {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pt-2">
+            {visiblePrimaryProfiles.length > 0 && <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pt-2">
               <div className="lg:col-span-5 bg-gradient-to-br from-brand-secondary/[0.08] via-zinc-950 to-transparent border border-brand-secondary/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[360px] shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.03)] hover:border-brand-secondary/45 transition-all duration-300">
                 <div className="absolute inset-0 z-0 pointer-events-none">
                   <ResilientImage
                     fallbackLabel="Imagem editorial"
                     sizes="(max-width: 1024px) 100vw, 42vw"
-                    src={TILES_HERO[0].image}
+                    src={visiblePrimaryProfiles[0].image}
                     alt=""
                     className="object-cover opacity-20 grayscale brightness-[0.7] group-hover:scale-[1.01] group-hover:opacity-30 transition-all duration-1000"
                     referrerPolicy="no-referrer"
@@ -256,14 +268,14 @@ export default function Sobre({ onNavigate }: SobreProps) {
                 <div className="relative z-10 flex items-center justify-between">
                   <div className="flex items-center gap-1.5 bg-brand-secondary/10 backdrop-blur-md px-3 py-1 rounded-full border border-brand-secondary/20 shadow-md">
                     <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary animate-pulse" />
-                    <span className="font-sans text-xs text-brand-secondary font-extrabold uppercase tracking-widest">{TILES_HERO[0].label}</span>
+                    <span className="font-sans text-xs text-brand-secondary font-extrabold uppercase tracking-widest">{visiblePrimaryProfiles[0].label}</span>
                   </div>
 
                   <div className="flex items-center gap-2.5">
-                    <span className="tag08-meta text-xs text-zinc-500 font-bold uppercase tracking-wider hidden sm:block">{TILES_HERO[0].name}</span>
+                    <span className="tag08-meta text-xs text-zinc-500 font-bold uppercase tracking-wider hidden sm:block">{visiblePrimaryProfiles[0].name}</span>
                     <Image
-                      src={TILES_HERO[0].photo}
-                      alt={`Retrato de ${TILES_HERO[0].name}`}
+                      src={visiblePrimaryProfiles[0].photo}
+                      alt={`Retrato de ${visiblePrimaryProfiles[0].name}`}
                       width={48}
                       height={48}
                       className="h-12 w-12 rounded-full border border-white/20 object-cover grayscale opacity-80 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100"
@@ -273,11 +285,11 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
                 <div className="relative z-10 space-y-4 mt-auto">
                   <div className="space-y-1">
-                    <span className="font-sans text-xs text-brand block uppercase font-bold">{TILES_HERO[0].role}</span>
-                    <h4 className="font-display font-black text-2xl sm:text-3xl text-white leading-none tracking-tight">{TILES_HERO[0].title}</h4>
-                    <p className="text-brand-secondary text-xs tag08-meta uppercase tracking-wider pt-1">{TILES_HERO[0].support}</p>
+                    <span className="font-sans text-xs text-brand block uppercase font-bold">{visiblePrimaryProfiles[0].role}</span>
+                    <h4 className="font-display font-black text-2xl sm:text-3xl text-white leading-none tracking-tight">{visiblePrimaryProfiles[0].title}</h4>
+                    <p className="text-brand-secondary text-xs tag08-meta uppercase tracking-wider pt-1">{visiblePrimaryProfiles[0].support}</p>
                     <p className="text-zinc-400 text-xs leading-relaxed max-w-sm pt-2 italic">
-                      {TILES_HERO[0].description}
+                      {visiblePrimaryProfiles[0].description}
                     </p>
                   </div>
 
@@ -285,7 +297,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
               </div>
 
               <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {TILES_HERO.slice(1).map((member, idx) => (
+                {visiblePrimaryProfiles.slice(1).map((member, idx) => (
                   <div
                     key={idx}
                     className="bg-charcoal-900 border border-white/[0.08] rounded-3xl p-5 flex flex-col justify-between text-left relative overflow-hidden h-[360px] group transition-all duration-300 hover:border-brand/40"
@@ -329,12 +341,12 @@ export default function Sobre({ onNavigate }: SobreProps) {
                   </div>
                 ))}
               </div>
-            </div>
+            </div>}
 
-            <div className="border-t border-white/[0.04] pt-6 sm:pt-8">
+            {visibleComplementaryProfiles.length > 0 && <div className="border-t border-white/[0.04] pt-6 sm:pt-8">
               <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block mb-4">Especialidades complementares</span>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {COMPLEMENTARY_PROFILES.map((profile) => (
+                {visibleComplementaryProfiles.map((profile) => (
                   <article key={profile.name} className="rounded-2xl border border-white/[0.06] bg-white/[0.01] p-5 space-y-3">
                     <div className="flex items-center gap-3">
                       <Image
@@ -353,9 +365,9 @@ export default function Sobre({ onNavigate }: SobreProps) {
                   </article>
                 ))}
               </div>
-            </div>
+            </div>}
 
-          </div>
+          </div>}
         </div>
       </section>
 

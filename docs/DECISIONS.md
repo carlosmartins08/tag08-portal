@@ -37,3 +37,11 @@ Este arquivo registra decisões que governam o estado atual. Ele não substitui 
 - Data: `2026-09-15`
 - Decisão: uma mudança só é concluída depois de commit focado, validação proporcional e atualização de `PROJECT_STATE.md` e `CHANGELOG.md` quando afetar comportamento, conteúdo ou arquitetura.
 - Regra: ativos não rastreados e alterações de objetivos diferentes não entram no mesmo commit.
+
+## DEC-005 — Gate de publicação para evidências públicas
+
+- Data: `2026-09-15`
+- Decisão: a política conservadora foi aprovada. Um item `pendente` permanece preservado no código e no inventário, mas não pode renderizar, gerar rota ou entrar no sitemap.
+- Escopo inicial: equipe, fotos, cases, candidatos de portfólio, métricas, mini-cases e depoimentos internos.
+- Exceção: avaliações obtidas ao vivo da integração oficial do Google Business continuam condicionadas à resposta real da fonte, sem fallback editorial.
+- Reativação: exige registrar evidência, responsável, validade e rotas autorizadas no inventário; depois, alterar apenas a chave correspondente em `src/content/publicEvidence.ts` e validar as rotas.
