@@ -2,6 +2,7 @@
 
 ## 2026-09-15
 
+- Fechada a integração da PR #1 em `main` (commit `5126504`) e transformado `main` no novo checkpoint. Missões futuras usam branches curtas `p<numero>-<tema>`, eliminando a dependência de uma branch de reconciliação já concluída.
 - Corrigida a prévia de conteúdo no CI: em checkout destacado ela usa o modo de continuidade próprio de CI, mas em desenvolvimento local ainda exige a branch registrada no checkpoint.
 - Isolados os testes públicos de navegador em porta própria, com servidor de produção obrigatório. Eles não reutilizam mais um servidor de desenvolvimento aberto em `:3000`, evitando validar uma versão diferente daquela em revisão.
 - Tornado semântico o teste de fallback de idioma: ele confirma URL, idioma e título da página canônica, em vez de congelar a quantidade de subtítulos. Os retratos locais de `/sobre` continuam em `next/image`, mas são servidos diretamente para não depender do otimizador em produção.
