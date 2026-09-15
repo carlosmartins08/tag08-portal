@@ -62,6 +62,7 @@
     "audit:performance": "npm run audit:performance:mobile && npm run audit:performance:desktop",
     "verify:simulators": "npm run test:routes",
     "verify:readiness": "npm test && npm run lint && npm run build && npm run audit:interactions && npm run audit:images && npm run audit:encoding && npm run audit:ux-matrix && npm run verify:routes",
+    "prelint": "npm run db:generate",
     "lint": "tsc --noEmit",
     "check": "npm test && npm run lint && npm run build"
   },

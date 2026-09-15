@@ -2,6 +2,7 @@
 
 ## 2026-09-15
 
+- Feito o `lint` gerar o cliente Prisma antes da checagem de tipos. Isso elimina a divergência em que o CI, iniciado sem artefatos locais, tentava resolver imports gerados antes do build.
 - Normalizada a assinatura de revisão do onboarding para que a mesma fonte não pareça alterada apenas por trocar `CRLF` por `LF` entre desenvolvimento local e CI.
 - Corrigido o gate de continuidade no CI: o checkout agora traz o histórico necessário para validar o commit-base da integração, sem desativar a checagem remota.
 - Aprovada e liberada a equipe em `/sobre`, além de mini-cases e depoimentos internos em `/servicos/assessoria-marketing-digital-estrategico`; a autorização é limitada a essas rotas. Home, portfólio e cases indexáveis continuam pendentes.
