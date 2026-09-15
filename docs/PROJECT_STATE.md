@@ -4,9 +4,9 @@ Atualizado em: `2026-09-15`
 
 ## Estado de integração
 
-- Branch de trabalho atual: `p0-routing-secret-containment` no commit `3314b39` (`2026-09-11`).
+- Branch de trabalho atual: `p0-routing-secret-containment`; o checkpoint de origem da reconciliação é `3314b39` (`2026-09-11`) e os checkpoints locais posteriores estão no histórico desta mesma linha.
 - Destino de integração: `main`, no commit `7d8aafd` (`2026-07-21`).
-- Relação: a branch atual contém dez commits posteriores à `main`; não há divergência da `main`, mas ela ainda não recebeu essa evolução.
+- Relação: a branch atual contém as dez evoluções inicialmente identificadas após a `main`, mais os checkpoints locais desta reconciliação. Não há divergência da `main`, mas ela ainda não recebeu essa evolução.
 - Regra ativa: não integrar por merge direto. Primeiro separar mudanças locais, classificar conflitos de conteúdo e executar as validações previstas em `docs/ROADMAP.md`.
 
 ## Alterações locais a preservar e separar
