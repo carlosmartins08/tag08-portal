@@ -13,7 +13,7 @@ Atualizado em: `2026-09-15`
 ## Checkpoint executável
 
 - Última missão concluída: publicação autorizada da equipe em `/sobre` e das provas internas em `/servicos/assessoria-marketing-digital-estrategico`, com gates de CI portáveis entre Windows e Linux; Home, portfólio e cases indexáveis permanecem pendentes.
-- Próxima missão autorizada: classificar uma evidência por vez ou concluir a validação técnica da integração.
+- Próxima missão autorizada: concluir a validação técnica da integração; a auditoria de imagens de `/sobre` foi alinhada ao uso obrigatório de `next/image`.
 - Antes de desenvolver: `npm run continuity:status`. O comando confere branch, commit-base, missão e itens locais isolados; `npm run dev` e `npm run dev:content-review` executam essa conferência automaticamente.
 - Antes de commitar: o hook local exige `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` no mesmo commit de qualquer alteração de comportamento. Para ativá-lo em uma instalação existente: `npm run setup:hooks`.
 - CI: o workflow busca o histórico completo para validar o commit-base, pois um checkout raso não permite provar a ancestralidade da branch.

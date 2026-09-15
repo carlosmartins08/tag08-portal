@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import { ArrowUpRight, ArrowRight, Target, Settings, BookOpen, FileCheck2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import ResilientImage from "../../../components/ResilientImage";
@@ -274,13 +275,12 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
                   <div className="flex items-center gap-2.5">
                     <span className="tag08-meta text-xs text-zinc-500 font-bold uppercase tracking-wider hidden sm:block">{visiblePrimaryProfiles[0].name}</span>
-                    <img
+                    <Image
                       src={visiblePrimaryProfiles[0].photo}
                       alt={`Retrato de ${visiblePrimaryProfiles[0].name}`}
                       width={48}
                       height={48}
-                      loading="lazy"
-                      decoding="async"
+                      sizes="48px"
                       className="h-12 w-12 rounded-full border border-white/20 object-cover grayscale opacity-80 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100"
                     />
                   </div>
@@ -324,13 +324,12 @@ export default function Sobre({ onNavigate }: SobreProps) {
                         <span className="w-1.5 h-1.5 rounded-full bg-brand" />
                         <span className="font-sans text-xs text-zinc-300 font-bold">{member.label}</span>
                       </div>
-                      <img
+                      <Image
                         src={member.photo}
                         alt={`Retrato de ${member.name}`}
                         width={44}
                         height={44}
-                        loading="lazy"
-                        decoding="async"
+                        sizes="44px"
                         className="h-11 w-11 rounded-full border border-white/20 object-cover grayscale opacity-80 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100"
                       />
 
@@ -357,13 +356,12 @@ export default function Sobre({ onNavigate }: SobreProps) {
                 {visibleComplementaryProfiles.map((profile) => (
                   <article key={profile.name} data-evidence-key={profile.evidenceKey} className="rounded-2xl border border-white/[0.06] bg-white/[0.01] p-5 space-y-3">
                     <div className="flex items-center gap-3">
-                      <img
+                      <Image
                         src={profile.photo}
                         alt={`Retrato de ${profile.name}`}
                         width={44}
                         height={44}
-                        loading="lazy"
-                        decoding="async"
+                        sizes="44px"
                         className="h-11 w-11 shrink-0 rounded-full border border-white/15 object-cover grayscale opacity-75 transition-all duration-300 hover:grayscale-0 hover:opacity-100"
                       />
                       <div className="space-y-1">
