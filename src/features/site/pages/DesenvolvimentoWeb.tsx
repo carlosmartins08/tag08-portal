@@ -509,6 +509,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
 
       {/* WEB DEV CLIENTS LOGO SOCIAL PROOF */}
       <MiniCases 
+        route="/servicos/desenvolvimento-web"
         onNavigate={onNavigate} 
         title="Projetos que mostram estrutura digital com dire&ccedil;&atilde;o."
         subtitle="A prova de um projeto web n&atilde;o est&aacute; em prometer performance, mas em organizar informa&ccedil;&atilde;o, experi&ecirc;ncia, credibilidade e pr&oacute;ximo passo de forma coerente."

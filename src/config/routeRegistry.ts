@@ -1,5 +1,5 @@
 import { CASE_STUDIES } from "../data";
-import { getApprovedEvidence } from "../content/publicEvidence";
+import { isContentReviewMode, isEvidenceVisible } from "../content/publicEvidence";
 import { isLocaleTranslationReady } from "../i18n/localizationReadiness";
 
 export const ROUTE_LOCALES = ["pt", "en", "es"] as const;
@@ -306,8 +306,15 @@ export const routeRegistry: RouteDefinition[] = [
 ];
 
 const legacyAliases: Record<string, string> = {};
-const publishedCaseStudies = getApprovedEvidence(CASE_STUDIES, (caseStudy) => `case-study/${caseStudy.id}`);
+const publishedCaseStudies = CASE_STUDIES.filter((caseStudy) =>
+  isEvidenceVisible(`case-study/${caseStudy.id}`, `/casos/${caseStudy.id}`)
+);
 const caseStudyPaths = new Set(publishedCaseStudies.map((caseStudy) => `/casos/${caseStudy.id}`));
+const reviewCaseStudyPaths = new Set(
+  CASE_STUDIES
+    .filter((caseStudy) => isEvidenceVisible(`case-study/${caseStudy.id}`, `/casos/${caseStudy.id}`, "review"))
+    .map((caseStudy) => `/casos/${caseStudy.id}`)
+);
 
 routeRegistry.forEach((route) => {
   route.aliases?.forEach((alias) => {
@@ -393,6 +400,13 @@ export const getRouteByPath = (path: string): RouteDefinition | undefined => {
   }
 
   return routeRegistry.find((route) => matchesDynamicRoute(normalizedPath, route));
+};
+
+/** Development-only route resolver for local review. It never contributes to public paths or the sitemap. */
+export const getContentReviewRouteByPath = (path: string): RouteDefinition | undefined => {
+  const normalizedPath = normalizePath(path);
+  if (!isContentReviewMode() || !reviewCaseStudyPaths.has(normalizedPath)) return undefined;
+  return routeRegistry.find((route) => route.dynamic && route.pathPattern === "/casos/:id");
 };
 
 export const getPublishedLocales = (route: RouteDefinition): readonly RouteLocale[] =>

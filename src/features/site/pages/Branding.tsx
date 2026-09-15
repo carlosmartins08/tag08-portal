@@ -578,6 +578,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
 
       {/* BRANDING CLIENTS LOGO SOCIAL PROOF */}
       <MiniCases 
+        route="/servicos/branding-identidade"
         onNavigate={onNavigate} 
         title="Projetos que mostram identidade com direção."
         subtitle="A prova de um projeto de identidade não está na direção visual, mas na coerência entre marca, linguagem, aplicação e percepção."

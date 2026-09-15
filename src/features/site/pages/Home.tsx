@@ -16,7 +16,8 @@ import heroTag08StrategyStage from "../../../assets/images/hero_tag08_strategy-s
 import creativeLeaderPortrait from "../../../assets/images/creative_leader_portrait_1780449653164.jpg";
 import moodyClientPortrait from "../../../assets/images/moody_client_portrait_1780449811793.jpg";
 import clientAlanRocha from "../../../assets/images/client_alan_rocha_1780449828496.jpg";
-import { getApprovedEvidence } from "../../../content/publicEvidence";
+import { getEvidenceVisibilityMode, getVisibleEvidence } from "../../../content/publicEvidence";
+import { EvidenceReviewBadge } from "../../../components/ContentReview";
 
 const DiagnosticDiagram = lazy(() => import("../../../components/DiagnosticDiagram"));
 
@@ -800,10 +801,13 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
     { id: "luciana-gadelha", name: "Luciana Gadelha" },
     { id: "espaco-glau-campos", name: "Espaço Glau Campos" }
   ];
-  const visibleClientCases = getApprovedEvidence(CLIENT_CASES, (caseStudy) => `home-case/${caseStudy.id}`);
-  const visiblePortfolioCandidates = getApprovedEvidence(
+  const evidenceMode = getEvidenceVisibilityMode();
+  const visibleClientCases = getVisibleEvidence(CLIENT_CASES, (caseStudy) => `home-case/${caseStudy.id}`, "/", evidenceMode);
+  const visiblePortfolioCandidates = getVisibleEvidence(
     PORTFOLIO_CANDIDATES,
-    (candidate) => `portfolio-candidate/${candidate.id}`
+    (candidate) => `portfolio-candidate/${candidate.id}`,
+    "/",
+    evidenceMode
   );
 
   useEffect(() => {
@@ -2411,7 +2415,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       </section>
 
       {/* SECTION 4.5 - RESULTADOS E CASES (MÉTODOS COM RESULTADO COMPROVADOS NA PRÁTICA) */}
-      {visiblePortfolioCandidates.length > 0 && <section id="resultados-cases" className="tag08-section px-4 sm:px-6 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
+      {visiblePortfolioCandidates.length > 0 && <section id="resultados-cases" data-testid="home-portfolio-candidates" className="tag08-section px-4 sm:px-6 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
         {/* Ambient background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -2434,9 +2438,10 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {visiblePortfolioCandidates.map((candidate, index) => (
-              <article key={candidate.id} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-[28px] min-h-[180px] flex flex-col justify-between text-left">
+              <article key={candidate.id} data-evidence-key={`portfolio-candidate/${candidate.id}`} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-[28px] min-h-[180px] flex flex-col justify-between text-left">
                 <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black">{String(index + 1).padStart(2, "0")} // em validação</span>
                 <h3 className="font-display font-semibold text-lg text-white">{candidate.name}</h3>
+                <EvidenceReviewBadge evidenceKey={`portfolio-candidate/${candidate.id}`} />
                 <p className="text-zinc-500 text-xs leading-relaxed">Aguardando confirmação de material, direitos de publicação, narrativa e rota antes de ser apresentado como case.</p>
               </article>
             ))}
@@ -3148,7 +3153,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       </section>
 
       {/* PORTFÓLIO DE TESTEMUNHOS & CASOS DE CLIENTES (UNIFICADO - O CLIENTE DICTA A REVOLUÇÃO) */}
-      {visibleClientCases.length > 0 && <section id="portfolio-marcas" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
+      {visibleClientCases.length > 0 && <section id="portfolio-marcas" data-testid="home-client-cases" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         
         {/* Editorial magazine background grid lines */}
         <div className="absolute inset-0 grid grid-cols-4 sm:grid-cols-8 h-full opacity-5 pointer-events-none">
@@ -3221,6 +3226,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   return (
                     <button
                       key={cc.id}
+                      data-evidence-key={`home-case/${cc.id}`}
                       onClick={() => setActiveSlide(index)}
                       className={`w-full text-left p-4 rounded-2xl border transition-all duration-300 relative overflow-hidden group cursor-pointer ${
                         isActive
@@ -3242,6 +3248,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                           <h4 className={`font-display font-black text-sm uppercase tracking-tight truncate ${isActive ? "text-black" : "text-white"}`}>
                             {cc.name}
                           </h4>
+                          <EvidenceReviewBadge evidenceKey={`home-case/${cc.id}`} />
                           <p className={`font-sans text-xs truncate ${isActive ? "text-black/80" : "text-zinc-500"}`}>
                             {cc.handle}
                           </p>

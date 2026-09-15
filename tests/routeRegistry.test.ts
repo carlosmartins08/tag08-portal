@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { CASE_STUDIES } from "../src/data";
-import { PUBLIC_EVIDENCE_STATUS, getApprovedEvidence } from "../src/content/publicEvidence";
+import { getVisibleEvidence } from "../src/content/publicEvidence";
 import { canonicalizeRoute, getLocalizedPath, getRouteByPath, indexedRoutePaths, routeRegistry, routeSitemapMeta } from "../src/config/routeRegistry";
 
 for (const route of routeRegistry.filter((entry) => entry.key !== "not-found" && !entry.dynamic)) {
@@ -19,12 +19,8 @@ for (const path of indexedRoutePaths) {
   assert.ok(!routeRegistry.some((route) => route.aliases?.includes(path)), `Alias leaked into sitemap: ${path}`);
 }
 
-assert.ok(
-  Object.values(PUBLIC_EVIDENCE_STATUS).every((status) => status === "pending"),
-  "Sensitive public evidence must remain pending until an approval is recorded"
-);
 assert.deepEqual(
-  getApprovedEvidence(CASE_STUDIES, (caseStudy) => `case-study/${caseStudy.id}`),
+  CASE_STUDIES.filter((caseStudy) => getVisibleEvidence([caseStudy], (item) => `case-study/${item.id}`, `/casos/${caseStudy.id}`).length > 0),
   [],
   "Unapproved cases must not be eligible for publication"
 );

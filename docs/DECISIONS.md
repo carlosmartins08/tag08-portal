@@ -45,3 +45,10 @@ Este arquivo registra decisões que governam o estado atual. Ele não substitui 
 - Escopo inicial: equipe, fotos, cases, candidatos de portfólio, métricas, mini-cases e depoimentos internos.
 - Exceção: avaliações obtidas ao vivo da integração oficial do Google Business continuam condicionadas à resposta real da fonte, sem fallback editorial.
 - Reativação: exige registrar evidência, responsável, validade e rotas autorizadas no inventário; depois, alterar apenas a chave correspondente em `src/content/publicEvidence.ts` e validar as rotas.
+
+## DEC-006 — Revisão local sem publicação implícita
+
+- Data: `2026-09-15`
+- Decisão: Carlos Henrique Martins é a autoridade final para classificar cada evidência. O registro executável deve guardar status, rotas autorizadas, responsável, data, referência verificável não sensível e validade quando existir.
+- Regra: `npm run dev:content-review` pode exibir localmente itens `pendente`, sempre com faixa e badge de revisão. O modo só funciona em desenvolvimento; produção, rota, sitemap e metadata continuam estritamente no modo público.
+- Encerramento: cada alteração de status exige `npm run content:status`, revisão visual local, testes e commit focado. O histórico Git explica contexto, mas não vale como autorização.

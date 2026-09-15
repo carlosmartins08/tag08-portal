@@ -1,7 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
-import { getApprovedEvidence } from "../content/publicEvidence";
+import { getEvidenceVisibilityMode, getVisibleEvidence } from "../content/publicEvidence";
+import { EvidenceReviewBadge } from "./ContentReview";
 import { 
   Building2, 
   Heart, 
@@ -32,6 +33,7 @@ interface MiniCasesProps {
   badge?: string;
   logos?: LogoItem[];
   highlightColor?: string; // e.g. 'var(--color-brand)'
+  route: string;
   onNavigate?: (page: string) => void;
 }
 
@@ -104,10 +106,11 @@ export default function MiniCases({
   badge = "PORTFÓLIO DE PROVA SOCIAL // MARCAS PARCEIRAS",
   logos = DEFAULT_LOGOS,
   highlightColor = "var(--color-brand)",
+  route,
   onNavigate
 }: MiniCasesProps) {
   const prefersReducedMotion = useReducedMotion();
-  const visibleLogos = getApprovedEvidence(logos, (logo) => logo.evidenceKey || `mini-case/${logo.name}`);
+  const visibleLogos = getVisibleEvidence(logos, (logo) => logo.evidenceKey || `mini-case/${logo.name}`, route, getEvidenceVisibilityMode());
 
   if (visibleLogos.length === 0) {
     return null;
@@ -144,6 +147,7 @@ export default function MiniCases({
   return (
     <section 
       id="mini-cases-section" 
+      data-testid="mini-cases"
       className="tag08-section w-full px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/20 text-left font-sans"
     >
       <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
@@ -179,6 +183,7 @@ export default function MiniCases({
             return (
               <motion.div
                 key={`${logo.name}-${idx}`}
+                data-evidence-key={logo.evidenceKey || `mini-case/${logo.name}`}
                 variants={prefersReducedMotion ? undefined : itemVariants}
                 className="tag08-card tag08-card--interactive p-6 flex flex-col justify-between min-h-[180px] group relative overflow-hidden"
               >
@@ -215,6 +220,7 @@ export default function MiniCases({
                   {/* Tiny action bullet or status indicator */}
                   <span className="w-1.5 h-1.5 rounded-full bg-zinc-700 group-hover:bg-brand transition-colors duration-300" />
                 </div>
+                <div className="relative z-10 pt-3"><EvidenceReviewBadge evidenceKey={logo.evidenceKey || `mini-case/${logo.name}`} /></div>
 
                 {/* Proof Metric Block at bottom */}
                 <div className="border-t border-white/[0.04] pt-4 mt-auto flex items-end justify-between relative z-10">

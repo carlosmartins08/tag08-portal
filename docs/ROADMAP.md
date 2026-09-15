@@ -15,8 +15,9 @@ Objetivo: consolidar uma linha de evolução sem descartar melhorias técnicas n
 
 - Inventário inicial registrado em `docs/CONTENT_EVIDENCE_INVENTORY.md`; a classificação comercial e a evidência externa ainda são pendentes.
 - Implementado o gate conservador de publicação: itens `pendente` continuam preservados, mas não são expostos em páginas, rotas ou sitemap.
+- Concluída a prevenção contra sumiços silenciosos: registro estruturado por item, contratos por página, relatório `content:status`, prévia local identificada e testes públicos/de revisão.
 - Criar inventário de equipe, cases, depoimentos, marcas, logos e métricas que aparecem no site.
-- Para cada item, registrar evidência, responsável e status: `aprovado`, `pendente` ou `remover`.
+- Para cada item, Carlos Henrique registra evidência não sensível, rotas autorizadas, data, validade quando houver e status: `aprovado`, `pendente` ou `remover`.
 - Resolver conflitos entre decisões de 02/09 e alterações posteriores, especialmente em `/sobre` e `/`.
 - Critério de saída: nenhuma reivindicação pública depende apenas de uma implementação ou de um asset local.
 

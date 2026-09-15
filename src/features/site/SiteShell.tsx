@@ -16,6 +16,7 @@ import { safeStorage } from "../../utils/storage";
 import { initializeTagManager, trackEngagement, trackPageView, trackScrollDepth, trackWebVital, updateGoogleAnalyticsConsent } from "../../lib/analytics";
 import { COOKIE_CONSENT_EVENT, readCookiePreferences, type CookiePreferences } from "../../lib/cookieConsent";
 import { flushFormQueue } from "../../lib/formQueue";
+import { ContentReviewBanner } from "../../components/ContentReview";
 
 const localeToUiLanguage: Record<RouteLocale, UiLanguage> = {
   pt: "pt",
@@ -309,6 +310,7 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
       </main>
       <Footer onNavigate={navigate} language={language} />
       <WhatsAppButton language={language} currentPage={path} />
+      <ContentReviewBanner />
     </PageCanvas>
   );
 }

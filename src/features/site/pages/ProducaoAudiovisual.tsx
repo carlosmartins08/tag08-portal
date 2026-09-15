@@ -1009,7 +1009,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
       </section>
 
       {/* MiniCases Validation panel */}
-      <MiniCases onNavigate={onNavigate} />
+      <MiniCases route="/servicos/producao-audiovisual" onNavigate={onNavigate} />
 
       <ServiceInsightsBridge servicePath="/servicos/producao-audiovisual" onNavigate={onNavigate} />
 

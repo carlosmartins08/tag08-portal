@@ -3,13 +3,14 @@ import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Star } from "lucide-react";
 import { TRUST_REVIEWS } from "../content/googleReviews";
-import { getApprovedEvidence } from "../content/publicEvidence";
+import { getEvidenceVisibilityMode, getVisibleEvidence } from "../content/publicEvidence";
+import { EvidenceReviewBadge } from "./ContentReview";
 
 export default function TrustTestimonialsSection() {
   const [activeReview, setActiveReview] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(0);
   const prefersReducedMotion = useReducedMotion();
-  const visibleReviews = getApprovedEvidence(TRUST_REVIEWS, (review) => review.evidenceKey);
+  const visibleReviews = getVisibleEvidence(TRUST_REVIEWS, (review) => review.evidenceKey, "/servicos/assessoria-marketing-digital-estrategico", getEvidenceVisibilityMode());
 
   useEffect(() => {
     const updateViewportWidth = () => setViewportWidth(window.innerWidth);
@@ -29,7 +30,7 @@ export default function TrustTestimonialsSection() {
     currentReview.source === "google-business-profile" ? "Google Meu Negocio" : "Depoimento interno";
 
   return (
-    <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/20 relative overflow-hidden">
+    <section data-testid="internal-testimonials" className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/20 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10 w-full">
@@ -90,6 +91,7 @@ export default function TrustTestimonialsSection() {
                 return (
                   <button
                     key={review.name}
+                    data-evidence-key={review.evidenceKey}
                     type="button"
                     onClick={() => setActiveReview(index)}
                     aria-pressed={isActive}
@@ -129,6 +131,7 @@ export default function TrustTestimonialsSection() {
               className="tag08-card tag08-surface-card p-6 sm:p-8 lg:p-10 relative overflow-hidden text-left flex flex-col justify-between min-h-[340px] w-full group/card"
             >
                 <div className="space-y-5 relative z-10 flex-1 flex flex-col justify-center">
+                  <EvidenceReviewBadge evidenceKey={currentReview.evidenceKey} />
                   <h3 className="font-display font-medium text-lg sm:text-2xl lg:text-[28px] text-white leading-normal tracking-tight max-w-[95%]">
                     {currentReview.tagline}
                   </h3>

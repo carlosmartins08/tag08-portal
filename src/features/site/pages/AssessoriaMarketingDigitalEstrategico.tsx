@@ -611,7 +611,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
       />
 
       {/* MiniCases Validation block */}
-      <MiniCases onNavigate={onNavigate} />
+      <MiniCases route="/servicos/assessoria-marketing-digital-estrategico" onNavigate={onNavigate} />
 
       <TrustTestimonialsSection />
 

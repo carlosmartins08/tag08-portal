@@ -4,6 +4,7 @@ import SiteShell from "../../../features/site/SiteShell";
 import RouteContent from "../../../features/site/RouteContent";
 import {
   canonicalizeRoute,
+  getContentReviewRouteByPath,
   getLocalizedPath,
   getRouteByPath,
   isRouteLocalePublished,
@@ -20,6 +21,7 @@ import {
   getOpenGraphLocale,
   getRouteSeo
 } from "../../../lib/seo";
+import { isContentReviewMode } from "../../../content/publicEvidence";
 
 type RoutePageProps = {
   params: Promise<{ locale: string; segments?: string[] }>;
@@ -32,7 +34,7 @@ const resolveRoute = async (params: RoutePageProps["params"]) => {
   const validLocale = ROUTE_LOCALES.includes(locale as RouteLocale);
   const path = segments.length ? `/${segments.join("/")}` : "/";
   const canonicalPath = canonicalizeRoute(path);
-  const route = getRouteByPath(canonicalPath);
+  const route = getRouteByPath(canonicalPath) ?? getContentReviewRouteByPath(canonicalPath);
 
   return { locale: (validLocale ? locale : "pt") as RouteLocale, path, validLocale, canonicalPath, route };
 };
@@ -63,7 +65,7 @@ export async function generateMetadata({ params }: RoutePageProps): Promise<Meta
       canonical: canonicalUrl,
       languages: getAlternates(canonicalPath)
     },
-    robots: route.indexable && isRouteLocalePublished(route, locale) ? { index: true, follow: true } : { index: false, follow: true },
+    robots: !isContentReviewMode() && route.indexable && isRouteLocalePublished(route, locale) ? { index: true, follow: true } : { index: false, follow: true },
     openGraph: {
       title: seo.title,
       description: seo.description,

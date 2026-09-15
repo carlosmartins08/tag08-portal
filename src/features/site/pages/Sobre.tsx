@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import { ArrowUpRight, ArrowRight, Target, Settings, BookOpen, FileCheck2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import ResilientImage from "../../../components/ResilientImage";
-import { getApprovedEvidence } from "../../../content/publicEvidence";
+import { getEvidenceVisibilityMode, getVisibleEvidence } from "../../../content/publicEvidence";
+import { EvidenceReviewBadge } from "../../../components/ContentReview";
 
 interface SobreProps {
   onNavigate: (page: string) => void;
@@ -88,8 +88,9 @@ export default function Sobre({ onNavigate }: SobreProps) {
     }
   ];
 
-  const visiblePrimaryProfiles = getApprovedEvidence(TILES_HERO, (profile) => profile.evidenceKey);
-  const visibleComplementaryProfiles = getApprovedEvidence(COMPLEMENTARY_PROFILES, (profile) => profile.evidenceKey);
+  const evidenceMode = getEvidenceVisibilityMode();
+  const visiblePrimaryProfiles = getVisibleEvidence(TILES_HERO, (profile) => profile.evidenceKey, "/sobre", evidenceMode);
+  const visibleComplementaryProfiles = getVisibleEvidence(COMPLEMENTARY_PROFILES, (profile) => profile.evidenceKey, "/sobre", evidenceMode);
   const hasPublicTeamProfiles = visiblePrimaryProfiles.length > 0 || visibleComplementaryProfiles.length > 0;
 
 
@@ -242,7 +243,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
             </div>
           </div>
 
-          {hasPublicTeamProfiles && <div className="pt-12 sm:pt-16 border-t border-white/[0.04] space-y-8 text-left font-sans">
+          {hasPublicTeamProfiles && <div data-testid="team-profiles" className="pt-12 sm:pt-16 border-t border-white/[0.04] space-y-8 text-left font-sans">
             <div className="space-y-2">
               <span className="tag08-meta text-xs text-brand tracking-widest block uppercase font-bold">COMPETÊNCIAS CONECTADAS</span>
               <h3 className="font-display font-black text-white text-xl sm:text-2xl tracking-tight">Pessoas com especialidades distintas, reunidas pela necessidade real de cada projeto.</h3>
@@ -252,7 +253,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
             </div>
 
             {visiblePrimaryProfiles.length > 0 && <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pt-2">
-              <div className="lg:col-span-5 bg-gradient-to-br from-brand-secondary/[0.08] via-zinc-950 to-transparent border border-brand-secondary/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[360px] shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.03)] hover:border-brand-secondary/45 transition-all duration-300">
+              <div data-evidence-key={visiblePrimaryProfiles[0].evidenceKey} className="lg:col-span-5 bg-gradient-to-br from-brand-secondary/[0.08] via-zinc-950 to-transparent border border-brand-secondary/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[360px] shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.03)] hover:border-brand-secondary/45 transition-all duration-300">
                 <div className="absolute inset-0 z-0 pointer-events-none">
                   <ResilientImage
                     fallbackLabel="Imagem editorial"
@@ -265,7 +266,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent" />
                 </div>
 
-                <div className="relative z-10 flex items-center justify-between">
+                  <div className="relative z-10 flex items-center justify-between">
                   <div className="flex items-center gap-1.5 bg-brand-secondary/10 backdrop-blur-md px-3 py-1 rounded-full border border-brand-secondary/20 shadow-md">
                     <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary animate-pulse" />
                     <span className="font-sans text-xs text-brand-secondary font-extrabold uppercase tracking-widest">{visiblePrimaryProfiles[0].label}</span>
@@ -273,14 +274,17 @@ export default function Sobre({ onNavigate }: SobreProps) {
 
                   <div className="flex items-center gap-2.5">
                     <span className="tag08-meta text-xs text-zinc-500 font-bold uppercase tracking-wider hidden sm:block">{visiblePrimaryProfiles[0].name}</span>
-                    <Image
+                    <img
                       src={visiblePrimaryProfiles[0].photo}
                       alt={`Retrato de ${visiblePrimaryProfiles[0].name}`}
                       width={48}
                       height={48}
+                      loading="lazy"
+                      decoding="async"
                       className="h-12 w-12 rounded-full border border-white/20 object-cover grayscale opacity-80 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100"
                     />
                   </div>
+                  <div className="relative z-10 pt-3"><EvidenceReviewBadge evidenceKey={visiblePrimaryProfiles[0].evidenceKey} /></div>
                 </div>
 
                 <div className="relative z-10 space-y-4 mt-auto">
@@ -300,6 +304,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                 {visiblePrimaryProfiles.slice(1).map((member, idx) => (
                   <div
                     key={idx}
+                    data-evidence-key={member.evidenceKey}
                     className="bg-charcoal-900 border border-white/[0.08] rounded-3xl p-5 flex flex-col justify-between text-left relative overflow-hidden h-[360px] group transition-all duration-300 hover:border-brand/40"
                   >
                     <div className="absolute inset-0 z-0 pointer-events-none">
@@ -319,15 +324,18 @@ export default function Sobre({ onNavigate }: SobreProps) {
                         <span className="w-1.5 h-1.5 rounded-full bg-brand" />
                         <span className="font-sans text-xs text-zinc-300 font-bold">{member.label}</span>
                       </div>
-                      <Image
+                      <img
                         src={member.photo}
                         alt={`Retrato de ${member.name}`}
                         width={44}
                         height={44}
+                        loading="lazy"
+                        decoding="async"
                         className="h-11 w-11 rounded-full border border-white/20 object-cover grayscale opacity-80 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100"
                       />
 
                     </div>
+                    <div className="relative z-10 pt-3"><EvidenceReviewBadge evidenceKey={member.evidenceKey} /></div>
 
                     <div className="relative z-10 space-y-3.5 mt-auto">
                       <div className="space-y-1">
@@ -347,13 +355,15 @@ export default function Sobre({ onNavigate }: SobreProps) {
               <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block mb-4">Especialidades complementares</span>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {visibleComplementaryProfiles.map((profile) => (
-                  <article key={profile.name} className="rounded-2xl border border-white/[0.06] bg-white/[0.01] p-5 space-y-3">
+                  <article key={profile.name} data-evidence-key={profile.evidenceKey} className="rounded-2xl border border-white/[0.06] bg-white/[0.01] p-5 space-y-3">
                     <div className="flex items-center gap-3">
-                      <Image
+                      <img
                         src={profile.photo}
                         alt={`Retrato de ${profile.name}`}
                         width={44}
                         height={44}
+                        loading="lazy"
+                        decoding="async"
                         className="h-11 w-11 shrink-0 rounded-full border border-white/15 object-cover grayscale opacity-75 transition-all duration-300 hover:grayscale-0 hover:opacity-100"
                       />
                       <div className="space-y-1">
@@ -361,6 +371,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
                         <h4 className="font-display font-black text-base text-white tracking-tight">{profile.name}</h4>
                       </div>
                     </div>
+                    <EvidenceReviewBadge evidenceKey={profile.evidenceKey} />
                     <p className="text-zinc-400 text-xs leading-relaxed">{profile.description}</p>
                   </article>
                 ))}

@@ -1,47 +1,103 @@
 export type PublicEvidenceStatus = "approved" | "pending" | "remove";
+export type PublicEvidenceKind = "team" | "home-case" | "portfolio-candidate" | "case-study" | "mini-case" | "internal-testimonial";
+export type EvidenceVisibilityMode = "public" | "review";
 
-/**
- * Single publication gate for public claims that require commercial evidence
- * or authorization. Pending items remain in the codebase for review but are
- * not eligible for rendering, routes, or the sitemap.
- */
-export const PUBLIC_EVIDENCE_STATUS = {
-  "team/carlos-henrique-martins": "pending",
-  "team/ignacio-quiroz": "pending",
-  "team/pedro-felix": "pending",
-  "team/daniel-lopes": "pending",
-  "team/guilherme-gomes": "pending",
-  "team/amazing-design": "pending",
-  "team/andreia-braga": "pending",
-  "home-case/alan-rocha": "pending",
-  "home-case/le-visage": "pending",
-  "home-case/luciana-gadelha": "pending",
-  "home-case/doctor-play": "pending",
-  "home-case/legal-lab": "pending",
-  "home-case/squalis": "pending",
-  "portfolio-candidate/lavar-roupa": "pending",
-  "portfolio-candidate/alugue-por-temporada": "pending",
-  "portfolio-candidate/centro-de-olhos": "pending",
-  "portfolio-candidate/le-visage": "pending",
-  "portfolio-candidate/luciana-gadelha": "pending",
-  "portfolio-candidate/espaco-glau-campos": "pending",
-  "case-study/case-clinica-alphaville": "pending",
-  "case-study/case-saas-process": "pending",
-  "case-study/case-branding-advocacia": "pending",
-  "mini-case/clinica-alphaville": "pending",
-  "mini-case/processflow-erp": "pending",
-  "mini-case/nunes-associados": "pending",
-  "mini-case/grupo-medeiros": "pending",
-  "mini-case/zenith-corporativo": "pending",
-  "mini-case/vanguard-sec": "pending",
-  "internal-testimonial/roberta-chaves": "pending",
-  "internal-testimonial/marcus-azevedo": "pending",
-  "internal-testimonial/juliana-reis": "pending",
-  "internal-testimonial/beatriz-nogueira": "pending"
-} as const satisfies Record<string, PublicEvidenceStatus>;
+export const CONTENT_REVIEW_ENV_KEY = "NEXT_PUBLIC_TAG08_CONTENT_REVIEW";
 
-export const isPublicEvidenceApproved = (evidenceKey: string): boolean =>
-  (PUBLIC_EVIDENCE_STATUS as Record<string, PublicEvidenceStatus>)[evidenceKey] === "approved";
+export type PublicEvidenceRecord = {
+  kind: PublicEvidenceKind;
+  label: string;
+  allowedRoutes: readonly string[];
+  status: PublicEvidenceStatus;
+  decisionOwner: "Carlos Henrique Martins";
+  decidedAt: string | null;
+  evidenceReference: string | null;
+  validUntil: string | null;
+  reason: string;
+};
 
-export const getApprovedEvidence = <T>(items: readonly T[], getEvidenceKey: (item: T) => string): T[] =>
-  items.filter((item) => isPublicEvidenceApproved(getEvidenceKey(item)));
+const pending = (kind: PublicEvidenceKind, label: string, allowedRoutes: readonly string[]): PublicEvidenceRecord => ({
+  kind,
+  label,
+  allowedRoutes,
+  status: "pending",
+  decisionOwner: "Carlos Henrique Martins",
+  decidedAt: null,
+  evidenceReference: null,
+  validUntil: null,
+  reason: "Aguardando autorização e evidência verificável para publicação."
+});
+
+/** Fonte executável de publicação; referências nunca guardam documentos sensíveis no repositório. */
+export const PUBLIC_EVIDENCE = {
+  "team/carlos-henrique-martins": pending("team", "Carlos Henrique Martins", ["/sobre"]),
+  "team/ignacio-quiroz": pending("team", "Ignacio Quiroz", ["/sobre"]),
+  "team/pedro-felix": pending("team", "Pedro Félix", ["/sobre"]),
+  "team/daniel-lopes": pending("team", "Daniel Lopes", ["/sobre"]),
+  "team/guilherme-gomes": pending("team", "Guilherme Gomes", ["/sobre"]),
+  "team/amazing-design": pending("team", "Amazing Design", ["/sobre"]),
+  "team/andreia-braga": pending("team", "Andréia Braga", ["/sobre"]),
+  "home-case/alan-rocha": pending("home-case", "Alan Rocha", ["/"]),
+  "home-case/le-visage": pending("home-case", "Clínica Le Visage", ["/"]),
+  "home-case/luciana-gadelha": pending("home-case", "Luciana Gadelha", ["/"]),
+  "home-case/doctor-play": pending("home-case", "Doctor Play", ["/"]),
+  "home-case/legal-lab": pending("home-case", "Legal Lab", ["/"]),
+  "home-case/squalis": pending("home-case", "Squalis Educação", ["/"]),
+  "portfolio-candidate/lavar-roupa": pending("portfolio-candidate", "LavarRoupa S.A.", ["/"]),
+  "portfolio-candidate/alugue-por-temporada": pending("portfolio-candidate", "Alugue por Temporada", ["/"]),
+  "portfolio-candidate/centro-de-olhos": pending("portfolio-candidate", "Centro de Olhos", ["/"]),
+  "portfolio-candidate/le-visage": pending("portfolio-candidate", "LeVisage", ["/"]),
+  "portfolio-candidate/luciana-gadelha": pending("portfolio-candidate", "Luciana Gadelha", ["/"]),
+  "portfolio-candidate/espaco-glau-campos": pending("portfolio-candidate", "Espaço Glau Campos", ["/"]),
+  "case-study/case-clinica-alphaville": pending("case-study", "Clínica Médica Alphaville", ["/casos/case-clinica-alphaville"]),
+  "case-study/case-saas-process": pending("case-study", "ProcessFlow SaaS", ["/casos/case-saas-process"]),
+  "case-study/case-branding-advocacia": pending("case-study", "Nunes & Associados", ["/casos/case-branding-advocacia"]),
+  "mini-case/clinica-alphaville": pending("mini-case", "Clínica Alphaville", ["/servicos/assessoria-marketing-digital-estrategico", "/servicos/branding-identidade", "/servicos/desenvolvimento-web", "/servicos/producao-audiovisual", "/servicos/process-intelligence", "/servicos/process-activation"]),
+  "mini-case/processflow-erp": pending("mini-case", "ProcessFlow ERP", ["/servicos/assessoria-marketing-digital-estrategico", "/servicos/branding-identidade", "/servicos/desenvolvimento-web", "/servicos/producao-audiovisual", "/servicos/process-intelligence", "/servicos/process-activation"]),
+  "mini-case/nunes-associados": pending("mini-case", "Nunes & Associados", ["/servicos/assessoria-marketing-digital-estrategico", "/servicos/branding-identidade", "/servicos/desenvolvimento-web", "/servicos/producao-audiovisual", "/servicos/process-intelligence", "/servicos/process-activation"]),
+  "mini-case/grupo-medeiros": pending("mini-case", "Grupo Medeiros", ["/servicos/assessoria-marketing-digital-estrategico", "/servicos/branding-identidade", "/servicos/desenvolvimento-web", "/servicos/producao-audiovisual", "/servicos/process-intelligence", "/servicos/process-activation"]),
+  "mini-case/zenith-corporativo": pending("mini-case", "Zenith Corporativo", ["/servicos/assessoria-marketing-digital-estrategico", "/servicos/branding-identidade", "/servicos/desenvolvimento-web", "/servicos/producao-audiovisual", "/servicos/process-intelligence", "/servicos/process-activation"]),
+  "mini-case/vanguard-sec": pending("mini-case", "Vanguard Sec", ["/servicos/assessoria-marketing-digital-estrategico", "/servicos/branding-identidade", "/servicos/desenvolvimento-web", "/servicos/producao-audiovisual", "/servicos/process-intelligence", "/servicos/process-activation"]),
+  "internal-testimonial/roberta-chaves": pending("internal-testimonial", "Dra. Roberta Chaves", ["/servicos/assessoria-marketing-digital-estrategico"]),
+  "internal-testimonial/marcus-azevedo": pending("internal-testimonial", "Marcus Azevedo", ["/servicos/assessoria-marketing-digital-estrategico"]),
+  "internal-testimonial/juliana-reis": pending("internal-testimonial", "Juliana Reis", ["/servicos/assessoria-marketing-digital-estrategico"]),
+  "internal-testimonial/beatriz-nogueira": pending("internal-testimonial", "Beatriz Nogueira", ["/servicos/assessoria-marketing-digital-estrategico"])
+} as const satisfies Record<string, PublicEvidenceRecord>;
+
+export type PublicEvidenceKey = keyof typeof PUBLIC_EVIDENCE;
+export const PUBLIC_EVIDENCE_STATUS: Record<PublicEvidenceKey, PublicEvidenceStatus> = Object.fromEntries(
+  Object.entries(PUBLIC_EVIDENCE).map(([key, record]) => [key, record.status])
+) as Record<PublicEvidenceKey, PublicEvidenceStatus>;
+
+export const getPublicEvidence = (evidenceKey: string): PublicEvidenceRecord | undefined =>
+  (PUBLIC_EVIDENCE as Record<string, PublicEvidenceRecord>)[evidenceKey];
+
+export const isContentReviewMode = (): boolean =>
+  process.env.NODE_ENV === "development" && process.env.NEXT_PUBLIC_TAG08_CONTENT_REVIEW === "1";
+
+export const getEvidenceVisibilityMode = (): EvidenceVisibilityMode =>
+  isContentReviewMode() ? "review" : "public";
+
+export const isEvidenceVisible = (evidenceKey: string, route: string, mode: EvidenceVisibilityMode = "public"): boolean => {
+  const evidence = getPublicEvidence(evidenceKey);
+  if (!evidence || !evidence.allowedRoutes.includes(route) || evidence.status === "remove") return false;
+  return mode === "review" || evidence.status === "approved";
+};
+
+export const getVisibleEvidence = <T>(items: readonly T[], getEvidenceKey: (item: T) => string, route: string, mode: EvidenceVisibilityMode = "public"): T[] =>
+  items.filter((item) => isEvidenceVisible(getEvidenceKey(item), route, mode));
+
+export const getEvidenceStatusLabel = (evidenceKey: string): PublicEvidenceStatus | "unknown" =>
+  getPublicEvidence(evidenceKey)?.status ?? "unknown";
+
+export const validatePublicEvidence = (records: Record<string, PublicEvidenceRecord> = PUBLIC_EVIDENCE): string[] =>
+  Object.entries(records).flatMap(([key, evidence]) => {
+    const errors: string[] = [];
+    if (!key.includes("/")) errors.push(`${key}: chave deve identificar o tipo e o item.`);
+    if (!evidence.label.trim()) errors.push(`${key}: nome público ausente.`);
+    if (!evidence.allowedRoutes.length || evidence.allowedRoutes.some((route) => !route.startsWith("/"))) errors.push(`${key}: rotas autorizadas inválidas.`);
+    if (evidence.decisionOwner !== "Carlos Henrique Martins") errors.push(`${key}: responsável pela decisão inválido.`);
+    if (evidence.status === "approved" && (!evidence.decidedAt || !evidence.evidenceReference)) errors.push(`${key}: aprovação exige data e referência verificável.`);
+    if (evidence.status === "remove" && !evidence.decidedAt) errors.push(`${key}: remoção exige data de decisão.`);
+    return errors;
+  });

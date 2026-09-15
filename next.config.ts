@@ -26,6 +26,7 @@ const nextConfig: NextConfig = {
   // Keep Turbopack's mutable dev manifests away from production build output.
   // This prevents a concurrent `next build` from corrupting a running dev server.
   distDir: isDevelopment ? ".next-dev" : ".next",
+  allowedDevOrigins: ["127.0.0.1"],
   output: "standalone",
   // Prisma uses a Node-only driver adapter at request time. Keep it external so
   // Next traces and copies the package into the standalone runtime image.
