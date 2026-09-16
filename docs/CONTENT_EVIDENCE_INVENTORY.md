@@ -18,7 +18,7 @@ Itens pendentes não renderizam, não geram rota e não entram no sitemap; conti
 
 | Grupo | Itens | Onde aparece | Alcance público | Estado | Evidência necessária |
 | --- | --- | --- | --- | --- |
-| Equipe | Carlos Henrique Martins, Ignacio Quiroz, Pedro Félix, Daniel Lopes, Guilherme Gomes, Amazing Design e Andréia Braga | `src/features/site/pages/Sobre.tsx`; fotos em `public/team/` | `/sobre` | `aprovado` | decisão de publicação registrada; não autoriza uso em outra rota |
+| Equipe | Carlos Henrique Martins, Ignacio Quiroz, Pedro Félix, Daniel Lopes, Guilherme Gomes, Amazing Design e Andréia Braga | `src/features/site/pages/Sobre.tsx`; fotos em `public/team/` | `/sobre` | `pendente` | conteúdo preservado para revisão; não renderiza publicamente até nova decisão |
 | Cases da Home | Alan Rocha, Clínica Le Visage, Luciana Gadelha, Doctor Play, Legal Lab e Squalis Educação | `CLIENT_CASES` em `src/features/site/pages/Home.tsx` | `/` | `pendente` | autorização de marca, pessoa, imagem, citação, data e escopo real; origem das imagens remotas |
 | Candidatos de portfólio da Home | LavarRoupa S.A., Alugue por Temporada, Centro de Olhos, LeVisage, Luciana Gadelha e Espaço Glau Campos | `PORTFOLIO_CANDIDATES` em `src/features/site/pages/Home.tsx` | `/` | `pendente` | autorização de marca e confirmação de que o projeto pode ser citado publicamente, mesmo como candidato |
 | Cases indexáveis | Clínica Médica Alphaville, ProcessFlow SaaS e Nunes & Associados | `CASE_STUDIES` em `src/data.ts`; renderização em `CaseStudyDetail.tsx`; paths derivados em `routeRegistry.ts` | `/casos/*`, sitemap e links internos | `pendente` | contrato/autorização de case, confirmação de dados, método de cálculo e direito de imagem |

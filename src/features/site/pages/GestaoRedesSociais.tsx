@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { MessageSquare, Sparkles, TrendingUp, ArrowUpRight, ArrowRight, Users, Plus, Minus } from "lucide-react";
@@ -106,6 +106,8 @@ const EDITORIAL_DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
   }
 ];
 
+const EDITORIAL_DIAGNOSTIC_STEP_COUNT = EDITORIAL_DIAGNOSTIC_QUESTIONS.length + 1;
+
 const getDiagnosticQuestion = (key: DiagnosticKey) =>
   EDITORIAL_DIAGNOSTIC_QUESTIONS.find((question) => question.key === key);
 
@@ -167,6 +169,7 @@ interface SocialMediaProps {
 export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
   const [activeFaq, setActiveFaq] = useState(0);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [diagnosticStep, setDiagnosticStep] = useState(0);
   const [diagnosticAnswers, setDiagnosticAnswers] = useState<Record<DiagnosticKey, DiagnosticAnswer>>({
     challenge: "",
     routine: "",
@@ -179,24 +182,25 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
   const [diagnosticWhatsapp, setDiagnosticWhatsapp] = useState("");
   const [diagnosticConsent, setDiagnosticConsent] = useState(false);
   const trackSimulator = useSimulatorTracking("social_editorial_diagnostic", 1, "/servicos/gestao-de-redes-sociais");
-  const diagnosticQuestionRefs = useRef<Record<DiagnosticKey, HTMLDivElement | null>>({
-    challenge: null,
-    routine: null,
-    channels: null,
-    priority: null,
-    formats: null,
-    moment: null
-  });
 
-  const answeredCount = EDITORIAL_DIAGNOSTIC_QUESTIONS.reduce((count, question) => {
-    const value = diagnosticAnswers[question.key];
-    if (Array.isArray(value)) {
-      return count + (value.length > 0 ? 1 : 0);
-    }
-    return count + (value ? 1 : 0);
-  }, 0);
-
-  const diagnosticProgress = Math.round((answeredCount / EDITORIAL_DIAGNOSTIC_QUESTIONS.length) * 100);
+  const isContactStep = diagnosticStep === EDITORIAL_DIAGNOSTIC_QUESTIONS.length;
+  const isDiagnosticComplete = diagnosticStep === EDITORIAL_DIAGNOSTIC_STEP_COUNT;
+  const diagnosticProgress = Math.round((Math.min(diagnosticStep, EDITORIAL_DIAGNOSTIC_STEP_COUNT) / EDITORIAL_DIAGNOSTIC_STEP_COUNT) * 100);
+  const activeDiagnosticQuestion = isContactStep || isDiagnosticComplete
+    ? null
+    : EDITORIAL_DIAGNOSTIC_QUESTIONS[diagnosticStep];
+  const activeDiagnosticAnswer = activeDiagnosticQuestion
+    ? diagnosticAnswers[activeDiagnosticQuestion.key]
+    : "";
+  const activeDiagnosticSelectedValues = Array.isArray(activeDiagnosticAnswer)
+    ? activeDiagnosticAnswer
+    : activeDiagnosticAnswer
+      ? [activeDiagnosticAnswer]
+      : [];
+  const activeDiagnosticSelectedLabels = activeDiagnosticQuestion
+    ? getDiagnosticValueLabel(activeDiagnosticQuestion.key, activeDiagnosticAnswer)
+    : "Aguardando resposta";
+  const hasActiveDiagnosticSelection = activeDiagnosticSelectedLabels !== "Aguardando resposta";
   const challengeLabel = getDiagnosticValueLabel("challenge", diagnosticAnswers.challenge);
   const routineLabel = getDiagnosticValueLabel("routine", diagnosticAnswers.routine);
   const channelsLabel = getDiagnosticValueLabel("channels", diagnosticAnswers.channels);
@@ -214,6 +218,11 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
     diagnosticWhatsapp.trim() &&
     diagnosticConsent
   );
+  const canContinueDiagnostic = activeDiagnosticQuestion
+    ? hasActiveDiagnosticSelection
+    : isContactStep
+      ? diagnosticReady
+      : false;
   const diagnosticRecommendation = buildDiagnosticRecommendation({
     challenge: diagnosticAnswers.challenge as string,
     routine: diagnosticAnswers.routine as string,
@@ -247,15 +256,6 @@ Consentimento: ${diagnosticConsent ? "Autorizado" : "Não autorizado"}
 Próximo passo: conversar com a TAG08 para entender escopo e direção editorial.`;
   const diagnosticWhatsAppUrl = buildBrazilWhatsAppUrl(diagnosticMessage);
 
-  const scrollToDiagnosticQuestion = (key: DiagnosticKey) => {
-    const target = diagnosticQuestionRefs.current[key];
-    if (!target) return;
-
-    window.setTimeout(() => {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 60);
-  };
-
   const scrollToEditorialDiagnostic = () => {
     document.getElementById("diagnostico-editorial")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -286,11 +286,28 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
     }
 
     setDiagnosticSingleAnswer(question.key as Exclude<DiagnosticKey, "channels" | "formats">, optionValue);
+  };
 
-    const nextQuestionIndex = EDITORIAL_DIAGNOSTIC_QUESTIONS.findIndex((item) => item.key === question.key) + 1;
-    const nextQuestion = EDITORIAL_DIAGNOSTIC_QUESTIONS[nextQuestionIndex];
-    if (nextQuestion) {
-      scrollToDiagnosticQuestion(nextQuestion.key);
+  const continueDiagnostic = () => {
+    if (isDiagnosticComplete) return;
+
+    if (isContactStep) {
+      if (!diagnosticReady) return;
+      setDiagnosticStep(EDITORIAL_DIAGNOSTIC_STEP_COUNT);
+      return;
+    }
+
+    const question = EDITORIAL_DIAGNOSTIC_QUESTIONS[diagnosticStep];
+    const value = diagnosticAnswers[question.key];
+    const hasAnswer = Array.isArray(value) ? value.length > 0 : Boolean(value);
+    if (!hasAnswer) return;
+
+    setDiagnosticStep((current) => current + 1);
+  };
+
+  const goToPreviousDiagnosticStep = () => {
+    if (diagnosticStep > 0) {
+      setDiagnosticStep((current) => current - 1);
     }
   };
 
@@ -834,246 +851,181 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
             )}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            <div className="lg:col-span-5 bg-charcoal-900/60 border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-8 text-left">
-              <div className="space-y-5">
-                <div className="flex items-center justify-between gap-3 border-b border-white/[0.05] pb-3">
-                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
-                    Pré-qualificação editorial
-                  </span>
-                  <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-                    {answeredCount}/{EDITORIAL_DIAGNOSTIC_QUESTIONS.length} respostas
-                  </span>
-                </div>
-
-                <div className="space-y-4">
-                  {EDITORIAL_DIAGNOSTIC_QUESTIONS.map((question) => {
-                    const currentValue = diagnosticAnswers[question.key];
-                    const selectedLabels = getDiagnosticValueLabel(question.key, currentValue);
-                    const hasSelection = selectedLabels !== "Aguardando resposta";
-                    const selectedValues = Array.isArray(currentValue)
-                      ? currentValue
-                      : currentValue
-                        ? [currentValue]
-                        : [];
-
-                    return (
-                      <div
-                        key={question.key}
-                        ref={(node) => {
-                          diagnosticQuestionRefs.current[question.key] = node;
-                        }}
-                        className="space-y-3 rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 sm:p-5 scroll-mt-24"
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="space-y-1.5">
-                            <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-black block">
-                              {question.step}
-                            </span>
-                            <p className="text-xs tag08-meta text-zinc-200 font-bold uppercase tracking-wider block">
-                              {question.title}
-                            </p>
-                            <p className="text-xs text-zinc-400 leading-relaxed">
-                              {question.helper}
-                            </p>
-                          </div>
-                          {hasSelection && (
-                            <span className="inline-flex shrink-0 items-center rounded-full border border-brand/20 bg-brand/5 px-2.5 py-1 tag08-meta text-xs uppercase tracking-widest text-brand">
-                              OK
-                            </span>
-                          )}
-                        </div>
-
-                        <div className={`grid gap-2 ${question.multi ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1 sm:grid-cols-2"}`}>
-                          {question.options.map((option) => {
-                            const isActive = selectedValues.includes(option.value);
-                            return (
-                              <button
-                                key={option.value}
-                                type="button"
-                                aria-pressed={isActive}
-                                onClick={() => handleDiagnosticAnswerSelect(question, option.value)}
-                                className={`rounded-xl border px-3 py-3 text-left transition-all duration-200 cursor-pointer text-xs sm:text-xs leading-snug hover:-translate-y-0.5 ${
-                                  isActive
-                                    ? "bg-brand-secondary/10 border-brand-secondary text-brand-secondary"
-                                    : "bg-white/[0.01] border-white/10 text-zinc-300 hover:text-white hover:border-white/20"
-                                }`}
-                              >
-                                {option.label}
-                              </button>
-                            );
-                          })}
-                        </div>
-
-                        {hasSelection && (
-                          <p className="text-xs text-brand-secondary tag08-meta uppercase tracking-widest leading-relaxed">
-                            Seleção atual: {selectedLabels}
-                          </p>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <label className="space-y-2 rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 text-left">
-                    <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
-                      Nome
-                    </span>
-                    <input
-                      type="text"
-                      value={diagnosticName}
-                      onChange={(event) => setDiagnosticName(event.target.value)}
-                      placeholder="Seu nome"
-                      className="w-full rounded-xl border border-white/[0.06] bg-black/30 px-3 py-2 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-brand/40"
-                    />
-                  </label>
-
-                  <label className="space-y-2 rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 text-left">
-                    <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
-                      WhatsApp
-                    </span>
-                    <input
-                      type="tel"
-                      value={diagnosticWhatsapp}
-                      onChange={(event) => setDiagnosticWhatsapp(event.target.value)}
-                      placeholder="+55 83 9XXXX-XXXX"
-                      className="w-full rounded-xl border border-white/[0.06] bg-black/30 px-3 py-2 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-brand/40"
-                    />
-                  </label>
-                </div>
-
-                <label className="flex items-start gap-3 rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 text-left cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={diagnosticConsent}
-                    onChange={(event) => setDiagnosticConsent(event.target.checked)}
-                    className="mt-1 h-4 w-4 rounded border-white/20 bg-black/40 accent-brand"
-                  />
-                  <span className="space-y-1">
-                    <span className="block tag08-meta text-xs text-zinc-300 font-bold uppercase tracking-widest">
-                      Consentimento LGPD
-                    </span>
-                    <span className="block text-xs text-zinc-400 leading-relaxed">
-                      Autorizo a TAG08 a usar essas respostas para continuar o atendimento por WhatsApp e evitar que eu repita tudo depois.
-                    </span>
-                  </span>
-                </label>
+          <div className="mx-auto max-w-4xl overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#09090b] shadow-[0_28px_90px_rgba(0,0,0,0.28)]">
+            <div className="space-y-3 border-b border-white/[0.06] px-6 pb-5 pt-6 sm:px-10 sm:pt-8">
+              <div className="flex items-center justify-between gap-4">
+                <span className="tag08-meta text-xs text-zinc-400 tracking-wide">
+                  Pré-qualificação editorial · {isDiagnosticComplete ? "Concluída" : `Etapa ${diagnosticStep + 1} de ${EDITORIAL_DIAGNOSTIC_STEP_COUNT}`}
+                </span>
+                <span className="tag08-meta text-xs text-zinc-500 tracking-wide">
+                  {diagnosticProgress}%
+                </span>
               </div>
-
-              <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] space-y-2">
-                <div className="flex items-center gap-2 text-brand">
-                  <Sparkles className="w-4 h-4 shrink-0" />
-                  <span className="text-xs tag08-meta font-black uppercase tracking-wider">
-                    Resumo útil para atendimento
-                  </span>
-                </div>
-                <p className="text-xs text-zinc-400 leading-relaxed font-sans">
-                  As respostas viram uma leitura organizada que a equipe pode abrir já com contexto. O objetivo é reduzir repetição e acelerar a conversa certa.
-                </p>
+              <div className="h-1 rounded-full bg-white/[0.06] overflow-hidden" aria-label={`Progresso: ${diagnosticProgress}%`}>
+                <div
+                  className="h-full rounded-full bg-brand-secondary transition-all duration-300"
+                  style={{ width: `${diagnosticProgress}%` }}
+                />
               </div>
             </div>
 
-            <div className="lg:col-span-7 bg-[#09090b] border border-white/[0.05] rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
-
-              <div className="space-y-6 w-full">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="space-y-2 max-w-2xl">
-                    <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
-                      Seu diagnóstico editorial
+            <div className="min-h-[420px] px-6 py-8 sm:min-h-[460px] sm:px-10 sm:py-10" aria-live="polite">
+              {activeDiagnosticQuestion && (
+                <div className="space-y-8">
+                  <div className="space-y-3">
+                    <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black block">
+                      {activeDiagnosticQuestion.step}
                     </span>
-                    <h3 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">
-                      Resumo pronto para enviar
+                    <h3 className="font-display text-2xl font-medium tracking-tight text-white sm:text-3xl">
+                      {activeDiagnosticQuestion.title}
                     </h3>
-                    <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-                      A leitura abaixo ajuda a TAG08 a continuar a conversa sem repetir perguntas e sem perder a lógica do seu contexto.
+                    <p className="max-w-2xl text-sm leading-relaxed text-zinc-400">
+                      {activeDiagnosticQuestion.helper}
+                      {activeDiagnosticQuestion.multi && " Você pode selecionar mais de uma opção."}
                     </p>
                   </div>
 
-                  <div className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-3 min-w-[120px]">
-                    <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
-                      Progresso
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {activeDiagnosticQuestion.options.map((option) => {
+                      const isActive = activeDiagnosticSelectedValues.includes(option.value);
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          aria-pressed={isActive}
+                          onClick={() => handleDiagnosticAnswerSelect(activeDiagnosticQuestion, option.value)}
+                          className={`min-h-[76px] rounded-2xl border px-4 py-4 text-left text-sm leading-snug transition-all duration-200 cursor-pointer hover:-translate-y-0.5 ${
+                            isActive
+                              ? "border-brand-secondary bg-brand-secondary/10 text-brand-secondary shadow-[0_12px_30px_rgba(var(--color-brand-secondary-rgb),0.08)]"
+                              : "border-white/[0.10] bg-white/[0.015] text-zinc-200 hover:border-white/25 hover:bg-white/[0.035] hover:text-white"
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {hasActiveDiagnosticSelection && (
+                    <p className="tag08-meta text-xs uppercase tracking-widest text-brand-secondary">
+                      Seleção atual: {activeDiagnosticSelectedLabels}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {isContactStep && (
+                <div className="space-y-8">
+                  <div className="space-y-3">
+                    <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black block">
+                      Etapa final
                     </span>
-                    <p className="text-2xl font-display font-black text-white leading-none mt-1">
-                      {diagnosticProgress}%
+                    <h3 className="font-display text-2xl font-medium tracking-tight text-white sm:text-3xl">
+                      Para quem enviamos este resumo?
+                    </h3>
+                    <p className="max-w-2xl text-sm leading-relaxed text-zinc-400">
+                      Seus dados entram apenas para que a conversa continue com o contexto que você acabou de preencher.
                     </p>
                   </div>
-                </div>
 
-                <div className="h-2 rounded-full bg-white/[0.04] overflow-hidden">
-                  <div
-                    className="h-full bg-brand-secondary transition-all duration-300"
-                    style={{ width: `${diagnosticProgress}%` }}
-                  />
-                </div>
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <label className="space-y-2">
+                      <span className="tag08-meta text-xs text-zinc-400 tracking-wide block">Nome</span>
+                      <input
+                        type="text"
+                        value={diagnosticName}
+                        onChange={(event) => setDiagnosticName(event.target.value)}
+                        placeholder="Seu nome"
+                        className="min-h-12 w-full rounded-2xl border border-white/[0.10] bg-white/[0.015] px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none transition-colors focus:border-brand-secondary"
+                      />
+                    </label>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {diagnosticSummaryCards.map((card) => (
-                    <div key={card.label} className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-4 space-y-1.5">
-                      <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
-                        {card.label}
-                      </span>
-                      <p className="text-sm sm:text-sm text-white font-semibold leading-snug">
-                        {card.value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+                    <label className="space-y-2">
+                      <span className="tag08-meta text-xs text-zinc-400 tracking-wide block">WhatsApp</span>
+                      <input
+                        type="tel"
+                        value={diagnosticWhatsapp}
+                        onChange={(event) => setDiagnosticWhatsapp(event.target.value)}
+                        placeholder="+55 83 9XXXX-XXXX"
+                        className="min-h-12 w-full rounded-2xl border border-white/[0.10] bg-white/[0.015] px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none transition-colors focus:border-brand-secondary"
+                      />
+                    </label>
+                  </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 space-y-1.5">
-                    <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
-                      Contato recebido
+                  <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.015] p-4">
+                    <input
+                      type="checkbox"
+                      checked={diagnosticConsent}
+                      onChange={(event) => setDiagnosticConsent(event.target.checked)}
+                      className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-black/40 accent-brand"
+                    />
+                    <span className="text-xs leading-relaxed text-zinc-400">
+                      Autorizo a TAG08 a usar estas respostas para continuar o atendimento por WhatsApp e evitar que eu repita tudo depois.
                     </span>
-                    <p className="text-sm text-white font-semibold leading-snug">
-                      {diagnosticName.trim() || "Aguardando nome"}
-                    </p>
-                  </div>
-                  <div className="rounded-2xl border border-white/[0.05] bg-white/[0.01] p-4 space-y-1.5">
-                    <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
-                      WhatsApp informado
-                    </span>
-                    <p className="text-sm text-white font-semibold leading-snug">
-                      {diagnosticWhatsapp.trim() || "Aguardando WhatsApp"}
-                    </p>
-                  </div>
+                  </label>
                 </div>
+              )}
 
-                <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-5 space-y-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="font-sans text-xs text-zinc-500 uppercase font-bold block">
+              {isDiagnosticComplete && (
+                <div className="space-y-7">
+                  <div className="space-y-3">
+                    <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black block">
+                      Diagnóstico concluído
+                    </span>
+                    <h3 className="font-display text-2xl font-medium tracking-tight text-white sm:text-3xl">
+                      Seu resumo está pronto para enviar.
+                    </h3>
+                    <p className="max-w-2xl text-sm leading-relaxed text-zinc-400">
+                      A leitura abaixo permite que a TAG08 continue a conversa sem repetir perguntas nem perder o contexto.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {diagnosticSummaryCards.map((card) => (
+                      <div key={card.label} className="space-y-1.5 rounded-2xl border border-white/[0.08] bg-white/[0.015] p-4">
+                        <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-bold block">
+                          {card.label}
+                        </span>
+                        <p className="text-sm font-semibold leading-snug text-white">{card.value}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="space-y-3 rounded-2xl border border-brand-secondary/20 bg-brand-secondary/[0.04] p-5">
+                    <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black block">
                       Leitura inicial
                     </span>
-                    <span className={`tag08-meta text-xs uppercase tracking-widest font-black px-2.5 py-1 rounded-md border ${
-                      diagnosticConsent
-                        ? "text-brand-secondary border-brand-secondary/20 bg-brand-secondary/5"
-                        : "text-zinc-500 border-white/[0.05] bg-white/[0.01]"
-                    }`}>
-                      {diagnosticConsent ? "Consentimento ativo" : "Consentimento pendente"}
-                    </span>
+                    <p className="text-sm font-semibold leading-snug text-white">{diagnosticRecommendation}</p>
+                    <p className="text-xs leading-relaxed text-zinc-400">
+                      A aderência entre Start, Base e Performance é confirmada na conversa de diagnóstico.
+                    </p>
                   </div>
-                  <p className="text-white text-sm sm:text-base font-semibold leading-snug">
-                    {diagnosticRecommendation}
-                  </p>
-                  <p className="text-zinc-400 text-xs leading-relaxed">
-                    Esta leitura organiza o contexto inicial. A aderência entre Start, Base e Performance é confirmada na conversa de diagnóstico.
-                  </p>
                 </div>
-              </div>
+              )}
+            </div>
 
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-t border-white/[0.05] pt-4 mt-6">
-                <div className="space-y-1.5 max-w-md">
-                  <span className="tag08-meta text-xs text-zinc-600 uppercase tracking-widest font-bold block">
-                    Antes de compartilhar
-                  </span>
-                  <p className="text-zinc-400 text-xs leading-relaxed">
-                    {diagnosticReady
-                      ? "O resumo já está pronto para ser enviado com contexto."
-                      : "Complete respostas, nome, WhatsApp e consentimento para liberar o envio."}
-                  </p>
-                </div>
+            <div className="flex flex-col-reverse gap-3 border-t border-white/[0.06] bg-white/[0.015] px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-10">
+              {isDiagnosticComplete ? (
+                <button
+                  type="button"
+                  onClick={() => setDiagnosticStep(0)}
+                  className="min-h-11 rounded-full border border-white/[0.10] px-5 tag08-meta text-xs font-black uppercase tracking-widest text-zinc-300 transition-colors hover:border-white/30 hover:text-white"
+                >
+                  Revisar respostas
+                </button>
+              ) : diagnosticStep > 0 ? (
+                <button
+                  type="button"
+                  onClick={goToPreviousDiagnosticStep}
+                  className="min-h-11 rounded-full border border-white/[0.10] px-5 tag08-meta text-xs font-black uppercase tracking-widest text-zinc-300 transition-colors hover:border-white/30 hover:text-white"
+                >
+                  Voltar
+                </button>
+              ) : (
+                <span className="hidden sm:block" />
+              )}
 
+              {isDiagnosticComplete ? (
                 <a
                   href={diagnosticReady ? diagnosticWhatsAppUrl : "#"}
                   target="_blank"
@@ -1086,16 +1038,25 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                       trackSimulator("cta_clicked");
                     }
                   }}
-                  className={`group inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 tag08-meta text-xs font-black uppercase tracking-widest transition-all duration-300 ${
-                    diagnosticReady
-                      ? "bg-brand text-black hover:bg-brand-dark shadow-[0_12px_35px_rgba(var(--color-brand-secondary-rgb),0.2)]"
-                      : "cursor-not-allowed bg-white/[0.05] text-zinc-500 border border-white/[0.06]"
+                  className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-brand px-5 py-3 tag08-meta text-xs font-black uppercase tracking-widest text-black transition-all duration-300 hover:bg-brand-dark"
+                >
+                  <span>Compartilhar por WhatsApp</span>
+                  <ArrowRight className="h-4 w-4 stroke-[2.5] transition-transform group-hover:translate-x-1" />
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  onClick={continueDiagnostic}
+                  disabled={!canContinueDiagnostic}
+                  className={`min-h-11 rounded-full px-5 tag08-meta text-xs font-black uppercase tracking-widest transition-all duration-200 ${
+                    canContinueDiagnostic
+                      ? "bg-brand text-black hover:bg-brand-dark"
+                      : "cursor-not-allowed bg-white/[0.06] text-zinc-600"
                   }`}
                 >
-                  <span>COMPARTILHAR DIAGNÓSTICO POR WHATSAPP</span>
-                  <ArrowRight className="w-4 h-4 stroke-[2.5] transition-transform group-hover:translate-x-1" />
-                </a>
-              </div>
+                  {isContactStep ? "Ver resumo" : "Continuar"}
+                </button>
+              )}
             </div>
           </div>
         </div>

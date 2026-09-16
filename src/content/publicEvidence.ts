@@ -42,13 +42,13 @@ const approved = (kind: PublicEvidenceKind, label: string, allowedRoutes: readon
 
 /** Fonte executável de publicação; referências nunca guardam documentos sensíveis no repositório. */
 export const PUBLIC_EVIDENCE = {
-  "team/carlos-henrique-martins": approved("team", "Carlos Henrique Martins", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
-  "team/ignacio-quiroz": approved("team", "Ignacio Quiroz", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
-  "team/pedro-felix": approved("team", "Pedro Félix", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
-  "team/daniel-lopes": approved("team", "Daniel Lopes", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
-  "team/guilherme-gomes": approved("team", "Guilherme Gomes", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
-  "team/amazing-design": approved("team", "Amazing Design", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
-  "team/andreia-braga": approved("team", "Andréia Braga", ["/sobre"], "Aprovado para a seção de equipe da página Sobre."),
+  "team/carlos-henrique-martins": pending("team", "Carlos Henrique Martins", ["/sobre"]),
+  "team/ignacio-quiroz": pending("team", "Ignacio Quiroz", ["/sobre"]),
+  "team/pedro-felix": pending("team", "Pedro Félix", ["/sobre"]),
+  "team/daniel-lopes": pending("team", "Daniel Lopes", ["/sobre"]),
+  "team/guilherme-gomes": pending("team", "Guilherme Gomes", ["/sobre"]),
+  "team/amazing-design": pending("team", "Amazing Design", ["/sobre"]),
+  "team/andreia-braga": pending("team", "Andréia Braga", ["/sobre"]),
   "home-case/alan-rocha": pending("home-case", "Alan Rocha", ["/"]),
   "home-case/le-visage": pending("home-case", "Clínica Le Visage", ["/"]),
   "home-case/luciana-gadelha": pending("home-case", "Luciana Gadelha", ["/"]),

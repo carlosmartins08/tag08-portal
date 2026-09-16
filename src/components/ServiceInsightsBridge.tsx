@@ -64,7 +64,7 @@ export default function ServiceInsightsBridge({
             return (
               <article
                 key={`${bridge.servicePath}-${index}`}
-                className={`tag08-card tag08-card--interactive ${isPublished ? "tag08-card--featured" : ""} p-5 sm:p-6 flex flex-col justify-between gap-5`}
+                className={`tag08-card ${isPublished ? "tag08-card--interactive tag08-card--featured" : ""} p-5 sm:p-6 flex flex-col justify-between gap-5`}
               >
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between gap-3">
@@ -94,6 +94,7 @@ export default function ServiceInsightsBridge({
 
                   {isPublished ? (
                     <button
+                      type="button"
                       onClick={goToHub}
                       className="inline-flex items-center gap-2 text-brand tag08-action hover:text-brand-dark transition-colors"
                     >

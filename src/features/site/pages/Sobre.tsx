@@ -94,6 +94,36 @@ export default function Sobre({ onNavigate }: SobreProps) {
   const visibleComplementaryProfiles = getVisibleEvidence(COMPLEMENTARY_PROFILES, (profile) => profile.evidenceKey, "/sobre", evidenceMode);
   const hasPublicTeamProfiles = visiblePrimaryProfiles.length > 0 || visibleComplementaryProfiles.length > 0;
 
+  const CONNECTED_CAPABILITIES = [
+    {
+      title: "Estratégia e direção",
+      description: "Diagnóstico, posicionamento, prioridades e coordenação ajudam a definir o que precisa acontecer antes da execução.",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
+      label: "DIREÇÃO",
+      support: "Contexto // decisão"
+    },
+    {
+      title: "Conteúdo e expressão",
+      description: "Narrativa, redação, design e audiovisual transformam direção em comunicação compreensível e consistente.",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400",
+      label: "COMUNICAÇÃO",
+      support: "Narrativa // presença"
+    },
+    {
+      title: "Tecnologia e experiência",
+      description: "Sites e estruturas digitais são construídos para cumprir uma função dentro da presença e da jornada do negócio.",
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400",
+      label: "TECNOLOGIA",
+      support: "Estrutura // experiência"
+    },
+    {
+      title: "Processos e continuidade",
+      description: "Fluxos, responsabilidades, documentação e acompanhamento ajudam a reduzir improviso e sustentar a execução.",
+      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400",
+      label: "OPERAÇÃO",
+      support: "Processo // continuidade"
+    }
+  ];
 
   const CORES_DIFERENCIAIS = [
     {
@@ -243,6 +273,86 @@ export default function Sobre({ onNavigate }: SobreProps) {
               <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Entrega acompanhada<br />e sustentada no tempo</span>
             </div>
           </div>
+
+          {!hasPublicTeamProfiles && <div data-testid="connected-capabilities" className="pt-12 sm:pt-16 border-t border-white/[0.04] space-y-8 text-left font-sans">
+            <div className="space-y-2">
+              <span className="tag08-meta text-xs text-brand tracking-widest block uppercase font-bold">COMPETÊNCIAS CONECTADAS</span>
+              <h3 className="font-display font-black text-white text-xl sm:text-2xl tracking-tight">Diferentes especialidades trabalham na mesma direção.</h3>
+              <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed max-w-2xl font-medium">
+                A estrutura de cada projeto é organizada de acordo com o problema, o escopo e a capacidade necessária para diagnosticar, produzir, revisar e sustentar a entrega.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pt-2">
+              <div className="lg:col-span-5 bg-gradient-to-br from-brand-secondary/[0.08] via-zinc-950 to-transparent border border-brand-secondary/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[360px] shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.03)] hover:border-brand-secondary/45 transition-all duration-300">
+                <div className="absolute inset-0 z-0 pointer-events-none">
+                  <ResilientImage
+                    fallbackLabel="Imagem editorial"
+                    sizes="(max-width: 1024px) 100vw, 42vw"
+                    src={CONNECTED_CAPABILITIES[0].image}
+                    alt=""
+                    className="object-cover opacity-20 grayscale brightness-[0.7] group-hover:scale-[1.01] group-hover:opacity-30 transition-all duration-1000"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent" />
+                </div>
+
+                <div className="relative z-10 flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 bg-brand-secondary/10 backdrop-blur-md px-3 py-1 rounded-full border border-brand-secondary/20 shadow-md">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary animate-pulse" />
+                    <span className="font-sans text-xs text-brand-secondary font-extrabold uppercase tracking-widest">{CONNECTED_CAPABILITIES[0].label}</span>
+                  </div>
+                  <span className="tag08-meta text-xs text-zinc-500 font-bold uppercase tracking-wider">DIREÇÃO TAG08</span>
+                </div>
+
+                <div className="relative z-10 space-y-4 mt-auto">
+                  <div className="space-y-1">
+                    <span className="font-sans text-xs text-brand block uppercase font-bold">{CONNECTED_CAPABILITIES[0].label}</span>
+                    <h4 className="font-display font-black text-2xl sm:text-3xl text-white leading-none tracking-tight">{CONNECTED_CAPABILITIES[0].title}</h4>
+                    <p className="text-brand-secondary text-xs tag08-meta uppercase tracking-wider pt-1">{CONNECTED_CAPABILITIES[0].support}</p>
+                    <p className="text-zinc-400 text-xs leading-relaxed max-w-sm pt-2 italic">{CONNECTED_CAPABILITIES[0].description}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {CONNECTED_CAPABILITIES.slice(1).map((capability) => (
+                  <div
+                    key={capability.title}
+                    className="bg-charcoal-900 border border-white/[0.08] rounded-3xl p-5 flex flex-col justify-between text-left relative overflow-hidden h-[360px] group transition-all duration-300 hover:border-brand/40"
+                  >
+                    <div className="absolute inset-0 z-0 pointer-events-none">
+                      <ResilientImage
+                        fallbackLabel="Imagem editorial"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                        src={capability.image}
+                        alt=""
+                        className="object-cover opacity-45 grayscale brightness-[0.7] group-hover:scale-105 group-hover:opacity-55 transition-all duration-700"
+                        referrerPolicy="no-referrer"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                    </div>
+
+                    <div className="relative z-10 flex items-center justify-between">
+                      <div className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand" />
+                        <span className="font-sans text-xs text-zinc-300 font-bold">{capability.label}</span>
+                      </div>
+                    </div>
+
+                    <div className="relative z-10 space-y-3.5 mt-auto">
+                      <div className="space-y-1">
+                        <span className="font-sans text-xs text-brand block uppercase font-bold">{capability.label}</span>
+                        <h4 className="font-display font-black text-white text-base sm:text-lg leading-none tracking-tight">{capability.title}</h4>
+                        <p className="text-zinc-350 text-xs font-sans font-medium leading-relaxed">{capability.description}</p>
+                        <p className="text-brand-secondary text-xs font-sans uppercase tracking-wider pb-1">{capability.support}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>}
 
           {hasPublicTeamProfiles && <div data-testid="team-profiles" className="pt-12 sm:pt-16 border-t border-white/[0.04] space-y-8 text-left font-sans">
             <div className="space-y-2">

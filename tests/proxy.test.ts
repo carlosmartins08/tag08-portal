@@ -18,6 +18,12 @@ test("proxy does not redirect the internal PT-BR locale rewrite", () => {
   assert.equal(response.headers.get("x-middleware-next"), "1");
 });
 
+test("proxy leaves public static assets untouched", () => {
+  const response = proxy(new NextRequest("https://tag08.test/team/carlos-henrique-martins.jpg"));
+
+  assert.equal(response.headers.get("x-middleware-next"), "1");
+});
+
 test("proxy redirects aliases and preserves language query semantics", () => {
   const alias = proxy(new NextRequest("https://tag08.test/blog"));
   assert.equal(alias.status, 308);

@@ -20,6 +20,7 @@ Portal institucional TAG08 em Next.js App Router. As paginas publicas sao gerada
 ```bash
 npm ci
 npm run dev
+npm run dev:public-preview
 npm run continuity:status
 npm run setup:hooks
 npm run lint
@@ -53,7 +54,11 @@ npm run build
 npm run start
 ```
 
-`npm run dev` usa `.next-dev`, separado do artefato de producao `.next`. Nao execute `next dev` diretamente: use o script para limpar o cache de desenvolvimento antes de iniciar.
+`npm run dev` abre a referência editorial completa em `http://localhost:3101`, identificada por “REVISÃO LOCAL — NÃO PUBLICADO”, com o cache `.next-review`. É o comando padrão para evoluir o projeto.
+
+`npm run dev:public-preview` abre em `http://localhost:3212` apenas o recorte que pode ser publicado hoje e usa `.next-dev`. O comando confere a continuidade e se recusa a limpar um cache ainda em uso.
+
+`http://127.0.0.1:3000` pertence somente ao container Docker local. Ele é uma imagem compilada e não deve ser usado para revisar alterações do diretório de trabalho; atualize-o apenas por um rebuild explícito.
 
 Para producao, substitua o preflight por `npm run preflight:deploy -- --production`. Mantenha `INTEGRATIONS_ENABLED=false` no primeiro deploy. Em staging, rode `BASE_URL=https://seu-staging.example npm run verify:staging` para validar rotas, health do banco, protecao das metricas, SEO, os tres formularios, idempotencia e outbox com registros sinteticos removidos ao fim. Apos a aprovacao do staging, habilite um destino por vez e valide novamente com `npm run preflight:deploy -- --allow-integrations`.
 

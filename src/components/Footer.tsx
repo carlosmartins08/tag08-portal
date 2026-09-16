@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
-import { ArrowUpRight, MessageSquare, Phone, Mail, MapPin, ShieldAlert, CheckCircle, Eye, Type, RefreshCw, Instagram, Linkedin, Youtube, Facebook, Twitter, Cookie, Lock, Scale, FileText } from "lucide-react";
+import { useState, useEffect, useRef, type MouseEvent, type ReactNode } from "react";
+import { ArrowUpRight, ChevronDown, MessageSquare, Phone, Mail, MapPin, ShieldAlert, CheckCircle, Eye, Type, RefreshCw, Instagram, Linkedin, Youtube, Facebook, Twitter, Cookie, Lock, Scale, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
 import { getLocalizedNetworkLinks, TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_PINTEREST_URL, TAG08_OFFICIAL_YOUTUBE_URL, TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
@@ -47,6 +47,20 @@ type FooterCopy = {
   cookieSaveLabel: string;
 };
 
+function FooterMobileSection({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <details className="group rounded-xl border border-white/[0.08] bg-white/[0.02] lg:hidden">
+      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-white marker:content-none focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand/60 [&::-webkit-details-marker]:hidden">
+        {title}
+        <ChevronDown className="h-4 w-4 shrink-0 text-brand transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+      </summary>
+      <ul className="space-y-3 border-t border-white/[0.06] px-4 py-4 font-sans text-sm text-zinc-300">
+        {children}
+      </ul>
+    </details>
+  );
+}
+
 const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
   pt: {
     brandStatement: "Agência Estratégica",
@@ -78,6 +92,7 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
       { label: "Insights Estratégicos", path: "/insights" },
       { label: "Trabalhe Conosco", path: "/trabalhe-conosco" },
       { label: "Contato", path: "/contato" },
+      { label: "Onboarding de Clientes", path: "/cliente/onboarding" },
       { label: "Política de Privacidade", action: "privacy" },
       { label: "Termos de Uso", action: "terms" },
     ],
@@ -131,6 +146,7 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
       { label: "Insights Estratégicos", path: "/insights" },
       { label: "Careers", path: "/trabalhe-conosco" },
       { label: "Contact", path: "/contato" },
+      { label: "Client Onboarding", path: "/cliente/onboarding" },
       { label: "Privacy Policy", action: "privacy" },
       { label: "Termos de Uso", action: "terms" },
     ],
@@ -184,6 +200,7 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
       { label: "Insights Estratégicos", path: "/insights" },
       { label: "Trabaja con nosotros", path: "/trabalhe-conosco" },
       { label: "Contacto", path: "/contato" },
+      { label: "Onboarding de clientes", path: "/cliente/onboarding" },
       { label: "Política de Privacidad", action: "privacy" },
       { label: "Términos de Uso", action: "terms" },
     ],
@@ -388,15 +405,71 @@ export default function Footer({ onNavigate, language }: FooterProps) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleInternalFooterLink = (event: MouseEvent<HTMLAnchorElement>, page: string) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    event.preventDefault();
+    handleLinkClick(page);
+  };
+
+  const internalLinkClassName = "inline-flex min-h-11 items-center text-left text-zinc-300 transition-colors hover:text-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950";
+  const renderInternalLinks = (links: ReadonlyArray<{ label: string; path: string }>) => links.map((link) => (
+    <li key={link.path}>
+      <a
+        href={link.path}
+        onClick={(event) => handleInternalFooterLink(event, link.path)}
+        className={internalLinkClassName}
+      >
+        {link.label}
+      </a>
+    </li>
+  ));
+  const renderInstitutionLinks = () => copy.institutionLinks.map((link) => (
+    <li key={link.label + (link.path ?? link.action)}>
+      {link.action === "privacy" || link.action === "terms" ? (
+        <button
+          type="button"
+          onClick={() => setActiveModal(link.action)}
+          className="inline-flex min-h-11 items-center text-left text-zinc-300 transition-colors hover:text-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+        >
+          {link.label}
+        </button>
+      ) : link.path ? (
+        <a
+          href={link.path}
+          onClick={(event) => handleInternalFooterLink(event, link.path!)}
+          className={internalLinkClassName}
+        >
+          {link.label}
+        </a>
+      ) : null}
+    </li>
+  ));
+  const renderEcosystemLinks = () => ecosystemLinks.map((property) => (
+    <li key={property.key}>
+      <a
+        href={property.url}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex min-h-11 items-center gap-1.5 text-left text-zinc-400 transition-colors hover:text-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+      >
+        <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+        {property.label}
+      </a>
+    </li>
+  ));
+
   return (
     <footer id="main-footer" className="bg-charcoal-950 border-t border-white/[0.05] pt-16 pb-12 relative overflow-hidden">
       {/* Background visual geometry */}
       <div className="absolute right-0 bottom-0 w-80 h-80 bg-brand/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-16">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-8 lg:grid-cols-6 lg:gap-8 mb-14">
           {/* Brand Column */}
-          <div className="space-y-6 lg:col-span-1">
+          <div className="order-1 space-y-6 lg:order-none lg:col-span-1">
             <div>
               <Image
                 src="/brand/logos/logo-horizontal-mono-white.svg"
@@ -419,7 +492,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("Instagram", "https://www.instagram.com/tag08.com.br/", "footer-social")}
-                  className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+                  className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label="Siga-nos no Instagram"
                 >
                   <Instagram className="w-4 h-4" />
@@ -429,7 +502,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/company/tag08-com-br/", "footer-social")}
-                  className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+                  className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label="Siga-nos no LinkedIn"
                 >
                   <Linkedin className="w-4 h-4" />
@@ -439,7 +512,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("YouTube", TAG08_OFFICIAL_YOUTUBE_URL, "footer-social")}
-                  className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+                  className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label="Inscreva-se no YouTube"
                 >
                   <Youtube className="w-4 h-4" />
@@ -449,7 +522,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("Facebook", "https://www.facebook.com/tag08.com.br", "footer-social")}
-                  className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+                  className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label="Siga-nos no Facebook"
                 >
                   <Facebook className="w-4 h-4" />
@@ -459,7 +532,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("X", "https://x.com/TAG08_com_br", "footer-social")}
-                  className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+                  className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label="Siga-nos no Twitter"
                 >
                   <Twitter className="w-4 h-4" />
@@ -469,7 +542,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("Pinterest", TAG08_OFFICIAL_PINTEREST_URL, "footer-social")}
-                  className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 pointer-events-auto"
+                  className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 pointer-events-auto"
                   aria-label="Siga-nos no Pinterest"
                 >
                   <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
@@ -485,105 +558,70 @@ export default function Footer({ onNavigate, language }: FooterProps) {
             </div>
           </div>
 
-              {/* Soluções (Services) Sitemap */}
-              <div>
-                <h4 className="font-display font-semibold text-white text-sm tracking-wide mb-6">
-                  {copy.servicesTitle}
-                </h4>
-                <ul className="space-y-3 font-sans text-sm text-zinc-400">
-                  {copy.serviceLinks.map((link) => (
-                    <li key={link.path}>
-                      <button
-                        onClick={() => handleLinkClick(link.path)}
-                        className="hover:text-brand transition-colors text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 cursor-pointer flex items-center gap-1.5"
-                      >
-                        {link.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Programas (Partnerships & Portals) Sitemap */}
-              <div>
-                <h4 className="font-display font-semibold text-white text-sm tracking-wide mb-6">
-                  {copy.programsTitle}
-                </h4>
-                <ul className="space-y-3 font-sans text-sm text-zinc-400">
-                  {copy.programLinks.map((link) => (
-                    <li key={link.path}>
-                      <button
-                        onClick={() => handleLinkClick(link.path)}
-                        className="group hover:text-brand transition-colors text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 cursor-pointer flex items-center gap-1.5"
-                      >
-                        <span>{link.label}</span>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Direct Sitemap (Institucional) */}
-              <div>
-                <h4 className="font-display font-semibold text-white text-sm tracking-wide mb-6">
-                  {copy.institutionTitle}
-                </h4>
-                <ul className="space-y-3 font-sans text-sm text-zinc-400">
-                  {copy.institutionLinks.map((link) => (
-                    <li key={link.label + (link.path ?? link.action)}>
-                      <button
-                        onClick={() => {
-                          if (link.action === "privacy" || link.action === "terms") {
-                            setActiveModal(link.action);
-                          } else if (link.path) {
-                            handleLinkClick(link.path);
-                          }
-                        }}
-                        className="hover:text-brand transition-colors text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 cursor-pointer"
-                      >
-                        {link.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-          {/* Ecosystem cross-domain links */}
-          <div>
-            <h4 className="font-display font-semibold text-white text-sm tracking-wide mb-6">
-              {copy.ecosystemTitle}
+          {/* Primary navigation: compact on mobile, exposed on larger screens. */}
+          <div className="order-3 lg:order-none">
+            <h4 className="mb-4 hidden font-display text-sm font-semibold tracking-wide text-white lg:block">
+              {copy.servicesTitle}
             </h4>
-            <ul className="space-y-3 font-sans text-sm text-zinc-400">
-              {ecosystemLinks.map((property) => (
-                <li key={property.key}>
-                  <a
-                    href={property.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-brand transition-colors text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 cursor-pointer flex items-center gap-1.5"
-                  >
-                    <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
-                    {property.label}
-                  </a>
-                </li>
-              ))}
+            <ul className="hidden space-y-1 font-sans text-sm lg:block">
+              {renderInternalLinks(copy.serviceLinks)}
             </ul>
+            <FooterMobileSection title={copy.servicesTitle}>
+              {renderInternalLinks(copy.serviceLinks)}
+            </FooterMobileSection>
           </div>
 
-          {/* Direct Contact */}
-              <div>
-                <h4 className="font-display font-semibold text-white text-sm tracking-wide mb-6">
+          <div className="order-3 lg:order-none">
+            <h4 className="mb-4 hidden font-display text-sm font-semibold tracking-wide text-white lg:block">
+              {copy.programsTitle}
+            </h4>
+            <ul className="hidden space-y-1 font-sans text-sm lg:block">
+              {renderInternalLinks(copy.programLinks)}
+            </ul>
+            <FooterMobileSection title={copy.programsTitle}>
+              {renderInternalLinks(copy.programLinks)}
+            </FooterMobileSection>
+          </div>
+
+          <div className="order-3 lg:order-none">
+            <h4 className="mb-4 hidden font-display text-sm font-semibold tracking-wide text-white lg:block">
+              {copy.institutionTitle}
+            </h4>
+            <ul className="hidden space-y-1 font-sans text-sm lg:block">
+              {renderInstitutionLinks()}
+            </ul>
+            <FooterMobileSection title={copy.institutionTitle}>
+              {renderInstitutionLinks()}
+            </FooterMobileSection>
+          </div>
+
+          {/* Secondary ecosystem navigation */}
+          <div className="order-3 lg:order-none">
+            <h4 className="mb-4 hidden font-display text-sm font-semibold tracking-wide text-zinc-300 lg:block">
+              {copy.ecosystemTitle}
+            </h4>
+            <ul className="hidden space-y-1 font-sans text-sm lg:block">
+              {renderEcosystemLinks()}
+            </ul>
+            <FooterMobileSection title={copy.ecosystemTitle}>
+              {renderEcosystemLinks()}
+            </FooterMobileSection>
+          </div>
+
+          {/* Direct contact is the first actionable block on mobile. */}
+          <div className="order-2 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 lg:order-none lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0">
+                <h4 className="mb-4 font-display text-sm font-semibold tracking-wide text-white">
                   {copy.connectTitle}
                 </h4>
-                <ul className="space-y-4 font-sans text-sm text-zinc-400">
+                <ul className="space-y-4 font-sans text-sm text-zinc-300">
                   <li className="flex items-start gap-3">
                     <Mail className="w-4 h-4 text-brand mt-0.5" />
                     <div>
-                      <p className="text-xs text-zinc-400 uppercase font-sans tracking-wider">{copy.contactEmailTitle}</p>
+                      <p className="text-xs text-zinc-300 uppercase font-sans tracking-wider">{copy.contactEmailTitle}</p>
                       <a
                         href="mailto:contato@tag08.com.br"
                         onClick={() => handleOutboundClick("contato@tag08.com.br", "mailto:contato@tag08.com.br", "footer-contact-email")}
-                        className="text-white hover:text-brand transition-colors font-sans text-xs"
+                        className="inline-flex min-h-11 items-center text-white transition-colors hover:text-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 font-sans text-sm"
                       >
                         contato@tag08.com.br
                       </a>
@@ -592,8 +630,8 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   <li className="flex items-start gap-3">
                     <Phone className="w-4 h-4 text-brand mt-0.5" />
                     <div>
-                      <p className="text-xs text-zinc-400 uppercase font-sans tracking-wider">{copy.contactPhoneTitle}</p>
-                      <div className="space-y-2 mt-1 font-sans text-xs">
+                      <p className="text-xs text-zinc-300 uppercase font-sans tracking-wider">{copy.contactPhoneTitle}</p>
+                      <div className="space-y-1 mt-1 font-sans text-sm">
                         {TAG08_WHATSAPP_CONTACTS.map((contact) => (
                           <div key={contact.key}>
                             <a
@@ -601,7 +639,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                               target="_blank"
                               rel="noreferrer"
                               onClick={() => handleOutboundClick(contact.label, contact.href, "footer-contact-whatsapp")}
-                              className={`transition-colors inline-flex items-center gap-1.5 ${
+                              className={`min-h-11 transition-colors inline-flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 ${
                                 contact.key === "brazil" ? "text-white hover:text-brand" : "text-white hover:text-brand-secondary"
                               }`}
                               aria-label={`Abrir WhatsApp ${contact.label}`}
@@ -619,35 +657,35 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   <li className="flex items-start gap-3">
                     <MapPin className="w-4 h-4 text-brand mt-0.5" />
                     <div>
-                      <p className="text-xs text-zinc-400 uppercase font-sans tracking-wider">{copy.locationTitle}</p>
+                      <p className="text-xs text-zinc-300 uppercase font-sans tracking-wider">{copy.locationTitle}</p>
                       <a
                         href={officialContact.googleBusinessUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-white text-sm hover:text-brand transition-colors"
+                        className="inline-flex min-h-11 items-center text-sm text-white transition-colors hover:text-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                       >
                         {copy.locationValue}
                       </a>
                     </div>
                   </li>
                 </ul>
-              </div>
+          </div>
         </div>
 
         {/* Brand statement / certifications */}
-        <div className="py-8 border-t border-b border-white/[0.04] grid grid-cols-1 md:grid-cols-2 gap-6 items-center font-sans text-xs text-zinc-400">
-          <div className="flex flex-wrap items-center gap-4">
-            <span className="text-zinc-400 uppercase tracking-widest text-xs">TAG08 ACADEMY &amp; PROCESS:</span>
-            <span className="flex items-center gap-1 text-zinc-450 uppercase text-xs"><CheckCircle className="w-3.5 h-3.5 text-brand" /> Atendimento Consultivo</span>
-            <span className="flex items-center gap-1 text-zinc-450 uppercase text-xs"><CheckCircle className="w-3.5 h-3.5 text-brand" /> Entrega sistêmica</span>
+        <div className="grid grid-cols-1 items-center gap-4 border-y border-white/[0.08] py-6 font-sans text-sm text-zinc-300 md:grid-cols-2 md:gap-6">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="text-xs font-medium uppercase tracking-wide text-zinc-300">TAG08 ACADEMY &amp; PROCESS:</span>
+            <span className="flex items-center gap-1.5 text-sm text-zinc-300"><CheckCircle className="h-3.5 w-3.5 text-brand" /> Atendimento Consultivo</span>
+            <span className="flex items-center gap-1.5 text-sm text-zinc-300"><CheckCircle className="h-3.5 w-3.5 text-brand" /> Entrega sistêmica</span>
           </div>
-          <div className="md:text-right uppercase tracking-widest text-xs text-zinc-400">
+          <div className="max-w-xl text-sm leading-relaxed text-zinc-300 md:ml-auto md:text-right">
             TAG08 CONSULTORIA E MARKETING LTDA &bull; CNPJ: 26.828.685/0001-52 &bull; Registrado e Desenvolvido de Forma Estratégica
           </div>
         </div>
 
         {/* Legal / Copyright row */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between font-sans text-xs text-zinc-400 gap-4">
+        <div className="flex flex-col items-center justify-between gap-4 pt-6 font-sans text-sm text-zinc-300 md:flex-row">
           <p>&copy; {new Date().getFullYear()} TAG08. Todos os direitos reservados.</p>
           <div className="flex gap-6">
             <button

@@ -1,5 +1,17 @@
 # CHANGELOG - TAG08
 
+## 2026-09-16
+
+- Feita a inicialização da prévia editorial detectar `:3101` já ocupado e orientar a reutilização da aba, evitando o erro técnico `EADDRINUSE` ao executar `npm run dev` duas vezes.
+- Feito `npm run dev` abrir a referência editorial em `:3101`; a simulação pública ficou explícita em `npm run dev:public-preview`, na porta `:3212`.
+- Corrigida a reescrita de assets públicos pelo proxy de idioma. Os retratos preservados da equipe em `/team/*.jpg` voltaram a ser servidos, com teste de regressão.
+- Ignorado o cache `.next-review/` pelo Git para que artefatos de desenvolvimento não contaminem o estado do projeto.
+- Corrigida a varredura do Tailwind: ela agora lê somente `src`, impedindo que CSS gerado em caches do Next seja interpretado novamente como classes. O cache editorial corrompido foi recriado e a prévia de revisão voltou a compilar.
+- Definida a prévia editorial identificada por “REVISÃO LOCAL — NÃO PUBLICADO” como referência interna de evolução. A prévia pública permanece um recorte deliberado de conteúdo autorizado, sem remover o trabalho preservado.
+- Separados os runtimes locais para eliminar a alternância entre versões: a prévia do código-fonte usa `:3212` e `.next-dev`; a prévia editorial usa `:3101` e `.next-review`; Docker permanece em `127.0.0.1:3000` como imagem compilada. O comando de desenvolvimento recusa limpar o cache quando sua porta já está em uso.
+- Reconciliada a DEC-001 com o histórico Git: `p0-routing-secret-containment` foi integrada pelo merge `5126504`; `main` é a linha de trabalho atual.
+- Reclassificados como pendentes os perfis de equipe em `/sobre`: os dados e a estrutura foram preservados para revisão local, mas deixaram de renderizar publicamente. Nenhuma rota, componente de página, SEO ou melhoria técnica foi revertido.
+
 ## 2026-09-15
 
 - Fechada a integração da PR #1 em `main` (commit `5126504`) e transformado `main` no novo checkpoint. Missões futuras usam branches curtas `p<numero>-<tema>`, eliminando a dependência de uma branch de reconciliação já concluída.

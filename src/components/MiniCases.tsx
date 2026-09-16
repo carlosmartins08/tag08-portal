@@ -185,22 +185,22 @@ export default function MiniCases({
                 key={`${logo.name}-${idx}`}
                 data-evidence-key={logo.evidenceKey || `mini-case/${logo.name}`}
                 variants={prefersReducedMotion ? undefined : itemVariants}
-                className="tag08-card tag08-card--interactive p-6 flex flex-col justify-between min-h-[180px] group relative overflow-hidden"
+                className="tag08-card p-6 flex flex-col justify-between min-h-[180px] relative overflow-hidden"
               >
                 {/* Micro Ambient Glow in background */}
-                <div className="absolute top-0 right-0 w-24 h-24 bg-brand/[0.015] blur-3xl rounded-full group-hover:bg-brand/[0.035] transition-all duration-500 pointer-events-none" />
+                <div className="absolute top-0 right-0 w-24 h-24 bg-brand/[0.015] blur-3xl rounded-full pointer-events-none" />
 
                 <div className="flex items-start justify-between relative z-10">
                   {/* Brand Typography & Visual Icon Wrapper */}
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-black/40 border border-white/5 flex items-center justify-center text-zinc-400 group-hover:text-brand group-hover:border-brand/20 transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-black/40 border border-white/5 flex items-center justify-center text-zinc-400">
                       {logo.logoUrl ? (
                         <Image
                           src={logo.logoUrl} 
                           alt={logo.name} 
                           width={24}
                           height={24}
-                          className="w-6 h-6 object-contain filter grayscale invert group-hover:grayscale-0 transition-all"
+                          className="w-6 h-6 object-contain filter grayscale invert"
                           referrerPolicy="no-referrer"
                         />
                       ) : (
@@ -208,7 +208,7 @@ export default function MiniCases({
                       )}
                     </div>
                     <div className="space-y-0.5">
-                      <h4 className="font-display font-black text-white text-base tracking-tight leading-none group-hover:text-brand transition-colors duration-300">
+                      <h4 className="font-display font-black text-white text-base tracking-tight leading-none">
                         {logo.name}
                       </h4>
                       <p className="tag08-meta text-zinc-500">
@@ -218,7 +218,7 @@ export default function MiniCases({
                   </div>
 
                   {/* Tiny action bullet or status indicator */}
-                  <span className="w-1.5 h-1.5 rounded-full bg-zinc-700 group-hover:bg-brand transition-colors duration-300" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
                 </div>
                 <div className="relative z-10 pt-3"><EvidenceReviewBadge evidenceKey={logo.evidenceKey || `mini-case/${logo.name}`} /></div>
 
@@ -240,8 +240,8 @@ export default function MiniCases({
                     </div>
                   )}
 
-                    <span className="tag08-meta text-zinc-600 group-hover:text-zinc-400 transition-colors duration-300 flex items-center gap-1">
-                    Ativo <ArrowUpRight className="w-3 h-3 text-brand" />
+                    <span className="tag08-meta text-zinc-600">
+                    Ativo
                   </span>
                 </div>
               </motion.div>

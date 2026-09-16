@@ -1,10 +1,10 @@
 import { expect, test } from "@playwright/test";
 
-test("produção mostra equipe aprovada sem expor a prévia local", async ({ page }) => {
+test("produção não mostra equipe pendente", async ({ page }) => {
   await page.goto("/sobre", { waitUntil: "domcontentloaded" });
   await expect(page.getByTestId("content-review-banner")).toHaveCount(0);
-  await expect(page.getByTestId("team-profiles")).toBeVisible();
-  await expect(page.getByTestId("team-profiles").locator("[data-evidence-key^='team/']")).toHaveCount(7);
+  await expect(page.getByTestId("team-profiles")).toHaveCount(0);
+  await expect(page.getByTestId("connected-capabilities")).toBeVisible();
 });
 
 test("produção mostra provas aprovadas somente em Assessoria", async ({ page }) => {

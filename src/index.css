@@ -1,4 +1,7 @@
-@import "tailwindcss";
+/* Scan only application source. Build caches contain generated CSS and must
+   never be fed back into Tailwind's class detector. */
+@import "tailwindcss" source(none);
+@source ".";
 
 /* Local files avoid a render-blocking request to Google Fonts on first paint. */
 @font-face {

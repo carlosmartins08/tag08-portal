@@ -7,6 +7,13 @@ const internalLocaleRewriteHeader = "x-tag08-internal-locale-rewrite";
 export function proxy(request: NextRequest) {
   const requestedLocale = request.nextUrl.searchParams.get("lang");
   const url = request.nextUrl.clone();
+
+  // Public assets must bypass locale routing. Without this guard, paths such
+  // as /team/carlos-henrique-martins.jpg are rewritten as application routes.
+  if (/\.[^/]+$/.test(url.pathname)) {
+    return NextResponse.next();
+  }
+
   const [, requestedPrefix] = url.pathname.split("/");
   const currentLocale = supportedLocales.has(requestedPrefix) ? requestedPrefix : undefined;
   const isInternalLocaleRewrite = request.headers.get(internalLocaleRewriteHeader) === "1";

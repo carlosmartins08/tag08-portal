@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { ArrowRight, ArrowUpRight, Cpu, Sparkles, Zap, Target, LineChart, MessageSquare, Settings } from "lucide-react";
@@ -23,42 +23,42 @@ interface Question {
 const auditQuestions: Question[] = [
   {
     id: 1,
-    text: "Qual é o maior gargalo comercial da sua marca no momento?",
+    text: "Como as prioridades de marketing são definidas hoje?",
     options: [
-      { label: "A", value: 10, text: "Não geramos contatos regulares de potenciais clientes (orgânico ou pago)" },
-      { label: "B", value: 20, text: "Até geramos leads, mas são desqualificados, choram preço e travam no comercial" },
-      { label: "C", value: 15, text: "Nossa presença digital é inexistente ou amadora frente aos nossos concorrentes" },
-      { label: "D", value: 25, text: "Falta de governança: temos boas ideias mas falta equipe dedicada para executar" }
+      { label: "A", value: 10, text: "A urgência da semana define o que entra na frente" },
+      { label: "B", value: 16, text: "Existe um plano, mas ele muda com frequência e sem critério claro" },
+      { label: "C", value: 23, text: "As prioridades existem, mas nem toda a equipe ou parceiro as entende" },
+      { label: "D", value: 30, text: "As prioridades são acordadas, registradas e revisadas com quem decide" }
     ]
   },
   {
     id: 2,
-    text: "Qual é o investimento mensal atual (ou planejado) em tráfego pago?",
+    text: "A mensagem da marca se mantém coerente entre os canais?",
     options: [
-      { label: "A", value: 10, text: "Não investimos em anúncios (foco exclusivo em redes sociais orgânicas)" },
-      { label: "B", value: 15, text: "Investimento inicial ou instável (até R$ 2.000 / mês)" },
-      { label: "C", value: 25, text: "Investimento moderado (entre R$ 2.000 e R$ 10.000 / mês)" },
-      { label: "D", value: 30, text: "Investimento em canais sem prioridade clara (acima de R$ 10.000 / mês)" }
+      { label: "A", value: 10, text: "Cada canal ou pessoa fala de um jeito, conforme a demanda" },
+      { label: "B", value: 16, text: "Temos uma ideia de mensagem, mas ela varia muito na prática" },
+      { label: "C", value: 23, text: "A mensagem é clara, porém ainda há pontos de contato desalinhados" },
+      { label: "D", value: 30, text: "Existe uma direção comum para mensagem, canal e material comercial" }
     ]
   },
   {
     id: 3,
-    text: "Como você define o ticket médio da sua solução ou produto principal?",
+    text: "Como as decisões entre equipe, parceiros e liderança são conduzidas?",
     options: [
-      { label: "A", value: 10, text: "Varejo ou baixo valor (Abaixo de R$ 500 por venda/assinatura)" },
-      { label: "B", value: 15, text: "Médio valor transacional (Entre R$ 500 e R$ 2.500)" },
-      { label: "C", value: 25, text: "Serviço especializado ou venda consultiva (Entre R$ 2.500 e R$ 10.000)" },
-      { label: "D", value: 30, text: "Corporativo, Enterprise ou B2B Complexo (Acima de R$ 10.000)" }
+      { label: "A", value: 10, text: "As decisões ficam soltas ou dependem de quem está disponível" },
+      { label: "B", value: 16, text: "Cada parceiro executa sua parte, mas faltam critérios compartilhados" },
+      { label: "C", value: 23, text: "Há responsáveis, mas aprovações e decisões ainda geram retrabalho" },
+      { label: "D", value: 30, text: "Papéis, critérios de aprovação e momentos de revisão estão claros" }
     ]
   },
   {
     id: 4,
-    text: "Quem dita a direção tática e faz a gestão do seu marketing hoje?",
+    text: "Qual é a capacidade real de transformar uma decisão em execução?",
     options: [
-      { label: "A", value: 10, text: "O próprio fundador / dono conduz quando tem tempo livre operacional" },
-      { label: "B", value: 15, text: "Contratamos freelancers ou agências, mas operam soltos, sem direção clara" },
-      { label: "C", value: 20, text: "Temos um departamento interno júnior ou intermediário sem governança estrita" },
-      { label: "D", value: 25, text: "Contamos com um CMO estrategista liderando e acompanhando dados em tempo real" }
+      { label: "A", value: 10, text: "Não há responsável ou rotina para sustentar as decisões" },
+      { label: "B", value: 16, text: "A execução acontece por esforço, mas sem uma sequência sustentável" },
+      { label: "C", value: 23, text: "Há capacidade e responsáveis, embora alguns alinhamentos travem o fluxo" },
+      { label: "D", value: 30, text: "A operação tem donos, rotina de acompanhamento e espaço para ajustes" }
     ]
   }
 ];
@@ -74,6 +74,9 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const [answers, setAnswers] = useState<Record<number, { score: number; text: string }>>({});
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [shouldRestoreQuizFocus, setShouldRestoreQuizFocus] = useState(false);
+  const questionHeadingRef = useRef<HTMLHeadingElement>(null);
+  const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const trackSimulator = useSimulatorTracking("marketing_assessment_quiz", 1, "/servicos/assessoria-marketing-digital-estrategico");
 
   const handleSelectOption = (questionId: number, score: number, text: string) => {
@@ -82,6 +85,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
       ...prev,
       [questionId]: { score, text }
     }));
+    setShouldRestoreQuizFocus(true);
 
     if (currentQuestionIdx < auditQuestions.length - 1) {
       setCurrentQuestionIdx(prev => prev + 1);
@@ -94,6 +98,13 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
     setAnswers({});
     setCurrentQuestionIdx(0);
     setQuizCompleted(false);
+    setShouldRestoreQuizFocus(true);
+  };
+
+  const handlePreviousQuestion = () => {
+    if (currentQuestionIdx === 0) return;
+    setShouldRestoreQuizFocus(true);
+    setCurrentQuestionIdx(prev => prev - 1);
   };
 
   // Diagnostic calculations
@@ -103,7 +114,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
 
   const getDiagnosticOutput = () => {
     const totalScore = calculateTotalScore();
-    if (totalScore <= 35) {
+    if (totalScore <= 45) {
       return {
         level: "Baixa clareza",
         percentage: totalScore,
@@ -112,7 +123,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
         focus: "O primeiro foco costuma ser clareza estratégica e alinhamento de comunicação.",
         recommendation: "A prioridade agora é estruturar a base antes de ampliar a execução."
       };
-    } else if (totalScore <= 60) {
+    } else if (totalScore <= 75) {
       return {
         level: "Clareza em construção",
         percentage: totalScore,
@@ -121,7 +132,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
         focus: "Ajuste de mensagem, consistência e estrutura de canais.",
         recommendation: "Vale organizar prioridades antes de ampliar qualquer frente."
       };
-    } else if (totalScore <= 85) {
+    } else if (totalScore <= 100) {
       return {
         level: "Boa direção",
         percentage: totalScore,
@@ -151,29 +162,65 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
     document.getElementById("diagnostic-audit")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  useEffect(() => {
+    if (!shouldRestoreQuizFocus) return;
+
+    window.requestAnimationFrame(() => {
+      const target = quizCompleted ? resultHeadingRef.current : questionHeadingRef.current;
+      target?.focus();
+      setShouldRestoreQuizFocus(false);
+    });
+  }, [currentQuestionIdx, quizCompleted, shouldRestoreQuizFocus]);
+
   const faqCategories = [
     { id: 0, title: "O QUE É" },
     { id: 1, title: "ESCOPO" },
-    { id: 2, title: "QUANDO FAZ SENTIDO" },
-    { id: 3, title: "EQUIPE INTERNA" },
-    { id: 4, title: "CLAREZA E PRÓXIMO PASSO" }
+    { id: 2, title: "ENCAIXE" },
+    { id: 3, title: "RITMO E PARTICIPAÇÃO" },
+    { id: 4, title: "EQUIPE E DECISÃO" },
+    { id: 5, title: "PRAZO E INVESTIMENTO" },
+    { id: 6, title: "PROMESSAS" }
   ];
 
   const faqQuestions = [
     "O que é a Assessoria de Marketing Estratégico da TAG08?",
     "A assessoria inclui execução de marketing?",
-    "Quando faz sentido contratar assessoria?",
-    "A assessoria substitui uma equipe interna?",
+    "Quando a assessoria faz sentido e quando não é o melhor próximo passo?",
+    "Qual é o ritmo do acompanhamento e o que a marca precisa participar?",
+    "A assessoria substitui a equipe interna ou parceiros externos?",
+    "Quanto tempo dura e como o investimento é definido?",
     "A TAG08 faz promessas com a assessoria?"
   ];
 
   const faqAnswers = [
     "É um acompanhamento para organizar posicionamento, prioridades, comunicação, canais e próximos passos antes da execução. O foco é ajudar a marca a decidir melhor e evitar ações soltas.",
     "Depende do escopo. Em alguns casos a assessoria orienta decisões e organiza o plano. Em outros, pode se conectar com serviços de conteúdo, branding, audiovisual, web ou processos.",
-    "Quando a marca sente que está fazendo muitas ações, mas ainda falta clareza sobre mensagem, público, canais, prioridades ou direção comercial.",
-    "Não necessariamente. A TAG08 pode apoiar a tomada de decisão, orientar prioridades e ajudar a equipe interna ou parceiros externos a trabalharem com mais clareza.",
+    "Ela faz sentido quando há decisões, canais ou parceiros que precisam trabalhar com uma direção comum. Pode não ser o melhor caminho quando a necessidade é apenas uma entrega pontual, quando se espera uma execução pronta sem participação da marca ou quando ainda não há quem possa decidir e acompanhar o processo.",
+    "O ritmo é definido no escopo. Para que a assessoria funcione, a marca precisa garantir acesso ao contexto, uma pessoa com poder de decisão e retornos nos momentos combinados. A TAG08 organiza a condução; decisões de negócio continuam sendo da marca.",
+    "Não. A TAG08 pode orientar prioridades e dar critérios para que equipe interna e parceiros executem melhor. Papéis, responsabilidades, entregas e aprovações são alinhados no início para evitar sobreposição e retrabalho.",
+    "O tempo de acompanhamento e o investimento dependem do contexto, do escopo, da quantidade de frentes e da disponibilidade da operação. A TAG08 só propõe um formato depois de entender o cenário e confirmar que existe encaixe.",
     "Não prometemos crescimento instantâneo, retorno financeiro ou ganho artificial. A assessoria busca construir clareza, critério, consistência e melhoria contínua com responsabilidade."
   ];
+
+  const handleFaqKeyDown = (event: ReactKeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
+    const lastIndex = faqCategories.length - 1;
+    let nextIndex: number | null = null;
+
+    if (event.key === "ArrowDown" || event.key === "ArrowRight") nextIndex = currentIndex === lastIndex ? 0 : currentIndex + 1;
+    if (event.key === "ArrowUp" || event.key === "ArrowLeft") nextIndex = currentIndex === 0 ? lastIndex : currentIndex - 1;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = lastIndex;
+
+    if (nextIndex === null) return;
+
+    event.preventDefault();
+    setActiveFaq(nextIndex);
+    window.requestAnimationFrame(() => document.getElementById(`assessoria-faq-tab-${nextIndex}`)?.focus());
+  };
+
+  const quizProgress = quizCompleted
+    ? 100
+    : Math.round(((currentQuestionIdx + 1) / auditQuestions.length) * 100);
 
   return (
     <div className="bg-charcoal-950 text-white min-h-screen pb-20 relative overflow-hidden">
@@ -265,6 +312,61 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                 <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">{description}</span>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 2 — QUALIFICAÇÃO: o visitante entende o encaixe antes do escopo. */}
+      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-neutral-950 text-left relative z-10">
+        <div className="max-w-7xl mx-auto space-y-10">
+          <div className="tag08-section__header max-w-3xl">
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">Antes de avançar</span>
+            <h2 className="tag08-section__heading font-display font-black text-3xl sm:text-4xl text-white">
+              A assessoria resolve falta de direção. Não substitui uma decisão que a marca ainda não quer tomar.
+            </h2>
+            <p className="tag08-section__copy text-zinc-400 text-sm font-sans">
+              O primeiro passo não é contratar mais uma frente. É confirmar se existe um problema de clareza, prioridade ou coordenação que precisa ser resolvido antes da execução.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <article className="tag08-surface-card rounded-3xl border p-6 sm:p-8 space-y-5">
+              <div className="flex items-center gap-2 text-brand tag08-meta text-xs font-bold uppercase tracking-widest">
+                <span className="h-2 w-2 rounded-full bg-brand" />
+                Há encaixe quando
+              </div>
+              <ul className="space-y-3 text-xs sm:text-sm leading-relaxed text-zinc-300">
+                {[
+                  "A marca já tem frentes, pessoas ou parceiros em movimento, mas falta uma direção comum.",
+                  "As prioridades mudam sem critério, e cada decisão reabre discussões ou cria retrabalho.",
+                  "Existe disposição para compartilhar contexto, participar das decisões e sustentar uma rotina possível."
+                ].map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <span className="text-brand font-black">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+
+            <article className="rounded-3xl border border-white/[0.05] bg-white/[0.01] p-6 sm:p-8 space-y-5">
+              <div className="flex items-center gap-2 text-zinc-500 tag08-meta text-xs font-bold uppercase tracking-widest">
+                <span className="h-2 w-2 rounded-full bg-zinc-600" />
+                Talvez não seja agora se
+              </div>
+              <ul className="space-y-3 text-xs sm:text-sm leading-relaxed text-zinc-400">
+                {[
+                  "A necessidade é uma entrega isolada, com escopo já totalmente definido.",
+                  "A expectativa é receber uma solução pronta sem acesso ao contexto ou participação nas decisões.",
+                  "Ainda não existe uma pessoa disponível para validar prioridades, aprovar caminhos e acompanhar a evolução."
+                ].map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <span className="text-zinc-600 font-black">—</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
           </div>
         </div>
       </section>
@@ -417,7 +519,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
               return (
                 <div 
                   key={idx}
-                  className="bg-charcoal-900 border border-white/[0.05] rounded-2xl p-6 sm:p-8 hover:border-brand/30 hover:bg-white/[0.015] transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-80 group"
+                  className="bg-charcoal-900 border border-white/[0.05] rounded-2xl p-6 sm:p-8 hover:border-brand/30 hover:bg-white/[0.015] transition-all duration-300 relative overflow-hidden flex flex-col justify-between min-h-[15rem] sm:min-h-[17rem] lg:h-80 group"
                 >
                   <div className="absolute inset-0 bg-[radial-gradient(#ffffff01_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
                   
@@ -496,15 +598,23 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                     </div>
 
                     {/* Progress feedback bar */}
-                    <div className="w-full h-1 bg-white/[0.02] rounded-full overflow-hidden">
+                    <div
+                      role="progressbar"
+                      aria-label="Progresso do diagnóstico"
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-valuenow={quizProgress}
+                      aria-valuetext={`Pergunta ${currentQuestionIdx + 1} de ${auditQuestions.length}`}
+                      className="w-full h-1 bg-white/[0.02] rounded-full overflow-hidden"
+                    >
                       <div 
                         className="h-full bg-brand transition-all duration-300"
-                        style={{ width: `${((currentQuestionIdx) / auditQuestions.length) * 100}%` }}
+                        style={{ width: `${quizProgress}%` }}
                       />
                     </div>
 
                     {/* Question text */}
-                    <h3 className="font-display font-semibold text-lg sm:text-xl text-white leading-snug">
+                    <h3 ref={questionHeadingRef} tabIndex={-1} className="font-display font-semibold text-lg sm:text-xl text-white leading-snug">
                       {auditQuestions[currentQuestionIdx].text}
                     </h3>
 
@@ -513,17 +623,39 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                       {auditQuestions[currentQuestionIdx].options.map((opt, optIdx) => (
                         <button
                           key={optIdx}
+                          type="button"
                           onClick={() => handleSelectOption(auditQuestions[currentQuestionIdx].id, opt.value, opt.text)}
-                          className="w-full text-left p-4 rounded-xl border border-white/[0.04] bg-white/[0.01] hover:bg-white/[0.03] hover:border-brand/40 group transition-all duration-200 flex gap-4 items-center focus:outline-none cursor-pointer"
+                          aria-pressed={answers[auditQuestions[currentQuestionIdx].id]?.score === opt.value}
+                          className={`w-full text-left p-4 rounded-xl border transition-all duration-200 flex gap-4 items-center focus:outline-none cursor-pointer ${
+                            answers[auditQuestions[currentQuestionIdx].id]?.score === opt.value
+                              ? "border-brand/60 bg-brand/[0.08]"
+                              : "border-white/[0.04] bg-white/[0.01] hover:bg-white/[0.03] hover:border-brand/40"
+                          }`}
                         >
-                          <div className="w-6 h-6 rounded-lg bg-white/[0.03] group-hover:bg-brand/20 border border-white/10 group-hover:border-brand/40 flex items-center justify-center font-sans text-xs text-zinc-400 group-hover:text-brand font-bold shrink-0">
+                          <div className={`w-6 h-6 rounded-lg border flex items-center justify-center font-sans text-xs font-bold shrink-0 ${
+                            answers[auditQuestions[currentQuestionIdx].id]?.score === opt.value
+                              ? "bg-brand text-black border-brand"
+                              : "bg-white/[0.03] border-white/10 text-zinc-400"
+                          }`}>
                             {opt.label}
                           </div>
-                          <span className="text-zinc-300 text-xs sm:text-sm font-sans font-medium group-hover:text-white transition-colors">
+                          <span className="text-zinc-300 text-xs sm:text-sm font-sans font-medium transition-colors">
                             {opt.text}
                           </span>
                         </button>
                       ))}
+                    </div>
+
+                    <div className="flex flex-col-reverse gap-3 border-t border-white/[0.04] pt-5 sm:flex-row sm:items-center sm:justify-between">
+                      <button
+                        type="button"
+                        onClick={handlePreviousQuestion}
+                        disabled={currentQuestionIdx === 0}
+                        className="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.01] px-4 py-2 text-xs tag08-action font-bold text-zinc-300 transition-colors hover:border-white/20 hover:bg-white/[0.04] disabled:cursor-not-allowed disabled:border-white/[0.04] disabled:text-zinc-600 disabled:hover:bg-white/[0.01]"
+                      >
+                        Voltar uma pergunta
+                      </button>
+                      <p className="text-xs text-zinc-500 sm:text-right">Sua resposta pode ser alterada antes da leitura final.</p>
                     </div>
                   </motion.div>
                 ) : (
@@ -550,7 +682,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-6 rounded-2xl border border-white/[0.06] bg-black/40">
                             <div className="text-center sm:text-left space-y-1.5 shrink-0">
                               <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">LEITURA ATUAL</span>
-                              <h4 className={`font-display font-black text-3xl uppercase leading-none ${diag.color}`}>{diag.level}</h4>
+                              <h4 ref={resultHeadingRef} tabIndex={-1} className={`font-display font-black text-3xl uppercase leading-none ${diag.color}`}>{diag.level}</h4>
                               <p className="text-zinc-400 text-xs font-sans font-bold uppercase text-brand mt-1">{diag.recommendation}</p>
                             </div>
                             <div className="relative flex items-center justify-center w-24 h-24 rounded-full bg-charcoal-950 border border-white/5 shadow-inner">
@@ -668,6 +800,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                     onClick={() => trackSimulator("cta_clicked")}
                     target="_blank"
                     rel="noreferrer"
+                    aria-label="Falar com a TAG08 pelo WhatsApp, abre em nova guia"
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-black text-white px-5 py-3 text-xs sm:text-sm tag08-meta font-bold uppercase tracking-widest transition-transform hover:-translate-y-0.5"
                   >
                     <span>FALAR COM A TAG08</span>
@@ -687,8 +820,8 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
 
           <div className="order-1 rounded-[32px] sm:rounded-[40px] bg-charcoal-950 border border-white/[0.05] p-6 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.02)_1.2px,transparent_1.2px)] [background-size:24px_24px] pointer-events-none" />
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
-              <div className="lg:col-span-4 flex flex-col justify-between space-y-8 text-left">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-stretch relative z-10">
+              <div className="md:col-span-1 lg:col-span-4 flex flex-col justify-between space-y-8 text-left">
                 <div className="space-y-4">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
                     D&Uacute;VIDAS SOBRE ASSESSORIA
@@ -701,14 +834,18 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   </p>
                 </div>
 
-                <div className="space-y-3 pt-4">
+                <div role="tablist" aria-label="Dúvidas sobre assessoria" aria-orientation="vertical" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 pt-4">
                   {faqCategories.map((item) => (
                     <button
                       key={item.id}
+                      id={`assessoria-faq-tab-${item.id}`}
                       type="button"
+                      role="tab"
                       onClick={() => setActiveFaq(item.id)}
-                      aria-expanded={activeFaq === item.id}
+                      onKeyDown={(event) => handleFaqKeyDown(event, item.id)}
+                      aria-selected={activeFaq === item.id}
                       aria-controls="assessoria-faq-panel"
+                      tabIndex={activeFaq === item.id ? 0 : -1}
                       className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all text-left group cursor-pointer ${
                         activeFaq === item.id
                           ? "bg-brand text-black border-brand shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.12)]"
@@ -727,7 +864,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                 </div>
               </div>
 
-              <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
+              <div className="md:col-span-1 lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[19rem] sm:min-h-[22rem] lg:min-h-[27.5rem] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
                 <Image
                   fill
                   sizes="(max-width: 1024px) 100vw, 34vw"
@@ -747,8 +884,9 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
 
                 <div
                   id="assessoria-faq-panel"
-                  role="region"
-                  aria-live="polite"
+                  role="tabpanel"
+                  aria-labelledby={`assessoria-faq-tab-${activeFaq}`}
+                  tabIndex={0}
                   className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left font-sans"
                 >
                   <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
@@ -765,7 +903,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                 </div>
               </div>
 
-              <div className="lg:col-span-4 flex flex-col justify-between gap-4">
+              <div className="md:col-span-2 lg:col-span-4 flex flex-col sm:flex-row lg:flex-col justify-between gap-4">
                 <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                   <div className="space-y-2">
                     <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
@@ -795,6 +933,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                     href={buildBrazilWhatsAppUrl("Olá TAG08! Gostaria de entender se a assessoria estratégica faz sentido para a minha marca.")}
                     target="_blank"
                     rel="noreferrer"
+                    aria-label="Falar com a TAG08 pelo WhatsApp, abre em nova guia"
                     className="group flex items-center justify-between text-xs font-sans font-bold text-black border-t border-black/10 pt-2 cursor-pointer select-none"
                   >
                     <span>FALAR COM A TAG08</span>

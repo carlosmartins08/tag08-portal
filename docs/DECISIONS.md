@@ -14,7 +14,7 @@ Este arquivo registra decisões que governam o estado atual. Ele não substitui 
 
 - Data: `2026-09-15`
 - Decisão: `p0-routing-secret-containment` é a candidata à base de integração; `main` continua sendo o destino de integração.
-- Estado: ativa, sem merge autorizado ainda.
+- Estado: reconciliada. A integracao ocorreu no merge `5126504`; `ee4d9ed` e o HEAD local/remoto subsequente neste checkpoint. O registro abaixo prevalece sobre a redacao anterior desta decisao.
 - Motivo: a branch candidata contém dez commits posteriores à `main`, incluindo correções de segurança, rotas, i18n, acessibilidade e testes.
 - Critérios antes do merge: árvore de trabalho limpa, mudanças locais separadas por objetivo, documentação reconciliada e validações executadas.
 
@@ -52,3 +52,17 @@ Este arquivo registra decisões que governam o estado atual. Ele não substitui 
 - Decisão: Carlos Henrique Martins é a autoridade final para classificar cada evidência. O registro executável deve guardar status, rotas autorizadas, responsável, data, referência verificável não sensível e validade quando existir.
 - Regra: `npm run dev:content-review` pode exibir localmente itens `pendente`, sempre com faixa e badge de revisão. O modo só funciona em desenvolvimento; produção, rota, sitemap e metadata continuam estritamente no modo público.
 - Encerramento: cada alteração de status exige `npm run content:status`, revisão visual local, testes e commit focado. O histórico Git explica contexto, mas não vale como autorização.
+
+## DEC-007 — Perfis de equipe preservados, fora da página pública
+
+- Data: `2026-09-16`
+- Decisão: os sete perfis de equipe em `/sobre` permanecem no código e disponíveis apenas na prévia de revisão, mas não renderizam no site público.
+- Motivo: restaurar a versão editorial atual de `/sobre` sem desfazer melhorias técnicas, estrutura, rota ou SEO acumulados desde a reintrodução dos perfis.
+- Reativação: exige nova decisão explícita de publicação; a mudança deve ocorrer somente em `src/content/publicEvidence.ts` e ser validada nas prévias pública e de revisão.
+
+## DEC-008 — Prévia editorial é a referência de evolução interna
+
+- Data: `2026-09-16`
+- Decisão: a versão identificada por “REVISÃO LOCAL — NÃO PUBLICADO”, aberta por `npm run dev` em `http://localhost:3101`, é a referência visual e editorial para continuidade do trabalho. `npm run dev:content-review` permanece como alias explícito.
+- Regra: a prévia pública em `http://localhost:3212` representa somente o recorte que pode ser publicado com as evidências classificadas. Ausências nessa prévia não autorizam remover estrutura, perfis, integrações ou conteúdo preservado.
+- Limite: essa decisão não publica automaticamente nenhum item pendente. A faixa de revisão deve permanecer visível enquanto houver conteúdo não aprovado.
