@@ -1,6 +1,6 @@
 # Estado do projeto — TAG08
 
-Atualizado em: `2026-09-15`
+Atualizado em: `2026-09-18`
 
 ## Estado de integração
 
@@ -29,7 +29,7 @@ Atualizado em: `2026-09-15`
 ## Alterações locais a preservar e separar
 
 - Discoverability: `/llms.txt` é servido por uma rota estática do Next. O checkpoint focado inclui a remoção do arquivo de raiz, a exclusão no `proxy` e a verificação de rota.
-- Ativos de clientes: `public/clients/` está fora de rastreamento. Os arquivos não estão associados a uso público no código e exigem validação de marca/direito de uso antes de serem incluídos em qualquer página.
+- Ativos de clientes: os SVGs em `public/clients/` estão versionados. As 12 marcas autorizadas para `/sobre` são controladas por `src/content/publicEvidence.ts`; qualquer novo logo exige a mesma aprovação por item e rota.
 - Evidências públicas: o gate em `src/content/publicEvidence.ts` libera somente mini-cases e depoimentos internos em Assessoria. Os perfis da equipe em `/sobre` permanecem preservados, mas pendentes e fora da renderização pública. Home, portfólio e cases indexáveis continuam bloqueados; os cases pendentes também não geram rota ou sitemap. `npm run content:status` torna cada supressão visível e `npm run dev:content-review` permite revisão local identificada, sem publicação.
 - Referência editorial interna: a prévia em `http://localhost:3101`, identificada por “REVISÃO LOCAL — NÃO PUBLICADO”, é a versão completa aprovada para evolução e revisão. A prévia pública em `:3212` continua sendo a simulação estrita do que pode ser publicado hoje; suas supressões não equivalem à perda do trabalho editorial.
 

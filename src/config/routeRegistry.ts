@@ -286,9 +286,9 @@ export const routeRegistry: RouteDefinition[] = [
     includeInSitemap: true,
     changefreq: "weekly",
     priority: "0.8",
-    title: "Assessoria de Marketing Digital Estratégico | TAG08",
+    title: "Assessoria de Marketing Estratégico | TAG08",
     description:
-      "Eleve sua atração comercial com direção e performance sênior. Acesse o diagnóstico inteligente e mude o posicionamento do seu marketing digital.",
+      "Assessoria de marketing estratégico para empresas que precisam organizar posicionamento, prioridades, comunicação, canais e planejamento antes de ampliar a execução.",
     isServicePage: true,
     aliases: ["/assessoria-marketing-digital-estrategico"]
   },

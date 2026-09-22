@@ -49,7 +49,7 @@ export const i18n = {
       statusTag: "SP | Aberto para projetos",
       languageLabel: "Idioma",
       servicePages: [
-        { path: "/servicos/assessoria-marketing-digital-estrategico", name: "Assessoria de Marketing", desc: "Direção CMO externa e performance de canais" },
+        { path: "/servicos/assessoria-marketing-digital-estrategico", name: "Assessoria de Marketing", desc: "Diagnóstico, prioridades e planejamento de marketing" },
         { path: "/servicos/gestao-de-redes-sociais", name: "Gestão de Redes Sociais", desc: "Posicionamento recorrente com alto engajamento" },
         { path: "/servicos/branding-identidade", name: "Branding & Identidade", desc: "Linguagem visual corporativa e narrativa de marca" },
         { path: "/servicos/desenvolvimento-web", name: "Desenvolvimento Web", desc: "Portais institucionais leves e páginas de conversão" },
@@ -195,7 +195,7 @@ export const i18n = {
         "/hospedagem-manutencao-sites": "Hospedagem & Manutenção",
       },
       servicePages: [
-        { path: "/servicos/assessoria-marketing-digital-estrategico", shortName: "Assessoria", name: "Assessoria CMO" },
+        { path: "/servicos/assessoria-marketing-digital-estrategico", shortName: "Assessoria", name: "Assessoria de Marketing Estratégico" },
         { path: "/servicos/gestao-de-redes-sociais", shortName: "Redes Sociais", name: "Gestão Social Media" },
         { path: "/servicos/branding-identidade", shortName: "Branding", name: "Branding & Identidade" },
         { path: "/servicos/desenvolvimento-web", shortName: "Dev Web", name: "Desenvolvimento Web" },
@@ -245,6 +245,10 @@ export const i18n = {
         "/servicos/producao-audiovisual": {
           title: "Produção Audiovisual & Eventos | TAG08",
           description: "Produções com posicionamento técnico: roteiro, captação e pós-produção para marcas que vendem pelo conteúdo.",
+        },
+        "/servicos/assessoria-marketing-digital-estrategico": {
+          title: "Assessoria de Marketing Estratégico | TAG08",
+          description: "Assessoria de marketing estratégico para empresas que precisam organizar posicionamento, prioridades, comunicação, canais e planejamento antes de ampliar a execução.",
         },
         "/contato": {
           title: "Contato | Fale com a TAG08",

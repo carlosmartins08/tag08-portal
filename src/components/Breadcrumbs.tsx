@@ -113,19 +113,21 @@ export default function Breadcrumbs({ currentPage, onNavigate, language }: Bread
             <div className="flex items-center gap-2">
               <button
                 onClick={handlePrevService}
-                className="p-1 px-2 text-zinc-400 hover:text-white hover:bg-white/[0.05] rounded transition-colors flex items-center gap-1 text-xs cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+                aria-label={copy.prevServiceLabel}
+                className="min-h-11 min-w-11 px-3 text-zinc-400 hover:text-white hover:bg-white/[0.05] rounded transition-colors flex items-center justify-center gap-1 text-xs cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                 title={copy.prevServiceLabel}
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
-                <span className="hidden xs:inline">{copy.prevServiceLabel}</span>
+                <span>{copy.prevServiceLabel}</span>
               </button>
               <div className="w-[1px] h-4 bg-white/[0.08]" />
               <button
                 onClick={handleNextService}
-                className="p-1 px-2 text-zinc-400 hover:text-white hover:bg-white/[0.05] rounded transition-colors flex items-center gap-1 text-xs cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+                aria-label={copy.nextServiceLabel}
+                className="min-h-11 min-w-11 px-3 text-zinc-400 hover:text-white hover:bg-white/[0.05] rounded transition-colors flex items-center justify-center gap-1 text-xs cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                 title={copy.nextServiceLabel}
               >
-                <span className="hidden xs:inline">{copy.nextServiceLabel}</span>
+                <span>{copy.nextServiceLabel}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>

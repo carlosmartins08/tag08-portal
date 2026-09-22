@@ -2,13 +2,55 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Star } from "lucide-react";
-import { TRUST_REVIEWS } from "../content/googleReviews";
+import { TRUST_REVIEWS, type GoogleReview } from "../content/googleReviews";
 import { getEvidenceVisibilityMode, getVisibleEvidence } from "../content/publicEvidence";
 import { EvidenceReviewBadge } from "./ContentReview";
+
+function getReviewInitials(name: string) {
+  return name
+    .replace(/^(Dra\.?|Dr\.?)\s+/i, "")
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("");
+}
+
+interface ReviewAvatarProps {
+  review: GoogleReview;
+  unavailable: boolean;
+  onUnavailable: (evidenceKey: string) => void;
+  width: number;
+  height: number;
+  className: string;
+}
+
+function ReviewAvatar({ review, unavailable, onUnavailable, width, height, className }: ReviewAvatarProps) {
+  if (!review.avatar || unavailable) {
+    return (
+      <span aria-hidden="true" className={`${className} flex items-center justify-center bg-brand-secondary/10 font-display text-xs font-black tracking-widest text-brand-secondary`}>
+        {getReviewInitials(review.name)}
+      </span>
+    );
+  }
+
+  return (
+    <Image
+      src={review.avatar}
+      alt={review.name}
+      width={width}
+      height={height}
+      className={className}
+      onError={() => onUnavailable(review.evidenceKey)}
+      referrerPolicy="no-referrer"
+    />
+  );
+}
 
 export default function TrustTestimonialsSection() {
   const [activeReview, setActiveReview] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(0);
+  const [unavailableAvatarKeys, setUnavailableAvatarKeys] = useState<Record<string, true>>({});
   const prefersReducedMotion = useReducedMotion();
   const visibleReviews = getVisibleEvidence(TRUST_REVIEWS, (review) => review.evidenceKey, "/servicos/assessoria-marketing-digital-estrategico", getEvidenceVisibilityMode());
 
@@ -21,6 +63,9 @@ export default function TrustTestimonialsSection() {
 
   const isLargeScreen = viewportWidth >= 1024;
   const currentReview = visibleReviews[activeReview] ?? visibleReviews[0];
+  const handleAvatarUnavailable = (evidenceKey: string) => {
+    setUnavailableAvatarKeys((current) => current[evidenceKey] ? current : { ...current, [evidenceKey]: true });
+  };
 
   if (!currentReview) {
     return null;
@@ -73,17 +118,17 @@ export default function TrustTestimonialsSection() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pt-4">
-          <div className="lg:col-span-3 w-full overflow-hidden h-[170px] sm:h-[195px] lg:h-[500px] relative flex items-center lg:items-start select-none">
+          <div className="lg:col-span-3 w-full overflow-x-auto lg:overflow-hidden h-[170px] sm:h-[195px] lg:h-[500px] relative flex items-center lg:items-start snap-x snap-mandatory lg:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <motion.div
               animate={
                 prefersReducedMotion
                   ? { x: 0, y: 0 }
                   : isLargeScreen
                     ? { y: -activeReview * (148 + 16), x: 0 }
-                    : { x: typeof window !== "undefined" && window.innerWidth >= 640 ? -activeReview * (98 + 16) : -activeReview * (85 + 16), y: 0 }
+                    : { x: 0, y: 0 }
               }
               transition={prefersReducedMotion ? { duration: 0 } : { type: "spring", stiffness: 140, damping: 22 }}
-              className="flex flex-row lg:flex-col gap-4 absolute left-4 sm:left-6 lg:left-0 lg:top-0 h-[140px] sm:h-[160px] lg:h-auto items-center lg:items-center w-max lg:w-full py-2"
+              className="relative lg:absolute left-4 sm:left-6 lg:left-0 lg:top-0 flex flex-row lg:flex-col gap-4 h-[140px] sm:h-[160px] lg:h-auto items-center lg:items-center w-max lg:w-full py-2 pr-4 sm:pr-6 lg:pr-0"
             >
               {visibleReviews.map((review, index) => {
                 const isActive = index === activeReview;
@@ -96,19 +141,19 @@ export default function TrustTestimonialsSection() {
                     onClick={() => setActiveReview(index)}
                     aria-pressed={isActive}
                     aria-label={`Selecionar depoimento de ${review.name}`}
-                    className={`shrink-0 cursor-pointer transition-all duration-500 overflow-hidden relative rounded-2xl sm:rounded-[22px] flex items-center justify-center ${
+                    className={`shrink-0 snap-start cursor-pointer transition-all duration-500 overflow-hidden relative rounded-2xl sm:rounded-[22px] flex items-center justify-center ${
                       isActive
                         ? "w-[105px] h-[140px] sm:w-[120px] sm:h-[160px] lg:w-[135px] lg:h-[180px] border-2 border-brand-secondary shadow-[0_4px_30px_rgba(var(--color-brand-secondary-rgb),0.2)] scale-105 z-10 opacity-100 grayscale-0"
                         : "w-[85px] h-[115px] sm:w-[98px] sm:h-[132px] lg:w-[110px] lg:h-[148px] border border-white/[0.06] opacity-35 grayscale hover:opacity-75 hover:grayscale-0 scale-95 hover:scale-98"
                     }`}
                   >
-                    <Image
-                      src={review.avatar}
-                      alt={review.name}
+                    <ReviewAvatar
+                      review={review}
+                      unavailable={Boolean(unavailableAvatarKeys[review.evidenceKey])}
+                      onUnavailable={handleAvatarUnavailable}
                       width={135}
                       height={180}
                       className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
-                      referrerPolicy="no-referrer"
                     />
 
                     {isActive && (
@@ -144,13 +189,13 @@ export default function TrustTestimonialsSection() {
                 <div className="mt-6 pt-5 border-t border-dashed border-white/[0.08] relative z-10">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                      <Image
-                        src={currentReview.avatar}
-                        alt={currentReview.name}
+                      <ReviewAvatar
+                        review={currentReview}
+                        unavailable={Boolean(unavailableAvatarKeys[currentReview.evidenceKey])}
+                        onUnavailable={handleAvatarUnavailable}
                         width={56}
                         height={56}
                         className="w-14 h-14 rounded-full object-cover border-2 border-brand-secondary"
-                        referrerPolicy="no-referrer"
                       />
                       <div className="text-left font-sans">
                         <h4 className="text-white font-display font-semibold text-sm">

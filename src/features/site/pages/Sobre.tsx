@@ -94,6 +94,22 @@ export default function Sobre({ onNavigate }: SobreProps) {
   const visibleComplementaryProfiles = getVisibleEvidence(COMPLEMENTARY_PROFILES, (profile) => profile.evidenceKey, "/sobre", evidenceMode);
   const hasPublicTeamProfiles = visiblePrimaryProfiles.length > 0 || visibleComplementaryProfiles.length > 0;
 
+  const CLIENT_LOGOS = [
+    { evidenceKey: "client-logo/cayuca", name: "CaYuCa", src: "/clients/CaYuCa_white.svg", imageClassName: "" },
+    { evidenceKey: "client-logo/wscom", name: "WSCOM", src: "/clients/WSCOM_white.svg", imageClassName: "" },
+    { evidenceKey: "client-logo/vr-imobiliaria", name: "VR Imobiliária", src: "/clients/VRImobiliaria_Black.svg", imageClassName: "invert" },
+    { evidenceKey: "client-logo/vaqrama", name: "Vaqrama", src: "/clients/Vaqrama_white.svg", imageClassName: "" },
+    { evidenceKey: "client-logo/alugue-por-temporada", name: "Alugue por Temporada", src: "/clients/logo-mono-white_AluguePorTemporada.svg", imageClassName: "" },
+    { evidenceKey: "client-logo/segura-epi", name: "Segura EPI", src: "/clients/SeguraEPI_white.svg", imageClassName: "" },
+    { evidenceKey: "client-logo/ruben-a", name: "Ruben A.", src: "/clients/RubenA_white.svg", imageClassName: "" },
+    { evidenceKey: "client-logo/reavivare", name: "Reavivare", src: "/clients/Reavivare_white.svg", imageClassName: "" },
+    { evidenceKey: "client-logo/raquel-cordeiro", name: "Raquel Cordeiro", src: "/clients/RaquelCordeiro_white.svg", imageClassName: "" },
+    { evidenceKey: "client-logo/luciana-gadelha", name: "Luciana Gadelha", src: "/clients/LucianaGadelha_logo-dark.svg", imageClassName: "" },
+    { evidenceKey: "client-logo/home-office", name: "HomeOffice", src: "/clients/HomeOffice_white.svg", imageClassName: "" },
+    { evidenceKey: "client-logo/harmonic", name: "Harmonic", src: "/clients/Harmonic_white.svg", imageClassName: "" }
+  ] as const;
+  const visibleClientLogos = getVisibleEvidence(CLIENT_LOGOS, (logo) => logo.evidenceKey, "/sobre", evidenceMode);
+
   const CONNECTED_CAPABILITIES = [
     {
       title: "Estratégia e direção",
@@ -510,6 +526,33 @@ export default function Sobre({ onNavigate }: SobreProps) {
               A TAG08 constrói relações a partir de diagnóstico, clareza de escopo, coordenação e execução responsável. Mais do que parecer grande, o trabalho precisa fazer sentido para o momento real da marca.
             </p>
           </div>
+
+          {visibleClientLogos.length > 0 && (
+            <div data-testid="client-logo-wall" className="space-y-6 border-y border-white/[0.04] py-8 sm:py-10">
+              <div className="mx-auto max-w-2xl space-y-2 text-center">
+                <span className="tag08-meta text-xs font-bold uppercase tracking-widest text-zinc-500">Repertório de colaborações</span>
+                <h3 className="font-display text-xl font-black tracking-tight text-white sm:text-2xl">Marcas que já trabalharam com a TAG08.</h3>
+                <p className="text-xs leading-relaxed text-zinc-400 sm:text-sm">Uma seleção de negócios atendidos em diferentes momentos e frentes. Cada marca é apresentada com autorização de uso.</p>
+              </div>
+
+              <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 sm:gap-4" aria-label="Marcas que já trabalharam com a TAG08">
+                {visibleClientLogos.map((logo) => (
+                  <li key={logo.evidenceKey} data-evidence-key={logo.evidenceKey} className="flex h-24 items-center justify-center rounded-2xl border border-white/[0.06] bg-white/[0.02] px-5 sm:h-28 sm:px-7">
+                    <Image
+                      src={logo.src}
+                      alt={`Logo da ${logo.name}`}
+                      width={180}
+                      height={72}
+                      unoptimized
+                      className={`max-h-11 w-full max-w-[10rem] object-contain ${logo.imageClassName}`}
+                    />
+                  </li>
+                ))}
+              </ul>
+
+              <p className="text-center text-xs leading-relaxed text-zinc-500">A presença nesta seleção não representa recomendação pública, parceria ativa ou promessa de resultado.</p>
+            </div>
+          )}
 
           {/* Reference 1: "Fast and flexible" colored tiles grid layout with top right oblique arrow */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-2">

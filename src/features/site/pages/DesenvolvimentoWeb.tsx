@@ -138,29 +138,29 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
         title: 'Portal institucional',
         category: 'Institucional',
         client: 'Marca com oferta clara',
-        tagline: 'Estrutura pensada para apresentar a empresa com mais ordem e credibilidade.',
-        description: 'Projeto focado em organizar apresenta\u00e7\u00e3o institucional, narrativa e caminhos de contato.',
+        tagline: 'Estrutura pensada para apresentar a empresa, os servi\u00e7os e os caminhos de contato de forma organizada.',
+        description: 'Estrutura para apresentar empresa, servi\u00e7os, diferenciais e caminhos de contato de forma organizada.',
       },
       {
         title: 'Landing de oferta',
         category: 'Oferta',
         client: 'Time comercial',
-        tagline: 'P\u00e1gina criada para explicar uma oferta espec\u00edfica com clareza e pr\u00f3ximo passo.',
-        description: 'P\u00e1gina orientada para explicar uma solu\u00e7\u00e3o, reduzir ru\u00eddo e sustentar a conversa comercial.',
+        tagline: 'P\u00e1gina focada em explicar uma oferta espec\u00edfica, responder d\u00favidas essenciais e conduzir para um pr\u00f3ximo passo.',
+        description: 'P\u00e1gina focada em explicar uma oferta espec\u00edfica, responder d\u00favidas essenciais e conduzir para um pr\u00f3ximo passo.',
       },
       {
         title: 'Cat\u00e1logo digital',
         category: 'Cat\u00e1logo',
         client: 'Portf\u00f3lio de produtos',
-        tagline: 'Organiza\u00e7\u00e3o naveg\u00e1vel de produtos, servi\u00e7os ou conte\u00fados com atualiza\u00e7\u00e3o simples.',
-        description: 'Estrutura para reunir informa\u00e7\u00f5es dispersas e facilitar a busca do que a marca oferece.',
+        tagline: 'Estrutura naveg\u00e1vel para organizar produtos, servi\u00e7os ou conte\u00fados e facilitar consulta.',
+        description: 'Estrutura naveg\u00e1vel para organizar produtos, servi\u00e7os ou conte\u00fados e facilitar consulta.',
       },
       {
         title: 'Estrutura personalizada',
         category: 'Personalizada',
         client: 'Opera\u00e7\u00e3o espec\u00edfica',
-        tagline: 'Formato ajustado a jornadas, integra\u00e7\u00f5es e necessidades pr\u00f3prias da marca.',
-        description: 'Conjunto de p\u00e1ginas pensado para apoiar uma opera\u00e7\u00e3o digital com regras pr\u00f3prias.',
+        tagline: 'Projeto adaptado a jornadas, integra\u00e7\u00f5es e necessidades espec\u00edficas da opera\u00e7\u00e3o.',
+        description: 'Projeto adaptado a jornadas, integra\u00e7\u00f5es e necessidades espec\u00edficas da opera\u00e7\u00e3o.',
       },
     ][index] ?? {
       title: project.title,
@@ -254,7 +254,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-medium">
-                A TAG08 desenvolve sites, landing pages, cat&aacute;logos e estruturas digitais para marcas que precisam apresentar melhor sua oferta, organizar informa&ccedil;&otilde;es, fortalecer credibilidade e apoiar o processo comercial.
+                A TAG08 desenvolve sites, landing pages, cat&aacute;logos e outras estruturas web para empresas que precisam apresentar melhor sua oferta, organizar informa&ccedil;&otilde;es, facilitar a navega&ccedil;&atilde;o e apoiar a jornada comercial com uma presen&ccedil;a digital pr&oacute;pria.
               </p>
             </div>
           </div>
@@ -264,7 +264,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
               <Image
                 src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1600"
-                alt="Estrutura web TAG08"
+                alt="Planejamento e desenvolvimento de estrutura web"
                 fill
                 sizes="100vw"
                 className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
@@ -304,19 +304,19 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Clareza</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Informa&ccedil;&atilde;o organizada de<br/>forma compreens&iacute;vel</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Informa&ccedil;&atilde;o organizada para facilitar<br/>entendimento da empresa e da oferta.</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Credibilidade</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Presen&ccedil;a digital com<br/>mais consist&ecirc;ncia</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Presen&ccedil;a digital coerente com a identidade,<br/>o conte&uacute;do e o momento da marca.</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Organiza&ccedil;&atilde;o</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">P&aacute;ginas, navega&ccedil;&atilde;o e<br/>conte&uacute;dos em ordem</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">P&aacute;ginas, navega&ccedil;&atilde;o e conte&uacute;dos<br/>estruturados com fun&ccedil;&atilde;o definida.</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Apoio comercial</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Pr&oacute;ximo passo claro para<br/>conversa e contato</span>
+              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Caminhos de contato e pr&oacute;ximos passos<br/>integrados &agrave; jornada do visitante.</span>
             </div>
           </div>
 
@@ -336,7 +336,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               Quando o site deixa de ajudar a marca a ser entendida.
             </h3>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-xl">
-              Muitas empresas t&ecirc;m presen&ccedil;a digital, mas ainda dificultam a jornada do cliente: informa&ccedil;&otilde;es dispersas, p&aacute;ginas pouco claras, navega&ccedil;&atilde;o confusa, conte&uacute;do desatualizado ou falta de conex&atilde;o com o processo comercial.
+              Muitas empresas possuem um site, mas ainda dificultam a experi&ecirc;ncia de quem procura informa&ccedil;&otilde;es sobre a marca, os servi&ccedil;os ou o pr&oacute;ximo passo. Conte&uacute;do desatualizado, navega&ccedil;&atilde;o confusa, p&aacute;ginas sem fun&ccedil;&atilde;o definida e uma estrutura que n&atilde;o acompanha o neg&oacute;cio s&atilde;o sinais comuns desse desalinhamento.
             </p>
           </div>
 
@@ -347,10 +347,10 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             </div>
 
             {[
-              { bad: "Informa&ccedil;&atilde;o dif&iacute;cil de encontrar", good: "O visitante precisa se esfor&ccedil;ar para entender o que a empresa faz, para quem entrega valor e qual &eacute; o pr&oacute;ximo passo." },
-              { bad: "Site que n&atilde;o acompanha o neg&oacute;cio", good: "A empresa evoluiu, mas a estrutura digital continua refletindo uma fase antiga da marca, dos servi&ccedil;os ou da opera&ccedil;&atilde;o." },
-              { bad: "P&aacute;ginas sem fun&ccedil;&atilde;o clara", good: "A p&aacute;gina existe, mas n&atilde;o organiza bem apresenta&ccedil;&atilde;o, confian&ccedil;a, oferta, d&uacute;vidas e caminho de contato." },
-              { bad: "Conte&uacute;do desalinhado", good: "Textos, imagens, chamadas e materiais n&atilde;o conversam com o posicionamento atual nem com a jornada do cliente." }
+              { bad: "Informa&ccedil;&atilde;o dif&iacute;cil de encontrar", good: "A arquitetura organiza empresa, oferta e pr&oacute;ximos passos para reduzir esfor&ccedil;o de compreens&atilde;o." },
+              { bad: "Site que n&atilde;o acompanha o neg&oacute;cio", good: "A estrutura digital &eacute; atualizada para refletir o momento, os servi&ccedil;os e as prioridades atuais da marca." },
+              { bad: "P&aacute;ginas sem fun&ccedil;&atilde;o clara", good: "Cada p&aacute;gina &eacute; estruturada com um papel definido dentro da jornada: apresentar, explicar, orientar ou apoiar contato." },
+              { bad: "Conte&uacute;do desalinhado", good: "Textos, imagens e chamadas seguem uma mesma l&oacute;gica de posicionamento, informa&ccedil;&atilde;o e experi&ecirc;ncia." }
             ].map((row, rIdx) => (
               <div key={rIdx} className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 sm:p-7 text-xs sm:text-sm text-left">
                 <div className="text-zinc-400 font-sans flex gap-3">
@@ -373,9 +373,9 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-2 max-w-2xl">
             <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">O que estruturamos</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">Um site precisa organizar informa&ccedil;&atilde;o, confian&ccedil;a e pr&oacute;ximo passo.</h2>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">Um site precisa organizar informa&ccedil;&atilde;o, experi&ecirc;ncia e pr&oacute;ximo passo.</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              A TAG08 desenvolve estruturas digitais que ajudam a marca a apresentar melhor sua oferta, organizar conte&uacute;dos importantes, orientar a jornada do visitante e apoiar o processo comercial com mais clareza.
+              A TAG08 desenvolve estruturas digitais que organizam informa&ccedil;&atilde;o, conte&uacute;do, navega&ccedil;&atilde;o e pontos de contato para que a marca consiga apresentar melhor sua oferta e orientar a jornada do visitante.
             </p>
           </div>
 
@@ -387,7 +387,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm">Arquitetura da informa&ccedil;&atilde;o</h4>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                  Organiza&ccedil;&atilde;o das p&aacute;ginas, se&ccedil;&otilde;es, menus e conte&uacute;dos para que o visitante encontre o que precisa com menos esfor&ccedil;o.
+                  Organiza&ccedil;&atilde;o de p&aacute;ginas, se&ccedil;&otilde;es, menus e conte&uacute;dos para facilitar a localiza&ccedil;&atilde;o das informa&ccedil;&otilde;es e construir uma jornada mais compreens&iacute;vel.
                 </p>
               </div>
             </div>
@@ -399,7 +399,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm">Design de interface</h4>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                  Constru&ccedil;&atilde;o visual das telas com hierarquia, clareza, responsividade e coer&ecirc;ncia com a identidade da marca.
+                  Constru&ccedil;&atilde;o visual das interfaces com hierarquia, legibilidade, responsividade e coer&ecirc;ncia com a <a href="/servicos/branding-identidade" className="text-brand-secondary underline-offset-2 hover:underline">identidade da marca</a>.
                 </p>
               </div>
             </div>
@@ -411,7 +411,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm">Conte&uacute;do e narrativa</h4>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                  Estrutura&ccedil;&atilde;o de textos, chamadas e blocos de informa&ccedil;&atilde;o para explicar melhor a oferta, o processo e os diferenciais da empresa.
+                  Estrutura&ccedil;&atilde;o de textos, chamadas e blocos de conte&uacute;do para explicar empresa, oferta, processo, diferenciais e pr&oacute;ximos passos com maior clareza.
                 </p>
               </div>
             </div>
@@ -423,7 +423,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm">Desenvolvimento t&eacute;cnico</h4>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                  Implementa&ccedil;&atilde;o da estrutura web com aten&ccedil;&atilde;o a responsividade, estabilidade, organiza&ccedil;&atilde;o de c&oacute;digo e experi&ecirc;ncia de navega&ccedil;&atilde;o.
+                  Implementa&ccedil;&atilde;o da estrutura web com aten&ccedil;&atilde;o a responsividade, estabilidade, organiza&ccedil;&atilde;o t&eacute;cnica e experi&ecirc;ncia de navega&ccedil;&atilde;o.
                 </p>
               </div>
             </div>
@@ -438,7 +438,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">Crit&eacute;rios t&eacute;cnicos e estrat&eacute;gicos</span>
             <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">O que torna uma estrutura web mais confi&aacute;vel.</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              Um bom site n&atilde;o depende apenas de apar&ecirc;ncia. Ele precisa organizar informa&ccedil;&atilde;o, funcionar bem em diferentes dispositivos, conduzir o visitante com clareza e ser poss&iacute;vel de manter depois da publica&ccedil;&atilde;o.
+              Um bom site n&atilde;o depende apenas de apar&ecirc;ncia. Ele precisa organizar informa&ccedil;&atilde;o, funcionar em diferentes dispositivos, orientar o visitante e permitir manuten&ccedil;&atilde;o e evolu&ccedil;&atilde;o depois da publica&ccedil;&atilde;o.
             </p>
           </div>
 
@@ -446,42 +446,42 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
               <h4 className="text-white font-display font-black text-sm">Clareza de navega&ccedil;&atilde;o</h4>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                Menus, se&ccedil;&otilde;es e caminhos organizados para reduzir esfor&ccedil;o e orientar melhor o visitante.
+                Menus, se&ccedil;&otilde;es e caminhos organizados para reduzir esfor&ccedil;o e facilitar a localiza&ccedil;&atilde;o das informa&ccedil;&otilde;es.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
               <h4 className="text-white font-display font-black text-sm">Estrutura de conte&uacute;do</h4>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                Textos, chamadas e blocos organizados para explicar a oferta, a empresa e o pr&oacute;ximo passo.
+                Textos, chamadas e blocos organizados para apresentar empresa, oferta, contexto e pr&oacute;ximo passo.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
               <h4 className="text-white font-display font-black text-sm">Design responsivo</h4>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                Interfaces pensadas para funcionar bem em diferentes telas, mantendo legibilidade e hierarquia.
+                Interfaces preparadas para diferentes tamanhos de tela, preservando legibilidade, hierarquia e navega&ccedil;&atilde;o.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
               <h4 className="text-white font-display font-black text-sm">Base t&eacute;cnica organizada</h4>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                Implementa&ccedil;&atilde;o com aten&ccedil;&atilde;o a estabilidade, manuten&ccedil;&atilde;o, responsividade e boas pr&aacute;ticas de desenvolvimento.
+                Implementa&ccedil;&atilde;o estruturada para facilitar estabilidade, manuten&ccedil;&atilde;o e evolu&ccedil;&atilde;o do projeto.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
               <h4 className="text-white font-display font-black text-sm">Continuidade de uso</h4>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                A estrutura permanece &uacute;til para ajustes, novas p&aacute;ginas e evolu&ccedil;&atilde;o do conte&uacute;do.
+                Estrutura preparada para receber ajustes, novas p&aacute;ginas, conte&uacute;dos e necessidades futuras quando tecnicamente previsto.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
               <h4 className="text-white font-display font-black text-sm">Acompanhamento de publica&ccedil;&atilde;o</h4>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                Orienta&ccedil;&otilde;es para manter o site coerente depois da entrega e durante as primeiras atualiza&ccedil;&otilde;es.
+                Revis&atilde;o da entrega e orienta&ccedil;&otilde;es iniciais para manter a estrutura coerente ap&oacute;s a publica&ccedil;&atilde;o, conforme o escopo contratado.
               </p>
             </div>
           </div>
@@ -493,7 +493,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           <div className="space-y-1 max-w-3xl">
             <h4 className="text-white font-display font-black text-sm tracking-tight">Crit&eacute;rios de confian&ccedil;a</h4>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed">
-              A estrutura web precisa ser clara para o visitante, coerente com a marca e funcional para a opera&ccedil;&atilde;o. O objetivo &eacute; criar uma base que possa ser usada, mantida e evolu&iacute;da com responsabilidade.
+              A estrutura web precisa ser compreens&iacute;vel para o visitante, coerente com a marca e funcional para a opera&ccedil;&atilde;o. O objetivo &eacute; construir uma base digital que possa ser usada, mantida e evolu&iacute;da com responsabilidade.
             </p>
           </div>
           <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest border border-brand-secondary/20 bg-brand-secondary/5 px-3.5 py-2 rounded-xl shrink-0 font-black">
@@ -526,7 +526,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               fill
               sizes="(max-width: 1024px) 100vw, 42vw"
               src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800"
-              alt="TAG08 Web Specialist"
+              alt="Profissional em ambiente de desenvolvimento web"
               className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
               referrerPolicy="no-referrer"
             />
@@ -572,7 +572,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 Como conduzimos um projeto web.
               </h2>
               <p className="text-black/85 text-xs sm:text-xs max-w-2xl leading-relaxed font-sans font-semibold">
-                A TAG08 organiza o desenvolvimento web em etapas claras: entendimento do contexto, estrutura&ccedil;&atilde;o da informa&ccedil;&atilde;o, desenho da experi&ecirc;ncia, desenvolvimento, revis&atilde;o e publica&ccedil;&atilde;o acompanhada.
+                A TAG08 organiza o desenvolvimento web em etapas claras: entendimento do contexto, arquitetura da informa&ccedil;&atilde;o, defini&ccedil;&atilde;o da experi&ecirc;ncia, desenvolvimento, revis&atilde;o e publica&ccedil;&atilde;o conforme o escopo aprovado.
               </p>
             </div>
 
@@ -582,7 +582,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 {[
                   {
                     title: "Entendimento",
-                    text: "Leitura do momento da marca, objetivo da p&aacute;gina, p&uacute;blico, conte&uacute;dos necess&aacute;rios e pontos de contato.",
+                    text: "Leitura do momento da marca, objetivo da estrutura, p&uacute;blico, conte&uacute;dos necess&aacute;rios e pontos de contato.",
                   },
                   {
                     title: "Estrutura",
@@ -590,11 +590,11 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                   },
                   {
                     title: "Design e desenvolvimento",
-                    text: "Cria&ccedil;&atilde;o da interface e implementa&ccedil;&atilde;o da estrutura com aten&ccedil;&atilde;o a responsividade, clareza e estabilidade.",
+                    text: "Cria&ccedil;&atilde;o da interface e implementa&ccedil;&atilde;o t&eacute;cnica com aten&ccedil;&atilde;o a responsividade, hierarquia, clareza e estabilidade.",
                   },
                   {
                     title: "Revis&atilde;o e publica&ccedil;&atilde;o",
-                    text: "Valida&ccedil;&atilde;o dos conte&uacute;dos, ajustes finais, publica&ccedil;&atilde;o e orienta&ccedil;&otilde;es para continuidade da estrutura.",
+                    text: "Valida&ccedil;&atilde;o dos conte&uacute;dos, ajustes finais, publica&ccedil;&atilde;o e orienta&ccedil;&otilde;es para continuidade conforme o escopo contratado.",
                   },
                 ].map((item) => (
                   <div key={item.title} className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
@@ -744,12 +744,12 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
 
                 <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
-                    "N&atilde;o. Podemos desenvolver sites institucionais, landing pages, p&aacute;ginas de servi&ccedil;o, cat&aacute;logos digitais ou estruturas personalizadas, conforme o objetivo da marca e a jornada do usu&aacute;rio.",
-                    "N&atilde;o necessariamente. A TAG08 pode ajudar a organizar a arquitetura da informa&ccedil;&atilde;o, os blocos de conte&uacute;do, as mensagens principais e os pontos que precisam ser explicados na p&aacute;gina.",
-                    "O site pode apoiar o processo comercial, mas n&atilde;o tratamos venda como promessa autom&aacute;tica. O foco &eacute; organizar informa&ccedil;&atilde;o, credibilidade, navega&ccedil;&atilde;o e pr&oacute;ximo passo com mais clareza.",
-                    "Sim. A estrutura precisa funcionar bem em diferentes telas, mantendo legibilidade, hierarquia, navega&ccedil;&atilde;o e clareza para o visitante.",
-                    "Sim. Um site pode receber ajustes, novas p&aacute;ginas, conte&uacute;dos, integra&ccedil;&otilde;es ou melhorias conforme a marca evolui e novas necessidades aparecem.",
-                    "Definimos escopo a partir do momento da marca, da fun&ccedil;&atilde;o da p&aacute;gina, dos conte&uacute;dos necess&aacute;rios e dos pontos de contato que precisam existir."
+                    "N&atilde;o. A TAG08 pode desenvolver sites institucionais, landing pages, p&aacute;ginas de servi&ccedil;o, cat&aacute;logos digitais e outras estruturas web conforme a fun&ccedil;&atilde;o necess&aacute;ria, o conte&uacute;do e a jornada do usu&aacute;rio.",
+                    "N&atilde;o necessariamente. O projeto pode incluir organiza&ccedil;&atilde;o da arquitetura da informa&ccedil;&atilde;o, defini&ccedil;&atilde;o dos blocos de conte&uacute;do e apoio na estrutura&ccedil;&atilde;o das mensagens necess&aacute;rias &agrave; p&aacute;gina, conforme o escopo aprovado.",
+                    "Pode considerar. O site pode organizar informa&ccedil;&otilde;es, ofertas, d&uacute;vidas e caminhos de contato para apoiar a conversa comercial, mas n&atilde;o tratamos vendas ou convers&atilde;o como resultado autom&aacute;tico.",
+                    "Sim. A interface &eacute; planejada para diferentes tamanhos de tela, preservando legibilidade, hierarquia, navega&ccedil;&atilde;o e acesso &agrave;s informa&ccedil;&otilde;es.",
+                    "Sim. Conforme a estrutura t&eacute;cnica e o escopo, o site pode receber novas p&aacute;ginas, conte&uacute;dos, integra&ccedil;&otilde;es ou melhorias &agrave; medida que surgem novas necessidades.",
+                    "O escopo &eacute; definido a partir do objetivo da estrutura, do momento da marca, da quantidade de p&aacute;ginas, dos conte&uacute;dos, das integra&ccedil;&otilde;es necess&aacute;rias e dos pontos de contato envolvidos."
                   ])[activeFaq]}
                 </p>
               </div>
@@ -775,10 +775,10 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
 
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">FALE COM O DIRETOR</span>
+                  <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">FALE COM A TAG08</span>
                   <h4 className="text-black font-black text-sm leading-tight tracking-tight">Quer conversar sobre o seu site?</h4>
                   <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
-                    Fale com a TAG08 para entender o que precisa ser estruturado, o que entra no escopo e qual caminho faz mais sentido.
+                    Converse com a TAG08 para entender o que precisa ser estruturado, o que entra no escopo e qual caminho faz sentido para o projeto.
                   </p>
                 </div>
                 <a
@@ -799,11 +799,10 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       {/* SECTION 6 - ACTION TRIGGER FOOTER */}
       <section className="px-4 sm:px-6 md:px-8 py-20 text-center space-y-6 max-w-4xl mx-auto">
         <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-none tracking-tighter">
-          Vamos entender qual estrutura web sua marca precisa? <br />
-          <span className="text-brand">PLANEJAR MEU SITE</span>
+          Vamos entender qual estrutura web sua marca precisa?
         </h2>
         <p className="text-zinc-400 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">
-          Antes de propor uma p&aacute;gina, a TAG08 entende o momento da marca, a jornada do usu&aacute;rio, os conte&uacute;dos necess&aacute;rios e o papel que o site deve cumprir dentro da estrat&eacute;gia.
+          Antes de propor uma estrutura, a TAG08 entende o momento da marca, a jornada do usu&aacute;rio, os conte&uacute;dos necess&aacute;rios e a fun&ccedil;&atilde;o que o site precisa cumprir dentro da estrat&eacute;gia.
         </p>
         <div className="pt-4">
           <button

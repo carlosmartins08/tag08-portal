@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { motion } from "motion/react";
-import Image from "next/image";
+import { motion, useReducedMotion } from "motion/react";
 import { MessageSquare, Sparkles, TrendingUp, ArrowUpRight, ArrowRight, Users, Plus, Minus } from "lucide-react";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
+import ResilientImage from "../../../components/ResilientImage";
 import { trackVideoEvent } from "../../../lib/analytics";
 import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
 import { useOfficialYouTubeVideos } from "../../../lib/useOfficialYouTubeVideos";
@@ -69,20 +69,20 @@ const EDITORIAL_DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
   {
     key: "priority",
     step: "Etapa 04",
-    title: "Qual prioridade editorial faz mais sentido agora?",
+    title: "Qual função principal a presença nas redes precisa cumprir agora?",
     helper: "Escolha a função principal da presença nas redes neste momento.",
     options: [
-      { value: "authority", label: "Autoridade" },
+      { value: "authority", label: "Fortalecer percepção e autoridade" },
       { value: "recurrence", label: "Presença recorrente" },
-      { value: "behind-scenes", label: "Bastidores" },
-      { value: "commercial-support", label: "Apoio comercial" }
+      { value: "behind-scenes", label: "Mostrar bastidores e processo" },
+      { value: "commercial-support", label: "Apoiar comunicação comercial" }
     ]
   },
   {
     key: "formats",
     step: "Etapa 05",
-    title: "Que formatos fazem mais sentido?",
-    helper: "Marque os formatos que o material precisa sustentar.",
+    title: "Quais formatos fazem sentido para a rotina atual?",
+    helper: "Marque os formatos que podem fazer sentido para a comunicação atual. A escolha não significa inclusão automática no escopo.",
     multi: true,
     options: [
       { value: "reels", label: "Reels e cortes" },
@@ -96,12 +96,12 @@ const EDITORIAL_DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
     key: "moment",
     step: "Etapa 06",
     title: "Qual é o momento da marca?",
-    helper: "Isso ajuda a TAG08 a entender urgência e profundidade do apoio.",
+    helper: "Isso ajuda a entender o nível de organização e a profundidade de apoio necessária.",
     options: [
       { value: "foundation", label: "Precisa organizar a base" },
       { value: "review", label: "Quer revisar a direção" },
-      { value: "accelerate", label: "Quer acelerar com critério" },
-      { value: "start", label: "Quer iniciar agora" }
+      { value: "accelerate", label: "Quer avançar com mais consistência" },
+      { value: "start", label: "Quer iniciar uma rotina" }
     ]
   }
 ];
@@ -144,7 +144,7 @@ const buildDiagnosticRecommendation = ({
   }
 
   if (challenge === "direction" || routine === "none") {
-    return "Começar por direção editorial, linha de conteúdo e rotina possível antes de pensar em volume.";
+    return "Começar por direção editorial, temas prioritários e uma rotina possível antes de pensar em volume.";
   }
 
   if (challenge === "clarity" || moment === "review") {
@@ -156,10 +156,10 @@ const buildDiagnosticRecommendation = ({
   }
 
   if (moment === "accelerate") {
-    return "A conversa pode avançar para escopo, formato e cadência com foco em consistência.";
+    return "A conversa pode avançar para escopo, responsabilidades e cadência compatíveis com a rotina atual.";
   }
 
-  return "A TAG08 pode ajudar a transformar o diagnóstico em linha editorial, formato e próxima ação prática.";
+  return "A TAG08 pode ajudar a transformar esta leitura em linha editorial, formatos e próximos passos mais claros.";
 };
 
 interface SocialMediaProps {
@@ -167,6 +167,7 @@ interface SocialMediaProps {
 }
 
 export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
+  const prefersReducedMotion = useReducedMotion();
   const [activeFaq, setActiveFaq] = useState(0);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [diagnosticStep, setDiagnosticStep] = useState(0);
@@ -228,7 +229,7 @@ export default function GestaoRedesSociais({ onNavigate }: SocialMediaProps) {
     routine: diagnosticAnswers.routine as string,
     moment: diagnosticAnswers.moment as string
   });
-  const { videos: youtubeVideos, source: youtubeSource } = useOfficialYouTubeVideos(3);
+  const { videos: youtubeVideos, source: youtubeSource, isLoading: isYouTubeLoading } = useOfficialYouTubeVideos(3);
   const visibleVideos = youtubeSource === "live" ? youtubeVideos : [];
   const diagnosticSummaryCards = [
     { label: "Principal desafio", value: challengeLabel },
@@ -248,12 +249,12 @@ Canais usados: ${channelsLabel}
 Prioridade editorial: ${priorityLabel}
 Formatos desejados: ${formatsLabel}
 Momento da marca: ${momentLabel}
-Plano de interesse sinalizado: ${selectedPlan ?? "Ainda não indicado"}
+Estrutura de interesse sinalizada: ${selectedPlan ?? "Ainda não indicada"}
 Nome: ${diagnosticName.trim()}
 WhatsApp: ${diagnosticWhatsapp.trim()}
 Consentimento: ${diagnosticConsent ? "Autorizado" : "Não autorizado"}
 
-Próximo passo: conversar com a TAG08 para entender escopo e direção editorial.`;
+Próximo passo: conversar com a TAG08 para entender contexto, escopo e direção editorial.`;
   const diagnosticWhatsAppUrl = buildBrazilWhatsAppUrl(diagnosticMessage);
 
   const scrollToEditorialDiagnostic = () => {
@@ -329,7 +330,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
       eyebrow: "Escolha do plano",
       question: "Qual é a diferença entre Start, Base e Performance?",
       answer:
-        "A principal diferença está na profundidade da operação e na divisão de responsabilidades. No Start, o cliente participa mais e normalmente publica. O Base estrutura planejamento e produção recorrentes. O Performance atende marcas que precisam de uma operação mais integrada, com maior coordenação entre conteúdo, vídeo, publicação e acompanhamento."
+        "A principal diferença está na profundidade da operação e na divisão de responsabilidades. No Start, o cliente participa mais e normalmente assume parte da rotina. O Base organiza planejamento e produção recorrente. O Performance atende operações que precisam de maior integração entre conteúdo, vídeo, publicação e acompanhamento."
     },
     {
       id: 2,
@@ -379,18 +380,18 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-medium">
-                A TAG08 organiza a presença da marca nas redes sociais com estratégia, narrativa, calendário, formatos e acompanhamento para que o conteúdo deixe de ser postagem solta e passe a cumprir uma função clara.
+                A TAG08 organiza a presença da marca nas redes sociais com planejamento, linha editorial, formatos, produção e acompanhamento para que o conteúdo deixe de ser postagem solta e passe a cumprir uma função clara na comunicação e no processo comercial.
               </p>
             </div>
           </div>
 
           <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px] overflow-visible">
-            <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
-              <Image
-                fill
+            <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[4/3] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
+              <ResilientImage
                 sizes="100vw"
                 src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1600"
-                alt="Presença com direção TAG08"
+                alt="Planejamento de conteúdo para redes sociais"
+                fallbackLabel="Presença com direção TAG08"
                 preload
                 className="object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
                 referrerPolicy="no-referrer"
@@ -401,17 +402,17 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(45px)" }}>
                 <button
                   onClick={scrollToEditorialDiagnostic}
-                  className="group bg-brand-secondary text-black font-sans font-black text-xs sm:text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
+                  className="group -translate-y-10 bg-brand-secondary text-black font-sans font-black text-xs sm:translate-y-0 sm:text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
                 >
                   <span>DIAGNÓSTICO EDITORIAL</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
                 </button>
               </div>
 
-              <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
+              <div className="absolute bottom-12 left-6 right-6 flex items-end justify-between z-10 pointer-events-none sm:bottom-6" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
                   <span className="tag08-meta text-xs text-brand-secondary tracking-widest block uppercase font-bold">CONTEÚDO E FORMATOS</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Recortes com direção e revisão</h4>
+                  <h4 className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Conteúdo com direção e revisão</h4>
                 </div>
 
                 <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-xs text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
@@ -425,19 +426,19 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Linha editorial</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Temas, formatos e prioridades<br/>organizados com intenção</span>
+              <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-widest leading-normal">Temas, mensagens, formatos e prioridades<br/>organizados com intenção.</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Frequência possível</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Cadência pensada para a<br/>realidade da operação</span>
+              <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-widest leading-normal">Cadência compatível com a realidade da<br/>operação e com a capacidade de aprovação.</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Narrativa de marca</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Mensagem coerente entre feed,<br/>legenda e conversa</span>
+              <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-widest leading-normal">Mensagem coerente entre conteúdo,<br/>legenda, formato e conversa.</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Acompanhamento</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Revisão contínua para ajustar<br/>a direção quando preciso</span>
+              <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-widest leading-normal">Revisão contínua para aprender com o ciclo<br/>e ajustar a direção quando necessário.</span>
             </div>
           </div>
         </div>
@@ -452,7 +453,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               Quando as redes sociais <span className="text-brand">deixam de construir presença.</span>
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Muitas marcas publicam com frequência, mas ainda não conseguem transmitir clareza, consistência ou percepção de valor. O problema nem sempre é falta de conteúdo; muitas vezes é falta de linha editorial, posicionamento e critério de produção.
+              Muitas marcas publicam com frequência, mas ainda não conseguem transmitir clareza, consistência ou percepção correta de valor. O problema nem sempre é falta de conteúdo; muitas vezes é falta de linha editorial, posicionamento, prioridade e critério de produção.
             </p>
           </div>
 
@@ -474,7 +475,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
             <div className="tag08-surface-card p-6 border hover:border-brand/40 duration-300 rounded-3xl space-y-3 transition-all">
               <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">Visual sem consistência</span>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                Cada peça parece seguir uma lógica diferente, enfraquecendo reconhecimento, confiança e percepção profissional.
+                Cada peça parece seguir uma lógica diferente, dificultando reconhecimento e continuidade da identidade entre as publicações.
               </p>
             </div>
 
@@ -503,7 +504,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               Gestão de redes não é só calendário. É direção editorial.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              A TAG08 estrutura temas, formatos, frequência, linguagem, design e revisão para que a presença da marca nas redes tenha consistência e função dentro da estratégia.
+              A TAG08 organiza temas, formatos, frequência, linguagem, produção, identidade visual aplicada e revisão para que a presença da marca nas redes sociais tenha coerência, continuidade e função dentro da estratégia.
             </p>
           </div>
 
@@ -515,7 +516,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm">Linha editorial</h4>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                  Definição de temas, mensagens, pilares de conteúdo e prioridades para orientar a comunicação da marca.
+                  Definição de temas, mensagens, pilares e prioridades que orientam o conteúdo antes da produção.
                 </p>
               </div>
             </div>
@@ -527,7 +528,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm">Calendário possível</h4>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                  Organização de uma rotina de publicação compatível com o momento, a equipe, os canais e a capacidade de aprovação.
+                  Organização de uma rotina compatível com o momento, os canais, a equipe e a capacidade real de aprovação.
                 </p>
               </div>
             </div>
@@ -539,7 +540,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm">Criação de conteúdo</h4>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                  Desenvolvimento de legendas, peças, roteiros e formatos alinhados ao posicionamento e ao objetivo de cada publicação.
+                  Produção dos formatos previstos no escopo a partir da linha editorial aprovada.
                 </p>
               </div>
             </div>
@@ -551,7 +552,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm">Direção visual</h4>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                  Aplicação de identidade, estética, hierarquia e consistência visual para fortalecer reconhecimento e percepção profissional.
+                  Aplicação consistente da identidade da marca nos materiais produzidos para os canais definidos.
                 </p>
               </div>
             </div>
@@ -563,7 +564,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               <div className="space-y-1">
                 <h4 className="text-white font-display font-black text-sm">Acompanhamento e revisão</h4>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                  Leitura do que precisa evoluir, ajustes de rota, organização de feedbacks e melhoria contínua do processo editorial.
+                  Leitura do ciclo para ajustar temas, linguagem, formatos e prioridades quando necessário.
                 </p>
               </div>
             </div>
@@ -594,11 +595,11 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                 eyebrow: "ENTRADA ESTRATÉGICA",
                 stage: "INÍCIO ORIENTADO",
                 subtitle: "Para começar com direção e maior participação do cliente.",
-                desc: "Estrutura indicada para profissionais e pequenos negócios que precisam organizar uma presença inicial, mas conseguem assumir parte da rotina e normalmente a publicação.",
+                desc: "Estrutura indicada para profissionais e pequenos negócios que precisam organizar uma presença inicial, conseguem participar mais da rotina e normalmente assumem a publicação.",
                 includes: [
                   "Direção inicial e linha editorial",
                   "Produção prevista para o ciclo",
-                  "Participação do cliente em aprovações e publicação"
+                  "Participação do cliente nas aprovações e, normalmente, na publicação"
                 ],
                 support: "Evolua quando a rotina pedir produção e acompanhamento mais constantes."
               },
@@ -607,31 +608,31 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                 eyebrow: "CONSISTÊNCIA MENSAL",
                 stage: "ROTINA CONSOLIDADA",
                 subtitle: "Para negócios ativos que precisam transformar comunicação improvisada em rotina.",
-                desc: "A TAG08 organiza planejamento e produção mensal para marcas que já possuem uma oferta ativa e precisam de consistência, linha editorial e continuidade.",
+                desc: "A TAG08 organiza planejamento e produção recorrente para marcas com oferta ativa que precisam manter linha editorial, consistência e continuidade.",
                 includes: [
                   "Planejamento e produção mensal",
                   "Linha editorial e rotina de revisão",
                   "Acompanhamento conforme o escopo contratado"
                 ],
-                support: "Evolua quando mais canais e frentes exigirem coordenação."
+                support: "Faz sentido evoluir quando mais canais, formatos e responsabilidades passam a exigir maior coordenação."
               },
               {
                 name: "Plano Performance",
                 eyebrow: "OPERAÇÃO INTEGRADA",
                 stage: "COORDENAÇÃO AMPLIADA",
-                subtitle: "Para marcas em crescimento que precisam de maior coordenação entre planejamento e execução.",
-                desc: "Estrutura recorrente mais completa, indicada quando existe necessidade real de integrar conteúdo, vídeo, publicação, acompanhamento e análise com maior profundidade.",
+                subtitle: "Para marcas que precisam de maior integração entre planejamento, produção e acompanhamento.",
+                desc: "Estrutura recorrente mais completa, indicada quando existe necessidade real de coordenar conteúdo, vídeo, publicação, acompanhamento e análise com maior profundidade.",
                 includes: [
-                  "Planejamento e produção integrados",
-                  "Conteúdo, vídeo e publicação quando previstos",
-                  "Coordenação e acompanhamento com maior profundidade"
+                  "Planejamento com maior integração entre frentes",
+                  "Produção e publicação conforme o escopo vigente",
+                  "Acompanhamento e revisão com maior profundidade operacional"
                 ],
-                support: "A proposta confirma canais, capacidade e responsabilidades da operação."
+                support: "Indicado quando a operação exige mais coordenação, não apenas mais volume."
               }
             ].map((plan) => (
               <motion.div
                 key={plan.name}
-                whileHover={{ y: -6 }}
+                whileHover={prefersReducedMotion ? undefined : { y: -6 }}
                 className="border rounded-3xl p-7 flex flex-col justify-between gap-8 transition-all duration-300 relative overflow-hidden bg-charcoal-900 border-white/[0.04]"
               >
                 <div className="space-y-6">
@@ -639,11 +640,11 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                     <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black max-w-max">
                       {plan.eyebrow}
                     </span>
-                    <span className="font-sans text-xs text-zinc-500 font-bold">{plan.stage}</span>
+                    <span className="font-sans text-xs text-zinc-400 font-bold">{plan.stage}</span>
                   </div>
 
                   <h3 className="text-white font-display font-medium text-xl tracking-tight leading-none pt-2">{plan.name}</h3>
-                  <p className="text-brand-secondary text-xs font-black uppercase tracking-[0.22em]">{plan.subtitle}</p>
+                  <p className="text-brand-secondary text-xs font-black uppercase tracking-[0.14em]">{plan.subtitle}</p>
                   <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">{plan.desc}</p>
                   <div className="space-y-3 rounded-2xl border border-white/[0.04] bg-white/[0.01] p-4">
                     <p className="tag08-meta text-xs font-black uppercase tracking-widest text-zinc-500">O que esta estrutura organiza</p>
@@ -669,7 +670,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                     aria-label={`Avaliar adequação ao ${plan.name}`}
                     className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-brand-secondary/20 bg-brand-secondary/10 px-5 py-3 text-xs font-black uppercase tracking-widest text-brand-secondary transition-all duration-300 hover:bg-brand-secondary hover:text-black"
                   >
-                    <span>AVALIAR {plan.name}</span>
+                    <span>ENTENDER ESCOPO</span>
                   </button>
                 </div>
               </motion.div>
@@ -710,10 +711,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                     "Diagnóstico ou briefing inicial",
                     "Planejamento e linha editorial",
                     "Calendário ou cronograma",
-                    "Artes, legendas e conteúdos",
+                    "Peças, legendas e conteúdos previstos no escopo",
                     "Roteiros e direcionamentos de gravação",
                     "Fluxo de revisão e aprovação",
-                    "Publicação, quando prevista no plano",
+                    "Publicação, quando prevista na proposta",
                     "Acompanhamento, conforme estrutura contratada"
                   ].map((inc, index) => (
                     <div key={index} className="flex gap-3 text-xs text-zinc-300 font-sans items-start font-medium leading-relaxed font-semibold">
@@ -773,10 +774,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {[
-                { title: "Leitura e planejamento", desc: "Organizamos contexto, objetivos, temas, prioridades e calendário do ciclo." },
-                { title: "Produção", desc: "Criamos os materiais previstos no escopo, como peças, legendas, roteiros e conteúdos em vídeo." },
-                { title: "Revisão e distribuição", desc: "Conduzimos aprovação e, quando previsto no plano, publicação nos canais definidos." },
-                { title: "Acompanhamento", desc: "Lemos aprendizados e ajustamos temas, formatos e frequência para o ciclo seguinte." }
+                { title: "Leitura e planejamento", desc: "Organizamos contexto, objetivos, temas, prioridades e formatos antes da produção do ciclo." },
+                { title: "Produção", desc: "Desenvolvemos os materiais previstos no escopo a partir da linha editorial e das prioridades definidas." },
+                { title: "Revisão e distribuição", desc: "Conduzimos revisão e aprovação e, quando previsto na proposta, publicação nos canais definidos." },
+                { title: "Acompanhamento", desc: "Os aprendizados do ciclo ajudam a orientar temas, formatos, linguagem e ajustes futuros." }
               ].map((step, sIdx) => (
                 <div key={sIdx} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-2xl text-left space-y-4 hover:border-brand/10 transition-all duration-300">
                   <div className="font-sans text-xs font-black text-brand-secondary bg-brand-secondary/5 w-8 h-8 rounded-lg flex items-center justify-center border border-brand-secondary/10 shadow-[0_4px_10px_rgba(var(--color-brand-secondary-rgb),0.05)]">
@@ -809,7 +810,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               {[
                 { title: "Presença mais coerente", desc: "O foco é tornar a comunicação mais clara, reconhecível e conectada ao posicionamento da marca." },
                 { title: "Leitura de conteúdo", desc: "Observamos se os formatos ajudam a sustentar a narrativa ou apenas ocupam espaço." },
-                { title: "Aproximação do público", desc: "Acompanhamos se os recortes e as falas facilitam compreensão, confiança e próximo passo." },
+                { title: "Aproximação do público", desc: "Observamos se conteúdos, formatos e mensagens ajudam o público a compreender melhor a marca, a oferta e o próximo passo." },
                 { title: "Ajuste contínuo", desc: "Usamos os aprendizados do ciclo para refinar temas, frequência e linguagem editorial." }
               ].map((item, iIdx) => (
                 <div key={iIdx} className="p-5 rounded-2xl bg-charcoal-900/60 border border-white/[0.03] space-y-1.5 text-left hover:border-brand/10 transition-colors">
@@ -846,22 +847,30 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
             </p>
             {selectedPlan && (
               <p className="border-l border-brand-secondary/40 pl-3 text-xs font-sans leading-relaxed text-zinc-300">
-                Você sinalizou interesse no <strong className="font-bold text-white">{selectedPlan}</strong>. O diagnóstico confirma se esta é a estrutura adequada ao momento da marca.
+                Você sinalizou interesse no <strong className="font-bold text-white">{selectedPlan}</strong>. A conversa de diagnóstico ajuda a entender se essa estrutura faz sentido para o momento da marca.
               </p>
             )}
           </div>
 
-          <div className="mx-auto max-w-4xl overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#09090b] shadow-[0_28px_90px_rgba(0,0,0,0.28)]">
+          <div className="mx-auto max-w-4xl overflow-hidden rounded-[28px] border border-white/[0.08] bg-charcoal-950 shadow-[0_28px_90px_rgba(0,0,0,0.28)]">
             <div className="space-y-3 border-b border-white/[0.06] px-6 pb-5 pt-6 sm:px-10 sm:pt-8">
               <div className="flex items-center justify-between gap-4">
                 <span className="tag08-meta text-xs text-zinc-400 tracking-wide">
                   Pré-qualificação editorial · {isDiagnosticComplete ? "Concluída" : `Etapa ${diagnosticStep + 1} de ${EDITORIAL_DIAGNOSTIC_STEP_COUNT}`}
                 </span>
-                <span className="tag08-meta text-xs text-zinc-500 tracking-wide">
+                <span className="tag08-meta text-xs text-zinc-400 tracking-wide">
                   {diagnosticProgress}%
                 </span>
               </div>
-              <div className="h-1 rounded-full bg-white/[0.06] overflow-hidden" aria-label={`Progresso: ${diagnosticProgress}%`}>
+              <div
+                role="progressbar"
+                aria-label="Progresso da pré-qualificação editorial"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={diagnosticProgress}
+                aria-valuetext={isDiagnosticComplete ? "Diagnóstico concluído" : `Etapa ${diagnosticStep + 1} de ${EDITORIAL_DIAGNOSTIC_STEP_COUNT}`}
+                className="h-1 rounded-full bg-white/[0.06] overflow-hidden"
+              >
                 <div
                   className="h-full rounded-full bg-brand-secondary transition-all duration-300"
                   style={{ width: `${diagnosticProgress}%` }}
@@ -885,26 +894,33 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <fieldset className="grid grid-cols-1 gap-3 border-0 p-0 sm:grid-cols-2">
+                    <legend className="sr-only">
+                      {activeDiagnosticQuestion.title}. {activeDiagnosticQuestion.multi ? "Selecione uma ou mais opções." : "Selecione uma opção."}
+                    </legend>
                     {activeDiagnosticQuestion.options.map((option) => {
                       const isActive = activeDiagnosticSelectedValues.includes(option.value);
                       return (
-                        <button
+                        <label
                           key={option.value}
-                          type="button"
-                          aria-pressed={isActive}
-                          onClick={() => handleDiagnosticAnswerSelect(activeDiagnosticQuestion, option.value)}
-                          className={`min-h-[76px] rounded-2xl border px-4 py-4 text-left text-sm leading-snug transition-all duration-200 cursor-pointer hover:-translate-y-0.5 ${
+                          className={`min-h-[76px] rounded-2xl border px-4 py-4 text-left text-sm leading-snug transition-all duration-200 cursor-pointer hover:-translate-y-0.5 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-secondary focus-within:ring-offset-2 focus-within:ring-offset-charcoal-950 ${
                             isActive
                               ? "border-brand-secondary bg-brand-secondary/10 text-brand-secondary shadow-[0_12px_30px_rgba(var(--color-brand-secondary-rgb),0.08)]"
                               : "border-white/[0.10] bg-white/[0.015] text-zinc-200 hover:border-white/25 hover:bg-white/[0.035] hover:text-white"
                           }`}
                         >
+                          <input
+                            type={activeDiagnosticQuestion.multi ? "checkbox" : "radio"}
+                            name={`diagnostic-${activeDiagnosticQuestion.key}`}
+                            checked={isActive}
+                            onChange={() => handleDiagnosticAnswerSelect(activeDiagnosticQuestion, option.value)}
+                            className="sr-only"
+                          />
                           {option.label}
-                        </button>
+                        </label>
                       );
                     })}
-                  </div>
+                  </fieldset>
 
                   {hasActiveDiagnosticSelection && (
                     <p className="tag08-meta text-xs uppercase tracking-widest text-brand-secondary">
@@ -923,7 +939,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                     <h3 className="font-display text-2xl font-medium tracking-tight text-white sm:text-3xl">
                       Para quem enviamos este resumo?
                     </h3>
-                    <p className="max-w-2xl text-sm leading-relaxed text-zinc-400">
+                    <p id="diagnostic-contact-hint" className="max-w-2xl text-sm leading-relaxed text-zinc-400">
                       Seus dados entram apenas para que a conversa continue com o contexto que você acabou de preencher.
                     </p>
                   </div>
@@ -933,6 +949,10 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                       <span className="tag08-meta text-xs text-zinc-400 tracking-wide block">Nome</span>
                       <input
                         type="text"
+                        name="name"
+                        autoComplete="name"
+                        required
+                        aria-describedby="diagnostic-contact-hint"
                         value={diagnosticName}
                         onChange={(event) => setDiagnosticName(event.target.value)}
                         placeholder="Seu nome"
@@ -944,6 +964,11 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                       <span className="tag08-meta text-xs text-zinc-400 tracking-wide block">WhatsApp</span>
                       <input
                         type="tel"
+                        name="tel"
+                        autoComplete="tel"
+                        inputMode="tel"
+                        required
+                        aria-describedby="diagnostic-contact-hint"
                         value={diagnosticWhatsapp}
                         onChange={(event) => setDiagnosticWhatsapp(event.target.value)}
                         placeholder="+55 83 9XXXX-XXXX"
@@ -1079,13 +1104,22 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans font-medium">
-                Quando faz sentido para a estratégia, vídeo, bastidores, falas e recortes ajudam a ampliar formatos sem romper a coerência da linha editorial.
+                Quando faz sentido para a estratégia, vídeo, bastidores, falas e recortes ampliam os formatos da marca sem romper a coerência da linha editorial.
               </p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {visibleVideos.length > 0 ? visibleVideos.map((video) => (
+            {isYouTubeLoading ? (
+              <div
+                role="status"
+                aria-live="polite"
+                aria-busy="true"
+                className="sm:col-span-2 lg:col-span-3 rounded-[28px] border border-white/[0.06] bg-white/[0.02] p-6 text-xs sm:text-sm leading-relaxed text-zinc-400"
+              >
+                Carregando vídeos oficiais…
+              </div>
+            ) : visibleVideos.length > 0 ? visibleVideos.map((video) => (
               <motion.a
                 key={video.id}
                 href={video.videoUrl}
@@ -1100,34 +1134,34 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                     page_path: "/servicos/gestao-de-redes-sociais"
                   })
                 }
-                whileHover={{ y: -4 }}
+                whileHover={prefersReducedMotion ? undefined : { y: -4 }}
                 className="group block rounded-[28px] overflow-hidden border border-white/[0.06] bg-white/[0.02] transition-all duration-300 hover:border-brand-secondary/45 hover:shadow-[0_18px_50px_rgba(var(--color-brand-secondary-rgb),0.08)]"
               >
                 <div className="relative aspect-[16/10] bg-zinc-900">
-                  <Image
-                    fill
+                  <ResilientImage
                     sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
                     src={video.thumbnail}
                     alt={video.title}
+                    fallbackLabel="Vídeo oficial TAG08"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-black/25" />
 
                   <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/60 px-3 py-1.5 backdrop-blur-md">
-                    <span className="tag08-meta text-xs font-black uppercase tracking-[0.24em] text-brand-secondary">
+                    <span className="tag08-meta text-xs font-black uppercase tracking-[0.16em] text-brand-secondary">
                       CONTEÚDO RECENTE
                     </span>
                   </div>
 
                   <div className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/60 px-3 py-1.5 backdrop-blur-md">
-                    <span className="tag08-meta text-xs font-black uppercase tracking-[0.24em] text-zinc-200">
+                    <span className="tag08-meta text-xs font-black uppercase tracking-[0.16em] text-zinc-200">
                       YouTube oficial
                     </span>
                   </div>
 
                   <div className="absolute inset-x-4 bottom-4 space-y-2">
-                    <span className="tag08-meta text-xs font-black uppercase tracking-[0.28em] text-brand-secondary/90">
+                    <span className="tag08-meta text-xs font-black uppercase tracking-[0.18em] text-brand-secondary/90">
                       {video.category}
                     </span>
                     <h3 className="font-display text-lg leading-tight font-black text-white">
@@ -1148,11 +1182,11 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
           </div>
 
           <div className="flex flex-col gap-2 border border-white/[0.05] bg-white/[0.02] rounded-[24px] p-5 sm:p-6">
-            <span className="tag08-meta text-xs font-black uppercase tracking-[0.28em] text-brand-secondary">
+            <span className="tag08-meta text-xs font-black uppercase tracking-[0.18em] text-brand-secondary">
               Fonte oficial
             </span>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Quando disponíveis, os conteúdos são sincronizados do canal oficial da TAG08 e funcionam como apoio editorial sem criar vídeo fictício dentro da página.
+              Quando disponíveis, os conteúdos são sincronizados do canal oficial da TAG08 e funcionam como referência real de linguagem, formato e produção.
             </p>
           </div>
 
@@ -1189,8 +1223,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                       key={item.id}
                       type="button"
                       onClick={() => setActiveFaq(item.id)}
-                      aria-expanded={isActive}
-                      aria-controls={`faq-panel-${item.id}`}
+                      aria-pressed={isActive}
                       className={`w-full min-h-[66px] flex items-center justify-between gap-4 px-4 py-4 rounded-xl border transition-all duration-200 text-left group cursor-pointer hover:-translate-y-0.5 ${
                         isActive
                           ? "bg-brand text-black border-brand shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.12)]"
@@ -1219,12 +1252,12 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
               </div>
             </div>
 
-            <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
-              <Image
-                fill
+            <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-charcoal-950">
+              <ResilientImage
                 sizes="(max-width: 1024px) 100vw, 34vw"
                 src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800"
-                alt="TAG08 Redes Sociais"
+                alt="Planejamento de gestão de redes sociais"
+                fallbackLabel="Gestão de redes TAG08"
                 className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
               />
               <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
@@ -1233,12 +1266,14 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                   <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
                 </svg>
               </div>
-              <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
+              <div aria-hidden="true" className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
                 GESTÃO DE REDES
               </div>
 
               <div
-                id={`faq-panel-${activeFaqItem.id}`}
+                role="status"
+                aria-live="polite"
+                aria-atomic="true"
                 className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left"
               >
                 <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
@@ -1256,12 +1291,12 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
             </div>
 
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
-              <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 hover:-translate-y-0.5 transition-all duration-200 text-left flex flex-col justify-between space-y-4 flex-1">
+              <div className="bg-charcoal-900 border border-white/5 rounded-2xl p-5 hover:border-brand/20 hover:-translate-y-0.5 transition-all duration-200 text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">Como agimos</span>
-                  <h4 className="text-white font-semibold text-sm leading-snug">Linha editorial, frequência possível e revisão constante.</h4>
+                  <h4 className="text-white font-semibold text-sm leading-snug">Linha editorial, frequência possível e revisão contínua.</h4>
                   <p className="text-zinc-300 text-xs leading-relaxed font-sans">
-                    Evitamos improviso e mantemos a presença coerente com o posicionamento da marca.
+                    Reduzimos improviso organizando temas, formatos, produção e revisão de acordo com o posicionamento e a capacidade real da operação.
                   </p>
                 </div>
               </div>
@@ -1271,7 +1306,7 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
                   <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">Próximo passo</span>
                   <h4 className="text-black font-black text-sm leading-tight tracking-tight">O melhor caminho começa pelo entendimento do momento atual.</h4>
                   <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
-                    A conversa inicial organiza contexto, prioridade e aderência antes da proposta.
+                    A conversa inicial organiza contexto, prioridades, responsabilidades e aderência antes da proposta.
                   </p>
                 </div>
                 <a
@@ -1295,14 +1330,14 @@ Próximo passo: conversar com a TAG08 para entender escopo e direção editorial
           Presença consistente começa com uma rotina que a marca consegue sustentar.
         </h2>
         <p className="text-zinc-400 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
-          A TAG08 organiza direção editorial, formatos, produção e acompanhamento conforme o momento e a estrutura necessária para manter a comunicação com mais critério.
+          A TAG08 organiza planejamento editorial, formatos, produção e acompanhamento de acordo com o momento da marca e com a estrutura necessária para sustentar a comunicação.
         </p>
         <div className="pt-2 sm:pt-3">
           <button
             onClick={() => handleLinkClick("/contato")}
             className="group bg-brand text-black font-sans font-black text-xs uppercase tracking-widest py-3.5 px-7 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
           >
-            <span>ENTENDER MEU MELHOR CAMINHO</span>
+            <span>ENTENDER SE A GESTÃO FAZ SENTIDO</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
           </button>
         </div>

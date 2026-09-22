@@ -1,5 +1,5 @@
 export type PublicEvidenceStatus = "approved" | "pending" | "remove";
-export type PublicEvidenceKind = "team" | "home-case" | "portfolio-candidate" | "case-study" | "mini-case" | "internal-testimonial";
+export type PublicEvidenceKind = "team" | "client-logo" | "home-case" | "portfolio-candidate" | "case-study" | "mini-case" | "internal-testimonial";
 export type EvidenceVisibilityMode = "public" | "review";
 
 export const CONTENT_REVIEW_ENV_KEY = "NEXT_PUBLIC_TAG08_CONTENT_REVIEW";
@@ -28,17 +28,31 @@ const pending = (kind: PublicEvidenceKind, label: string, allowedRoutes: readonl
   reason: "Aguardando autorização e evidência verificável para publicação."
 });
 
-const approved = (kind: PublicEvidenceKind, label: string, allowedRoutes: readonly string[], reason: string): PublicEvidenceRecord => ({
+const approved = (
+  kind: PublicEvidenceKind,
+  label: string,
+  allowedRoutes: readonly string[],
+  reason: string,
+  approval: Pick<PublicEvidenceRecord, "decidedAt" | "evidenceReference"> = {
+    decidedAt: "2026-09-15",
+    evidenceReference: "approval:conversation-2026-09-15-publication-scope"
+  }
+): PublicEvidenceRecord => ({
   kind,
   label,
   allowedRoutes,
   status: "approved",
   decisionOwner: "Carlos Henrique Martins",
-  decidedAt: "2026-09-15",
-  evidenceReference: "approval:conversation-2026-09-15-publication-scope",
+  decidedAt: approval.decidedAt,
+  evidenceReference: approval.evidenceReference,
   validUntil: null,
   reason
 });
+
+const clientLogoApproval = {
+  decidedAt: "2026-09-18",
+  evidenceReference: "approval:conversation-2026-09-18-client-logo-publication"
+} as const;
 
 /** Fonte executável de publicação; referências nunca guardam documentos sensíveis no repositório. */
 export const PUBLIC_EVIDENCE = {
@@ -49,6 +63,18 @@ export const PUBLIC_EVIDENCE = {
   "team/guilherme-gomes": pending("team", "Guilherme Gomes", ["/sobre"]),
   "team/amazing-design": pending("team", "Amazing Design", ["/sobre"]),
   "team/andreia-braga": pending("team", "Andréia Braga", ["/sobre"]),
+  "client-logo/cayuca": approved("client-logo", "CaYuCa", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
+  "client-logo/wscom": approved("client-logo", "WSCOM", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
+  "client-logo/vr-imobiliaria": approved("client-logo", "VR Imobiliária", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
+  "client-logo/vaqrama": approved("client-logo", "Vaqrama", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
+  "client-logo/alugue-por-temporada": approved("client-logo", "Alugue por Temporada", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
+  "client-logo/segura-epi": approved("client-logo", "Segura EPI", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
+  "client-logo/ruben-a": approved("client-logo", "Ruben A.", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
+  "client-logo/reavivare": approved("client-logo", "Reavivare", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
+  "client-logo/raquel-cordeiro": approved("client-logo", "Raquel Cordeiro", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
+  "client-logo/luciana-gadelha": approved("client-logo", "Luciana Gadelha", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
+  "client-logo/home-office": approved("client-logo", "HomeOffice", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
+  "client-logo/harmonic": approved("client-logo", "Harmonic", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
   "home-case/alan-rocha": pending("home-case", "Alan Rocha", ["/"]),
   "home-case/le-visage": pending("home-case", "Clínica Le Visage", ["/"]),
   "home-case/luciana-gadelha": pending("home-case", "Luciana Gadelha", ["/"]),

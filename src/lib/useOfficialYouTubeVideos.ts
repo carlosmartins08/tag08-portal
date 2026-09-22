@@ -60,6 +60,7 @@ const getOfficialYouTubeVideos = async (): Promise<YouTubeSnapshot> => {
 
 export const useOfficialYouTubeVideos = (limit: number) => {
   const [snapshot, setSnapshot] = useState<YouTubeSnapshot>(cachedSnapshot ?? fallbackSnapshot);
+  const [isLoading, setIsLoading] = useState(() => !cachedSnapshot);
 
   useEffect(() => {
     let active = true;
@@ -67,6 +68,7 @@ export const useOfficialYouTubeVideos = (limit: number) => {
     void getOfficialYouTubeVideos().then((nextSnapshot) => {
       if (active) {
         setSnapshot(nextSnapshot);
+        setIsLoading(false);
       }
     });
 
@@ -77,6 +79,7 @@ export const useOfficialYouTubeVideos = (limit: number) => {
 
   return {
     source: snapshot.source,
-    videos: snapshot.videos.slice(0, limit)
+    videos: snapshot.videos.slice(0, limit),
+    isLoading
   };
 };

@@ -4,7 +4,7 @@ export type GoogleReview = {
   evidenceKey: string;
   name: string;
   role: string;
-  avatar: string;
+  avatar?: string;
   time: string;
   tagline: string;
   text: string;
@@ -17,7 +17,6 @@ export const TRUST_REVIEWS: GoogleReview[] = [
     evidenceKey: "internal-testimonial/roberta-chaves",
     name: "Dra. Roberta Chaves",
     role: "Clínica de Odontologia",
-    avatar: "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=200",
     time: "há 2 semanas",
     tagline: "Clareza no posicionamento",
     text: "Fizemos o reposicionamento estético da nossa clínica e o novo site estruturado com a TAG08. Estou impactada com a precisão do design. Nosso volume de pacientes particulares de alto padrão aumentou muito porque finalmente nossa comunicação condiz com o nosso tratamento.",

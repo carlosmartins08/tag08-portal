@@ -1,5 +1,9 @@
 # CHANGELOG - TAG08
 
+## 2026-09-18
+
+- Publicada em `/sobre` uma grade institucional com 12 logos de clientes autorizados, protegida pelo gate de evidências por item e rota. A seção não faz alegações de resultado, recomendação pública ou parceria ativa.
+
 ## 2026-09-16
 
 - Feita a inicialização da prévia editorial detectar `:3101` já ocupado e orientar a reutilização da aba, evitando o erro técnico `EADDRINUSE` ao executar `npm run dev` duas vezes.
