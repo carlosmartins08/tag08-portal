@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-30T00:00:00.000Z",
+  "title": "Design System: TAG08",
+  "northStar": "Direção editorial com clareza operacional",
+  "overview": "Sistema editorial escuro com camadas neutras, tipografia Manrope, acento lime controlado e âncoras claras intencionais.",
+  "keyCharacteristics": [
+    "60/30/10 entre neutros, estrutura e destaque",
+    "Manrope como família tipográfica única de interface",
+    "Ação comercial clara sem excesso de decoração",
+    "Superfícies claras somente com contraste remapeado",
+    "Responsividade validada em 390, 768 e 1440 pixels"
+  ],
+  "colors": {
+    "brand": {
+      "value": "#D4FF00",
+      "role": "Ação, estado ativo e ênfase estratégica",
+      "tonalRamp": ["#303900", "#526300", "#748D00", "#96B600", "#B9DE00", "#D4FF00", "#E8FF7A", "#F6FFCF"]
+    },
+    "brand-dark": {
+      "value": "#B9DE00",
+      "role": "Interação e variação de suporte"
+    },
+    "main": {
+      "value": "#0A0A0A",
+      "role": "Fundo principal"
+    },
+    "surface": {
+      "value": "#151518",
+      "role": "Superfície funcional"
+    },
+    "subtle": {
+      "value": "#1E1E22",
+      "role": "Superfície de separação"
+    },
+    "border-subtle": {
+      "value": "#303038",
+      "role": "Borda estrutural"
+    },
+    "text-primary": {
+      "value": "#F3F4F6",
+      "role": "Texto principal"
+    },
+    "text-secondary": {
+      "value": "#D1D5DB",
+      "role": "Texto auxiliar funcional"
+    },
+    "accent-readable": {
+      "value": "#5B8000",
+      "role": "Destaque legível sobre superfícies claras"
+    }
+  },
+  "typography": {
+    "display": {"fontFamily": "Manrope", "fontWeight": 800, "lineHeight": 1.05, "letterSpacing": "-0.04em"},
+    "body": {"fontFamily": "Manrope", "fontWeight": 400, "lineHeight": 1.65},
+    "label": {"fontFamily": "Manrope", "fontWeight": 700, "fontSize": "0.6875rem", "lineHeight": 1.35, "letterSpacing": "0.08em"},
+    "mono": {"fontFamily": "JetBrains Mono", "fontWeight": 400}
+  },
+  "shadows": {
+    "base": "0 18px 45px -38px rgb(0 0 0 / 0.95)",
+    "emphasis": "0 28px 72px -48px rgb(0 0 0 / 0.98)"
+  },
+  "motion": {
+    "standard": "180ms ease",
+    "short": "200ms ease-out",
+    "reducedMotion": "Remove smooth scrolling and displacement; preserve opacity changes only when useful"
+  },
+  "breakpoints": {"sm": "640px", "md": "768px", "lg": "1024px", "xl": "1280px"},
+  "components": [
+    {"name": "Primary Button", "className": "ds-btn-primary", "description": "CTA principal com acento lime e texto escuro", "snippet": ".ds-btn-primary { background: var(--color-brand); color: var(--color-main); border-radius: var(--radius-control); min-height: 44px; padding: .75rem 1.25rem; }"},
+    {"name": "Secondary Button", "className": "ds-btn-secondary", "description": "Ação secundária em superfície neutra", "snippet": ".ds-btn-secondary { background: var(--color-surface); color: var(--color-text-primary); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-control); min-height: 44px; padding: .75rem 1.25rem; }"},
+    {"name": "Functional Card", "className": "ds-card-functional", "description": "Card de escolha, formulário ou item de lista", "snippet": ".ds-card-functional { background: var(--color-surface); color: var(--color-text-primary); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-card); padding: 1.25rem; }"},
+    {"name": "Editorial Block", "className": "ds-card-editorial", "description": "Bloco de hero, prova ou destaque editorial", "snippet": ".ds-card-editorial { background: var(--color-main); color: var(--color-text-primary); border-radius: var(--radius-editorial); padding: 1.5rem; }"},
+    {"name": "Field", "className": "ds-field", "description": "Campo com contraste e foco visível", "snippet": ".ds-field { background: var(--color-main); color: var(--color-text-primary); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-control); padding: .75rem 1rem; }"}
+  ],
+  "rules": {
+    "dos": ["Use semantic tokens", "Keep CTA primary distinct", "Validate 390/768/1440", "Remap all descendants on light surfaces"],
+    "donts": ["No third accent", "No accent as body text", "No hardcoded brand hex outside exceptions", "No dark-on-dark controls without contrast"]
+  }
+}

@@ -293,7 +293,7 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
       <div className="absolute bottom-[15%] right-[-5%] w-[480px] h-[480px] bg-brand/3 rounded-full blur-[150px] pointer-events-none z-0" />
       <Header currentPage={path} onNavigate={navigate} language={language} onLanguageChange={changeLanguage} />
       <Breadcrumbs currentPage={path} onNavigate={navigate} language={language} />
-      <main className="flex-grow relative z-10" data-route={path}>
+      <main id="main-content" className="flex-grow relative z-10" data-route={path}>
         <AnimatePresence mode="wait">
           <motion.div
             className="tag08-editorial-page"

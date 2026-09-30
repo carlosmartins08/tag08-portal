@@ -140,7 +140,7 @@ export default function MiniCases({
   const handleCtaClick = () => {
     if (onNavigate) {
       onNavigate("/contato");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+       window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
     }
   };
 
@@ -208,11 +208,11 @@ export default function MiniCases({
                       )}
                     </div>
                     <div className="space-y-0.5">
-                      <h4 className="font-display font-black text-white text-base tracking-tight leading-none">
-                        {logo.name}
-                      </h4>
-                      <p className="tag08-meta text-zinc-500">
-                        {logo.industry || "Empresa Clientes"}
+                       <h3 className="font-display font-black text-white text-base tracking-tight leading-none">
+                         {logo.name}
+                       </h3>
+                       <p className="tag08-meta text-zinc-300">
+                         {logo.industry || "Empresa cliente"}
                       </p>
                     </div>
                   </div>
@@ -229,18 +229,18 @@ export default function MiniCases({
                       <span className="block font-display font-black text-xl text-brand leading-none tracking-tight">
                         {logo.metric}
                       </span>
-                      <span className="block text-zinc-500 tag08-meta leading-none">
+                         <span className="block text-zinc-300 tag08-meta leading-none">
                         {logo.metricLabel || "Indicador de Sucesso"}
                       </span>
                     </div>
                   ) : (
-                    <div className="flex items-center gap-1.5 text-zinc-500 tag08-meta">
+                     <div className="flex items-center gap-1.5 text-zinc-300 tag08-meta">
                       <CheckCircle2 className="w-3.5 h-3.5 text-brand stroke-[2]" />
                     <span>Projeto entregue e homologado</span>
                     </div>
                   )}
 
-                    <span className="tag08-meta text-zinc-600">
+                     <span className="tag08-meta text-zinc-300">
                     Ativo
                   </span>
                 </div>
@@ -254,13 +254,13 @@ export default function MiniCases({
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-white/[0.04]">
             <div className="flex items-center gap-2.5">
               <Award className="w-4 h-4 text-brand" />
-              <p className="text-zinc-500 tag08-meta text-left">
+                 <p className="text-zinc-300 tag08-meta text-left">
                 Gostaria de ver sua marca gerando este nível de autoridade e retenção?
               </p>
             </div>
             <button
               onClick={handleCtaClick}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-brand text-zinc-300 hover:text-black border border-white/10 hover:border-transparent rounded-xl tag08-action transition-colors duration-200 cursor-pointer"
+               className="inline-flex min-h-11 items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-brand text-zinc-300 hover:text-black border border-white/10 hover:border-transparent rounded-xl tag08-action transition-[background-color,border-color,color] duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
             >
               <span>Solicitar Diagnóstico de Posicionamento</span>
               <ArrowUpRight className="w-3.5 h-3.5" />

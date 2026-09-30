@@ -32,25 +32,25 @@
   --color-brand-dark-rgb: 185, 222, 0;
   --color-brand-secondary-rgb: 212, 255, 0;
   --color-charcoal-950: #0A0A0A;
-  --color-charcoal-900: #111111;
-  --color-charcoal-800: #171717;
-  --color-charcoal-700: #26262B;
+  --color-charcoal-900: #151518;
+  --color-charcoal-800: #1E1E22;
+  --color-charcoal-700: #303038;
   --color-main: #0A0A0A;
-  --color-surface: #111111;
-  --color-subtle: #171717;
+  --color-surface: #151518;
+  --color-subtle: #1E1E22;
   --color-text-primary: #F3F4F6;
   --color-text-secondary: #D1D5DB;
-  --color-border-subtle: #26262B;
+  --color-border-subtle: #303038;
   --color-accent-readable: #5B8000;
 }
 
 :root {
   --color-main: #0A0A0A;
-  --color-surface: #111111;
-  --color-subtle: #171717;
+  --color-surface: #151518;
+  --color-subtle: #1E1E22;
   --color-text-primary: #F3F4F6;
   --color-text-secondary: #D1D5DB;
-  --color-border-subtle: #26262B;
+  --color-border-subtle: #303038;
   --color-accent-readable: #5B8000;
   --color-brand-rgb: 212, 255, 0;
   --color-brand-dark-rgb: 185, 222, 0;
@@ -359,6 +359,52 @@ main section[id] {
 .tag08-card--featured {
   border-color: rgb(var(--color-brand-rgb) / 0.28);
   background: linear-gradient(145deg, rgb(var(--color-brand-rgb) / 0.09), rgb(255 255 255 / 0.025));
+}
+
+/* A single light service surface creates a clear decision anchor inside the dark catalogue. */
+.tag08-service-domain--light {
+  background: var(--color-text-primary) !important;
+  border-color: var(--color-text-secondary) !important;
+  color: var(--color-main);
+}
+
+.tag08-service-domain--light :is(.text-white) {
+  color: var(--color-main) !important;
+}
+
+.tag08-service-domain--light :is(.text-zinc-300, .text-zinc-400, .text-zinc-500) {
+  color: var(--color-charcoal-700) !important;
+}
+
+.tag08-service-domain--light :is(.text-brand, .text-brand-secondary) {
+  color: var(--color-accent-readable) !important;
+}
+
+.tag08-service-domain--light :is([class*="border-white"]) {
+  border-color: rgb(38 38 43 / 0.16) !important;
+}
+
+.tag08-service-domain--light :is([class*="bg-white"]) {
+  background-color: rgb(10 10 10 / 0.06) !important;
+}
+
+.tag08-service-domain--light .tag08-service-domain__media :is(.text-zinc-300, .text-zinc-400, .text-zinc-500) {
+  color: var(--color-text-secondary) !important;
+}
+
+.tag08-service-domain--light button {
+  background-color: var(--color-main) !important;
+  border-color: var(--color-main) !important;
+  color: var(--color-text-primary) !important;
+}
+
+.tag08-service-domain--light button :is(.text-white, .text-brand, .text-brand-secondary),
+.tag08-service-domain--light button svg {
+  color: var(--color-text-primary) !important;
+}
+
+.tag08-service-domain--light button:hover {
+  background-color: var(--color-charcoal-700) !important;
 }
 
 /*

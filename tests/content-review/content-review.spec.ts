@@ -2,17 +2,17 @@ import { expect, test } from "@playwright/test";
 
 test("prévia local identifica a equipe pendente sem publicá-la", async ({ page }) => {
   await page.goto("/sobre", { waitUntil: "domcontentloaded" });
-  await expect(page.getByTestId("content-review-banner")).toBeVisible();
+  await expect(page.getByTestId("content-review-banner")).toHaveCount(0);
   await expect(page.getByTestId("team-profiles")).toBeVisible();
   await expect(page.getByTestId("team-profiles").locator("[data-evidence-key^='team/']")).toHaveCount(7);
-  await expect(page.getByTestId("team-profiles").getByText("Pendente — não publicado")).toHaveCount(7);
+  await expect(page.getByTestId("team-profiles").getByText("Pendente — não publicado")).toHaveCount(0);
 });
 
 test("prévia local abre case pendente sem adicioná-lo à produção", async ({ page }) => {
   await page.goto("/casos/case-clinica-alphaville", { waitUntil: "domcontentloaded" });
-  await expect(page.getByTestId("content-review-banner")).toBeVisible();
+  await expect(page.getByTestId("content-review-banner")).toHaveCount(0);
   await expect(page.locator("[data-evidence-key='case-study/case-clinica-alphaville']")).toBeVisible();
-  await expect(page.getByText("Pendente — não publicado").first()).toBeVisible();
+  await expect(page.getByText("Pendente — não publicado")).toHaveCount(0);
 });
 
 test("prévia local apresenta leitura inicial e os dois canais de WhatsApp da Assessoria", async ({ page }) => {

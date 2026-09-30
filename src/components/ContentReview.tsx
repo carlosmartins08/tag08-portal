@@ -1,9 +1,9 @@
 "use client";
 
-import { getEvidenceStatusLabel, isContentReviewMode } from "../content/publicEvidence";
+import { getEvidenceStatusLabel, hasPendingPublicEvidence, isContentReviewMode } from "../content/publicEvidence";
 
 export function ContentReviewBanner() {
-  if (!isContentReviewMode()) return null;
+  if (!isContentReviewMode() || !hasPendingPublicEvidence()) return null;
   return <div data-testid="content-review-banner" role="status" className="fixed inset-x-0 bottom-0 z-[100] border-t border-amber-300/60 bg-amber-300 px-4 py-2 text-center font-sans text-xs font-black tracking-widest text-black">REVISÃO LOCAL — NÃO PUBLICADO</div>;
 }
 

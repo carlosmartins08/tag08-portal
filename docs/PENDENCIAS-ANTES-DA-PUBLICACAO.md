@@ -1,6 +1,6 @@
 # Pendencias antes da publicacao
 
-Atualizado em: `2026-09-25`
+Atualizado em: `2026-09-30`
 
 Este e o documento unico para acompanhar o que ainda precisa acontecer antes de publicar a TAG08. Um item so pode ser marcado como concluido quando houver evidencia verificavel, comando executado ou decisao registrada.
 
@@ -14,9 +14,15 @@ Este e o documento unico para acompanhar o que ainda precisa acontecer antes de 
 
 ### Validacao local desta rodada
 
+- `npm run build`: concluido com sucesso, incluindo `prisma generate`, TypeScript, paginas estaticas e standalone.
+- `npm run verify:routes`: concluido com sucesso no servidor standalone em `127.0.0.1:3210`.
+- `npm run lint`: concluido com sucesso (`tsc --noEmit`).
 - `npx tsc --noEmit --pretty false`: concluido com sucesso.
-- `npm run lint`: bloqueado neste ambiente porque `prisma generate` tenta baixar o engine e a rede local recusa a conexao (`ECONNREFUSED 127.0.0.1:9`).
-- `npm test`: bloqueado neste ambiente por `spawn EPERM` ao iniciar o servico do `esbuild`; executar novamente no terminal local/CI antes do release.
+- `npm test`: concluido com sucesso, incluindo testes de rotas e contratos.
+- `npx playwright test tests/e2e/critical-pages.spec.ts`: concluido com 89 testes aprovados (incluindo navegacao, movimento e imagem).
+- Auditoria visual de superfícies: tokens remapeados e validados em 390, 768 e 1440 px pela suíte crítica; inspeção visual manual final em navegador continua recomendada antes do corte.
+- Piloto de acento na Home: concluído e validado; replicação nas demais rotas depende de inspeção visual e não deve ser feita por substituição em massa.
+- Superfície clara na primeira frente de Serviços: implementada e validada pela suíte crítica; demais frentes permanecem dark até nova decisão visual.
 
 ## Pendencias bloqueantes
 

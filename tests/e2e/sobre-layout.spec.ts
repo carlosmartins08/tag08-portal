@@ -35,15 +35,13 @@ for (const viewport of viewports) {
   });
 }
 
-test("Sobre mantém o último card amplo no tablet e expõe o accordion corretamente", async ({ page }) => {
+test("Sobre mantém os perfis autorizados e expõe o accordion corretamente", async ({ page }) => {
   await openSobre(page, 768, 1024);
 
-  const capabilityCards = page.getByTestId("connected-capabilities").locator(":scope > div:last-child article");
-  await expect(capabilityCards).toHaveCount(3);
-  const widths = await capabilityCards.evaluateAll((elements) =>
-    elements.map((element) => element.getBoundingClientRect().width)
-  );
-  expect(widths[2]).toBeGreaterThan(widths[0] * 1.8);
+  const profileCards = page.getByTestId("team-profiles").locator("[data-evidence-key^='team/']");
+  await expect(profileCards).toHaveCount(7);
+  const primaryCards = page.getByTestId("team-profiles").locator("[data-evidence-key^='team/']").filter({ has: page.locator("h3") });
+  await expect(primaryCards.first()).toBeVisible();
 
   const control = page.getByRole("button", { name: /Ver princípios de Pensamento estratégico/ });
   await expect(control).toHaveAttribute("aria-expanded", "false");

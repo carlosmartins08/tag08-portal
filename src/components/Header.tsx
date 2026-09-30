@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type CSSProperties } from "react";
 import { ChevronDown, Menu, X, ArrowUpRight, MessageSquare, Briefcase, Compass, Settings, Users, Mail, Award, Activity, Video } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
 import { getRouteByPath, isRouteLocalePublished } from "../config/routeRegistry";
 import { TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
@@ -31,6 +31,42 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
     ...svc,
     icon: serviceIcons[index],
   }));
+  const serviceClusterCopy = {
+    pt: [
+      ["Organizar presença", "Conteúdo, canais e presença digital."],
+      ["Posicionar a marca", "Clareza de oferta, linguagem e direção."],
+      ["Estruturar operação", "Processos, tecnologia e continuidade."]
+    ],
+    en: [
+      ["Organize presence", "Content, channels and digital presence."],
+      ["Position the brand", "Clear offer, language and direction."],
+      ["Structure operations", "Processes, technology and continuity."]
+    ],
+    es: [
+      ["Organizar presencia", "Contenido, canales y presencia digital."],
+      ["Posicionar la marca", "Claridad de oferta, lenguaje y dirección."],
+      ["Estructurar la operación", "Procesos, tecnología y continuidad."]
+    ]
+  }[language];
+  const serviceClusters = [
+    {
+      paths: ["/servicos/gestao-de-redes-sociais", "/servicos/producao-audiovisual"]
+    },
+    {
+      paths: ["/servicos/assessoria-marketing-digital-estrategico", "/servicos/branding-identidade", "/servicos/desenvolvimento-web"]
+    },
+    {
+      paths: ["/servicos/process-intelligence", "/servicos/process-activation"]
+    }
+  ].map((cluster, index) => ({
+    label: serviceClusterCopy[index][0],
+    description: serviceClusterCopy[index][1],
+    ...cluster,
+    services: cluster.paths
+      .map((path) => localizedServices.find((service) => service.path === path))
+      .filter((service): service is (typeof localizedServices)[number] => Boolean(service))
+  }));
+  const firstServicePath = serviceClusters.flatMap((cluster) => cluster.services).at(0)?.path;
   const localizedMainLinks = [
     { id: 0, label: copy.navHome, path: "/" },
     { id: 1, label: copy.navAbout, path: "/sobre" },
@@ -42,21 +78,44 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
   const [scrolled, setScrolled] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(88);
+  const prefersReducedMotion = useReducedMotion();
+  const scrollFrameRef = useRef<number | null>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const servicesTriggerRef = useRef<HTMLButtonElement>(null);
   const firstServiceRef = useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = useRef<HTMLButtonElement>(null);
 
+  const availableLanguageOptions = languageOptions.filter((option) => isLanguageAvailable(option.code));
+
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalScroll > 0) {
-        setScrollProgress((window.scrollY / totalScroll) * 100);
-      }
+      if (scrollFrameRef.current !== null) return;
+      scrollFrameRef.current = window.requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 20);
+        const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+        setScrollProgress(totalScroll > 0 ? (window.scrollY / totalScroll) * 100 : 0);
+        scrollFrameRef.current = null;
+      });
     };
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollFrameRef.current !== null) window.cancelAnimationFrame(scrollFrameRef.current);
+    };
   }, []);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const updateHeaderHeight = () => setHeaderHeight(Math.ceil(header.getBoundingClientRect().height));
+    updateHeaderHeight();
+    const observer = new ResizeObserver(updateHeaderHeight);
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, [scrolled]);
 
   useEffect(() => {
     if (!dropdownOpen) return;
@@ -77,6 +136,18 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
     return () => window.cancelAnimationFrame(frame);
   }, [dropdownOpen]);
 
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      if (target instanceof Element && !target.closest("[aria-controls='desktop-services-panel']") && !target.closest("#desktop-services-panel")) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [dropdownOpen]);
+
   const handleLinkClick = (page: string, ctaName: string, ctaLocation: string, ctaType: string = "navigation") => {
     trackCtaClick({
       cta_name: ctaName,
@@ -87,8 +158,9 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
     });
     onNavigate(page);
     setMobileMenuOpen(false);
+    setMobileServicesOpen(false);
     setDropdownOpen(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
   };
 
   const handleOutboundClick = (label: string, url: string, surface: string) => {
@@ -112,6 +184,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
     });
     onLanguageChange(nextLanguage);
     setMobileMenuOpen(false);
+    setMobileServicesOpen(false);
   };
 
   const isSolutionsActive = [
@@ -128,17 +201,23 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
 
   return (
     <header
+      ref={headerRef}
       id="main-header"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      style={{ "--tag08-header-height": `${headerHeight}px` } as CSSProperties}
+      className={`fixed top-0 left-0 right-0 z-50 transition-[padding,background-color,border-color,box-shadow] duration-200 ${
         scrolled
           ? "py-3 bg-charcoal-950/98 backdrop-blur-2xl border-b border-white/[0.08] shadow-[0_10px_40px_-15px_rgba(0,0,0,0.9)]"
           : "py-6 bg-transparent border-b border-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:left-6 focus:top-2 focus:z-[60] focus:rounded-md focus:bg-brand focus:px-3 focus:py-2 focus:text-xs focus:font-bold focus:text-black">
+          Pular para o conteúdo
+        </a>
         {/* Logo with futuristic tracking */}
         <button
           id="btn-logo-home"
+          type="button"
           onClick={() => handleLinkClick("/", copy.brandSubtitle, "header-logo", "brand")}
           className="flex items-center gap-3 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 group select-none"
         >
@@ -174,10 +253,12 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                     type="button"
                     aria-expanded={dropdownOpen}
                     aria-controls="desktop-services-panel"
-                    aria-haspopup="dialog"
+                    aria-haspopup="true"
+                    aria-current={isActive ? "page" : undefined}
                     onClick={() => setDropdownOpen((open) => !open)}
+                    onFocus={() => setHoveredIndex(link.id)}
                     className={`px-4 py-2 rounded-full text-xs font-semibold font-sans relative z-10 transition-colors duration-300 flex items-center gap-1 cursor-pointer ${
-                      isActive ? "text-brand" : "text-white/70 hover:text-white"
+                      isActive ? "text-brand" : "text-zinc-300 hover:text-white"
                     }`}
                   >
                     {link.label}
@@ -188,52 +269,62 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                     {dropdownOpen && (
                       <motion.div
                         id="desktop-services-panel"
-                        role="dialog"
-                        aria-label={copy.navTitleServices}
-                        aria-modal="false"
-                        initial={{ opacity: 0, y: 15, scale: 0.97 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.97 }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute left-1/2 -translate-x-[40%] mt-3 w-[640px] bg-charcoal-900/98 backdrop-blur-3xl border border-white/[0.08] rounded-2xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden grid grid-cols-12 gap-6"
+                        role="region"
+                        aria-labelledby="desktop-services-heading"
+                         initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 15, scale: 0.97 }}
+                         animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+                         exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.97 }}
+                         transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: "easeOut" }}
+                        className="absolute left-1/2 -translate-x-[40%] mt-3 max-h-[calc(100dvh-7rem)] w-[640px] overflow-y-auto rounded-2xl border border-white/[0.08] bg-charcoal-900/98 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-3xl grid grid-cols-12 gap-6"
                       >
                         {/* Background subtle glow inside dropdown */}
                         <div className="absolute top-0 right-0 w-44 h-44 bg-brand/3 rounded-full blur-[40px] pointer-events-none" />
 
                         {/* Left column: Services */}
                         <div className="col-span-7 space-y-4">
-                          <div className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold border-b border-white/[0.04] pb-1.5 flex items-center gap-1.5">
+                          <div id="desktop-services-heading" className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold border-b border-white/[0.04] pb-1.5 flex items-center gap-1.5">
                             <Activity className="w-3.5 h-3.5" /> {copy.navTitleServices}
                           </div>
                           
-                          <div className="grid gap-1.5">
-                            {localizedServices.map((svc) => (
-                              <button
-                                key={svc.path}
-                                ref={svc.path === localizedServices[0]?.path ? firstServiceRef : undefined}
-                                type="button"
-                                onClick={() => handleLinkClick(svc.path, svc.name, "header-services-dropdown", "navigation")}
-                                className="group flex gap-3 text-left p-2 rounded-xl hover:bg-white/[0.04] transition-all duration-200"
-                              >
-                                <div className="mt-0.5 p-2 rounded-lg bg-white/[0.02] text-zinc-400 group-hover:text-brand group-hover:bg-brand/10 transition-colors duration-200 shrink-0">
-                                  <svc.icon className="w-3.5 h-3.5" />
+                          <div className="space-y-4">
+                            {serviceClusters.map((cluster) => (
+                              <div key={cluster.label} className="space-y-1.5">
+                                <div>
+                                  <p className="text-xs font-bold text-white">{cluster.label}</p>
+                                  <p className="text-xs leading-snug text-zinc-400">{cluster.description}</p>
                                 </div>
-                                <div className="min-w-0">
-                                  <div className="text-white font-semibold text-xs group-hover:text-brand transition-colors flex items-center gap-1">
-                                    {svc.name}
-                                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                                  </div>
-                                  <p className="text-zinc-400 text-xs leading-snug mt-0.5 truncate">{svc.desc}</p>
+                                <div className="grid gap-1.5">
+                                  {cluster.services.map((svc) => (
+                                    <button
+                                      key={svc.path}
+                                      ref={svc.path === firstServicePath ? firstServiceRef : undefined}
+                                      type="button"
+                                      onClick={() => handleLinkClick(svc.path, svc.name, "header-services-dropdown", "navigation")}
+                                      className="group flex min-h-11 gap-3 rounded-xl p-2 text-left transition-[background-color] duration-200 hover:bg-white/[0.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-inset"
+                                    >
+                                      <div className="mt-0.5 shrink-0 rounded-lg bg-white/[0.02] p-2 text-zinc-300 transition-[background-color,color] duration-200 group-hover:bg-brand/10 group-hover:text-brand">
+                                        <svc.icon className="h-3.5 w-3.5" />
+                                      </div>
+                                      <div className="min-w-0">
+                                        <div className="flex items-center gap-1 text-xs font-semibold text-white transition-colors duration-200 group-hover:text-brand">
+                                          {svc.name}
+                                          <ArrowUpRight className="h-3 w-3 opacity-0 transition-[opacity,transform] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden="true" />
+                                        </div>
+                                        <p className="mt-0.5 truncate text-xs leading-snug text-zinc-400">{svc.desc}</p>
+                                      </div>
+                                    </button>
+                                  ))}
                                 </div>
-                              </button>
+                              </div>
                             ))}
                           </div>
 
                           <div className="pt-2 border-t border-white/[0.04]">
-                            <button
-                              onClick={() => handleLinkClick("/servicos", copy.navExploreAllServices, "header-services-dropdown-cta", "navigation")}
-                              className="text-xs font-bold font-sans text-brand hover:text-brand-dark transition-colors flex items-center gap-1"
-                            >
+                             <button
+                               type="button"
+                               className="min-h-11 text-xs font-bold font-sans text-brand hover:text-brand-dark transition-colors flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900"
+                               onClick={() => handleLinkClick("/servicos", copy.navExploreAllServices, "header-services-dropdown-cta", "navigation")}
+                             >
                               {copy.navExploreAllServices} <ArrowUpRight className="w-3 h-3" />
                             </button>
                           </div>
@@ -246,7 +337,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                               <Award className="w-3 h-3" /> {copy.navAccelerateTag}
                             </div>
                             <div className="space-y-1">
-                              <h4 className="font-display font-bold text-sm text-white">{copy.navAccelerateText}</h4>
+                              <p className="font-display font-bold text-sm text-white">{copy.navAccelerateText}</p>
                               <p className="text-zinc-400 text-xs leading-relaxed">
                                 {copy.navAccelerateSubtext}
                               </p>
@@ -264,9 +355,10 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                             </div>
                           </div>
 
-                          <button
+                           <button
+                             type="button"
                             onClick={() => handleLinkClick("/contato", copy.navSolutionsCta, "header-services-dropdown-cta", "conversion")}
-                            className="w-full mt-4 bg-brand hover:bg-brand-dark text-black font-bold font-sans text-xs uppercase py-2.5 rounded-lg transition-all duration-300 hover:shadow-[0_4px_15px_rgba(var(--color-brand-rgb),0.15)] select-none text-center"
+                             className="w-full min-h-11 mt-4 bg-brand hover:bg-brand-dark text-black font-bold font-sans text-xs uppercase py-2.5 rounded-lg transition-[background-color,box-shadow] duration-200 hover:shadow-[0_4px_15px_rgba(var(--color-brand-rgb),0.15)] select-none text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900"
                           >
                             {copy.navSolutionsCta}
                           </button>
@@ -281,10 +373,13 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
             return (
               <button
                 key={link.id}
+                type="button"
                 onClick={() => handleLinkClick(link.path, link.label, "header-nav", "navigation")}
                 onMouseEnter={() => setHoveredIndex(link.id)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold font-sans relative transition-colors duration-300 cursor-pointer ${
-                  isActive ? "text-brand" : "text-white/70 hover:text-white"
+                onFocus={() => setHoveredIndex(link.id)}
+                aria-current={isActive ? "page" : undefined}
+                    className={`min-h-11 px-4 py-2 rounded-full text-xs font-semibold font-sans relative transition-colors duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 ${
+                  isActive ? "text-brand" : "text-zinc-300 hover:text-white"
                 }`}
               >
                 {/* Frictionless Glide Backdrop Pill */}
@@ -304,7 +399,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
         {/* Language choice and the primary conversion action. */}
         <div className="hidden lg:flex items-center gap-5">
           <div aria-label="Selecionar idioma" className="flex items-center rounded-lg border border-white/[0.08] bg-white/[0.03] p-1" role="group">
-            {languageOptions.map((option) => (
+            {availableLanguageOptions.map((option) => (
               <button
                 key={option.code}
                 type="button"
@@ -313,7 +408,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                 disabled={!isLanguageAvailable(option.code)}
                 onClick={() => handleLanguageSelection(option.code, "header-language")}
                 title={option.name}
-                className={`rounded-md px-2.5 py-1.5 font-sans text-xs font-black tracking-wider transition-colors ${
+                  className={`min-h-11 rounded-md px-2.5 py-1.5 font-sans text-xs font-black tracking-wider transition-colors ${
                   language === option.code ? "bg-brand text-black" : isLanguageAvailable(option.code) ? "text-zinc-400 hover:text-white" : "cursor-not-allowed text-zinc-600 opacity-60"
                 }`}
               >
@@ -325,7 +420,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
           <button
             id="btn-nav-contato"
             onClick={() => handleLinkClick("/contato", copy.navMobileContact, "header-cta", "conversion")}
-            className="cursor-pointer bg-brand hover:bg-brand-dark text-black text-xs font-bold font-sans px-5 py-2.5 rounded-lg transition-all duration-300 flex items-center gap-1.5 shadow-[0_4px_20px_rgba(var(--color-brand-rgb),0.15)] hover:shadow-[0_4px_25px_rgba(var(--color-brand-rgb),0.35)] select-none rounded-tl-none rounded-br-none"
+             className="min-h-11 cursor-pointer bg-brand hover:bg-brand-dark text-black text-xs font-bold font-sans px-5 py-2.5 rounded-lg transition-[background-color,box-shadow] duration-200 flex items-center gap-1.5 shadow-[0_4px_20px_rgba(var(--color-brand-rgb),0.15)] hover:shadow-[0_4px_25px_rgba(var(--color-brand-rgb),0.35)] select-none rounded-tl-none rounded-br-none focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
           >
             {copy.navMobileContact} <ArrowUpRight className="w-3.5 h-3.5" />
           </button>
@@ -333,6 +428,14 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
 
         {/* Mobile Actions block including trigger and quick toggles */}
         <div className="lg:hidden flex items-center gap-2.5">
+          <button
+            type="button"
+            onClick={() => handleLinkClick("/contato", copy.navMobileContact, "mobile-header-cta", "conversion")}
+            aria-label="Falar com a TAG08"
+            className="min-h-11 rounded-lg bg-brand px-3 py-2 text-xs font-bold text-black transition-[background-color,box-shadow] duration-200 hover:bg-brand-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+          >
+            Falar
+          </button>
           <button
             id="btn-toggle-mobile-menu"
             type="button"
@@ -355,13 +458,13 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
             ariaLabel="Navegação principal"
             initialFocusRef={firstMobileLinkRef}
             onClose={() => setMobileMenuOpen(false)}
-            className="lg:hidden fixed inset-x-0 top-20 z-40 h-[calc(100vh-5rem)] overflow-y-auto bg-charcoal-950/98 backdrop-blur-3xl border-b border-white/[0.08] shadow-3xl"
+             className="lg:hidden fixed inset-x-0 top-[var(--tag08-header-height)] z-40 max-h-[calc(100dvh-var(--tag08-header-height))] min-h-[calc(100dvh-var(--tag08-header-height))] overflow-y-auto bg-charcoal-950/98 pb-[env(safe-area-inset-bottom)] backdrop-blur-3xl border-b border-white/[0.08] shadow-3xl"
           >
             <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ type: "spring", duration: 0.4 }}
+               initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -20 }}
+               animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+               exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -15 }}
+               transition={prefersReducedMotion ? { duration: 0 } : { type: "spring", duration: 0.4 }}
               className="flex min-h-full flex-col justify-between"
             >
             <div className="px-6 py-8 space-y-8">
@@ -381,7 +484,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                         ref={link.id === 0 ? firstMobileLinkRef : undefined}
                         type="button"
                         onClick={() => handleLinkClick(link.path, link.label, "mobile-nav", "navigation")}
-                        className={`text-left text-xl font-display font-medium py-1 transition-all duration-300 flex items-center justify-between border-b border-white/[0.02] ${
+                         className={`text-left text-xl font-display font-medium min-h-11 py-1 transition-[color,padding-left] duration-200 flex items-center justify-between border-b border-white/[0.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 ${
                           isActive ? "text-brand pl-2" : "text-white/80 hover:text-white"
                         }`}
                       >
@@ -395,8 +498,8 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
 
               <div className="space-y-3 border-t border-white/[0.05] pt-6">
                 <p className="tag08-meta text-xs font-bold uppercase tracking-[0.2em] text-zinc-400">Idioma do portal</p>
-                <div className="grid grid-cols-3 gap-2">
-                  {languageOptions.map((option) => (
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(5rem,1fr))] gap-2">
+                  {availableLanguageOptions.map((option) => (
                     <button
                       key={option.code}
                       type="button"
@@ -405,7 +508,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                       disabled={!isLanguageAvailable(option.code)}
                       onClick={() => handleLanguageSelection(option.code, "mobile-language")}
                       title={option.name}
-                      className={`rounded-lg border px-3 py-2.5 text-xs font-sans font-bold transition-colors ${
+                       className={`min-h-11 rounded-lg border px-3 py-2.5 text-xs font-sans font-bold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 ${
                         language === option.code
                           ? "border-brand bg-brand text-black"
                           : isLanguageAvailable(option.code)
@@ -419,40 +522,61 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                 </div>
               </div>
 
-              {/* Grid of Specialized services */}
+              {/* Progressive disclosure for specialized services */}
               <div className="space-y-4">
-                <div className="tag08-meta text-xs text-brand uppercase tracking-[0.2em] mb-2 font-bold flex items-center gap-1.5">
-                  <Activity className="w-3.5 h-3.5" /> {copy.navMobileSolutionsTitle}
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {localizedServices.map((svc) => (
-                    <button
-                      key={svc.path}
-                      type="button"
-                      onClick={() => handleLinkClick(svc.path, svc.name, "mobile-services", "navigation")}
-                      className={`text-left p-3 rounded-xl border transition-all duration-300 text-xs flex gap-3 ${
-                        currentPage === svc.path
-                          ? "bg-brand/10 border-brand/30 text-brand"
-                          : "bg-white/[0.01] border-white/[0.04] text-zinc-400 hover:text-white hover:bg-white/[0.03]"
-                      }`}
-                    >
-                      <div className="p-1.5 rounded-lg bg-white/[0.03] text-brand shrink-0">
-                        <svc.icon className="w-3.5 h-3.5" />
-                      </div>
-                      <div>
-                        <div className="font-semibold text-white">{svc.name}</div>
-                        <div className="text-xs text-zinc-400 leading-snug mt-0.5">{svc.desc}</div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
                 <button
                   type="button"
-                  onClick={() => handleLinkClick("/servicos", copy.navExploreAllServices, "mobile-services-cta", "navigation")}
-                  className="w-full py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center text-xs font-sans font-semibold text-brand hover:bg-white/[0.06] transition-colors"
+                  aria-expanded={mobileServicesOpen}
+                  aria-controls="mobile-services-list"
+                  onClick={() => setMobileServicesOpen((open) => !open)}
+                  className="flex min-h-11 w-full items-center justify-between border-b border-white/[0.05] pb-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60"
                 >
-                  {copy.navExploreAllServices}
+                  <span className="tag08-meta flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.2em] text-brand">
+                    <Activity className="h-3.5 w-3.5" aria-hidden="true" /> {copy.navMobileSolutionsTitle}
+                  </span>
+                  <ChevronDown className={`h-4 w-4 text-brand transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`} aria-hidden="true" />
                 </button>
+                {mobileServicesOpen && (
+                  <div id="mobile-services-list" className="space-y-4">
+                    {serviceClusters.map((cluster) => (
+                      <div key={cluster.label} className="space-y-2">
+                        <div>
+                          <p className="text-xs font-bold text-white">{cluster.label}</p>
+                          <p className="text-xs leading-snug text-zinc-400">{cluster.description}</p>
+                        </div>
+                        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                          {cluster.services.map((svc) => (
+                            <button
+                              key={svc.path}
+                              type="button"
+                              onClick={() => handleLinkClick(svc.path, svc.name, "mobile-services", "navigation")}
+                              className={`flex min-h-11 gap-3 rounded-xl border p-3 text-left text-xs transition-[background-color,border-color,color] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 ${
+                                currentPage === svc.path
+                                  ? "border-brand/30 bg-brand/10 text-brand"
+                                  : "border-white/[0.04] bg-white/[0.01] text-zinc-300 hover:bg-white/[0.03] hover:text-white"
+                              }`}
+                            >
+                              <div className="shrink-0 rounded-lg bg-white/[0.03] p-1.5 text-brand">
+                                <svc.icon className="h-3.5 w-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-semibold text-white">{svc.name}</div>
+                                <div className="mt-0.5 text-xs leading-snug text-zinc-400">{svc.desc}</div>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => handleLinkClick("/servicos", copy.navExploreAllServices, "mobile-services-cta", "navigation")}
+                      className="min-h-11 w-full rounded-xl border border-white/[0.06] bg-white/[0.03] py-2.5 text-center text-xs font-semibold text-brand transition-colors duration-200 hover:bg-white/[0.06] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60"
+                    >
+                      {copy.navExploreAllServices}
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -465,7 +589,8 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                     href={contact.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors font-sans"
+                    onClick={() => handleOutboundClick(`whatsapp_${contact.key}`, contact.href, "mobile-header-whatsapp-link")}
+                    className="flex min-h-11 items-center gap-3 text-zinc-400 hover:text-white transition-colors font-sans focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60"
                   >
                     <MessageSquare className="w-4 h-4 text-brand/70" />
                     <span className="inline-flex items-center gap-2">
@@ -479,7 +604,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                 <a
                   href="mailto:contato@tag08.com.br"
                   onClick={() => handleOutboundClick("contato@tag08.com.br", "mailto:contato@tag08.com.br", "header-contact-email")}
-                  className="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors font-sans"
+                   className="flex min-h-11 items-center gap-3 text-zinc-400 hover:text-white transition-colors font-sans focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60"
                 >
                   <Mail className="w-4 h-4 text-brand/70" />
                   <span>contato@tag08.com.br</span>
@@ -493,7 +618,8 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
                     href={contact.href}
                     target="_blank"
                     rel="noreferrer"
-                    className={`font-sans font-bold text-xs py-3.5 rounded-xl text-center transition-all duration-300 ${
+                    onClick={() => handleOutboundClick(`whatsapp_${contact.key}`, contact.href, "mobile-header-whatsapp-cta")}
+                    className={`min-h-11 font-sans font-bold text-xs py-3.5 rounded-xl text-center transition-[background-color,color] duration-200 ${
                       contact.key === "brazil"
                         ? "bg-zinc-800 hover:bg-zinc-700 text-white"
                         : "bg-brand hover:bg-brand-dark text-black"
@@ -512,7 +638,7 @@ export default function Header({ currentPage, onNavigate, language, onLanguageCh
       
       {/* Sleek, micro-thin Cupertino scroll progress indicator bar */}
       <div 
-        className="absolute bottom-0 left-0 h-[1.5px] bg-gradient-to-r from-brand to-brand-dark transition-all duration-75 pointer-events-none z-50 shadow-[0_1px_5px_rgba(var(--color-brand-rgb),0.5)]" 
+        className="absolute bottom-0 left-0 z-50 h-[1.5px] pointer-events-none bg-gradient-to-r from-brand to-brand-dark transition-[width] duration-75 shadow-[0_1px_5px_rgba(var(--color-brand-rgb),0.5)] motion-reduce:transition-none"
         style={{ width: `${scrollProgress}%` }} 
       />
     </header>

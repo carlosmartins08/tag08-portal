@@ -234,7 +234,9 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   <span>Mapear minha hospedagem</span>
                   <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                 </a>
-                <a
+                <TrackedOutboundLink
+                  label="Falar com especialista"
+                  surface="hospedagem-hero-cta"
                   href={buildBrazilWhatsAppUrl("Ola%20TAG08!%20Gostaria%20de%20conversar%20sobre%20as%20soluções%20de%20Hospedagem%20e%20Manutenção%20de%20Sites.")}
                   target="_blank"
                   rel="noreferrer"
@@ -242,7 +244,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 >
                   <span>Falar com especialista</span>
                   <ArrowUpRight className="w-4 h-4" />
-                </a>
+                </TrackedOutboundLink>
               </div>
             </div>
           </div>
@@ -783,14 +785,16 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                               </li>
                             ))}
                           </ul>
-                          <a
+                          <TrackedOutboundLink
+                            label={"Solicitar " + host.title}
+                            surface="hospedagem-solution-card"
                             href={buildBrazilWhatsAppUrl(`Ola%20TAG08!%20Gostaria%20de%20conversar%20sobre%20a%20soluaao%20de%20"${encodeURIComponent(host.title)}"%20para%20minha%20empresa.`)}
                             target="_blank"
                             rel="noreferrer"
                             className="relative z-20 mt-6 w-full py-3 rounded-xl tag08-action text-xs font-black uppercase text-center block tracking-widest transition-all duration-300 border bg-white/5 border-white/10 text-white hover:bg-brand hover:border-brand hover:text-black hover:shadow-lg"
                           >
                             Solicitar esta opaao
-                          </a>
+                          </TrackedOutboundLink>
                         </div>
                       </motion.div>
                     );
@@ -944,7 +948,9 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   </div>
 
                   <div className="pt-8 mt-8 border-t border-white/[0.04]">
-                    <a
+                    <TrackedOutboundLink
+                      label={"Contratar " + plan.name}
+                      surface="hospedagem-plan-cta"
                       href={buildBrazilWhatsAppUrl(`${encodeURIComponent(
                         `Ola TAG08! Gostaria de conversar com os engenheiros comerciais para fechar a contratação do "${plan.name.toUpperCase()}" de Hospedagem & Zeladoria no valor recorrente de ${plan.startingPrice}/mas. Aguardo retorno!`
                       )}`)}
@@ -953,7 +959,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       className="w-full py-4 rounded-xl bg-white hover:bg-brand hover:text-black hover:border-brand text-[#030303] tag08-action text-xs font-black uppercase text-center block tracking-widest transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] shadow-md border border-white/10"
                     >
                       CONTRATAR ESTE ALICERCE
-                    </a>
+                    </TrackedOutboundLink>
                   </div>
                 </div>
               ))}
@@ -1648,14 +1654,16 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
               <p className="text-zinc-500 text-xs font-sans leading-tight">
                 Seu site de ponta cresce sem gargalos técnicos e sem dores operacionais de cabeça. Cuidamos do motor técnico para você acelerar.
               </p>
-              <a
+              <TrackedOutboundLink
+                label="Conhecer planos"
+                surface="hospedagem-explanatory-cta"
                 href={buildBrazilWhatsAppUrl("Ola%20TAG08!%20Gostaria%20de%20saber%2520mais%2520sobre%2520a%2520hospedagem%2520escalavel.")}
                 target="_blank"
                 rel="noreferrer"
                 className="w-full sm:w-auto px-5 py-2.5 bg-white/5 border border-white/10 text-white hover:text-brand hover:border-brand/45 tag08-action text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-300 block text-center"
               >
                 Conhecer planos
-              </a>
+              </TrackedOutboundLink>
             </div>
           </div>
 
@@ -1743,7 +1751,9 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
 
                 {/* DUAL CLIENT CONNECTION CHANNELS (BR & INT) */}
                 <div className="space-y-3">
-                  <a 
+                  <TrackedOutboundLink
+                    label="WhatsApp Brasil"
+                    surface="hospedagem-contact-card-br"
                     href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20consultar%20plano%20de%20Hospedagem%20e%20Manutenção%20da%20TAG08")}
                     target="_blank"
                     rel="noreferrer"
@@ -1767,9 +1777,11 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                         CONECTAR
                       </span>
                     </div>
-                  </a>
+                  </TrackedOutboundLink>
 
-                  <a 
+                  <TrackedOutboundLink
+                    label="WhatsApp Internacional"
+                    surface="hospedagem-contact-card-int"
                     href={buildInternationalWhatsAppUrl("Hello,%20I%20would%20like%20to%20consult%20TAG08%2520holding%2520and%2520maintenance%2520plans")}
                     target="_blank"
                     rel="noreferrer"
@@ -1793,7 +1805,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                         CONECTAR
                       </span>
                     </div>
-                  </a>
+                  </TrackedOutboundLink>
                 </div>
               </div>
             </div>
@@ -2012,7 +2024,9 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       Fale diretamente com os tomadores de decisão da TAG08 via WhatsApp para avaliar a viabilidade de alocação de equipe.
                     </p>
                   </div>
-                  <a
+                  <TrackedOutboundLink
+                    label="Conversar agora"
+                    surface="hospedagem-final-cta"
                     href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20consultar%20viabilidade%20estratégica%20especializada%2520para%20minha%2520marca!")}
                     target="_blank"
                     rel="noreferrer"
@@ -2020,7 +2034,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   >
                     <span>Conversar Agora</span>
                     <ArrowUpRight className="w-4 h-4 text-black stroke-[2.5]" />
-                  </a>
+                  </TrackedOutboundLink>
                 </div>
               </div>
             </div>

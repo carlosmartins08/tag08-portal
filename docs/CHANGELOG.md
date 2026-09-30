@@ -1,5 +1,22 @@
 # CHANGELOG - TAG08
 
+## 2026-09-30
+
+- Corrigido o foco de teclado do primeiro servico no painel agrupado do Header.
+- Corrigida a superficie de ponteiro do palco editorial da Home sem tornar a camada decorativa interativa.
+- Aplicado `ResilientImage` ao hero da Assessoria para evitar imagem quebrada quando o CDN remoto estiver indisponivel.
+- Suite critica reexecutada com o build atualizado: 89 testes aprovados em 2,9 minutos, incluindo imagem resiliente, luz editorial e foco de teclado.
+- Atualizado o fingerprint de revisao de localizacao do Cliente Onboarding apos as mudancas de conteudo e acessibilidade.
+- Corrigido o CTA hero de audiovisual para usar o contrato de rastreamento de links externos.
+- `npm test` passou integralmente após as correções.
+- Ajustados os tokens de superfície em `src/index.css` para reduzir a massa visual preta e reforçar a hierarquia entre canvas, cards, áreas sutis e bordas.
+- Auditorias de cores/contrato visual e suíte crítica (89 testes) passaram após a alteração.
+- Padronizado o metadado `M-07 // ASSESSORIA ESTRATÉGICA` na Home para manter consistência editorial.
+- Aplicada uma superfície clara na primeira frente de Serviços para criar âncora de leitura e corrigir contraste em fundo dark.
+- Suíte crítica reexecutada após o ajuste: 89 testes aprovados.
+- Corrigido o estado do CTA dessa superfície para manter texto e ícone claros sobre o botão escuro.
+- Reduzida a saturação decorativa da Home em 10 glows, preservando o verde para ações, foco e estados ativos.
+
 ## 2026-09-25
 
 - Impedida a entrada de relatórios gerados do Lighthouse no repositório; `.lighthouseci/` passa a ser tratado como artefato de auditoria/CI.

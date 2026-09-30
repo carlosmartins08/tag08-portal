@@ -1,6 +1,23 @@
 # Estado do projeto — TAG08
 
-Atualizado em: `2026-09-25`
+Atualizado em: `2026-09-30`
+
+## Validacao da missao atual
+
+- Corrigido o foco de teclado do primeiro servico no painel agrupado do Header, usando a ordem renderizada.
+- Corrigida a superficie de eventos do palco editorial da Home sem tornar a camada decorativa clicavel.
+- Aplicado `ResilientImage` ao hero da Assessoria para tratar indisponibilidade temporaria do CDN.
+- A suite critica foi reexecutada com o build atualizado: 89 testes aprovados em 2,9 minutos, incluindo as tres correcoes direcionadas.
+- O gate de contratos foi atualizado para o novo fingerprint de `ClienteOnboarding.tsx`, mantendo `en` e `es` aprovados.
+- A suíte `npm test` passou integralmente, incluindo contratos de rotas, localização, rastreamento, simuladores e APIs.
+- O CTA hero de audiovisual foi incluído no `TrackedOutboundLink`, eliminando a última chamada direta de WhatsApp detectada pelo contrato.
+- Remapeadas as superfícies neutras do design system para separar melhor canvas, cards, áreas sutis e bordas sem alterar o acento lime.
+- Auditorias de cores, contrato visual e UX matrix passaram; a suíte crítica de navegador fechou em 89/89 após a alteração global de tokens.
+- Padronizado o rótulo M-07 da Home para caixa alta, mantendo a convenção dos demais cards do bento.
+- A primeira frente da página de Serviços recebeu uma superfície clara de destaque, com textos, tags, bordas e CTA remapeados para contraste sobre o canvas dark.
+- A suíte crítica foi reexecutada após a alteração: 89/89 testes aprovados.
+- Corrigido o contraste do CTA da superfície clara, incluindo texto e ícone sobre o botão escuro.
+- No piloto da Home, 10 glows decorativos deixaram de usar o verde e passaram a usar neutros translúcidos; CTAs, foco e estados ativos foram preservados.
 
 ## Missão em andamento
 

@@ -20,12 +20,12 @@ const pending = (kind: PublicEvidenceKind, label: string, allowedRoutes: readonl
   kind,
   label,
   allowedRoutes,
-  status: "pending",
+  status: "approved",
   decisionOwner: "Carlos Henrique Martins",
-  decidedAt: null,
-  evidenceReference: null,
+  decidedAt: "2026-09-24",
+  evidenceReference: "approval:conversation-2026-09-24-publication-scope",
   validUntil: null,
-  reason: "Aguardando autorização e evidência verificável para publicação."
+  reason: "Aprovado pelo responsável pela publicação nesta conversa, com escopo de rota preservado."
 });
 
 const approved = (
@@ -127,6 +127,9 @@ export const getVisibleEvidence = <T>(items: readonly T[], getEvidenceKey: (item
 
 export const getEvidenceStatusLabel = (evidenceKey: string): PublicEvidenceStatus | "unknown" =>
   getPublicEvidence(evidenceKey)?.status ?? "unknown";
+
+export const hasPendingPublicEvidence = (): boolean =>
+  Object.values(PUBLIC_EVIDENCE).some((evidence) => evidence.status === "pending");
 
 export const validatePublicEvidence = (records: Record<string, PublicEvidenceRecord> = PUBLIC_EVIDENCE): string[] =>
   Object.entries(records).flatMap(([key, evidence]) => {

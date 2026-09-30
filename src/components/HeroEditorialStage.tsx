@@ -58,10 +58,16 @@ export default function HeroEditorialStage({ image }: HeroEditorialStageProps) {
       });
     };
 
-    window.addEventListener("pointermove", moveLight, { passive: true });
+    const stage = stageRef.current;
+    const eventSurface = stage?.parentElement;
+    if (!stage || !eventSurface) return;
+
+    eventSurface.addEventListener("pointermove", moveLight, { passive: true });
+    eventSurface.addEventListener("pointerleave", resetLight);
     return () => {
       window.cancelAnimationFrame(animationFrame);
-      window.removeEventListener("pointermove", moveLight);
+      eventSurface.removeEventListener("pointermove", moveLight);
+      eventSurface.removeEventListener("pointerleave", resetLight);
     };
   }, []);
 

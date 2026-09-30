@@ -14,7 +14,7 @@ export default function Subtle3DCanvasScene({ className = "", intensity = 1 }: S
   const coreOpacity = prefersReducedMotion ? 0.55 : Math.min(1, 0.72 + intensity * 0.06);
 
   return (
-    <div className={`absolute inset-0 pointer-events-none overflow-hidden select-none z-0 ${className}`}>
+    <div aria-hidden="true" className={`absolute inset-0 pointer-events-none overflow-hidden select-none z-0 ${className}`}>
       <div
         className="absolute inset-0"
         style={{
@@ -29,6 +29,7 @@ export default function Subtle3DCanvasScene({ className = "", intensity = 1 }: S
       <div className="absolute inset-[24%] rounded-full border border-white/5 animate-[spin_72s_linear_infinite]" style={spinStyle} />
 
       <svg
+        aria-hidden="true"
         viewBox="0 0 200 200"
         className="absolute left-1/2 top-1/2 w-[76%] h-[76%] -translate-x-1/2 -translate-y-1/2 opacity-90"
       >

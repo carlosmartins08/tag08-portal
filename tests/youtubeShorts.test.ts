@@ -28,3 +28,13 @@ test("audiovisual and social pages consume the shared live YouTube source", () =
   assert.doesNotMatch(audiovisualPage, /youtubeShorts/);
   assert.doesNotMatch(socialPage, /youtubeShorts/);
 });
+
+test("assessoria only promotes Google Business reviews when the official source is live", () => {
+  const testimonials = readFileSync("src/components/TrustTestimonialsSection.tsx", "utf8");
+  const hook = readFileSync("src/lib/useOfficialGoogleBusinessReviews.ts", "utf8");
+
+  assert.ok(testimonials.includes('from "../lib/useOfficialGoogleBusinessReviews"'));
+  assert.match(testimonials, /googleBusinessSource === "live"/);
+  assert.match(hook, /payload\.sources\.googleBusiness === "live"/);
+  assert.match(hook, /reviews: \[\]/);
+});

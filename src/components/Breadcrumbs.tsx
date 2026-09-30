@@ -81,7 +81,7 @@ export default function Breadcrumbs({ currentPage, onNavigate, language }: Bread
             const isLast = idx === breadcrumbs.length - 1;
             return (
               <div key={crumb.path + idx} className="flex items-center gap-1.5">
-                {idx > 0 && <ChevronRight className="w-3.5 h-3.5 text-zinc-600 shrink-0" />}
+                {idx > 0 && <ChevronRight aria-hidden="true" className="w-3.5 h-3.5 text-zinc-600 shrink-0" />}
                 {idx === 0 ? (
                   <button
                     onClick={() => onNavigate(crumb.path)}

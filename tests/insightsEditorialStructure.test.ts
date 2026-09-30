@@ -13,6 +13,7 @@ test("every insight follows the TAG08 editorial reading contract", () => {
     ids.add(post.id);
 
     assert.ok(post.slug.trim(), `${post.id} must have a stable slug.`);
+    assert.match(post.slug, /^[a-z0-9]+(?:-[a-z0-9]+)*$/, `${post.id} slug must use URL-safe kebab-case.`);
     assert.ok(!slugs.has(post.slug), `Duplicate insight slug: ${post.slug}`);
     slugs.add(post.slug);
 

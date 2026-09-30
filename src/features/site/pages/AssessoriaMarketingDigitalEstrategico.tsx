@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowRight, ArrowUpRight, Check, ChevronDown, LineChart, MessageSquare, Settings, Target } from "lucide-react";
+import ResilientImage from "../../../components/ResilientImage";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import MiniCases from "../../../components/MiniCases";
 import TrustTestimonialsSection from "../../../components/TrustTestimonialsSection";
@@ -111,8 +111,6 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const trackSimulator = useSimulatorTracking("marketing_assessment_quiz", 1, "/servicos/assessoria-marketing-digital-estrategico");
   const brazilConsultationWhatsappUrl = buildBrazilWhatsAppUrl("Olá TAG08! Gostaria de conversar sobre Assessoria de Marketing Estratégico e entender os próximos passos para a minha empresa.");
-  const brazilDiagnosticWhatsappUrl = buildBrazilWhatsAppUrl("Olá TAG08! Concluí a leitura inicial de maturidade e gostaria de conversar sobre Assessoria de Marketing Estratégico para entender os próximos passos da minha empresa.");
-  const internationalDiagnosticWhatsappUrl = buildInternationalWhatsAppUrl("Hello TAG08! I completed the initial assessment and would like to discuss Strategic Marketing Advisory and the next steps for my company.");
 
   const handleLinkClick = (page: string) => {
     onNavigate(page);
@@ -181,6 +179,8 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
       : totalScore <= 100
         ? { level: "Boa direção", tone: "text-brand", description: "A marca tem um caminho mais consistente, mas ainda pode ganhar clareza na sustentação da rotina.", focus: "Foco em acompanhamento, revisão e continuidade do que já foi estruturado.", recommendation: "O próximo passo é consolidar método e manter a execução responsável." }
         : { level: "Direção mais consolidada", tone: "text-brand", description: "Existe uma base organizada para decidir e executar, embora prioridades e contexto precisem ser revistos com a operação.", focus: "Prioridade em consistência, revisão e continuidade.", recommendation: "A leitura não substitui uma análise completa, mas indica uma base estruturada para os próximos passos." };
+  const brazilDiagnosticWhatsappUrl = buildBrazilWhatsAppUrl(`Olá TAG08! Concluí a leitura inicial de maturidade para Assessoria de Marketing Estratégico. Minha leitura foi "${diagnostic.level}" (${totalScore}/120). Foco indicado: ${diagnostic.focus} Próxima recomendação: ${diagnostic.recommendation}`);
+  const internationalDiagnosticWhatsappUrl = buildInternationalWhatsAppUrl(`Hello TAG08! I completed the initial Strategic Marketing Advisory assessment. My reading was "${diagnostic.level}" (${totalScore}/120). Recommended focus: ${diagnostic.focus} Next recommendation: ${diagnostic.recommendation}`);
   const quizProgress = quizCompleted ? 100 : Math.round(((currentQuestionIdx + 1) / AUDIT_QUESTIONS.length) * 100);
   const quizTransition = prefersReducedMotion ? { duration: 0 } : { duration: 0.2, ease: [0.23, 1, 0.32, 1] as const };
 
@@ -207,7 +207,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
           </div>
 
           <div className="relative aspect-[16/10] overflow-hidden rounded-[24px] border border-white/[0.08] bg-charcoal-900 shadow-2xl sm:aspect-[2.39/1] sm:rounded-[32px]">
-            <Image fill preload sizes="(max-width: 768px) 100vw, (max-width: 1280px) calc(100vw - 4rem), 1280px" src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1600" alt="Reunião de planejamento estratégico" className="object-cover grayscale brightness-50" referrerPolicy="no-referrer" />
+            <ResilientImage fallbackLabel="Imagem de planejamento estratégico" preload sizes="(max-width: 768px) 100vw, (max-width: 1280px) calc(100vw - 4rem), 1280px" src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1600" alt="Reunião de planejamento estratégico" className="object-cover grayscale brightness-50" referrerPolicy="no-referrer" />
             <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
             <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6"><p className="text-sm font-bold text-white">Diagnóstico, prioridades e direção de marketing.</p></div>
           </div>

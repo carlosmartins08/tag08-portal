@@ -16,12 +16,12 @@ import {
   Clock,
   Copy
 } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ContactFormData } from "../../../types";
 import { TAG08_OFFICIAL_CHANNELS, TAG08_OFFICIAL_CONTACT, TAG08_WHATSAPP_CONTACTS, buildGoogleMapsEmbedUrl } from "../../../config/siteNetwork";
 import { trackFormError, trackFormStart, trackFormSubmit, trackLeadEvent, trackOutboundClick } from "../../../lib/analytics";
 import { queueFormSubmission } from "../../../lib/formQueue";
-import { COOKIE_CONSENT_EVENT, grantMarketingConsent, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
+import { COOKIE_CONSENT_EVENT, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
 import CountryFlag from "../../../components/CountryFlag";
 import type { RouteLocale } from "../../../config/routeRegistry";
 
@@ -31,6 +31,8 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   const [marketingConsent, setMarketingConsent] = useState(false);
   const hasTrackedFormStartRef = useRef(false);
   const honeypotRef = useRef<HTMLInputElement>(null);
+  const successRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const syncMarketingConsent = (preferences: CookiePreferences | null) => {
@@ -51,13 +53,25 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   };
 
   const copyToClipboard = (text: string, id: string) => {
+    const reportCopyError = () => {
+      setCopiedStates(prev => ({ ...prev, [`${id}-error`]: true }));
+      window.setTimeout(() => {
+        setCopiedStates(prev => ({ ...prev, [`${id}-error`]: false }));
+      }, 2500);
+    };
+
+    if (!navigator.clipboard?.writeText) {
+      reportCopyError();
+      return;
+    }
+
     navigator.clipboard.writeText(text).then(() => {
       setCopiedStates(prev => ({ ...prev, [id]: true }));
       setTimeout(() => {
         setCopiedStates(prev => ({ ...prev, [id]: false }));
       }, 1500);
-    }).catch(err => {
-      console.warn("Could not copy clipboard: ", err);
+    }).catch(() => {
+      reportCopyError();
     });
   };
 
@@ -98,7 +112,14 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState<Partial<ContactFormData>>({});
   const [consent, setConsent] = useState(false);
+  const [consentError, setConsentError] = useState(false);
   const [submitError, setSubmitError] = useState("");
+
+  useEffect(() => {
+    if (success) {
+      window.requestAnimationFrame(() => successRef.current?.focus());
+    }
+  }, [success]);
 
   const validate = () => {
     const tempErrors: Partial<ContactFormData> = {};
@@ -108,6 +129,8 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
     if (!formData.email.includes("@")) tempErrors.email = "Insira um e-mail corporativo válido.";
     setErrors(tempErrors);
     if (Object.keys(tempErrors).length > 0) {
+      const firstInvalidField = Object.keys(tempErrors)[0];
+      window.requestAnimationFrame(() => document.getElementById(`form-${firstInvalidField}`)?.focus());
       trackFormError({
         form_name: "contact",
         form_surface: "contact-page",
@@ -136,31 +159,40 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate() || !consent) {
-      if (!consent) setSubmitError("Confirme o consentimento para enviar seus dados.");
+    const formIsValid = validate();
+    setConsentError(!consent);
+    if (!formIsValid || !consent) {
+      if (!formIsValid) {
+        setSubmitError("");
+      } else if (!consent) {
+        setSubmitError("");
+        window.requestAnimationFrame(() => document.getElementById("form-consent")?.focus());
+      }
       return;
     }
 
     setLoading(true);
     setSubmitError("");
+    setConsentError(false);
+    const idempotencyKey = crypto.randomUUID();
+    const searchParams = new URLSearchParams(window.location.search);
+    const payload = {
+      ...formData,
+      website: honeypotRef.current?.value || "",
+      consent,
+      consentVersion: "contact-v1",
+      locale,
+      source: "contact-page",
+      utm: {
+        source: searchParams.get("utm_source") || "",
+        medium: searchParams.get("utm_medium") || "",
+        campaign: searchParams.get("utm_campaign") || "",
+        content: searchParams.get("utm_content") || "",
+        term: searchParams.get("utm_term") || ""
+      }
+    };
+    let queuedForRetry = false;
     try {
-      const searchParams = new URLSearchParams(window.location.search);
-      const idempotencyKey = crypto.randomUUID();
-      const payload = {
-        ...formData,
-        website: honeypotRef.current?.value || "",
-        consent,
-        consentVersion: "contact-v1",
-        locale,
-        source: "contact-page",
-        utm: {
-          source: searchParams.get("utm_source") || "",
-          medium: searchParams.get("utm_medium") || "",
-          campaign: searchParams.get("utm_campaign") || "",
-          content: searchParams.get("utm_content") || "",
-          term: searchParams.get("utm_term") || ""
-        }
-      };
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -173,6 +205,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
       if (!response.ok) {
         if (response.status >= 500) {
           queueFormSubmission({ endpoint: "/api/contact", idempotencyKey, payload });
+          queuedForRetry = true;
           throw new Error("submission_queued");
         }
         setSubmitError("Revise os campos obrigatórios e tente novamente.");
@@ -194,8 +227,12 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
         status: "success"
       });
     } catch {
+      if (!queuedForRetry) {
+        queueFormSubmission({ endpoint: "/api/contact", idempotencyKey, payload });
+        queuedForRetry = true;
+      }
       setLoading(false);
-      setSubmitError("Sua solicitação foi salva neste navegador e será reenviada quando a conexão voltar.");
+      setSubmitError("Não foi possível concluir o envio agora. Sua solicitação foi salva neste navegador para nova tentativa automática.");
       trackFormError({
         form_name: "contact",
         form_surface: "contact-page",
@@ -263,21 +300,24 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
           </div>
 
           <div className="tag08-contact__directory space-y-4 border-t border-b border-white/[0.04] py-8 font-sans">
+            <h2 className="sr-only">Canais de contato</h2>
+
             {/* Email Contact Card */}
-            <div className="flex gap-4 items-center justify-between group/item p-3 -mx-3 rounded-xl hover:bg-white/[0.02] border border-transparent hover:border-white/[0.03] transition-all duration-300">
+            <div className="flex gap-4 items-center justify-between group/item p-3 -mx-3 rounded-xl hover:bg-white/[0.02] border border-transparent hover:border-white/[0.03] transition-[background-color,border-color] duration-200">
               <div className="flex gap-4 items-start">
                 <div className="w-9 h-9 rounded bg-brand/5 border border-brand/20 text-brand flex items-center justify-center shrink-0">
                   <Mail className="w-4.5 h-4.5" />
                 </div>
                 <div>
-                  <h4 className="text-white font-semibold text-xs tracking-wider tag08-meta">Diretoria Geral</h4>
-                  <p className="text-zinc-400 text-sm">contato@tag08.com.br</p>
+                  <h3 className="text-white font-semibold text-xs tracking-wider tag08-meta">Diretoria Geral</h3>
+                  <a href="mailto:contato@tag08.com.br" className="text-zinc-300 text-sm underline-offset-4 hover:text-brand hover:underline focus-visible:rounded-sm">contato@tag08.com.br</a>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => copyToClipboard("contato@tag08.com.br", "email")}
-                className="opacity-60 sm:opacity-0 group-hover/item:opacity-100 focus:opacity-100 transition-all duration-200 text-zinc-500 hover:text-brand p-2 rounded-lg hover:bg-brand/10 border border-transparent hover:border-brand/20 flex items-center gap-1.5 font-sans text-xs uppercase font-bold select-none cursor-pointer shrink-0"
+                aria-label="Copiar e-mail da diretoria"
+                className="min-h-11 min-w-11 justify-center text-zinc-400 sm:opacity-70 sm:group-hover/item:opacity-100 focus-visible:opacity-100 transition-[opacity,color,background-color,border-color] duration-200 text-xs rounded-lg hover:text-brand hover:bg-brand/10 border border-transparent hover:border-brand/20 flex items-center gap-1.5 font-sans uppercase font-bold select-none cursor-pointer shrink-0"
               >
                 {copiedStates["email"] ? (
                   <>
@@ -292,13 +332,14 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                 )}
               </button>
             </div>
+            {copiedStates["email-error"] && <p className="-mt-2 text-xs text-amber-300">Não foi possível copiar. Selecione o e-mail manualmente.</p>}
 
             <div className="grid grid-cols-1 gap-4">
               {TAG08_WHATSAPP_CONTACTS.map((contact) => (
-                <div
-                  key={contact.key}
-                  className="flex gap-4 items-center justify-between group/item p-3 -mx-3 rounded-xl hover:bg-white/[0.02] border border-transparent hover:border-white/[0.03] transition-all duration-300"
-                >
+                <React.Fragment key={contact.key}>
+                  <div
+                    className="flex gap-4 items-center justify-between group/item p-3 -mx-3 rounded-xl hover:bg-white/[0.02] border border-transparent hover:border-white/[0.03] transition-[background-color,border-color] duration-200"
+                  >
                   <div className="flex gap-4 items-start">
                     <div className={`w-9 h-9 rounded border flex items-center justify-center shrink-0 ${
                       contact.key === "brazil"
@@ -308,23 +349,29 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                       <Phone className="w-4.5 h-4.5" />
                     </div>
                     <div>
-                      <h4 className="flex items-center gap-1.5 text-white font-semibold text-xs tracking-wider tag08-meta">
+                      <h3 className="flex items-center gap-1.5 text-white font-semibold text-xs tracking-wider tag08-meta">
                         <CountryFlag country={contact.country} className="text-sm leading-none" /> WhatsApp {contact.label}
-                      </h4>
-                      <p className={`text-sm font-sans font-medium ${
+                      </h3>
+                      <a
+                        href={buildWhatsAppUrl(contact.phoneE164, "Olá, gostaria de falar com a TAG08.")}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={() => trackOutboundClick({ label: `WhatsApp ${contact.label}`, url: buildWhatsAppUrl(contact.phoneE164, "Olá, gostaria de falar com a TAG08."), surface: "contact-directory-whatsapp" })}
+                        className={`text-sm font-sans font-medium underline-offset-4 hover:underline ${
                         contact.key === "brazil" ? "text-zinc-400" : "text-brand-secondary"
                       }`}>
                         {contact.display}
-                      </p>
+                      </a>
                     </div>
                   </div>
                   <button
                     type="button"
                     onClick={() => copyToClipboard(contact.phoneE164.replace("+", ""), contact.key)}
-                    className={`opacity-60 sm:opacity-0 group-hover/item:opacity-100 focus:opacity-100 transition-all duration-200 p-2 rounded-lg border border-transparent flex items-center gap-1.5 font-sans text-xs uppercase font-bold select-none cursor-pointer shrink-0 ${
+                    aria-label={`Copiar WhatsApp ${contact.label}`}
+                    className={`min-h-11 min-w-11 justify-center sm:opacity-70 sm:group-hover/item:opacity-100 focus-visible:opacity-100 transition-[opacity,color,background-color,border-color] duration-200 p-2 rounded-lg border border-transparent flex items-center gap-1.5 font-sans text-xs uppercase font-bold select-none cursor-pointer shrink-0 ${
                       contact.key === "brazil"
-                        ? "text-zinc-500 hover:text-brand hover:bg-brand/10 hover:border-brand/20"
-                        : "text-zinc-500 hover:text-brand-secondary hover:bg-brand-secondary/10 hover:border-brand-secondary/20"
+                        ? "text-zinc-400 hover:text-brand hover:bg-brand/10 hover:border-brand/20"
+                        : "text-zinc-400 hover:text-brand-secondary hover:bg-brand-secondary/10 hover:border-brand-secondary/20"
                     }`}
                   >
                     {copiedStates[contact.key] ? (
@@ -339,25 +386,36 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                       </>
                     )}
                   </button>
-                </div>
+                  </div>
+                  {copiedStates[`${contact.key}-error`] && <p className="-mt-2 text-xs text-amber-300">Não foi possível copiar este número.</p>}
+                </React.Fragment>
               ))}
             </div>
 
             {/* Address Card */}
-            <div className="flex gap-4 items-center justify-between group/item p-3 -mx-3 rounded-xl hover:bg-white/[0.02] border border-transparent hover:border-white/[0.03] transition-all duration-300">
+            <div className="flex gap-4 items-center justify-between group/item p-3 -mx-3 rounded-xl hover:bg-white/[0.02] border border-transparent hover:border-white/[0.03] transition-[background-color,border-color] duration-200">
               <div className="flex gap-4 items-start">
                 <div className="w-9 h-9 rounded bg-brand/5 border border-brand/20 text-brand flex items-center justify-center shrink-0">
                   <MapPin className="w-4.5 h-4.5" />
                 </div>
                 <div>
-                  <h4 className="text-white font-semibold text-xs tracking-wider tag08-meta">Nosso Escritório</h4>
-                  <p className="text-zinc-400 text-sm">{TAG08_OFFICIAL_CONTACT.address}</p>
+                  <h3 className="text-white font-semibold text-xs tracking-wider tag08-meta">Nosso Escritório</h3>
+                  <a
+                    href={TAG08_OFFICIAL_CONTACT.googleBusinessUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => trackOutboundClick({ label: "Google Business Profile", url: TAG08_OFFICIAL_CONTACT.googleBusinessUrl, surface: "contact-address" })}
+                    className="text-zinc-300 text-sm underline-offset-4 hover:text-brand hover:underline focus-visible:rounded-sm"
+                  >
+                    {TAG08_OFFICIAL_CONTACT.address}
+                  </a>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => copyToClipboard(TAG08_OFFICIAL_CONTACT.address, "address")}
-                className="opacity-60 sm:opacity-0 group-hover/item:opacity-100 focus:opacity-100 transition-all duration-200 text-zinc-500 hover:text-brand p-2 rounded-lg hover:bg-brand/10 border border-transparent hover:border-brand/20 flex items-center gap-1.5 font-sans text-xs uppercase font-bold select-none cursor-pointer shrink-0"
+                aria-label="Copiar endereço do escritório"
+                className="min-h-11 min-w-11 justify-center text-zinc-400 sm:opacity-70 sm:group-hover/item:opacity-100 focus-visible:opacity-100 transition-[opacity,color,background-color,border-color] duration-200 text-xs rounded-lg hover:text-brand hover:bg-brand/10 border border-transparent hover:border-brand/20 flex items-center gap-1.5 font-sans uppercase font-bold select-none cursor-pointer shrink-0"
               >
                 {copiedStates["address"] ? (
                   <>
@@ -377,7 +435,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
               <div className="flex items-center justify-between gap-4 px-4 pt-4">
                 <div className="space-y-1">
                   <p className="text-xs uppercase tracking-widest tag08-meta text-brand font-black">Google Maps</p>
-                  <h4 className="text-white text-sm font-semibold">Localização e avaliações da TAG08</h4>
+                  <h3 className="text-white text-sm font-semibold">Localização e avaliações da TAG08</h3>
                 </div>
                 <a
                   href={TAG08_OFFICIAL_CONTACT.googleBusinessUrl}
@@ -397,7 +455,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                 </a>
               </div>
 
-              <div className="mt-4 h-[280px] sm:h-[320px]">
+              <div className="mt-4 h-[220px] sm:h-[280px]">
                 {marketingConsent ? (
                   <iframe
                     title="Mapa da TAG08"
@@ -409,24 +467,22 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                 ) : (
                   <div className="flex h-full flex-col items-center justify-center gap-3 bg-zinc-950 px-6 text-center">
                     <p className="max-w-md text-xs leading-relaxed text-zinc-400">
-                      O mapa externo é opcional e só é carregado depois da autorização de cookies de marketing.
+                      O mapa incorporado só é carregado quando os cookies de marketing já foram autorizados. Você também pode abrir a localização diretamente no Google Maps.
                     </p>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        grantMarketingConsent();
-                        setMarketingConsent(true);
-                      }}
+                    <a
+                      href={TAG08_OFFICIAL_CONTACT.googleBusinessUrl}
+                      target="_blank"
+                      rel="noreferrer"
                       className="rounded-xl border border-brand/30 bg-brand/10 px-4 py-2 text-xs tag08-meta font-black uppercase tracking-widest text-brand transition-colors hover:bg-brand hover:text-black"
                     >
-                      Carregar mapa
-                    </button>
+                      Abrir no Google Maps
+                    </a>
                   </div>
                 )}
               </div>
 
               <div className="px-4 pb-4 pt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                <p className="text-xs text-zinc-500 leading-relaxed max-w-lg">
+                <p className="text-xs text-zinc-400 leading-relaxed max-w-lg">
                   O mapa e o perfil do Google Business concentram rota, endereço oficial e as avaliações públicas que validam nossa presença local.
                 </p>
                 <a
@@ -472,11 +528,11 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         surface: "contact-official-channel"
                       })
                     }
-                    className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.05] bg-black/20 px-4 py-3 transition-all duration-200 hover:border-brand/40 hover:bg-brand/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+                    className="min-h-11 flex items-center justify-between gap-3 rounded-xl border border-white/[0.05] bg-black/20 px-4 py-3 transition-[background-color,border-color] duration-200 hover:border-brand/40 hover:bg-brand/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   >
                     <div>
                       <p className="text-sm text-white font-medium">{channel.label}</p>
-                      <p className="text-xs text-zinc-500">{host}</p>
+                      <p className="text-xs text-zinc-400">{host}</p>
                     </div>
                     <ArrowRight className="w-4 h-4 text-brand shrink-0" />
                   </a>
@@ -488,7 +544,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
           <div className="tag08-contact__response-note bg-charcoal-900 border border-white/[0.04] p-5 rounded-lg flex items-start gap-3">
             <ClipboardCheck className="w-5 h-5 text-brand shrink-0 mt-0.5" />
             <p className="text-xs text-zinc-400 leading-relaxed">
-              <strong>Procedimento pós-envio:</strong> Respondemos em no máximo 6 horas úteis enviando uma prévia diagnóstica da presença da sua marca direto no seu número WhatsApp.
+              <strong>Procedimento pós-envio:</strong> Respondemos em até 6 horas úteis pelo WhatsApp para confirmar o próximo passo e orientar a conversa inicial.
             </p>
           </div>
         </div>
@@ -503,6 +559,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   initial={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   onSubmit={handleSubmit}
+                  aria-busy={loading}
                   className="space-y-6 text-left"
                 >
                   <div className="tag08-contact__form-intro">
@@ -524,11 +581,13 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         id="form-name"
                         type="text"
                         name="name"
+                        autoComplete="name"
+                        required
                         value={formData.name}
                         onChange={handleChange}
                         aria-invalid={Boolean(errors.name)}
                         aria-describedby={errors.name ? "form-name-error" : undefined}
-                        className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-all ${
+                        className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 ${
                           errors.name ? "border-red-500/50" : "border-white/[0.08]"
                         }`}
                         placeholder="Ex: Fernando Guedes"
@@ -546,11 +605,13 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         id="form-company"
                         type="text"
                         name="company"
+                        autoComplete="organization"
+                        required
                         value={formData.company}
                         onChange={handleChange}
                         aria-invalid={Boolean(errors.company)}
                         aria-describedby={errors.company ? "form-company-error" : undefined}
-                        className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-all ${
+                        className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 ${
                           errors.company ? "border-red-500/50" : "border-white/[0.08]"
                         }`}
                         placeholder="Ex: Clínica Guedes Ltda"
@@ -571,11 +632,13 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         id="form-whatsapp"
                         type="tel"
                         name="whatsapp"
+                        autoComplete="tel"
+                        required
                         value={formData.whatsapp}
                         onChange={handleChange}
                         aria-invalid={Boolean(errors.whatsapp)}
                         aria-describedby={errors.whatsapp ? "form-whatsapp-error" : undefined}
-                        className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-all ${
+                        className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 ${
                           errors.whatsapp ? "border-red-500/50" : "border-white/[0.08]"
                         }`}
                         placeholder="Ex: (11) 99999-9999"
@@ -593,11 +656,13 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         id="form-email"
                         type="email"
                         name="email"
+                        autoComplete="email"
+                        required
                         value={formData.email}
                         onChange={handleChange}
                         aria-invalid={Boolean(errors.email)}
                         aria-describedby={errors.email ? "form-email-error" : undefined}
-                        className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-all ${
+                        className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 ${
                           errors.email ? "border-red-500/50" : "border-white/[0.08]"
                         }`}
                         placeholder="Ex: fernando@clinicaguedes.com"
@@ -666,21 +731,28 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   </div>
 
                   {/* LGPD Compliance badge & Data Security Lock Notice */}
-                  <label className="flex items-start gap-2.5 px-4 py-3 rounded-xl bg-white/[0.02] border border-white/[0.05] cursor-pointer">
+                  <label htmlFor="form-consent" className={`flex items-start gap-2.5 px-4 py-3 rounded-xl bg-white/[0.02] border cursor-pointer ${consentError ? "border-red-400/70" : "border-white/[0.05]"}`}>
                     <input
+                      id="form-consent"
                       type="checkbox"
                       checked={consent}
-                      onChange={(event) => setConsent(event.target.checked)}
+                      onChange={(event) => {
+                        setConsent(event.target.checked);
+                        if (event.target.checked) setConsentError(false);
+                      }}
+                      aria-invalid={consentError}
+                      aria-describedby={consentError ? "form-consent-error" : undefined}
                       className="mt-0.5 h-4 w-4 accent-[var(--color-brand)]"
                     />
                     <span className="text-xs text-zinc-300 leading-relaxed font-sans">
                       Autorizo o uso destes dados para retorno sobre esta solicitação, conforme o aviso de privacidade da TAG08.
                     </span>
                   </label>
+                  {consentError && <p id="form-consent-error" className="text-xs text-red-300" role="alert">Confirme o consentimento para enviar seus dados.</p>}
                   <div className="flex items-start gap-2.5 px-4 py-3 rounded-xl bg-white/[0.02] border border-white/[0.05]">
-                    <div className="w-1.5 h-1.5 rounded-full bg-brand shrink-0 mt-1.5 animate-pulse" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-brand shrink-0 mt-1.5 motion-safe:animate-pulse" aria-hidden="true" />
                     <p className="text-xs text-zinc-400 leading-relaxed font-sans">
-                      <strong>Compromisso de Confidencialidade (LGPD):</strong> Seus dados corporativos e de contato estão 100% blindados sob camadas de criptografia. Nós nunca compartilhamos informações operacionais e não enviamos spam comercial.
+                      <strong>Uso responsável dos dados:</strong> Usaremos estas informações apenas para responder à solicitação e seguir o aviso de privacidade da TAG08. Em falhas temporárias, a solicitação pode ser armazenada localmente para nova tentativa automática.
                     </p>
                   </div>
 
@@ -692,11 +764,11 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                       id="btn-form-submit"
                       type="submit"
                       disabled={loading}
-                      className="w-full bg-brand hover:bg-brand-dark text-black font-bold font-sans text-xs uppercase py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_25px_rgba(var(--color-brand-rgb),0.15)]"
+                      className="min-h-11 w-full bg-brand hover:bg-brand-dark text-black font-bold font-sans text-xs uppercase py-4 rounded-xl transition-[background-color,box-shadow,opacity] duration-200 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_25px_rgba(var(--color-brand-rgb),0.15)]"
                     >
                       {loading ? (
                         <span className="flex items-center gap-2">
-                          <span className="w-4 h-4 border-2 border-black border-r-transparent rounded-full animate-spin" /> Verificando Dados...
+                          <span className="w-4 h-4 border-2 border-black border-r-transparent rounded-full motion-safe:animate-spin" aria-hidden="true" /> Verificando Dados...
                         </span>
                       ) : (
                         <span className="flex items-center gap-1.5">
@@ -709,9 +781,13 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
               ) : (
                 <motion.div
                   key="success-container"
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
+                  initial={prefersReducedMotion ? { opacity: 0 } : { scale: 0.96, opacity: 0 }}
+                  animate={prefersReducedMotion ? { opacity: 1 } : { scale: 1, opacity: 1 }}
                   className="space-y-8 text-center py-6"
+                  ref={successRef}
+                  tabIndex={-1}
+                  role="status"
+                  aria-live="polite"
                 >
                   <div className="w-16 h-16 rounded-full bg-brand/10 border-2 border-brand text-brand flex items-center justify-center mx-auto shadow-2xl">
                     <CheckCircle className="w-9 h-9" />
@@ -723,7 +799,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                       Prezado(a) <strong>{formData.name}</strong>, agradecemos a sua confiança. A equipe de consultoria estratégica da <strong>TAG08</strong> já foi informada do seu interesse.
                     </p>
                     <p className="text-zinc-400 text-xs font-sans">
-                      Em breve (no máximo 6 horas úteis) entraremos em contato enviando um estudo prévio do cenário da sua empresa <strong>{formData.company}</strong>.
+                      Em até 6 horas úteis, entraremos em contato pelo WhatsApp para confirmar o próximo passo sobre o cenário da sua empresa <strong>{formData.company}</strong>.
                     </p>
                   </div>
 
@@ -765,7 +841,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
       <div className="tag08-contact__support max-w-7xl mx-auto px-6 mt-24 pt-20 border-t border-white/[0.04] space-y-20 text-left">
         
         {/* Próximos Passos (Timeline) */}
-        <div className="tag08-contact__steps space-y-12 animate-fade-in">
+        <div className="tag08-contact__steps space-y-12">
           <div className="text-center md:text-left space-y-4">
             <span className="tag08-meta text-xs tracking-widest text-brand uppercase bg-brand/5 border border-brand/20 px-3 py-1 rounded-full">
               PROCESSO DE ANALISE // TRANSPARENCIA
@@ -780,7 +856,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Step 1 */}
-            <div className="bg-charcoal-900 border border-white/[0.04] p-6 sm:p-8 rounded-2xl space-y-4 relative overflow-hidden group hover:border-brand/20 transition-all duration-300">
+            <div className="bg-charcoal-900 border border-white/[0.04] p-6 sm:p-8 rounded-2xl space-y-4 relative overflow-hidden group hover:border-brand/20 transition-[border-color] duration-200">
               <div className="w-10 h-10 rounded-lg bg-brand/10 border border-brand/25 flex items-center justify-center text-brand font-sans text-sm font-bold">
                 01
               </div>
@@ -790,14 +866,14 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   Estudamos os canais atuais de sua marca, concorrentes mapeados e velocidade de carregamento dos seus criativos e sites. Criamos hipóteses válidas antes de qualquer contato.
                 </p>
               </div>
-              <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-500">
-                <Clock className="w-3 h-3 text-brand animate-pulse" />
-                <span>Prazo: nas primeiras 2h úteis</span>
+            <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-400">
+                <Clock className="w-3 h-3 text-brand motion-safe:animate-pulse" />
+                <span>Início da análise após o envio</span>
               </div>
             </div>
 
             {/* Step 2 */}
-            <div className="bg-charcoal-900 border border-white/[0.04] p-6 sm:p-8 rounded-2xl space-y-4 relative overflow-hidden group hover:border-brand/20 transition-all duration-300">
+            <div className="bg-charcoal-900 border border-white/[0.04] p-6 sm:p-8 rounded-2xl space-y-4 relative overflow-hidden group hover:border-brand/20 transition-[border-color] duration-200">
               <div className="w-10 h-10 rounded-lg bg-brand/10 border border-brand/25 flex items-center justify-center text-brand font-sans text-sm font-bold">
                 02
               </div>
@@ -807,14 +883,14 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   Enviamos as primeiras impressões táticas direto no seu WhatsApp de forma resumida e direta. Se houver fit de trabalho inicial, propomos uma agenda rápida de alinhamento.
                 </p>
               </div>
-              <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-500">
+            <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-400">
                 <MessageSquare className="w-3 h-3 text-brand" />
                 <span>Prazo: até 6h úteis totais</span>
               </div>
             </div>
 
             {/* Step 3 */}
-            <div className="bg-charcoal-900 border border-white/[0.04] p-6 sm:p-8 rounded-2xl space-y-4 relative overflow-hidden group hover:border-brand/20 transition-all duration-300">
+            <div className="bg-charcoal-900 border border-white/[0.04] p-6 sm:p-8 rounded-2xl space-y-4 relative overflow-hidden group hover:border-brand/20 transition-[border-color] duration-200">
               <div className="w-10 h-10 rounded-lg bg-brand/10 border border-brand/25 flex items-center justify-center text-brand font-sans text-sm font-bold">
                 03
               </div>
@@ -824,7 +900,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   Uma conversa de 15 minutos baseada em soluções técnicas. Sanamos suas dúvidas sobre nossos playbooks operacionais de processos e apresentamos o plano de expansão ideal.
                 </p>
               </div>
-              <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-500">
+            <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-400">
                 <CheckCircle className="w-3 h-3 text-brand" />
                 <span>Duração: Chamada ágil de 15 min</span>
               </div>
@@ -863,11 +939,16 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
               return (
                 <div 
                   key={index} 
-                  className="border-b border-white/[0.06] pb-4 transition-all duration-300"
+                  className="border-b border-white/[0.06] pb-4 transition-[border-color] duration-200"
                 >
-                  <button
+                  <h3 className="m-0">
+                    <button
+                    type="button"
                     onClick={() => toggleFaq(index)}
-                    className="w-full flex justify-between items-center text-left py-3 gap-4 text-white hover:text-brand transition-colors focus:outline-none"
+                    id={`faq-question-${index}`}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-panel-${index}`}
+                    className="min-h-11 w-full flex justify-between items-center text-left py-3 gap-4 text-white hover:text-brand transition-colors focus:outline-none"
                   >
                     <span className="font-display font-medium text-sm sm:text-base leading-snug">
                       {faq.question}
@@ -875,15 +956,19 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                     <span className="text-brand shrink-0">
                       {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                     </span>
-                  </button>
+                    </button>
+                  </h3>
                   
                   <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
+                        id={`faq-panel-${index}`}
+                        role="region"
+                        aria-labelledby={`faq-question-${index}`}
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25 }}
+                        transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
                         className="overflow-hidden"
                       >
                         <p className="text-zinc-400 text-xs leading-relaxed pt-2 pb-3 font-sans max-w-2xl">

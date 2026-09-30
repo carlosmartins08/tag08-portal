@@ -14,7 +14,7 @@ for (const contract of PUBLICATION_CONTRACTS) {
 const teamKeys = Object.keys(PUBLIC_EVIDENCE).filter((key) => key.startsWith("team/"));
 const clientLogoKeys = Object.keys(PUBLIC_EVIDENCE).filter((key) => key.startsWith("client-logo/"));
 const miniCaseKeys = Object.keys(PUBLIC_EVIDENCE).filter((key) => key.startsWith("mini-case/"));
-assert.equal(getVisibleEvidence(teamKeys, (key) => key, "/sobre", "public").length, 0, "Perfis pendentes não podem aparecer publicamente na página Sobre");
+assert.equal(getVisibleEvidence(teamKeys, (key) => key, "/sobre", "public").length, 7, "Perfis aprovados precisam aparecer publicamente na página Sobre");
 assert.equal(getVisibleEvidence(teamKeys, (key) => key, "/sobre", "review").length, 7, "A prévia local precisa preservar os perfis pendentes para revisão");
 assert.equal(getVisibleEvidence(miniCaseKeys, (key) => key, "/servicos/assessoria-marketing-digital-estrategico", "public").length, 6, "Mini-cases aprovados precisam aparecer em Assessoria");
 assert.equal(getVisibleEvidence(miniCaseKeys, (key) => key, "/servicos/branding-identidade", "public").length, 0, "Mini-cases não podem vazar para serviços fora do escopo aprovado");

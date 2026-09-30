@@ -1,120 +1,13 @@
 import { useState } from "react";
 import Image from "next/image";
-import { Check, Cpu, Code2, Smartphone, LineChart, ShieldCheck, ArrowUpRight, ArrowRight, Layers, Award, MessageSquare, Globe, Laptop, ExternalLink, Eye, Activity, Sparkles, X, Server, CheckCircle2, Monitor, Database, Zap, Briefcase } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { Code2, Smartphone, LineChart, ArrowUpRight, ArrowRight, Layers } from "lucide-react";
+import { useReducedMotion } from "motion/react";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import MiniCases from "../../../components/MiniCases";
-import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
-
-interface WebProject {
-  id: string;
-  title: string;
-  category: string;
-  client: string;
-  year: string;
-  tagline: string;
-  description: string;
-  strategy: {
-    challenge: string;
-    solution: string;
-    result: string;
-  };
-  technologies: string[];
-  metrics: {
-    label: string;
-    value: string;
-  }[];
-  screenshot: string;
-}
-
-const webProjects: WebProject[] = [
-  {
-    id: "proj-medvinci",
-    title: "MedVinci Oncology Group",
-    category: "Portal Corporativo",
-    client: "MedVinci Onco & Saúde Sênior",
-    year: "2026",
-    tagline: "Elevação clínica e autoridade digital inquestionável focado em tratamentos premium.",
-      description: "Um ecossistema digital sob medida para uma das principais clínicas oncológicas do país. Projetado para desmistificar procedimentos complexos de radioterapia e imunoterapia, direcionando o lead para atendimento particular de forma segura.",
-    strategy: {
-      challenge: "Clínicas oncológicas enfrentam barreiras de frieza institucional e ansiedade do paciente. O site precisava passar acolhimento humano ao mesmo tempo que transmitia competência científica inabalável e alto status.",
-      solution: "Estruturação de um layout com tipografia moderna, fotografia premium tratada em tons de sépia corporativo e cinza sutil, e carregamento instantâneo via Next.js estático. Desenvolvemos uma árvore de decisões baseada em sintomas para conduzir doadores e agendadores.",
-      result: "Aumento de 180% no agendamento de consultas de pacientes particulares por meio do canal digital primário de conversão nas primeiras 12 semanas pós-lançamento."
-    },
-    technologies: ["React / Next.js", "Tailwind CSS", "Vercel Edge", "Framer Motion", "Google Maps Platform Integration"],
-    metrics: [
-      { label: "Tempo de Carregamento", value: "0.4s" },
-      { label: "Nota Lighthouse API", value: "100/100" },
-      { label: "Ativação de Leads", value: "+42%" }
-    ],
-    screenshot: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: "proj-kronos",
-    title: "Kronos Multi-Asset Group",
-    category: "Landing Page B2B",
-    client: "Kronos Partners Trust",
-    year: "2025",
-    tagline: "Validação institucional sóbria para captação de fortunas com investidores qualificados.",
-    description: "Landing page corporativa extremamente focada, desenhada para captar fundos de investimentos alternativos voltada a family offices e trusts familiares. O site rejeita designs genéricos de fintechs coloridas e abraça a sobriedade analítica de investidores seniores.",
-    strategy: {
-      challenge: "Investidores senis e gestores de fortunas ignoram landing pages comuns de startups. O portfólio de ativos exigia um visual heráldico de legado, com total segurança de criptografia e seriedade heráldica pura.",
-      solution: "Layout brutalista minimalista com tons monocromáticos de ardósia, finas linhas pretas e brancas, micro-interações analíticas realistas e um simulador de carteira estático ultrarrápido rodando localmente no navegador.",
-      result: "Ativação de 34 leads institucionais qualificados adicionais nas primeiras 6 semanas de veiculação em canais exclusivos de tráfego, movimentando R$ 82M sob custódia corporativa."
-    },
-    technologies: ["React / Vite SPA", "WebGL Matrix Background", "Tailwind CSS", "Docker Engine Deploy", "Resend API Integration"],
-    metrics: [
-      { label: "Captação Estimada", value: "R$ 82M" },
-      { label: "Retenção na Página", value: "3m 45s" },
-      { label: "Taxa de Rejeição", value: "12%" }
-    ],
-    screenshot: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: "proj-aerolog",
-    title: "AeroCargo International",
-    category: "Web System",
-    client: "AeroCargo S.A.",
-    year: "2026",
-    tagline: "Painel de controle com rastreamento geoespacial em tempo real para cargas aéreas exclusivas.",
-    description: "Desenvolvimento de interface em Single Page Application interconectada à API de aeronaves comerciais. O cockpit possibilita que os contratantes acompanhem a logística física ativa em mapas ricos com total confidencialidade de mercadorias.",
-    strategy: {
-      challenge: "Sistemas ERP tradicionais e portais de fretamento operam com softwares cinzas, obsoletos, ruidosos e lentos, gerando atrito operacional constante de coordenação presencial.",
-      solution: "Criação de um painel em modo dark integral e design com alto contraste, utilizando bibliotecas de renderização vetorial rápidas para plotagem de rotas e status de aeroportos em tempo real via canais web.",
-      result: "Redução de 40% no envio de e-mails manuais de suporte operacional e 100% de elogios no onboarding de clientes VIP."
-    },
-    technologies: ["Vite / React Routing", "WebSockets Engine", "Mapbox GL JS Map", "Tailwind CSS grid", "Node.js API Microservices"],
-    metrics: [
-      { label: "Latência de Dados", value: "<150ms" },
-      { label: "Segurança de Fluxo", value: "End-to-End" },
-      { label: "Redução de Suporte", value: "40%" }
-    ],
-    screenshot: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: "proj-therastudio",
-    title: "Thera Digital Health Hub",
-    category: "Portal Multipáginas",
-    client: "Clínica Thera Integrada",
-    year: "2025",
-    tagline: "Presença digital delicada e sofisticada para clínica premium de bem-estar integrado.",
-    description: "O portal hospeda e centraliza frentes de atendimento como psicologia clínica sênior, fisiatria preventiva e nutrologia esportiva de alto ticket. O design foca em transmitir uma experiência orgânica de calma sensorial sofisticada.",
-    strategy: {
-      challenge: "Falta de coesão visual na apresentação de especialidades clínicas diferentes afastava potenciais pacientes que buscavam soluções holísticas sob o mesmo selo de excelência.",
-      solution: "Uso de tipografia serifada elegante, paletas de cores quentes e off-white refinadas, transições de páginas extremamente fluidas via framer-motion e sistema de agendamento integrado via cal.com customizado.",
-      result: "Centralização operacional perfeita de 3 especialidades em uma única marca harmônica, elevando o tíquete-médio do paciente de R$ 350 para R$ 1.200 por consulta."
-    },
-    technologies: ["React SPA", "Custom Headless API Gateway", "Tailwind CSS utility", "Motion API", "Cal.com Booking Engine API"],
-    metrics: [
-      { label: "Sessões Agendadas", value: "+540" },
-      { label: "Tempo de Permanência", value: "4m 12s" },
-      { label: "Lighthouse Performance", value: "98/100" }
-    ],
-    screenshot: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1200",
-  }
-];
+import TrackedOutboundLink from "../../../components/TrackedOutboundLink";
+import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
 
 interface WebProps {
   onNavigate: (page: string) => void;
@@ -122,111 +15,12 @@ interface WebProps {
 
 export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
   const [activeFaq, setActiveFaq] = useState(0);
-  const [selectedProject, setSelectedProject] = useState<WebProject | null>(null);
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
-  const [activeFilter, setActiveFilter] = useState<string>("TODOS");
-  const [activeNeed, setActiveNeed] = useState<string>("empresa");
+  const prefersReducedMotion = useReducedMotion();
 
   const handleLinkClick = (page: string) => {
     onNavigate(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
   };
-
-  const portfolioProjects: WebProject[] = webProjects.map((project, index) => {
-    const consultative = [
-      {
-        title: 'Portal institucional',
-        category: 'Institucional',
-        client: 'Marca com oferta clara',
-        tagline: 'Estrutura pensada para apresentar a empresa, os servi\u00e7os e os caminhos de contato de forma organizada.',
-        description: 'Estrutura para apresentar empresa, servi\u00e7os, diferenciais e caminhos de contato de forma organizada.',
-      },
-      {
-        title: 'Landing de oferta',
-        category: 'Oferta',
-        client: 'Time comercial',
-        tagline: 'P\u00e1gina focada em explicar uma oferta espec\u00edfica, responder d\u00favidas essenciais e conduzir para um pr\u00f3ximo passo.',
-        description: 'P\u00e1gina focada em explicar uma oferta espec\u00edfica, responder d\u00favidas essenciais e conduzir para um pr\u00f3ximo passo.',
-      },
-      {
-        title: 'Cat\u00e1logo digital',
-        category: 'Cat\u00e1logo',
-        client: 'Portf\u00f3lio de produtos',
-        tagline: 'Estrutura naveg\u00e1vel para organizar produtos, servi\u00e7os ou conte\u00fados e facilitar consulta.',
-        description: 'Estrutura naveg\u00e1vel para organizar produtos, servi\u00e7os ou conte\u00fados e facilitar consulta.',
-      },
-      {
-        title: 'Estrutura personalizada',
-        category: 'Personalizada',
-        client: 'Opera\u00e7\u00e3o espec\u00edfica',
-        tagline: 'Projeto adaptado a jornadas, integra\u00e7\u00f5es e necessidades espec\u00edficas da opera\u00e7\u00e3o.',
-        description: 'Projeto adaptado a jornadas, integra\u00e7\u00f5es e necessidades espec\u00edficas da opera\u00e7\u00e3o.',
-      },
-    ][index] ?? {
-      title: project.title,
-      category: project.category,
-      client: project.client,
-      tagline: project.tagline,
-      description: project.description,
-    };
-
-    return {
-      ...project,
-      title: consultative.title,
-      category: consultative.category,
-      client: consultative.client,
-      tagline: consultative.tagline,
-      description: consultative.description,
-      strategy: {
-        challenge: 'A marca precisa de uma base digital mais clara para orientar visita, contato e leitura da oferta.',
-        solution: 'Estrutura\u00e7\u00e3o de conte\u00fado, navega\u00e7\u00e3o e design para apresentar melhor a marca e sustentar sua jornada.',
-        result: 'Uma presen\u00e7a digital mais organizada, f\u00e1cil de explicar e coerente com o momento da empresa.',
-      },
-      metrics: [
-        { label: 'Fun\u00e7\u00e3o', value: consultative.category },
-        { label: 'Foco', value: 'Clareza' },
-        { label: 'Aplica\u00e7\u00e3o', value: 'Contato' },
-      ],
-    };
-  });
-  const needOptions = [
-    {
-      id: 'empresa',
-      title: 'Sua marca precisa apresentar melhor a empresa?',
-      text: 'Quando o visitante ainda n\u00e3o entende com clareza quem \u00e9 a marca, o que ela faz e por que deveria confiar.',
-      result: 'Site institucional',
-      tags: ['Institucional', 'Clareza', 'Credibilidade'],
-    },
-    {
-      id: 'oferta',
-      title: 'Voc\u00ea precisa explicar uma oferta espec\u00edfica?',
-      text: 'Quando um servi\u00e7o, produto, campanha ou solu\u00e7\u00e3o precisa de uma p\u00e1gina pr\u00f3pria para ser compreendido.',
-      result: 'Landing page',
-      tags: ['Oferta', 'Jornada', 'Contato'],
-    },
-    {
-      id: 'comercial',
-      title: 'Seu comercial precisa de apoio digital?',
-      text: 'Quando propostas, atendimento e conversas precisam de uma base clara para apresentar informa\u00e7\u00f5es e pr\u00f3ximos passos.',
-      result: 'P\u00e1gina de servi\u00e7o',
-      tags: ['Comercial', 'Organiza\u00e7\u00e3o', 'Pr\u00f3ximo passo'],
-    },
-    {
-      id: 'catalogo',
-      title: 'Voc\u00ea precisa organizar cat\u00e1logo, servi\u00e7os ou conte\u00fados?',
-      text: 'Quando h\u00e1 muitas informa\u00e7\u00f5es dispersas e o usu\u00e1rio precisa encontrar o que procura com menos esfor\u00e7o.',
-      result: 'Cat\u00e1logo digital',
-      tags: ['Cat\u00e1logo', 'Navega\u00e7\u00e3o', 'Atualiza\u00e7\u00e3o'],
-    },
-    {
-      id: 'evolucao',
-      title: 'A estrutura atual precisa evoluir?',
-      text: 'Quando o site existe, mas j\u00e1 n\u00e3o acompanha o momento, a oferta, a linguagem ou a opera\u00e7\u00e3o da marca.',
-      result: 'Estrutura web evolutiva',
-      tags: ['Evolu\u00e7\u00e3o', 'Conte\u00fado', 'Opera\u00e7\u00e3o'],
-    },
-  ];
-  const activeNeedCard = needOptions.find((item) => item.id === activeNeed) ?? needOptions[0];
 
   return (
     <div className="bg-charcoal-950 text-white min-h-screen pb-20 relative overflow-hidden">
@@ -235,7 +29,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       <div className="absolute bottom-[20%] right-[-15%] w-[600px] h-[600px] bg-brand/[0.02] rounded-full blur-[150px] pointer-events-none" />
 
       {/* Subtle floating 3D element in the background of user focus */}
-      <Subtle3DCanvas intensity={1.3} className="absolute right-[-8%] top-[5%] w-[480px] h-[480px] opacity-[0.35] mix-blend-screen hidden lg:block" />
+      <Subtle3DCanvas aria-hidden="true" intensity={1.3} className="absolute right-[-8%] top-[5%] w-[480px] h-[480px] opacity-[0.35] mix-blend-screen hidden lg:block" />
 
       {/* SECTION 1 - HERO: THE EDITORIAL SYSTEM (Synchronized Style) */}
       <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-20 border-b border-white/[0.04]">
@@ -266,8 +60,9 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1600"
                 alt="Planejamento e desenvolvimento de estrutura web"
                 fill
-                sizes="100vw"
-                className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-[1.01] transition-all duration-1000 ease-out"
+                priority
+                sizes="(max-width: 768px) calc(100vw - 2rem), (max-width: 1280px) calc(100vw - 4rem), 1152px"
+                className="w-full h-full object-cover grayscale brightness-50 transition-transform duration-200 ease-out motion-safe:group-hover:scale-[1.01]"
                 referrerPolicy="no-referrer"
               />
               {/* Elegant overlay masks */}
@@ -276,20 +71,24 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
 
               {/* Glowing neon action button floating inside face banner mimicking "Free Trial" anchor */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(45px)" }}>
-                <button
-                  onClick={() => handleLinkClick("/contato")}
-                  className="group bg-brand-secondary text-black font-sans font-black text-xs sm:text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
+                <TrackedOutboundLink
+                  label="Falar com a TAG08"
+                  surface="desenvolvimento-web-hero-cta"
+                  href={buildBrazilWhatsAppUrl("Ol%C3%A1,%20gostaria%20de%20conversar%20sobre%20um%20projeto%20de%20desenvolvimento%20web%20com%20a%20TAG08")}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group min-h-11 bg-brand-secondary text-black font-sans font-black text-xs sm:text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] hover:bg-brand-dark active:scale-[0.98] transition-[background-color,transform] duration-200 border border-brand-secondary flex items-center gap-2 cursor-pointer z-20"
                 >
-                  <span>PLANEJAR MEU SITE</span>
+                  <span>FALAR COM A TAG08</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-                </button>
+                </TrackedOutboundLink>
               </div>
 
               {/* Absolute indicator tags on corners */}
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
                   <span className="tag08-meta text-xs text-brand-secondary tracking-widest block uppercase font-bold">Sistema web TAG08</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Estrutura digital com dire&ccedil;&atilde;o e fun&ccedil;&atilde;o</h4>
+                  <p className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Estrutura digital com dire&ccedil;&atilde;o e fun&ccedil;&atilde;o</p>
                 </div>
 
                 <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-xs text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
@@ -301,22 +100,22 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           </ThreeDimensionalTilt>
 
           {/* 3. High status core statistics row matching screenshot layout */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 pt-6 pb-4 text-left border-t border-white/[0.04]">
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Clareza</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Informa&ccedil;&atilde;o organizada para facilitar<br/>entendimento da empresa e da oferta.</span>
+              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">Informa&ccedil;&atilde;o organizada para facilitar entendimento da empresa e da oferta.</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Credibilidade</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Presen&ccedil;a digital coerente com a identidade,<br/>o conte&uacute;do e o momento da marca.</span>
+              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">Presen&ccedil;a digital coerente com a identidade, o conte&uacute;do e o momento da marca.</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Organiza&ccedil;&atilde;o</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">P&aacute;ginas, navega&ccedil;&atilde;o e conte&uacute;dos<br/>estruturados com fun&ccedil;&atilde;o definida.</span>
+              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">P&aacute;ginas, navega&ccedil;&atilde;o e conte&uacute;dos estruturados com fun&ccedil;&atilde;o definida.</span>
             </div>
             <div className="space-y-2">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Apoio comercial</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Caminhos de contato e pr&oacute;ximos passos<br/>integrados &agrave; jornada do visitante.</span>
+              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">Caminhos de contato e pr&oacute;ximos passos integrados &agrave; jornada do visitante.</span>
             </div>
           </div>
 
@@ -332,16 +131,16 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
               Sinais de desalinhamento digital
             </span>
-            <h3 className="font-display font-medium text-3xl sm:text-4xl text-white tracking-tight">
+            <h2 className="font-display font-medium text-3xl sm:text-4xl text-white tracking-tight">
               Quando o site deixa de ajudar a marca a ser entendida.
-            </h3>
+            </h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-xl">
               Muitas empresas possuem um site, mas ainda dificultam a experi&ecirc;ncia de quem procura informa&ccedil;&otilde;es sobre a marca, os servi&ccedil;os ou o pr&oacute;ximo passo. Conte&uacute;do desatualizado, navega&ccedil;&atilde;o confusa, p&aacute;ginas sem fun&ccedil;&atilde;o definida e uma estrutura que n&atilde;o acompanha o neg&oacute;cio s&atilde;o sinais comuns desse desalinhamento.
             </p>
           </div>
 
-          <div className="border border-white/[0.06] rounded-3xl overflow-hidden divide-y divide-white/[0.06] bg-neutral-900/10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 tag08-meta text-xs text-zinc-500 uppercase tracking-widest bg-white/[0.01]">
+          <div className="border border-white/[0.06] rounded-3xl overflow-hidden divide-y divide-white/[0.06] bg-charcoal-900/40">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 tag08-meta text-xs text-zinc-300 uppercase tracking-widest bg-white/[0.01]">
               <div>Leitura da experi&ecirc;ncia atual</div>
               <div className="text-brand-secondary">Base digital TAG08</div>
             </div>
@@ -354,11 +153,11 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             ].map((row, rIdx) => (
               <div key={rIdx} className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 sm:p-7 text-xs sm:text-sm text-left">
                 <div className="text-zinc-400 font-sans flex gap-3">
-                  <span className="text-zinc-600 font-sans font-bold shrink-0">[-]</span>
+                  <span aria-hidden="true" className="text-zinc-300 font-sans font-bold shrink-0">–</span>
                   <span>{row.bad}</span>
                 </div>
                 <div className="text-zinc-200 font-sans flex gap-3 border-t md:border-t-0 border-white/[0.03] pt-4 md:pt-0">
-                  <span className="text-brand-secondary font-sans font-bold shrink-0">[+]</span>
+                  <span aria-hidden="true" className="text-brand-secondary font-sans font-bold shrink-0">+</span>
                   <span>{row.good}</span>
                 </div>
               </div>
@@ -385,7 +184,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 <Code2 className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm">Arquitetura da informa&ccedil;&atilde;o</h4>
+                <h3 className="text-white font-display font-black text-sm">Arquitetura da informa&ccedil;&atilde;o</h3>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Organiza&ccedil;&atilde;o de p&aacute;ginas, se&ccedil;&otilde;es, menus e conte&uacute;dos para facilitar a localiza&ccedil;&atilde;o das informa&ccedil;&otilde;es e construir uma jornada mais compreens&iacute;vel.
                 </p>
@@ -397,7 +196,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 <LineChart className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm">Design de interface</h4>
+                <h3 className="text-white font-display font-black text-sm">Design de interface</h3>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Constru&ccedil;&atilde;o visual das interfaces com hierarquia, legibilidade, responsividade e coer&ecirc;ncia com a <a href="/servicos/branding-identidade" className="text-brand-secondary underline-offset-2 hover:underline">identidade da marca</a>.
                 </p>
@@ -409,7 +208,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 <Smartphone className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm">Conte&uacute;do e narrativa</h4>
+                <h3 className="text-white font-display font-black text-sm">Conte&uacute;do e narrativa</h3>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Estrutura&ccedil;&atilde;o de textos, chamadas e blocos de conte&uacute;do para explicar empresa, oferta, processo, diferenciais e pr&oacute;ximos passos com maior clareza.
                 </p>
@@ -421,7 +220,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 <Layers className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-white font-display font-black text-sm">Desenvolvimento t&eacute;cnico</h4>
+                <h3 className="text-white font-display font-black text-sm">Desenvolvimento t&eacute;cnico</h3>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                   Implementa&ccedil;&atilde;o da estrutura web com aten&ccedil;&atilde;o a responsividade, estabilidade, organiza&ccedil;&atilde;o t&eacute;cnica e experi&ecirc;ncia de navega&ccedil;&atilde;o.
                 </p>
@@ -444,42 +243,42 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm">Clareza de navega&ccedil;&atilde;o</h4>
+              <h3 className="text-white font-display font-black text-sm">Clareza de navega&ccedil;&atilde;o</h3>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Menus, se&ccedil;&otilde;es e caminhos organizados para reduzir esfor&ccedil;o e facilitar a localiza&ccedil;&atilde;o das informa&ccedil;&otilde;es.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm">Estrutura de conte&uacute;do</h4>
+              <h3 className="text-white font-display font-black text-sm">Estrutura de conte&uacute;do</h3>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Textos, chamadas e blocos organizados para apresentar empresa, oferta, contexto e pr&oacute;ximo passo.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm">Design responsivo</h4>
+              <h3 className="text-white font-display font-black text-sm">Design responsivo</h3>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Interfaces preparadas para diferentes tamanhos de tela, preservando legibilidade, hierarquia e navega&ccedil;&atilde;o.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm">Base t&eacute;cnica organizada</h4>
+              <h3 className="text-white font-display font-black text-sm">Base t&eacute;cnica organizada</h3>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Implementa&ccedil;&atilde;o estruturada para facilitar estabilidade, manuten&ccedil;&atilde;o e evolu&ccedil;&atilde;o do projeto.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm">Continuidade de uso</h4>
+              <h3 className="text-white font-display font-black text-sm">Continuidade de uso</h3>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Estrutura preparada para receber ajustes, novas p&aacute;ginas, conte&uacute;dos e necessidades futuras quando tecnicamente previsto.
               </p>
             </div>
 
             <div className="p-6 bg-charcoal-900/40 border border-white/[0.05] rounded-3xl space-y-2">
-              <h4 className="text-white font-display font-black text-sm">Acompanhamento de publica&ccedil;&atilde;o</h4>
+              <h3 className="text-white font-display font-black text-sm">Acompanhamento de publica&ccedil;&atilde;o</h3>
               <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
                 Revis&atilde;o da entrega e orienta&ccedil;&otilde;es iniciais para manter a estrutura coerente ap&oacute;s a publica&ccedil;&atilde;o, conforme o escopo contratado.
               </p>
@@ -491,7 +290,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       <section className="px-4 sm:px-6 md:px-8 py-10 border-b border-white/[0.04] bg-charcoal-900/40 text-left">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 max-w-3xl">
-            <h4 className="text-white font-display font-black text-sm tracking-tight">Crit&eacute;rios de confian&ccedil;a</h4>
+            <h2 className="text-white font-display font-black text-sm tracking-tight">Crit&eacute;rios de confian&ccedil;a</h2>
             <p className="text-zinc-400 text-xs font-sans font-medium leading-relaxed">
               A estrutura web precisa ser compreens&iacute;vel para o visitante, coerente com a marca e funcional para a opera&ccedil;&atilde;o. O objetivo &eacute; construir uma base digital que possa ser usada, mantida e evolu&iacute;da com responsabilidade.
             </p>
@@ -518,7 +317,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       {/* SECTION - WORK SYSTEM */}
       <section className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
         <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(var(--color-brand-rgb),0.18)] select-none">
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.08)_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-20 pointer-events-none" />
+          <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.08)_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-20 pointer-events-none" />
 
           <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[520px]">
             <div className="absolute inset-0 bg-black/10 rounded-[24px] overflow-hidden" />
@@ -527,7 +326,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               sizes="(max-width: 1024px) 100vw, 42vw"
               src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800"
               alt="Profissional em ambiente de desenvolvimento web"
-              className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
+              className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-transform duration-200 motion-safe:hover:scale-[1.02]"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
@@ -577,7 +376,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             </div>
 
             <div className="bg-charcoal-900/98 backdrop-blur-3xl border border-white/[0.08] p-6 sm:p-7 rounded-[28px] shadow-[0_25px_60px_rgba(0,0,0,0.5)] space-y-6 max-w-2xl relative overflow-hidden text-left">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
+              <div aria-hidden="true" className="absolute top-0 right-0 w-24 h-24 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
               <div className="space-y-4 relative z-10">
                 {[
                   {
@@ -608,15 +407,17 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               </div>
 
               <div className="space-y-3 pt-2 relative z-10">
-                <a
+                <TrackedOutboundLink
+                  label="WhatsApp oficial"
+                  surface="desenvolvimento-web-contact-card"
                   href={buildBrazilWhatsAppUrl("Ol%C3%A1,%20gostaria%20de%20solicitar%20um%20projeto%20de%20Desenvolvimento%20Web%20com%20a%20TAG08")}
                   target="_blank"
                   rel="noreferrer"
-                  className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-3 px-4 transition-all duration-300 group shadow-inner"
+                  className="block min-h-11 w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-3 px-4 transition-[background-color] duration-200 group shadow-inner"
                 >
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex flex-col text-left">
-                      <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
+                      <span className="tag08-meta text-xs text-zinc-300 uppercase font-black tracking-wider leading-none">
                         WhatsApp oficial
                       </span>
                       <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
@@ -625,15 +426,16 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                     </div>
                     <ArrowUpRight className="w-4 h-4 text-black stroke-[2.5] bg-brand rounded-full p-0.5" />
                   </div>
-                </a>
+                </TrackedOutboundLink>
 
                 <button
+                  type="button"
                   onClick={() => handleLinkClick("/servicos")}
-                  className="w-full bg-black/10 hover:bg-black/15 border border-black/10 rounded-2xl py-3 px-4 transition-all duration-300 group text-left"
+                  className="min-h-11 w-full bg-black/10 hover:bg-black/15 border border-black/10 rounded-2xl py-3 px-4 transition-[background-color] duration-200 group text-left active:scale-[0.99]"
                 >
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex flex-col text-left">
-                      <span className="tag08-meta text-xs text-black/55 uppercase font-black tracking-wider leading-none">
+                      <span className="tag08-meta text-xs text-black/80 uppercase font-black tracking-wider leading-none">
                         Pr&oacute;ximo passo
                       </span>
                       <span className="text-black text-xs font-sans font-bold tracking-wider mt-0.5">
@@ -652,8 +454,8 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
       <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand/[0.015] rounded-full blur-[160px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[40px] bg-charcoal-950 border border-white/[0.04] p-6 sm:p-10 lg:p-14 relative overflow-hidden shadow-2xl">
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.015)_1.2px,transparent_1.2px)] [background-size:24px_24px] pointer-events-none" />
+          <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[40px] bg-charcoal-950 border border-white/[0.04] p-6 sm:p-10 lg:p-14 relative overflow-hidden shadow-2xl">
+          <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.015)_1.2px,transparent_1.2px)] [background-size:24px_24px] pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
             <div className="lg:col-span-5 flex flex-col justify-between space-y-8 text-left">
@@ -680,20 +482,23 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                 ]).map((item) => (
                   <button
                     key={item.id}
+                    type="button"
                     onClick={() => setActiveFaq(item.id)}
-                    className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all text-left group cursor-pointer ${
+                    aria-expanded={activeFaq === item.id}
+                    aria-controls={`web-faq-panel-${item.id}`}
+                    className={`w-full min-h-11 flex items-center justify-between p-4 rounded-xl border transition-[background-color,border-color,color,box-shadow] duration-200 text-left group cursor-pointer active:scale-[0.99] ${
                       activeFaq === item.id
                         ? "bg-brand text-black border-brand shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.12)]"
                         : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
                     }`}
                   >
-                    <span className="tag08-meta text-xs font-black uppercase tracking-wider flex items-center gap-3">
+                    <span id={`web-faq-heading-${item.id}`} className="tag08-meta text-xs font-black uppercase tracking-wider flex items-center gap-3">
                       <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
                         {String(item.id + 1).padStart(2, '0')}.
                       </span>
                       {item.title}
                     </span>
-                    <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
+                    <ArrowRight aria-hidden="true" className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
                       activeFaq === item.id ? "text-black rotate-[-45deg] stroke-[2.5]" : "text-zinc-500"
                     }`} />
                   </button>
@@ -701,13 +506,13 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               </div>
             </div>
 
-            <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
+            <div id={`web-faq-panel-${activeFaq}`} role="region" aria-labelledby={`web-faq-heading-${activeFaq}`} className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-charcoal-900">
               <Image
                 fill
                 sizes="(max-width: 1024px) 100vw, 34vw"
                 src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800"
                 alt="TAG08 Web Design"
-                className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
+                className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-opacity duration-200 pointer-events-none"
               />
               <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
                 <svg viewBox="0 0 100 100" className="w-full h-full text-brand fill-none stroke-current" strokeWidth="0.75" strokeLinecap="round">
@@ -715,7 +520,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                   <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
                 </svg>
               </div>
-              <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
+              <div aria-hidden="true" className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
                 SYS // STATIC_WEB
               </div>
 
@@ -731,7 +536,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                   ])[activeFaq]}
                 </span>
 
-                <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
+                <h3 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
                   {([
                     "A TAG08 desenvolve apenas sites institucionais?",
                     "Preciso ter todo o conte&uacute;do pronto antes de come&ccedil;ar?",
@@ -740,7 +545,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                     "Depois da publica&ccedil;&atilde;o, o site pode evoluir?",
                     "Como a TAG08 define o escopo do site?"
                   ])[activeFaq]}
-                </h4>
+                </h3>
 
                 <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
@@ -756,40 +561,43 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             </div>
 
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
-              <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
+              <div className="bg-charcoal-900 border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-[border-color] duration-200 text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
-                  <h4 className="text-white font-semibold text-sm leading-snug">O que o projeto precisa deixar claro?</h4>
+                  <span className="tag08-meta text-xs text-zinc-300 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
+                  <h3 className="text-white font-semibold text-sm leading-snug">O que o projeto precisa deixar claro?</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     A estrutura precisa deixar claro o papel da p&aacute;gina, a jornada do visitante e o pr&oacute;ximo passo esperado.
                   </p>
                 </div>
                 <button
+                  type="button"
                   onClick={() => handleLinkClick("/servicos")}
-                  className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
+                  className="group min-h-11 flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand active:scale-[0.99] cursor-pointer select-none pt-2 border-t border-white/5 transition-colors duration-200"
                 >
                   <span>VER SOLU&Ccedil;&Otilde;ES</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
 
-              <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
+              <div className="bg-brand text-black rounded-2xl p-5 hover:shadow-lg transition-shadow duration-200 text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
-                  <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">FALE COM A TAG08</span>
-                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">Quer conversar sobre o seu site?</h4>
+                  <span className="tag08-meta text-xs text-black/80 uppercase tracking-widest block font-extrabold">FALE COM A TAG08</span>
+                  <h3 className="text-black font-black text-sm leading-tight tracking-tight">Quer conversar sobre o seu site?</h3>
                   <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
                     Converse com a TAG08 para entender o que precisa ser estruturado, o que entra no escopo e qual caminho faz sentido para o projeto.
                   </p>
                 </div>
-                <a
+                <TrackedOutboundLink
+                  label="Falar com a TAG08"
+                  surface="desenvolvimento-web-final-cta"
                   href={buildBrazilWhatsAppUrl("Ol%C3%A1,%20gostaria%20de%20conversar%20sobre%20um%20projeto%20de%20desenvolvimento%20web%20com%20a%20TAG08")}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-all"
+                  className="group min-h-11 flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-transform duration-200"
                 >
                   <span>FALAR COM A TAG08</span>
                   <ArrowUpRight className="w-4 h-4 text-black stroke-[2.5]" />
-                </a>
+                </TrackedOutboundLink>
               </div>
             </div>
           </div>
@@ -806,8 +614,9 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
         </p>
         <div className="pt-4">
           <button
+            type="button"
             onClick={() => handleLinkClick("/contato")}
-            className="group bg-brand text-black font-sans font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
+            className="group min-h-11 bg-brand text-black font-sans font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark active:scale-[0.98] transition-[background-color,transform] duration-200 cursor-pointer flex items-center gap-2 mx-auto"
           >
             <span>PLANEJAR MEU SITE</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />

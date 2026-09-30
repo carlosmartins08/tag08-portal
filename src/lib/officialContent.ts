@@ -187,7 +187,7 @@ export const FALLBACK_YOUTUBE_VIDEOS: OfficialYouTubeVideo[] = [
     duration: "18:20",
     date: "14 Mai, 2026",
     category: "EVENTOS",
-    thumbnail: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=1200",
+    thumbnail: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200",
     embedCode: "612U4R57M70",
     videoUrl: DEFAULT_YOUTUBE_VIDEO_URL,
     views: "PORTFÓLIO 02",

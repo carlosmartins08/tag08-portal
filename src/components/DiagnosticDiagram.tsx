@@ -121,7 +121,7 @@ export default function DiagnosticDiagram() {
                 type="button"
                 aria-pressed={isActive}
                 onClick={() => setActivePillarId(pillar.id)}
-                className={`w-full rounded-2xl border p-4 text-left transition-colors ${
+                className={`w-full min-h-11 rounded-2xl border p-4 text-left transition-[border-color,background-color] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 ${
                   isActive
                     ? "border-brand/40 bg-brand/[0.05]"
                     : "border-white/[0.04] bg-transparent hover:border-white/15 hover:bg-white/[0.02]"
@@ -140,7 +140,7 @@ export default function DiagnosticDiagram() {
                         {pillar.score}%
                       </span>
                     </span>
-                    <span className={`mt-1 block text-xs leading-relaxed ${isActive ? "text-zinc-400" : "line-clamp-1 text-zinc-600"}`}>
+                    <span className="mt-1 block text-xs leading-relaxed text-zinc-300">
                       {pillar.description}
                     </span>
                   </span>

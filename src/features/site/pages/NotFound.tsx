@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import type { RouteLocale } from "../../../config/routeRegistry";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
 import { getNotFoundCopy } from "../../../i18n/notFoundCopy";
+import TrackedOutboundLink from "../../../components/TrackedOutboundLink";
 
 interface NotFoundProps {
   locale: RouteLocale;
@@ -77,10 +78,10 @@ export default function NotFound({ locale, onNavigate }: NotFoundProps) {
                 </div>
               </div>
 
-              <a href={buildBrazilWhatsAppUrl(copy.supportMessage)} target="_blank" rel="noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-1 bg-black hover:bg-neutral-900 border border-black text-white px-4 py-2.5 rounded-xl font-sans text-xs uppercase font-black tracking-widest hover:scale-[1.02] transition-all cursor-pointer whitespace-nowrap">
+              <TrackedOutboundLink label={copy.supportAction} surface="not-found-support" href={buildBrazilWhatsAppUrl(copy.supportMessage)} target="_blank" rel="noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-1 bg-black hover:bg-neutral-900 border border-black text-white px-4 py-2.5 rounded-xl font-sans text-xs uppercase font-black tracking-widest hover:scale-[1.02] transition-all cursor-pointer whitespace-nowrap">
                 <span>{copy.supportAction}</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-brand-secondary" />
-              </a>
+              </TrackedOutboundLink>
             </div>
           </div>
         </div>

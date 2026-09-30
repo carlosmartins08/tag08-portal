@@ -320,11 +320,11 @@ test.describe("regressões de responsividade e movimento", () => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/servicos/gestao-de-redes-sociais", { waitUntil: "domcontentloaded" });
 
-    const option = page.getByRole("button", { name: "Falta clareza", exact: true });
+    const option = page.getByLabel("Falta clareza", { exact: true });
     await option.scrollIntoViewIfNeeded();
-    await expect(option).toHaveAttribute("aria-pressed", "false");
+    await expect(option).not.toBeChecked();
     await page.waitForTimeout(7_000);
-    await expect(option).toHaveAttribute("aria-pressed", "false");
+    await expect(option).not.toBeChecked();
   });
 
   test("diagrama inicializa o traço sem aviso de valor indefinido", async ({ page }) => {

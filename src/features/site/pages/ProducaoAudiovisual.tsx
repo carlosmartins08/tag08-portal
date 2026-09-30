@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { 
   Check, ArrowRight, ArrowUpRight, Camera, Video, Film, Sparkles, 
@@ -12,6 +12,7 @@ import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import MiniCases from "../../../components/MiniCases";
 import ResilientImage from "../../../components/ResilientImage";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
+import TrackedOutboundLink from "../../../components/TrackedOutboundLink";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
 import { trackVideoEvent } from "../../../lib/analytics";
 import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
@@ -115,6 +116,7 @@ interface ProducaoProps {
 
 export default function ProducaoAudiovisual({ onNavigate }: ProducaoProps) {
   const [activeFaq, setActiveFaq] = useState<number>(0);
+  const prefersReducedMotion = useReducedMotion();
   const { videos: youtubeVideos } = useOfficialYouTubeVideos(4);
   
   // Custom calculator states
@@ -153,7 +155,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
   const handleLinkClick = (page: string) => {
     onNavigate(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
   };
 
   return (
@@ -163,7 +165,9 @@ Quero conversar sobre o próximo passo com a TAG08.`;
       <div className="absolute bottom-[25%] right-[-12%] w-[580px] h-[580px] bg-brand/[0.02] rounded-full blur-[140px] pointer-events-none" />
 
       {/* Floating 3D Geometric Mesh for Tech/Artistic Authority */}
-      <Subtle3DCanvas intensity={1.5} className="absolute right-[-8%] top-[5%] w-[480px] h-[480px] opacity-[0.35] mix-blend-screen hidden lg:block animate-pulse-slow" />
+      <div aria-hidden="true">
+        <Subtle3DCanvas intensity={1.5} className="absolute right-[-8%] top-[5%] w-[480px] h-[480px] opacity-[0.35] mix-blend-screen hidden lg:block animate-pulse-slow" />
+      </div>
 
       {/*=========================================
           SECTION 1: HERO - THE CINEMATIC SYSTEM
@@ -193,10 +197,11 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.35/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
               <ResilientImage
                 fallbackLabel="Produção Audiovisual TAG08"
-                sizes="100vw"
+                priority
+                sizes="(max-width: 768px) calc(100vw - 2rem), (max-width: 1280px) calc(100vw - 4rem), 1152px"
                 src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1600"
                 alt="Produção Audiovisual TAG08"
-                className="object-cover grayscale brightness-40 group-hover:scale-[1.02] transition-all duration-1000 ease-out"
+                className="object-cover grayscale brightness-40 motion-safe:group-hover:scale-[1.02] transition-transform duration-200 ease-out"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent pointer-events-none" />
@@ -204,20 +209,29 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
               {/* Central Floating Callout */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(50px)" }}>
-                <a
-                  href="#planner"
-                  className="bg-brand-secondary text-black font-sans font-black text-xs sm:text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.3)] hover:scale-105 duration-300 transition-all border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
-                >
-                  <span>PLANEJAR MEU AUDIOVISUAL</span>
-                  <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-                </a>
+                <div className="flex flex-col items-center gap-3">
+                  <TrackedOutboundLink
+                    label="Falar com a TAG08 sobre produção audiovisual"
+                    surface="audiovisual-hero"
+                    href={buildBrazilWhatsAppUrl("Olá, quero conversar sobre uma produção audiovisual para a minha marca.")}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="min-h-11 bg-brand-secondary text-black font-sans font-black text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.3)] motion-safe:hover:scale-105 active:scale-[0.98] transition-transform duration-200 border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
+                  >
+                    <span>FALAR COM A TAG08</span>
+                    <ArrowUpRight aria-hidden="true" className="w-4 h-4 stroke-[2.5]" />
+                  </TrackedOutboundLink>
+                  <a href="#planner" className="min-h-11 inline-flex items-center rounded-full border border-white/30 bg-black/50 px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-white backdrop-blur-sm transition-colors duration-200 hover:border-white/60 active:scale-[0.98]">
+                    PLANEJAR MEU AUDIOVISUAL
+                  </a>
+                </div>
               </div>
 
               {/* Bottom detail row */}
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
                   <span className="tag08-meta text-xs text-brand-secondary tracking-widest block uppercase font-bold">TAG08 AUDIOVISUAL</span>
-                  <h4 className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Narrativa, presença e conteúdo com direção</h4>
+                  <p className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Narrativa, presença e conteúdo com direção</p>
                 </div>
 
                 <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-xs text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
@@ -229,22 +243,22 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           </ThreeDimensionalTilt>
 
           {/* Hero benefit cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-6 pb-2 text-left border-t border-white/[0.04]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 pt-6 pb-2 text-left border-t border-white/[0.04]">
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Narrativa</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Capta fala, bastidores e ambiente<br/>com intenção editorial</span>
+              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">Capta fala, bastidores e ambiente com intenção editorial</span>
             </div>
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Clareza</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Organiza o material para apoiar<br/>apresentação, redes e site</span>
+              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">Organiza o material para apoiar apresentação, redes e site</span>
             </div>
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-white">Aplicação</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Peças pensadas para uso recorrente<br/>e consistente</span>
+              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">Peças pensadas para uso recorrente e consistente</span>
             </div>
             <div className="space-y-1.5">
               <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Continuidade</span>
-              <span className="block text-zinc-500 tag08-meta text-xs uppercase tracking-widest leading-normal">Conteúdo útil depois da gravação<br/>e da edição</span>
+              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">Conteúdo útil depois da gravação e da edição</span>
             </div>
           </div>
 
@@ -296,14 +310,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             ].map((item, idx) => (
               <div 
                 key={idx}
-                className="bg-charcoal-900 border border-white/[0.04] rounded-2xl p-6 sm:p-7 space-y-3 hover:border-red-500/20 transition-all duration-300"
+                className="bg-charcoal-900 border border-white/[0.04] rounded-2xl p-6 sm:p-7 space-y-3 transition-colors duration-200 hover:border-red-500/20"
               >
                 <div className="w-10 h-10 rounded-xl bg-red-500/5 text-red-400 border border-red-500/10 flex items-center justify-center font-sans text-xs font-bold">
                   SINAL {String(idx + 1).padStart(2, '0')}
                 </div>
-                <h4 className="text-white text-base sm:text-lg font-display font-semibold tracking-tight">
+                <h3 className="text-white text-base sm:text-lg font-display font-semibold tracking-tight">
                   {item.title}
-                </h4>
+                </h3>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
                   {item.desc}
                 </p>
@@ -364,10 +378,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               return (
                 <div 
                   key={idx}
-                  className="bg-charcoal-900 border border-white/[0.05] rounded-2xl p-6 hover:border-brand/30 hover:bg-white/[0.015] transition-all duration-300 flex flex-col justify-between group h-64"
+                    className="bg-charcoal-900 border border-white/[0.05] rounded-2xl p-6 hover:border-brand/30 hover:bg-white/[0.015] transition-colors duration-200 flex flex-col justify-between group min-h-64"
                 >
                   <div className="space-y-4">
-                    <div className="p-2.5 bg-white/[0.03] text-zinc-400 group-hover:text-brand group-hover:bg-brand/10 rounded-xl transition-all w-10 h-10 flex items-center justify-center">
+                    <div className="p-2.5 bg-white/[0.03] text-zinc-400 group-hover:text-brand group-hover:bg-brand/10 rounded-xl transition-colors duration-200 w-10 h-10 flex items-center justify-center">
                       <AudienceIcon className="w-5 h-5" />
                     </div>
                     <h3 className="text-white text-base sm:text-lg font-display font-semibold tracking-tight group-hover:text-brand transition-colors">
@@ -377,7 +391,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                       {audience.desc}
                     </p>
                   </div>
-                  <div className="text-xs tag08-meta text-zinc-500 uppercase tracking-widest select-none">
+                  <div className="text-xs tag08-meta text-zinc-300 uppercase tracking-widest select-none">
                     DIRECIONAMENTO // COD_0{idx + 1}
                   </div>
                 </div>
@@ -447,7 +461,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             ].map((frente, idx) => (
               <div 
                 key={idx}
-                className="bg-charcoal-900 border border-white/[0.06] rounded-2.5xl p-6 sm:p-10 space-y-6 hover:border-brand/40 hover:bg-white/[0.01] transition-all duration-300 relative overflow-hidden"
+                className="bg-charcoal-900 border border-white/[0.06] rounded-2.5xl p-6 sm:p-10 space-y-6 hover:border-brand/40 hover:bg-white/[0.01] transition-colors duration-200 relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-brand/[0.015] rounded-full blur-2xl pointer-events-none" />
                 
@@ -462,7 +476,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 </div>
 
                 <div className="space-y-3.5 pt-4 border-t border-white/[0.04]">
-                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">FORMATOS POSSÍVEIS:</span>
+                  <span className="tag08-meta text-xs text-zinc-300 uppercase tracking-widest block font-bold">FORMATOS POSSÍVEIS:</span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {frente.list.map((item, itemIdx) => (
                       <div key={itemIdx} className="flex gap-2.5 items-center">
@@ -482,7 +496,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
       {/*=========================================
           SECTION 4.5: FORMATOS AUDIOVISUAIS // TAG08 (Conteúdos recentes do canal)
          =========================================*/}
-      <section className="px-6 md:px-8 py-20 border-b border-white/[0.04] bg-black/35 text-left relative z-10">
+      <section className="px-6 md:px-8 py-20 border-b border-white/[0.04] bg-charcoal-950/80 text-left relative z-10">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-3 max-w-2xl">
             <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
@@ -512,7 +526,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                     page_path: "/servicos/producao-audiovisual"
                   })
                 }
-                className="group block h-full overflow-hidden rounded-[28px] border border-white/[0.05] bg-charcoal-900 transition-all duration-300 hover:border-brand/30 hover:-translate-y-0.5"
+                className="group block h-full overflow-hidden rounded-[28px] border border-white/[0.05] bg-charcoal-900 transition-colors duration-200 hover:border-brand/30"
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-black">
                   <Image
@@ -520,7 +534,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                     sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
                     src={video.thumbnail}
                     alt={video.title}
-                    className="object-cover brightness-[0.82] contrast-[1.05] transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover brightness-[0.82] contrast-[1.05] transition-transform duration-200 motion-safe:group-hover:scale-[1.03]"
                     loading="lazy"
                     referrerPolicy="no-referrer"
                   />
@@ -536,7 +550,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                     </span>
                   </div>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white/90 backdrop-blur-sm transition-transform duration-300 group-hover:scale-105">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white/90 backdrop-blur-sm transition-transform duration-200 motion-safe:group-hover:scale-105">
                       <PlayCircle className="h-7 w-7" />
                     </div>
                   </div>
@@ -547,7 +561,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                     {video.title}
                   </h3>
                   <div className="flex items-center justify-between border-t border-white/[0.05] pt-3">
-                    <span className="tag08-meta text-xs uppercase tracking-widest text-zinc-500">
+                    <span className="tag08-meta text-xs uppercase tracking-widest text-zinc-300">
                       Publicado no canal
                     </span>
                     <span className="inline-flex items-center gap-1 tag08-meta text-xs font-bold uppercase tracking-widest text-brand-secondary">
@@ -589,11 +603,13 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               
               {/* Formatos Buttons Selector */}
               <div className="space-y-3 sm:space-y-4">
-                <span className="tag08-meta text-xs sm:text-xs text-zinc-500 uppercase tracking-widest font-bold block">1. ESCOLHA O FORMATO QUE FAZ MAIS SENTIDO</span>
+                <span className="tag08-meta text-xs sm:text-xs text-zinc-300 uppercase tracking-widest font-bold block">1. ESCOLHA O FORMATO QUE FAZ MAIS SENTIDO</span>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
                   {FORMATOS.map((f) => (
                     <button
                       key={f.id}
+                      type="button"
+                      aria-pressed={selectedFormat === f.id}
                       onClick={() => {
                         trackSimulator("input_changed");
                         setSelectedFormat(f.id);
@@ -602,14 +618,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                         else if (f.id === "evento") setSelectedTools(["evento", "autoridade", "redes"]);
                         else setSelectedTools(["redes", "bastidores", "autoridade", "apoio"]);
                       }}
-                      className={`p-3.5 sm:p-4 rounded-xl text-left border relative transition-all cursor-pointer focus:outline-none min-h-[88px] sm:min-h-0 ${
+                      className={`p-3.5 sm:p-4 rounded-xl text-left border relative transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary min-h-[88px] ${
                         selectedFormat === f.id
                           ? "bg-brand/5 border-brand text-white shadow-xl shadow-brand/5"
                           : "bg-white/[0.01] border-white/5 text-zinc-400 hover:border-white/10"
                       }`}
                     >
                       <span className="font-sans text-xs sm:text-xs text-brand block mb-1 font-black uppercase tracking-wider">{f.tag}</span>
-                      <h4 className="text-white text-xs sm:text-sm font-semibold leading-tight">{f.name}</h4>
+                      <h3 className="text-white text-xs sm:text-sm font-semibold leading-tight">{f.name}</h3>
                     </button>
                   ))}
                 </div>
@@ -617,31 +633,33 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
               {/* Deliverables Grid selector */}
               <div className="space-y-3 sm:space-y-4">
-                <span className="tag08-meta text-xs sm:text-xs text-zinc-500 uppercase tracking-widest font-bold block">2. MARQUE O QUE PODE SER PRODUZIDO</span>
+                <span className="tag08-meta text-xs sm:text-xs text-zinc-300 uppercase tracking-widest font-bold block">2. MARQUE O QUE PODE SER PRODUZIDO</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3">
                   {DELIVERABLES.map((del) => {
                     const isSelected = selectedTools.includes(del.id);
                     return (
                       <button
                         key={del.id}
+                        type="button"
+                        aria-pressed={isSelected}
                         onClick={() => handleToggleTool(del.id)}
-                        className={`p-3.5 sm:p-4 rounded-xl border text-left transition-all relative flex flex-col justify-between min-h-[10rem] sm:h-36 cursor-pointer focus:outline-none group ${
+                        className={`p-3.5 sm:p-4 rounded-xl border text-left transition-colors duration-200 relative flex flex-col justify-between min-h-[10rem] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary group ${
                           isSelected
                             ? "bg-brand text-black border-brand/40 shadow-lg shadow-brand/5 font-medium"
                             : "bg-white/[0.01] border-white/5 text-zinc-400 hover:border-white/10"
                         }`}
                       >
                         <div className="space-y-1 text-left">
-                          <h5 className={`text-xs sm:text-xs uppercase font-semibold font-display tracking-tight leading-snug group-hover:text-white transition-colors ${isSelected ? "text-black group-hover:text-black" : "text-white"}`}>
+                          <h3 className={`text-xs sm:text-xs uppercase font-semibold font-display tracking-tight leading-snug group-hover:text-white transition-colors ${isSelected ? "text-black group-hover:text-black" : "text-white"}`}>
                             {del.name}
-                          </h5>
-                          <p className={`text-xs sm:text-xs leading-relaxed line-clamp-2 sm:line-clamp-3 font-medium transition-colors ${isSelected ? "text-black/75" : "text-zinc-500 group-hover:text-zinc-400"}`}>
+                          </h3>
+                          <p className={`text-xs sm:text-xs leading-relaxed font-medium transition-colors ${isSelected ? "text-black/75" : "text-zinc-300 group-hover:text-zinc-400"}`}>
                             {del.desc}
                           </p>
                         </div>
                         
                         <div className="flex justify-between items-center w-full pt-2 border-t border-black/5">
-                          <span className={`font-sans text-xs font-bold uppercase ${isSelected ? "text-black/60" : "text-zinc-400"}`}>{del.category} material</span>
+                          <span className={`font-sans text-xs font-bold uppercase ${isSelected ? "text-black/80" : "text-zinc-400"}`}>{del.category} material</span>
                           <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${isSelected ? "bg-black text-brand border-black" : "border-zinc-700 text-zinc-500"}`}>
                             {isSelected ? <Check className="w-2.5 h-2.5 stroke-[3]" /> : <Plus className="w-2.5 h-2.5" />}
                           </div>
@@ -664,23 +682,23 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                       <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
                     <span className="tag08-meta text-xs sm:text-xs text-brand uppercase tracking-wider font-extrabold">RESUMO DO FORMATO AUDIOVISUAL</span>
                     </div>
-                  <span className="font-sans text-xs sm:text-xs text-zinc-500">TAG08_AUDIOVISUAL</span>
+                  <span className="font-sans text-xs sm:text-xs text-zinc-300">TAG08_AUDIOVISUAL</span>
                   </div>
 
                 {/* Setup selected details */}
                 <div className="space-y-3 sm:space-y-4">
                   <div className="space-y-1.5">
-                    <span className="font-sans text-xs sm:text-xs text-zinc-500 uppercase font-black block">FORMATO AVALIADO:</span>
-                    <h4 className="font-display font-medium text-base sm:text-lg text-brand-secondary tracking-tight leading-none">
+                    <span className="font-sans text-xs sm:text-xs text-zinc-300 uppercase font-black block">FORMATO AVALIADO:</span>
+                    <h3 className="font-display font-medium text-base sm:text-lg text-brand-secondary tracking-tight leading-none">
                       {currentFormatDetails.name}
-                    </h4>
+                    </h3>
                     <p className="text-zinc-400 text-xs sm:text-xs leading-normal">
                       {currentFormatDetails.desc}
                     </p>
                   </div>
 
                   <div className="pt-3 sm:pt-4 border-t border-white/[0.04] space-y-2.5 text-left">
-                    <span className="font-sans text-xs sm:text-xs text-zinc-500 uppercase font-black block">O QUE ESSE FORMATO AJUDA A ORGANIZAR:</span>
+                    <span className="font-sans text-xs sm:text-xs text-zinc-300 uppercase font-black block">O QUE ESSE FORMATO AJUDA A ORGANIZAR:</span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {currentFormatDetails.features.map((feat, fidx) => (
                         <div key={fidx} className="flex gap-2 items-center">
@@ -693,7 +711,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
                   {/* Chosen tools list output */}
                     <div className="pt-3 sm:pt-4 border-t border-white/[0.04] space-y-2.5">
-                      <span className="font-sans text-xs sm:text-xs text-zinc-500 uppercase font-black block">MATERIAIS RELACIONADOS ({selectedTools.length}):</span>
+                      <span className="font-sans text-xs sm:text-xs text-zinc-300 uppercase font-black block">MATERIAIS RELACIONADOS ({selectedTools.length}):</span>
                       {hasSelectedTools ? (
                         <div className="flex flex-wrap gap-2 text-left max-h-40 overflow-y-auto pr-1">
                           {selectedTools.map((tId) => {
@@ -708,7 +726,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                         </div>
                       ) : (
                         <div className="rounded-2xl border border-dashed border-white/8 bg-white/[0.02] px-4 py-4 sm:py-5 space-y-2">
-                          <h5 className="text-sm sm:text-sm font-semibold text-white">Nenhum material selecionado ainda.</h5>
+                          <h3 className="text-sm sm:text-sm font-semibold text-white">Nenhum material selecionado ainda.</h3>
                           <p className="text-xs leading-relaxed text-zinc-400 max-w-md">
                             Marque ao menos um item para visualizar possibilidades de desdobramento para esse formato audiovisual.
                           </p>
@@ -719,17 +737,19 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
                 {/* Core action trigger with prefilled parameters */}
                 <div className="pt-3 sm:pt-4 space-y-2.5 sm:space-y-3">
-                  <a
+                  <TrackedOutboundLink
+                    label="Enviar briefing audiovisual por WhatsApp"
+                    surface="audiovisual-planner-result"
                     href={getWhatsAppLink()}
                     onClick={() => trackSimulator("cta_clicked")}
                     target="_blank"
                     rel="noreferrer"
-                    className="block w-full bg-brand-secondary hover:bg-brand hover:shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.22)] text-black text-xs sm:text-xs font-sans font-black uppercase tracking-widest py-3.5 sm:py-4 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.15)]"
+                    className="min-h-11 block w-full bg-brand-secondary hover:bg-brand hover:shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.22)] text-black text-xs sm:text-xs font-sans font-black uppercase tracking-widest py-3.5 sm:py-4 rounded-xl text-center transition-[background-color,box-shadow] duration-200 active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.15)]"
                   >
                     <MessageSquare className="w-4 h-4 text-black" />
                     <span>CONVERSAR SOBRE MEU FORMATO AUDIOVISUAL</span>
-                  </a>
-                  <span className="block text-center font-sans text-xs sm:text-xs text-zinc-500 uppercase leading-none select-none">
+                  </TrackedOutboundLink>
+                  <span className="block text-center font-sans text-xs sm:text-xs text-zinc-300 uppercase leading-none select-none">
                     USE ESTE RESUMO COMO PONTO DE PARTIDA PARA A CONVERSA
                   </span>
                 </div>
@@ -807,7 +827,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             ].map((step, idx) => (
               <div 
                 key={idx}
-                className="bg-charcoal-900 border border-white/[0.05] rounded-2xl p-6 sm:p-9 relative z-10 group hover:bg-white/[0.015] transition-all duration-300 flex flex-col justify-between min-h-[440px]"
+                className="bg-charcoal-900 border border-white/[0.05] rounded-2xl p-6 sm:p-9 relative z-10 group hover:bg-white/[0.015] transition-colors duration-200 flex flex-col justify-between"
               >
                 <div className="space-y-5 text-left">
                   <div className="flex justify-between items-center">
@@ -835,7 +855,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   </ul>
                 </div>
 
-                <div className="pt-4 border-t border-white/[0.04] text-xs tag08-meta text-zinc-500 uppercase tracking-widest flex justify-between">
+                <div className="pt-4 border-t border-white/[0.04] text-xs tag08-meta text-zinc-300 uppercase tracking-widest flex justify-between">
                   <span>PROCESSO ATIVO</span>
                   <span className="text-brand font-bold select-none">TAG08_PROCESS_0{idx + 1}</span>
                 </div>
@@ -886,14 +906,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                         {iIdx + 1}
                       </div>
                       <div className="space-y-0.5">
-                        <h4 className="text-white text-xs sm:text-sm font-semibold">{inc.title}</h4>
+                        <h3 className="text-white text-xs sm:text-sm font-semibold">{inc.title}</h3>
                         <p className="text-zinc-400 text-xs leading-normal">{inc.desc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="pt-6 border-t border-white/[0.04] text-xs tag08-meta text-zinc-500 uppercase tracking-widest">
+              <div className="pt-6 border-t border-white/[0.04] text-xs tag08-meta text-zinc-300 uppercase tracking-widest">
                 ESCOPOS DEFINIDOS CONFORME USO REAL
               </div>
             </div>
@@ -901,7 +921,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             {/* COMPLEMENTOS POSSÍVEIS */}
             <div className="bg-white/[0.01] border border-white/[0.04] rounded-2.5xl p-6 sm:p-9 space-y-6 flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-2 text-zinc-500 tag08-meta text-xs uppercase tracking-widest font-bold pb-4 border-b border-white/[0.04]">
+                <div className="flex items-center gap-2 text-zinc-300 tag08-meta text-xs uppercase tracking-widest font-bold pb-4 border-b border-white/[0.04]">
                   <span className="w-1.5 h-1.5 rounded-full bg-zinc-650" />
                   <span>COMPLEMENTOS POSSÍVEIS // DEFINIDOS CONFORME ESCOPO</span>
                 </div>
@@ -919,14 +939,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                         +{oIdx + 1}
                       </div>
                       <div className="space-y-0.5">
-                        <h4 className="text-zinc-300 text-xs sm:text-sm font-semibold">{opt.title}</h4>
-                        <p className="text-zinc-500 text-xs leading-normal">{opt.desc}</p>
+                        <h3 className="text-zinc-300 text-xs sm:text-sm font-semibold">{opt.title}</h3>
+                        <p className="text-zinc-300 text-xs leading-normal">{opt.desc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="pt-6 border-t border-white/[0.04] text-xs tag08-meta text-zinc-500 uppercase tracking-widest">
+              <div className="pt-6 border-t border-white/[0.04] text-xs tag08-meta text-zinc-300 uppercase tracking-widest">
                 ITENS DEFINIDOS CONFORME ESCOPO
               </div>
             </div>
@@ -982,7 +1002,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             ].map((syn, idx) => (
               <div 
                 key={idx}
-                className="bg-charcoal-900 border border-white/[0.05] rounded-2xl p-6.5 sm:p-7 hover:border-brand/40 transition-colors duration-300 flex flex-col justify-between h-72 group"
+                className="bg-charcoal-900 border border-white/[0.05] rounded-2xl p-6.5 sm:p-7 hover:border-brand/40 transition-colors duration-200 flex flex-col justify-between min-h-[18rem] group"
               >
                 <div className="space-y-4">
                   <span className="tag08-meta text-xs text-brand-secondary font-black uppercase tracking-widest block">SINERGIA {String(idx + 1).padStart(2, '0')}</span>
@@ -996,7 +1016,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
                 <button
                   onClick={() => handleLinkClick(syn.page)}
-                  className="group flex items-center justify-between text-xs font-sans font-bold text-zinc-500 hover:text-brand cursor-pointer select-none pt-3 border-t border-white/5 w-full focus:outline-none"
+                  className="group min-h-11 flex items-center justify-between text-xs font-sans font-bold text-zinc-300 hover:text-brand cursor-pointer select-none pt-3 border-t border-white/5 w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary transition-colors duration-200"
                 >
                   <span className="uppercase text-xs tracking-widest">{syn.cta}</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -1021,7 +1041,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           <div className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.08)_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-15 pointer-events-none" />
 
           {/* Left Block: Image frame */}
-          <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[380px] sm:min-h-[460px] lg:min-h-[500px]">
+          <div className="lg:col-span-5 relative flex justify-center items-center h-full min-h-[300px] sm:min-h-[380px] lg:min-h-[440px]">
             <div className="absolute inset-0 bg-black/15 rounded-[24px] overflow-hidden" />
             <Image
               fill
@@ -1029,7 +1049,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               sizes="(max-width: 1024px) 100vw, 42vw"
               src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3CradialGradient id='g' cx='30%25' cy='30%25' r='80%25'%3E%3Cstop offset='0%25' stop-color='%23f5f5f5' stop-opacity='.18'/%3E%3Cstop offset='60%25' stop-color='%23000000' stop-opacity='.25'/%3E%3Cstop offset='100%25' stop-color='%23000000' stop-opacity='.85'/%3E%3C/radialGradient%3E%3ClinearGradient id='l' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23d4d4d8' stop-opacity='.12'/%3E%3Cstop offset='100%25' stop-color='%233f3f46' stop-opacity='.45'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='%230b0b0d'/%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Cg opacity='.65'%3E%3Ccircle cx='180' cy='120' r='96' fill='url(%23l)'/%3E%3Ccircle cx='610' cy='360' r='160' fill='%23facc15' fill-opacity='.08'/%3E%3Cpath d='M80 390C180 300 290 320 380 250s170-90 320-30' fill='none' stroke='%23ffffff' stroke-opacity='.15' stroke-width='2'/%3E%3Cpath d='M110 150h180M510 120h180M120 420h120' stroke='%23ffffff' stroke-opacity='.08' stroke-width='3'/%3E%3C/g%3E%3C/svg%3E" 
               alt="TAG08 Equipe Técnica Apoio Audiovisual"
-              className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[10%] hover:scale-105 duration-500 transition-all"
+              className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[10%] motion-safe:hover:scale-[1.02] transition-transform duration-200"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
@@ -1082,7 +1102,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             <div className="bg-charcoal-900/98 backdrop-blur-3xl border border-white/[0.08] p-6 sm:p-7 rounded-[28px] shadow-[0_25px_60px_rgba(0,0,0,0.5)] space-y-6 max-w-md relative overflow-hidden text-left font-sans">
               <div className="absolute top-0 right-0 w-24 h-24 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
               <div className="flex gap-4 items-start select-none">
-                <div className="w-10 h-10 rounded-full bg-brand flex items-center justify-center text-black shrink-0 shadow-lg shadow-brand/10 hover:scale-105 transition-all">
+                <div className="w-10 h-10 rounded-full bg-brand flex items-center justify-center text-black shrink-0 shadow-lg shadow-brand/10 motion-safe:hover:scale-105 transition-transform duration-200">
                   <ArrowUpRight className="w-5 h-5 rotate-45 stroke-[2.5] text-black" />
                 </div>
                 <div className="space-y-0.5">
@@ -1097,19 +1117,21 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
               {/* Contacts info details */}
               <div className="space-y-3 font-sans">
-                <a 
+                <TrackedOutboundLink
+                  label="Conversar sobre meu audiovisual"
+                  surface="audiovisual-final-cta"
                   href={buildBrazilWhatsAppUrl("Olá, quero entender qual formato audiovisual faz mais sentido para o momento da minha marca.")}
                   target="_blank"
                   rel="noreferrer"
-                  className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner cursor-pointer"
+                  className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-colors duration-200 group shadow-inner cursor-pointer"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-full bg-brand/10 flex items-center justify-center text-brand shrink-0 group-hover:bg-brand group-hover:text-black transition-all">
+                      <div className="w-7 h-7 rounded-full bg-brand/10 flex items-center justify-center text-brand shrink-0 group-hover:bg-brand group-hover:text-black transition-colors duration-200">
                         <span className="text-xs font-sans font-black tracking-tight text-brand group-hover:text-black">BR</span>
                       </div>
                       <div className="flex flex-col text-left">
-                        <span className="tag08-meta text-xs text-zinc-500 uppercase font-black tracking-wider leading-none">
+                        <span className="tag08-meta text-xs text-zinc-300 uppercase font-black tracking-wider leading-none">
                           CONVERSAR SOBRE MEU AUDIOVISUAL
                         </span>
                         <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
@@ -1117,11 +1139,11 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                         </span>
                       </div>
                     </div>
-                    <span className="text-xs text-brand tag08-meta font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-all">
+                    <span className="text-xs text-brand tag08-meta font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-colors duration-200">
                       INICIAR CONVERSA
                     </span>
                   </div>
-                </a>
+                </TrackedOutboundLink>
               </div>
 
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 text-xs font-sans select-none">
@@ -1169,8 +1191,11 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 {faqCategories.map((item) => (
                   <button
                     key={item.id}
+                    type="button"
+                    aria-expanded={activeFaq === item.id}
+                    aria-controls={`web-audiovisual-faq-panel-${item.id}`}
                     onClick={() => setActiveFaq(item.id)}
-                    className={`w-full flex items-center justify-between p-3.5 sm:p-4 rounded-xl border transition-all text-left group cursor-pointer ${
+                    className={`w-full min-h-11 flex items-center justify-between p-3.5 sm:p-4 rounded-xl border transition-colors duration-200 text-left group cursor-pointer active:scale-[0.99] ${
                       activeFaq === item.id
                         ? "bg-brand text-black border-brand shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.12)]"
                         : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
@@ -1182,7 +1207,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                       </span>
                       {item.title}
                     </span>
-                    <ArrowRight className={`w-4 h-4 shrink-0 transition-transform group-hover:translate-x-1 ${
+                    <ArrowRight aria-hidden="true" className={`w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1 ${
                       activeFaq === item.id ? "text-black rotate-[-45deg] stroke-[2.5]" : "text-zinc-500"
                     }`} />
                   </button>
@@ -1191,13 +1216,13 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             </div>
 
             {/* Central Side: Responsive image + Answer container */}
-            <div className="lg:col-span-4 relative flex flex-col justify-end p-4 sm:p-6 min-h-[300px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
+            <div className="lg:col-span-4 relative flex flex-col justify-end p-4 sm:p-6 min-h-[300px] sm:min-h-[380px] rounded-3xl overflow-hidden border border-white/[0.04] bg-charcoal-900">
               <ResilientImage
                 fallbackLabel="Produção Audiovisual TAG08"
                 sizes="(max-width: 1024px) 100vw, 34vw"
                 src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800"
                 alt="TAG08 Produção Audiovisual"
-                className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
+                className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-opacity duration-200 pointer-events-none"
               />
               <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
                 <svg viewBox="0 0 100 100" className="w-full h-full text-brand fill-none stroke-current" strokeWidth="0.75" strokeLinecap="round">
@@ -1205,18 +1230,18 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
                 </svg>
               </div>
-              <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10 pointer-events-none tag08-meta text-xs sm:text-xs text-white/20 uppercase tracking-widest leading-none">
+              <div aria-hidden="true" className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10 pointer-events-none tag08-meta text-xs sm:text-xs text-white/20 uppercase tracking-widest leading-none">
                 SYS // BROADCAST_FAQ
               </div>
 
-              <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-4 sm:p-5 rounded-2xl space-y-2.5 sm:space-y-3 shadow-2xl text-left font-sans">
+              <div id={`web-audiovisual-faq-panel-${activeFaq}`} role="region" aria-labelledby={`web-audiovisual-faq-heading-${activeFaq}`} className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-4 sm:p-5 rounded-2xl space-y-2.5 sm:space-y-3 shadow-2xl text-left font-sans">
                 <span className="tag08-meta text-xs sm:text-xs text-brand uppercase tracking-widest font-black block">
                   {faqCategories[activeFaq].title}
                 </span>
                 
-                <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
+                <h3 id={`web-audiovisual-faq-heading-${activeFaq}`} className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
                   {faqQuestions[activeFaq]}
-                </h4>
+                </h3>
                 
                 <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {faqAnswers[activeFaq]}
@@ -1226,40 +1251,43 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
             {/* Right Side: Proportional side cards */}
             <div className="lg:col-span-3 flex flex-col justify-between gap-3 sm:gap-4">
-              <div className="bg-[#121214] border border-white/5 rounded-2xl p-4 sm:p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-3 sm:space-y-4 flex-1">
+              <div className="bg-charcoal-900 border border-white/5 rounded-2xl p-4 sm:p-5 hover:border-brand/20 transition-colors duration-200 text-left flex flex-col justify-between space-y-3 sm:space-y-4 flex-1">
                 <div className="space-y-1.5 sm:space-y-2">
-                  <span className="tag08-meta text-xs sm:text-xs text-zinc-500 uppercase tracking-widest block font-bold">SERVIÇOS &amp; FORMATOS</span>
-                  <h4 className="text-white font-semibold text-sm leading-snug">Planejamento e clareza</h4>
+                  <span className="tag08-meta text-xs sm:text-xs text-zinc-300 uppercase tracking-widest block font-bold">SERVIÇOS &amp; FORMATOS</span>
+                  <h3 className="text-white font-semibold text-sm leading-snug">Planejamento e clareza</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     O processo começa entendendo o contexto da marca, a função do material e o uso esperado depois da gravação.
                   </p>
                 </div>
                 <button
                   onClick={() => handleLinkClick("/servicos")}
-                  className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
+                  type="button"
+                  className="group min-h-11 flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5 transition-colors duration-200"
                 >
                   <span>VER SERVIÇOS</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
 
-              <div className="bg-brand text-black rounded-2xl p-4 sm:p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-3 sm:space-y-4 flex-1">
+              <div className="bg-brand text-black rounded-2xl p-4 sm:p-5 motion-safe:hover:scale-[1.01] transition-transform duration-200 text-left flex flex-col justify-between space-y-3 sm:space-y-4 flex-1">
                 <div className="space-y-1.5 sm:space-y-2">
-                  <span className="tag08-meta text-xs sm:text-xs text-black/60 uppercase tracking-widest block font-extrabold">CONVERSA CONSULTIVA</span>
-                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">Quer conversar sobre seu audiovisual?</h4>
+                  <span className="tag08-meta text-xs sm:text-xs text-black/80 uppercase tracking-widest block font-extrabold">CONVERSA CONSULTIVA</span>
+                  <h3 className="text-black font-black text-sm leading-tight tracking-tight">Quer conversar sobre seu audiovisual?</h3>
                   <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
                     Sem pacote pronto. Primeiro entendemos contexto, objetivo e uso do material.
                   </p>
                 </div>
-                <a
+                <TrackedOutboundLink
+                  label="Conversar sobre meu audiovisual"
+                  surface="audiovisual-mobile-cta"
                   href={buildBrazilWhatsAppUrl("Olá, quero entender qual formato audiovisual faz mais sentido para o momento da minha marca.")}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between text-xs font-sans font-bold text-black border-t border-black/10 pt-2 cursor-pointer select-none"
+                  className="group min-h-11 flex items-center justify-between text-xs font-sans font-bold text-black border-t border-black/10 pt-2 cursor-pointer select-none transition-colors duration-200"
                 >
                   <span>CONVERSAR SOBRE MEU AUDIOVISUAL</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                </a>
+                </TrackedOutboundLink>
               </div>
             </div>
           </div>

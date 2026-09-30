@@ -10,6 +10,28 @@ const DELIVERY_ID_FILTER = process.env.INTEGRATION_DELIVERY_ID?.trim() || null;
 const MOCK_INTEGRATION_MODE = process.env.INTEGRATION_MOCK_MODE === "true";
 const MOCK_INTEGRATION_FAILURE = process.env.INTEGRATION_MOCK_FAILURE?.trim() || null;
 
+const validateIntegrationConfiguration = () => {
+  if (process.env.INTEGRATIONS_ENABLED !== "true") return;
+
+  const sheetsEnabled = process.env.GOOGLE_SHEETS_ENABLED === "true";
+  const clickUpEnabled = process.env.CLICKUP_ENABLED === "true";
+  if (!sheetsEnabled && !clickUpEnabled) throw new Error("integration_target_not_configured");
+
+  if (sheetsEnabled) {
+    if (!process.env.GOOGLE_SHEETS_SPREADSHEET_ID) throw new Error("google_sheets_not_configured");
+    const serviceAccount = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON || "{}");
+    if (!serviceAccount.client_email || !serviceAccount.private_key) throw new Error("google_service_account_not_configured");
+  }
+
+  if (clickUpEnabled) {
+    if (!process.env.CLICKUP_API_TOKEN || !process.env.CLICKUP_TALENT_LIST_ID || !process.env.CLICKUP_ONBOARDING_LIST_ID) {
+      throw new Error("clickup_not_configured");
+    }
+  }
+};
+
+validateIntegrationConfiguration();
+
 if (!Number.isSafeInteger(PROCESSING_LEASE_SECONDS) || PROCESSING_LEASE_SECONDS < 60) {
   throw new Error("INTEGRATION_PROCESSING_LEASE_SECONDS must be an integer of at least 60 seconds.");
 }

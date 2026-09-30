@@ -28,7 +28,7 @@ export default function ServiceInsightsBridge({
       window.location.assign(bridge.hubPath);
     }
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   };
 
   return (
@@ -50,7 +50,7 @@ export default function ServiceInsightsBridge({
 
           <button
             onClick={goToHub}
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand text-black px-4 py-3 tag08-action transition-colors duration-200 hover:bg-brand-dark self-start"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 tag08-action text-black transition-[background-color,color] duration-200 hover:bg-brand-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 self-start"
           >
             {bridge.hubCtaLabel}
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -71,7 +71,7 @@ export default function ServiceInsightsBridge({
                     <span className={`tag08-kicker ${isPublished ? "text-brand" : "text-zinc-400"}`}>
                       {isPublished ? "Publicado" : "Tema planejado"}
                     </span>
-                    <span className="tag08-meta text-zinc-500">
+                     <span className="tag08-meta text-zinc-300">
                       {bridge.serviceTitle}
                     </span>
                   </div>
@@ -86,7 +86,7 @@ export default function ServiceInsightsBridge({
                 </div>
 
                 <div className="space-y-2.5">
-                  <p className="tag08-meta text-zinc-500">
+                   <p className="tag08-meta text-zinc-300">
                     {isPublished
                       ? item.note ?? item.post.serviceNote
                       : item.note ?? "Tema em preparação"}
@@ -96,13 +96,13 @@ export default function ServiceInsightsBridge({
                     <button
                       type="button"
                       onClick={goToHub}
-                      className="inline-flex items-center gap-2 text-brand tag08-action hover:text-brand-dark transition-colors"
+                      className="inline-flex min-h-11 items-center gap-2 text-brand tag08-action transition-colors duration-200 hover:text-brand-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                     >
                       Ver no Hub
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </button>
                   ) : (
-                    <span className="tag08-meta text-zinc-500">
+                       <span className="tag08-meta text-zinc-300">
                       Sem link ainda
                     </span>
                   )}

@@ -403,7 +403,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
 
   const handleLinkClick = (page: string) => {
     onNavigate(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
   };
 
   const handleInternalFooterLink = (event: MouseEvent<HTMLAnchorElement>, page: string) => {
@@ -493,7 +493,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("Instagram", "https://www.instagram.com/tag08.com.br/", "footer-social")}
-                  className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label="Siga-nos no Instagram"
                 >
                   <Instagram className="w-4 h-4" />
@@ -503,7 +503,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/company/tag08-com-br/", "footer-social")}
-                  className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label="Siga-nos no LinkedIn"
                 >
                   <Linkedin className="w-4 h-4" />
@@ -513,7 +513,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("YouTube", TAG08_OFFICIAL_YOUTUBE_URL, "footer-social")}
-                  className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label="Inscreva-se no YouTube"
                 >
                   <Youtube className="w-4 h-4" />
@@ -523,7 +523,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("Facebook", "https://www.facebook.com/tag08.com.br", "footer-social")}
-                  className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label="Siga-nos no Facebook"
                 >
                   <Facebook className="w-4 h-4" />
@@ -533,7 +533,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("X", "https://x.com/TAG08_com_br", "footer-social")}
-                  className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label="Siga-nos no Twitter"
                 >
                   <Twitter className="w-4 h-4" />
@@ -543,7 +543,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("Pinterest", TAG08_OFFICIAL_PINTEREST_URL, "footer-social")}
-                  className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-all duration-300 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 pointer-events-auto"
+              className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 pointer-events-auto"
                   aria-label="Siga-nos no Pinterest"
                 >
                   <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
@@ -800,7 +800,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                             aria-label={cookiePreferences.performance ? "Desativar cookies de desempenho" : "Ativar cookies de desempenho"}
                             aria-pressed={cookiePreferences.performance}
                             onClick={() => setCookiePreferences(prev => ({ ...prev, performance: !prev.performance }))}
-                            className={`px-3 py-1 rounded text-xs font-sans transition-all font-black ${
+                          className={`min-h-11 px-3 py-1 rounded text-xs font-sans transition-colors duration-200 font-black focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 ${
                               cookiePreferences.performance 
                                 ? "bg-brand-secondary text-black hover:bg-white" 
                                 : "bg-white/5 text-zinc-400 hover:bg-white/10"
@@ -820,7 +820,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                             aria-label={cookiePreferences.marketing ? "Desativar cookies de marketing" : "Ativar cookies de marketing"}
                             aria-pressed={cookiePreferences.marketing}
                             onClick={() => setCookiePreferences(prev => ({ ...prev, marketing: !prev.marketing }))}
-                            className={`px-3 py-1 rounded text-xs font-sans transition-all font-black ${
+                          className={`min-h-11 px-3 py-1 rounded text-xs font-sans transition-colors duration-200 font-black focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 ${
                               cookiePreferences.marketing 
                                 ? "bg-brand-secondary text-black hover:bg-white" 
                                 : "bg-white/5 text-zinc-400 hover:bg-white/10"
@@ -833,7 +833,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                       <div className="pt-2 text-right">
                         <button type="button" aria-label="Salvar preferências de privacidade"
                           onClick={handleSaveCookiePreferences}
-                          className="text-xs font-sans font-bold text-black bg-brand-secondary hover:bg-white px-3 py-1.5 rounded transition-all shrink-0 cursor-pointer"
+                  className="min-h-11 px-3 text-xs font-sans font-bold text-black bg-brand-secondary hover:bg-white rounded transition-colors duration-200 shrink-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                         >
                           Salvar Preferências de Privacidade
                         </button>
@@ -856,7 +856,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                               setShowLgpdForm(true);
                             }
                           }}
-                          className="text-xs font-sans text-brand-secondary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 cursor-pointer"
+                          className="min-h-11 px-2 text-xs font-sans text-brand-secondary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 cursor-pointer"
                         >
                           {showLgpdForm ? "[ Recolher Formulário ]" : "[ Abrir Pedido de Direitos ]"}
                         </button>
@@ -886,7 +886,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                                   aria-label="Fechar mensagem de sucesso"
                                   type="button"
                                   onClick={handleResetLgpdForm}
-                                  className="text-xs font-sans text-zinc-400 hover:text-white underline cursor-pointer"
+                          className="min-h-11 text-xs font-sans text-zinc-300 hover:text-white underline cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60"
                                 >
                                   Fazer nova solicitação
                                 </button>
@@ -953,7 +953,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                               <button
                                 type="submit"
                                 disabled={lgpdRequestLoading}
-                                  className="w-full bg-brand-secondary text-black text-xs font-sans font-black uppercase tracking-wider py-2 rounded shadow hover:bg-white transition-all disabled:cursor-not-allowed disabled:opacity-50"
+                                  className="w-full min-h-11 bg-brand-secondary text-black text-xs font-sans font-black uppercase tracking-wider py-2 rounded shadow hover:bg-white transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60"
                               >
                                 {lgpdRequestLoading ? "Processando e gerando protocolo..." : "Enviar Solicitação Legal TAG08"}
                               </button>
@@ -1005,7 +1005,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   type="button"
                   aria-label="Fechar modal de termos e diretrizes"
                   onClick={() => setActiveModal(null)}
-                  className="bg-brand text-black font-semibold px-5 py-2 rounded text-xs hover:bg-brand-dark transition-all duration-200"
+                  className="min-h-11 bg-brand text-black font-semibold px-5 py-2 rounded text-xs hover:bg-brand-dark transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60"
                 >
                   Entendi e concordo
                 </button>
@@ -1026,7 +1026,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: "easeOut" }}
-            className="fixed bottom-3 left-3 right-3 z-40 flex max-h-[30dvh] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-charcoal-950/95 p-3.5 text-left shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-lg sm:bottom-4 sm:left-4 sm:right-4 sm:max-h-none sm:p-5 md:left-auto md:right-8 md:max-w-lg"
+            className="fixed bottom-3 left-3 right-3 z-40 flex max-h-[44dvh] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-charcoal-950/95 p-3.5 text-left shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-lg sm:bottom-4 sm:left-4 sm:right-4 sm:max-h-none sm:p-5 md:left-auto md:right-8 md:max-w-lg"
           >
             <div className="min-h-0 space-y-3 overflow-y-auto pr-1 sm:space-y-4">
               <div className="flex items-start gap-3">
@@ -1071,7 +1071,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                       aria-label={cookiePreferences.performance ? "Desativar cookies de desempenho" : "Ativar cookies de desempenho"}
                       aria-pressed={cookiePreferences.performance}
                       onClick={() => setCookiePreferences(prev => ({ ...prev, performance: !prev.performance }))}
-                      className={`text-xs font-sans px-2 py-0.5 rounded font-black ${
+                      className={`min-h-11 px-2 py-0.5 rounded font-black focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 ${
                         cookiePreferences.performance ? "bg-brand-secondary text-black" : "bg-white/5 text-zinc-400"
                       }`}
                     >
@@ -1091,7 +1091,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                       aria-label={cookiePreferences.marketing ? "Desativar cookies de marketing" : "Ativar cookies de marketing"}
                       aria-pressed={cookiePreferences.marketing}
                       onClick={() => setCookiePreferences(prev => ({ ...prev, marketing: !prev.marketing }))}
-                      className={`text-xs font-sans px-2 py-0.5 rounded font-black ${
+                      className={`min-h-11 px-2 py-0.5 rounded font-black focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 ${
                         cookiePreferences.marketing ? "bg-brand-secondary text-black" : "bg-white/5 text-zinc-400"
                       }`}
                     >

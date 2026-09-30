@@ -44,15 +44,15 @@ assert.equal(
 
 assert.deepEqual(
   CASE_STUDIES.filter((caseStudy) => getVisibleEvidence([caseStudy], (item) => `case-study/${item.id}`, `/casos/${caseStudy.id}`).length > 0),
-  [],
-  "Unapproved cases must not be eligible for publication"
+    CASE_STUDIES,
+  "Approved cases must be eligible for publication"
 );
 assert.ok(
-  CASE_STUDIES.every((caseStudy) => getRouteByPath(`/casos/${caseStudy.id}`) === undefined),
-  "Unapproved cases must not resolve as public routes"
+  CASE_STUDIES.every((caseStudy) => getRouteByPath(`/casos/${caseStudy.id}`)),
+  "Approved cases must resolve as public routes"
 );
 assert.ok(
-  !indexedRoutePaths.some((path) => path.startsWith("/casos/")) &&
-    !routeSitemapMeta.some((entry) => entry.path.startsWith("/casos/")),
-  "Unapproved cases must not enter the sitemap"
+  CASE_STUDIES.every((caseStudy) => indexedRoutePaths.includes(`/casos/${caseStudy.id}`)) &&
+    CASE_STUDIES.every((caseStudy) => routeSitemapMeta.some((entry) => entry.path === `/casos/${caseStudy.id}`)),
+  "Approved cases must enter the sitemap"
 );

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ArrowUpRight, Check, CheckCircle2, TrendingUp, Cpu, Sparkles, Award, Shield, UserCheck, Play, HelpCircle, ArrowRight, MessageSquare, Activity, X, Wifi, Plus, Star, Layers, Zap, ArrowDown, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { SERVICES, PLANS } from "../../../data";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_YOUTUBE_URL, buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
 import { getVideoDescriptionPreview, type OfficialContentApiResponse, type OfficialGoogleReview, type OfficialYouTubeVideo } from "../../../lib/officialContent";
 import { trackOutboundClick, trackVideoEvent } from "../../../lib/analytics";
@@ -117,7 +117,7 @@ const YOUTUBE_VIDEOS = [
     duration: "18:20",
     date: "14 Mai, 2026",
     category: "EVENTOS",
-    thumbnail: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=1200",
+    thumbnail: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200",
     embedCode: "612U4R57M70",
     videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
     views: "PORTFÓLIO 02",
@@ -687,6 +687,8 @@ interface HomeProps {
 }
 
 export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const scrollBehavior = prefersReducedMotion ? "auto" : "smooth";
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeServiceTab, setActiveServiceTab] = useState(0);
   const [selectedEditorialPlan, setSelectedEditorialPlan] = useState<"start" | "base" | "performance">("base");
@@ -915,22 +917,22 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
   }, []);
 
   useEffect(() => {
-    if (isHoveringGmb || visibleGmbReviews.length === 0) return;
+    if (prefersReducedMotion || !isLargeScreen || isHoveringGmb || visibleGmbReviews.length === 0) return;
     const interval = setInterval(() => {
       setActiveReview((prev) => (prev + 1) % visibleGmbReviews.length);
     }, 8500);
     return () => clearInterval(interval);
-  }, [isHoveringGmb, visibleGmbReviews.length]);
+  }, [isHoveringGmb, isLargeScreen, prefersReducedMotion, visibleGmbReviews.length]);
 
   const handleLinkClick = (page: string) => {
     onNavigate(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: scrollBehavior });
   };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      element.scrollIntoView({ behavior: scrollBehavior, block: "start" });
     }
   };
 
@@ -977,13 +979,11 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               </div>
 
               {/* Lower audio signal interactable widget exactly like reference image */}
-              <div 
+              <button
+                type="button"
                 onClick={() => handleLinkClick("/contato")}
-                onKeyDown={(event) => activateOnKeyboard(event, () => handleLinkClick("/contato"))}
-                role="link"
-                tabIndex={0}
                 aria-label="Ir para contato e solicitar diagnóstico"
-                className="bg-black/35 hover:bg-black/55 transition-all duration-300 border border-white/15 p-5 rounded-2xl flex flex-col gap-4 max-w-sm cursor-pointer shadow-sm backdrop-blur-sm group"
+                className="bg-black/35 hover:bg-black/55 transition-[background-color,border-color,box-shadow] duration-200 border border-white/15 p-5 rounded-2xl flex flex-col gap-4 max-w-sm cursor-pointer shadow-sm backdrop-blur-sm group text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -1007,13 +1007,13 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   </div>
                 </div>
 
-                <div className="w-full bg-brand text-black rounded-xl py-3 px-4 flex items-center justify-between group-hover:bg-brand-dark group-hover:text-white transition-all duration-300">
+                <div className="w-full bg-brand text-black rounded-xl py-3 px-4 flex items-center justify-between group-hover:bg-brand-dark group-hover:text-white transition-[background-color,color] duration-200">
                   <span className="tag08-meta text-xs font-extrabold tracking-wider uppercase">
-                    ENTENDER MEU MELHOR CAMINHO
+                    FALAR COM A TAG08
                   </span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </div>
-              </div>
+              </button>
             </div>
 
             {/* The image is now the stage itself; this column preserves the editorial reading space. */}
@@ -1054,7 +1054,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                       <button
                         key={tag.name}
                         onClick={() => scrollToSection("servicos-principais")}
-                        className={`cursor-pointer select-none font-sans ${pillClasses}`}
+                      className={`min-h-11 cursor-pointer select-none font-sans focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand ${pillClasses}`}
                       >
                         {tag.name}
                       </button>
@@ -1145,11 +1145,11 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               <button
                 onClick={() => {
                   onNavigate("/contato");
-                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  window.scrollTo({ top: 0, behavior: scrollBehavior });
                 }}
-                className="group relative px-7 py-4 bg-brand text-black tag08-action rounded-xl transition-all duration-300 shrink-0 overflow-hidden shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:shadow-[0_8px_35px_rgba(var(--color-brand-secondary-rgb),0.3)] hover:-translate-y-1"
+                className="group relative min-h-11 px-7 py-4 bg-brand text-black tag08-action rounded-xl transition-[background-color,box-shadow,transform] duration-200 shrink-0 overflow-hidden shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] hover:shadow-[0_8px_35px_rgba(var(--color-brand-secondary-rgb),0.3)] motion-safe:hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
               >
-                <div className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full skew-x-12 group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+                <div className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full skew-x-12 motion-safe:group-hover:translate-x-full transition-transform duration-200 ease-out" />
                 <span className="relative z-10 flex items-center gap-2">
                   Identificar meu momento <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>
@@ -1181,16 +1181,16 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 <div 
                   onClick={() => {
                     onNavigate("/servicos/branding-identidade");
-                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    window.scrollTo({ top: 0, behavior: scrollBehavior });
                   }}
                   onKeyDown={(event) => activateOnKeyboard(event, () => {
                     onNavigate("/servicos/branding-identidade");
-                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    window.scrollTo({ top: 0, behavior: scrollBehavior });
                   })}
                   role="link"
                   tabIndex={0}
                   aria-label="Conhecer Branding e Identidade"
-                  className="tag08-card tag08-card--interactive relative group overflow-hidden h-[220px] sm:h-[260px] bg-charcoal-900 cursor-pointer"
+                  className="tag08-card tag08-card--interactive relative group overflow-hidden min-h-[220px] sm:min-h-[260px] bg-charcoal-900 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                 >
                   <Image
                     fill
@@ -1226,16 +1226,16 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     <div 
                       onClick={() => {
                         onNavigate("/servicos/gestao-de-redes-sociais");
-                        window.scrollTo({ top: 0, behavior: "smooth" });
+                        window.scrollTo({ top: 0, behavior: scrollBehavior });
                       }}
                       onKeyDown={(event) => activateOnKeyboard(event, () => {
                         onNavigate("/servicos/gestao-de-redes-sociais");
-                        window.scrollTo({ top: 0, behavior: "smooth" });
+                        window.scrollTo({ top: 0, behavior: scrollBehavior });
                       })}
                       role="link"
                       tabIndex={0}
                       aria-label="Conhecer Gestão de Redes Sociais"
-                      className="tag08-card tag08-card--interactive p-6 sm:p-8 flex flex-col justify-between min-h-[194px] relative overflow-hidden text-left group cursor-pointer"
+                      className="tag08-card tag08-card--interactive p-6 sm:p-8 flex flex-col justify-between min-h-[194px] relative overflow-hidden text-left group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                     >
                       <div>
                         <div className="flex items-center justify-between w-full">
@@ -1244,9 +1244,9 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                         </span>
                           <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-brand transition-colors" />
                         </div>
-                        <h4 className="text-white font-display font-semibold text-xs sm:text-sm leading-tight group-hover:text-brand transition-colors mt-2">
+                        <h3 className="text-white font-display font-semibold text-xs sm:text-sm leading-tight group-hover:text-brand transition-colors mt-2">
                           Presença ativa, mas inconsistente
-                        </h4>
+                        </h3>
                         <p className="text-zinc-400 text-xs font-sans leading-normal mt-1.5">
                           O negócio já funciona, porém comunicação, calendário e produção ainda dependem de decisões pontuais. Caminhos possíveis: Base, Desenvolvimento Web ou projeto complementar de marca.
                         </p>
@@ -1264,16 +1264,16 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     <div 
                       onClick={() => {
                         onNavigate("/servicos/producao-audiovisual");
-                        window.scrollTo({ top: 0, behavior: "smooth" });
+                        window.scrollTo({ top: 0, behavior: scrollBehavior });
                       }}
                       onKeyDown={(event) => activateOnKeyboard(event, () => {
                         onNavigate("/servicos/producao-audiovisual");
-                        window.scrollTo({ top: 0, behavior: "smooth" });
+                        window.scrollTo({ top: 0, behavior: scrollBehavior });
                       })}
                       role="link"
                       tabIndex={0}
                       aria-label="Conhecer Produção Audiovisual"
-                      className="tag08-card tag08-card--interactive p-6 sm:p-8 flex flex-col justify-between min-h-[194px] relative overflow-hidden text-left cursor-pointer group"
+                      className="tag08-card tag08-card--interactive p-6 sm:p-8 flex flex-col justify-between min-h-[194px] relative overflow-hidden text-left cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                     >
                       <div className="flex items-center justify-between">
                         <span className="tag08-kicker">M-03</span>
@@ -1281,9 +1281,9 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                       </div>
                       
                       <div>
-                        <h4 className="text-white font-display font-semibold text-xs sm:text-sm leading-tight group-hover:text-brand transition-colors">
+                        <h3 className="text-white font-display font-semibold text-xs sm:text-sm leading-tight group-hover:text-brand transition-colors">
                           Marca em crescimento
-                        </h4>
+                        </h3>
                         <p className="text-zinc-400 text-xs font-sans leading-relaxed mt-1.5">
                           Existe necessidade de integrar planejamento, vídeo, produção, publicação e acompanhamento com maior profundidade. Caminhos possíveis: Performance, Produção Audiovisual ou Reposicionamento Estratégico.
                         </p>
@@ -1296,18 +1296,18 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   <div 
                     onClick={() => {
                       onNavigate("/servicos/desenvolvimento-web");
-                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      window.scrollTo({ top: 0, behavior: scrollBehavior });
                     }}
                     onKeyDown={(event) => activateOnKeyboard(event, () => {
                       onNavigate("/servicos/desenvolvimento-web");
-                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      window.scrollTo({ top: 0, behavior: scrollBehavior });
                     })}
                     role="link"
                     tabIndex={0}
                     aria-label="Conhecer Desenvolvimento Web Estratégico"
-                    className="tag08-card tag08-card--interactive tag08-card--featured text-white p-8 flex flex-col justify-between h-[412px] text-left relative overflow-hidden group cursor-pointer"
+                    className="tag08-card tag08-card--interactive tag08-card--featured text-white p-8 flex flex-col justify-between min-h-[340px] sm:min-h-[412px] text-left relative overflow-hidden group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                   >
-                    <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-brand-secondary/15 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700 pointer-events-none" />
+                    <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/[0.06] rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700 pointer-events-none" />
                     
                     <div>
                       <div className="flex items-center justify-between w-full">
@@ -1320,7 +1320,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     </div>
 
                     <div className="space-y-2 relative z-10">
-                      <h4 className="font-display font-extrabold text-white text-sm tracking-tight">Um canal próprio com função clara</h4>
+                      <h3 className="font-display font-extrabold text-white text-sm tracking-tight">Um canal próprio com função clara</h3>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
                         A estrutura web precisa organizar informação, fortalecer credibilidade e facilitar o caminho entre interesse e contato.
                       </p>
@@ -1341,16 +1341,16 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   <div 
                     onClick={() => {
                       onNavigate("/servicos/process-intelligence");
-                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      window.scrollTo({ top: 0, behavior: scrollBehavior });
                     }}
                     onKeyDown={(event) => activateOnKeyboard(event, () => {
                       onNavigate("/servicos/process-intelligence");
-                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      window.scrollTo({ top: 0, behavior: scrollBehavior });
                     })}
                     role="link"
                     tabIndex={0}
                     aria-label="Conhecer Process Intelligence"
-                    className="tag08-card tag08-card--interactive p-8 flex flex-col justify-between h-[340px] text-left relative overflow-hidden group cursor-pointer"
+                      className="tag08-card tag08-card--interactive p-8 flex flex-col justify-between min-h-[300px] sm:min-h-[340px] text-left relative overflow-hidden group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                   >
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-brand/5 rounded-full blur-3xl pointer-events-none" />
                     
@@ -1365,7 +1365,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     </div>
 
                     <div className="space-y-2 relative z-10">
-                      <h4 className="font-display font-extrabold text-white text-sm tracking-tight group-hover:text-brand transition-colors">Operação pressionada pelo crescimento</h4>
+                      <h3 className="font-display font-extrabold text-white text-sm tracking-tight group-hover:text-brand transition-colors">Operação pressionada pelo crescimento</h3>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
                         A empresa aumentou o volume, mas processos, responsabilidades ou conhecimento ainda dependem demais de improviso. Caminho possível: Process Intelligence.
                       </p>
@@ -1379,16 +1379,16 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     <div 
                       onClick={() => {
                         onNavigate("/servicos/process-activation");
-                        window.scrollTo({ top: 0, behavior: "smooth" });
+                        window.scrollTo({ top: 0, behavior: scrollBehavior });
                       }}
                       onKeyDown={(event) => activateOnKeyboard(event, () => {
                         onNavigate("/servicos/process-activation");
-                        window.scrollTo({ top: 0, behavior: "smooth" });
+                        window.scrollTo({ top: 0, behavior: scrollBehavior });
                       })}
                       role="link"
                       tabIndex={0}
                       aria-label="Conhecer Process Activation"
-                      className="tag08-card tag08-card--interactive text-white p-6 flex flex-col justify-between h-[158px] text-left relative group overflow-hidden cursor-pointer"
+                      className="tag08-card tag08-card--interactive text-white p-6 flex flex-col justify-between min-h-[158px] text-left relative group overflow-hidden cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                     >
                       <div className="flex items-center justify-between">
                         <span className="tag08-kicker">M-06</span>
@@ -1396,7 +1396,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                       </div>
                       
                       <div>
-                        <h4 className="font-display font-bold text-sm tracking-tight leading-none text-white group-hover:text-brand transition-colors">Processos existentes, execução irregular</h4>
+                        <h3 className="font-display font-bold text-sm tracking-tight leading-none text-white group-hover:text-brand transition-colors">Processos existentes, execução irregular</h3>
                         <p className="text-zinc-400 text-xs font-sans leading-normal mt-1.5">
                           Quando a estrutura já existe, Process Activation ajuda a transformar definições em prática acompanhada.
                         </p>
@@ -1408,17 +1408,17 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                       onClick={() => {
                         const target = document.getElementById("diagnostico");
                         if (target) {
-                          target.scrollIntoView({ behavior: "smooth" });
+                          target.scrollIntoView({ behavior: scrollBehavior });
                         }
                       }}
                       onKeyDown={(event) => activateOnKeyboard(event, () => {
                         const target = document.getElementById("diagnostico");
-                        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+                        if (target) target.scrollIntoView({ behavior: scrollBehavior, block: "start" });
                       })}
                       role="button"
                       tabIndex={0}
                       aria-label="Abrir diagnóstico"
-                      className="tag08-card tag08-card--interactive text-white p-6 flex flex-col justify-between h-[158px] text-left relative group overflow-hidden cursor-pointer"
+                      className="tag08-card tag08-card--interactive text-white p-6 flex flex-col justify-between min-h-[158px] text-left relative group overflow-hidden cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                     >
                       <div className="flex items-center justify-between">
                         <span className="tag08-kicker">Próximo passo</span>
@@ -1426,7 +1426,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                       </div>
                       
                       <div>
-                        <h4 className="font-display font-bold text-sm tracking-tight leading-none text-white">Identificar meu momento</h4>
+                        <h3 className="font-display font-bold text-sm tracking-tight leading-none text-white">Identificar meu momento</h3>
                         <p className="text-zinc-400 text-xs font-sans leading-relaxed mt-1.5">
                           A conversa inicial ajuda a avaliar contexto, fit, maturidade e prioridade, sem promessa pronta ou solução empurrada.
                         </p>
@@ -1442,17 +1442,17 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   onClick={() => {
                     const target = document.getElementById("diagnostico");
                     if (target) {
-                      target.scrollIntoView({ behavior: "smooth" });
+                      target.scrollIntoView({ behavior: scrollBehavior });
                     }
                   }}
                   onKeyDown={(event) => activateOnKeyboard(event, () => {
                     const target = document.getElementById("diagnostico");
-                    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    if (target) target.scrollIntoView({ behavior: scrollBehavior, block: "start" });
                   })}
                   role="button"
                   tabIndex={0}
                   aria-label="Iniciar diagnóstico"
-                  className="tag08-card tag08-card--interactive relative group overflow-hidden h-[332px] bg-charcoal-900 cursor-pointer"
+                  className="tag08-card tag08-card--interactive relative group overflow-hidden min-h-[300px] sm:min-h-[332px] bg-charcoal-900 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                 >
                   <Image
                     fill
@@ -1464,7 +1464,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-6 text-left">
                     <span className="tag08-kicker">
-                      M-07 // Assessoria estratégica
+                      M-07 // ASSESSORIA ESTRATÉGICA
                     </span>
                     <h3 className="font-display font-bold text-lg text-white tracking-tight mt-1 group-hover:text-brand transition-colors">
                       Preciso de direção para decidir o próximo movimento
@@ -1488,7 +1488,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       <section id="diagnostico" className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
         {/* Subtle grid decor */}
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff01_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none" />
-        <div className="absolute top-1/4 left-0 w-[450px] h-[450px] bg-brand-secondary/[0.01] rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute top-1/4 left-0 w-[450px] h-[450px] bg-white/[0.01] rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-500/[0.01] rounded-full blur-[140px] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto relative z-10 space-y-16">
@@ -1551,13 +1551,9 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 return (
                   <div
                     key={phase.id}
-                    onMouseEnter={() => {
-                      setActiveDiagPhase(phase.id as any);
-                      setHoveredPill(null);
-                    }}
                     role="group"
                     aria-label={`Diagnóstico: ${phase.title}`}
-                    className={`p-6 rounded-[24px] border transition-all duration-300 bg-zinc-950/40 relative group text-left cursor-pointer flex flex-col justify-between ${
+                    className={`p-6 rounded-[24px] border transition-[background-color,border-color,box-shadow] duration-200 bg-zinc-950/40 relative group text-left cursor-pointer flex flex-col justify-between ${
                       isPhaseSelected
                         ? "border-brand-secondary bg-brand-secondary/[0.02] shadow-[0_8px_32px_rgba(var(--color-brand-secondary-rgb),0.04)]"
                         : "border-white/[0.03] hover:border-white/10"
@@ -1578,19 +1574,19 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                       <div className="flex items-center justify-between pb-4 border-b border-white/[0.03]">
                         <div className="flex items-center gap-1.5">
                           <span className={`w-1.5 h-1.5 rounded-full transition-transform duration-300 ${isPhaseSelected ? "bg-brand-secondary scale-125 shadow-[0_0_8px_var(--color-brand-secondary)]" : "bg-zinc-700"}`} />
-                          <span className={`text-xs tag08-meta font-black uppercase tracking-widest ${isPhaseSelected ? "text-brand-secondary" : "text-zinc-500"}`}>
+                          <span className={`text-xs tag08-meta font-black uppercase tracking-widest ${isPhaseSelected ? "text-brand-secondary" : "text-zinc-300"}`}>
                             {phase.badge}
                           </span>
                         </div>
-                        <span className="font-sans text-zinc-600 text-xs font-bold">FASE {phase.step}</span>
+                        <span className="font-sans text-zinc-300 text-xs font-bold">FASE {phase.step}</span>
                       </div>
 
                       {/* Phase Info */}
                       <div className="mt-4">
-                        <h4 className="font-display font-bold text-base text-white tracking-tight">
+                        <h3 className="font-display font-bold text-base text-white tracking-tight">
                           {phase.title}
-                        </h4>
-                        <p className="text-zinc-500 text-xs font-sans mt-1">
+                        </h3>
+                        <p className="text-zinc-300 text-xs font-sans mt-1">
                           {phase.desc}
                         </p>
                       </div>
@@ -1598,7 +1594,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
 
                     {/* Tactics Pills inside the column */}
                     <div className="mt-6 space-y-2 relative z-20">
-                      <span className="text-xs tag08-meta text-zinc-600 uppercase tracking-widest block font-bold">
+                      <span className="text-xs tag08-meta text-zinc-300 uppercase tracking-widest block font-bold">
                         PONTOS DE LEITURA:
                       </span>
                       <div className="flex flex-wrap gap-1.5">
@@ -1607,6 +1603,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                           
                           return (
                             <button
+                              type="button"
                               key={p.id}
                               onMouseEnter={(e) => {
                                 e.stopPropagation();
@@ -1618,12 +1615,12 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                                 setActiveDiagPhase(phase.id as any);
                                 setHoveredPill(p.id);
                               }}
-                              className={`px-3 py-1.5 rounded-lg text-xs font-sans uppercase tracking-wider transition-all border text-left cursor-pointer ${
+                              className={`min-h-11 px-3 py-2 rounded-lg text-xs font-sans uppercase tracking-wider transition-[background-color,border-color,color,box-shadow] duration-200 border text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary ${
                                 isPillActive
                                   ? "bg-brand-secondary border-brand-secondary text-black font-bold shadow-[0_2px_8px_rgba(var(--color-brand-secondary-rgb),0.15)]"
                                   : isPhaseSelected && hoveredPill === null
                                     ? "bg-zinc-900/80 border-brand-secondary/20 text-zinc-300 hover:border-brand-secondary/60"
-                                    : "bg-zinc-950/80 border-white/[0.04] text-zinc-500 hover:text-white hover:border-white/10"
+                                    : "bg-zinc-950/80 border-white/[0.04] text-zinc-300 hover:text-white hover:border-white/10"
                               }`}
                             >
                               {p.label}
@@ -1677,11 +1674,11 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                           </span>
                         </div>
                         
-                        <h4 className="font-display font-medium text-xl text-white tracking-tight">
+                        <h3 className="font-display font-medium text-xl text-white tracking-tight">
                           {currentPhaseInfo.title.split(" // ")[0]}
-                        </h4>
+                        </h3>
                         
-                        <p className="text-zinc-500 font-sans text-xs leading-relaxed">
+                        <p className="text-zinc-300 font-sans text-xs leading-relaxed">
                           {currentPhaseInfo.desc}
                         </p>
                       </div>
@@ -1689,7 +1686,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                       {/* Severity Metrics indicator */}
                       <div className="space-y-3 pt-6 border-t border-white/[0.03] mt-2">
                         <div className="flex justify-between items-center text-xs font-sans">
-                          <span className="text-zinc-500 uppercase tracking-widest">SINAL DE DESALINHAMENTO</span>
+                          <span className="text-zinc-300 uppercase tracking-widest">SINAL DE DESALINHAMENTO</span>
                           <span className="text-brand-secondary font-semibold">{currentPhaseInfo.rating}</span>
                         </div>
                         
@@ -1701,7 +1698,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                             className="bg-gradient-to-r from-red-600 via-orange-500 to-brand-secondary h-full rounded-full shadow-[0_0_8px_rgba(var(--color-brand-secondary-rgb),0.3)]"
                           />
                         </div>
-                        <p className="text-xs tag08-meta text-zinc-600 uppercase tracking-tight">
+                        <p className="text-xs tag08-meta text-zinc-300 uppercase tracking-tight">
                           Quando o digital cresce sem estrutura, o esforço aumenta mais rápido que a clareza.
                         </p>
                       </div>
@@ -1711,7 +1708,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     <div className="col-span-12 lg:col-span-8 border-t lg:border-t-0 lg:border-l border-white/[0.04] pt-6 lg:pt-0 lg:pl-8 flex flex-col justify-between space-y-6 relative z-10 text-left">
                       
                       <div className="space-y-4">
-                        <span className="tag08-meta text-xs text-zinc-500 font-bold tracking-widest uppercase block border-b border-white/[0.03] pb-2">
+                        <span className="tag08-meta text-xs text-zinc-300 font-bold tracking-widest uppercase block border-b border-white/[0.03] pb-2">
                           SINAIS OBSERVADOS
                         </span>
 
@@ -1742,7 +1739,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                                 <div className="space-y-2">
                                   {/* Symptom title & Status header */}
                                   <div className="flex items-center justify-between gap-2">
-                                    <span className={`font-sans text-xs font-bold uppercase ${isThisSymptomActive ? "text-brand-secondary" : "text-zinc-500"}`}>
+                                    <span className={`font-sans text-xs font-bold uppercase ${isThisSymptomActive ? "text-brand-secondary" : "text-zinc-300"}`}>
                                       SINAL // {symptom.label}
                                     </span>
                                     <div className={`w-2 h-2 rounded-full ${isThisSymptomActive ? "bg-brand-secondary shadow-[0_0_8px_var(--color-brand-secondary)] animate-pulse" : "bg-red-500/40"}`} />
@@ -1755,8 +1752,8 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
 
                                 {/* Consequences quote */}
                                 <div className="pt-3 border-t border-white/[0.02] space-y-1.5">
-                                  <span className="font-sans text-xs text-zinc-500 uppercase tracking-widest block">IMPACTO POSSÍVEL</span>
-                                  <p className={`text-xs font-sans leading-relaxed italic border-l-2 pl-2.5 py-0.5 rounded ${
+                                  <span className="font-sans text-xs text-zinc-300 uppercase tracking-widest block">IMPACTO POSSÍVEL</span>
+                                  <p className={`text-xs font-sans leading-relaxed italic border-l pl-2.5 py-0.5 rounded ${
                                     isThisSymptomActive 
                                       ? "bg-red-950/10 border-red-500/35 text-red-300" 
                                       : "bg-zinc-900/10 border-zinc-700/30 text-zinc-400"
@@ -1783,10 +1780,10 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                           onClick={() => {
                             const target = document.getElementById("contato");
                             if (target) {
-                              target.scrollIntoView({ behavior: "smooth" });
+                              target.scrollIntoView({ behavior: scrollBehavior });
                             } else {
                               onNavigate("/contato");
-                              window.scrollTo({ top: 0, behavior: "smooth" });
+                              window.scrollTo({ top: 0, behavior: scrollBehavior });
                             }
                           }}
                           className="text-xs text-brand-secondary hover:text-white font-sans font-bold flex items-center gap-1.5 group transition-colors cursor-pointer self-end"
@@ -1809,7 +1806,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       {/* INDEPENDENT SECTION 2.2: SUTILEZA OPERACIONAL // DIREÇÃO SÊNIOR */}
       {false && <section id="metodologia-preview" className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
         {/* Glow corner decors */}
-        <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-brand-secondary/[0.01] rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-white/[0.01] rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-white/[0.01] rounded-full blur-[140px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto space-y-16">
@@ -1924,10 +1921,10 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   onClick={() => {
                     const target = document.getElementById("contato");
                     if (target) {
-                      target.scrollIntoView({ behavior: "smooth" });
+                      target.scrollIntoView({ behavior: scrollBehavior });
                     } else {
                       onNavigate("/contato");
-                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      window.scrollTo({ top: 0, behavior: scrollBehavior });
                     }
                   }}
                   className="bg-brand text-black hover:bg-brand-dark tag08-action px-4 py-2 rounded-xl transition-colors flex items-center gap-2 group/btn"
@@ -1969,7 +1966,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       {/* SECTION 3 - NOSSO DIFERENCIAL (BENTO GRID PREMIUM INSPIRADO NO ACORDO VISUAL SELECIONADO) */}
       <section id="solucao" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-zinc-950 relative overflow-hidden">
         {/* Ambient top-right neon highlight mimicking fitness studio */}
-        <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-brand-secondary/[0.02] rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-white/[0.015] rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-white/[0.01] rounded-full blur-[160px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto">
@@ -2006,7 +2003,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   <span className="tag08-meta text-xs text-brand-secondary tracking-wider uppercase font-bold opacity-60">ESCUTA</span>
                 </div>
                 <div className="mt-4 space-y-1">
-                  <h4 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">Diagnóstico antes da execução</h4>
+                  <h3 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">Diagnóstico antes da execução</h3>
                   <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
                     Antes de produzir, entendemos o momento da marca, os objetivos, os gargalos e a estrutura disponível para sustentar o trabalho.
                   </p>
@@ -2025,7 +2022,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   <span className="tag08-meta text-xs text-zinc-500 tracking-wider uppercase font-bold">ENTREGA</span>
                 </div>
                 <div className="mt-4 space-y-1">
-                  <h4 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">Estratégia com entrega</h4>
+                  <h3 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">Estratégia com entrega</h3>
                   <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
                     A TAG08 não fica apenas no discurso estratégico. Organizamos direção, escopo, conteúdo, design, tecnologia e operação para tirar o plano do papel.
                   </p>
@@ -2051,7 +2048,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
 
                 {/* Card 4: Atuação Premium */}
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[135px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl group-hover:bg-brand-secondary/[0.02] transition-all pointer-events-none" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl group-hover:bg-white/[0.03] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
                     <span className="font-sans text-xs font-black uppercase text-brand-secondary bg-brand-secondary/5 px-2 py-0.5 rounded border border-brand-secondary/10">02 // IMPACTO</span>
                     <Zap className="w-3 h-3 text-brand-secondary" />
@@ -2119,7 +2116,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 
                 {/* Card 6: Wifi / Sincronização */}
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[135px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl group-hover:bg-brand-secondary/[0.02] transition-all pointer-events-none" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl group-hover:bg-white/[0.03] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
                     <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">03 // PROCESSO</span>
                     <Wifi className="w-3.5 h-3.5 text-zinc-400 group-hover:text-brand-secondary transition-colors" />
@@ -2159,7 +2156,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-extrabold">ANÁLISE E AJUSTE</span>
                 </div>
                 <div className="mt-4 space-y-1">
-                  <h4 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">Análise e melhoria contínua</h4>
+                  <h3 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">Análise e melhoria contínua</h3>
                   <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
                     Dados e aprendizados orientam ajustes, sem transformar uma métrica isolada em promessa de resultado.
                   </p>
@@ -2171,7 +2168,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 
                 {/* Card 9: R$ 50M+ */}
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[140px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
-                  <div className="absolute top-0 right-0 w-16 h-16 bg-white/[0.01] rounded-full blur-md group-hover:bg-brand-secondary/[0.01] transition-all pointer-events-none" />
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-white/[0.015] rounded-full blur-md group-hover:bg-white/[0.03] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
                     <span className="font-sans text-xs font-black uppercase text-brand-secondary bg-brand-secondary/5 px-1.5 py-0.5 rounded">PROVA</span>
                     <TrendingUp className="w-3.5 h-3.5 text-zinc-500" />
@@ -2185,7 +2182,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
 
                 {/* Card 10: Retenção */}
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[140px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
-                  <div className="absolute bottom-[-20px] right-[-20px] w-20 h-20 bg-brand/[0.015] rounded-full blur-xl group-hover:bg-brand-secondary/[0.03] transition-all pointer-events-none" />
+                  <div className="absolute bottom-[-20px] right-[-20px] w-20 h-20 bg-brand/[0.015] rounded-full blur-xl group-hover:bg-white/[0.03] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
                     <span className="font-sans text-xs font-black uppercase text-zinc-400 bg-white/5 px-1.5 py-0.5 rounded">CONTINUIDADE</span>
                     <div className="flex -space-x-1.5">
@@ -2278,7 +2275,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       <section id="servicos-principais" className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         
         {/* Ambient background decoration */}
-        <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-brand-secondary/5 rounded-full blur-[200px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-white/[0.03] rounded-full blur-[200px] pointer-events-none" />
         <div className="absolute -bottom-24 -right-24 w-[350px] h-[350px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto">
@@ -2382,8 +2379,9 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
 
                       <div className="mt-6 flex w-full items-center justify-between gap-4 border-t border-current/10 pt-5">
                         <button
+                          type="button"
                           onClick={() => handleLinkClick(service.slug)}
-                          className={`flex items-center gap-1.5 font-sans text-xs font-black uppercase tracking-widest cursor-pointer hover:underline ${darkCard ? "text-white" : "text-black"}`}
+                          className={`min-h-11 flex items-center gap-1.5 font-sans text-xs font-black uppercase tracking-widest cursor-pointer hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand ${darkCard ? "text-white" : "text-black"}`}
                         >
                           {service.cta}
                           <ArrowRight className="w-3.5 h-3.5" />
@@ -2712,7 +2710,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
               <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">01 // ENTENDIMENTO</div>
-              <h4 className="font-display font-semibold text-white">Entendimento</h4>
+              <h3 className="font-display font-semibold text-white">Entendimento</h3>
               <p className="text-zinc-400 text-xs leading-relaxed">
                 Leitura do negócio, objetivos, momento, comunicação, canais, estrutura e restrições relevantes.
               </p>
@@ -2722,7 +2720,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
               <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">02 // DIAGNÓSTICO E DIREÇÃO</div>
-              <h4 className="font-display font-semibold text-white">Diagnóstico e direção</h4>
+              <h3 className="font-display font-semibold text-white">Diagnóstico e direção</h3>
               <p className="text-zinc-400 text-xs leading-relaxed">
                 Separação entre sintomas e causas para definir prioridades e o caminho mais coerente.
               </p>
@@ -2732,7 +2730,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
               <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">03 // PLANEJAMENTO</div>
-              <h4 className="font-display font-semibold text-white">Planejamento</h4>
+              <h3 className="font-display font-semibold text-white">Planejamento</h3>
               <p className="text-zinc-400 text-xs leading-relaxed">
                 Organização de escopo, sequência de execução, responsabilidades, dependências e critérios de aprovação.
               </p>
@@ -2742,7 +2740,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
               <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">04 // EXECUÇÃO</div>
-              <h4 className="font-display font-semibold text-white">Execução</h4>
+              <h3 className="font-display font-semibold text-white">Execução</h3>
               <p className="text-zinc-400 text-xs leading-relaxed">
                 Produção e desenvolvimento alinhados à estratégia, à identidade, ao canal e à capacidade disponível.
               </p>
@@ -2752,7 +2750,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
             <div className="relative space-y-3">
               <div className="absolute -left-[31px] lg:left-0 -top-2 lg:-top-[46px] w-4 h-4 rounded-full bg-brand border-4 border-charcoal-950 z-10" />
               <div className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest">05 // EVOLUÇÃO</div>
-              <h4 className="font-display font-semibold text-white">Evolução</h4>
+              <h3 className="font-display font-semibold text-white">Evolução</h3>
               <p className="text-zinc-400 text-xs leading-relaxed">
                 Análise de aprendizados, resultados e ajustes que precisam entrar no próximo ciclo.
               </p>
@@ -3021,9 +3019,9 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                                 {item.date}
                               </span>
                             </div>
-                            <h4 className={`font-display font-black text-xs uppercase tracking-tight line-clamp-2 leading-tight ${isActive ? "text-black" : "text-white"}`}>
+                            <h3 className={`font-display font-black text-xs uppercase tracking-tight line-clamp-2 leading-tight ${isActive ? "text-black" : "text-white"}`}>
                               {item.title}
-                            </h4>
+                            </h3>
                           </div>
 
                           <div className="flex items-center justify-between pt-1 font-sans text-xs">
@@ -3045,7 +3043,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 
                 <div className="space-y-1">
                   <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">PORTFÓLIO AUDIOVISUAL // {contentSources.youtube === "live" ? "CURADORIA ATIVA" : "CURADORIA INTERNA"}</span>
-                  <h4 className="text-white font-semibold text-xs leading-tight">Quer conhecer a produção audiovisual da TAG08?</h4>
+                  <h3 className="text-white font-semibold text-xs leading-tight">Quer conhecer a produção audiovisual da TAG08?</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed">
                     Veja como a TAG08 organiza imagem, fala e bastidores em entregas com clareza, estética e função de marca.
                   </p>
@@ -3089,7 +3087,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               <div className="bg-charcoal-900/60 p-6 rounded-xl border border-white/[0.05] flex gap-4">
                 <div className="text-brand font-sans text-sm font-bold">01</div>
                 <div>
-                  <h4 className="text-base font-semibold text-white">Diagnóstico antes da demanda</h4>
+                  <h3 className="text-base font-semibold text-white">Diagnóstico antes da demanda</h3>
                   <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-[1.55]">
                     Antes de executar, entendemos o momento da marca, o problema real e o que precisa ser priorizado.
                   </p>
@@ -3099,7 +3097,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               <div className="bg-charcoal-900/60 p-6 rounded-xl border border-white/[0.05] flex gap-4">
                 <div className="text-brand font-sans text-sm font-bold">02</div>
                 <div>
-                  <h4 className="text-base font-semibold text-white">Estratégia que vira entrega</h4>
+                  <h3 className="text-base font-semibold text-white">Estratégia que vira entrega</h3>
                   <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-[1.55]">
                     A direção não fica só no plano. Ela se desdobra em conteúdo, identidade, site, campanhas, processos ou materiais concretos.
                   </p>
@@ -3109,7 +3107,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               <div className="bg-charcoal-900/60 p-6 rounded-xl border border-white/[0.05] flex gap-4">
                 <div className="text-brand font-sans text-sm font-bold">03</div>
                 <div>
-                  <h4 className="text-base font-semibold text-white">Visão multidisciplinar</h4>
+                  <h3 className="text-base font-semibold text-white">Visão multidisciplinar</h3>
                   <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-[1.55]">
                     Unimos posicionamento, narrativa, estética, tecnologia e operação para evitar soluções soltas.
                   </p>
@@ -3119,7 +3117,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               <div className="bg-charcoal-900/60 p-6 rounded-xl border border-white/[0.05] flex gap-4">
                 <div className="text-brand font-sans text-sm font-bold">04</div>
                 <div>
-                  <h4 className="text-base font-semibold text-white">Execução com responsabilidade</h4>
+                  <h3 className="text-base font-semibold text-white">Execução com responsabilidade</h3>
                   <p className="text-zinc-400 text-xs sm:text-sm mt-1 leading-[1.55]">
                     Trabalhamos com escopo, critério, revisão e melhoria contínua, sem prometer atalhos ou resultados artificiais.
                   </p>
@@ -3245,9 +3243,9 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                         </span>
                         
                         <div className="flex-1 min-w-0">
-                          <h4 className={`font-display font-black text-sm uppercase tracking-tight truncate ${isActive ? "text-black" : "text-white"}`}>
+                          <h3 className={`font-display font-black text-sm uppercase tracking-tight truncate ${isActive ? "text-black" : "text-white"}`}>
                             {cc.name}
-                          </h4>
+                          </h3>
                           <EvidenceReviewBadge evidenceKey={`home-case/${cc.id}`} />
                           <p className={`font-sans text-xs truncate ${isActive ? "text-black/80" : "text-zinc-500"}`}>
                             {cc.handle}
@@ -3532,7 +3530,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   className="bg-charcoal-900/90 border border-white/[0.06] p-6 sm:p-10 lg:p-12 rounded-[28px] sm:rounded-[36px] relative overflow-hidden text-left shadow-2xl flex flex-col justify-between min-h-[380px] w-full group/card"
                 >
                   {/* Absolute giant background quote marks mimicking the image mockup exactly */}
-                  <span className="font-serif text-[180px] sm:text-[230px] text-brand-secondary/[0.03] absolute right-6 sm:right-10 -top-8 sm:-top-12 leading-none select-none pointer-events-none font-black italic">
+                  <span className="font-serif text-[180px] sm:text-[230px] text-white/[0.04] absolute right-6 sm:right-10 -top-8 sm:-top-12 leading-none select-none pointer-events-none font-black italic">
                     “
                   </span>
 
@@ -3573,9 +3571,9 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                           referrerPolicy="no-referrer"
                         />
                         <div className="text-left font-sans">
-                          <h4 className="text-white font-display font-semibold text-sm">
+                          <h3 className="text-white font-display font-semibold text-sm">
                             {visibleGmbReviews[activeReview].name}
-                          </h4>
+                          </h3>
                           <p className="text-zinc-500 font-sans text-xs mt-0.5">
                             {visibleGmbReviews[activeReview].role} ⬢ {visibleGmbReviews[activeReview].time}
                           </p>
@@ -3817,8 +3815,12 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 ]).map((item) => (
                   <button
                     key={item.id}
+                    type="button"
                     onClick={() => setActiveFaq(item.id)}
-                    className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all text-left group cursor-pointer ${
+                    id={`home-faq-question-${item.id}`}
+                    aria-expanded={activeFaq === item.id}
+                    aria-controls="home-faq-panel"
+                    className={`min-h-11 w-full flex items-center justify-between p-4 rounded-xl border transition-[background-color,border-color,color,box-shadow] duration-200 text-left group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset ${
                       activeFaq === item.id
                         ? "bg-brand text-black border-brand shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.12)]"
                         : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
@@ -3863,7 +3865,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               </div>
 
               {/* Dynamic Answer panel floating bottom-aligned inside the picture card */}
-              <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left">
+              <div id="home-faq-panel" role="region" aria-labelledby={`home-faq-question-${activeFaq}`} className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left">
                 <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
                   {([
                     "ENTENDIMENTO",
@@ -3874,7 +3876,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   ])[activeFaq]}
                 </span>
                 
-                <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
+                <h3 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
                   {([
                     "Qual é o papel da TAG08?",
                     "Como escolhemos o serviço?",
@@ -3882,7 +3884,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     "Quando o projeto pode começar?",
                     "Como a TAG08 trata resultados e expectativas?"
                   ])[activeFaq]}
-                </h4>
+                </h3>
                 
                 <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
@@ -3902,7 +3904,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">COMO A TAG08 TRABALHA</span>
-                  <h4 className="text-white font-semibold text-sm leading-snug">Diagnóstico antes da proposta.</h4>
+                  <h3 className="text-white font-semibold text-sm leading-snug">Diagnóstico antes da proposta.</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     Organizamos entendimento, prioridades e escopo antes de iniciar qualquer entrega.
                   </p>
@@ -3920,7 +3922,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">PRÓXIMO PASSO</span>
-                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">O melhor caminho começa pelo entendimento do momento atual.</h4>
+                  <h3 className="text-black font-black text-sm leading-tight tracking-tight">O melhor caminho começa pelo entendimento do momento atual.</h3>
                   <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
                     Antes de uma proposta, a TAG08 organiza o contexto: o que a empresa quer construir, o que está travando esse avanço e qual estrutura consegue sustentar a próxima etapa.
                   </p>

@@ -1,10 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-test("produção não mostra equipe pendente", async ({ page }) => {
+test("produção mostra equipe aprovada", async ({ page }) => {
   await page.goto("/sobre", { waitUntil: "domcontentloaded" });
   await expect(page.getByTestId("content-review-banner")).toHaveCount(0);
-  await expect(page.getByTestId("team-profiles")).toHaveCount(0);
-  await expect(page.getByTestId("connected-capabilities")).toBeVisible();
+  await expect(page.getByTestId("team-profiles")).toBeVisible();
 });
 
 test("produção mostra provas aprovadas somente em Assessoria", async ({ page }) => {
@@ -14,7 +13,7 @@ test("produção mostra provas aprovadas somente em Assessoria", async ({ page }
   await expect(page.getByTestId("internal-testimonials")).toBeVisible();
 });
 
-test("produção não resolve case pendente", async ({ page }) => {
+test("produção resolve case aprovado", async ({ page }) => {
   const response = await page.goto("/casos/case-clinica-alphaville", { waitUntil: "domcontentloaded" });
-  expect(response?.status()).toBe(404);
+  expect(response?.status()).toBe(200);
 });

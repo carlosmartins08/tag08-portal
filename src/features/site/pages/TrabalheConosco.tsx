@@ -1,7 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ResilientImage from "../../../components/ResilientImage";
-import { motion, AnimatePresence } from "motion/react";
-import { activateOnKeyboard } from "../../../lib/keyboard";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import {
   Briefcase, 
   MapPin, 
@@ -60,6 +59,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const honeypotRef = useRef<HTMLInputElement>(null);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (currentStep > 1) {
+      requestAnimationFrame(() => stepHeadingRef.current?.focus());
+    }
+  }, [currentStep]);
 
   const handleOutboundClick = (label: string, url: string, surface: string) => {
     trackOutboundClick({
@@ -75,15 +82,20 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
       if (!formName.trim()) {
         newErrors.name = "Nome é obrigatório";
       }
-      if (!formEmail.trim() || !formEmail.includes("@")) {
+      if (!/^\S+@\S+\.\S+$/.test(formEmail.trim())) {
         newErrors.email = "E-mail válido é obrigatório";
       }
       if (!formPhone.trim()) {
         newErrors.phone = "Telefone é obrigatório";
       }
     } else if (step === 2) {
-      if (!formLinkedin.trim() || !formLinkedin.includes("linkedin.com")) {
-        newErrors.linkedin = "Insira um link do LinkedIn válido (contendo linkedin.com)";
+      try {
+        const linkedinUrl = new URL(formLinkedin.trim());
+        if (linkedinUrl.protocol !== "https:" || !["linkedin.com", "www.linkedin.com"].includes(linkedinUrl.hostname)) {
+          throw new Error("invalid_linkedin");
+        }
+      } catch {
+        newErrors.linkedin = "Insira uma URL válida do LinkedIn, começando por https://www.linkedin.com/";
       }
     } else if (step === 3) {
       if (!formCoverLetter.trim() || formCoverLetter.length < 20) {
@@ -93,6 +105,8 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
+      const firstInvalidField = Object.keys(newErrors)[0];
+      requestAnimationFrame(() => document.getElementById(`talent-${firstInvalidField === "coverLetter" ? "cover-letter" : firstInvalidField}`)?.focus());
       trackFormError({
         form_name: "talent_application",
         form_surface: "talent-page",
@@ -199,7 +213,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
     });
     const formElement = document.getElementById("application-form-section");
     if (formElement) {
-      formElement.scrollIntoView({ behavior: "smooth" });
+      formElement.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
     }
   };
 
@@ -209,7 +223,10 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
     setSubmitError("");
 
     if (!validateStep(3) || !consent) {
-      if (!consent) setSubmitError("Confirme o consentimento para enviar sua candidatura.");
+      if (!consent) {
+        setSubmitError("Confirme o consentimento para enviar sua candidatura.");
+        requestAnimationFrame(() => document.getElementById("talent-consent")?.focus());
+      }
       trackFormSubmit({
         form_name: "talent_application",
         form_surface: "talent-page",
@@ -221,7 +238,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
 
     setSubmitting(true);
     try {
-      const idempotencyKey = crypto.randomUUID();
+      const idempotencyKey = globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
       const payload = {
         vacancyId: activeVacancy.id,
         vacancyTitle: activeVacancy.title,
@@ -282,7 +299,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
   };
 
   return (
-    <div className="w-full bg-[#070708] select-none text-left relative overflow-hidden">
+    <div className="w-full bg-charcoal-950 text-left relative overflow-hidden">
       
       {/* SECTION 1: THE PREMIUM DARK HERO HEADER (Inspired by mockup's head section) */}
       <div className="max-w-6xl mx-auto px-6 md:px-12 pt-16 pb-40">
@@ -292,7 +309,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand/10 border border-brand/20 text-brand font-bold text-xs rounded-lg tracking-widest uppercase tag08-meta">
               <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-              DIGITAL MARKETING SERVICES &amp; STRATEGY
+              CULTURA DE TRABALHO // TAG08
             </div>
             
             <h1 className="font-display font-black text-4xl sm:text-5xl text-white tracking-tighter leading-[1.0]">
@@ -307,13 +324,13 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
             <div className="flex flex-wrap gap-4 pt-2">
               <a 
                 href="#vagas-abertas-anchor" 
-                className="px-6 py-3 bg-brand text-black tag08-action font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-brand-dark transition-all duration-300 shadow-[0_8px_25px_rgba(var(--color-brand-rgb),0.15)] flex items-center gap-2"
+                className="inline-flex min-h-11 items-center gap-2 px-6 py-3 bg-brand text-black tag08-action font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 transition-[background-color,box-shadow] duration-200 shadow-[0_8px_25px_rgba(var(--color-brand-rgb),0.15)]"
               >
                 Ver Vagas Abertas <ArrowRight className="w-3.5 h-3.5" />
               </a>
               <a 
                 href="#aplicacao-direta-anchor" 
-                className="px-6 py-3 bg-white/5 text-zinc-300 tag08-action text-xs uppercase tracking-widest rounded-xl border border-white/5 hover:border-white/12 hover:text-white transition-all"
+                className="inline-flex min-h-11 items-center px-6 py-3 bg-white/5 text-zinc-300 tag08-action text-xs uppercase tracking-widest rounded-xl border border-white/10 hover:border-white/25 hover:text-white focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 transition-[border-color,color,background-color] duration-200"
               >
                 Banco de Talentos
               </a>
@@ -326,10 +343,11 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
             <div className="relative aspect-[4/5] border border-white/10 rounded-[32px] overflow-hidden bg-charcoal-900 group">
               <ResilientImage
                 fallbackLabel="Pessoas TAG08"
-                sizes="(max-width: 1024px) 100vw, 42vw"
+                priority
+                sizes="(max-width: 1024px) calc(100vw - 3rem), 30rem"
                 src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600" 
                 alt="Profissional TAG08" 
-                className="object-cover group-hover:scale-103 transition-transform duration-700"
+                className="object-cover transition-transform duration-200 motion-reduce:transition-none"
                 referrerPolicy="no-referrer"
               />
               {/* Floating aesthetic widget over image */}
@@ -351,29 +369,30 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
         <div className="max-w-6xl mx-auto bg-white text-zinc-900 rounded-[32px] sm:rounded-[48px] shadow-[0_20px_60px_rgba(0,0,0,0.5)] p-8 sm:p-14 space-y-16 relative z-10 -mt-16 sm:-mt-24">
           
           {/* Bento layout secondary header cards inspired by tablet display */}
+          <h2 className="sr-only">Como trabalhamos na TAG08</h2>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch border-b border-zinc-100 pb-12">
             
             {/* List column on left */}
             <div className="lg:col-span-3 space-y-4">
               <p className="text-xs text-zinc-400 uppercase tracking-widest tag08-meta font-bold">DIRETRIZES // EXPERTISE</p>
               <ul className="space-y-2.5 font-display text-sm font-bold text-zinc-800">
-                <li className="flex items-center gap-2 border-b border-zinc-50 pb-2 hover:translate-x-1 transition-transform cursor-default">
+                <li className="flex items-center gap-2 border-b border-zinc-50 pb-2">
                   <span className="w-1.5 h-1.5 bg-brand border border-black/10 rounded-full" />
                   Strategy &amp; Positioning
                 </li>
-                <li className="flex items-center gap-2 border-b border-zinc-50 pb-2 hover:translate-x-1 transition-transform cursor-default">
+                <li className="flex items-center gap-2 border-b border-zinc-50 pb-2">
                   <span className="w-1.5 h-1.5 bg-brand border border-black/10 rounded-full" />
                   Content Creation
                 </li>
-                <li className="flex items-center gap-2 border-b border-zinc-50 pb-2 hover:translate-x-1 transition-transform cursor-default">
+                <li className="flex items-center gap-2 border-b border-zinc-50 pb-2">
                   <span className="w-1.5 h-1.5 bg-brand border border-black/10 rounded-full" />
                   SEO &amp; High Integrity Web
                 </li>
-                <li className="flex items-center gap-2 border-b border-zinc-50 pb-2 hover:translate-x-1 transition-transform cursor-default">
+                <li className="flex items-center gap-2 border-b border-zinc-50 pb-2">
                   <span className="w-1.5 h-1.5 bg-brand border border-black/10 rounded-full" />
                   Premium Graphic Design
                 </li>
-                <li className="flex items-center gap-2 border-b border-zinc-50 pb-2 hover:translate-x-1 transition-transform cursor-default">
+                <li className="flex items-center gap-2 border-b border-zinc-50 pb-2">
                   <span className="w-1.5 h-1.5 bg-brand border border-black/10 rounded-full" />
                   Performance Ads
                 </li>
@@ -385,7 +404,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
               <div className="space-y-2">
                 <p className="text-xs text-zinc-400 uppercase tracking-widest tag08-meta font-bold">VALORES EXTRAORDINÁRIOS</p>
                 <h3 className="font-display font-black text-xl text-zinc-900 tracking-tight">
-                  Social Media <br/>Management
+                  Processos e <br/>colaboração
                 </h3>
                 <p className="text-zinc-500 text-xs leading-relaxed font-sans">
                   Não criamos apenas posts redundantes de feed. Estruturamos autoria, tom de narrativa impecável e canais ativos que geram relevância e conversão premium para clientes de alto ticket.
@@ -393,9 +412,9 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
               </div>
               <a 
                 href="#vagas-abertas-anchor"
-                className="inline-flex self-start px-4 py-2 bg-zinc-950 text-white tag08-action font-bold text-xs uppercase tracking-wider rounded-lg hover:bg-zinc-800 transition-colors"
+                className="inline-flex min-h-11 items-center self-start px-4 py-2 bg-zinc-950 text-white tag08-action font-bold text-xs uppercase tracking-wider rounded-lg hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 transition-[background-color] duration-200"
               >
-                Conhecer Métodos
+                Conhecer o processo
               </a>
             </div>
 
@@ -405,7 +424,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
               <div className="space-y-2">
                 <p className="text-xs text-brand uppercase tracking-widest tag08-meta font-bold">TAG08 ECOSSISTEMA</p>
                 <h3 className="font-display font-black text-2xl tracking-tighter leading-none">
-                  Let's grow your <br />Brand Together!
+                  Crescer com <br />direção e parceria
                 </h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans mt-2">
                   Oferecer serviços com prazos cirúrgicos e processos bem documentados. Esse é nosso pacto. Se você compartilha disso, estamos esperando sua candidatura.
@@ -413,7 +432,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
               </div>
               <a 
                 href="#aplicacao-direta-anchor"
-                className="self-start px-4.5 py-2.5 bg-white text-zinc-950 hover:bg-brand tag08-action font-bold text-xs uppercase tracking-widest rounded-xl transition-all duration-300"
+                className="inline-flex min-h-11 items-center self-start px-4 py-2.5 bg-white text-zinc-950 hover:bg-brand tag08-action font-bold text-xs uppercase tracking-widest rounded-xl transition-[background-color,color] duration-200 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
               >
                 Iniciar Cadastro Exclusivo
               </a>
@@ -439,7 +458,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch font-sans">
               
               {/* Highlighter Founder Card (Dark contrast container for dynamic style rhythm) */}
-              <div className="lg:col-span-4 bg-zinc-950 text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group min-h-[380px] shadow-lg">
+              <div className="lg:col-span-4 bg-zinc-950 text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left relative overflow-hidden group shadow-lg">
                 <div className="absolute inset-0 z-0 pointer-events-none">
                   {/* Founder photo */}
                   <ResilientImage
@@ -447,7 +466,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     sizes="(max-width: 1024px) 100vw, 34vw"
                     src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" 
                     alt="Carlos Eduardo" 
-                    className="object-cover opacity-15 grayscale brightness-[0.7] group-hover:scale-105 group-hover:opacity-25 transition-all duration-700"
+                    className="object-cover opacity-15 grayscale brightness-[0.7] transition-[opacity] duration-200"
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/75 to-transparent" />
@@ -475,7 +494,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     target="_blank"
                     rel="noreferrer"
                     onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/in/carlos-eduardo-tag08", "careers-profile-carlos")}
-                    className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-brand hover:bg-white text-zinc-950 font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-md hover:-translate-y-0.5 cursor-pointer max-w-max"
+                    className="inline-flex min-h-11 items-center gap-1.5 px-4 py-2.5 bg-brand hover:bg-white text-zinc-950 font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-[background-color,color,box-shadow] duration-200 shadow-md focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 cursor-pointer max-w-max"
                   >
                     <Linkedin className="w-3.5 h-3.5 fill-current stroke-none" />
                     <span>Conectar no LinkedIn</span>
@@ -488,7 +507,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
               <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
                 
                 {/* Leader Card 1 */}
-                <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
+                <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-[box-shadow] duration-200 group">
                   <div className="flex min-w-0 gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
                       <ResilientImage
@@ -496,13 +515,13 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         sizes="80px"
                         src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" 
                         alt="Marina Fontes" 
-                        className="object-cover group-hover:scale-104 transition-all duration-500"
+                        className="object-cover transition-opacity duration-200"
                         referrerPolicy="no-referrer"
                       />
                     </div>
                     <div className="min-w-0 flex-1 space-y-1 text-left">
                       <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">UI/UX &amp; Brand Director</span>
-                      <h4 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Marina Fontes</h4>
+                      <h3 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Marina Fontes</h3>
                       <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
                         Cria diretrizes estéticas e manuais gráficos para marcas com exigência alta de consistência visual.
                       </p>
@@ -515,7 +534,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       target="_blank"
                       rel="noreferrer"
                       onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/in/marina-fontes-tag08", "careers-profile-marina")}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-colors duration-205 text-xs tracking-wider uppercase font-sans cursor-pointer"
+                      className="inline-flex min-h-11 items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-[background-color,color] duration-200 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 text-xs tracking-wider uppercase font-sans cursor-pointer"
                     >
                       <Linkedin className="w-3 h-3 fill-current stroke-none" />
                       <span>LinkedIn</span>
@@ -524,7 +543,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                 </div>
 
                 {/* Leader Card 2 */}
-                <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
+                <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-[box-shadow] duration-200 group">
                   <div className="flex min-w-0 gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
                       <ResilientImage
@@ -532,13 +551,13 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         sizes="80px"
                         src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250" 
                         alt="Renato Silveira" 
-                        className="object-cover group-hover:scale-104 transition-all duration-500"
+                        className="object-cover transition-opacity duration-200"
                         referrerPolicy="no-referrer"
                       />
                     </div>
                     <div className="min-w-0 flex-1 space-y-1 text-left">
                       <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">Tech Lead Architect</span>
-                      <h4 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Renato Silveira</h4>
+                      <h3 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Renato Silveira</h3>
                       <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
                         Responsável pela integridade técnica, empacotamento leve e SEO dos sites.
                       </p>
@@ -551,7 +570,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       target="_blank"
                       rel="noreferrer"
                       onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/in/renato-silveira-tag08", "careers-profile-renato")}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-colors duration-205 text-xs tracking-wider uppercase font-sans cursor-pointer"
+                      className="inline-flex min-h-11 items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-[background-color,color] duration-200 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 text-xs tracking-wider uppercase font-sans cursor-pointer"
                     >
                       <Linkedin className="w-3 h-3 fill-current stroke-none" />
                       <span>LinkedIn</span>
@@ -560,7 +579,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                 </div>
 
                 {/* Leader Card 3 */}
-                <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
+                <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md duration-200 group transition-[box-shadow]">
                   <div className="flex min-w-0 gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
                       <ResilientImage
@@ -568,13 +587,13 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         sizes="80px"
                         src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=250" 
                         alt="Amanda Reis" 
-                        className="object-cover group-hover:scale-104 transition-all duration-500"
+                        className="object-cover transition-opacity duration-200"
                         referrerPolicy="no-referrer"
                       />
                     </div>
                     <div className="min-w-0 flex-1 space-y-1 text-left">
                       <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">Content Strategist</span>
-                      <h4 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Amanda Reis</h4>
+                      <h3 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Amanda Reis</h3>
                       <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
                         Domínio em roteiros, storytelling e manuais de voz para executivos.
                       </p>
@@ -587,7 +606,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       target="_blank"
                       rel="noreferrer"
                       onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/in/amanda-reis-tag08", "careers-profile-amanda")}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-colors duration-205 text-xs tracking-wider uppercase font-sans cursor-pointer"
+                      className="inline-flex min-h-11 items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-[background-color,color] duration-200 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 text-xs tracking-wider uppercase font-sans cursor-pointer"
                     >
                       <Linkedin className="w-3 h-3 fill-current stroke-none" />
                       <span>LinkedIn</span>
@@ -596,7 +615,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                 </div>
 
                 {/* Leader Card 4 */}
-                <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-350 group">
+                <div className="bg-zinc-50 border border-zinc-100 p-5 rounded-3xl flex flex-col justify-between space-y-5 hover:shadow-md transition-[box-shadow] duration-200 group">
                   <div className="flex min-w-0 gap-4 items-start">
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 relative">
                       <ResilientImage
@@ -604,13 +623,13 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         sizes="80px"
                         src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=250" 
                         alt="Lucas Mendes" 
-                        className="object-cover group-hover:scale-104 transition-all duration-500"
+                        className="object-cover transition-opacity duration-200"
                         referrerPolicy="no-referrer"
                       />
                     </div>
                     <div className="min-w-0 flex-1 space-y-1 text-left">
                       <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">Performance Specialist</span>
-                      <h4 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Lucas Mendes</h4>
+                      <h3 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Lucas Mendes</h3>
                       <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
                         Análise fria de CPA, LTV e otimização cirúrgica no Meta &amp; Google Ads.
                       </p>
@@ -623,7 +642,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       target="_blank"
                       rel="noreferrer"
                       onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/in/lucas-mendes-tag08", "careers-profile-lucas")}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-colors duration-205 text-xs tracking-wider uppercase font-sans cursor-pointer"
+                      className="inline-flex min-h-11 items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-brand text-white hover:text-black hover:font-bold rounded-lg transition-[background-color,color] duration-200 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 text-xs tracking-wider uppercase font-sans cursor-pointer"
                     >
                       <Linkedin className="w-3 h-3 fill-current stroke-none" />
                       <span>LinkedIn</span>
@@ -645,9 +664,9 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     <Linkedin className="w-3.5 h-3.5 fill-brand stroke-none" />
                     <span>Inovação, Processos & Insights Diários</span>
                   </div>
-                  <h4 className="font-display font-black text-zinc-900 text-lg sm:text-xl tracking-tight leading-none">
+                  <h3 className="font-display font-black text-zinc-900 text-lg sm:text-xl tracking-tight leading-none">
                     Engaje com nossos diretores no LinkedIn
-                  </h4>
+                  </h3>
                   <p className="text-zinc-500 text-xs leading-relaxed max-w-2xl font-medium">
                     Acompanhe a rotina de faturamento de alto ticket, as preleções de design estratégico do nosso fundador e a engenharia web sem construtores de código desenvolvida pelo nosso time. Conecte-se com nossos líderes para insights diários que aceleram carreiras e marcas corporativas.
                   </p>
@@ -691,8 +710,11 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                   return (
                     <button
                       key={v.id}
+                      type="button"
                       onClick={() => setSelectedVacancy(v.id)}
-                      className={`w-full p-4.5 rounded-2xl border text-left flex flex-col justify-between items-start transition-all duration-300 cursor-pointer focus:outline-none ${
+                      aria-pressed={isActive}
+                      aria-controls="active-vacancy-details"
+                      className={`w-full min-h-11 p-4 rounded-2xl border text-left flex flex-col justify-between items-start transition-[background-color,border-color,box-shadow,color] duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${
                         isActive
                           ? "bg-zinc-950 border-zinc-950 text-white shadow-lg"
                           : "bg-zinc-50 border-zinc-100 text-zinc-800 hover:bg-zinc-100/60"
@@ -717,7 +739,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
               </div>
 
               {/* RIGHT SIDE: Rich specifications card wrapper inside White Area */}
-              <div className="lg:col-span-7 bg-zinc-50 border border-zinc-100 rounded-3xl p-6 sm:p-8 space-y-6 relative overflow-hidden text-left shadow-sm">
+              <div id="active-vacancy-details" aria-live="polite" className="lg:col-span-7 bg-zinc-50 border border-zinc-100 rounded-3xl p-6 sm:p-8 space-y-6 relative overflow-hidden text-left shadow-sm">
                 
                 <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-200/65 pb-5">
                   <div>
@@ -735,7 +757,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
 
                 <div className="space-y-4">
                   <div>
-                    <h4 className="tag08-meta text-xs font-bold text-zinc-500 tracking-wider mb-1.5">
+                    <h4 className="tag08-meta text-xs font-bold text-zinc-700 tracking-wider mb-1.5">
                       Descrição do Escopo Técnico
                     </h4>
                     <p className="text-zinc-600 text-xs sm:text-xs leading-relaxed">
@@ -744,14 +766,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                   </div>
 
                   <div className="space-y-2 pt-1">
-                    <h4 className="tag08-meta text-xs font-bold text-zinc-500 tracking-wider mb-2.5">
+                    <h4 className="tag08-meta text-xs font-bold text-zinc-700 tracking-wider mb-2.5">
                       Requisitos Desejáveis para Handoff Perfeito
                     </h4>
                     <div className="grid grid-cols-1 gap-2">
                       {activeVacancy.requirements.map((req, i) => (
                         <div key={i} className="flex gap-2.5 items-start bg-white border border-zinc-100 p-3 rounded-xl shadow-xs">
                           <CheckCircle2 className="w-4 h-4 text-zinc-900 shrink-0 mt-0.5 stroke-[2.5]" />
-                          <span className="text-xs text-zinc-650 leading-relaxed font-sans">{req}</span>
+                          <span className="text-xs text-zinc-700 leading-relaxed font-sans">{req}</span>
                         </div>
                       ))}
                     </div>
@@ -769,7 +791,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     
                     <button
                       onClick={() => handleApply(activeVacancy.id)}
-                      className="px-4.5 py-2.5 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-colors cursor-pointer flex items-center gap-1.5"
+                      className="inline-flex min-h-11 items-center gap-1.5 px-4 py-2.5 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 transition-[background-color] duration-200 cursor-pointer"
                     >
                       Preencher Formulário <ArrowRight className="w-3.5 h-3.5 text-brand" />
                     </button>
@@ -817,7 +839,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
             <div className="p-6 sm:p-8 rounded-3xl bg-zinc-950 text-white space-y-6">
               <div className="space-y-2">
                 <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">OPÇÕES DE PARCERIA // CONDIÇÕES CONTRATUAIS</span>
-                <h4 className="font-display font-black text-xl">Formatos de Contratação e Atuação Disponíveis</h4>
+                <h3 className="font-display font-black text-xl">Formatos de Contratação e Atuação Disponíveis</h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans max-w-xl">
                   Estamos constantemente em busca das melhores mentes do mercado independente de sua preferência logística comercial de contratação:
                 </p>
@@ -834,7 +856,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     <span className="font-sans text-xs text-brand border border-brand/15 bg-brand/5 px-2 py-0.5 rounded uppercase block w-max">
                       {bond.focus}
                     </span>
-                    <h5 className="text-white font-display font-bold text-xs">{bond.title}</h5>
+                    <h4 className="text-white font-display font-bold text-xs">{bond.title}</h4>
                     <p className="text-zinc-400 text-xs leading-relaxed font-sans">{bond.desc}</p>
                   </div>
                 ))}
@@ -845,7 +867,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
             <div className="space-y-6 pt-6 border-t border-zinc-100">
               <div className="space-y-1">
                 <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest font-bold block">workflow seletivo // sem desvios</span>
-                <h4 className="font-display font-black text-xl text-zinc-900">Como avaliamos e integramos novos talentos</h4>
+                <h3 className="font-display font-black text-xl text-zinc-900">Como avaliamos e integramos novos talentos</h3>
                 <p className="text-zinc-500 text-xs sm:text-sm font-sans leading-relaxed max-w-xl">
                   Nosso processo de recrutamento é transparente, rápido e focado em competência operacional técnica real:
                 </p>
@@ -861,7 +883,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                   <div key={sIdx} className="p-4 rounded-xl border border-zinc-100 bg-zinc-50/50 flex gap-4">
                     <div className="font-sans font-black text-zinc-300 text-2xl shrink-0 mt-0.5">{st.step}</div>
                     <div className="space-y-0.5 text-left">
-                      <h5 className="text-zinc-900 font-display font-bold text-xs tracking-tight">{st.title}</h5>
+                      <h4 className="text-zinc-900 font-display font-bold text-xs tracking-tight">{st.title}</h4>
                       <p className="text-zinc-500 text-xs leading-relaxed font-sans">{st.desc}</p>
                     </div>
                   </div>
@@ -875,7 +897,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
           <div id="application-form-section" className="grid grid-cols-1 lg:grid-cols-12 gap-10 pt-8 border-t border-zinc-100 items-start">
             
             {/* Form desk on left (Dynamic Animated Multi-step Wizard) */}
-            <div id="aplicacao-direta-anchor" className="lg:col-span-7 bg-zinc-50 border border-zinc-100 p-6 sm:p-9 rounded-3xl relative overflow-hidden space-y-6 min-h-[520px] flex flex-col justify-between">
+            <div id="aplicacao-direta-anchor" className="lg:col-span-7 bg-zinc-50 border border-zinc-100 p-6 sm:p-9 rounded-3xl relative overflow-hidden space-y-6 flex flex-col justify-between">
               
               <div className="space-y-6">
                 
@@ -884,7 +906,8 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                   <div className="flex items-center gap-3">
                     {[1, 2, 3].map((step) => (
                       <React.Fragment key={step}>
-                        <div 
+                        <button
+                          type="button"
                           onClick={() => {
                             // Let users go back to previous steps by clicking on the indicator if validated
                             if (step < currentStep) {
@@ -902,22 +925,9 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                               }
                             }
                           }}
-                          onKeyDown={(event) => activateOnKeyboard(event, () => {
-                            if (step < currentStep) {
-                              setCurrentStep(step);
-                            } else if (step > currentStep) {
-                              if (currentStep === 1 && validateStep(1)) {
-                                if (step === 3 && validateStep(2)) setCurrentStep(3);
-                                else if (step === 2) setCurrentStep(2);
-                              } else if (currentStep === 2 && validateStep(2) && step === 3) {
-                                setCurrentStep(3);
-                              }
-                            }
-                          })}
-                          role="button"
-                          tabIndex={0}
-                          aria-label={`Ir para a etapa ${step}`}
-                          className={`flex items-center justify-center w-8 h-8 rounded-xl text-xs font-sans font-bold transition-all duration-300 cursor-pointer ${
+                          aria-current={currentStep === step ? "step" : undefined}
+                          aria-label={`Ir para a etapa ${step}${currentStep === step ? ", etapa atual" : ""}`}
+                          className={`flex min-h-11 min-w-11 items-center justify-center rounded-xl text-xs font-sans font-bold transition-[background-color,border-color,color,box-shadow] duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${
                             currentStep === step 
                               ? "bg-zinc-950 text-white shadow-md ring-2 ring-brand" 
                               : currentStep > step 
@@ -926,14 +936,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                           }`}
                         >
                           {currentStep > step ? <CheckCircle2 className="w-4 h-4 stroke-[2.5]" /> : step}
-                        </div>
+                        </button>
                         {step < 3 && (
-                          <div className="flex-1 h-0.5 rounded-full overflow-hidden bg-zinc-250/70">
+                          <div className="flex-1 h-0.5 rounded-full overflow-hidden bg-zinc-200">
                             <motion.div 
                               className="h-full bg-green-600"
                               initial={{ width: "0%" }}
                               animate={{ width: currentStep > step ? "100%" : "0%" }}
-                              transition={{ duration: 0.4 }}
+                              transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
                             />
                           </div>
                         )}
@@ -944,23 +954,23 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                   {/* Header text containing dynamic personalization */}
                   <div className="space-y-1 text-left">
                     <span className="tag08-meta text-xs text-brand bg-black px-2 py-0.5 rounded font-black uppercase tracking-widest inline-block">
-                      ETAPA {currentStep} DE 3 " {currentStep === 1 ? "DADOS PESSOAIS" : currentStep === 2 ? "LINKS PROFISSIONAIS" : "CURRÍCULO & APRESENTAÇÃO"}
+                      ETAPA {currentStep} DE 3 · {currentStep === 1 ? "DADOS PESSOAIS" : currentStep === 2 ? "LINKS PROFISSIONAIS" : "APRESENTAÇÃO & EVIDÊNCIAS"}
                     </span>
-                    <h2 className="font-display font-black text-2xl text-zinc-900 tracking-tight">
+                    <h2 ref={stepHeadingRef} tabIndex={-1} className="font-display font-black text-2xl text-zinc-900 tracking-tight focus:outline-none">
                       {currentStep === 1 ? "Identificação Primária" : currentStep === 2 ? "Presença na Web" : "Ficha & Conquistas"}
                     </h2>
-                    <p className="text-zinc-500 text-xs">
+                    <p className="text-zinc-700 text-xs">
                       {currentStep === 1 
                         ? `Apresente-se brevemente para iniciarmos seu processo de seleção para a vaga de ${activeVacancy.title}.`
                         : currentStep === 2 
                           ? `Excelente, ${formName.split(" ")[0]}! Agora, compartilhe os links onde seu trabalho é exposto.`
-                          : `Quase lá! Para finalizar, anexe seu currículo e faça uma mini apresentação profissional.`}
+                          : `Quase lá! Para finalizar, compartilhe uma apresentação profissional e seus principais cases.`}
                     </p>
                   </div>
                 </div>
 
                 {/* Submitting the form block */}
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form id="talent-application-form" onSubmit={handleSubmit} className="space-y-4">
                   <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
                     <label htmlFor="talent-website">Não preencha este campo</label>
                     <input id="talent-website" name="website" type="text" tabIndex={-1} autoComplete="off" ref={honeypotRef} />
@@ -974,11 +984,11 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         initial={{ opacity: 0, x: -15 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 15 }}
-                        transition={{ duration: 0.25 }}
+                        transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
                         className="space-y-4"
                       >
                         <div id="field-name" className="space-y-1.5 text-left">
-                          <label htmlFor="talent-name" className="block text-xs uppercase tracking-widest font-bold text-zinc-500 tag08-meta">
+                          <label htmlFor="talent-name" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
                             Nome Completo *
                           </label>
                           <div className="relative">
@@ -986,12 +996,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                             <input
                               id="talent-name"
                               type="text"
+                              name="name"
+                              autoComplete="name"
                               placeholder="Ex: Carlos Silva"
                               value={formName}
                               onChange={(e) => setFormName(e.target.value)}
                               aria-invalid={Boolean(errors.name)}
                               aria-describedby={errors.name ? "talent-name-error" : undefined}
-                              className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 font-sans ${
+                              className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans ${
                                 errors.name ? "border-red-500 ring-1 ring-red-500/20" : "border-zinc-200"
                               }`}
                             />
@@ -1001,7 +1013,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div id="field-email" className="space-y-1.5 text-left">
-                            <label htmlFor="talent-email" className="block text-xs uppercase tracking-widest font-bold text-zinc-500 tag08-meta">
+                            <label htmlFor="talent-email" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
                               E-mail de Contato *
                             </label>
                             <div className="relative">
@@ -1009,12 +1021,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                               <input
                                 id="talent-email"
                                 type="email"
+                                name="email"
+                                autoComplete="email"
                                 placeholder="Ex: carlos@empresa.com"
                                 value={formEmail}
                                 onChange={(e) => setFormEmail(e.target.value)}
                                 aria-invalid={Boolean(errors.email)}
                                 aria-describedby={errors.email ? "talent-email-error" : undefined}
-                                className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 font-sans ${
+                                className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans ${
                                   errors.email ? "border-red-500 ring-1 ring-red-500/20" : "border-zinc-200"
                                 }`}
                               />
@@ -1023,7 +1037,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                           </div>
 
                           <div id="field-phone" className="space-y-1.5 text-left">
-                            <label htmlFor="talent-phone" className="block text-xs uppercase tracking-widest font-bold text-zinc-500 tag08-meta">
+                            <label htmlFor="talent-phone" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
                               WhatsApp de Contato *
                             </label>
                             <div className="relative">
@@ -1031,12 +1045,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                               <input
                                 id="talent-phone"
                                 type="tel"
+                                name="phone"
+                                autoComplete="tel"
                                 placeholder="Ex: (47) 99999-9999"
                                 value={formPhone}
                                 onChange={(e) => setFormPhone(e.target.value)}
                                 aria-invalid={Boolean(errors.phone)}
                                 aria-describedby={errors.phone ? "talent-phone-error" : undefined}
-                                className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 font-sans ${
+                                className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans ${
                                   errors.phone ? "border-red-500" : "border-zinc-200"
                                 }`}
                               />
@@ -1054,11 +1070,11 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         initial={{ opacity: 0, x: -15 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 15 }}
-                        transition={{ duration: 0.25 }}
+                        transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
                         className="space-y-4"
                       >
                         <div id="field-linkedin" className="space-y-1.5 text-left">
-                          <label htmlFor="talent-linkedin" className="block text-xs uppercase tracking-widest font-bold text-zinc-500 tag08-meta">
+                          <label htmlFor="talent-linkedin" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
                             Perfil do LinkedIn *
                           </label>
                           <div className="relative">
@@ -1066,12 +1082,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                             <input
                               id="talent-linkedin"
                               type="url"
+                              name="linkedin"
+                              autoComplete="url"
                               placeholder="Ex: linkedin.com/in/seunome"
                               value={formLinkedin}
                               onChange={(e) => setFormLinkedin(e.target.value)}
                               aria-invalid={Boolean(errors.linkedin)}
                               aria-describedby={errors.linkedin ? "talent-linkedin-error" : undefined}
-                              className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 font-sans ${
+                              className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans ${
                                 errors.linkedin ? "border-red-500" : "border-zinc-200"
                               }`}
                             />
@@ -1080,7 +1098,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         </div>
 
                         <div className="space-y-1.5 text-left">
-                          <label htmlFor="talent-portfolio" className="block text-xs uppercase tracking-widest font-bold text-zinc-500 tag08-meta">
+                          <label htmlFor="talent-portfolio" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
                             Link do Portfólio / GitHub (Opcional)
                           </label>
                           <div className="relative">
@@ -1088,39 +1106,41 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                             <input
                               id="talent-portfolio"
                               type="url"
+                              name="portfolio"
+                              autoComplete="url"
                               placeholder="Ex: behance.net/seunome ou github.com/seunome"
                               value={formPortfolio}
                               onChange={(e) => setFormPortfolio(e.target.value)}
-                              className="w-full bg-white border border-zinc-200 rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 font-sans"
+                              className="w-full bg-white border border-zinc-200 rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans"
                             />
                           </div>
-                          <p className="text-xs text-zinc-450 leading-tight">
+                          <p className="text-xs text-zinc-600 leading-tight">
                             Gostamos de analisar cases práticos. Recomendamos inserir seu portfólio para ganhar destaque preferencial na triagem.
                           </p>
                         </div>
                       </motion.div>
                     )}
 
-                    {/* STEP 3: CURRÍCULO & MINI LETTER */}
+                    {/* STEP 3: APRESENTAÇÃO & MINI LETTER */}
                     {currentStep === 3 && (
                       <motion.div
                         key="step-3"
                         initial={{ opacity: 0, x: -15 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 15 }}
-                        transition={{ duration: 0.25 }}
+                        transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
                         className="space-y-4"
                       >
                         <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-left">
-                          <p className="text-xs tag08-meta font-bold uppercase tracking-widest text-zinc-600">Currículo e evidências</p>
-                          <p className="mt-1 text-xs leading-relaxed text-zinc-500">
-                            Nesta etapa não recebemos arquivos. Inclua LinkedIn e portfólio no passo anterior para que a equipe avalie sua experiência com segurança.
+                          <p className="text-xs tag08-meta font-bold uppercase tracking-widest text-zinc-700">Apresentação e evidências</p>
+                          <p className="mt-1 text-xs leading-relaxed text-zinc-700">
+                            Nesta etapa não recebemos arquivos. Use o LinkedIn, o portfólio e esta apresentação para que a equipe avalie sua experiência com segurança.
                           </p>
                         </div>
 
                         {/* Miniature Pitch Letter */}
                         <div id="field-coverLetter" className="space-y-1.5 text-left">
-                          <label htmlFor="talent-cover-letter" className="block text-xs uppercase tracking-widest font-bold text-zinc-500 tag08-meta">
+                          <label htmlFor="talent-cover-letter" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
                             Diferencial &amp; Foco em Resultados *
                           </label>
                           <textarea
@@ -1131,22 +1151,26 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                             onChange={(e) => setFormCoverLetter(e.target.value)}
                             aria-invalid={Boolean(errors.coverLetter)}
                             aria-describedby={errors.coverLetter ? "talent-cover-letter-error" : undefined}
-                            className={`w-full bg-white border rounded-xl p-3 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 font-sans leading-relaxed ${
+                            className={`w-full bg-white border rounded-xl p-3 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans leading-relaxed ${
                               errors.coverLetter ? "border-red-500" : "border-zinc-200"
                             }`}
                           />
                           {errors.coverLetter && <span id="talent-cover-letter-error" role="alert" className="text-red-500 text-xs font-sans block mt-1">{errors.coverLetter}</span>}
                         </div>
-                        <label className="flex items-start gap-2 text-left text-xs text-zinc-500 cursor-pointer">
+                        <label htmlFor="talent-consent" className="flex items-start gap-2 text-left text-xs text-zinc-700 cursor-pointer">
                           <input
                             type="checkbox"
+                            id="talent-consent"
+                            name="consent"
                             checked={consent}
                             onChange={(event) => setConsent(event.target.checked)}
-                            className="mt-0.5 h-3.5 w-3.5 accent-[var(--color-brand)]"
+                            aria-invalid={Boolean(submitError && !consent)}
+                            aria-describedby={submitError && !consent ? "talent-consent-error" : undefined}
+                            className="mt-0.5 h-4 w-4 accent-[var(--color-brand)]"
                           />
-                          <span>Autorizo o uso destes dados para a seleção e o Banco de Talentos da TAG08.</span>
+                          <span>Autorizo o uso destes dados para avaliar minha candidatura às vagas atuais e ao Banco de Talentos da TAG08.</span>
                         </label>
-                        {submitError ? <p role="alert" className="text-xs text-red-500">{submitError}</p> : null}
+                        {submitError ? <p id={!consent ? "talent-consent-error" : undefined} role="alert" className="text-xs text-red-600">{submitError}</p> : null}
                       </motion.div>
                     )}
 
@@ -1158,7 +1182,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
               {/* Step Navigation Controls bottom footer */}
               <div className="pt-6 border-t border-zinc-200/50 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p className="text-xs text-zinc-400 leading-tight flex items-center gap-1.5 self-start sm:self-center">
-                  <Lock className="w-3.5 h-3.5 text-zinc-350 shrink-0" /> Gestão privativa de dados e cookies locais.
+                  <Lock className="w-3.5 h-3.5 text-zinc-500 shrink-0" /> Tratamento responsável dos dados enviados.
                 </p>
                 
                 <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
@@ -1166,7 +1190,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     <button
                       type="button"
                       onClick={handlePrevStep}
-                      className="px-5 py-3 border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-700 font-sans font-bold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer flex items-center gap-1.5"
+                      className="inline-flex min-h-11 items-center gap-1.5 px-5 py-3 border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-700 font-sans font-bold text-xs uppercase tracking-wider rounded-xl transition-[background-color,border-color,color] duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
                     >
                       Voltar
                     </button>
@@ -1176,16 +1200,16 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     <button
                       type="button"
                       onClick={handleNextStep}
-                      className="w-full sm:w-auto px-6.5 py-3 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                      className="inline-flex min-h-11 w-full sm:w-auto items-center justify-center gap-1.5 px-6 py-3 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-[background-color] duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
                     >
                       Continuar <ArrowRight className="w-3.5 h-3.5 text-brand" />
                     </button>
                   ) : (
                     <button
-                      type="button"
-                      onClick={handleSubmit}
+                      type="submit"
+                      form="talent-application-form"
                       disabled={submitting}
-                      className="w-full sm:w-auto px-6.5 py-3 bg-brand hover:bg-brand-dark disabled:hover:bg-brand text-black font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-[0_4px_12px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center gap-1.5"
+                      className="inline-flex min-h-11 w-full sm:w-auto items-center justify-center gap-1.5 px-6 py-3 bg-brand hover:bg-brand-dark disabled:hover:bg-brand text-black font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-[background-color,box-shadow] duration-200 shadow-[0_4px_12px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {submitting ? "Enviando..." : "Enviar Candidatura"} <Send className="w-3.5 h-3.5 shrink-0" />
                     </button>
@@ -1202,26 +1226,26 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     exit={{ opacity: 0 }}
                     className="absolute inset-0 bg-white/95 backdrop-blur-xs flex flex-col items-center justify-center text-center p-6 z-30"
                   >
-                    <div className="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center mb-5 border border-green-150">
-                      <CheckCircle2 className="w-8 h-8 animate-bounce" />
+                    <div className="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center mb-5 border border-green-200">
+                      <CheckCircle2 className="w-8 h-8" />
                     </div>
                     <h3 className="font-display font-black text-xl text-zinc-900 tracking-tight">
                       Candidatura Recebida!
                     </h3>
-                    <p className="text-zinc-500 text-xs sm:text-sm mt-2 max-w-sm leading-relaxed">
+                    <p className="text-zinc-700 text-xs sm:text-sm mt-2 max-w-sm leading-relaxed">
                       Sua triagem de competência para a vaga de <span className="text-zinc-950 font-bold">{activeVacancy.title}</span> foi consolidada. Retornaremos em breve.
                     </p>
                     
                     <div className="mt-6 flex flex-wrap justify-center gap-3">
                       <button
                         onClick={() => setSubmitSuccess(false)}
-                        className="px-4.5 py-2.5 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-colors cursor-pointer"
+                      className="inline-flex min-h-11 items-center px-4 py-2.5 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-[background-color] duration-200 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 cursor-pointer"
                       >
                         Enviar Outra Ficha
                       </button>
                       <button
                         onClick={() => onNavigate("/")}
-                        className="px-4.5 py-2.5 bg-zinc-100 text-zinc-800 border border-zinc-200 font-sans text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-200 transition-all cursor-pointer"
+                        className="inline-flex min-h-11 items-center px-4 py-2.5 bg-zinc-100 text-zinc-800 border border-zinc-200 font-sans text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-200 transition-[background-color,border-color] duration-200 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 cursor-pointer"
                       >
                         Página Inicial
                       </button>
@@ -1233,7 +1257,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
 
             {/* Application privacy notice */}
             <div className="lg:col-span-5 space-y-5">
-              <div className="bg-zinc-50 border border-zinc-100 p-5 sm:p-6.5 rounded-3xl space-y-4">
+              <div className="bg-zinc-50 border border-zinc-100 p-5 sm:p-6 rounded-3xl space-y-4">
                 <div className="flex items-center gap-2 tag08-meta text-xs text-brand bg-black px-2 py-0.5 rounded font-bold uppercase tracking-wider self-start inline-flex">
                   <Terminal className="w-3.5 h-3.5 animate-pulse" />
                   Envio protegido
@@ -1242,27 +1266,27 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                 <h3 className="font-display font-black text-lg text-zinc-900 tracking-tight leading-none">
                   Como funciona a candidatura
                 </h3>
-                <p className="text-zinc-500 text-xs leading-relaxed">
-                  Seus dados são enviados com consentimento para o Banco de Talentos. Esta página não mantém cópias da candidatura nem exibe informações pessoais após o envio.
+                <p className="text-zinc-700 text-xs leading-relaxed">
+                  Seus dados são enviados com consentimento para a seleção e o Banco de Talentos. Em caso de falha temporária, o navegador pode manter a candidatura em uma fila local até que o reenvio seja concluído.
                 </p>
 
                 <div className="space-y-2.5 pt-1 border border-dashed border-zinc-200 rounded-2xl p-5 text-left">
                   <p className="text-zinc-700 text-xs font-semibold">1. Recebimento e confirmação</p>
-                  <p className="text-zinc-500 text-xs leading-relaxed">A candidatura é registrada antes da confirmação exibida na tela.</p>
+                  <p className="text-zinc-700 text-xs leading-relaxed">A candidatura é registrada antes da confirmação exibida na tela.</p>
                   <p className="text-zinc-700 text-xs font-semibold">2. Triagem interna</p>
-                  <p className="text-zinc-500 text-xs leading-relaxed">A equipe analisa o perfil no Banco de Talentos e entra em contato pelos canais informados, se houver aderência.</p>
+                  <p className="text-zinc-700 text-xs leading-relaxed">A equipe analisa o perfil no Banco de Talentos e entra em contato pelos canais informados, se houver aderência. Você pode solicitar a revisão ou exclusão dos dados pelo canal de contato da TAG08.</p>
                 </div>
               </div>
 
               {/* Cultural Banner */}
-              <div className="bg-zinc-950 text-white p-6.5 rounded-3xl text-left space-y-3.5 shadow-md relative overflow-hidden">
+              <div className="bg-zinc-950 text-white p-6 rounded-3xl text-left space-y-3.5 shadow-md relative overflow-hidden">
                 <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
                 <div className="inline-flex px-2 py-0.5 bg-brand/10 text-brand font-sans text-xs font-black uppercase rounded-md">
                   CULTURA TAG08
                 </div>
-                <h4 className="font-display font-bold text-white text-xs sm:text-sm">
+                <h3 className="font-display font-bold text-white text-xs sm:text-sm">
                   Pacto de Alinhamento de Valor
-                </h4>
+                </h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                   Desenvolvemos pessoas que gostam de processos independentes com metas claras de performance e transparência. Se você procura um lugar sem drama operacional com alto ticket B2B, faça sua candidatura.
                 </p>

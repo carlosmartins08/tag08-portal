@@ -1,9 +1,11 @@
 import { Check, ArrowRight, ArrowUpRight, Award } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
+import { useReducedMotion } from "motion/react";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
+import TrackedOutboundLink from "../../../components/TrackedOutboundLink";
 
 interface ServicosProps {
   onNavigate: (page: string) => void;
@@ -11,10 +13,11 @@ interface ServicosProps {
 
 export default function Servicos({ onNavigate }: ServicosProps) {
   const [activeFaq, setActiveFaq] = useState(0);
+  const prefersReducedMotion = useReducedMotion() ?? false;
 
   const handleLinkClick = (page: string) => {
     onNavigate(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
   };
 
   const SERVICE_DOMAINS = [
@@ -78,7 +81,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
   ];
 
   return (
-    <div className="bg-charcoal-950 text-white min-h-screen pt-28 pb-20 relative overflow-hidden">
+    <div className="flex flex-col bg-charcoal-950 text-white min-h-screen pt-28 pb-20 relative overflow-hidden">
       {/* Absolute Ambient Background Lights resembling our modern portfolio pages */}
       <div className="absolute top-[5%] left-[-10%] w-[500px] h-[500px] bg-brand/[0.015] rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute top-[35%] right-[-10%] w-[550px] h-[550px] bg-brand-secondary/[0.01] rounded-full blur-[180px] pointer-events-none" />
@@ -122,7 +125,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <button
                   onClick={() => handleLinkClick("/contato")}
-                  className="inline-flex items-center justify-center gap-2 bg-brand text-black hover:bg-brand-dark tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 bg-brand text-black hover:bg-brand-dark tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-colors duration-200"
                 >
                   QUERO ENTENDER MEU MELHOR CAMINHO
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -131,12 +134,12 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   onClick={() => {
                     const target = document.getElementById("servicos-principais");
                     if (target) {
-                      target.scrollIntoView({ behavior: "smooth" });
+                      target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
                       return;
                     }
                     handleLinkClick("/servicos");
                   }}
-                  className="inline-flex items-center justify-center gap-2 bg-white/[0.02] border border-white/10 text-white hover:bg-white/[0.08] tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 bg-white/[0.02] border border-white/10 text-white hover:bg-white/[0.08] tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-colors duration-200"
                 >
                   VER SOLUÇÕES
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -155,13 +158,13 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                       <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
                       <span className="tag08-meta text-xs uppercase tracking-widest text-brand-secondary">MAPA DE SOLUÇÕES</span>
                     </div>
-                    <span className="font-sans text-xs text-zinc-600">QUATRO CAMINHOS</span>
+                    <span className="font-sans text-xs text-zinc-300">QUATRO FRENTES</span>
                   </div>
 
                   <div className="space-y-5">
                     <div className="flex items-baseline justify-between">
                       <div>
-                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Presença</h4>
+                        <span className="tag08-meta text-xs text-zinc-300 tracking-widest">Presença</span>
                         <p className="text-zinc-300 text-xs mt-0.5">Rotina de comunicação compatível com o momento do negócio.</p>
                       </div>
                       <span className="font-display font-black text-3xl text-white">Presença</span>
@@ -169,7 +172,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                     <div className="flex items-baseline justify-between border-t border-white/[0.04] pt-4">
                       <div>
-                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Marca</h4>
+                        <span className="tag08-meta text-xs text-zinc-300 tracking-widest">Marca</span>
                         <p className="text-zinc-300 text-xs mt-0.5">Expressão e posicionamento coerentes com a fase atual.</p>
                       </div>
                       <span className="font-display font-black text-3xl text-brand-secondary">Marca</span>
@@ -177,7 +180,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                     <div className="flex items-baseline justify-between border-t border-white/[0.04] pt-4">
                       <div>
-                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Audiovisual</h4>
+                        <span className="tag08-meta text-xs text-zinc-300 tracking-widest">Audiovisual</span>
                         <p className="text-zinc-300 text-xs mt-0.5">Vídeo com direção e função definida para a comunicação.</p>
                       </div>
                       <span className="font-display font-black text-3xl text-brand">Audiovisual</span>
@@ -185,7 +188,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                     <div className="flex items-baseline justify-between border-t border-white/[0.04] pt-4">
                       <div>
-                        <h4 className="tag08-meta text-xs text-zinc-500 tracking-widest">Web</h4>
+                        <span className="tag08-meta text-xs text-zinc-300 tracking-widest">Web</span>
                         <p className="text-zinc-300 text-xs mt-0.5">Canal próprio para apresentar, converter ou operar no digital.</p>
                       </div>
                       <span className="font-display font-black text-3xl text-white">Web</span>
@@ -197,7 +200,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                       <Award className="w-4.5 h-4.5" />
                     </div>
                     <div>
-                      <h5 className="tag08-meta text-xs font-bold text-white tracking-wider leading-none">Diagnóstico</h5>
+                      <p className="tag08-meta text-xs font-bold text-white tracking-wider leading-none">Diagnóstico</p>
                       <p className="text-zinc-400 text-xs mt-1 leading-relaxed">O ponto de partida depende do problema real, não do serviço pedido inicialmente.</p>
                     </div>
                   </div>
@@ -211,16 +214,16 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       {/*=========================================
           INTELLIGENT DIAGNOSTIC PROBLEM MATRIX
          =========================================*/}
-      <section className="px-4 sm:px-6 md:px-8 py-20 bg-charcoal-950 text-left relative z-10 border-b border-white/[0.04]">
+      <section className="order-2 px-4 sm:px-6 md:px-8 py-14 sm:py-20 bg-charcoal-950 text-left relative z-10 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 max-w-5xl">
             <div className="space-y-3">
               <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
                 Diagnóstico por necessidade
               </span>
-              <h3 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
+              <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
                 O que sua marca precisa organizar agora?
-              </h3>
+              </h2>
             </div>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm md:pb-1">
               Nem toda marca precisa começar pelo mesmo serviço. Algumas precisam de clareza de posicionamento, outras de conteúdo, presença visual, estrutura digital ou organização operacional. Esta matriz ajuda a identificar o ponto de partida mais coerente.
@@ -228,7 +231,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
           </div>
 
           <div className="border border-white/[0.06] rounded-3xl overflow-hidden divide-y divide-white/[0.05] bg-charcoal-900/30 relative drop-shadow-2xl">
-            <div className="absolute inset-0 bg-[#000]/10" />
+            <div className="absolute inset-0 bg-black/10" aria-hidden="true" />
             <div className="absolute inset-0 bg-[radial-gradient(#ffffff01_1.2px,transparent_1.2px)] [background-size:24px_24px] pointer-events-none" />
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4 p-5 tag08-meta text-xs text-zinc-500 uppercase tracking-widest bg-charcoal-900/60 font-semibold relative z-10 select-none">
@@ -271,10 +274,10 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             ].map((item, idx) => (
               <div
                 key={idx}
-                className="grid grid-cols-1 md:grid-cols-12 gap-4 p-6 sm:p-7 items-center hover:bg-white/[0.015] transition-all duration-300 relative z-10 group"
+                className="grid grid-cols-1 md:grid-cols-12 gap-4 p-6 sm:p-7 items-center hover:bg-white/[0.015] transition-colors duration-200 relative z-10 group"
               >
                 <div className="md:col-span-6 flex gap-4 items-start">
-                  <span className="font-sans text-xs text-zinc-600 mt-1 font-bold">[{idx + 1}]</span>
+                  <span className="font-sans text-xs text-zinc-300 mt-1 font-bold" aria-hidden="true">[{idx + 1}]</span>
                   <div className="space-y-2">
                     <p className="text-zinc-100 text-xs sm:text-sm font-sans font-semibold leading-relaxed group-hover:text-white transition-colors">
                       {item.problem}
@@ -286,7 +289,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 </div>
 
                 <div className="md:col-span-4">
-                  <span className="inline-flex px-3 py-1.5 rounded-xl bg-brand/5 border border-brand/10 text-brand text-xs tag08-meta font-bold uppercase tracking-tight group-hover:bg-brand group-hover:text-black transition-all duration-300">
+                  <span className="inline-flex px-3 py-1.5 rounded-xl bg-brand/5 border border-brand/10 text-brand text-xs tag08-meta font-bold uppercase tracking-tight group-hover:bg-brand group-hover:text-black transition-colors duration-200">
                     {item.label}
                   </span>
                 </div>
@@ -294,7 +297,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 <div className="md:col-span-2 md:text-right">
                   <button
                     onClick={() => handleLinkClick(item.slug)}
-                    className="text-white hover:text-brand-secondary font-sans text-xs font-bold uppercase tracking-widest inline-flex items-center gap-1.5 group/btn transition-colors cursor-pointer"
+                    className="min-h-11 text-white hover:text-brand-secondary font-sans text-xs font-bold uppercase tracking-widest inline-flex items-center gap-1.5 group/btn transition-colors duration-200 cursor-pointer"
                   >
                     VER CAMINHO <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform text-brand-secondary" />
                   </button>
@@ -308,7 +311,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       {/*==========================================================
           THE HEROIC LIST: "DISCOVER OUR DIGITAL SOLUTIONS" (01 to 05)
          ==========================================================*/}
-      <section id="servicos-principais" className="px-4 sm:px-6 md:px-8 py-20 relative z-10 border-b border-white/[0.04]">
+      <section id="servicos-principais" className="order-1 px-4 sm:px-6 md:px-8 py-14 sm:py-20 relative z-10 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-16">
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
@@ -327,14 +330,14 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             {SERVICE_DOMAINS.map((domain, index) => (
                 <div
                   key={index}
-                  className="bg-charcoal-900 border border-white/[0.06] rounded-[24px] p-6 sm:p-8 lg:p-12 relative overflow-hidden group hover:border-brand-secondary/20 transition-all duration-300 shadow-xl flex flex-col justify-between"
+                  className={`tag08-service-domain ${index === 0 ? "tag08-service-domain--light" : "bg-charcoal-900"} border border-white/[0.06] rounded-[24px] p-6 sm:p-8 lg:p-12 relative overflow-hidden group hover:border-brand-secondary/20 transition-colors duration-200 shadow-xl flex flex-col justify-between`}
                 >
                   {/* Neon top thin strip glow indicator to add extreme design fidelity */}
                   <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-brand-secondary/15 to-transparent transition-opacity group-hover:via-brand/45" />
                   
                   {/* Number count and status bar indicators */}
                   <div className="flex items-center justify-between border-b border-white/[0.04] pb-5 mb-6 text-left select-none">
-                    <span className="font-display font-black text-3xl sm:text-4xl text-zinc-800 group-hover:text-brand-secondary transition-colors uppercase">
+                    <span className="font-display font-black text-3xl sm:text-4xl text-zinc-500 group-hover:text-brand-secondary transition-colors uppercase" aria-hidden="true">
                       {domain.num}.
                     </span>
                     <div className="flex items-center gap-1.5 tag08-meta text-xs text-zinc-500 uppercase tracking-widest">
@@ -382,7 +385,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                                 <Check className="w-2 h-2 text-brand-secondary" />
                               </div>
                               <div>
-                                <h4 className="text-white text-xs font-semibold">{sub.name}</h4>
+                                <h3 className="text-white text-xs font-semibold">{sub.name}</h3>
                                 <p className="text-zinc-400 text-xs mt-0.5 leading-relaxed">{sub.desc}</p>
                               </div>
                             </div>
@@ -394,7 +397,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                       <div className="pt-6 flex flex-wrap gap-3 items-center">
                         <button
                           onClick={() => handleLinkClick(domain.ctaPage)}
-                          className="inline-flex items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-xs text-white tag08-meta font-semibold uppercase tracking-widest py-3 px-6 rounded-xl transition-all duration-300 group/btn shrink-0"
+                          className="inline-flex min-h-11 items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-xs text-white tag08-meta font-semibold uppercase tracking-widest py-3 px-6 rounded-xl transition-colors duration-200 group/btn shrink-0"
                         >
                           <span>{domain.ctaLabel}</span>
                           <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform" />
@@ -405,14 +408,13 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                     {/* Right Column: High Visual Mockup wrapped in subtle physical perspective frames */}
                     <div className="lg:col-span-6 w-full h-full xl:pl-6">
-                      <ThreeDimensionalTilt>
-                        <div className="relative rounded-2xl overflow-hidden aspect-[16/10] sm:aspect-[1.5/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group/img">
+                      <div className="tag08-service-domain__media relative rounded-2xl overflow-hidden aspect-[16/10] sm:aspect-[1.5/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group/img">
                           <Image
                             fill
                             sizes="(max-width: 1024px) 100vw, 50vw"
                             src={domain.image}
                             alt=""
-                            className="object-cover grayscale brightness-[0.4] group-hover/img:scale-105 group-hover/img:grayscale-0 group-hover/img:brightness-[0.6] transition-all duration-700 ease-out"
+                          className="object-cover grayscale brightness-[0.4] group-hover/img:grayscale-0 group-hover/img:brightness-[0.6] transition-[filter] duration-200 ease-out"
                             referrerPolicy="no-referrer"
                           />
                           {/* Rich overlays */}
@@ -421,8 +423,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                             <span className="w-1 h-1 rounded-full bg-brand" />
                             <span>SOLUÇÃO TAG08</span>
                           </div>
-                        </div>
-                      </ThreeDimensionalTilt>
+                      </div>
                     </div>
 
                   </div>
@@ -436,15 +437,15 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       {/*==========================================================
           THE STRATEGIC MATRIX OF COMBINED VALUE (User Screen 2 Style)
          ==========================================================*/}
-      <section className="px-4 sm:px-6 md:px-8 py-20 relative z-10 border-b border-white/[0.04] bg-neutral-900/10">
+      <section className="order-3 px-4 sm:px-6 md:px-8 py-14 sm:py-20 relative z-10 border-b border-white/[0.04] bg-charcoal-950">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="space-y-3 text-left max-w-2xl">
             <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
               Combinação de frentes
             </span>
-            <h3 className="font-display font-medium text-3xl sm:text-4xl text-white tracking-tighter leading-none">
+            <h2 className="font-display font-medium text-3xl sm:text-4xl text-white tracking-tighter leading-none">
               Alguns problemas atravessam mais de uma frente.
-            </h3>
+            </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
               Uma única solução pode ser suficiente. Quando o problema envolve mais de uma dimensão, a combinação precisa nascer do diagnóstico — não da tentativa de ampliar o escopo.
             </p>
@@ -470,7 +471,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             ].map((item, idx) => (
               <div
                 key={idx}
-                className="p-7 rounded-[24px] bg-charcoal-900 border border-white/[0.05] hover:border-brand/40 hover:bg-white/[0.015] transition-all duration-300 relative overflow-hidden flex flex-col justify-between min-h-[240px] group"
+                className="p-6 sm:p-7 rounded-[24px] bg-charcoal-900 border border-white/[0.05] hover:border-brand/40 hover:bg-white/[0.015] transition-colors duration-200 relative overflow-hidden flex flex-col justify-between group"
               >
                 <div className="absolute inset-0 bg-[radial-gradient(#ffffff01_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
@@ -479,11 +480,11 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                     <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-0.5 rounded font-black tracking-widest">
                       {item.tag}
                     </span>
-                    <span className="font-sans text-xs text-zinc-600">0{idx + 1}</span>
+                    <span className="font-sans text-xs text-zinc-300" aria-hidden="true">0{idx + 1}</span>
                   </div>
-                  <h4 className="text-white text-base sm:text-lg font-display font-bold tracking-tight group-hover:text-brand-secondary transition-colors">
+                  <h3 className="text-white text-base sm:text-lg font-display font-bold tracking-tight group-hover:text-brand-secondary transition-colors">
                     {item.title}
-                  </h4>
+                  </h3>
                   <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
                     {item.desc}
                   </p>
@@ -495,7 +496,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       </section>
 
       {/* SECTION - WORK SYSTEM (WhatsApp Neon Callout inspired by screenshot) */}
-      <section className="py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
+      <section className="order-4 py-14 sm:py-20 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
         <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[48px] bg-brand text-black p-6 sm:p-10 lg:p-16 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center shadow-[0_30px_70px_rgba(var(--color-brand-rgb),0.18)] select-none">
           <div className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.08)_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-20 pointer-events-none" />
 
@@ -506,15 +507,15 @@ export default function Servicos({ onNavigate }: ServicosProps) {
               sizes="(max-width: 1024px) 100vw, 42vw"
               src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800"
               alt=""
-              className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%] transition-all duration-500 hover:scale-105"
+              className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[15%]"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
-                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/80 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   CONTEXTO
                 </span>
-                <span className="font-sans text-xs text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/70 tracking-wider">
                   DIREÇÃO TAG08
                 </span>
               </div>
@@ -527,10 +528,10 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 </div>
               </div>
               <div className="flex justify-between items-end">
-                <span className="font-sans text-xs text-white/40 tracking-wider">
+                <span className="font-sans text-xs text-white/70 tracking-wider">
                   EXECUÇÃO
                 </span>
-                <span className="tag08-meta text-xs text-white/50 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
+                <span className="tag08-meta text-xs text-white/80 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-white/5">
                   ACOMPANHAMENTO
                 </span>
               </div>
@@ -592,7 +593,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
               <div className="flex pt-2 relative z-10">
                 <button
                   onClick={() => handleLinkClick("/contato")}
-                  className="inline-flex items-center justify-center gap-2 bg-brand text-black hover:bg-brand-dark tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300"
+                    className="inline-flex min-h-11 items-center justify-center gap-2 bg-brand text-black hover:bg-brand-dark tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-colors duration-200"
                 >
                   FALAR COM A TAG08
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -604,7 +605,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       </section>
 
       {/* SECTION - FAQ */}
-      <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
+      <section className="order-5 py-16 sm:py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand/[0.015] rounded-full blur-[160px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[40px] bg-charcoal-950 border border-white/[0.04] p-6 sm:p-10 lg:p-14 relative overflow-hidden shadow-2xl">
@@ -637,7 +638,9 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   <button
                     key={item.id}
                     onClick={() => setActiveFaq(item.id)}
-                    className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all text-left group cursor-pointer ${
+                    aria-expanded={activeFaq === item.id}
+                    aria-controls="faq-panel"
+                    className={`w-full min-h-11 flex items-center justify-between p-4 rounded-xl border transition-colors duration-200 text-left group cursor-pointer ${
                       activeFaq === item.id
                         ? "bg-brand text-black border-brand shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.12)]"
                         : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
@@ -658,25 +661,25 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             </div>
 
             {/* Middle Column: Cover image */}
-            <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[380px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
+            <div className="lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[300px] sm:min-h-[360px] rounded-3xl overflow-hidden border border-white/[0.04] bg-charcoal-900">
               <Image
                 fill
                 sizes="(max-width: 1024px) 100vw, 34vw"
                 src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800"
                 alt=""
-                className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
+                className="object-cover grayscale brightness-[0.22] contrast-[1.1] pointer-events-none"
               />
-              <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
+              <div className="absolute inset-0 pointer-events-none z-10 opacity-30" aria-hidden="true">
                 <svg viewBox="0 0 100 100" className="w-full h-full text-brand fill-none stroke-current" strokeWidth="0.75" strokeLinecap="round">
                   <path d="M15,80 C40,40 20,10 60,35 C80,50 30,90 85,15" strokeDasharray="2,2" />
                   <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
                 </svg>
               </div>
-              <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
+              <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/50 uppercase tracking-widest leading-none" aria-hidden="true">
                 ORIENTAÇÃO
               </div>
 
-              <div className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left font-sans">
+              <div id="faq-panel" role="region" aria-live="polite" aria-labelledby="faq-panel-heading" className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left font-sans">
                 <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
                   {([
                     "PONTO DE PARTIDA",
@@ -687,7 +690,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   ])[activeFaq]}
                 </span>
 
-                <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
+                <h3 id="faq-panel-heading" className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
                   {([
                     "Preciso saber qual serviço contratar antes de falar com a TAG08?",
                     "A TAG08 trabalha com estruturas prontas?",
@@ -695,7 +698,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                     "Por que o diagnóstico vem antes da proposta?",
                     "A TAG08 garante resultados?"
                   ])[activeFaq]}
-                </h4>
+                </h3>
 
                 <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
@@ -711,33 +714,35 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
             {/* Right Column: Mini auxiliary action cards */}
             <div className="lg:col-span-3 flex flex-col justify-between gap-4">
-              <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
+              <div className="bg-charcoal-900 border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-colors duration-200 text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest block font-bold">CRITÉRIO</span>
-                  <h4 className="text-white font-semibold text-sm leading-snug font-display">A solução vem depois do entendimento.</h4>
+                  <h3 className="text-white font-semibold text-sm leading-snug font-display">A solução vem depois do entendimento.</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
                     O hub apresenta caminhos possíveis. A recomendação final depende de contexto, maturidade e capacidade de execução.
                   </p>
                 </div>
               </div>
 
-              <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
+              <div className="bg-brand text-black rounded-2xl p-5 hover:bg-brand-dark transition-colors duration-200 text-left flex flex-col justify-between space-y-4 flex-1">
                 <div className="space-y-2">
                   <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">PRÓXIMO PASSO</span>
-                  <h4 className="text-black font-black text-sm leading-tight tracking-tight">O melhor caminho começa pelo entendimento do momento atual.</h4>
+                  <h3 className="text-black font-black text-sm leading-tight tracking-tight">O melhor caminho começa pelo entendimento do momento atual.</h3>
                   <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
                     A conversa inicial organiza contexto, prioridade e fit antes da proposta.
                   </p>
                 </div>
-                <a
+                <TrackedOutboundLink
+                  label="Falar com a TAG08"
+                  surface="servicos-final-cta"
                   href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20entender%20o%20melhor%20caminho%20para%20minha%20marca!")}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:translate-x-0.5 transition-all"
+                  className="group flex min-h-11 items-center justify-between text-xs font-sans font-black text-black select-none border-t border-black/10 pt-3 hover:border-black/30 transition-colors duration-200"
                 >
                   <span>FALAR COM A TAG08</span>
                   <ArrowUpRight className="w-4 h-4 text-black stroke-[2.5]" />
-                </a>
+                </TrackedOutboundLink>
               </div>
             </div>
           </div>
@@ -747,7 +752,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       {/*==========================================================
           THE EXECUTIVE CONVICTION CTA PANEL
          ==========================================================*/}
-      <section className="px-4 sm:px-6 md:px-8 py-12 relative z-10 animate-fade-in border-t border-white/[0.04]">
+      <section className="order-6 px-4 sm:px-6 md:px-8 py-10 sm:py-12 relative z-10 animate-fade-in border-t border-white/[0.04]">
         <div className="max-w-4xl mx-auto rounded-3xl bg-charcoal-900 border border-white/[0.06] p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8 text-left relative overflow-hidden shadow-2xl">
           <div className="absolute inset-0 bg-gradient-to-r from-brand-secondary/[0.01] via-transparent to-transparent pointer-events-none" />
           
@@ -755,9 +760,9 @@ export default function Servicos({ onNavigate }: ServicosProps) {
             <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-semibold bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
               Próximo passo
             </span>
-            <h3 className="font-display font-medium text-xl sm:text-2xl text-white tracking-tight leading-none">
+            <h2 className="font-display font-medium text-xl sm:text-2xl text-white tracking-tight leading-none">
               A solução certa precisa fazer sentido antes da contratação.
-            </h3>
+            </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
               A TAG08 procura entender contexto, maturidade, prioridade e capacidade de execução antes de recomendar uma solução.
             </p>
@@ -766,7 +771,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
           <div className="flex shrink-0">
             <button
               onClick={() => handleLinkClick("/contato")}
-              className="bg-brand-secondary hover:bg-brand hover:scale-105 duration-300 text-black font-black text-xs font-sans px-7 py-4 rounded-xl transition-all shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.15)] cursor-pointer"
+              className="min-h-11 bg-brand-secondary hover:bg-brand text-black font-black text-xs font-sans px-7 py-4 rounded-xl transition-colors duration-200 shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.15)] cursor-pointer"
             >
               QUERO ENTENDER MEU MELHOR CAMINHO
             </button>

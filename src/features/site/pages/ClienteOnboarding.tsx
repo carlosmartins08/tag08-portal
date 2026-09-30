@@ -28,7 +28,7 @@ import {
   MessageCircle,
   FolderDot
 } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { activateOnKeyboard } from "../../../lib/keyboard";
 import {
   ONBOARDING_QUEUE_MAX_AGE_DAYS,
@@ -104,12 +104,12 @@ const translations: Record<Language, Record<string, string>> = {
     header_desc: "Inicie a engenharia de seu projeto de forma leve e progressiva. Evitamos a rigidez de formulários tradicionais por meio de perguntas táticas guiadas.",
     
     // Privacy Sidebar
-    privacy_title: "GARANTIAS DE PRIVACIDADE",
-    privacy_desc: "Sua empresa goza de absoluta proteção jurídica. Assinamos NDAs de confidencialidade padrão caso seja necessário antes do início de qualquer procedimento.",
-    privacy_indicators: "PROTETORES ATIVOS:",
-    privacy_p1: "Tratamento de dados sob a LGPD",
-    privacy_p2: "Criptografia de upload no formulário",
-    privacy_p3: "Suporte corporativo sob demanda",
+    privacy_title: "TRATAMENTO RESPONSÁVEL DE DADOS",
+    privacy_desc: "Usamos estas informações para preparar o projeto, organizar o briefing e encaminhar o atendimento da TAG08. Se a conexão cair, o envio pode ficar temporariamente em fila local. Evite enviar senhas ou dados desnecessários.",
+    privacy_indicators: "COMO OS DADOS SÃO USADOS:",
+    privacy_p1: "Tratamento conforme a LGPD",
+    privacy_p2: "Links e materiais usados apenas no briefing",
+    privacy_p3: "Acessos sempre solicitados por canal seguro",
     
     // Step indicator & generic
     step_label: "ETAPA",
@@ -268,7 +268,7 @@ const translations: Record<Language, Record<string, string>> = {
     err_responsible_email: "Insira um endereço de e-mail corporativo válido.",
     err_responsible_whatsapp: "Precisamos de um número de WhatsApp ativo para contato técnico.",
     err_business_moment: "Por favor, selecione a alternativa que mais condiz com o momento de sua empresa.",
-    err_priority_map: "Por favor, assinale qual rea de prioridade podemos te auxiliar primeiro.",
+    err_priority_map: "Por favor, assinale qual área de prioridade podemos te auxiliar primeiro.",
     err_selected_services: "Selecione ao menos um dos formatos ou serviços contratados de seu projeto.",
     err_consent: "Você precisa estar ciente e marcar todos os 3 tópicos de consentimento sob LGPD para submeter o onboarding."
   },
@@ -279,12 +279,12 @@ const translations: Record<Language, Record<string, string>> = {
     header_desc: "Start your project engineering smoothly and progressively. We avoid rigid traditional forms through guided tactical questions.",
     
     // Privacy Sidebar
-    privacy_title: "PRIVACY GUARANTEES",
-    privacy_desc: "Your company enjoys absolute legal protection. If necessary, we sign standard confidentiality NDAs before initiating any procedure.",
-    privacy_indicators: "ACTIVE PROTECTORS:",
-    privacy_p1: "Data processing under LGPD/GDPR regulations",
-    privacy_p2: "Upload encryption within the form",
-    privacy_p3: "On-demand corporate support",
+    privacy_title: "RESPONSIBLE DATA HANDLING",
+    privacy_desc: "We use this information to prepare the project, organize the briefing, and route TAG08 delivery. If the connection drops, the submission may remain temporarily in a local queue. Do not submit passwords or unnecessary data.",
+    privacy_indicators: "HOW DATA IS USED:",
+    privacy_p1: "Processing under applicable privacy rules",
+    privacy_p2: "Links and assets used for the briefing",
+    privacy_p3: "Access requests always use a secure channel",
     
     // Step indicator & generic
     step_label: "STEP",
@@ -453,12 +453,12 @@ const translations: Record<Language, Record<string, string>> = {
     header_desc: "Inicie la ingeniería de su proyecto de manera fluida y progresiva. Evitamos la rigidez de formularios tradicionales mediante preguntas tácticas guiadas.",
     
     // Privacy Sidebar
-    privacy_title: "GARANTAS DE PRIVACIDAD",
-    privacy_desc: "Su empresa goza de absoluta protección jurídica. Si es necesario, firmamos NDAs estándar de confidencialidad antes de iniciar cualquier procedimiento.",
-    privacy_indicators: "PROTECTORES ACTIVOS:",
-    privacy_p1: "Procesamiento bajo regulaciones de protección de datos",
-    privacy_p2: "Encriptacin de archivos adjuntos en el formulario",
-    privacy_p3: "Soporte corporativo especializado bajo demanda",
+    privacy_title: "TRATAMIENTO RESPONSABLE DE DATOS",
+    privacy_desc: "Usamos esta información para preparar el proyecto, organizar el briefing y encaminar la atención de TAG08. Si falla la conexión, el envío puede quedar temporalmente en una cola local. No envíe contraseñas ni datos innecesarios.",
+    privacy_indicators: "CÓMO SE USAN LOS DATOS:",
+    privacy_p1: "Tratamiento conforme a las reglas aplicables",
+    privacy_p2: "Enlaces y materiales usados para el briefing",
+    privacy_p3: "Los accesos se solicitan por un canal seguro",
     
     // Step indicator & generic
     step_label: "ETAPA",
@@ -688,11 +688,16 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
   const [deliveryState, setDeliveryState] = useState<DeliveryState>("idle");
   const [deliveryMessage, setDeliveryMessage] = useState("");
   const [pendingQueueCount, setPendingQueueCount] = useState(0);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const prefersReducedMotion = useReducedMotion();
   
-  // Developer log visual state
-  const [showDevPayload, setShowDevPayload] = useState(false);
-  const [generatedPayload, setGeneratedPayload] = useState<any>(null);
   const hasTrackedOnboardingStartRef = useRef(false);
+
+  useEffect(() => {
+    if (currentStep > 0) {
+      requestAnimationFrame(() => stepHeadingRef.current?.focus());
+    }
+  }, [currentStep]);
 
   // STEP 1: Dados da Empresa
   const [companyName, setCompanyName] = useState("");
@@ -849,7 +854,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     } catch {
       // Mantém apenas estado em memória se localStorage estiver indisponível.
     }
-    setPendingQueueCount(entries.filter((entry) => entry.status !== "sent").length);
+    setPendingQueueCount(entries.filter((entry) => entry.status === "pending" || entry.status === "retrying").length);
   };
 
   const buildRetryDelayMs = (attempt: number) => {
@@ -921,8 +926,12 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
     const remaining: OnboardingQueueEntry[] = [];
     for (const entry of entries) {
-      if (entry.status === "sent" || entry.status === "error") {
+      if (entry.status === "sent") {
         remaining.push(entry);
+        continue;
+      }
+
+      if (entry.status === "error") {
         continue;
       }
 
@@ -955,7 +964,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     setQueuedOnboardingEntries(remaining);
   };
   useEffect(() => {
-    setPendingQueueCount(getQueuedOnboardingEntries().filter((entry) => entry.status !== "sent").length);
+    setPendingQueueCount(getQueuedOnboardingEntries().filter((entry) => entry.status === "pending" || entry.status === "retrying").length);
     const syncQueueIfPossible = () => {
       if (!navigator.onLine) return;
       flushQueuedSubmissions().catch(() => {
@@ -1203,14 +1212,14 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
         });
         return nextStep;
       });
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
     }
   };
 
   const handlePrev = () => {
     setCurrentErrors([]);
     setCurrentStep(prev => Math.max(0, prev - 1));
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
   };
 
   // Check if a specific service briefing is required based on selection
@@ -1426,8 +1435,6 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
       clickupPayload
     };
 
-    setGeneratedPayload(finalPayload);
-
     let shouldShowSuccessScreen = false;
     try {
       const response = await sendToBackend(finalPayload);
@@ -1550,7 +1557,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                 <Building2 className="w-3.5 h-3.5 text-brand-secondary shrink-0" /> {companyName}
               </p>
             ) : (
-              <p className="text-zinc-600 italic">{t("sidebar_pending")}</p>
+              <p className="text-zinc-400 italic">{t("sidebar_pending")}</p>
             )}
             <div className="flex gap-1 pt-1">
               <span className="px-1.5 py-0.5 bg-white/[0.04] border border-white/[0.06] text-xs rounded text-zinc-300 font-sans uppercase">
@@ -1567,7 +1574,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                 <User className="w-3.5 h-3.5 text-brand-secondary shrink-0" /> {responsibleName}
               </span>
             ) : (
-              <span className="text-zinc-600 italic">{t("sidebar_waiting")}</span>
+              <span className="text-zinc-400 italic">{t("sidebar_waiting")}</span>
             )}
           </div>
 
@@ -1577,7 +1584,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
             {businessMoment ? (
               <p className="text-zinc-300 line-clamp-2 leading-snug">{businessMoment}</p>
             ) : (
-              <p className="text-zinc-600 italic">{t("sidebar_none_selected")}</p>
+              <p className="text-zinc-400 italic">{t("sidebar_none_selected")}</p>
             )}
           </div>
 
@@ -1593,7 +1600,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                 ))}
               </div>
             ) : (
-              <p className="text-zinc-600 italic">{t("sidebar_no_service")}</p>
+              <p className="text-zinc-400 italic">{t("sidebar_no_service")}</p>
             )}
           </div>
 
@@ -1606,8 +1613,8 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
           )}
         </div>
 
-        <div className="pt-3 border-t border-white/[0.03] flex items-center gap-2 text-xs text-zinc-500 font-sans">
-          <Lock className="w-3.5 h-3.5 text-zinc-600" />
+        <div className="pt-3 border-t border-white/[0.03] flex items-center gap-2 text-xs text-zinc-400 font-sans">
+          <Lock className="w-3.5 h-3.5 text-zinc-400" />
           <span>{t("senior_info")}</span>
         </div>
       </div>
@@ -1688,7 +1695,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                 key={lang.code}
                 type="button"
                 onClick={() => setPreferredLanguage(lang.code)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-sans font-bold uppercase transition-all ${
+                className={`min-h-11 px-3 py-1.5 rounded-lg text-xs font-sans font-bold uppercase transition-[background-color,color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 ${
                   preferredLanguage === lang.code
                     ? "bg-brand-secondary text-black shadow-[0_4px_12px_rgba(var(--color-brand-secondary-rgb),0.15)]"
                     : "text-zinc-400 hover:text-white hover:bg-white/[0.03]"
@@ -1710,9 +1717,17 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
               </span>
               <span>{Math.round((currentStep / (steps.length - 1)) * 100)}% {t("completed")}</span>
             </div>
-            <div className="h-1.5 w-full bg-white/[0.03] border border-white/[0.05] rounded-full overflow-hidden">
+            <div
+              className="h-1.5 w-full bg-white/[0.03] border border-white/[0.05] rounded-full overflow-hidden"
+              role="progressbar"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={Math.round((currentStep / (steps.length - 1)) * 100)}
+              aria-valuetext={`${t("step_label")} ${currentStep} ${t("step_of")} ${steps.length - 1}`}
+              aria-label={t("step_label")}
+            >
               <div 
-                className="h-full bg-brand-secondary transition-all duration-500 ease-out shadow-[0_0_8px_rgba(var(--color-brand-secondary-rgb),0.3)]"
+                className="h-full bg-brand-secondary transition-[width] duration-200 ease-out motion-reduce:transition-none shadow-[0_0_8px_rgba(var(--color-brand-secondary-rgb),0.3)]"
                 style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
               />
             </div>
@@ -1755,15 +1770,16 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
           {/* RIGHT CONTAINER - INTERACTIVE ASSISTANT FORM CARD */}
           <div className="lg:col-span-8">
-            <div className="bg-charcoal-900/70 border border-white/[0.06] rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-md relative overflow-hidden min-h-[480px] flex flex-col justify-between">
+            <div className="bg-charcoal-900/70 border border-white/[0.06] rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-md relative overflow-hidden flex flex-col justify-between">
               
+              <form id="onboarding-form" onSubmit={handleSubmit}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentStep}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: "easeOut" }}
                   className="space-y-8 text-left h-full flex flex-col justify-between"
                 >
                   
@@ -1782,6 +1798,10 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                     </div>
                   )}
 
+                  <h2 ref={stepHeadingRef} tabIndex={-1} className="sr-only focus:outline-none" aria-live="polite">
+                    {currentStep === 9 ? t("finalized_title") : currentStep === 0 ? t("welcome_title").replace("<br />", " ") : `${steps[currentStep].title}: ${steps[currentStep].desc}`}
+                  </h2>
+
                   {/* STEP 0: WELCOME SCREEN */}
                   {currentStep === 0 && (
                     <div className="space-y-8 py-4">
@@ -1790,7 +1810,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           <Sparkles className="w-3 h-3 text-brand-secondary animate-pulse shrink-0" />
                         </div>
                         <h2 
-                          className="font-display font-medium text-2xl sm:text-3.5xl text-gradient tracking-tight leading-none text-white font-semibold"
+                          className="font-display font-medium text-2xl sm:text-4xl text-gradient tracking-tight leading-none text-white font-semibold"
                           dangerouslySetInnerHTML={{ __html: t("welcome_title") }}
                         />
                         <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-3xl">
@@ -1806,19 +1826,19 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                             /* HIGH STANDOUT NEON ACCENT CARD */
                             <div 
                               key={index}
-                              className="bg-brand-secondary border border-black/10 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[160px] shadow-[0_12px_36px_rgba(var(--color-brand-secondary-rgb),0.12)] relative overflow-hidden select-none hover:scale-[1.02] transition-all duration-300"
+                              className="bg-brand-secondary border border-black/10 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[140px] shadow-[0_12px_36px_rgba(var(--color-brand-secondary-rgb),0.12)] relative overflow-hidden"
                             >
                               <div className="absolute top-[-25px] right-[-25px] w-16 h-16 bg-white/20 rounded-full blur-xl pointer-events-none" />
                               <div className="flex items-center justify-between relative z-10">
                                 <span className="font-sans text-xs font-black uppercase text-black/60 bg-black/5 px-2 py-0.5 rounded border border-black/5">
                                   {item.phase}
                                 </span>
-                                <IconComp className="w-3.5 h-3.5 text-black/70 animate-bounce" />
+                                <IconComp className="w-3.5 h-3.5 text-black/80" />
                               </div>
                               <div className="space-y-1 relative z-10 mt-4 text-left">
-                                <h4 className="font-display font-black text-sm text-black tracking-tight leading-none">
+                                <h3 className="font-display font-black text-sm text-black tracking-tight leading-none">
                                   {item.title}
-                                </h4>
+                                </h3>
                                 <p className="text-black/70 text-xs leading-snug font-medium">
                                   {item.desc}
                                 </p>
@@ -1828,7 +1848,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                             /* SLEEK AMBIENT DARK CORE CARD */
                             <div 
                               key={index}
-                              className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[160px] relative overflow-hidden select-none hover:scale-[1.02] transition-all duration-300"
+                              className="bg-charcoal-950 border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[140px] relative overflow-hidden transition-[border-color,background-color] duration-200"
                             >
                               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl pointer-events-none" />
                               <div className="flex items-center justify-between relative z-10">
@@ -1838,9 +1858,9 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                                 <IconComp className="w-3.5 h-3.5 text-zinc-500" />
                               </div>
                               <div className="space-y-1 relative z-10 mt-4 text-left">
-                                <h4 className="font-display font-black text-sm text-white tracking-tight leading-none">
+                                <h3 className="font-display font-black text-sm text-white tracking-tight leading-none">
                                   {item.title}
-                                </h4>
+                                </h3>
                                 <p className="text-zinc-500 text-xs leading-snug font-medium">
                                   {item.desc}
                                 </p>
@@ -1874,9 +1894,9 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         <button
                           type="button"
                           onClick={() => setCurrentStep(1)}
-                          className="px-7 py-4.5 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center gap-2.5 cursor-pointer shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.18)] hover:-translate-y-0.5"
+                          className="inline-flex min-h-11 items-center gap-2.5 px-7 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-[background-color,box-shadow] duration-200 cursor-pointer shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900"
                         >
-                          {t("btn_start")} <ArrowRight className="w-4.5 h-4.5" />
+                          {t("btn_start")} <ArrowRight className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
@@ -1887,31 +1907,36 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                     <div className="space-y-6 py-2">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
+                          <label htmlFor="onboarding-company-name" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("empresa_label_name")}
                           </label>
                           <div className="relative">
-                            <Building2 className="absolute left-3.5 top-3.5 w-4.5 h-4.5 text-zinc-500" />
+                            <Building2 className="absolute left-3.5 top-3.5 w-4 h-4 text-zinc-500" />
                             <input
+                              id="onboarding-company-name"
+                              name="companyName"
+                              autoComplete="organization"
                               type="text"
                               required
                               value={companyName}
                               onChange={(e) => setCompanyName(e.target.value)}
-                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-all font-sans"
+                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 font-sans"
                               placeholder={t("empresa_placeholder_name")}
                             />
                           </div>
                         </div>
 
                         <div className="space-y-2">
-                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
+                          <label htmlFor="onboarding-cnpj" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("empresa_label_cnpj")}
                           </label>
                           <input
+                            id="onboarding-cnpj"
+                            name="cnpjCpf"
                             type="text"
                             value={cnpjCpf}
                             onChange={(e) => setCnpjCpf(e.target.value)}
-                            className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-all font-sans"
+                            className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 font-sans"
                             placeholder={t("empresa_placeholder_cnpj")}
                           />
                         </div>
@@ -1919,32 +1944,36 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
+                          <label htmlFor="onboarding-city" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("empresa_label_city")}
                           </label>
                           <div className="relative">
-                            <MapPin className="absolute left-3.5 top-3.5 w-4.5 h-4.5 text-zinc-500" />
+                            <MapPin className="absolute left-3.5 top-3.5 w-4 h-4 text-zinc-500" />
                             <input
+                              id="onboarding-city"
+                              name="cityState"
                               type="text"
                               value={cityState}
                               onChange={(e) => setCityState(e.target.value)}
-                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-all font-sans"
+                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 font-sans"
                               placeholder={t("empresa_placeholder_city")}
                             />
                           </div>
                         </div>
 
                         <div className="space-y-2">
-                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
+                          <label htmlFor="onboarding-website" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("empresa_label_site")}
                           </label>
                           <div className="relative">
-                            <Globe className="absolute left-3.5 top-3.5 w-4.5 h-4.5 text-zinc-500" />
+                            <Globe className="absolute left-3.5 top-3.5 w-4 h-4 text-zinc-500" />
                             <input
+                              id="onboarding-website"
+                              name="companyWebsite"
                               type="url"
                               value={companyWebsite}
                               onChange={(e) => setCompanyWebsite(e.target.value)}
-                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-all font-sans"
+                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 font-sans"
                               placeholder={t("empresa_placeholder_site")}
                             />
                           </div>
@@ -1953,32 +1982,36 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-2">
                         <div className="space-y-2">
-                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
+                          <label htmlFor="onboarding-instagram" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("empresa_label_insta")}
                           </label>
                           <div className="relative">
-                            <Instagram className="absolute left-3.5 top-3.5 w-4.5 h-4.5 text-zinc-500" />
+                            <Instagram className="absolute left-3.5 top-3.5 w-4 h-4 text-zinc-500" />
                             <input
+                              id="onboarding-instagram"
+                              name="companyInstagram"
                               type="text"
                               value={companyInstagram}
                               onChange={(e) => setCompanyInstagram(e.target.value)}
-                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-all font-sans"
+                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 font-sans"
                               placeholder={t("empresa_placeholder_insta")}
                             />
                           </div>
                         </div>
 
                         <div className="space-y-2">
-                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
+                          <label htmlFor="onboarding-linkedin" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("empresa_label_linkedin")}
                           </label>
                           <div className="relative">
-                            <Linkedin className="absolute left-3.5 top-3.5 w-4.5 h-4.5 text-zinc-500" />
+                            <Linkedin className="absolute left-3.5 top-3.5 w-4 h-4 text-zinc-500" />
                             <input
+                              id="onboarding-linkedin"
+                              name="companyLinkedin"
                               type="text"
                               value={companyLinkedin}
                               onChange={(e) => setCompanyLinkedin(e.target.value)}
-                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-all font-sans"
+                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 font-sans"
                               placeholder={t("empresa_placeholder_linkedin")}
                             />
                           </div>
@@ -1988,9 +2021,9 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* IDIOMA PREFERENCIAL DE ATENDIMENTO */}
                       <div className="space-y-4 pt-4 border-t border-white/[0.04]">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                          <h4 className="text-xs tag08-meta text-zinc-300 tracking-wider font-bold">
+                          <h3 className="text-xs tag08-meta text-zinc-300 tracking-wider font-bold">
                             {t("empresa_lang_title")}
-                          </h4>
+                          </h3>
                           <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/10 border border-brand-secondary/20 px-2.5 py-0.5 rounded uppercase font-black shrink-0 self-start">
                             {t("empresa_lang_badge")}
                           </span>
@@ -2009,7 +2042,8 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                               key={lang.value}
                               type="button"
                               onClick={() => setPreferredLanguage(lang.value)}
-                              className={`p-4 rounded-xl border text-left transition-all ${
+                              aria-pressed={preferredLanguage === lang.value}
+                              className={`min-h-11 p-4 rounded-xl border text-left transition-[background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary ${
                                 preferredLanguage === lang.value
                                   ? "bg-brand-secondary/10 border-brand-secondary text-white"
                                   : "bg-zinc-950/40 border-white/[0.08] hover:border-white/[0.18] text-zinc-300"
@@ -2034,31 +2068,36 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                     <div className="space-y-6 py-2">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
+                          <label htmlFor="onboarding-responsible-name" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("equipe_label_name")}
                           </label>
                           <div className="relative">
-                            <User className="absolute left-3.5 top-3.5 w-4.5 h-4.5 text-zinc-500" />
+                          <User className="absolute left-3.5 top-3.5 w-4 h-4 text-zinc-500" />
                             <input
+                              id="onboarding-responsible-name"
+                              name="responsibleName"
+                              autoComplete="name"
                               type="text"
                               required
                               value={responsibleName}
                               onChange={(e) => setResponsibleName(e.target.value)}
-                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-all font-sans"
+                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 font-sans"
                               placeholder={t("equipe_placeholder_name")}
                             />
                           </div>
                         </div>
 
                         <div className="space-y-2">
-                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
+                          <label htmlFor="onboarding-responsible-role" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("equipe_label_role")}
                           </label>
                           <input
+                            id="onboarding-responsible-role"
+                            name="responsibleRole"
                             type="text"
                             value={responsibleRole}
                             onChange={(e) => setResponsibleRole(e.target.value)}
-                            className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-all font-sans"
+                            className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 font-sans"
                             placeholder={t("equipe_placeholder_role")}
                           />
                         </div>
@@ -2066,34 +2105,40 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
+                          <label htmlFor="onboarding-responsible-email" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("equipe_label_email")}
                           </label>
                           <div className="relative">
-                            <Mail className="absolute left-3.5 top-3.5 w-4.5 h-4.5 text-zinc-500" />
+                            <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-zinc-500" />
                             <input
+                              id="onboarding-responsible-email"
+                              name="responsibleEmail"
+                              autoComplete="email"
                               type="email"
                               required
                               value={responsibleEmail}
                               onChange={(e) => setResponsibleEmail(e.target.value)}
-                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-all font-sans"
+                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 font-sans"
                               placeholder={t("equipe_placeholder_email")}
                             />
                           </div>
                         </div>
 
                         <div className="space-y-2">
-                          <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
+                          <label htmlFor="onboarding-responsible-whatsapp" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("equipe_label_whatsapp")}
                           </label>
                           <div className="relative">
-                            <Phone className="absolute left-3.5 top-3.5 w-4.5 h-4.5 text-zinc-500" />
+                            <Phone className="absolute left-3.5 top-3.5 w-4 h-4 text-zinc-500" />
                             <input
+                              id="onboarding-responsible-whatsapp"
+                              name="responsibleWhatsapp"
+                              autoComplete="tel"
                               type="tel"
                               required
                               value={responsibleWhatsapp}
                               onChange={(e) => setResponsibleWhatsapp(e.target.value)}
-                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-all font-sans"
+                              className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 font-sans"
                               placeholder={t("equipe_placeholder_whatsapp")}
                             />
                           </div>
@@ -2157,7 +2202,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                               role="radio"
                               aria-checked={businessMoment === opt.value}
                               tabIndex={0}
-                              className={`p-4 rounded-2xl border transition-all duration-300 cursor-pointer text-left flex flex-col justify-between h-[110px] ${
+                              className={`flex min-h-11 p-4 rounded-2xl border transition-[background-color,border-color,box-shadow] duration-200 cursor-pointer text-left flex-col justify-between min-h-[96px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900 ${
                                 businessMoment === opt.value
                                   ? "bg-brand-secondary/[0.03] border-brand-secondary shadow-[0_4px_15px_rgba(var(--color-brand-secondary-rgb),0.06)]"
                                   : "bg-neutral-900/40 border-white/[0.04] hover:bg-neutral-900/60 hover:border-white/[0.12]"
@@ -2188,7 +2233,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                               role="radio"
                               aria-checked={priorityMap === opt.value}
                               tabIndex={0}
-                              className={`p-3.5 rounded-xl border text-center cursor-pointer transition-all ${
+                              className={`flex min-h-11 items-center justify-center p-3.5 rounded-xl border text-center cursor-pointer transition-[background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900 ${
                                 priorityMap === opt.value
                                   ? "bg-white/[0.03] border-brand-secondary text-brand-secondary"
                                   : "bg-zinc-950 border-white/[0.04] text-zinc-400 hover:border-white/[0.1]"
@@ -2259,7 +2304,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                               role="checkbox"
                               aria-checked={active}
                               tabIndex={0}
-                              className={`p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between text-left h-[130px] relative ${
+                              className={`flex min-h-11 p-4 rounded-2xl border cursor-pointer transition-[background-color,border-color,box-shadow] duration-200 flex-col justify-between text-left min-h-[120px] relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900 ${
                                 active
                                   ? "bg-brand-secondary/[0.02] border-brand-secondary shadow-[0_4px_15px_rgba(var(--color-brand-secondary-rgb),0.05)]"
                                   : "bg-neutral-900/30 border-white/[0.04] hover:bg-neutral-900/60 hover:border-white/[0.1]"
@@ -2269,7 +2314,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                                 <div className={`w-9 h-9 rounded-xl flex items-center justify-center border ${
                                   active ? "bg-brand/15 border-brand text-brand" : "bg-white/[0.02] border-white/[0.06] text-zinc-400"
                                 }`}>
-                                  <IconComp className="w-4.5 h-4.5" />
+                                  <IconComp className="w-4 h-4" />
                                 </div>
                                 {active && (
                                   <div className="w-5 h-5 rounded-full bg-brand-secondary flex items-center justify-center">
@@ -2299,7 +2344,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                             value={customServiceText}
                             onChange={(e) => setCustomServiceText(e.target.value)}
                             placeholder={t("escopo_placeholder_custom")}
-                            className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-all font-sans"
+                            className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 font-sans"
                           />
                         </div>
                       )}
@@ -2308,7 +2353,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                   {/* STEP 5: BRIEFING ESPECFICO POR SERVI!O */}
                   {currentStep === 5 && (
-                    <div className="space-y-6 py-2 overflow-y-auto max-h-[500px] pr-2">
+                    <div className="space-y-6 py-2 pr-2">
                       <div className="space-y-2 bg-neutral-950 p-4 rounded-xl border border-white/[0.03] mb-4">
                         <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black uppercase inline-block">MÓDULO CUSTOMIZADO ATIVO</span>
                         <p className="text-zinc-400 text-xs leading-relaxed font-sans">
@@ -2319,9 +2364,9 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* 5a. GESTO DE REDES SOCIAIS BRIEFING */}
                       {isSelected("Gestão de Redes Sociais") && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 p-5 rounded-2xl border border-white/[0.05] bg-neutral-900/30 text-left">
-                          <h4 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
+                          <h3 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-brand-secondary" /> Redes Sociais & Conteúdo
-                          </h4>
+                          </h3>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-1.5 font-sans">
@@ -2329,14 +2374,14 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                               <input type="text" value={smChannels} onChange={(e) => setSmChannels(e.target.value)} placeholder="Instagram e YouTube" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                             <div className="space-y-1.5 font-sans">
-                              <label className="text-xs text-zinc-400 font-sans">Qual o principal pblico desejado?</label>
+                              <label className="text-xs text-zinc-300 font-sans">Qual o principal público desejado?</label>
                               <input type="text" value={smTargetAudience} onChange={(e) => setSmTargetAudience(e.target.value)} placeholder="Diretores de empresas parceiras" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-sans">
                             <div className="space-y-1.5">
-                              <label className="text-xs text-zinc-400 font-sans">Produtos/Serviços prioritrios a vender</label>
+                              <label className="text-xs text-zinc-300 font-sans">Produtos/Serviços prioritários a vender</label>
                               <input type="text" value={smPriorityProducts} onChange={(e) => setSmPriorityProducts(e.target.value)} placeholder="Tratamento estético VIP" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                             </div>
                             <div className="space-y-1.5">
@@ -2382,9 +2427,9 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* 5b. BRANDING BRIEFING */}
                       {isSelected("Branding & Identidade") && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 p-5 rounded-2xl border border-white/[0.05] bg-neutral-900/30 text-left">
-                          <h4 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
+                          <h3 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-brand-secondary" /> Branding &amp; Identidade Visual
-                          </h4>
+                          </h3>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-1.5 font-sans">
@@ -2443,9 +2488,9 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* 5c. WEB DEVELOPMENT BRIEFING */}
                       {isSelected("Desenvolvimento Web") && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 p-5 rounded-2xl border border-white/[0.05] bg-neutral-900/30 text-left">
-                          <h4 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
+                          <h3 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-brand-secondary" /> Engenharia Web & Sites
-                          </h4>
+                          </h3>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-1.5 font-sans">
@@ -2532,9 +2577,9 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* 5d. PROCESS INTELLIGENCE BRIEFING */}
                       {isSelected("Process Intelligence") && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 p-5 rounded-2xl border border-white/[0.05] bg-neutral-900/30 text-left">
-                          <h4 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
+                          <h3 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-brand-secondary" /> Process Intelligence
-                          </h4>
+                          </h3>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-1.5 font-sans">
@@ -2603,9 +2648,9 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       {/* 5e. PROCESS ACTIVATION BRIEFING */}
                       {isSelected("Process Activation") && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 p-5 rounded-2xl border border-white/[0.05] bg-neutral-900/30 text-left">
-                          <h4 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
+                          <h3 className="text-brand-secondary font-sans text-xs font-extrabold border-b border-white/[0.03] pb-2 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-brand-secondary" /> Governança &amp; Process Activation
-                          </h4>
+                          </h3>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-1.5 font-sans">
@@ -2718,7 +2763,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                    {/* STEP 7: EXPECTATIVAS PARA PRÓXIMOS 90 DIAS */}
                   {currentStep === 7 && (
-                    <div className="space-y-6 py-2 overflow-y-auto max-h-[500px] pr-2 font-sans">
+                    <div className="space-y-6 py-2 pr-2 font-sans">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-1.5">
                           <label className="text-xs text-zinc-400">{t("expectativas_subtitle")}</label>
@@ -2764,7 +2809,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                     <div className="space-y-6 py-2 font-sans">
                       <div className="p-5 rounded-2xl bg-brand-secondary/[0.01] border border-brand-secondary/10 space-y-4">
                         <div className="flex items-center gap-2.5 text-brand-secondary font-sans text-xs uppercase font-extrabold pb-2 border-b border-white/[0.03]">
-                          <Lock className="w-4.5 h-4.5" /> {t("consent_title")}
+                          <Lock className="w-4 h-4" /> {t("consent_title")}
                         </div>
                         
                         <p className="text-zinc-400 text-xs leading-relaxed font-sans">
@@ -2853,7 +2898,9 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300">
                             <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-xs"><Check className="w-3 h-3" /></div>
-                            <span>{preferredLanguage === "en" ? "Notification sent to TAG08 board" : preferredLanguage === "es" ? "Notificación enviada a la directiva" : "Notificação enviada à diretoria TAG08"}</span>
+                            <span>{deliveryState === "queued"
+                              ? (preferredLanguage === "en" ? "Waiting to synchronize with TAG08" : preferredLanguage === "es" ? "Pendiente de sincronización con TAG08" : "Aguardando sincronização com a TAG08")
+                              : (preferredLanguage === "en" ? "Notification sent to TAG08 board" : preferredLanguage === "es" ? "Notificación enviada a la directiva" : "Notificação enviada à diretoria TAG08")}</span>
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300 animate-pulse">
                             <div className="w-3 h-3 rounded-full bg-amber-400 shrink-0 shadow-[0_0_8px_#fbbf24]" />
@@ -2864,7 +2911,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                       <div className="space-y-4 p-5 rounded-2xl bg-white/[0.01] border border-white/[0.04] text-left">
                         <span className="font-sans text-xs text-zinc-500 uppercase font-black block mb-1">
-                          {preferredLanguage === "en" ? "DURING THIS INTERVAL, YOU CAN PREPARE:" : preferredLanguage === "es" ? "DURANTE ESTE INTERVALO, PUEDE PREPARAR:" : "DURANTE ESSE INTERVALO, VOC? PODE SEPARAR:"}
+                          {preferredLanguage === "en" ? "DURING THIS INTERVAL, YOU CAN PREPARE:" : preferredLanguage === "es" ? "DURANTE ESTE INTERVALO, PUEDE PREPARAR:" : "DURANTE ESSE INTERVALO, VOCÊ PODE SEPARAR:"}
                         </span>
                         
                         <ul className="space-y-1.5 text-zinc-400 text-xs">
@@ -2875,42 +2922,6 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Access details to be requested via secure & auditable channel" : preferredLanguage === "es" ? "Detalles de acceso que se solicitarán por canal seguro y auditable" : "Acessos que serão solicitados por canal seguro e auditável"}</li>
                         </ul>
                       </div>
-
-                      {/* Developer playground view trigger */}
-                      <div className="bg-charcoal-950 p-4 rounded-xl border border-white/[0.03] flex items-center justify-between text-xs font-sans">
-                        <span className="text-zinc-400">
-                          {preferredLanguage === "en" ? "Structured payload (Sheets & ClickUp) generated:" : preferredLanguage === "es" ? "Payload estructurado (Sheets y ClickUp) generado:" : "Payload estruturado (Sheets & ClickUp) gerado:"}
-                        </span>
-                        <button 
-                          onClick={() => setShowDevPayload(!showDevPayload)} 
-                          className="text-brand-secondary bg-brand-secondary/5 px-2.5 py-1 rounded border border-brand-secondary/15 hover:bg-brand-secondary/10 transition-colors uppercase text-xs"
-                        >
-                          {showDevPayload 
-                            ? (preferredLanguage === "en" ? "Hide Structure" : preferredLanguage === "es" ? "Ocultar Estructura" : "Ocultar Estrutura") 
-                            : (preferredLanguage === "en" ? "Inspect Payload" : preferredLanguage === "es" ? "Inspecionar Payload" : "Inspecionar Payload")}
-                        </button>
-                      </div>
-
-                      {showDevPayload && generatedPayload && (
-                        <motion.div 
-                          initial={{ opacity: 0, height: 0 }} 
-                          animate={{ opacity: 1, height: "auto" }}
-                          className="bg-zinc-950 border border-white/[0.06] p-4 rounded-xl font-sans text-xs text-zinc-400 overflow-x-auto text-left space-y-3"
-                        >
-                          <div>
-                            <span className="text-brand-secondary font-bold block mb-1 uppercase tracking-widest">// SHEETS INSTANT MAPPING PAYLOAD</span>
-                            <pre className="p-2.5 bg-neutral-900 rounded select-all max-h-[150px] overflow-y-auto">
-                              {JSON.stringify(generatedPayload.sheetPayload, null, 2)}
-                            </pre>
-                          </div>
-                          <div>
-                            <span className="text-amber-400 font-bold block mb-1 uppercase tracking-widest">// CLICKUP INSTANT COMPLIANCE PAYLOAD</span>
-                            <pre className="p-2.5 bg-neutral-900 rounded select-all max-h-[150px] overflow-y-auto">
-                              {JSON.stringify(generatedPayload.clickupPayload, null, 2)}
-                            </pre>
-                          </div>
-                        </motion.div>
-                      )}
 
                       <div className="pt-4 border-t border-white/[0.04] flex flex-col sm:flex-row gap-4 items-center justify-between">
                         <button
@@ -2924,9 +2935,9 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         <button
                           type="button"
                           onClick={handleLaunchWhatsAppOnboardingFastTrack}
-                          className="px-6 py-4 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-[0_8px_30px_rgba(16,185,129,0.15)] hover:-translate-y-0.5"
+                          className="inline-flex min-h-11 items-center gap-2 px-6 py-4 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-[background-color,box-shadow] duration-200 cursor-pointer shadow-[0_8px_30px_rgba(16,185,129,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                         >
-                          <MessageCircle className="w-4.5 h-4.5" /> {preferredLanguage === "en" ? "Talk to TAG08 on WhatsApp" : preferredLanguage === "es" ? "Hablar con TAG08 en WhatsApp" : "Falar com a TAG08 no WhatsApp"}
+                          <MessageCircle className="w-4 h-4" /> {preferredLanguage === "en" ? "Talk to TAG08 on WhatsApp" : preferredLanguage === "es" ? "Hablar con TAG08 en WhatsApp" : "Falar com a TAG08 no WhatsApp"}
                         </button>
                       </div>
                     </div>
@@ -2938,13 +2949,13 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       <button
                         type="button"
                         onClick={handlePrev}
-                        className="px-5 py-3 border border-white/[0.08] hover:border-white/[0.18] hover:bg-white/[0.01] rounded-xl text-xs font-sans uppercase tracking-wider text-zinc-400 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer"
+                        className="inline-flex min-h-11 items-center gap-1.5 px-5 py-3 border border-white/[0.08] hover:border-white/[0.18] hover:bg-white/[0.01] rounded-xl text-xs font-sans uppercase tracking-wider text-zinc-300 hover:text-white transition-[background-color,border-color,color] duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/70"
                       >
                         <ArrowLeft className="w-4 h-4" /> Voltar
                       </button>
 
                       {currentErrors.length > 0 && (
-                        <div className="hidden sm:flex text-red-400 text-xs items-center gap-1 max-w-[50%] font-medium">
+                        <div role="alert" aria-live="assertive" className="hidden sm:flex text-red-300 text-xs items-center gap-1 max-w-[50%] font-medium">
                           <AlertCircle className="w-4 h-4 shrink-0" />
                           <span>{currentErrors[0]}</span>
                         </div>
@@ -2954,16 +2965,15 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         <button
                           type="button"
                           onClick={handleNext}
-                          className="px-6 py-3.5 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center gap-1.5 cursor-pointer shadow-[0_4px_20px_rgba(var(--color-brand-secondary-rgb),0.12)] hover:-translate-y-0.5"
+                          className="inline-flex min-h-11 items-center gap-1.5 px-6 py-3.5 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-[background-color,box-shadow] duration-200 cursor-pointer shadow-[0_4px_20px_rgba(var(--color-brand-secondary-rgb),0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70"
                         >
                           Avançar <ArrowRight className="w-4 h-4" />
                         </button>
                       ) : (
                         <button
-                          type="button"
-                          onClick={handleSubmit}
+                          type="submit"
                           disabled={isSubmitting}
-                          className="px-6 py-4 bg-brand hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_25px_rgba(var(--color-brand-rgb),0.15)]"
+                        className="inline-flex min-h-11 items-center gap-2 px-6 py-4 bg-brand hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-[background-color,box-shadow] duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_25px_rgba(var(--color-brand-rgb),0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/70"
                         >
                           {isSubmitting ? (
                             <>
@@ -2982,7 +2992,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                   {/* Responsive Error Warning for smaller layout viewports */}
                   {currentErrors.length > 0 && (
-                    <div className="flex sm:hidden p-3.5 rounded-xl bg-red-950/20 border border-red-500/30 text-red-300 text-xs items-start gap-2 max-w-full font-medium">
+                    <div role="alert" aria-live="assertive" className="flex sm:hidden p-3.5 rounded-xl bg-red-950/20 border border-red-500/30 text-red-300 text-xs items-start gap-2 max-w-full font-medium">
                       <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                       <span>{currentErrors[0]}</span>
                     </div>
@@ -2990,6 +3000,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                 </motion.div>
               </AnimatePresence>
+              </form>
 
             </div>
           </div>

@@ -5,6 +5,10 @@ import { ArrowUpRight, Star } from "lucide-react";
 import { TRUST_REVIEWS, type GoogleReview } from "../content/googleReviews";
 import { getEvidenceVisibilityMode, getVisibleEvidence } from "../content/publicEvidence";
 import { EvidenceReviewBadge } from "./ContentReview";
+import { useOfficialGoogleBusinessReviews } from "../lib/useOfficialGoogleBusinessReviews";
+import type { OfficialGoogleReview } from "../lib/officialContent";
+
+type DisplayReview = GoogleReview | (OfficialGoogleReview & { evidenceKey: string });
 
 function getReviewInitials(name: string) {
   return name
@@ -17,7 +21,7 @@ function getReviewInitials(name: string) {
 }
 
 interface ReviewAvatarProps {
-  review: GoogleReview;
+  review: DisplayReview;
   unavailable: boolean;
   onUnavailable: (evidenceKey: string) => void;
   width: number;
@@ -40,6 +44,7 @@ function ReviewAvatar({ review, unavailable, onUnavailable, width, height, class
       alt={review.name}
       width={width}
       height={height}
+      sizes={width === 56 ? "56px" : "(max-width: 1023px) 120px, 135px"}
       className={className}
       onError={() => onUnavailable(review.evidenceKey)}
       referrerPolicy="no-referrer"
@@ -52,7 +57,12 @@ export default function TrustTestimonialsSection() {
   const [viewportWidth, setViewportWidth] = useState(0);
   const [unavailableAvatarKeys, setUnavailableAvatarKeys] = useState<Record<string, true>>({});
   const prefersReducedMotion = useReducedMotion();
-  const visibleReviews = getVisibleEvidence(TRUST_REVIEWS, (review) => review.evidenceKey, "/servicos/assessoria-marketing-digital-estrategico", getEvidenceVisibilityMode());
+  const { reviews: liveGoogleReviews, source: googleBusinessSource } = useOfficialGoogleBusinessReviews();
+  const approvedInternalReviews = getVisibleEvidence(TRUST_REVIEWS, (review) => review.evidenceKey, "/servicos/assessoria-marketing-digital-estrategico", getEvidenceVisibilityMode());
+  const visibleReviews: DisplayReview[] = googleBusinessSource === "live"
+    ? liveGoogleReviews.map((review, index) => ({ ...review, evidenceKey: `google-business-review/${index}` }))
+    : approvedInternalReviews;
+  const usesLiveGoogleReviews = googleBusinessSource === "live" && visibleReviews.length > 0;
 
   useEffect(() => {
     const updateViewportWidth = () => setViewportWidth(window.innerWidth);
@@ -60,6 +70,10 @@ export default function TrustTestimonialsSection() {
     window.addEventListener("resize", updateViewportWidth);
     return () => window.removeEventListener("resize", updateViewportWidth);
   }, []);
+
+  useEffect(() => {
+    setActiveReview((current) => Math.min(current, Math.max(0, visibleReviews.length - 1)));
+  }, [visibleReviews.length]);
 
   const isLargeScreen = viewportWidth >= 1024;
   const currentReview = visibleReviews[activeReview] ?? visibleReviews[0];
@@ -71,8 +85,7 @@ export default function TrustTestimonialsSection() {
     return null;
   }
 
-  const currentSourceLabel =
-    currentReview.source === "google-business-profile" ? "Google Meu Negocio" : "Depoimento interno";
+  const currentSourceLabel = usesLiveGoogleReviews ? "Google Business" : "Depoimento interno";
 
   return (
     <section data-testid="internal-testimonials" className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/20 relative overflow-hidden">
@@ -97,15 +110,19 @@ export default function TrustTestimonialsSection() {
 
           <div className="tag08-card p-5 flex items-center gap-4 shrink-0 text-left max-w-xl">
             <div className="w-12 h-12 bg-white/[0.03] rounded-xl flex items-center justify-center border border-white/[0.05]">
-              <div className="flex items-center gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-brand-secondary text-brand-secondary" />
-                ))}
-              </div>
+              {usesLiveGoogleReviews ? (
+                <span className="tag08-meta text-xs font-black uppercase tracking-wider text-brand-secondary">{currentReview.category}</span>
+              ) : (
+                <div className="flex items-center gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-brand-secondary text-brand-secondary" />
+                  ))}
+                </div>
+              )}
             </div>
             <div>
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="font-display font-bold text-xl text-white tracking-tight leading-none">Depoimentos</span>
+                <span className="font-display font-bold text-xl text-white tracking-tight leading-none">{usesLiveGoogleReviews ? "Avaliações" : "Depoimentos"}</span>
                 <span className="tag08-meta text-brand-secondary">
                   {currentSourceLabel}
                 </span>
@@ -118,7 +135,7 @@ export default function TrustTestimonialsSection() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pt-4">
-          <div className="lg:col-span-3 w-full overflow-x-auto lg:overflow-hidden h-[170px] sm:h-[195px] lg:h-[500px] relative flex items-center lg:items-start snap-x snap-mandatory lg:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="lg:col-span-3 w-full overflow-x-auto lg:overflow-hidden min-h-[170px] sm:min-h-[195px] lg:min-h-[500px] relative flex items-center lg:items-start snap-x snap-mandatory lg:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <motion.div
               animate={
                 prefersReducedMotion
@@ -128,7 +145,7 @@ export default function TrustTestimonialsSection() {
                     : { x: 0, y: 0 }
               }
               transition={prefersReducedMotion ? { duration: 0 } : { type: "spring", stiffness: 140, damping: 22 }}
-              className="relative lg:absolute left-4 sm:left-6 lg:left-0 lg:top-0 flex flex-row lg:flex-col gap-4 h-[140px] sm:h-[160px] lg:h-auto items-center lg:items-center w-max lg:w-full py-2 pr-4 sm:pr-6 lg:pr-0"
+              className="relative lg:absolute left-4 sm:left-6 lg:left-0 lg:top-0 flex flex-row lg:flex-col gap-4 min-h-[140px] sm:min-h-[160px] lg:h-auto items-center lg:items-center w-max lg:w-full py-2 pr-4 sm:pr-6 lg:pr-0"
             >
               {visibleReviews.map((review, index) => {
                 const isActive = index === activeReview;
@@ -141,10 +158,10 @@ export default function TrustTestimonialsSection() {
                     onClick={() => setActiveReview(index)}
                     aria-pressed={isActive}
                     aria-label={`Selecionar depoimento de ${review.name}`}
-                    className={`shrink-0 snap-start cursor-pointer transition-all duration-500 overflow-hidden relative rounded-2xl sm:rounded-[22px] flex items-center justify-center ${
+                    className={`shrink-0 snap-start cursor-pointer transition-[border-color,opacity,filter,transform,box-shadow] duration-200 overflow-hidden relative rounded-2xl sm:rounded-[22px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 ${
                       isActive
                         ? "w-[105px] h-[140px] sm:w-[120px] sm:h-[160px] lg:w-[135px] lg:h-[180px] border-2 border-brand-secondary shadow-[0_4px_30px_rgba(var(--color-brand-secondary-rgb),0.2)] scale-105 z-10 opacity-100 grayscale-0"
-                        : "w-[85px] h-[115px] sm:w-[98px] sm:h-[132px] lg:w-[110px] lg:h-[148px] border border-white/[0.06] opacity-35 grayscale hover:opacity-75 hover:grayscale-0 scale-95 hover:scale-98"
+                        : "w-[85px] h-[115px] sm:w-[98px] sm:h-[132px] lg:w-[110px] lg:h-[148px] border border-white/[0.1] opacity-55 grayscale hover:opacity-80 hover:grayscale-0 scale-95 hover:scale-98"
                     }`}
                   >
                     <ReviewAvatar
@@ -153,7 +170,7 @@ export default function TrustTestimonialsSection() {
                       onUnavailable={handleAvatarUnavailable}
                       width={135}
                       height={180}
-                      className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
+                      className="w-full h-full object-cover transition-[filter,opacity] duration-200 pointer-events-none"
                     />
 
                     {isActive && (
@@ -173,7 +190,8 @@ export default function TrustTestimonialsSection() {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: -20, scale: 0.99 }}
               transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.35, ease: "easeOut" }}
-              className="tag08-card tag08-surface-card p-6 sm:p-8 lg:p-10 relative overflow-hidden text-left flex flex-col justify-between min-h-[340px] w-full group/card"
+              aria-live="polite"
+              className="tag08-card tag08-surface-card p-6 sm:p-8 lg:p-10 relative overflow-hidden text-left flex flex-col justify-between min-h-[300px] sm:min-h-[340px] w-full group/card"
             >
                 <div className="space-y-5 relative z-10 flex-1 flex flex-col justify-center">
                   <EvidenceReviewBadge evidenceKey={currentReview.evidenceKey} />
@@ -198,9 +216,9 @@ export default function TrustTestimonialsSection() {
                         className="w-14 h-14 rounded-full object-cover border-2 border-brand-secondary"
                       />
                       <div className="text-left font-sans">
-                        <h4 className="text-white font-display font-semibold text-sm">
+                        <p className="text-white font-display font-semibold text-sm">
                           {currentReview.name}
-                        </h4>
+                        </p>
                         <p className="text-zinc-400 font-sans text-xs mt-0.5">
                           {currentReview.role} • {currentReview.time}
                         </p>
@@ -208,11 +226,15 @@ export default function TrustTestimonialsSection() {
                     </div>
 
                     <div className="flex flex-col items-start sm:items-end gap-1.5 shrink-0">
-                      <div className="flex gap-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-brand-secondary text-brand-secondary" />
-                        ))}
-                      </div>
+                      {usesLiveGoogleReviews ? (
+                        <span className="tag08-meta text-xs font-black uppercase tracking-wider text-brand-secondary">{currentReview.category}</span>
+                      ) : (
+                        <div className="flex gap-0.5">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className="w-4 h-4 fill-brand-secondary text-brand-secondary" />
+                          ))}
+                        </div>
+                      )}
                       <span className="tag08-meta text-brand-secondary">
                         {currentSourceLabel}
                       </span>
@@ -227,13 +249,15 @@ export default function TrustTestimonialsSection() {
           <div className="tag08-card mt-10 p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-left select-none">
           <div className="flex items-center gap-3">
             <span className={`w-2 h-2 rounded-full bg-[#34A853] shrink-0 ${prefersReducedMotion ? "" : "animate-pulse"}`} />
-            <p className="text-xs text-zinc-300 font-sans">
-              Enquanto os reviews oficiais nao sao fornecidos, estes depoimentos seguem marcados como internos para nao fingir validacao externa.
+              <p className="text-xs text-zinc-300 font-sans">
+              {usesLiveGoogleReviews
+                ? "Avaliações exibidas a partir da fonte oficial do Google Business."
+                : "Enquanto as avaliações oficiais não são fornecidas, estes depoimentos seguem identificados como internos."}
             </p>
           </div>
           <a
             href="/contato"
-            className="inline-flex items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-white tag08-action py-2.5 px-5 rounded-xl transition-colors duration-200 shrink-0 cursor-pointer"
+            className="inline-flex min-h-11 items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-white tag08-action py-2.5 px-5 rounded-xl transition-colors duration-200 shrink-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
           >
             <span>FALAR COM A TAG08</span>
             <ArrowUpRight className="w-3.5 h-3.5" />

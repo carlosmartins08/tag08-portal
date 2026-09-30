@@ -10,13 +10,13 @@ interface ResilientImageProps extends Omit<ImageProps, "fill" | "onError"> {
 /** Keeps editorial media meaningful when a remote CDN is temporarily unavailable. */
 export default function ResilientImage({ fallbackLabel, alt, className, sizes, ...props }: ResilientImageProps) {
   const [hasError, setHasError] = useState(false);
+  const isDecorative = !alt;
 
   if (hasError) {
     return (
       <div
-        aria-label={alt}
+        {...(isDecorative ? { "aria-hidden": true } : { "aria-label": alt, role: "img" })}
         className="absolute inset-0 overflow-hidden bg-[linear-gradient(135deg,#101011_0%,#161612_48%,#0b0b0b_100%)]"
-        role="img"
       >
         <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--color-brand-secondary-rgb),0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--color-brand-secondary-rgb),0.06)_1px,transparent_1px)] bg-[size:28px_28px] opacity-45" />
         <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-brand-secondary/10 blur-3xl" />

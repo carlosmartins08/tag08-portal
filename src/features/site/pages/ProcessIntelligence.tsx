@@ -7,6 +7,7 @@ import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import MiniCases from "../../../components/MiniCases";
+import TrackedOutboundLink from "../../../components/TrackedOutboundLink";
 import { calculateProcessIntelligenceWaste } from "../../../lib/simulators/processIntelligence";
 import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
 
@@ -21,6 +22,12 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
   const [monthlySalary, setMonthlySalary] = useState(4500);
   const trackSimulator = useSimulatorTracking("process_intelligence_waste", 1, "/servicos/process-intelligence");
   const waste = calculateProcessIntelligenceWaste({ collaborators, hoursPerDay, monthlySalary });
+  const processIntelligenceBrazilUrl = buildBrazilWhatsAppUrl(
+    `Olá TAG08! Usei o simulador de Process Intelligence com ${collaborators} colaboradores, ${hoursPerDay.toLocaleString("pt-BR")} horas por pessoa/dia e salário médio de R$ ${monthlySalary.toLocaleString("pt-BR")}. A estimativa foi de ${waste.annualWasteHours.toLocaleString("pt-BR")} horas desperdiçadas por ano, R$ ${waste.annualWasteCost.toLocaleString("pt-BR")} em custo anual e ${waste.recoverableHours.toLocaleString("pt-BR")} horas recuperáveis. Quero conversar sobre o próximo passo.`
+  );
+  const processIntelligenceInternationalUrl = buildInternationalWhatsAppUrl(
+    `Hello TAG08! I used the Process Intelligence simulator with ${collaborators} collaborators, ${hoursPerDay.toLocaleString("en-US")} hours per person/day and an average monthly salary of BRL ${monthlySalary.toLocaleString("en-US")}. The estimate was ${waste.annualWasteHours.toLocaleString("en-US")} wasted hours per year, BRL ${waste.annualWasteCost.toLocaleString("en-US")} in annual cost and ${waste.recoverableHours.toLocaleString("en-US")} recoverable hours. I would like to discuss the next step.`
+  );
 
   const handleLinkClick = (page: string) => {
     onNavigate(page);
@@ -583,8 +590,10 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
 
               {/* DUAL CLIENT CONNECTION CHANNELS (BR & INT) */}
               <div className="space-y-3">
-                <a 
-                  href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20solicitar%20um%20diagnóstico%20de%20Process%20Intelligence%20com%20a%20TAG08")}
+                <TrackedOutboundLink
+                  label="Solicitar diagnóstico de Process Intelligence"
+                  surface="process-intelligence-contact-card-br"
+                  href={processIntelligenceBrazilUrl}
                   onClick={() => trackSimulator("cta_clicked")}
                   target="_blank"
                   rel="noreferrer"
@@ -608,10 +617,12 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                       CONECTAR
                     </span>
                   </div>
-                </a>
+                </TrackedOutboundLink>
 
-                <a 
-                  href={buildInternationalWhatsAppUrl("Hello,%20I%20would%20like%20to%20request%20a%20process%20intelligence%20consultation%20from%20TAG08")}
+                <TrackedOutboundLink
+                  label="Request Process Intelligence consulting"
+                  surface="process-intelligence-contact-card-int"
+                  href={processIntelligenceInternationalUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-all duration-300 group shadow-inner"
@@ -634,7 +645,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                       CONECTAR
                     </span>
                   </div>
-                </a>
+                </TrackedOutboundLink>
               </div>
 
               <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 text-xs">
@@ -894,7 +905,9 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                     Fale diretamente com os tomadores de decisão da TAG08 via WhatsApp para avaliar a viabilidade de alocação de equipe.
                   </p>
                 </div>
-                <a
+                <TrackedOutboundLink
+                  label="Conversar agora"
+                  surface="process-intelligence-final-cta"
                   href={buildBrazilWhatsAppUrl("Ola,%20gostaria%20de%20consultar%20viabilidade%20estratégica%20especializada%2520para%20minha%20marca!")}
                   target="_blank"
                   rel="noreferrer"
@@ -902,7 +915,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                 >
                   <span>Conversar Agora</span>
                   <ArrowUpRight className="w-4 h-4 text-black stroke-[2.5]" />
-                </a>
+                </TrackedOutboundLink>
               </div>
             </div>
           </div>

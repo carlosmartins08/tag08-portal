@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUp, MessageCircle, X } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { type UiLanguage } from "../i18n/siteI18n";
 import { TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
 import { safeStorage } from "../utils/storage";
@@ -55,6 +55,7 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
   const [selectedLanguage, setSelectedLanguage] = useState<UiLanguage>(language);
   const [lgpdBannerHeight, setLgpdBannerHeight] = useState(0);
   const floatingRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const copy = COPY[selectedLanguage] ?? COPY.pt;
 
@@ -126,7 +127,7 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
   };
 
   const handleScrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
   };
 
   const bottomOffset = lgpdBannerHeight > 0
@@ -135,19 +136,19 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
 
   return (
     <>
-      <div className="fixed bottom-3 left-4 z-40 transition-all duration-500 ease-out sm:bottom-6 sm:left-6" style={bottomOffset ? { bottom: bottomOffset } : undefined}>
+      <div className="fixed bottom-3 left-4 z-40 transition-[bottom] duration-200 ease-out sm:bottom-6 sm:left-6" style={bottomOffset ? { bottom: bottomOffset } : undefined}>
         <AnimatePresence>
           {showScrollTop && (
             <motion.button
               key="scroll-to-top"
               type="button"
-              initial={{ opacity: 0, scale: 0.7, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.7, y: 10 }}
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.92 }}
+              initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.7, y: 10 }}
+              animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+              exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.7, y: 10 }}
+              whileHover={prefersReducedMotion ? undefined : { scale: 1.08 }}
+              whileTap={prefersReducedMotion ? undefined : { scale: 0.92 }}
               onClick={handleScrollToTop}
-              className="bg-charcoal-900/90 text-white w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center border border-white/10 hover:border-brand/40 hover:text-brand shadow-[0_8px_25px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="bg-charcoal-900/90 text-white h-11 w-11 rounded-full flex items-center justify-center border border-white/10 hover:border-brand/40 hover:text-brand shadow-[0_8px_25px_rgba(0,0,0,0.5)] backdrop-blur-md transition-[border-color,color] duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 motion-reduce:transition-none"
               title={copy.backTop}
               aria-label={copy.backTop}
             >
@@ -157,13 +158,13 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
         </AnimatePresence>
       </div>
 
-      <div ref={floatingRef} className="fixed bottom-3 right-4 z-40 flex flex-col items-end transition-all duration-500 ease-out sm:bottom-6 sm:right-6" style={bottomOffset ? { bottom: bottomOffset } : undefined}>
+      <div ref={floatingRef} className="fixed bottom-3 right-4 z-40 flex flex-col items-end transition-[bottom] duration-200 ease-out sm:bottom-6 sm:right-6" style={bottomOffset ? { bottom: bottomOffset } : undefined}>
         <AnimatePresence>
           {showNotification && !isOpen && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8 }}
+              initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.8, y: 15 }}
+              animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+              exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.8 }}
               className="mb-3 w-[min(18rem,calc(100vw-2rem))] sm:w-80 bg-charcoal-900 border border-brand/20 rounded-xl p-4 shadow-2xl relative text-left"
             >
               <button
@@ -173,7 +174,7 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
                   setShowNotification(false);
                   safeStorage.set("whatsapp_notification_dismissed", "true");
                 }}
-                className="absolute top-2 right-2 text-zinc-500 hover:text-white p-1 cursor-pointer"
+                className="absolute right-2 top-2 flex min-h-11 min-w-11 items-center justify-center text-zinc-300 hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -205,14 +206,15 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
 
           <motion.button
             type="button"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
+            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
+            animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            whileHover={prefersReducedMotion ? undefined : { scale: 1.04 }}
+            whileTap={prefersReducedMotion ? undefined : { scale: 0.96 }}
             onClick={() => setIsOpen((prev) => !prev)}
             aria-label={copy.ariaOpen}
             aria-expanded={isOpen}
-            className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-brand text-black shadow-[0_10px_35px_rgba(0,0,0,0.35)] transition-colors hover:bg-brand/90"
+            aria-controls="whatsapp-panel"
+            className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-brand text-black shadow-[0_10px_35px_rgba(0,0,0,0.35)] transition-colors duration-200 hover:bg-brand/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 motion-reduce:transition-none"
           >
             <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6" />
           </motion.button>
@@ -220,18 +222,21 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.95 }}
+              id="whatsapp-panel"
+              role="region"
+              aria-labelledby="whatsapp-panel-title"
+              initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.95 }}
+              animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+              exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.95 }}
               className="mt-4 w-[min(20rem,calc(100vw-2rem))] sm:w-80 max-h-[calc(100vh-8rem)] overflow-hidden rounded-xl border border-white/[0.08] bg-charcoal-900 shadow-3xl"
             >
               <div className="flex items-center justify-between border-b border-white/[0.05] bg-charcoal-800 p-4">
-                <div className="text-sm font-semibold text-white">{copy.title}</div>
+                <h2 id="whatsapp-panel-title" className="text-sm font-semibold text-white">{copy.title}</h2>
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
                   aria-label={copy.close}
-                  className="rounded-full p-1 text-zinc-400 hover:bg-white/[0.05] hover:text-white"
+                  className="flex min-h-11 min-w-11 items-center justify-center rounded-full text-zinc-300 hover:bg-white/[0.05] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-800"
                 >
                   <X className="h-4 w-4" />
                 </button>
