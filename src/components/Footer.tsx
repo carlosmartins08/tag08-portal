@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState, useEffect, useRef, type MouseEvent, type ReactNode } from "react";
 import { ArrowUpRight, ChevronDown, MessageSquare, Phone, Mail, MapPin, ShieldAlert, CheckCircle, Eye, Type, RefreshCw, Instagram, Linkedin, Youtube, Facebook, Twitter, Cookie, Lock, Scale, FileText } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
 import { getLocalizedNetworkLinks, TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_PINTEREST_URL, TAG08_OFFICIAL_YOUTUBE_URL, TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
 import { safeStorage } from "../utils/storage";
@@ -227,6 +227,7 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
 };
 
 export default function Footer({ onNavigate, language }: FooterProps) {
+  const prefersReducedMotion = useReducedMotion();
   const source = i18n[language].footer;
   const copy = {
     ...FOOTER_COPY[language],
@@ -1021,13 +1022,13 @@ export default function Footer({ onNavigate, language }: FooterProps) {
             ref={cookieBannerRef}
             role="region"
             aria-labelledby="cookie-banner-title"
-            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 30, scale: 0.95 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed bottom-4 left-4 right-4 md:left-auto md:right-8 md:max-w-lg bg-charcoal-950/95 backdrop-blur-lg border border-white/[0.08] p-5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-40 text-left"
+            exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: "easeOut" }}
+            className="fixed bottom-3 left-3 right-3 z-40 flex max-h-[30dvh] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-charcoal-950/95 p-3.5 text-left shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-lg sm:bottom-4 sm:left-4 sm:right-4 sm:max-h-none sm:p-5 md:left-auto md:right-8 md:max-w-lg"
           >
-            <div className="space-y-4">
+            <div className="min-h-0 space-y-3 overflow-y-auto pr-1 sm:space-y-4">
               <div className="flex items-start gap-3">
                 <div className="p-2 bg-brand-secondary/10 rounded-lg text-brand-secondary shrink-0 mt-0.5">
                   <Cookie className="w-5 h-5" />
@@ -1099,13 +1100,14 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   </div>
                 </motion.div>
               ) : null}
+            </div>
 
-              <div className="flex flex-col sm:flex-row gap-2 pt-1.5 justify-end text-xs font-sans">
+              <div className="grid shrink-0 grid-cols-3 gap-2 border-t border-white/[0.06] bg-charcoal-950/95 pt-3 text-xs font-sans sm:flex sm:justify-end">
                     <button
                       aria-label={customizeCookies ? "Fechar personalização de cookies" : "Abrir personalização de cookies"}
                       type="button"
                       onClick={() => setCustomizeCookies(!customizeCookies)}
-                      className="text-zinc-400 hover:text-white px-3 py-2 text-center transition-all cursor-pointer"
+                      className="min-h-11 px-3 py-2 text-center text-zinc-300 transition-colors duration-150 hover:text-white cursor-pointer"
                 >
                   {customizeCookies ? "[ Fechar Ajustes ]" : "[ Personalizar... ]"}
                 </button>
@@ -1113,7 +1115,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                       aria-label="Rejeitar todos os cookies"
                       type="button"
                       onClick={handleRejectCookies}
-                      className="border border-white/10 hover:bg-white/5 text-zinc-300 font-bold px-3.5 py-2 rounded-lg transition-all text-center cursor-pointer"
+                      className="min-h-11 rounded-lg border border-white/10 px-3.5 py-2 text-center font-bold text-zinc-200 transition-colors duration-150 hover:bg-white/5 cursor-pointer"
                 >
                   Rejeitar
                 </button>
@@ -1121,12 +1123,11 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   aria-label={customizeCookies ? "Salvar ajustes de cookies" : "Aceitar todos os cookies"}
                   type="button"
                   onClick={customizeCookies ? handleSaveCookiePreferences : handleAcceptAllCookies}
-                  className="bg-brand-secondary hover:bg-white text-black font-black px-4 py-2 rounded-lg transition-all text-center cursor-pointer shadow-[0_2px_10px_rgba(var(--color-brand-secondary-rgb),0.2)]"
+                  className="min-h-11 rounded-lg bg-brand-secondary px-4 py-2 text-center font-black text-black shadow-[0_2px_10px_rgba(var(--color-brand-secondary-rgb),0.2)] transition-colors duration-150 hover:bg-white cursor-pointer"
                 >
                   {customizeCookies ? "Salvar Ajustes" : "Aceitar Todos"}
                 </button>
               </div>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -2,6 +2,7 @@ node_modules/
 .next/
 .next-dev/
 .next-review/
+.lighthouseci/
 *.tsbuildinfo
 build/
 dist/

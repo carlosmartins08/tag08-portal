@@ -1,28 +1,25 @@
-import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, Cpu, Sparkles, Zap, Target, LineChart, MessageSquare, Settings } from "lucide-react";
-import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
-import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { ArrowRight, ArrowUpRight, Check, ChevronDown, LineChart, MessageSquare, Settings, Target } from "lucide-react";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import MiniCases from "../../../components/MiniCases";
 import TrustTestimonialsSection from "../../../components/TrustTestimonialsSection";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
 import { trackOutboundClick } from "../../../lib/analytics";
 import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
-import heroTag08StrategyStage from "../../../assets/images/hero_tag08_strategy-stage.webp";
+
+interface AssessoriaProps {
+  onNavigate: (page: string) => void;
+}
 
 interface Question {
   id: number;
   text: string;
-  options: {
-    label: string;
-    value: number;
-    text: string;
-  }[];
+  options: Array<{ label: string; value: number; text: string }>;
 }
 
-const auditQuestions: Question[] = [
+const AUDIT_QUESTIONS: Question[] = [
   {
     id: 1,
     text: "Como as prioridades de marketing são definidas hoje?",
@@ -65,38 +62,97 @@ const auditQuestions: Question[] = [
   }
 ];
 
-interface AssessoriaProps {
-  onNavigate: (page: string) => void;
-}
+const CAPABILITIES = [
+  { icon: Target, title: "Posicionamento e mensagem", description: "Clareza sobre oferta, público, percepção e mensagens que precisam sustentar a marca." },
+  { icon: MessageSquare, title: "Conteúdo e relacionamento", description: "Argumentos e conversas que ajudam o público a compreender melhor a marca e sua oferta." },
+  { icon: LineChart, title: "Canais e conversão", description: "Pontos de contato organizados para apoiar a jornada e o próximo passo." },
+  { icon: Settings, title: "Operação e acompanhamento", description: "Responsáveis, prioridades, revisão e rotina para reduzir improviso." }
+] as const;
+
+const METHOD_STEPS = [
+  { title: "Entender o cenário", description: "Contexto, objetivos, gargalos, canais e limitações reais antes de recomendar ações." },
+  { title: "Ler a maturidade", description: "Desalinhamentos entre oferta, mensagem, rotina e capacidade de execução." },
+  { title: "Definir prioridades", description: "O que vem primeiro, o que pode esperar e qual sequência é viável agora." },
+  { title: "Acompanhar decisões", description: "Critérios, revisões e ajustes compatíveis com o escopo combinado." }
+] as const;
+
+const FIT_SIGNALS = [
+  "A marca já tem frentes, pessoas ou parceiros em movimento, mas falta uma direção comum.",
+  "As prioridades mudam sem critério e cada decisão reabre discussões ou cria retrabalho.",
+  "Existe disposição para compartilhar contexto, participar das decisões e sustentar uma rotina possível."
+] as const;
+
+const NON_FIT_SIGNALS = [
+  "A necessidade é uma entrega isolada, com escopo já totalmente definido.",
+  "A expectativa é receber uma solução pronta sem acesso ao contexto ou participação nas decisões.",
+  "Ainda não existe uma pessoa disponível para validar prioridades, aprovar caminhos e acompanhar a evolução."
+] as const;
+
+const FAQ_ITEMS = [
+  { question: "O que é a Assessoria de Marketing Estratégico da TAG08?", answer: "É um acompanhamento para organizar posicionamento, prioridades, comunicação, canais e próximos passos antes de ampliar a execução. O foco é melhorar a qualidade das decisões de marketing e reduzir ações soltas." },
+  { question: "A assessoria inclui execução de marketing?", answer: "Depende do escopo. Em alguns casos, a assessoria orienta decisões e organiza o planejamento. Em outros, ela se conecta a soluções específicas da TAG08. A proposta define o que está incluído, quem executa e quais decisões seguem com a empresa." },
+  { question: "Quando a assessoria faz sentido?", answer: "Quando decisões, canais, equipes ou parceiros precisam trabalhar com uma direção comum. Pode não ser o melhor caminho para uma entrega pontual, para quem espera execução sem participação ou quando não há uma pessoa disponível para decidir e acompanhar." },
+  { question: "Qual é o ritmo e a participação esperada?", answer: "O ritmo é definido no escopo. A marca compartilha contexto, indica uma pessoa com poder de decisão e participa dos retornos combinados. A TAG08 organiza a condução; decisões de negócio continuam sendo da empresa." },
+  { question: "A TAG08 substitui equipe interna ou parceiros?", answer: "Não. A assessoria pode organizar prioridades, critérios e planejamento para que equipe interna e parceiros trabalhem com maior alinhamento. Papéis, aprovações e responsabilidades são definidos no início." },
+  { question: "Quanto tempo dura e como o investimento é definido?", answer: "Tempo e investimento dependem do contexto, escopo, quantidade de frentes e disponibilidade da operação. A TAG08 propõe um formato somente depois de entender o cenário e confirmar o encaixe." },
+  { question: "A TAG08 faz promessas de resultado?", answer: "Não. A assessoria não promete crescimento instantâneo, retorno financeiro ou resultado artificial. O trabalho busca clareza, critério, planejamento, consistência e melhoria contínua com responsabilidade." }
+] as const;
+
+const actionTransition = "transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-out active:scale-[0.98] motion-reduce:transform-none motion-reduce:transition-none";
 
 export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: AssessoriaProps) {
-  const [activeFaq, setActiveFaq] = useState<number>(0);
-  
-  // Quiz states
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const [answers, setAnswers] = useState<Record<number, { score: number; text: string }>>({});
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [shouldRestoreQuizFocus, setShouldRestoreQuizFocus] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const prefersReducedMotion = useReducedMotion() ?? false;
   const questionHeadingRef = useRef<HTMLHeadingElement>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const trackSimulator = useSimulatorTracking("marketing_assessment_quiz", 1, "/servicos/assessoria-marketing-digital-estrategico");
+  const brazilConsultationWhatsappUrl = buildBrazilWhatsAppUrl("Olá TAG08! Gostaria de conversar sobre Assessoria de Marketing Estratégico e entender os próximos passos para a minha empresa.");
   const brazilDiagnosticWhatsappUrl = buildBrazilWhatsAppUrl("Olá TAG08! Concluí a leitura inicial de maturidade e gostaria de conversar sobre Assessoria de Marketing Estratégico para entender os próximos passos da minha empresa.");
   const internationalDiagnosticWhatsappUrl = buildInternationalWhatsAppUrl("Hello TAG08! I completed the initial assessment and would like to discuss Strategic Marketing Advisory and the next steps for my company.");
-  const brazilConsultationWhatsappUrl = buildBrazilWhatsAppUrl("Olá TAG08! Gostaria de conversar sobre Assessoria de Marketing Estratégico e entender os próximos passos para a minha empresa.");
+
+  const handleLinkClick = (page: string) => {
+    onNavigate(page);
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+  };
+
+  const scrollToDiagnostic = () => {
+    document.getElementById("diagnostic-audit")?.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start"
+    });
+  };
+
+  const handleConsultationWhatsAppClick = (surface: string) => {
+    trackSimulator("cta_clicked");
+    trackOutboundClick({ label: "WhatsApp Brasil", url: brazilConsultationWhatsappUrl, surface });
+  };
+
+  const handleDiagnosticWhatsAppClick = (label: string, url: string) => {
+    trackSimulator("cta_clicked");
+    trackOutboundClick({ label, url, surface: "assessoria-diagnostic-result" });
+  };
 
   const handleSelectOption = (questionId: number, score: number, text: string) => {
     trackSimulator("input_changed");
-    setAnswers(prev => ({
-      ...prev,
-      [questionId]: { score, text }
-    }));
+    setAnswers((current) => ({ ...current, [questionId]: { score, text } }));
     setShouldRestoreQuizFocus(true);
 
-    if (currentQuestionIdx < auditQuestions.length - 1) {
-      setCurrentQuestionIdx(prev => prev + 1);
-    } else {
-      setQuizCompleted(true);
+    if (currentQuestionIdx < AUDIT_QUESTIONS.length - 1) {
+      setCurrentQuestionIdx((current) => current + 1);
+      return;
     }
+
+    setQuizCompleted(true);
+  };
+
+  const handlePreviousQuestion = () => {
+    if (currentQuestionIdx === 0) return;
+    setShouldRestoreQuizFocus(true);
+    setCurrentQuestionIdx((current) => current - 1);
   };
 
   const handleResetQuiz = () => {
@@ -106,885 +162,191 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
     setShouldRestoreQuizFocus(true);
   };
 
-  const handlePreviousQuestion = () => {
-    if (currentQuestionIdx === 0) return;
-    setShouldRestoreQuizFocus(true);
-    setCurrentQuestionIdx(prev => prev - 1);
-  };
-
-  const handleDiagnosticWhatsAppClick = (label: string, url: string) => {
-    trackSimulator("cta_clicked");
-    trackOutboundClick({ label, url, surface: "assessoria-diagnostic-result" });
-  };
-
-  const handleConsultationWhatsAppClick = (surface: string) => {
-    trackSimulator("cta_clicked");
-    trackOutboundClick({ label: "WhatsApp Brasil", url: brazilConsultationWhatsappUrl, surface });
-  };
-
-  // Diagnostic calculations
-  const calculateTotalScore = () => {
-    return (Object.values(answers) as Array<{ score: number; text: string }>).reduce((sum, current) => sum + current.score, 0);
-  };
-
-  const getDiagnosticOutput = () => {
-    const totalScore = calculateTotalScore();
-    // The four answer values create discrete totals. These boundaries keep
-    // each label reachable by more than one realistic response pattern.
-    if (totalScore <= 59) {
-      return {
-        level: "Baixa clareza",
-        percentage: totalScore,
-        color: "text-red-400 border-red-500/20 bg-red-500/5",
-        description: "A marca ainda depende muito de ações isoladas e de decisões pouco organizadas. Falta uma base mais clara de posicionamento, mensagem e próximos passos.",
-        focus: "O primeiro foco costuma ser clareza estratégica e alinhamento de comunicação.",
-        recommendation: "A prioridade agora é estruturar a base antes de ampliar a execução."
-      };
-    } else if (totalScore <= 79) {
-      return {
-        level: "Clareza em construção",
-        percentage: totalScore,
-        color: "text-brand border-brand/20 bg-brand/5",
-        description: "Já existe movimento, mas a comunicação ainda pode ficar mais coerente entre canais, conteúdos e materiais comerciais.",
-        focus: "Ajuste de mensagem, consistência e estrutura de canais.",
-        recommendation: "Vale organizar prioridades antes de ampliar qualquer frente."
-      };
-    } else if (totalScore <= 100) {
-      return {
-        level: "Boa direção",
-        percentage: totalScore,
-        color: "text-brand-secondary border-brand-secondary/20 bg-brand-secondary/5",
-        description: "A marca já tem um caminho mais consistente, mas ainda pode ganhar clareza na sustentação da rotina e na priorização das frentes.",
-        focus: "Foco em acompanhamento, revisão e continuidade do que já foi estruturado.",
-        recommendation: "O próximo passo é consolidar método e manter a execução responsável."
-      };
-    } else {
-      return {
-        level: "Direção mais consolidada",
-        percentage: totalScore,
-        color: "text-brand-secondary border-brand-secondary/20 bg-brand-secondary/5",
-        description: "Existe uma base mais organizada para decidir e executar, embora prioridades e contexto ainda devam ser revisados conforme a operação evolui.",
-        focus: "Prioridade em consistência, revisão e continuidade.",
-        recommendation: "A leitura não substitui uma análise completa, mas indica uma base mais estruturada para definir próximos passos."
-      };
-    }
-  };
-
-  const handleLinkClick = (page: string) => {
-    onNavigate(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const scrollToDiagnostic = () => {
-    document.getElementById("diagnostic-audit")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
   useEffect(() => {
     if (!shouldRestoreQuizFocus) return;
 
-    window.requestAnimationFrame(() => {
-      const target = quizCompleted ? resultHeadingRef.current : questionHeadingRef.current;
-      target?.focus();
+    const timer = window.setTimeout(() => {
+      (quizCompleted ? resultHeadingRef.current : questionHeadingRef.current)?.focus();
       setShouldRestoreQuizFocus(false);
-    });
-  }, [currentQuestionIdx, quizCompleted, shouldRestoreQuizFocus]);
+    }, prefersReducedMotion ? 0 : 220);
 
-  const faqCategories = [
-    { id: 0, title: "O QUE É" },
-    { id: 1, title: "ESCOPO" },
-    { id: 2, title: "ENCAIXE" },
-    { id: 3, title: "RITMO E PARTICIPAÇÃO" },
-    { id: 4, title: "EQUIPE E DECISÃO" },
-    { id: 5, title: "PRAZO E INVESTIMENTO" },
-    { id: 6, title: "PROMESSAS" }
-  ];
+    return () => window.clearTimeout(timer);
+  }, [currentQuestionIdx, prefersReducedMotion, quizCompleted, shouldRestoreQuizFocus]);
 
-  const faqQuestions = [
-    "O que é a Assessoria de Marketing Estratégico da TAG08?",
-    "A assessoria inclui execução de marketing?",
-    "Quando a assessoria faz sentido e quando não é o melhor próximo passo?",
-    "Qual é o ritmo do acompanhamento e o que a marca precisa participar?",
-    "A assessoria substitui a equipe interna ou parceiros externos?",
-    "Quanto tempo dura e como o investimento é definido?",
-    "A TAG08 faz promessas com a assessoria?"
-  ];
-
-  const faqAnswers = [
-    "É um acompanhamento para organizar posicionamento, prioridades, comunicação, canais e próximos passos antes de ampliar a execução. O foco é melhorar a qualidade das decisões de marketing e reduzir ações soltas. A assessoria cumpre uma função consultiva semelhante a uma consultoria de marketing estratégico, com contexto e continuidade definidos no escopo.",
-    "Depende do escopo. Em alguns casos, a assessoria orienta decisões e organiza o planejamento de marketing. Em outros, pode se conectar a soluções específicas da TAG08, como conteúdo, identidade visual, audiovisual, desenvolvimento web ou processos. A proposta define o que está incluído, quem executa e quais decisões continuam sob responsabilidade da empresa.",
-    "Ela faz sentido quando existem decisões, canais, equipes ou parceiros que precisam trabalhar com uma direção comum. Pode não ser o melhor caminho quando a necessidade é apenas uma entrega pontual, quando se espera uma execução pronta sem participação da marca ou quando ainda não existe alguém disponível para decidir e acompanhar o processo.",
-    "O ritmo é definido no escopo. Para que a assessoria funcione, a marca precisa compartilhar contexto, indicar uma pessoa com poder de decisão e participar dos retornos nos momentos combinados. A TAG08 organiza a condução; decisões de negócio continuam sendo da empresa.",
-    "Não. A TAG08 pode ajudar a organizar prioridades, critérios e planejamento para que equipe interna e parceiros trabalhem com maior alinhamento. Papéis, responsabilidades, entregas e aprovações são definidos no início para reduzir sobreposição e retrabalho.",
-    "O tempo de acompanhamento e o investimento dependem do contexto, do escopo, da quantidade de frentes e da disponibilidade da operação. A TAG08 só propõe um formato depois de entender o cenário e confirmar que existe encaixe.",
-    "Não. A TAG08 não promete crescimento instantâneo, retorno financeiro ou resultado artificial. A assessoria busca construir clareza, critério, planejamento, consistência e melhoria contínua com responsabilidade."
-  ];
-
-  const handleFaqKeyDown = (event: ReactKeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
-    const lastIndex = faqCategories.length - 1;
-    let nextIndex: number | null = null;
-
-    if (event.key === "ArrowDown" || event.key === "ArrowRight") nextIndex = currentIndex === lastIndex ? 0 : currentIndex + 1;
-    if (event.key === "ArrowUp" || event.key === "ArrowLeft") nextIndex = currentIndex === 0 ? lastIndex : currentIndex - 1;
-    if (event.key === "Home") nextIndex = 0;
-    if (event.key === "End") nextIndex = lastIndex;
-
-    if (nextIndex === null) return;
-
-    event.preventDefault();
-    setActiveFaq(nextIndex);
-    window.requestAnimationFrame(() => document.getElementById(`assessoria-faq-tab-${nextIndex}`)?.focus());
-  };
-
-  const quizProgress = quizCompleted
-    ? 100
-    : Math.round(((currentQuestionIdx + 1) / auditQuestions.length) * 100);
+  const totalScore = Object.values(answers).reduce((sum, answer) => sum + answer.score, 0);
+  const diagnostic = totalScore <= 59
+    ? { level: "Baixa clareza", tone: "text-red-300", description: "A marca ainda depende de ações isoladas e de decisões pouco organizadas.", focus: "O primeiro foco costuma ser clareza estratégica e alinhamento de comunicação.", recommendation: "A prioridade agora é estruturar a base antes de ampliar a execução." }
+    : totalScore <= 79
+      ? { level: "Clareza em construção", tone: "text-brand", description: "Já existe movimento, mas a comunicação ainda pode ganhar consistência entre canais e materiais.", focus: "Ajustar mensagem, consistência e estrutura de canais.", recommendation: "Vale organizar prioridades antes de ampliar qualquer frente." }
+      : totalScore <= 100
+        ? { level: "Boa direção", tone: "text-brand", description: "A marca tem um caminho mais consistente, mas ainda pode ganhar clareza na sustentação da rotina.", focus: "Foco em acompanhamento, revisão e continuidade do que já foi estruturado.", recommendation: "O próximo passo é consolidar método e manter a execução responsável." }
+        : { level: "Direção mais consolidada", tone: "text-brand", description: "Existe uma base organizada para decidir e executar, embora prioridades e contexto precisem ser revistos com a operação.", focus: "Prioridade em consistência, revisão e continuidade.", recommendation: "A leitura não substitui uma análise completa, mas indica uma base estruturada para os próximos passos." };
+  const quizProgress = quizCompleted ? 100 : Math.round(((currentQuestionIdx + 1) / AUDIT_QUESTIONS.length) * 100);
+  const quizTransition = prefersReducedMotion ? { duration: 0 } : { duration: 0.2, ease: [0.23, 1, 0.32, 1] as const };
 
   return (
-    <div className="bg-charcoal-950 text-white min-h-screen pb-20 relative overflow-hidden">
-      {/* Dynamic Ambient Background Elements */}
-      <div className="absolute top-[6%] left-[-15%] w-[620px] h-[620px] bg-brand/[0.015] rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-[20%] right-[-15%] w-[620px] h-[620px] bg-brand/[0.02] rounded-full blur-[150px] pointer-events-none" />
-
-      {/* Floating 3D Geometric mesh for tech authority decoration */}
-      <Subtle3DCanvas minimumViewport={1024} intensity={1.4} className="absolute right-[-10%] top-[4%] w-[490px] h-[490px] opacity-[0.38] mix-blend-screen hidden lg:block" />
-
-      {/* SECTION 1 - HERO: base compartilhada pelas páginas de serviço */}
-      <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-20 border-b border-white/[0.04] relative z-10">
-        <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center text-left">
-            <div className="lg:col-span-7 space-y-4">
-              <span className="inline-flex w-fit items-center rounded-lg bg-brand px-3 py-1 tag08-meta text-xs font-bold uppercase tracking-widest text-black">
-                Assessoria de marketing estratégico
-              </span>
-              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black leading-[0.98] tracking-tighter text-white">
+    <div className="min-h-screen overflow-hidden bg-charcoal-950 pb-20 text-white">
+      <section className="border-b border-white/[0.06] px-4 py-12 sm:px-6 sm:py-20 md:px-8">
+        <div className="mx-auto max-w-7xl space-y-10 sm:space-y-14">
+          <div className="grid grid-cols-1 items-end gap-7 lg:grid-cols-12 lg:gap-12">
+            <div className="space-y-5 lg:col-span-7">
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-brand">Assessoria de marketing estratégico</p>
+              <h1 className="max-w-4xl font-display text-4xl font-black leading-[0.98] tracking-[-0.04em] text-white sm:text-5xl md:text-6xl">
                 Direção de marketing <span className="text-brand">antes de ampliar a execução.</span>
               </h1>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <a data-testid="assessoria-hero-contact" href={brazilConsultationWhatsappUrl} onClick={() => handleConsultationWhatsAppClick("assessoria-hero")} target="_blank" rel="noreferrer" aria-label="Falar com a TAG08 pelo WhatsApp, abre em nova guia" className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-brand px-5 py-3 text-xs font-black uppercase tracking-widest text-black shadow-[0_12px_36px_rgba(var(--color-brand-rgb),0.18)] ${actionTransition}`}>
+                  <span>Falar com a TAG08</span><ArrowUpRight className="h-4 w-4 stroke-[2.5]" />
+                </a>
+                <button type="button" onClick={scrollToDiagnostic} className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-3 text-xs font-bold uppercase tracking-widest text-zinc-200 ${actionTransition}`}>
+                  <span>Fazer leitura inicial</span><ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
             </div>
-            <div className="lg:col-span-5 space-y-5">
-              <p className="text-zinc-400 text-sm sm:text-base leading-relaxed font-sans">
-                A Assessoria de Marketing Estratégico da TAG08 organiza contexto, posicionamento, prioridades, comunicação e próximos passos para que decisões de marketing deixem de nascer da urgência e passem a seguir critérios mais claros.
-              </p>
-              <button
-                type="button"
-                onClick={scrollToDiagnostic}
-                className="inline-flex min-h-11 items-center gap-2 rounded-full bg-brand px-5 py-3 text-xs tag08-meta font-black uppercase tracking-widest text-black transition-transform hover:-translate-y-0.5 hover:bg-brand-dark"
-              >
-                Iniciar diagnóstico estratégico
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
+            <p className="max-w-xl text-sm leading-relaxed text-zinc-300 lg:col-span-5 lg:pb-1">A TAG08 organiza contexto, posicionamento, prioridades, comunicação e próximos passos para que decisões de marketing deixem de nascer da urgência e passem a seguir critérios mais claros.</p>
           </div>
 
-          <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px] overflow-visible">
-            <div className="relative aspect-[21/9] sm:aspect-[2.39/1] overflow-hidden rounded-[24px] sm:rounded-[36px] border border-white/[0.08] bg-charcoal-900 shadow-2xl group">
-              <Image
-                fill
-                sizes="100vw"
-                src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1600"
-                alt="Reunião de planejamento estratégico"
-                className="object-cover grayscale brightness-50 transition-transform duration-1000 group-hover:scale-[1.01]"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
-              <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="grid w-[58%] grid-cols-3 gap-3 opacity-45 sm:w-[46%]">
-                  {["Cenário", "Prioridades", "Plano"].map((label, index) => (
-                    <div key={label} className={`rounded-2xl border border-white/15 bg-black/30 p-3 backdrop-blur-sm ${index === 1 ? "translate-y-5" : ""}`}>
-                      <span className="block h-1.5 w-1.5 rounded-full bg-brand" />
-                      <span className="mt-5 block tag08-meta text-xs uppercase tracking-widest text-white/80">{label}</span>
-                      <span className="mt-2 block h-px w-full bg-white/25" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div aria-hidden="true" className="absolute inset-0 hidden items-center justify-center sm:flex">
-                <span className="inline-flex min-h-11 items-center gap-2 rounded-full border border-brand/60 bg-black/55 px-6 py-3 text-xs tag08-meta font-black uppercase tracking-widest text-brand">
-                  Entender meu momento atual
-                  <ArrowUpRight className="h-4 w-4 stroke-[2.5]" />
-                </span>
-              </div>
-              <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between gap-4 pointer-events-none">
-                <div className="space-y-1">
-                  <span className="tag08-meta text-xs font-bold uppercase tracking-widest text-brand">Assessoria TAG08</span>
-                  <p className="font-display text-xs sm:text-sm font-bold text-white">Diagnóstico, prioridades e direção de marketing.</p>
-                </div>
-                <span className="hidden sm:inline-flex rounded-xl border border-white/10 bg-black/60 px-2.5 py-1.5 text-xs font-sans text-zinc-300">CLAREZA // PRIORIDADE</span>
-              </div>
-            </div>
-          </ThreeDimensionalTilt>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/[0.04] pt-6 pb-4 text-left">
-            {[
-              ["Diagnóstico", "Leitura do cenário, dos gargalos e das decisões que precisam ser tomadas."],
-              ["Prioridades", "Escolhas organizadas antes de multiplicar frentes, canais ou investimentos."],
-              ["Direção", "Posicionamento, mensagem, canais e objetivos trabalhando na mesma lógica."],
-              ["Acompanhamento", "Decisões revisadas conforme contexto, execução e aprendizados evoluem."]
-            ].map(([title, description], index) => (
-              <div key={title} className="space-y-2">
-                <span className={`block font-display text-2xl sm:text-3xl font-black ${index === 1 ? "text-brand" : "text-white"}`}>{title}</span>
-                <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-widest leading-normal">{description}</span>
-              </div>
-            ))}
+          <div className="relative aspect-[16/10] overflow-hidden rounded-[24px] border border-white/[0.08] bg-charcoal-900 shadow-2xl sm:aspect-[2.39/1] sm:rounded-[32px]">
+            <Image fill preload sizes="(max-width: 768px) 100vw, (max-width: 1280px) calc(100vw - 4rem), 1280px" src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1600" alt="Reunião de planejamento estratégico" className="object-cover grayscale brightness-50" referrerPolicy="no-referrer" />
+            <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+            <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6"><p className="text-sm font-bold text-white">Diagnóstico, prioridades e direção de marketing.</p></div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 2 — QUALIFICAÇÃO: o visitante entende o encaixe antes do escopo. */}
-      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-neutral-950 text-left relative z-10">
-        <div className="max-w-7xl mx-auto space-y-10">
-          <div className="tag08-section__header max-w-3xl">
-            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">Antes de avançar</span>
-            <h2 className="tag08-section__heading font-display font-black text-3xl sm:text-4xl text-white">
-              A assessoria resolve falta de direção. Não substitui uma decisão que a marca ainda não quer tomar.
-            </h2>
-            <p className="tag08-section__copy text-zinc-400 text-sm font-sans">
-              O primeiro passo não é contratar mais uma frente. É confirmar se existe um problema de clareza, prioridade ou coordenação que precisa ser resolvido antes da execução.
-            </p>
+      <section className="border-b border-white/[0.06] bg-zinc-950/70 px-4 py-16 sm:px-6 sm:py-20 md:px-8">
+        <div className="mx-auto max-w-7xl space-y-10 sm:space-y-14">
+          <div className="max-w-3xl space-y-3">
+            <h2 className="font-display text-3xl font-black leading-[1.02] tracking-[-0.035em] text-white sm:text-4xl">Quando a assessoria faz sentido.</h2>
+            <p className="text-sm leading-relaxed text-zinc-300">A assessoria resolve falta de direção e coordenação. Não substitui uma decisão que a marca ainda não quer ou não consegue tomar.</p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <article className="tag08-surface-card rounded-3xl border p-6 sm:p-8 space-y-5">
-              <div className="flex items-center gap-2 text-brand tag08-meta text-xs font-bold uppercase tracking-widest">
-                <span className="h-2 w-2 rounded-full bg-brand" />
-                Há encaixe quando
-              </div>
-              <ul className="space-y-3 text-xs sm:text-sm leading-relaxed text-zinc-300">
-                {[
-                  "A marca já tem frentes, pessoas ou parceiros em movimento, mas falta uma direção comum.",
-                  "As prioridades mudam sem critério, e cada decisão reabre discussões ou cria retrabalho.",
-                  "Existe disposição para compartilhar contexto, participar das decisões e sustentar uma rotina possível."
-                ].map((item) => (
-                  <li key={item} className="flex gap-3">
-                    <span className="text-brand font-black">✓</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
+          <div className="grid grid-cols-1 gap-8 border-y border-white/[0.08] py-1 md:grid-cols-2">
+            <article className="border-b border-white/[0.08] py-7 md:border-b-0 md:border-r md:pr-8">
+              <p className="text-sm font-bold text-brand">Há encaixe quando</p>
+              <ul className="mt-5 space-y-3 text-sm leading-relaxed text-zinc-200">
+                {FIT_SIGNALS.map((item) => <li key={item} className="flex gap-3"><Check aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-brand" /><span>{item}</span></li>)}
               </ul>
             </article>
-
-            <article className="rounded-3xl border border-white/[0.05] bg-white/[0.01] p-6 sm:p-8 space-y-5">
-              <div className="flex items-center gap-2 text-zinc-400 tag08-meta text-xs font-bold uppercase tracking-widest">
-                <span className="h-2 w-2 rounded-full bg-zinc-600" />
-                Talvez não seja agora se
-              </div>
-              <ul className="space-y-3 text-xs sm:text-sm leading-relaxed text-zinc-400">
-                {[
-                  "A necessidade é uma entrega isolada, com escopo já totalmente definido.",
-                  "A expectativa é receber uma solução pronta sem acesso ao contexto ou participação nas decisões.",
-                  "Ainda não existe uma pessoa disponível para validar prioridades, aprovar caminhos e acompanhar a evolução."
-                ].map((item) => (
-                  <li key={item} className="flex gap-3">
-                    <span className="text-zinc-600 font-black">—</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
+            <article className="py-7 md:pl-8">
+              <p className="text-sm font-bold text-zinc-200">Talvez não seja agora se</p>
+              <ul className="mt-5 space-y-3 text-sm leading-relaxed text-zinc-300">
+                {NON_FIT_SIGNALS.map((item) => <li key={item} className="flex gap-3"><span aria-hidden="true" className="mt-0.5 text-brand">—</span><span>{item}</span></li>)}
               </ul>
             </article>
           </div>
+          <div className="space-y-5">
+            <div className="max-w-3xl">
+              <h2 className="font-display text-2xl font-black tracking-[-0.03em] text-white sm:text-3xl">Como a TAG08 organiza a decisão.</h2>
+              <p className="mt-3 text-sm leading-relaxed text-zinc-300">A execução só ganha consistência quando contexto, prioridade e responsabilidade estão alinhados.</p>
+            </div>
+            <ol className="grid grid-cols-1 border-t border-white/[0.08] md:grid-cols-2 lg:grid-cols-4">
+              {METHOD_STEPS.map((step, index) => <li key={step.title} className={`min-h-[170px] border-b border-white/[0.08] py-6 ${index % 2 === 0 ? "md:border-r md:pr-6 lg:border-r" : "md:pl-6 lg:border-r lg:pr-6"} ${index === 3 ? "lg:border-r-0" : ""}`}><h3 className="text-sm font-bold text-white">{step.title}</h3><p className="mt-4 max-w-xs text-sm leading-relaxed text-zinc-300">{step.description}</p></li>)}
+            </ol>
+          </div>
         </div>
       </section>
 
-      {/*=========================================
-          COMPARISON MATRIX
-         =========================================*/}
-      <section className="tag08-section px-4 sm:px-6 md:px-8 bg-charcoal-900/15 border-b border-white/[0.04] text-left relative z-10">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <div className="text-left space-y-3 max-w-2xl">
-            <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-              COMPARAÇÃO ESTRATÉGICA
-            </span>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
-              A diferença entre executar ações soltas e trabalhar com direção.
-            </h2>
-            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              A assessoria existe para ajudar a marca a entender prioridades, organizar decisões e reduzir dispersão antes de transformar ideias em ações de marketing.
-            </p>
+      <section className="border-b border-white/[0.06] px-4 py-16 sm:px-6 sm:py-20 md:px-8">
+        <div className="mx-auto max-w-7xl space-y-9 sm:space-y-12">
+          <div className="max-w-3xl space-y-3">
+            <h2 className="font-display text-3xl font-black leading-[1.02] tracking-[-0.035em] text-white sm:text-4xl">O que organizamos antes de ampliar frentes.</h2>
+            <p className="text-sm leading-relaxed text-zinc-300">A assessoria conecta posicionamento, comunicação, canais e operação. Nem toda frente precisa acontecer ao mesmo tempo; a escolha depende do contexto, da prioridade e da capacidade real de execução.</p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white/[0.01] border border-white/[0.04] rounded-2xl p-6 sm:p-8 space-y-6 relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-px bg-white/[0.08]" />
-              <div className="flex items-center gap-2 text-zinc-400 tag08-meta text-xs uppercase tracking-widest">
-                <span className="w-1.5 h-1.5 rounded-full bg-zinc-500" />
-                <span>Execução sem direção</span>
-              </div>
-              <h3 className="font-display font-bold text-lg sm:text-xl text-white leading-none">Quando tudo começa pela urgência</h3>
-
-              <ul className="space-y-4">
-                {[
-                  "Ações começam por urgência, gosto pessoal ou tentativa isolada, sem clareza suficiente de prioridade, mensagem ou continuidade.",
-                  "Canais, conteúdos e materiais passam a ser produzidos sem uma lógica comum de posicionamento, mensagem e prioridade.",
-                  "O esforço se espalha entre várias frentes sem um critério claro de foco, sequência e capacidade de execução."
-                ].map((item, idx) => (
-                  <li key={idx} className="flex gap-3 text-zinc-400 text-xs sm:text-sm leading-relaxed">
-                    <span className="text-zinc-600 font-bold font-sans">/ &times;</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 transition-colors duration-300 rounded-2xl p-6 sm:p-8 space-y-6 relative overflow-hidden shadow-xl">
-              <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-brand/20 via-brand/40 to-transparent" />
-              <div className="flex items-center gap-2 text-brand tag08-meta text-xs uppercase tracking-widest font-bold">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                <span>Assessoria com direção</span>
-              </div>
-              <h3 className="font-display font-medium text-lg sm:text-xl text-brand-secondary leading-none">Quando a decisão parte de diagnóstico</h3>
-
-              <ul className="space-y-4">
-                {[
-                  "As decisões partem de diagnóstico, critérios, prioridades e um plano possível de executar com responsabilidade.",
-                  "A assessoria ajuda a organizar posicionamento, comunicação, canais e próximos passos antes de ampliar a produção.",
-                  "O objetivo é reduzir improviso, desalinhamento e retrabalho para que a execução tenha mais coerência."
-                ].map((item, idx) => (
-                  <li key={idx} className="flex gap-3 text-white text-xs sm:text-sm leading-relaxed font-medium">
-                    <span className="text-brand font-black font-semibold">&#10003;</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {CAPABILITIES.map((capability) => {
+              const Icon = capability.icon;
+              return <article key={capability.title} className="border-t border-white/[0.12] py-5"><Icon aria-hidden="true" className="h-5 w-5 text-brand" /><h3 className="mt-8 font-display text-lg font-black tracking-tight text-white">{capability.title}</h3><p className="mt-3 text-sm leading-relaxed text-zinc-300">{capability.description}</p></article>;
+            })}
           </div>
-
         </div>
       </section>
-      {/* SECTION 3 - ESCOPO: a página explica a oferta antes de pedir dados. */}
-      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-neutral-950 text-left relative overflow-hidden">
-        <div className="absolute top-[20%] right-[-10%] h-[500px] w-[500px] rounded-full bg-brand/[0.015] blur-[140px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto space-y-10 relative z-10">
-          <div className="tag08-section__header">
-            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">O que organizamos</span>
-            <h2 className="tag08-section__heading font-display font-black text-3xl sm:text-4xl text-white">
-              Antes de combinar canais, organizamos a base da decisão.
-            </h2>
-            <p className="tag08-section__copy text-zinc-400 text-sm font-sans">
-              A assessoria conecta posicionamento, comunicação, canais e operação. Dependendo do contexto, pode se conectar à <a href="/servicos/gestao-de-redes-sociais" className="text-brand underline-offset-4 hover:underline">Gestão de Redes Sociais</a>, ao <a href="/servicos/branding-identidade" className="text-brand underline-offset-4 hover:underline">branding e à identidade visual</a>, ao <a href="/servicos/desenvolvimento-web" className="text-brand underline-offset-4 hover:underline">Desenvolvimento Web</a> ou ao <a href="/servicos/process-intelligence" className="text-brand underline-offset-4 hover:underline">Process Intelligence</a>. Nem toda frente precisa acontecer ao mesmo tempo; a escolha depende do contexto, da prioridade e da capacidade real de execução.
-            </p>
+      <section id="diagnostic-audit" className="scroll-mt-24 border-b border-white/[0.06] bg-zinc-950/70 px-4 py-16 sm:px-6 sm:py-20 md:px-8">
+        <div className="mx-auto max-w-5xl space-y-9 sm:space-y-12">
+          <div className="max-w-3xl space-y-3">
+            <p className="text-sm font-bold uppercase tracking-[0.14em] text-brand">Leitura inicial opcional</p>
+            <h2 className="font-display text-3xl font-black leading-[1.02] tracking-[-0.035em] text-white sm:text-4xl">Sua empresa tem direção suficiente para executar com consistência?</h2>
+            <p className="text-sm leading-relaxed text-zinc-300">Esta leitura inicial ajuda a perceber se prioridades, mensagem, canais, responsabilidades e capacidade de execução estão organizados o suficiente para sustentar os próximos passos.</p>
           </div>
+          <div className="rounded-3xl border border-white/[0.08] bg-charcoal-900 p-6 shadow-2xl sm:p-10">
+            <AnimatePresence mode="wait" initial={false}>
+              {!quizCompleted ? <motion.div key={currentQuestionIdx} initial={prefersReducedMotion ? false : { opacity: 0, transform: "translateX(10px)" }} animate={{ opacity: 1, transform: "translateX(0)" }} exit={prefersReducedMotion ? undefined : { opacity: 0, transform: "translateX(-8px)" }} transition={quizTransition} className="space-y-7">
+                <div className="flex items-center justify-between border-b border-white/[0.08] pb-4"><p className="text-xs font-bold uppercase tracking-widest text-brand">Leitura de maturidade</p><p className="text-xs text-zinc-300">{currentQuestionIdx + 1} de {AUDIT_QUESTIONS.length}</p></div>
+                <div role="progressbar" aria-label="Progresso do diagnóstico" aria-valuemin={0} aria-valuemax={100} aria-valuenow={quizProgress} aria-valuetext={`Pergunta ${currentQuestionIdx + 1} de ${AUDIT_QUESTIONS.length}`} className="h-1 w-full overflow-hidden rounded-full bg-white/[0.08]"><div className="h-full bg-brand transition-[width] duration-200 ease-out motion-reduce:transition-none" style={{ width: `${quizProgress}%` }} /></div>
+                <h3 ref={questionHeadingRef} tabIndex={-1} className="font-display text-xl font-black leading-snug text-white sm:text-2xl">{AUDIT_QUESTIONS[currentQuestionIdx].text}</h3>
+                <div className="grid gap-3">
+                  {AUDIT_QUESTIONS[currentQuestionIdx].options.map((option) => {
+                    const isSelected = answers[AUDIT_QUESTIONS[currentQuestionIdx].id]?.score === option.value;
+                    return <button key={option.label} type="button" onClick={() => handleSelectOption(AUDIT_QUESTIONS[currentQuestionIdx].id, option.value, option.text)} aria-pressed={isSelected} className={`flex min-h-12 w-full items-center gap-4 rounded-xl border p-4 text-left text-sm ${isSelected ? "border-brand/60 bg-brand/[0.08] text-white" : "border-white/[0.10] bg-white/[0.01] text-zinc-200 hover:border-brand/45 hover:bg-white/[0.03]"} ${actionTransition}`}><span aria-hidden="true" className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-black ${isSelected ? "bg-brand text-black" : "bg-white/[0.08] text-zinc-200"}`}>{option.label}</span><span>{option.text}</span></button>;
+                  })}
+                </div>
+                <div className="flex flex-col-reverse gap-3 border-t border-white/[0.08] pt-5 sm:flex-row sm:items-center sm:justify-between">
+                  <button type="button" onClick={handlePreviousQuestion} disabled={currentQuestionIdx === 0} className={`inline-flex min-h-11 items-center justify-center rounded-xl border border-white/10 px-4 py-2 text-xs font-bold text-zinc-200 disabled:cursor-not-allowed disabled:opacity-45 ${actionTransition}`}>Voltar uma pergunta</button>
+                  <p className="text-xs leading-relaxed text-zinc-300 sm:text-right">Sua resposta pode ser alterada antes da leitura final.</p>
+                </div>
+              </motion.div> : <motion.div initial={prefersReducedMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={quizTransition} className="space-y-7">
+                <div className="border-b border-white/[0.08] pb-4"><p className="text-xs font-bold uppercase tracking-widest text-brand">Leitura orientativa concluída</p></div>
+                <div className="rounded-2xl border border-white/[0.08] bg-black/25 p-6"><p className="text-xs font-bold uppercase tracking-widest text-zinc-300">Leitura atual</p><h3 ref={resultHeadingRef} tabIndex={-1} className={`mt-3 font-display text-3xl font-black leading-none ${diagnostic.tone}`}>{diagnostic.level}</h3><p className="mt-5 text-sm leading-relaxed text-zinc-200">{diagnostic.description}</p><p className="mt-4 border-t border-white/[0.08] pt-4 text-sm font-semibold leading-relaxed text-white">{diagnostic.focus}</p><p className="mt-3 text-sm leading-relaxed text-zinc-300">{diagnostic.recommendation}</p></div>
+                <p className="text-sm leading-relaxed text-zinc-300">Esta leitura organiza percepções da própria empresa; não substitui diagnóstico técnico, análise de canais ou recomendação comercial.</p>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <a href={brazilDiagnosticWhatsappUrl} onClick={() => handleDiagnosticWhatsAppClick("WhatsApp Brasil", brazilDiagnosticWhatsappUrl)} target="_blank" rel="noreferrer" aria-label="Falar no WhatsApp Brasil sobre esta leitura, abre em nova guia" className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand px-5 py-3 text-xs font-black uppercase tracking-widest text-black ${actionTransition}`}><MessageSquare className="h-4 w-4" />WhatsApp Brasil</a>
+                  <a href={internationalDiagnosticWhatsappUrl} onClick={() => handleDiagnosticWhatsAppClick("WhatsApp Internacional", internationalDiagnosticWhatsappUrl)} target="_blank" rel="noreferrer" aria-label="Falar no WhatsApp Internacional sobre esta leitura, abre em nova guia" className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-brand/45 px-5 py-3 text-xs font-black uppercase tracking-widest text-brand ${actionTransition}`}><MessageSquare className="h-4 w-4" />WhatsApp Internacional</a>
+                  <button type="button" onClick={handleResetQuiz} className={`min-h-11 rounded-xl border border-white/10 px-5 py-3 text-xs font-bold uppercase tracking-widest text-zinc-200 sm:col-span-2 ${actionTransition}`}>Repetir leitura</button>
+                </div>
+              </motion.div>}
+            </AnimatePresence>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { icon: Target, title: "Posicionamento e mensagem", description: "Clareza sobre o que a marca oferece, para quem, como quer ser percebida e quais mensagens precisam sustentar essa percepção." },
-              { icon: MessageSquare, title: "Conteúdo e relacionamento", description: "Linha editorial, argumentos e conversas que ajudam o público a compreender melhor a marca e sua oferta." },
-              { icon: LineChart, title: "Canais e conversão", description: "Site, redes sociais, materiais e pontos de contato organizados para apoiar a jornada e o próximo passo." },
-              { icon: Settings, title: "Operação e acompanhamento", description: "Responsáveis, prioridades, revisão e rotina para reduzir improviso e preservar continuidade." }
-            ].map((item) => {
-              const Icon = item.icon;
+      <MiniCases route="/servicos/assessoria-marketing-digital-estrategico" onNavigate={onNavigate} badge="Experiências acompanhadas" title="Provas apresentadas com contexto" subtitle="Uma seleção de experiências autorizadas para esta rota. Cada caso representa um contexto, escopo e momento próprios." />
+      <TrustTestimonialsSection />
 
+      <section className="border-b border-white/[0.06] px-4 py-16 sm:px-6 sm:py-20 md:px-8">
+        <div className="mx-auto max-w-4xl space-y-8">
+          <div className="max-w-3xl space-y-3"><h2 className="font-display text-3xl font-black leading-[1.02] tracking-[-0.035em] text-white sm:text-4xl">Dúvidas antes de conversar.</h2><p className="text-sm leading-relaxed text-zinc-300">As respostas abaixo ajudam a entender o que esperar antes de avaliar um escopo.</p></div>
+          <div className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+            {FAQ_ITEMS.map((item, index) => {
+              const isOpen = openFaq === index;
+              const panelId = `assessoria-faq-panel-${index}`;
+              const headingId = `assessoria-faq-heading-${index}`;
               return (
-                <article key={item.title} className="tag08-surface-card rounded-3xl border p-6 space-y-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/5 bg-zinc-950 text-brand">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="font-display text-sm font-black text-white">{item.title}</h3>
-                    <p className="text-xs leading-relaxed text-zinc-400">{item.description}</p>
-                  </div>
+                <article key={item.question} className="py-1">
+                  <h3 id={headingId}>
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      aria-controls={panelId}
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                      className={`flex min-h-14 w-full items-center justify-between gap-5 py-4 text-left text-base font-bold text-white ${actionTransition}`}
+                    >
+                      <span>{item.question}</span>
+                      <ChevronDown aria-hidden="true" className={`h-5 w-5 shrink-0 text-brand transition-transform duration-200 ease-out motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`} />
+                    </button>
+                  </h3>
+                  {isOpen && (
+                    <div id={panelId} role="region" aria-labelledby={headingId} className="pb-5 pr-10 text-sm leading-relaxed text-zinc-300">
+                      {item.answer}
+                    </div>
+                  )}
                 </article>
               );
             })}
           </div>
         </div>
       </section>
-      {/* SECTION 4 - SISTEMA DE TRABALHO */}
-      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/10 text-left relative z-10">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <div className="tag08-section__header">
-            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">Sistema de trabalho</span>
-            <h2 className="tag08-section__heading font-display font-black text-3xl sm:text-4xl text-white">
-              Da leitura do cenário ao plano de ação.
-            </h2>
-            <p className="tag08-section__copy text-zinc-400 text-sm font-sans">
-              A assessoria transforma diagnóstico em prioridades e planejamento de marketing compatível com o momento, os objetivos e a capacidade de execução da empresa.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-            {[
-              {
-                num: "01",
-                icon: Target,
-                title: "Diagnóstico inicial",
-                desc: "Entendemos contexto, objetivos, gargalos, comunicação atual, canais e limitações reais antes de recomendar qualquer ação."
-              },
-              {
-                num: "02",
-                icon: Zap,
-                title: "Leitura de maturidade",
-                desc: "Identificamos desalinhamentos entre posicionamento, oferta, mensagem, canais, rotina e capacidade de execução."
-              },
-              {
-                num: "03",
-                icon: LineChart,
-                title: "Priorização",
-                desc: "Definimos o que vem primeiro, o que pode esperar e quais frentes fazem sentido para o momento atual do negócio."
-              },
-              {
-                num: "04",
-                icon: Cpu,
-                title: "Plano e acompanhamento",
-                desc: "Organizamos as decisões em um caminho de ação e, quando previsto no escopo, acompanhamos ajustes, aprendizados e novas prioridades."
-              }
-            ].map((pilar, idx) => {
-              const PilarIcon = pilar.icon;
-              return (
-                <div 
-                  key={idx}
-                  className="bg-charcoal-900 border border-white/[0.05] rounded-2xl p-6 sm:p-8 hover:border-brand/30 hover:bg-white/[0.015] transition-all duration-300 relative overflow-hidden flex flex-col justify-between min-h-[15rem] sm:min-h-[17rem] lg:h-80 group"
-                >
-                  <div className="absolute inset-0 bg-[radial-gradient(#ffffff01_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
-                  
-                  <div className="space-y-4 relative z-10">
-                    <div className="flex items-center justify-between">
-                      <span className="font-display font-black text-2xl text-zinc-800 group-hover:text-brand transition-colors uppercase">
-                        {pilar.num}.
-                      </span>
-                      <div className="p-2 bg-white/[0.03] text-zinc-400 group-hover:text-brand group-hover:bg-brand/10 rounded-lg transition-all">
-                        <PilarIcon className="w-4.5 h-4.5" />
-                      </div>
-                    </div>
-                    <h3 className="text-white text-base sm:text-lg font-display font-medium tracking-tight group-hover:text-brand transition-colors leading-[1.25]">
-                      {pilar.title}
-                    </h3>
-                    <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
-                      {pilar.desc}
-                    </p>
-                  </div>
-
-                  <div className="pt-4 border-t border-white/[0.04] text-xs tag08-meta text-zinc-400 uppercase tracking-widest relative z-10 flex justify-between">
-                    <span>ETAPA DA ASSESSORIA</span>
-                    <span className="text-brand font-semibold select-none">ETAPA_0{idx + 1}</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-        </div>
-      </section>
-
-      {/*=========================================
-          INTERACTIVE MARKETING AUDIT SIMULATOR
-         =========================================*/}
-      <section id="diagnostic-audit" className="tag08-section px-4 sm:px-6 md:px-8 bg-charcoal-900/25 border-b border-white/[0.04] text-left relative z-10 scroll-mt-24">
-        <div className="max-w-7xl mx-auto space-y-12">
-          
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 max-w-5xl">
-            <div className="space-y-3">
-              <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-                LEITURA DE MATURIDADE
-              </span>
-              <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white tracking-tighter">
-                Sua empresa tem direção suficiente para executar com consistência?
-              </h2>
-            </div>
-            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Esta leitura inicial ajuda a perceber se prioridades, mensagem, canais, responsabilidades e capacidade de execução estão organizados o suficiente para sustentar próximos passos com mais critério.
-            </p>
-          </div>
-
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-charcoal-900 border border-white/[0.08] rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-tr from-brand/[0.015] to-transparent pointer-events-none" />
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand/5 rounded-full blur-[60px] pointer-events-none" />
-
-              <AnimatePresence mode="wait">
-                {!quizCompleted ? (
-                  <motion.div
-                    key={currentQuestionIdx}
-                    initial={{ opacity: 0, x: 15 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -15 }}
-                    transition={{ duration: 0.25 }}
-                    className="space-y-8"
-                  >
-                    {/* Header info */}
-                    <div className="flex justify-between items-center border-b border-white/[0.04] pb-4">
-                      <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-wider font-extrabold">
-                        LEITURA INICIAL DE MATURIDADE
-                      </span>
-                      <span className="font-sans text-xs text-zinc-400">
-                        {currentQuestionIdx + 1} / {auditQuestions.length}
-                      </span>
-                    </div>
-
-                    {/* Progress feedback bar */}
-                    <div
-                      role="progressbar"
-                      aria-label="Progresso do diagnóstico"
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      aria-valuenow={quizProgress}
-                      aria-valuetext={`Pergunta ${currentQuestionIdx + 1} de ${auditQuestions.length}`}
-                      className="w-full h-1 bg-white/[0.02] rounded-full overflow-hidden"
-                    >
-                      <div 
-                        className="h-full bg-brand transition-all duration-300"
-                        style={{ width: `${quizProgress}%` }}
-                      />
-                    </div>
-
-                    {currentQuestionIdx > 0 && (
-                      <p className="text-xs text-zinc-400" role="status">
-                        Resposta anterior registrada. Você pode voltar para alterá-la antes da leitura final.
-                      </p>
-                    )}
-
-                    {/* Question text */}
-                    <h3 ref={questionHeadingRef} tabIndex={-1} className="font-display font-semibold text-lg sm:text-xl text-white leading-snug">
-                      {auditQuestions[currentQuestionIdx].text}
-                    </h3>
-
-                    {/* Options list column */}
-                    <div className="grid gap-3.5 pt-2">
-                      {auditQuestions[currentQuestionIdx].options.map((opt, optIdx) => (
-                        <button
-                          key={optIdx}
-                          type="button"
-                          onClick={() => handleSelectOption(auditQuestions[currentQuestionIdx].id, opt.value, opt.text)}
-                          aria-pressed={answers[auditQuestions[currentQuestionIdx].id]?.score === opt.value}
-                          className={`w-full text-left p-4 rounded-xl border transition-all duration-200 flex gap-4 items-center cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand ${
-                            answers[auditQuestions[currentQuestionIdx].id]?.score === opt.value
-                              ? "border-brand/60 bg-brand/[0.08]"
-                              : "border-white/[0.04] bg-white/[0.01] hover:bg-white/[0.03] hover:border-brand/40"
-                          }`}
-                        >
-                          <div className={`w-6 h-6 rounded-lg border flex items-center justify-center font-sans text-xs font-bold shrink-0 ${
-                            answers[auditQuestions[currentQuestionIdx].id]?.score === opt.value
-                              ? "bg-brand text-black border-brand"
-                              : "bg-white/[0.03] border-white/10 text-zinc-400"
-                          }`}>
-                            {opt.label}
-                          </div>
-                          <span className="text-zinc-300 text-xs sm:text-sm font-sans font-medium transition-colors">
-                            {opt.text}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="flex flex-col-reverse gap-3 border-t border-white/[0.04] pt-5 sm:flex-row sm:items-center sm:justify-between">
-                      <button
-                        type="button"
-                        onClick={handlePreviousQuestion}
-                        disabled={currentQuestionIdx === 0}
-                        className="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.01] px-4 py-2 text-xs tag08-action font-bold text-zinc-300 transition-colors hover:border-white/20 hover:bg-white/[0.04] disabled:cursor-not-allowed disabled:border-white/[0.04] disabled:text-zinc-600 disabled:hover:bg-white/[0.01]"
-                      >
-                        Voltar uma pergunta
-                      </button>
-                      <p className="text-xs text-zinc-400 sm:text-right">Sua resposta pode ser alterada antes da leitura final.</p>
-                    </div>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="space-y-8"
-                  >
-                    <div className="flex justify-between items-center border-b border-white/[0.04] pb-4">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-                        <span className="tag08-meta text-xs text-brand uppercase tracking-wider font-extrabold">
-                          AUTOAVALIAÇÃO INICIAL CONCLUÍDA
-                        </span>
-                      </div>
-                      <span className="font-sans text-xs text-zinc-400">LEITURA ORIENTATIVA</span>
-                    </div>
-
-                    {/* Scoring and output display */}
-                    {(() => {
-                      const diag = getDiagnosticOutput();
-                      return (
-                        <div className="space-y-6">
-                          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-6 rounded-2xl border border-white/[0.06] bg-black/40">
-                            <div className="text-center sm:text-left space-y-1.5 shrink-0">
-                              <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest block font-bold">LEITURA ATUAL</span>
-                              <h4 ref={resultHeadingRef} tabIndex={-1} className={`font-display font-black text-3xl uppercase leading-none ${diag.color}`}>{diag.level}</h4>
-                              <p className="text-zinc-400 text-xs font-sans font-bold uppercase text-brand mt-1">{diag.recommendation}</p>
-                            </div>
-                            <div aria-hidden="true" className="relative flex flex-col items-center justify-center w-24 h-24 rounded-full bg-charcoal-950 border border-white/5 shadow-inner">
-                              <span className="tag08-meta text-xs font-black uppercase tracking-widest text-brand">Auto</span>
-                              <span className="tag08-meta text-xs font-black uppercase tracking-widest text-zinc-400">avaliação</span>
-                            </div>
-                          </div>
-
-                          <div className="space-y-4 text-zinc-300 text-xs sm:text-sm font-sans leading-relaxed text-left bg-white/[0.01] border border-white/[0.03] p-5 sm:p-6 rounded-xl">
-                            <p className="border-b border-white/[0.04] pb-4 text-zinc-400">
-                              Esta leitura organiza as percepções da própria empresa; não substitui um diagnóstico técnico, uma análise de canais ou uma recomendação comercial.
-                            </p>
-                            <div>
-                              <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest font-black block mb-1">Leituras observadas</span>
-                              <p className="text-zinc-300 font-medium">{diag.description}</p>
-                            </div>
-                            <div className="pt-4 border-t border-white/[0.04]">
-                              <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest font-black block mb-1.5">Próximo foco</span>
-                              <div className="flex gap-2.5 items-start">
-                                <div className="mt-0.5 p-1 rounded bg-brand-secondary/10 border border-brand-secondary/20 text-brand-secondary">
-                                  <Sparkles className="w-3.5 h-3.5" />
-                                </div>
-                                <p className="text-white font-semibold text-xs leading-normal">{diag.focus}</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Action tools */}
-                          <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <a
-                              href={brazilDiagnosticWhatsappUrl}
-                              onClick={() => handleDiagnosticWhatsAppClick("WhatsApp Brasil", brazilDiagnosticWhatsappUrl)}
-                              target="_blank"
-                              rel="noreferrer"
-                              aria-label="Falar no WhatsApp Brasil sobre esta leitura, abre em nova guia"
-                              className="min-h-11 bg-brand-secondary hover:bg-brand hover:shadow-[0_10px_35px_rgba(var(--color-brand-secondary-rgb),0.25)] text-black text-xs font-sans font-black uppercase tracking-widest py-4 px-6 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.15)]"
-                            >
-                              <MessageSquare className="w-4 h-4 text-black" />
-                              <span>FALAR NO WHATSAPP BRASIL</span>
-                            </a>
-                            <a
-                              href={internationalDiagnosticWhatsappUrl}
-                              onClick={() => handleDiagnosticWhatsAppClick("WhatsApp Internacional", internationalDiagnosticWhatsappUrl)}
-                              target="_blank"
-                              rel="noreferrer"
-                              aria-label="Falar no WhatsApp Internacional sobre esta leitura, abre em nova guia"
-                              className="min-h-11 bg-brand-secondary hover:bg-brand hover:shadow-[0_10px_35px_rgba(var(--color-brand-secondary-rgb),0.25)] text-black text-xs font-sans font-black uppercase tracking-widest py-4 px-6 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.15)]"
-                            >
-                              <MessageSquare className="w-4 h-4 text-black" />
-                              <span>FALAR NO WHATSAPP INTERNACIONAL</span>
-                            </a>
-                            <button
-                              type="button"
-                              onClick={handleResetQuiz}
-                              className="min-h-11 sm:col-span-2 bg-white/5 hover:bg-white/[0.08] text-white hover:text-white border border-white/10 hover:border-white/20 text-xs font-sans font-bold uppercase tracking-widest py-3 px-6 rounded-xl text-center transition-all duration-300 cursor-pointer"
-                            >
-                              REPETIR DIAGNÓSTICO
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })()}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <ServiceInsightsBridge
-        servicePath="/servicos/assessoria-marketing-digital-estrategico"
-        onNavigate={onNavigate}
-      />
-
-      {/* MiniCases Validation block */}
-      <MiniCases route="/servicos/assessoria-marketing-digital-estrategico" onNavigate={onNavigate} />
-
-      <TrustTestimonialsSection />
-
-      {/*=========================================
-          CTA FINAL + FAQ
-         =========================================*/}
-      <section className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-950 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto flex flex-col gap-8">
-          <div className="rounded-[32px] sm:rounded-[40px] border border-white/[0.06] bg-black/45 overflow-hidden shadow-2xl">
-            <div className="grid grid-cols-1 lg:grid-cols-12">
-              <div className="lg:col-span-5 min-h-[320px] sm:min-h-[380px] relative overflow-hidden">
-                <Image
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 42vw"
-                  src={heroTag08StrategyStage}
-                  alt="TAG08 assessoria"
-                  className="object-cover brightness-[0.48] contrast-[1.05]"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-black/35 to-black/75" />
-                <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between">
-                  <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-black/35 px-3 py-1 text-xs tag08-meta font-bold uppercase tracking-widest text-white/70">
-                    Pr&oacute;ximo passo
-                  </span>
-                  <div className="space-y-3 max-w-sm">
-                    <p className="text-white/70 text-xs sm:text-sm leading-relaxed">
-                      A assessoria faz sentido quando a marca precisa entender melhor o que priorizar antes de executar.
-                    </p>
-                    <div className="flex flex-wrap gap-2 text-xs tag08-meta uppercase tracking-widest text-white/55">
-                      <span className="rounded-full border border-white/10 bg-black/25 px-2 py-1">Clareza</span>
-                      <span className="rounded-full border border-white/10 bg-black/25 px-2 py-1">Dire&ccedil;&atilde;o</span>
-                      <span className="rounded-full border border-white/10 bg-black/25 px-2 py-1">Prioridade</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between gap-6 bg-white text-black">
-                <div className="space-y-4 max-w-2xl">
-                  <span className="inline-flex items-center rounded-full border border-black/10 bg-black/[0.03] px-3 py-1 text-xs tag08-meta font-bold uppercase tracking-widest text-black/60">
-                    Próximo passo
-                  </span>
-                  <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black leading-[0.92] tracking-tighter">
-                    Vamos entender se a assessoria faz sentido para sua marca?
-                  </h2>
-                  <p className="text-black/75 text-sm sm:text-sm leading-relaxed max-w-xl">
-                    Antes de propor qualquer formato, a TAG08 entende contexto, posicionamento, prioridades e capacidade de execução para avaliar se a Assessoria de Marketing Estratégico &eacute; o caminho mais coerente para este momento.
-                  </p>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <a
-                    href={brazilConsultationWhatsappUrl}
-                    onClick={() => handleConsultationWhatsAppClick("assessoria-final-cta")}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="Falar com a TAG08 pelo WhatsApp, abre em nova guia"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-black text-white px-5 py-3 text-xs sm:text-sm tag08-meta font-bold uppercase tracking-widest transition-transform hover:-translate-y-0.5"
-                  >
-                    <span>FALAR COM A TAG08</span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </a>
-                  <button
-                    onClick={() => handleLinkClick("/servicos")}
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-black/[0.03] px-5 py-3 text-xs sm:text-sm tag08-meta font-bold uppercase tracking-widest text-black transition-colors hover:bg-black/[0.06]"
-                  >
-                    <span>VER OUTRAS SOLUÇÕES</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-[32px] sm:rounded-[40px] bg-charcoal-950 border border-white/[0.05] p-6 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.02)_1.2px,transparent_1.2px)] [background-size:24px_24px] pointer-events-none" />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-stretch relative z-10">
-              <div className="md:col-span-1 lg:col-span-4 flex flex-col justify-between space-y-8 text-left">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
-                    D&Uacute;VIDAS SOBRE ASSESSORIA
-                  </div>
-                  <h2 className="font-display font-black text-3xl sm:text-4xl text-white leading-[0.95] tracking-tighter">
-                    Antes de contratar, entenda como a assessoria funciona.
-                  </h2>
-                  <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-sm">
-                    A assessoria existe para ajudar a marca a decidir melhor antes de executar. As respostas abaixo ajudam a entender quando esse caminho faz sentido e o que esperar do processo.
-                  </p>
-                </div>
-
-                <div role="tablist" aria-label="Dúvidas sobre assessoria" aria-orientation="vertical" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 pt-4">
-                  {faqCategories.map((item) => (
-                    <button
-                      key={item.id}
-                      id={`assessoria-faq-tab-${item.id}`}
-                      type="button"
-                      role="tab"
-                      onClick={() => setActiveFaq(item.id)}
-                      onKeyDown={(event) => handleFaqKeyDown(event, item.id)}
-                      aria-selected={activeFaq === item.id}
-                      aria-controls="assessoria-faq-panel"
-                      tabIndex={activeFaq === item.id ? 0 : -1}
-                      className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all text-left group cursor-pointer ${
-                        activeFaq === item.id
-                          ? "bg-brand text-black border-brand shadow-[0_8px_25px_rgba(var(--color-brand-secondary-rgb),0.12)]"
-                          : "bg-white/[0.01] border-white/5 text-zinc-400 hover:text-white hover:border-white/10"
-                      }`}
-                    >
-                      <span className="tag08-meta text-xs font-black uppercase tracking-wider flex items-center gap-3">
-                        <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
-                          {String(item.id + 1).padStart(2, "0")}.
-                        </span>
-                        {item.title}
-                      </span>
-                      <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${activeFaq === item.id ? "text-black rotate-[-45deg] stroke-[2.5]" : "text-zinc-400"}`} />
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="md:col-span-1 lg:col-span-4 relative flex flex-col justify-end p-6 min-h-[19rem] sm:min-h-[22rem] lg:min-h-[27.5rem] rounded-3xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e]">
-                <Image
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 34vw"
-                  src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800"
-                  alt="TAG08 Assessoria"
-                  className="object-cover grayscale brightness-[0.22] contrast-[1.1] transition-transform duration-700 pointer-events-none"
-                />
-                <div className="absolute inset-0 pointer-events-none z-10 opacity-30">
-                  <svg viewBox="0 0 100 100" className="w-full h-full text-brand fill-none stroke-current" strokeWidth="0.75" strokeLinecap="round">
-                    <path d="M15,80 C40,40 20,10 60,35 C80,50 30,90 85,15" strokeDasharray="2,2" />
-                    <circle cx="85" cy="15" r="1.5" className="fill-brand animate-pulse" />
-                  </svg>
-                </div>
-                <div className="absolute top-6 left-6 z-10 pointer-events-none tag08-meta text-xs text-white/20 uppercase tracking-widest leading-none">
-                  TAG08 // ASSESSORIA
-                </div>
-
-                <div
-                  id="assessoria-faq-panel"
-                  role="tabpanel"
-                  aria-labelledby={`assessoria-faq-tab-${activeFaq}`}
-                  tabIndex={0}
-                  className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-5 rounded-2xl space-y-3 shadow-2xl text-left font-sans"
-                >
-                  <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">
-                    {faqCategories[activeFaq].title}
-                  </span>
-
-                  <h4 className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
-                    {faqQuestions[activeFaq]}
-                  </h4>
-
-                  <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
-                    {faqAnswers[activeFaq]}
-                  </p>
-                </div>
-              </div>
-
-              <div className="md:col-span-2 lg:col-span-4 flex flex-col sm:flex-row lg:flex-col justify-between gap-4">
-                <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 hover:border-brand/20 transition-all text-left flex flex-col justify-between space-y-4 flex-1">
-                  <div className="space-y-2">
-                    <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest block font-bold">PROPOSTA DE VALOR</span>
-                    <h4 className="text-white font-semibold text-sm leading-snug">Dire&ccedil;&atilde;o antes da execu&ccedil;&atilde;o</h4>
-                    <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                      A assessoria organiza contexto, prioridades, critérios e planejamento antes de ampliar ações, canais ou investimentos.
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => handleLinkClick("/servicos")}
-                    className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
-                  >
-                    <span>VER OUTRAS SOLUÇÕES</span>
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                  </button>
-                </div>
-
-                <div className="bg-brand text-black rounded-2xl p-5 hover:scale-[1.02] transition-all text-left flex flex-col justify-between space-y-4 flex-1">
-                  <div className="space-y-2">
-                    <span className="tag08-meta text-xs text-black/60 uppercase tracking-widest block font-extrabold">CONTATO DIRETO</span>
-                    <h4 className="text-black font-black text-sm leading-tight tracking-tight">Falar com a TAG08</h4>
-                    <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
-                      Se fizer sentido para o momento da empresa, o próximo passo &eacute; conversar sobre contexto, prioridade, escopo e nível de apoio necessário.
-                    </p>
-                  </div>
-                  <a
-                    href={brazilConsultationWhatsappUrl}
-                    onClick={() => handleConsultationWhatsAppClick("assessoria-faq-contact")}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="Falar com a TAG08 pelo WhatsApp, abre em nova guia"
-                    className="group flex items-center justify-between text-xs font-sans font-bold text-black border-t border-black/10 pt-2 cursor-pointer select-none"
-                  >
-                    <span>FALAR COM A TAG08</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                  </a>
-                </div>
-              </div>
-            </div>
+      <section className="px-4 py-20 sm:px-6 md:px-8">
+        <div className="mx-auto max-w-4xl rounded-3xl bg-brand p-7 text-black sm:p-10">
+          <div className="max-w-2xl"><h2 className="font-display text-3xl font-black leading-[0.98] tracking-[-0.04em] sm:text-4xl">Vamos entender se a assessoria faz sentido para sua marca?</h2><p className="mt-5 text-sm leading-relaxed text-black/75">Antes de propor qualquer formato, a TAG08 entende contexto, posicionamento, prioridades e capacidade de execução para indicar o caminho mais coerente para este momento.</p></div>
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <a href={brazilConsultationWhatsappUrl} onClick={() => handleConsultationWhatsAppClick("assessoria-final-cta")} target="_blank" rel="noreferrer" aria-label="Falar com a TAG08 pelo WhatsApp, abre em nova guia" className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-black px-5 py-3 text-xs font-black uppercase tracking-widest text-white ${actionTransition}`}>Falar com a TAG08<ArrowUpRight className="h-4 w-4" /></a>
+            <button type="button" onClick={() => handleLinkClick("/servicos")} className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-black/15 px-5 py-3 text-xs font-bold uppercase tracking-widest text-black ${actionTransition}`}>Ver outras soluções<ArrowRight className="h-4 w-4" /></button>
           </div>
         </div>
       </section>
 
+      <ServiceInsightsBridge servicePath="/servicos/assessoria-marketing-digital-estrategico" onNavigate={onNavigate} />
     </div>
   );
 }
-
-

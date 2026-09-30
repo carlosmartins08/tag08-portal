@@ -1,5 +1,12 @@
 # CHANGELOG - TAG08
 
+## 2026-09-25
+
+- Impedida a entrada de relatórios gerados do Lighthouse no repositório; `.lighthouseci/` passa a ser tratado como artefato de auditoria/CI.
+- Refinado o Header para orientar melhor a navegação: serviços agrupados por contexto, CTA de contato visível no mobile, atalho para o conteúdo principal, painel com semântica de região, foco de teclado e redução de movimento respeitados.
+- Ajustado o shell para expor `#main-content`, permitindo que o skip link do Header funcione sem alterar a arquitetura das rotas.
+- Melhorado o desempenho do indicador de rolagem com atualização por `requestAnimationFrame` e medição responsiva da altura do Header para o drawer mobile.
+
 ## 2026-09-18
 
 - Publicada em `/sobre` uma grade institucional com 12 logos de clientes autorizados, protegida pelo gate de evidências por item e rota. A seção não faz alegações de resultado, recomendação pública ou parceria ativa.

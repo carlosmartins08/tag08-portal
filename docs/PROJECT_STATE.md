@@ -1,6 +1,10 @@
 # Estado do projeto — TAG08
 
-Atualizado em: `2026-09-18`
+Atualizado em: `2026-09-25`
+
+## Missão em andamento
+
+- Refinada a experiência do Header sem alterar rotas ou contratos: navegação de serviços agrupada por decisão, CTA de contato visível no mobile, atalho de acessibilidade, foco/semântica revisados e redução de movimento respeitada. A validação visual em viewport móvel ainda depende da execução do teste de navegador neste ambiente.
 
 ## Estado de integração
 
@@ -24,6 +28,7 @@ Atualizado em: `2026-09-18`
 - Navegador local: `npm run test:browser` usa a porta `3211` e inicia o build atual, sem reutilizar um `next dev` em `:3000`. Para validar staging, usar explicitamente `E2E_BASE_URL`.
 - Dono de cada runtime local: `npm run dev` e `npm run dev:content-review` abrem a referência editorial em `:3101` com `.next-review`; se ela já estiver ativa, o comando informa o endereço para reutilizar sem tentar iniciar uma segunda cópia. `npm run dev:public-preview` simula somente o conteúdo publicável em `:3212` com `.next-dev`; `npm run test:browser` usa `:3211`; Docker ocupa `127.0.0.1:3000` apenas para a imagem compilada. Não comparar mudanças locais em `:3000` nem iniciar duas prévias sobre o mesmo cache.
 - Tailwind: `src/index.css` limita a descoberta de classes ao diretório `src`. Caches gerados (`.next`, `.next-dev` e `.next-review`) nunca podem entrar na varredura, pois isso realimenta CSS compilado e corrompe classes arbitrárias. `.next-review/` também é ignorado pelo Git.
+- Higiene do repositório: `.lighthouseci/` contém relatórios gerados de auditoria e permanece fora do Git; os resultados devem ser tratados como artefatos de CI, não como fonte do produto.
 - Assets públicos: `src/proxy.ts` deixa URLs com extensão de arquivo passarem sem reescrita de idioma. Isso preserva imagens da equipe e demais arquivos em `public/`.
 
 ## Alterações locais a preservar e separar
