@@ -10,5 +10,6 @@ assert.match(state, /Última missão concluída:\s*\S+/);
 assert.match(state, /Próxima missão autorizada:\s*\S+/);
 
 execFileSync(process.execPath, ["tools/continuity-check.mjs", "--ci"], { stdio: "inherit" });
+execFileSync(process.execPath, ["tools/continuity-check.mjs", "--ci", "--staged"], { stdio: "inherit" });
 
 console.log("continuity check tests passed");

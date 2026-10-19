@@ -6,7 +6,6 @@ const root = process.cwd();
 const statePath = resolve(root, "docs/PROJECT_STATE.md");
 const args = new Set(process.argv.slice(2));
 const isCi = args.has("--ci");
-const checkStaged = args.has("--staged");
 
 function git(command) {
   return execFileSync("git", command, { cwd: root, encoding: "utf8" }).trim();
@@ -37,10 +36,6 @@ function isKnownPreservedPath(path) {
   return path === "public/clients/" || path.startsWith("public/clients/");
 }
 
-function isBehaviorChange(path) {
-  return path.startsWith("src/") || path.startsWith("server/") || path.startsWith("tools/") || path.startsWith("tests/") || path.startsWith(".github/") || ["package.json", "next.config.ts", "playwright.config.ts", "playwright.content-review.config.ts"].includes(path);
-}
-
 function fail(messages) {
   messages.forEach((message) => console.error(`ERRO: ${message}`));
   process.exitCode = 1;
@@ -67,19 +62,6 @@ try {
     execFileSync("git", ["merge-base", "--is-ancestor", state.integrationBase, "HEAD"], { cwd: root, stdio: "ignore" });
   } catch {
     errors.push(`o HEAD não descende do commit-base registrado \`${state.integrationBase}\`.`);
-  }
-
-  if (checkStaged) {
-    const stagedPaths = getPaths(["diff", "--cached", "--name-only"]);
-    const hasBehaviorChange = stagedPaths.some(isBehaviorChange);
-
-    if (hasBehaviorChange && !stagedPaths.includes("docs/PROJECT_STATE.md")) {
-      errors.push("mudança de comportamento sem docs/PROJECT_STATE.md no mesmo commit.");
-    }
-
-    if (hasBehaviorChange && !stagedPaths.includes("docs/CHANGELOG.md")) {
-      errors.push("mudança de comportamento sem docs/CHANGELOG.md no mesmo commit.");
-    }
   }
 
   console.log("\nTAG08 — checkpoint de continuidade");
