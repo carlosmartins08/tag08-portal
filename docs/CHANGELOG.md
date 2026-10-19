@@ -7,7 +7,7 @@
 
 - Evoluída a jornada de Contato para qualificar novos projetos, clientes atuais e parcerias; novos projetos aceitam múltiplos interesses ou pedido de orientação, mantendo o contrato compatível com envios antigos.
 
-- Reconciliada a foundation cromática aprovada: lime institucional `#DDF81D` e `accent-readable` funcional `#3F5A00`; aliases e derivações digitais acompanham os tokens sem promover cores de estado a cores institucionais.
+- Reconciliada a foundation cromática aprovada: lime institucional `#DDF81D` e `accent-readable` funcional `#3F5A00`; aliases, derivações digitais e o acento padrão dos avatares externos acompanham os valores aprovados sem promover cores funcionais a institucionais.
 
 ## 2026-10-12
 

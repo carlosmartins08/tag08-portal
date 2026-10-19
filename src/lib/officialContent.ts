@@ -60,7 +60,7 @@ const fallbackAvatarGradient = (name: string) => {
   return palette[index];
 };
 
-export const createAvatarDataUri = (name: string, accent = "#D4FF00") => {
+export const createAvatarDataUri = (name: string, accent = "#DDF81D") => {
   const initials = name
     .split(" ")
     .filter(Boolean)

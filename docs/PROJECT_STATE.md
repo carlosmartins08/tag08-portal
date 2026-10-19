@@ -4,7 +4,7 @@ Atualizado em: `2026-10-19`
 
 ## Validacao da missao atual
 
-- Os assets aprovados da Darker Grotesque e sua licença OFL estão versionados; a integração tipográfica permanece pausada. A foundation cromática aprovada (`#DDF81D` institucional e `#3F5A00` funcional) foi reconciliada e consolidada em unidade própria.
+- Os assets aprovados da Darker Grotesque e sua licença OFL estão versionados; a integração tipográfica permanece pausada. A foundation cromática aprovada (`#DDF81D` institucional e `#3F5A00` funcional) foi reconciliada; o acento padrão dos avatares externos também usa o lime aprovado.
 - A jornada de Contato foi estruturada para qualificar projetos, clientes atuais e parcerias; esta unidade não altera distribuição automática de leads. As demais alterações locais permanecem fora dela e ainda não foram consolidadas.
 - Corrigido o foco de teclado do primeiro servico no painel agrupado do Header, usando a ordem renderizada.
 - Corrigida a superficie de eventos do palco editorial da Home sem tornar a camada decorativa clicavel.
