@@ -1,9 +1,14 @@
 import assert from "node:assert/strict";
 import { CASE_STUDIES } from "../src/data";
-import { getVisibleEvidence } from "../src/content/publicEvidence";
-import { canonicalizeRoute, getLocalizedPath, getRouteByPath, indexedRoutePaths, routeRegistry, routeSitemapMeta } from "../src/config/routeRegistry";
+import { getVisibleEvidence, PUBLIC_EVIDENCE } from "../src/content/publicEvidence";
+import { canonicalizeRoute, getContentReviewRouteByPath, getLocalizedPath, getRouteByPath, indexedRoutePaths, publicRoutePaths, renderableRoutePaths, routeRegistry, routeSitemapMeta, staticRouteSegments } from "../src/config/routeRegistry";
 import { getRouteSeo } from "../src/lib/seo";
 import { i18n } from "../src/i18n/siteI18n";
+import { readFileSync } from "node:fs";
+
+const routeContentSource = readFileSync("src/features/site/RouteContent.tsx", "utf8");
+const catchAllPageSource = readFileSync("src/app/[locale]/[[...segments]]/page.tsx", "utf8");
+const notFoundPageSource = readFileSync("src/app/[locale]/not-found.tsx", "utf8");
 
 for (const route of routeRegistry.filter((entry) => entry.key !== "not-found" && !entry.dynamic)) {
   const canonical = canonicalizeRoute(route.canonicalPath);
@@ -16,6 +21,52 @@ for (const route of routeRegistry.filter((entry) => entry.key !== "not-found" &&
     assert.equal(canonicalizeRoute(alias), route.canonicalPath, `Alias does not resolve: ${alias}`);
   }
 }
+
+for (const path of renderableRoutePaths) {
+  const route = getRouteByPath(path);
+  assert.ok(route, `Renderable path has no registry route: ${path}`);
+
+  if (route.dynamic && route.routeCategory === "case-study") {
+    assert.match(routeContentSource, /route\?\.routeCategory === "case-study"\) page = <CaseStudyDetail/,
+      "Dynamic case-study route must have an explicit renderer");
+    assert.match(routeContentSource, /const CaseStudyDetail = dynamic\(\(\) => import\("\.\/pages\/CaseStudyDetail"\)\)/,
+      "Dynamic case-study renderer must resolve to its page module");
+    continue;
+  }
+
+  const escapedPath = path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const renderer = routeContentSource.match(new RegExp(`(?:if|else if) \\(path === "${escapedPath}"\\) page = <([A-Za-z0-9_]+)`))?.[1];
+  assert.ok(renderer, `Renderable route has no explicit RouteContent renderer: ${path}`);
+  assert.match(routeContentSource, new RegExp(`const ${renderer} = dynamic\\(\\(\\) => import\\("\\./pages\\/[A-Za-z0-9]+"\\)\\)`),
+    `Renderer ${renderer} for ${path} must resolve to a page module`);
+}
+
+for (const route of routeRegistry) {
+  if (!route.indexable) {
+    assert.ok(!publicRoutePaths.includes(route.canonicalPath), `Non-indexable route leaked into public paths: ${route.canonicalPath}`);
+  }
+  if (!route.includeInSitemap) {
+    assert.ok(!indexedRoutePaths.includes(route.canonicalPath), `Route excluded from sitemap appeared in indexed paths: ${route.canonicalPath}`);
+    assert.ok(!routeSitemapMeta.some((entry) => entry.path === route.canonicalPath), `Route excluded from sitemap has metadata: ${route.canonicalPath}`);
+  }
+}
+
+assert.ok(!renderableRoutePaths.includes("/404"), "/404 remains excluded from generated renderable paths");
+assert.ok(!publicRoutePaths.includes("/404"), "/404 remains non-public/indexable");
+assert.ok(!indexedRoutePaths.includes("/404"), "/404 remains outside sitemap paths");
+const notFoundRegistryEntry = getRouteByPath("/404");
+assert.equal(notFoundRegistryEntry?.key, "not-found", "Direct /404 currently resolves to the route-registry entry");
+assert.equal(notFoundRegistryEntry?.indexable, false, "The /404 registry entry remains non-indexable");
+assert.equal(notFoundRegistryEntry?.includeInSitemap, false, "The /404 registry entry remains excluded from the sitemap");
+assert.doesNotMatch(routeContentSource, /path === "\/404"/, "RouteContent currently has no dedicated /404 renderer");
+assert.match(catchAllPageSource, /const route = getRouteByPath\(canonicalPath\) \?\? getContentReviewRouteByPath\(canonicalPath\)/,
+  "The catch-all currently resolves direct /404 through the route registry");
+assert.match(catchAllPageSource, /if \(!validLocale \|\| !route\) \{\s*notFound\(\);\s*\}/,
+  "The catch-all invokes Next notFound only when locale or registry route is missing");
+assert.match(notFoundPageSource, /return <NotFoundRoute locale=\{locale\} \/>/,
+  "The framework not-found route renders the dedicated NotFoundRoute");
+assert.equal(getRouteByPath("/casos/case-not-registered"), undefined,
+  "Case-study data without a matching publication-evidence record must not create a route");
 
 for (const path of indexedRoutePaths) {
   assert.ok(!routeRegistry.some((route) => route.aliases?.includes(path)), `Alias leaked into sitemap: ${path}`);
@@ -44,15 +95,35 @@ assert.equal(
 
 assert.deepEqual(
   CASE_STUDIES.filter((caseStudy) => getVisibleEvidence([caseStudy], (item) => `case-study/${item.id}`, `/casos/${caseStudy.id}`).length > 0),
-    CASE_STUDIES,
-  "Approved cases must be eligible for publication"
+  [],
+  "Cases marked investigate are not eligible for public publication"
 );
-assert.ok(
-  CASE_STUDIES.every((caseStudy) => getRouteByPath(`/casos/${caseStudy.id}`)),
-  "Approved cases must resolve as public routes"
-);
-assert.ok(
-  CASE_STUDIES.every((caseStudy) => indexedRoutePaths.includes(`/casos/${caseStudy.id}`)) &&
-    CASE_STUDIES.every((caseStudy) => routeSitemapMeta.some((entry) => entry.path === `/casos/${caseStudy.id}`)),
-  "Approved cases must enter the sitemap"
-);
+for (const caseStudy of CASE_STUDIES) {
+  const casePath = `/casos/${caseStudy.id}`;
+  assert.equal(PUBLIC_EVIDENCE[`case-study/${caseStudy.id}` as keyof typeof PUBLIC_EVIDENCE].status, "investigate");
+  assert.equal(getRouteByPath(casePath), undefined, `${casePath} does not resolve as a public route`);
+  assert.ok(!publicRoutePaths.includes(casePath), `${casePath} is absent from public routes`);
+  assert.ok(!renderableRoutePaths.includes(casePath), `${casePath} is absent from generated renderable routes`);
+  assert.ok(!staticRouteSegments().some((segments) => `/${segments.join("/")}` === casePath), `${casePath} is absent from static route segments`);
+  assert.ok(!indexedRoutePaths.includes(casePath), `${casePath} is absent from indexed paths`);
+  assert.ok(!routeSitemapMeta.some((entry) => entry.path === casePath), `${casePath} is absent from sitemap metadata`);
+}
+
+const originalNodeEnv = process.env.NODE_ENV;
+const originalReviewFlag = process.env.NEXT_PUBLIC_TAG08_CONTENT_REVIEW;
+const mutableEnvironment = process.env as unknown as Record<string, string | undefined>;
+try {
+  mutableEnvironment.NODE_ENV = "development";
+  mutableEnvironment.NEXT_PUBLIC_TAG08_CONTENT_REVIEW = "1";
+  for (const caseStudy of CASE_STUDIES) {
+    const casePath = `/casos/${caseStudy.id}`;
+    assert.ok(getContentReviewRouteByPath(casePath), `${casePath} remains reachable only through local review`);
+    assert.equal(getRouteByPath(casePath), undefined, `${casePath} does not become a public route in review mode`);
+    assert.ok(!routeSitemapMeta.some((entry) => entry.path === casePath), `${casePath} never enters the sitemap through review mode`);
+  }
+} finally {
+  if (originalNodeEnv === undefined) delete mutableEnvironment.NODE_ENV;
+  else mutableEnvironment.NODE_ENV = originalNodeEnv;
+  if (originalReviewFlag === undefined) delete mutableEnvironment.NEXT_PUBLIC_TAG08_CONTENT_REVIEW;
+  else mutableEnvironment.NEXT_PUBLIC_TAG08_CONTENT_REVIEW = originalReviewFlag;
+}

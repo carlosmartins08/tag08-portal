@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { INDEXABLE_LOCALES, getPublishedLocales, getRouteByPath, isLocaleIndexable, isRouteLocalePublished } from "../src/config/routeRegistry";
+import { INDEXABLE_LOCALES, getPublishedLocales, isLocaleIndexable, isRouteLocalePublished, routeRegistry } from "../src/config/routeRegistry";
 
 test("only routes with complete, reviewed copy are published outside Portuguese", () => {
   assert.deepEqual(INDEXABLE_LOCALES, ["pt"]);
@@ -8,12 +8,9 @@ test("only routes with complete, reviewed copy are published outside Portuguese"
   assert.equal(isLocaleIndexable("en"), false);
   assert.equal(isLocaleIndexable("es"), false);
 
-  const home = getRouteByPath("/");
-  const onboarding = getRouteByPath("/cliente/onboarding");
-  assert.ok(home);
-  assert.ok(onboarding);
-  assert.deepEqual(getPublishedLocales(home), ["pt"]);
-  assert.equal(isRouteLocalePublished(home, "en"), false);
-  assert.deepEqual(getPublishedLocales(onboarding), ["pt"]);
-  assert.equal(isRouteLocalePublished(onboarding, "en"), false);
+  for (const route of routeRegistry.filter((entry) => entry.key !== "not-found")) {
+    assert.deepEqual(getPublishedLocales(route), ["pt"], `${route.key} must remain PT-only until approved`);
+    assert.equal(isRouteLocalePublished(route, "en"), false, `${route.key} must not bypass EN readiness`);
+    assert.equal(isRouteLocalePublished(route, "es"), false, `${route.key} must not bypass ES readiness`);
+  }
 });

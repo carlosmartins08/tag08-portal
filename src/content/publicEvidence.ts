@@ -1,4 +1,4 @@
-export type PublicEvidenceStatus = "approved" | "pending" | "remove";
+export type PublicEvidenceStatus = "approved" | "pending" | "investigate" | "remove";
 export type PublicEvidenceKind = "team" | "client-logo" | "home-case" | "portfolio-candidate" | "case-study" | "mini-case" | "internal-testimonial";
 export type EvidenceVisibilityMode = "public" | "review";
 
@@ -20,12 +20,24 @@ const pending = (kind: PublicEvidenceKind, label: string, allowedRoutes: readonl
   kind,
   label,
   allowedRoutes,
-  status: "approved",
+  status: "pending",
   decisionOwner: "Carlos Henrique Martins",
-  decidedAt: "2026-09-24",
-  evidenceReference: "approval:conversation-2026-09-24-publication-scope",
+  decidedAt: null,
+  evidenceReference: null,
   validUntil: null,
-  reason: "Aprovado pelo responsável pela publicação nesta conversa, com escopo de rota preservado."
+  reason: "Aguardando decisão editorial."
+});
+
+const investigate = (kind: PublicEvidenceKind, label: string, allowedRoutes: readonly string[]): PublicEvidenceRecord => ({
+  kind,
+  label,
+  allowedRoutes,
+  status: "investigate",
+  decisionOwner: "Carlos Henrique Martins",
+  decidedAt: "2026-10-19",
+  evidenceReference: "decision:docs/architecture-consolidation/14_PUBLIC_EVIDENCE_DECISIONS.md",
+  validUntil: null,
+  reason: "Decisão humana: investigar origem, vínculo e autorização antes de publicação."
 });
 
 const approved = (
@@ -56,13 +68,13 @@ const clientLogoApproval = {
 
 /** Fonte executável de publicação; referências nunca guardam documentos sensíveis no repositório. */
 export const PUBLIC_EVIDENCE = {
-  "team/carlos-henrique-martins": pending("team", "Carlos Henrique Martins", ["/sobre"]),
-  "team/ignacio-quiroz": pending("team", "Ignacio Quiroz", ["/sobre"]),
-  "team/pedro-felix": pending("team", "Pedro Félix", ["/sobre"]),
-  "team/daniel-lopes": pending("team", "Daniel Lopes", ["/sobre"]),
-  "team/guilherme-gomes": pending("team", "Guilherme Gomes", ["/sobre"]),
-  "team/amazing-design": pending("team", "Amazing Design", ["/sobre"]),
-  "team/andreia-braga": pending("team", "Andréia Braga", ["/sobre"]),
+  "team/carlos-henrique-martins": investigate("team", "Carlos Henrique Martins", ["/sobre"]),
+  "team/ignacio-quiroz": investigate("team", "Ignacio Quiroz", ["/sobre"]),
+  "team/pedro-felix": investigate("team", "Pedro Félix", ["/sobre"]),
+  "team/daniel-lopes": investigate("team", "Daniel Lopes", ["/sobre"]),
+  "team/guilherme-gomes": investigate("team", "Guilherme Gomes", ["/sobre"]),
+  "team/amazing-design": investigate("team", "Amazing Design", ["/sobre"]),
+  "team/andreia-braga": investigate("team", "Andréia Braga", ["/sobre"]),
   "client-logo/cayuca": approved("client-logo", "CaYuCa", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
   "client-logo/wscom": approved("client-logo", "WSCOM", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
   "client-logo/vr-imobiliaria": approved("client-logo", "VR Imobiliária", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
@@ -75,21 +87,21 @@ export const PUBLIC_EVIDENCE = {
   "client-logo/luciana-gadelha": approved("client-logo", "Luciana Gadelha", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
   "client-logo/home-office": approved("client-logo", "HomeOffice", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
   "client-logo/harmonic": approved("client-logo", "Harmonic", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
-  "home-case/alan-rocha": pending("home-case", "Alan Rocha", ["/"]),
-  "home-case/le-visage": pending("home-case", "Clínica Le Visage", ["/"]),
-  "home-case/luciana-gadelha": pending("home-case", "Luciana Gadelha", ["/"]),
-  "home-case/doctor-play": pending("home-case", "Doctor Play", ["/"]),
-  "home-case/legal-lab": pending("home-case", "Legal Lab", ["/"]),
-  "home-case/squalis": pending("home-case", "Squalis Educação", ["/"]),
-  "portfolio-candidate/lavar-roupa": pending("portfolio-candidate", "LavarRoupa S.A.", ["/"]),
-  "portfolio-candidate/alugue-por-temporada": pending("portfolio-candidate", "Alugue por Temporada", ["/"]),
-  "portfolio-candidate/centro-de-olhos": pending("portfolio-candidate", "Centro de Olhos", ["/"]),
-  "portfolio-candidate/le-visage": pending("portfolio-candidate", "LeVisage", ["/"]),
-  "portfolio-candidate/luciana-gadelha": pending("portfolio-candidate", "Luciana Gadelha", ["/"]),
-  "portfolio-candidate/espaco-glau-campos": pending("portfolio-candidate", "Espaço Glau Campos", ["/"]),
-  "case-study/case-clinica-alphaville": pending("case-study", "Clínica Médica Alphaville", ["/casos/case-clinica-alphaville"]),
-  "case-study/case-saas-process": pending("case-study", "ProcessFlow SaaS", ["/casos/case-saas-process"]),
-  "case-study/case-branding-advocacia": pending("case-study", "Nunes & Associados", ["/casos/case-branding-advocacia"]),
+  "home-case/alan-rocha": investigate("home-case", "Alan Rocha", ["/"]),
+  "home-case/le-visage": investigate("home-case", "Clínica Le Visage", ["/"]),
+  "home-case/luciana-gadelha": investigate("home-case", "Luciana Gadelha", ["/"]),
+  "home-case/doctor-play": investigate("home-case", "Doctor Play", ["/"]),
+  "home-case/legal-lab": investigate("home-case", "Legal Lab", ["/"]),
+  "home-case/squalis": investigate("home-case", "Squalis Educação", ["/"]),
+  "portfolio-candidate/lavar-roupa": investigate("portfolio-candidate", "LavarRoupa S.A.", ["/"]),
+  "portfolio-candidate/alugue-por-temporada": investigate("portfolio-candidate", "Alugue por Temporada", ["/"]),
+  "portfolio-candidate/centro-de-olhos": investigate("portfolio-candidate", "Centro de Olhos", ["/"]),
+  "portfolio-candidate/le-visage": investigate("portfolio-candidate", "LeVisage", ["/"]),
+  "portfolio-candidate/luciana-gadelha": investigate("portfolio-candidate", "Luciana Gadelha", ["/"]),
+  "portfolio-candidate/espaco-glau-campos": investigate("portfolio-candidate", "Espaço Glau Campos", ["/"]),
+  "case-study/case-clinica-alphaville": investigate("case-study", "Clínica Médica Alphaville", ["/casos/case-clinica-alphaville"]),
+  "case-study/case-saas-process": investigate("case-study", "ProcessFlow SaaS", ["/casos/case-saas-process"]),
+  "case-study/case-branding-advocacia": investigate("case-study", "Nunes & Associados", ["/casos/case-branding-advocacia"]),
   "mini-case/clinica-alphaville": approved("mini-case", "Clínica Alphaville", ["/servicos/assessoria-marketing-digital-estrategico"], "Aprovado somente para a página de Assessoria de Marketing Estratégico."),
   "mini-case/processflow-erp": approved("mini-case", "ProcessFlow ERP", ["/servicos/assessoria-marketing-digital-estrategico"], "Aprovado somente para a página de Assessoria de Marketing Estratégico."),
   "mini-case/nunes-associados": approved("mini-case", "Nunes & Associados", ["/servicos/assessoria-marketing-digital-estrategico"], "Aprovado somente para a página de Assessoria de Marketing Estratégico."),
@@ -130,6 +142,9 @@ export const getEvidenceStatusLabel = (evidenceKey: string): PublicEvidenceStatu
 
 export const hasPendingPublicEvidence = (): boolean =>
   Object.values(PUBLIC_EVIDENCE).some((evidence) => evidence.status === "pending");
+
+export const hasUnpublishedPublicEvidence = (): boolean =>
+  Object.values(PUBLIC_EVIDENCE).some((evidence) => evidence.status === "pending" || evidence.status === "investigate");
 
 export const validatePublicEvidence = (records: Record<string, PublicEvidenceRecord> = PUBLIC_EVIDENCE): string[] =>
   Object.entries(records).flatMap(([key, evidence]) => {
