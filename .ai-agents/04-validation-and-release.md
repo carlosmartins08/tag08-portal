@@ -16,7 +16,7 @@ Tarefas:
 4. Atualizar README com ordem de execuÃÃo e limitaÃÃes atuais.
 
 EntregÃvel:
-- `docs/DECISION_MATRIX.md` com risco/impacto de cada mudanÃa.
+- `docs/architecture-consolidation/09_RISK_REGISTER.md` e `10_CONSOLIDATION_WAVES.md` para riscos, dependências e gates das mudanças.
 - `docs/CHANGELOG.md` resumindo decisÃes e prÃximos passos obrigatÃrios.
 
 CritÃrios de aceite:

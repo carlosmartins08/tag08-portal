@@ -2,6 +2,7 @@
 
 ## 2026-10-19
 
+- Reconciliadas referências documentais após a aposentadoria de documentos históricos: PROJECT_STATE, README e instruções de agentes agora apontam para os mapas atuais de arquitetura, rotas, riscos e ondas. Os 29 arquivos-fonte editoriais ainda referenciados pelo gerador legado não foram restaurados; seu destino permanece pendente.
 - Refinada a Home: removida a seção redundante de portfólio em validação, alinhado o mapa de soluções, desativada a troca automática de avaliações e ajustados os links de contato. Os rascunhos EN/ES continuam bloqueados para publicação até revisão linguística; build e 94 testes E2E críticos passaram.
 - Atualizada a jornada de Onboarding para apresentação guiada, suporte ao preenchimento pela equipe TAG08 com identificação e confirmação de autorização, e aviso antes de sair com respostas não enviadas. A rota passa o idioma resolvido ao fluxo, sem liberar EN/ES antes da revisão linguística. Testes de rotas, contratos, build e seis cenários E2E passaram.
 

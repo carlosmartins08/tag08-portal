@@ -7,13 +7,12 @@ Escopo:
 - `src/App.tsx` (roteamento e validaÃÃo de caminho)
 - `generate-sitemap.ts` (paths cobertos)
 - `README.md` (instruÃÃes de execuÃÃo/estrutura)
-- Arquivos de documentaÃÃo que faltam criaÃÃo: `docs/ARCHITECTURE.md`, `docs/ROUTES.md`
+- Referências atuais: `docs/architecture-consolidation/01_CURRENT_STATE_MAP.md`, `03_ROUTE_AND_PAGE_INVENTORY.md` e `10_CONSOLIDATION_WAVES.md`.
 
 Tarefas:
 1. Padronizar rotas existentes: lista canÃnica Ãnica de pÃginas vÃlidas e redirecionamentos.
 2. Garantir que sitemap e SEO usem a mesma fonte de rotas.
-3. Criar `docs/ARCHITECTURE.md` com visÃo de app (stack, camada SPA, integraÃÃes).
-4. Criar `docs/ROUTES.md` com mapa completo de URLs pÃblicas, legado e destino.
+3. Atualizar os mapas canônicos existentes quando uma decisão de rota/arquitetura for aprovada; não recriar `docs/ARCHITECTURE.md` ou `docs/ROUTES.md`.
 
 EntregÃvel:
 - Documentos rastreÃveis com versÃo e data.

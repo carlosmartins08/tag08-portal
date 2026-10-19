@@ -75,7 +75,7 @@ Agende integracoes em intervalo curto e retencao uma vez ao dia. O primeiro usa 
 
 ## Pacote de staging
 
-O staging da hospedagem Node.js usa o servidor standalone e um PostgreSQL exclusivo. Copie somente os nomes de variaveis de `.env.staging.example` para o painel, preenchendo os valores reais diretamente no ambiente remoto. O procedimento de publicacao, cron e rollback esta em `docs/STAGING-HOSTING-CHECKLIST.md`.
+O staging da hospedagem Node.js usa o servidor standalone e um PostgreSQL exclusivo. Copie somente os nomes de variaveis de `.env.staging.example` para o painel, preenchendo os valores reais diretamente no ambiente remoto. Os passos de build, preflight, migrations, cron e verificacao estao nas secoes **Sequencia de deploy** e **Regras de manutencao** deste README; nao ha checklist operacional separado versionado no momento.
 
 ## Regras de manutencao
 

@@ -4,8 +4,8 @@ Objetivo:
 - Consolidar o contrato de SEO e links entre o domínio principal `tag08.com.br` e os subdomínios do ecossistema.
 
 Escopo:
-- `docs/ARCHITECTURE.md`
-- `docs/ROUTES.md`
+- `docs/architecture-consolidation/01_CURRENT_STATE_MAP.md`
+- `docs/architecture-consolidation/03_ROUTE_AND_PAGE_INVENTORY.md`
 - `.ai-agents/README.md`
 - Blocos de ecossistema e rodapés dos LPs listados quando houver código local:
   - `LandingPage_hospedagem_TAG08`
@@ -24,7 +24,7 @@ Mapa de rede declarado:
 - Fonte de contrato da rede no código: `src/config/siteNetwork.ts`
 
 Tarefas:
-1. Declarar um mapa único de propriedades em `docs/ARCHITECTURE.md` e `docs/ROUTES.md`.
+1. Manter o mapa de rotas e propriedades nos documentos canônicos existentes; não recriar `docs/ARCHITECTURE.md` ou `docs/ROUTES.md`.
 2. Padronizar `canonical` por projeto para o domínio correto.
 3. Eliminar links sem destino em blocos de ecossistema.
 4. Registrar critérios de revisão e owner na `.ai-agents/README.md`.

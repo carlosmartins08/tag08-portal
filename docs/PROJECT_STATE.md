@@ -79,17 +79,18 @@ Atualizado em: `2026-10-19`
 
 ## Fontes de decisão e continuidade
 
-- Decisões ativas: `docs/DECISIONS.md`.
-- Próximas fases: `docs/ROADMAP.md`.
-- Inventário de evidências públicas: `docs/CONTENT_EVIDENCE_INVENTORY.md`.
-- Auditoria e sequência de integração: `docs/INTEGRATION_AUDIT.md`.
-- Rotas: `docs/ROUTES.md` e `src/config/routeRegistry.ts`.
-- Arquitetura e contratos: `docs/ARCHITECTURE.md` e `server/onboardingContract.ts`.
+- Baseline e estado atual observado: `docs/architecture-consolidation/01_CURRENT_STATE_MAP.md` e `11_P0_BASELINE.md`.
+- Arquitetura canônica, paralela e alvo aprovado: `docs/architecture-consolidation/02_CANONICAL_VS_PARALLEL.md` e `10_CONSOLIDATION_WAVES.md`.
+- Próximas fases de saneamento: `docs/architecture-consolidation/10_CONSOLIDATION_WAVES.md`.
+- Rotas e indexação: `docs/architecture-consolidation/03_ROUTE_AND_PAGE_INVENTORY.md` e `src/config/routeRegistry.ts`.
+- Evidências públicas: `docs/architecture-consolidation/13_PUBLIC_EVIDENCE_APPROVAL_MATRIX.md`, `14_PUBLIC_EVIDENCE_DECISIONS.md` e `15_P0_4_INVESTIGATE_IMPLEMENTATION.md`.
+- Integrações e riscos: `docs/architecture-consolidation/07_INTEGRATION_MAP.md` e `09_RISK_REGISTER.md`.
+- Arquitetura, conteúdo e contratos: `docs/architecture-consolidation/01_CURRENT_STATE_MAP.md`, `05_CONTENT_SOURCE_MAP.md`, `07_INTEGRATION_MAP.md` e os contratos em `server/`.
 
 ## Regra para a próxima sessão
 
 1. Conferir `git status --short`, branch e último commit.
-2. Ler este arquivo e `docs/DECISIONS.md`.
+2. Ler este arquivo e `docs/architecture-consolidation/10_CONSOLIDATION_WAVES.md`; consultar `docs/architecture-consolidation/14_PUBLIC_EVIDENCE_DECISIONS.md` quando a tarefa envolver publicação de evidências.
 3. Escolher uma única missão do roadmap.
 4. Não reabrir conteúdo pendente sem evidência ou decisão registrada.
 5. Antes de aprovar ou revisar conteúdo, rodar `npm run content:status`; para interface, usar `npm run dev` (ou o alias `npm run dev:content-review`).
