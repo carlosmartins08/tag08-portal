@@ -2,7 +2,7 @@
 name: TAG08 Design System
 description: Direção editorial com clareza operacional para experiências institucionais, comerciais e de serviço da TAG08.
 colors:
-  brand: "#D4FF00"
+  brand: "#DDF81D"
   brand-dark: "#B9DE00"
   main: "#0A0A0A"
   surface: "#151518"
@@ -10,7 +10,7 @@ colors:
   border-subtle: "#303038"
   text-primary: "#F3F4F6"
   text-secondary: "#D1D5DB"
-  accent-readable: "#5B8000"
+  accent-readable: "#3F5A00"
 typography:
   display:
     fontFamily: "Manrope, Inter, ui-sans-serif, system-ui, sans-serif"
@@ -80,9 +80,11 @@ O sistema segue a proporção 60/30/10: neutros para fundo e superfícies, texto
 - `bg-subtle` / `subtle` (`#1E1E22`) cria separação discreta entre camadas.
 - `border-subtle` (`#303038`) estrutura sem competir com o conteúdo.
 - `text-primary` (`#F3F4F6`) é o texto principal; `text-secondary` (`#D1D5DB`) é o texto auxiliar funcional.
-- `brand` (`#D4FF00`) é o acento principal de CTA, estados ativos e ênfase estratégica.
-- `brand-dark` (`#B9DE00`) é a variação de interação em fundos claros ou estados pressionados.
-- `accent-readable` (`#5B8000`) é a alternativa para texto de destaque sobre superfícies claras.
+- `brand` (`#DDF81D`, RGB `221, 248, 29`) é o lime institucional principal para CTA, estados ativos e ênfase estratégica.
+- `brand-secondary` é alias compatível de `brand`, inclusive no RGB; não representa uma segunda cor.
+- `brand-dark` (`#B9DE00`) permanece como token funcional legado de interação; não é cor institucional e não foi recalibrado nesta fase.
+- `accent-readable` (`#3F5A00`) é uma cor funcional de acessibilidade para texto de destaque sobre superfícies claras; não é cor institucional TAG08.
+- Cores de estado (`success`, `warning`, `danger`, `info`) são cores funcionais do produto, não cores institucionais.
 
 `brand-secondary` é um alias legado de `brand`. Ele pode aparecer em detalhes de suporte, mas não cria uma segunda paleta nem deve dominar uma tela.
 

@@ -1,5 +1,9 @@
 # CHANGELOG - TAG08
 
+## 2026-10-19
+
+- Reconciliada a foundation cromática aprovada: lime institucional `#DDF81D` e `accent-readable` funcional `#3F5A00`; aliases e derivações digitais acompanham os tokens sem promover cores de estado a cores institucionais.
+
 ## 2026-10-12
 
 - Adicionados os assets locais aprovados da Darker Grotesque (Regular 400, SemiBold 600 e Bold 700) e a licença SIL Open Font License 1.1; a fonte ainda não foi integrada à interface.

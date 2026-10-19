@@ -4,8 +4,8 @@ Atualizado em: `2026-10-12`
 
 ## Validacao da missao atual
 
-- Os assets oficiais da Darker Grotesque e sua licença OFL foram adicionados ao repositório; a integração tipográfica permanece pausada. A reconciliação cromática aprovada (`#DDF81D` e `#3F5A00`) está preparada em unidade separada e ainda aguarda consolidação.
-- As demais alterações locais permanecem não consolidadas e fora desta unidade de assets.
+- Os assets aprovados da Darker Grotesque e sua licença OFL estão versionados; a integração tipográfica permanece pausada. A foundation cromática aprovada (`#DDF81D` institucional e `#3F5A00` funcional) foi reconciliada e consolidada em unidade própria.
+- As demais alterações locais permanecem não consolidadas e fora dessas unidades.
 - Corrigido o foco de teclado do primeiro servico no painel agrupado do Header, usando a ordem renderizada.
 - Corrigida a superficie de eventos do palco editorial da Home sem tornar a camada decorativa clicavel.
 - Aplicado `ResilientImage` ao hero da Assessoria para tratar indisponibilidade temporaria do CDN.

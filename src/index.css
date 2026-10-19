@@ -24,13 +24,13 @@
   --font-sans: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --color-brand: #D4FF00;
+  --color-brand: #DDF81D;
   --color-brand-dark: #B9DE00;
   /* Semantic alias retained for existing components; the interface has one lime accent. */
-  --color-brand-secondary: #D4FF00;
-  --color-brand-rgb: 212, 255, 0;
+  --color-brand-secondary: var(--color-brand);
+  --color-brand-rgb: 221, 248, 29;
   --color-brand-dark-rgb: 185, 222, 0;
-  --color-brand-secondary-rgb: 212, 255, 0;
+  --color-brand-secondary-rgb: var(--color-brand-rgb);
   --color-charcoal-950: #0A0A0A;
   --color-charcoal-900: #151518;
   --color-charcoal-800: #1E1E22;
@@ -41,7 +41,31 @@
   --color-text-primary: #F3F4F6;
   --color-text-secondary: #D1D5DB;
   --color-border-subtle: #303038;
-  --color-accent-readable: #5B8000;
+  --color-accent-readable: #3F5A00;
+  /* Semantic foundation roles. These are additive aliases until a page opts
+     into a context; legacy utility classes keep their current values. */
+  --color-surface-canvas: var(--color-main);
+  --color-surface-default: var(--color-surface);
+  --color-surface-subtle: var(--color-subtle);
+  --color-surface-inverse: var(--color-charcoal-950);
+  --color-surface-brand: var(--color-brand);
+  --color-content-primary: var(--color-text-primary);
+  --color-content-secondary: var(--color-text-secondary);
+  --color-content-muted: #9CA3AF;
+  --color-content-inverse: var(--color-main);
+  --color-border-default: var(--color-text-secondary);
+  --color-border-strong: var(--color-text-primary);
+  --color-focus-ring: var(--color-brand);
+  --color-action-primary: var(--color-brand);
+  --color-action-primary-hover: var(--color-brand-dark);
+  --color-action-on-primary: var(--color-main);
+  --color-action-readable: var(--color-accent-readable);
+  /* Product states stay independent from third-party brand indicators. */
+  --color-state-success: #10B981;
+  --color-state-warning: #FBBF24;
+  --color-state-danger: #EF4444;
+  --color-state-info: #3B82F6;
+  --color-media-scrim: rgb(0 0 0 / 0.65);
 }
 
 :root {
@@ -51,10 +75,32 @@
   --color-text-primary: #F3F4F6;
   --color-text-secondary: #D1D5DB;
   --color-border-subtle: #303038;
-  --color-accent-readable: #5B8000;
-  --color-brand-rgb: 212, 255, 0;
+  --color-accent-readable: #3F5A00;
+  /* Root values intentionally preserve the current dark-first rendering. */
+  --color-surface-canvas: var(--color-main);
+  --color-surface-default: var(--color-surface);
+  --color-surface-subtle: var(--color-subtle);
+  --color-surface-inverse: var(--color-charcoal-950);
+  --color-surface-brand: var(--color-brand);
+  --color-content-primary: var(--color-text-primary);
+  --color-content-secondary: var(--color-text-secondary);
+  --color-content-muted: #9CA3AF;
+  --color-content-inverse: var(--color-main);
+  --color-border-default: var(--color-text-secondary);
+  --color-border-strong: var(--color-text-primary);
+  --color-focus-ring: var(--color-brand);
+  --color-action-primary: var(--color-brand);
+  --color-action-primary-hover: var(--color-brand-dark);
+  --color-action-on-primary: var(--color-main);
+  --color-action-readable: var(--color-accent-readable);
+  --color-state-success: #10B981;
+  --color-state-warning: #FBBF24;
+  --color-state-danger: #EF4444;
+  --color-state-info: #3B82F6;
+  --color-media-scrim: rgb(0 0 0 / 0.65);
+  --color-brand-rgb: 221, 248, 29;
   --color-brand-dark-rgb: 185, 222, 0;
-  --color-brand-secondary-rgb: 212, 255, 0;
+  --color-brand-secondary-rgb: var(--color-brand-rgb);
   --section-space: clamp(4.5rem, 8vw, 7rem);
   --section-space-compact: clamp(3.5rem, 6vw, 5rem);
   --type-meta-size: 0.6875rem;
@@ -65,6 +111,172 @@
   --radius-editorial: 1.5rem;
   --shadow-base: 0 18px 45px -38px rgb(0 0 0 / 0.95);
   --shadow-emphasis: 0 28px 72px -48px rgb(0 0 0 / 0.98);
+}
+
+/*
+ * Contexts are opt-in. No current page applies these classes, so introducing
+ * the target light-first semantics cannot change the legacy dark rendering.
+ * Components migrated later should consume the semantic roles above rather
+ * than selecting a raw color by page.
+ */
+.context-default {
+  --color-surface-canvas: var(--color-text-primary);
+  --color-surface-default: var(--color-text-secondary);
+  --color-surface-subtle: var(--color-text-primary);
+  --color-surface-inverse: var(--color-main);
+  --color-content-primary: var(--color-main);
+  --color-content-secondary: var(--color-charcoal-700);
+  --color-content-muted: var(--color-charcoal-700);
+  --color-content-inverse: var(--color-text-primary);
+  --color-border-default: var(--color-charcoal-700);
+  --color-border-strong: var(--color-main);
+  --color-focus-ring: var(--color-accent-readable);
+  --color-action-primary: var(--color-brand);
+  --color-action-primary-hover: var(--color-brand-dark);
+  --color-action-on-primary: var(--color-main);
+  --color-action-readable: var(--color-accent-readable);
+}
+
+.context-subtle {
+  --color-surface-canvas: var(--color-text-primary);
+  --color-surface-default: var(--color-text-primary);
+  --color-surface-subtle: var(--color-text-secondary);
+  --color-surface-inverse: var(--color-main);
+  --color-content-primary: var(--color-main);
+  --color-content-secondary: var(--color-charcoal-700);
+  --color-content-muted: var(--color-charcoal-700);
+  --color-content-inverse: var(--color-text-primary);
+  --color-border-default: var(--color-charcoal-700);
+  --color-border-strong: var(--color-main);
+  --color-focus-ring: var(--color-accent-readable);
+  --color-action-primary: var(--color-brand);
+  --color-action-primary-hover: var(--color-brand-dark);
+  --color-action-on-primary: var(--color-main);
+  --color-action-readable: var(--color-accent-readable);
+}
+
+.context-inverse,
+.context-media {
+  --color-surface-canvas: var(--color-main);
+  --color-surface-default: var(--color-surface);
+  --color-surface-subtle: var(--color-subtle);
+  --color-surface-inverse: var(--color-main);
+  --color-content-primary: var(--color-text-primary);
+  --color-content-secondary: var(--color-text-secondary);
+  --color-content-muted: #9CA3AF;
+  --color-content-inverse: var(--color-text-primary);
+  --color-border-default: var(--color-text-secondary);
+  --color-border-strong: var(--color-text-primary);
+  --color-focus-ring: var(--color-brand);
+  --color-action-primary: var(--color-brand);
+  --color-action-primary-hover: var(--color-brand-dark);
+  --color-action-on-primary: var(--color-main);
+  --color-action-readable: var(--color-brand);
+}
+
+.context-brand {
+  --color-surface-canvas: var(--color-brand);
+  --color-surface-default: var(--color-brand);
+  --color-surface-subtle: var(--color-brand-dark);
+  --color-surface-inverse: var(--color-main);
+  --color-content-primary: var(--color-main);
+  --color-content-secondary: var(--color-charcoal-700);
+  --color-content-muted: var(--color-charcoal-700);
+  --color-content-inverse: var(--color-text-primary);
+  --color-border-default: var(--color-charcoal-700);
+  --color-border-strong: var(--color-main);
+  --color-focus-ring: var(--color-main);
+  --color-action-primary: var(--color-main);
+  --color-action-primary-hover: var(--color-charcoal-700);
+  --color-action-on-primary: var(--color-text-primary);
+  --color-action-readable: var(--color-accent-readable);
+}
+
+.context-media {
+  --color-media-scrim: rgb(0 0 0 / 0.65);
+}
+
+/* Shared proof/insight components opt into context only when an ancestor
+   explicitly applies one. Without a context, their legacy classes win. */
+.context-default .tag08-contextual-section,
+.context-subtle .tag08-contextual-section,
+.context-inverse .tag08-contextual-section,
+.context-brand .tag08-contextual-section,
+.context-media .tag08-contextual-section {
+  background-color: var(--color-surface-canvas) !important;
+  border-color: var(--color-border-default) !important;
+  color: var(--color-content-primary);
+}
+
+/* Page-level text roles for opt-in light-first sections. Legacy pages do not
+   carry a context class, so their explicit dark utility classes remain intact. */
+.context-default .tag08-contextual-section :is(.text-white),
+.context-subtle .tag08-contextual-section :is(.text-white) {
+  color: var(--color-content-primary) !important;
+}
+
+.context-default .tag08-contextual-section :is(.text-zinc-300, .text-zinc-400, .text-zinc-500),
+.context-subtle .tag08-contextual-section :is(.text-zinc-300, .text-zinc-400, .text-zinc-500) {
+  color: var(--color-content-secondary) !important;
+}
+
+.context-default .tag08-contextual-section :is(.text-brand, .text-brand-secondary),
+.context-subtle .tag08-contextual-section :is(.text-brand, .text-brand-secondary) {
+  color: var(--color-action-readable) !important;
+}
+
+.context-default .tag08-contextual-section :is([class*="border-white"]),
+.context-subtle .tag08-contextual-section :is([class*="border-white"]) {
+  border-color: var(--color-border-default) !important;
+}
+
+.context-default :is(.tag08-card, .tag08-surface-card),
+.context-subtle :is(.tag08-card, .tag08-surface-card),
+.context-inverse :is(.tag08-card, .tag08-surface-card),
+.context-brand :is(.tag08-card, .tag08-surface-card),
+.context-media :is(.tag08-card, .tag08-surface-card) {
+  background: var(--color-surface-default) !important;
+  border-color: var(--color-border-default) !important;
+  color: var(--color-content-primary);
+  box-shadow: var(--shadow-base);
+}
+
+.context-default :is(.tag08-card, .tag08-surface-card) :is(.text-white, .text-zinc-300, .text-zinc-400, .text-zinc-500),
+.context-subtle :is(.tag08-card, .tag08-surface-card) :is(.text-white, .text-zinc-300, .text-zinc-400, .text-zinc-500) {
+  color: var(--color-content-secondary) !important;
+}
+
+.context-brand :is(.tag08-card, .tag08-surface-card) .text-white {
+  color: var(--color-content-primary) !important;
+}
+
+.context-brand :is(.tag08-card, .tag08-surface-card) :is(.text-zinc-300, .text-zinc-400, .text-zinc-500) {
+  color: var(--color-content-secondary) !important;
+}
+
+.context-default :is(.tag08-card, .tag08-surface-card) :is(.text-brand, .text-brand-secondary),
+.context-subtle :is(.tag08-card, .tag08-surface-card) :is(.text-brand, .text-brand-secondary) {
+  color: var(--color-action-readable) !important;
+}
+
+.context-brand :is(.tag08-contextual-section, .tag08-card, .tag08-surface-card) :is(.text-brand, .text-brand-secondary) {
+  color: var(--color-content-primary) !important;
+}
+
+.context-default :is(.tag08-contextual-section, .tag08-card, .tag08-surface-card) :is([class*="bg-brand"], [class*="bg-brand-secondary"]),
+.context-subtle :is(.tag08-contextual-section, .tag08-card, .tag08-surface-card) :is([class*="bg-brand"], [class*="bg-brand-secondary"]) {
+  background-color: var(--color-action-primary) !important;
+  color: var(--color-action-on-primary) !important;
+}
+
+.context-brand :is(.tag08-contextual-section, .tag08-card, .tag08-surface-card) :is([class*="bg-brand"], [class*="bg-brand-secondary"]) {
+  background-color: var(--color-action-primary) !important;
+  color: var(--color-action-on-primary) !important;
+}
+
+.context-default :is(.tag08-contextual-section, .tag08-card, .tag08-surface-card) :is([class*="border-white"]),
+.context-subtle :is(.tag08-contextual-section, .tag08-card, .tag08-surface-card) :is([class*="border-white"]) {
+  border-color: var(--color-border-default) !important;
 }
 
 html {
@@ -525,14 +737,14 @@ main section[id] {
 }
 
 .text-brand-gradient {
-  background: linear-gradient(135deg, #D4FF00 50%, #ffffff 130%);
+  background: linear-gradient(135deg, var(--color-brand) 50%, #ffffff 130%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 /* Polished dot grid pattern */
 .radial-grid {
-  background-image: radial-gradient(rgba(212, 255, 0, 0.15) 0.8px, transparent 0.8px);
+  background-image: radial-gradient(rgba(var(--color-brand-rgb), 0.15) 0.8px, transparent 0.8px);
   background-size: 24px 24px;
 }
 
@@ -581,7 +793,7 @@ main section[id] {
 }
 
 .hero-editorial-stage__grid {
-  background-image: linear-gradient(rgba(212, 255, 0, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(212, 255, 0, 0.08) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(var(--color-brand-rgb), 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--color-brand-rgb), 0.08) 1px, transparent 1px);
   background-position: right center;
   background-size: 72px 72px;
   mask-image: linear-gradient(90deg, transparent 42%, #000 100%);
@@ -618,7 +830,7 @@ main section[id] {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #D4FF00;
+  background: var(--color-brand);
 }
 
 /* ==========================================================================
@@ -666,12 +878,12 @@ html.high-contrast .text-brand,
 html.high-contrast [class*="text-brand"],
 html.high-contrast span.text-brand,
 html.high-contrast .text-gradient-yellow {
-  color: #D4FF00 !important;
+  color: var(--color-brand) !important;
 }
 
 html.high-contrast .bg-brand,
 html.high-contrast [class*="bg-brand"] {
-  background-color: #D4FF00 !important;
+  background-color: var(--color-brand) !important;
   color: #000000 !important;
 }
 
@@ -695,7 +907,7 @@ html.high-contrast button:focus-visible,
 html.high-contrast a:focus-visible,
 html.high-contrast button:hover,
 html.high-contrast a:hover {
-  outline: 3px solid #D4FF00 !important;
+  outline: 3px solid var(--color-brand) !important;
   text-decoration: underline !important;
 }
 
