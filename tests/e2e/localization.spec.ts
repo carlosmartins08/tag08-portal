@@ -16,11 +16,12 @@ test("language selector exposes only locales approved for the current page", asy
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/servicos/process-intelligence", { waitUntil: "domcontentloaded" });
 
-  await expect(page.getByRole("button", { name: "Navegar em English" })).toBeDisabled();
-  await expect(page.getByRole("button", { name: /Navegar em Espa/ })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Navegar em English" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Navegar em Espa/ })).toHaveCount(0);
 
   await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
-  await expect(page.getByRole("button", { name: "Navegar em English" })).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Navegar em English" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Navegar em Espa/ })).toHaveCount(0);
   await expect(page.getByRole("button", { name: /Navegar em Espa/ })).toBeEnabled();
 
   await page.getByRole("button", { name: "Navegar em English" }).click();

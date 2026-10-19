@@ -47,14 +47,7 @@ export const localizationReadiness: Record<RouteKey, RouteLocalizationReadiness>
   "programa-afiliados": pending("src/features/site/pages/ProgramaAfiliados.tsx"),
   "hospedagem-manutencao-sites": pending("src/features/site/pages/HospedagemManutencaoSites.tsx"),
   "not-found": pending("src/features/site/pages/NotFound.tsx"),
-  "cliente-onboarding": {
-    sourceFile: "src/features/site/pages/ClienteOnboarding.tsx",
-    sourceFingerprint: "8a31f62a63b1c97467df37ebfc3fafba01c0822388e4e2a5d2084d7657907aff",
-    locales: {
-      en: { state: "approved", sourceFingerprint: "8a31f62a63b1c97467df37ebfc3fafba01c0822388e4e2a5d2084d7657907aff" },
-      es: { state: "approved", sourceFingerprint: "8a31f62a63b1c97467df37ebfc3fafba01c0822388e4e2a5d2084d7657907aff" }
-    }
-  }
+  "cliente-onboarding": pending("src/features/site/pages/ClienteOnboarding.tsx")
 };
 
 export const isLocaleTranslationReady = (routeKey: RouteKey, locale: RouteLocale): boolean => {

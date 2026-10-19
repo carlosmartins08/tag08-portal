@@ -213,13 +213,25 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
     };
   }, [analyticsEnabled, language, path]);
 
+  const confirmUnsavedOnboardingExit = () => {
+    if (path !== "/cliente/onboarding" || document.querySelector('[data-onboarding-unsent="true"]') === null) return true;
+    const messages: Record<UiLanguage, string> = {
+      pt: "As respostas deste onboarding ainda não foram enviadas e serão perdidas se você sair. Deseja continuar?",
+      en: "This onboarding has unsent answers. They will be lost if you leave. Do you want to continue?",
+      es: "Las respuestas de este onboarding aún no se enviaron y se perderán si sale. ¿Desea continuar?"
+    };
+    return window.confirm(messages[language]);
+  };
+
   const navigate = (targetPath: string) => {
     const canonicalPath = canonicalizeRoute(targetPath);
+    if (canonicalPath !== path && !confirmUnsavedOnboardingExit()) return;
     router.push(getLocalizedPath(canonicalPath, locale));
   };
 
   const changeLanguage = (nextLanguage: UiLanguage) => {
     const nextLocale = nextLanguage as RouteLocale;
+    if (nextLocale !== locale && !confirmUnsavedOnboardingExit()) return;
     setLanguage(nextLanguage);
     router.push(getLocalizedPath(path, nextLocale));
   };

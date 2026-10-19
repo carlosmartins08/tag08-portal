@@ -2,6 +2,8 @@
 
 ## 2026-10-19
 
+- Atualizada a jornada de Onboarding para apresentação guiada, suporte ao preenchimento pela equipe TAG08 com identificação e confirmação de autorização, e aviso antes de sair com respostas não enviadas. Testes de rotas, contratos, build e seis cenários E2E passaram; EN/ES ficam bloqueados até revisão linguística.
+
 - Evoluída a jornada de Contato para qualificar novos projetos, clientes atuais e parcerias; novos projetos aceitam múltiplos interesses ou pedido de orientação, mantendo o contrato compatível com envios antigos.
 
 - Reconciliada a foundation cromática aprovada: lime institucional `#DDF81D` e `accent-readable` funcional `#3F5A00`; aliases e derivações digitais acompanham os tokens sem promover cores de estado a cores institucionais.

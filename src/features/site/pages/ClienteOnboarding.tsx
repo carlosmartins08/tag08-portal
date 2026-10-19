@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { 
   Building2, 
   User, 
@@ -37,9 +38,11 @@ import {
   ONBOARDING_PAYLOAD_VERSION
 } from "../../../../server/onboardingContract";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
+import type { RouteLocale } from "../../../config/routeRegistry";
 import { trackFormStart, trackFormStep, trackFormSubmit, trackLeadEvent, trackOutboundClick } from "../../../lib/analytics";
 
 type Language = "pt" | "en" | "es";
+type SubmissionMode = "client" | "tag08_team";
 type DeliveryState = "idle" | "online" | "queued" | "error";
 type QueueStatus = "pending" | "sent" | "retrying" | "error";
 type OnboardingDeliveryStatus = "received" | "accepted" | "queued" | "failed";
@@ -139,8 +142,32 @@ const translations: Record<Language, Record<string, string>> = {
     // Step 0: Welcome Screen
     welcome_title: "Bem-vindo  TAG08. <br />Vamos organizar o início do seu projeto.",
     welcome_desc: "Este assistente vai reunir as informações essenciais para preparar sua jornada com clareza, segurança e direção. Responda no seu ritmo. O objetivo não burocratizar o início, mas evitar retrabalho e preparar nossa equipe para te atender melhor.",
+    submission_mode_title: "Quem está preenchendo este onboarding?",
+    submission_mode_client: "Sou o contato do cliente",
+    submission_mode_team: "Sou da equipe TAG08",
+    submission_mode_team_note: "A equipe pode preencher sozinha. No envio, será necessário confirmar que já recebeu autorização do cliente para compartilhar estas informações.",
+    welcome_steps_title: "Como funciona",
+    question_label: "PERGUNTA",
+    exit_flow: "Sair do preenchimento",
+    confirm_exit_flow: "Suas respostas ainda não foram enviadas e serão perdidas se você sair. Deseja sair do onboarding?",
+    question_company_identity: "Qual é o nome da sua empresa ou projeto?",
+    question_company_location: "Onde sua empresa está localizada?",
+    question_digital_presence: "Onde podemos conhecer sua presença digital?",
+    question_service_language: "Em qual idioma o cliente prefere receber atendimento?",
+    question_team_operator: "Quem da equipe TAG08 está conduzindo este preenchimento?",
+    question_project_contact: "Quem será o contato principal do projeto?",
+    question_contact_channels: "Como podemos falar com essa pessoa?",
+    question_additional_contacts: "Há outros contatos que devem participar do projeto?",
+    question_business_moment: "Qual frase melhor representa o momento da empresa?",
+    question_priority: "Qual deve ser a primeira prioridade?",
+    question_maturity: "Como você avalia hoje a organização da empresa?",
+    question_services: "Quais serviços foram contratados?",
+    question_service_briefing: "Há detalhes específicos do escopo que devemos conhecer?",
+    question_materials: "Onde estão os materiais de referência do projeto?",
+    question_success: "O que seria um bom resultado nos primeiros 90 dias?",
+    question_consent: "Você confirma estas informações e autorizações?",
     est_time: "Tempo Estimado",
-    est_time_desc: "8 a 15 minutos em preenchimento fluido. Não é necessário preencher tudo de uma vez.",
+    est_time_desc: "Leva de 8 a 15 minutos. Preencha em uma única sessão: as respostas não enviadas não ficam salvas se você sair desta página.",
     pass_guideline: "Diretriz de Senhas",
     pass_desc: "Não solicitamos ou aceitamos qualquer senha por este formulário. Suas credenciais estão preservadas.",
     
@@ -170,26 +197,28 @@ const translations: Record<Language, Record<string, string>> = {
     empresa_placeholder_insta: "Ex: instagram.com/empresa",
     empresa_label_linkedin: "LinkedIn Institucional / Pessoal",
     empresa_placeholder_linkedin: "Ex: linkedin.com/company/suaempresa",
-    empresa_lang_title: "Idioma Preferencial de Atendimento / Preferred Language",
-    empresa_lang_badge: "Global Coverage / Suporte Internacional",
-    empresa_lang_desc: "Oferecemos atendimento técnico corporativo em português para empresas brasileiras, com suporte operacional de engenharia em inglês ou espanhol para clientes internacionais.",
+    empresa_lang_title: "Em qual idioma o cliente prefere receber o atendimento?",
+    empresa_lang_badge: "Preferência do cliente",
+    empresa_lang_desc: "Esta escolha não altera o idioma deste formulário. Se a equipe TAG08 estiver preenchendo, selecione o idioma preferido pelo cliente.",
     empresa_lang_pt_desc: "Equipe nativa e playbooks em PT-BR",
     empresa_lang_en_desc: "Global support & English technical delivery",
     empresa_lang_es_desc: "Soporte y flujos estratégicos en español",
     
     // Step 2: Responsável / Contatos
-    equipe_label_name: "Qual o seu nome? *",
+    equipe_label_name: "Nome do contato responsável pelo projeto *",
     equipe_placeholder_name: "Ex: Dr. Fernando Guedes",
+    operator_label_name: "Seu nome na equipe TAG08 *",
+    operator_placeholder_name: "Informe seu nome para identificar o atendimento",
     equipe_label_role: "Cargo / Função na Empresa",
     equipe_placeholder_role: "Ex: Fundador e Diretor Clínico",
     equipe_label_email: "E-mail de Contato Comercial *",
     equipe_placeholder_email: "Ex: dr@clinicaguedes.com",
     equipe_label_whatsapp: "WhatsApp Corporativo / Pessoal *",
     equipe_placeholder_whatsapp: "Ex: (11) 99999-9999",
-    equipe_section_focal: "Definies de Ponto Focal",
+    equipe_additional_contacts: "Adicionar outros contatos (opcional)",
     equipe_label_ti: "Ponto focal técnico (ex: DNS, TI)",
     equipe_placeholder_ti: "Ex: Camila (Marketing)",
-    equipe_label_approver: "Quem aprova decisões estratégicas? *",
+    equipe_label_approver: "Quem aprova decisões estratégicas?",
     equipe_placeholder_approver: "Ex: Fernando Guedes",
     equipe_label_finance: "Recebe o financeiro? (Notas/Boletos)",
     equipe_placeholder_finance: "Ex: financeiro@empresa.com",
@@ -215,17 +244,16 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Step 5: Briefing
     briefing_module_title: "MÓDULO CUSTOMIZADO ATIVO",
-    briefing_module_desc: "Sua empresa contratou {services}. Responda abaixo os detalhes operacionais que ditou nossa produção técnica:",
-    briefing_not_selected_desc: "Descreva brevemente detalhes, metas ou escopo contratado para as divisões assinaladas:",
-    briefing_not_selected_placeholder: "Informe aqui metas de tráfego, detalhes do ecossistema audiovisual ou observações específicas do seu projeto.",
+    briefing_module_desc: "Sua empresa contratou {services}. Se quiser, acrescente detalhes específicos para cada serviço; você pode avançar sem responder a todos.",
+    briefing_optional_details: "Adicionar detalhes por serviço (opcional)",
+    briefing_not_selected_desc: "Algum contexto importante que ainda não perguntamos? (opcional — não repita informações já preenchidas)",
+    briefing_not_selected_placeholder: "Se houver algo relevante que ficou de fora, conte aqui. Você pode deixar em branco.",
     
     // Step 6: Materiais
     materiais_title: "MATERIAIS E LINKS DE SUPORTE",
     materiais_desc: "Forneça links de pastas compartilhadas públicas ou materiais comerciais para abastecer nossa equipe (Ex: Google Drive, Dropbox, Figma).",
-    materiais_warning: "ALERTA SEGURO: Não insira senhas sensíveis ou PINs de e-mails em nenhum dos campos.",
     materiais_label_drive: "Link Pasta Principal (Google Drive/Dropbox)",
-    materiais_label_insta: "Link Instagram Atual",
-    materiais_label_site: "Link Site Institucional do Negócio",
+    materiais_more_links: "Adicionar outros materiais (opcional)",
     materiais_label_portfolio: "Link Portfólio / Catálogo Oficial",
     materiais_label_references: "Referências Visuais (Links ou Pinterest)",
     materiais_label_documents: "Manual de Marca ou Logotipos (.PDF / .AI / .PNG)",
@@ -233,6 +261,8 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Step 7: Expectativas
     expectativas_title: "DIREÇÃO E EXPECTATIVAS DE SUCESSO na TAG08",
+    expectativas_optional_context: "Adicionar contexto opcional",
+    expectativas_answer_label: "Sua resposta",
     expectativas_subtitle: "Por que você buscou a TAG08 neste exato momento corporativo?",
     expectativas_desc: "Compreender os pontos sensíveis da sua marca nos blinda contra falhas e acelera a transição de seus novos canais.",
     expectativas_placeholder_1: "Ex: Sentimos que nossa comunicação atual nos faz parecer menores do que realmente somos...",
@@ -253,12 +283,16 @@ const translations: Record<Language, Record<string, string>> = {
     consent_desc: "Leia e marque as caixas abaixo para fins operacionais imediatos de kick-off.",
     consent_opt1: "Declaro que todas as informações corporativas prestadas são íntegras e verdadeiras.",
     consent_opt2: "Autorizo o uso destes dados unicamente pela equipe técnica da TAG08 para estrutura estratégica.",
+    consent_opt2_team: "Confirmo que já recebi autorização do cliente para compartilhar estes dados com a equipe TAG08 para preparar o serviço contratado.",
     consent_opt3: "Confirmo que não forneci qualquer credencial de acesso direto ou senha de segurança neste fluxo.",
     
     // Step 9: Finalizado (WhatsApp)
     finalized_badge: "ONBOARDING ENVIADO COM SUCESSO",
+    finalized_queued_badge: "AGUARDANDO SINCRONIZAÇÃO",
     finalized_title: "Integração operacional em andamento!",
+    finalized_queued_title: "Envio ainda não recebido pela TAG08",
     finalized_desc_1: "Seus dados de direção corporativa foram consolidados com sucesso e já está na fila de triagem técnica de nossa equipe de engenharia e branding.",
+    finalized_queued_desc: "O envio está na fila local deste navegador. O sistema tentará novamente quando a conexão voltar; confira este status mais tarde.",
     finalized_desc_2: "Para acelerar seu kickoff e confirmar o recebimento direto com o diretor técnico do seu projeto, clique no link abaixo para nos notificar via WhatsApp corporativo.",
     whatsapp_template_msg: "Olá time TAG08! Concluímos o preenchimento do nosso onboarding institucional via Assistente Conversacional.\\n\\nEmpresa: {company}\\nRepresentante: {name}\\nMeta dos próximos 90 dias: {goal}.\\n\\nAguardamos contato técnico para agendarmos nosso kickoff!",
     
@@ -266,10 +300,13 @@ const translations: Record<Language, Record<string, string>> = {
     err_company_name: "O nome da sua empresa é essencial para darmos o pontapé.",
     err_responsible_name: "Informe o nome do responsável principal.",
     err_responsible_email: "Insira um endereço de e-mail corporativo válido.",
+    err_company_website: "Informe um endereço de site válido.",
     err_responsible_whatsapp: "Precisamos de um número de WhatsApp ativo para contato técnico.",
     err_business_moment: "Por favor, selecione a alternativa que mais condiz com o momento de sua empresa.",
     err_priority_map: "Por favor, assinale qual área de prioridade podemos te auxiliar primeiro.",
     err_selected_services: "Selecione ao menos um dos formatos ou serviços contratados de seu projeto.",
+    err_operator_name: "Informe seu nome para identificar o preenchimento pela equipe TAG08.",
+    err_good_result: "Descreva o que seria um bom resultado nos primeiros 90 dias.",
     err_consent: "Você precisa estar ciente e marcar todos os 3 tópicos de consentimento sob LGPD para submeter o onboarding."
   },
   en: {
@@ -314,8 +351,32 @@ const translations: Record<Language, Record<string, string>> = {
     // Step 0: Welcome Screen
     welcome_title: "Welcome to TAG08. <br />Let's organize the start of your project.",
     welcome_desc: "This assistant will gather the essential information to prepare your journey with clarity, security, and direction. Answer at your own pace. The goal is not to create bureaucracy, but to avoid rework and prepare our team to serve you better.",
+    submission_mode_title: "Who is completing this onboarding?",
+    submission_mode_client: "I am the client's project contact",
+    submission_mode_team: "I am on the TAG08 team",
+    submission_mode_team_note: "The TAG08 team can complete this form on the client's behalf. Before submitting, confirm that the client has authorized sharing this information.",
+    welcome_steps_title: "How it works",
+    question_label: "QUESTION",
+    exit_flow: "Exit onboarding",
+    confirm_exit_flow: "Your answers have not been submitted and will be lost if you leave. Do you want to exit onboarding?",
+    question_company_identity: "What is the name of your company or project?",
+    question_company_location: "Where is your company located?",
+    question_digital_presence: "Where can we learn about your digital presence?",
+    question_service_language: "Which language does the client prefer for support?",
+    question_team_operator: "Who on the TAG08 team is completing this onboarding?",
+    question_project_contact: "Who will be the primary project contact?",
+    question_contact_channels: "How can we reach this person?",
+    question_additional_contacts: "Are there other contacts who should be involved?",
+    question_business_moment: "Which statement best describes the company's current situation?",
+    question_priority: "What should be the first priority?",
+    question_maturity: "How would you rate the company's current organization?",
+    question_services: "Which services were contracted?",
+    question_service_briefing: "Are there scope details our team should know?",
+    question_materials: "Where can we find the project's reference materials?",
+    question_success: "What would a good result in the first 90 days look like?",
+    question_consent: "Do you confirm this information and these permissions?",
     est_time: "Estimated Time",
-    est_time_desc: "8 to 15 minutes of fluid completion. No need to fill everything at once.",
+    est_time_desc: "It takes 8 to 15 minutes. Complete it in one session: unsent answers are not saved if you leave this page.",
     pass_guideline: "Password Guidelines",
     pass_desc: "We do not request or accept any passwords through this form. Your credentials are safe.",
     
@@ -345,26 +406,28 @@ const translations: Record<Language, Record<string, string>> = {
     empresa_placeholder_insta: "e.g., instagram.com/company",
     empresa_label_linkedin: "Corporate / Personal LinkedIn",
     empresa_placeholder_linkedin: "e.g., linkedin.com/company/yourcompany",
-    empresa_lang_title: "Preferred Service Language / Idioma Preferencial",
-    empresa_lang_badge: "Global Coverage / International Support",
-    empresa_lang_desc: "We offer technical corporate service in Portuguese for Brazilian companies, as well as operational engineering support in English or Spanish for international clients.",
+    empresa_lang_title: "Which language does the client prefer for TAG08 support?",
+    empresa_lang_badge: "Client preference",
+    empresa_lang_desc: "This choice does not change the language of this form. If the TAG08 team is completing it, select the language preferred by the client.",
     empresa_lang_pt_desc: "Native team and playbooks in PT-BR",
     empresa_lang_en_desc: "Global support & English technical delivery",
     empresa_lang_es_desc: "Support and strategic flows in Spanish",
     
     // Step 2: Responsável / Contatos
-    equipe_label_name: "What is your name? *",
+    equipe_label_name: "Name of the client's project contact *",
     equipe_placeholder_name: "e.g., Mary Smith",
+    operator_label_name: "Your name as a TAG08 team member *",
+    operator_placeholder_name: "Enter your name to identify this submission",
     equipe_label_role: "Role / Position in Company",
     equipe_placeholder_role: "e.g., Founder & Clinical Director",
     equipe_label_email: "Business Contact Email *",
     equipe_placeholder_email: "e.g., mary@yourcompany.com",
     equipe_label_whatsapp: "Corporate / Personal WhatsApp *",
     equipe_placeholder_whatsapp: "e.g., +1 (555) 019-2834",
-    equipe_section_focal: "Focal Point Definitions",
+    equipe_additional_contacts: "Add other contacts (optional)",
     equipe_label_ti: "Technical focal point (e.g. DNS, IT)",
     equipe_placeholder_ti: "e.g., Camilla (Marketing)",
-    equipe_label_approver: "Who approves strategic decisions? *",
+    equipe_label_approver: "Who approves strategic decisions?",
     equipe_placeholder_approver: "e.g., CEO, Marketing Director or Mary herself",
     equipe_label_finance: "Receives billing / invoices?",
     equipe_placeholder_finance: "e.g., billing@company.com",
@@ -390,17 +453,16 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Step 5: Briefing
     briefing_module_title: "ACTIVE CUSTOMIZED BRIEF",
-    briefing_module_desc: "Your company has selected {services}. Please provide operational details below:",
-    briefing_not_selected_desc: "Briefly describe details, goals, or scope contracted for the checked divisions:",
-    briefing_not_selected_placeholder: "Enter traffic goals, audiovisual assets, or project notes here.",
+    briefing_module_desc: "You selected {services}. Add service-specific details below if they are relevant; you can continue without answering every field.",
+    briefing_optional_details: "Add service details (optional)",
+    briefing_not_selected_desc: "Is there important context we have not asked about? (optional — do not repeat information already provided)",
+    briefing_not_selected_placeholder: "If anything relevant was left out, add it here. You can leave this blank.",
     
     // Step 6: Materiais
     materiais_title: "SUPPORTING FILES & LINKS",
     materiais_desc: "Provide public shared links or assets to supply our creative and technical team (e.g., Drive, Figma, templates).",
-    materiais_warning: "SECURE ALERTE: Do not share passwords or credentials on this form.",
     materiais_label_drive: "Main Folder Link (Google Drive/Dropbox)",
-    materiais_label_insta: "Current Instagram Link",
-    materiais_label_site: "Current Corporate Link",
+    materiais_more_links: "Add other materials (optional)",
     materiais_label_portfolio: "Catalog / Corporate Deck Link",
     materiais_label_references: "Visual Reference Link (or Pinterest)",
     materiais_label_documents: "Brand Manual or Logotypes (.PDF / .AI / .PNG)",
@@ -408,6 +470,8 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Step 7: Expectativas
     expectativas_title: "STRATEGIC DIRECTION & 90-DAY METRICS",
+    expectativas_optional_context: "Add optional context",
+    expectativas_answer_label: "Your answer",
     expectativas_subtitle: "Why did you reach out to TAG08 at this exact time?",
     expectativas_desc: "Understanding the sensitive points of your business protects our operations and speeds up onboarding setup.",
     expectativas_placeholder_1: "e.g., We feel our current messaging makes our business look smaller than it is...",
@@ -428,22 +492,29 @@ const translations: Record<Language, Record<string, string>> = {
     consent_desc: "Read and check the fields below for immediate kick-off onboarding setup.",
     consent_opt1: "I declare that all corporate information provided is honest and true.",
     consent_opt2: "I authorize the use of this data solely by the TAG08 technical team for strategic structure setup.",
+    consent_opt2_team: "I confirm that I have received the client's authorization to share this information with TAG08 to prepare the contracted service.",
     consent_opt3: "I confirm that I have not provided any direct passwords or security credentials in this wizard.",
     
     // Step 9: Finalizado (WhatsApp)
     finalized_badge: "ONBOARDING SUBMITTED SUCCESSFULLY",
+    finalized_queued_badge: "SYNC PENDING",
     finalized_title: "Integration setup starts now!",
+    finalized_queued_title: "TAG08 has not received this submission yet",
     finalized_desc_1: "Your integration data has been integrated on your systems and is currently being analyzed by our senior creative and engineering teams.",
+    finalized_queued_desc: "The submission is in this browser's local queue. The app will retry when the connection returns; check this status again later.",
     whatsapp_template_msg: "Hello TAG08 team! I have completed our Onboarding Guidelines via the Conversational Assistant.\\n\\nCompany: {company}\\nRepresentative: {name}\\nTarget 90 days: {goal}.\\n\\nLooking forward to scheduling our kickoff!",
     
     // Errors
     err_company_name: "Please fill in the Company Name in Step 1.",
     err_responsible_name: "Please fill in Representative details (Step 2).",
     err_responsible_email: "Please enter a valid corporate email address.",
+    err_company_website: "Enter a valid website address.",
     err_responsible_whatsapp: "We need an active WhatsApp number for tactical contact.",
     err_business_moment: "Please select both the challenge and priority (Step 3).",
     err_priority_map: "Please select which area of priority we can assist you with first.",
     err_selected_services: "Please select at least one of the contracted services for your project.",
+    err_operator_name: "Enter your name to identify this submission by the TAG08 team.",
+    err_good_result: "Describe what a good result in the first 90 days would look like.",
     err_consent: "You must review and check all 3 consent fields under regulation policies to submit onboarding."
   },
   es: {
@@ -488,8 +559,32 @@ const translations: Record<Language, Record<string, string>> = {
     // Step 0: Welcome Screen
     welcome_title: "Bienvenido a TAG08. <br />Vamos a organizar el inicio de su proyecto.",
     welcome_desc: "Este asistente reunir la información esencial para trazar su camino estratégico con claridad, seguridad y dirección. Responda a su propio ritmo. El objetivo no es burocratizar el inicio, sino evitar el retrabajo y preparar a nuestro equipo para servirle mejor.",
+    submission_mode_title: "¿Quién está completando este onboarding?",
+    submission_mode_client: "Soy la persona de contacto del cliente",
+    submission_mode_team: "Soy parte del equipo TAG08",
+    submission_mode_team_note: "El equipo TAG08 puede completar este formulario en nombre del cliente. Antes de enviarlo, confirme que el cliente autorizó compartir esta información.",
+    welcome_steps_title: "Cómo funciona",
+    question_label: "PREGUNTA",
+    exit_flow: "Salir del onboarding",
+    confirm_exit_flow: "Sus respuestas aún no se han enviado y se perderán si sale. ¿Desea salir del onboarding?",
+    question_company_identity: "¿Cuál es el nombre de su empresa o proyecto?",
+    question_company_location: "¿Dónde está ubicada su empresa?",
+    question_digital_presence: "¿Dónde podemos conocer su presencia digital?",
+    question_service_language: "¿En qué idioma prefiere recibir atención el cliente?",
+    question_team_operator: "¿Quién del equipo TAG08 está completando este onboarding?",
+    question_project_contact: "¿Quién será el contacto principal del proyecto?",
+    question_contact_channels: "¿Cómo podemos comunicarnos con esta persona?",
+    question_additional_contacts: "¿Hay otros contactos que deban participar en el proyecto?",
+    question_business_moment: "¿Qué frase representa mejor el momento actual de la empresa?",
+    question_priority: "¿Cuál debería ser la primera prioridad?",
+    question_maturity: "¿Cómo evalúa hoy la organización de la empresa?",
+    question_services: "¿Qué servicios fueron contratados?",
+    question_service_briefing: "¿Hay detalles del alcance que debamos conocer?",
+    question_materials: "¿Dónde están los materiales de referencia del proyecto?",
+    question_success: "¿Qué sería un buen resultado durante los primeros 90 días?",
+    question_consent: "¿Confirma esta información y estas autorizaciones?",
     est_time: "Tiempo Estimado",
-    est_time_desc: "De 8 a 15 minutos en completado fluido. No es necesario rellenarlo todo de una sola vez.",
+    est_time_desc: "Toma de 8 a 15 minutos. Complételo en una sola sesión: las respuestas no enviadas no se guardan si sale de esta página.",
     pass_guideline: "Guas de Contraseas",
     pass_desc: "Não solicitamos ni aceptamos ningún tipo de contraseña a través de este formulario. Sus credenciales están totalmente preservadas.",
     
@@ -519,26 +614,28 @@ const translations: Record<Language, Record<string, string>> = {
     empresa_placeholder_insta: "ej. instagram.com/empresa",
     empresa_label_linkedin: "LinkedIn Corporativo / Personal",
     empresa_placeholder_linkedin: "ej. linkedin.com/company/suempresa",
-    empresa_lang_title: "Idioma preferido de atención / Preferred Language",
-    empresa_lang_badge: "Cobertura Global / Soporte Internacional",
-    empresa_lang_desc: "Ofrecemos atención técnica corporativa en portugués para empresas brasileñas, con soporte técnico de implementación en inglés o español para clientes internacionales.",
+    empresa_lang_title: "¿En qué idioma prefiere recibir atención el cliente?",
+    empresa_lang_badge: "Preferencia del cliente",
+    empresa_lang_desc: "Esta elección no cambia el idioma de este formulario. Si el equipo TAG08 lo está completando, seleccione el idioma que prefiere el cliente.",
     empresa_lang_pt_desc: "Equipo nativo y documentos base en PT-BR",
     empresa_lang_en_desc: "Global support & English technical delivery",
     empresa_lang_es_desc: "Atención y flujos estratégicos en español",
     
     // Step 2: Responsável / Contatos
-    equipe_label_name: "¿Cuál es su nombre? *",
+    equipe_label_name: "Nombre del contacto responsable del proyecto *",
     equipe_placeholder_name: "ej. Mara Silva",
+    operator_label_name: "Su nombre como integrante del equipo TAG08 *",
+    operator_placeholder_name: "Indique su nombre para identificar este envío",
     equipe_label_role: "Cargo / Función en la Empresa",
     equipe_placeholder_role: "ej. Fundador y Director Clínico",
     equipe_label_email: "Correo Electrónico de Contacto *",
     equipe_placeholder_email: "ej. maria@suempresa.com",
     equipe_label_whatsapp: "WhatsApp Corporativo / Personal *",
     equipe_placeholder_whatsapp: "ej. +57 300 123 4567",
-    equipe_section_focal: "Definiciones de Punto Focal",
+    equipe_additional_contacts: "Añadir otros contactos (opcional)",
     equipe_label_ti: "Punto focal técnico (ej. DNS, TI)",
     equipe_placeholder_ti: "ej. Camila (Marketing)",
-    equipe_label_approver: "?Qui?n aprueba decisiones estrat?gicas? *",
+    equipe_label_approver: "¿Quién aprueba decisiones estratégicas?",
     equipe_placeholder_approver: "ej. CEO, Director de Marketing o la propia Mara",
     equipe_label_finance: "?Recibe facturaci?n y cobros?",
     equipe_placeholder_finance: "ej. financeiro@empresa.com",
@@ -564,17 +661,16 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Step 5: Briefing
     briefing_module_title: "MÓDULO SELECCIONADO ACTIVO",
-    briefing_module_desc: "Su empresa ha contratado {services}. Responda por favor las preguntas tácticas a continuación:",
-    briefing_not_selected_desc: "Describa brevemente los detalles, requerimientos o alcance del servicio personalizado contratado:",
-    briefing_not_selected_placeholder: "Indique aqu sus objetivos comerciales, particularidades del ecosistema audiovisual o notas estratégicas.",
+    briefing_module_desc: "Seleccionó {services}. Si lo desea, añada detalles específicos de cada servicio; puede continuar sin responder todos los campos.",
+    briefing_optional_details: "Añadir detalles por servicio (opcional)",
+    briefing_not_selected_desc: "¿Hay algún contexto importante que aún no preguntamos? (opcional — no repita información ya indicada)",
+    briefing_not_selected_placeholder: "Si quedó algo relevante fuera, cuéntelo aquí. Puede dejarlo en blanco.",
     
     // Step 6: Materiais
     materiais_title: "MATERIALES Y ENLACES DE SOPORTE",
     materiais_desc: "Adicione links de pastas públicas compartidas de marca o recursos estratégicos para nuestro equipo (ej. Google Drive, Dropbox, Figma).",
-    materiais_warning: "AVISO DE SEGURIDAD: No comparta contraseñas ni pins de acceso mediante este formulario.",
     materiais_label_drive: "Enlace Carpeta Principal (Google Drive/Dropbox)",
-    materiais_label_insta: "Enlace de Instagram Corporativo",
-    materiais_label_site: "Enlace de Sitio Web Actual",
+    materiais_more_links: "Añadir otros materiales (opcional)",
     materiais_label_portfolio: "Enlace del Catálogo / Portafolio Oficial",
     materiais_label_references: "Referencias Visuales (Enlace o tablero Pinterest)",
     materiais_label_documents: "Manuales de Identidad Visual o Logotipos (.PDF / .AI / .PNG)",
@@ -582,6 +678,8 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Step 7: Expectativas
     expectativas_title: "PERSPECTIVAS OPERACIONALES & METAS DE ÉXITO",
+    expectativas_optional_context: "Añadir contexto opcional",
+    expectativas_answer_label: "Su respuesta",
     expectativas_subtitle: "?Por qu? recurri? a TAG08 en este momento particular?",
     expectativas_desc: "Mapear los dolores de su organización protege nuestras entregas técnicas y acelera la definición de canales de comunicación.",
     expectativas_placeholder_1: "ej. Sentimos que nuestra comunicación actual nos hace lucir más pequeños de lo que realmente somos...",
@@ -602,12 +700,16 @@ const translations: Record<Language, Record<string, string>> = {
     consent_desc: "Marque las opciones de consentimiento para realizar el envío definitivo del onboarding.",
     consent_opt1: "Declaro que toda la información corporativa proporcionada es honesta y verídica.",
     consent_opt2: "Autorizo el uso de estos datos únicamente por el equipo técnico de TAG08 para definir la estrategia táctica.",
+    consent_opt2_team: "Confirmo que ya recibí autorización del cliente para compartir esta información con TAG08 y preparar el servicio contratado.",
     consent_opt3: "Confirmo que no he proporcionado ninguna credencial directa de acceso ni contraseñas en este flujo.",
     
     // Step 9: Finalizado (WhatsApp)
     finalized_badge: "ONBOARDING ENVIADO CON ÉXITO",
+    finalized_queued_badge: "PENDIENTE DE SINCRONIZACIÓN",
     finalized_title: "Integración Operativa en proceso!",
+    finalized_queued_title: "TAG08 aún no ha recibido este envío",
     finalized_desc_1: "Sus directrices operativas han sido integradas en nuestro sistema de forma exitosa y se encuentran en nuestra cola de revisión técnica por los equipos creativo y de ingeniería.",
+    finalized_queued_desc: "El envío está en la cola local de este navegador. Se volverá a intentar cuando se restablezca la conexión; revise este estado más tarde.",
     finalized_desc_2: "Para acelerar la programación de su sesión de arranque (kickoff) y confirmar el recibimiento técnico con el director del proyecto, haga clic a continuación para notificarnos via WhatsApp.",
     whatsapp_template_msg: "Hola equipo TAG08! Completé nuestro onboarding de integración con el asistente conversacional.\\n\\nEmpresa: {company}\\nRepresentante: {name}\\nMeta de 90 días: {goal}.\\n\\n¡Quedamos atentos para agendar nuestro kickoff!",
     
@@ -615,10 +717,13 @@ const translations: Record<Language, Record<string, string>> = {
     err_company_name: "Por favor, ingrese el nombre de su empresa en la Etapa 1.",
     err_responsible_name: "Por favor, complete los datos del Responsable (Etapa 2).",
     err_responsible_email: "Por favor, ingrese un correo electrónico corporativo válido.",
+    err_company_website: "Ingrese una dirección de sitio web válida.",
     err_responsible_whatsapp: "Necesitamos un número de WhatsApp activo para contacto táctico.",
     err_business_moment: "Por favor, seleccione la opción que mejor se ajuste al momento actual de su empresa.",
     err_priority_map: "Por favor, indique qué área de prioridad podemos ayudarle a resolver primero.",
     err_selected_services: "Seleccione al menos uno de los servicios o formatos contratados para su proyecto.",
+    err_operator_name: "Indique su nombre para identificar el envío realizado por el equipo TAG08.",
+    err_good_result: "Describa cómo sería un buen resultado durante los primeros 90 días.",
     err_consent: "Debe revisar y marcar las 3 casillas de consentimiento para continuar."
   }
 };
@@ -679,25 +784,39 @@ const priorityOptions = {
 
 interface ClienteOnboardingProps {
   onNavigate: (page: string) => void;
+  locale: RouteLocale;
 }
 
-export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps) {
+export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboardingProps) {
   const [currentStep, setCurrentStep] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [deliveryState, setDeliveryState] = useState<DeliveryState>("idle");
   const [deliveryMessage, setDeliveryMessage] = useState("");
   const [pendingQueueCount, setPendingQueueCount] = useState(0);
+  const [submissionMode, setSubmissionMode] = useState<SubmissionMode>("client");
+  const [operatorName, setOperatorName] = useState("");
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const isFlowActive = currentStep > 0 && currentStep < 9;
   
   const hasTrackedOnboardingStartRef = useRef(false);
 
   useEffect(() => {
-    if (currentStep > 0) {
-      requestAnimationFrame(() => stepHeadingRef.current?.focus());
+    if (isFlowActive) {
+      requestAnimationFrame(() => stepHeadingRef.current?.focus({ preventScroll: true }));
     }
-  }, [currentStep]);
+  }, [currentStep, currentQuestion, isFlowActive]);
+
+  useEffect(() => {
+    if (!isFlowActive) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isFlowActive]);
 
   // STEP 1: Dados da Empresa
   const [companyName, setCompanyName] = useState("");
@@ -706,7 +825,8 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
   const [companyWebsite, setCompanyWebsite] = useState("");
   const [companyInstagram, setCompanyInstagram] = useState("");
   const [companyLinkedin, setCompanyLinkedin] = useState("");
-  const [preferredLanguage, setPreferredLanguage] = useState("pt");
+  const [serviceLanguage, setServiceLanguage] = useState<Language>("pt");
+  const uiLanguage: Language = locale;
 
   // STEP 2: Responsáveis pelo projeto
   const [responsibleName, setResponsibleName] = useState("");
@@ -790,8 +910,6 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
   // STEP 6: Materiais e links
   const [linkDrive, setLinkDrive] = useState("");
-  const [linkInstagram, setLinkInstagram] = useState("");
-  const [linkSite, setLinkSite] = useState("");
   const [linkPortfolio, setLinkPortfolio] = useState("");
   const [linkReferences, setLinkReferences] = useState("");
   const [linkDocuments, setLinkDocuments] = useState("");
@@ -983,16 +1101,27 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     };
   }, []);
 
+  useEffect(() => {
+    if (currentStep === 0 || currentStep === 9) return;
+
+    const warnBeforeLeaving = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warnBeforeLeaving);
+    return () => window.removeEventListener("beforeunload", warnBeforeLeaving);
+  }, [currentStep]);
+
   // Access key translations
   const t = (key: string): string => {
-    const lang = (preferredLanguage as Language) || "pt";
+    const lang = uiLanguage;
     const dict = translations[lang] || translations.pt;
     return dict[key] || translations.pt[key] || "";
   };
 
   // Dynamic steps translation
   const getSteps = () => {
-    const lang = (preferredLanguage as Language) || "pt";
+    const lang = uiLanguage;
     const localizedSteps = {
       pt: [
         { title: "Boas-vindas", desc: "Introdução ao Assistente" },
@@ -1035,7 +1164,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
   };
 
   const getWelcomeSteps = () => {
-    const lang = (preferredLanguage as Language) || "pt";
+    const lang = uiLanguage;
     const data = {
       pt: [
         {
@@ -1103,8 +1232,19 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
   const steps = getSteps();
 
+  const getQuestionCount = (step: number) => {
+    if (step === 1) return 4;
+    if (step === 2) return submissionMode === "tag08_team" ? 4 : 3;
+    if (step === 3) return 3;
+    return step > 0 && step < 9 ? 1 : 0;
+  };
+
+  const totalQuestions = Array.from({ length: 8 }, (_, index) => getQuestionCount(index + 1)).reduce((sum, count) => sum + count, 0);
+  const currentQuestionNumber = Array.from({ length: Math.max(0, currentStep - 1) }, (_, index) => getQuestionCount(index + 1))
+    .reduce((sum, count) => sum + count, currentQuestion) + 1;
+
   const getServicesOptions = () => {
-    const lang = (preferredLanguage as Language) || "pt";
+    const lang = uiLanguage;
     const sTexts = {
       pt: {
         sm: "Gestão de Redes Sociais",
@@ -1149,13 +1289,16 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
       { label: sx.web, icon: FileCode, id: "Desenvolvimento Web" },
       { label: sx.pi, icon: Cpu, id: "Process Intelligence" },
       { label: sx.pa, icon: Gauge, id: "Process Activation" },
-      { label: sx.traff, icon: TrendingUp, id: "Tráfego Pago" },
-      { label: sx.audio, icon: FolderDot, id: "Produção Audiovisual" },
-      { label: sx.other, icon: Sparkles, id: "Outro" }
+      { label: sx.traff, icon: TrendingUp, id: "Tráfego Pago", requiresGeneralBriefing: true },
+      { label: sx.audio, icon: FolderDot, id: "Produção Audiovisual", requiresGeneralBriefing: true },
+      { label: sx.other, icon: Sparkles, id: "Outro", requiresGeneralBriefing: true }
     ];
   };
 
   const servicesOptions = getServicesOptions();
+  const hasUnmanagedServiceSelected = servicesOptions.some(
+    (service) => service.requiresGeneralBriefing && selectedServices.includes(service.id)
+  );
 
   const handleToggleService = (serviceId: string) => {
     setSelectedServices(prev => {
@@ -1172,15 +1315,24 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     
     if (currentStep === 1) {
       if (!companyName.trim()) errs.push(t("err_company_name"));
+      if (companyWebsite.trim() && !isValidWebsite(companyWebsite)) errs.push(t("err_company_website"));
     } else if (currentStep === 2) {
+      if (submissionMode === "tag08_team" && !operatorName.trim()) errs.push(t("err_operator_name"));
       if (!responsibleName.trim()) errs.push(t("err_responsible_name"));
-      if (!responsibleEmail.includes("@")) errs.push(t("err_responsible_email"));
+      if (!isValidEmail(responsibleEmail)) errs.push(t("err_responsible_email"));
       if (!responsibleWhatsapp.trim()) errs.push(t("err_responsible_whatsapp"));
     } else if (currentStep === 3) {
       if (!businessMoment) errs.push(t("err_business_moment"));
       if (!priorityMap) errs.push(t("err_priority_map"));
     } else if (currentStep === 4) {
       if (selectedServices.length === 0) errs.push(t("err_selected_services"));
+    } else if (currentStep === 7 && !goodResult90Days.trim()) {
+      errs.push(t("err_good_result"));
+      const requiredResult = document.getElementById("onboarding-good-result");
+      if (requiredResult instanceof HTMLInputElement) {
+        requiredResult.setCustomValidity(t("err_good_result"));
+        requiredResult.reportValidity();
+      }
     } else if (currentStep === 8) {
       if (!consentTruth || !consentUsage || !consentNoPasswords) {
         errs.push(t("err_consent"));
@@ -1191,26 +1343,77 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     return errs.length === 0;
   };
 
+  const validateCurrentQuestion = () => {
+    const errs: string[] = [];
+
+    if (currentStep === 1 && currentQuestion === 0 && !companyName.trim()) {
+      errs.push(t("err_company_name"));
+    } else if (currentStep === 2) {
+      if (submissionMode === "tag08_team" && currentQuestion === 0 && !operatorName.trim()) {
+        errs.push(t("err_operator_name"));
+      }
+      const contactQuestion = submissionMode === "tag08_team" ? 1 : 0;
+      const channelsQuestion = submissionMode === "tag08_team" ? 2 : 1;
+      if (currentQuestion === contactQuestion && !responsibleName.trim()) errs.push(t("err_responsible_name"));
+      if (currentQuestion === channelsQuestion && !isValidEmail(responsibleEmail)) errs.push(t("err_responsible_email"));
+      if (currentQuestion === channelsQuestion && !responsibleWhatsapp.trim()) errs.push(t("err_responsible_whatsapp"));
+    } else if (currentStep === 3 && currentQuestion === 0 && !businessMoment) {
+      errs.push(t("err_business_moment"));
+    } else if (currentStep === 3 && currentQuestion === 1 && !priorityMap) {
+      errs.push(t("err_priority_map"));
+    } else if (currentStep === 4 && selectedServices.length === 0) {
+      errs.push(t("err_selected_services"));
+    } else if (currentStep === 7 && !goodResult90Days.trim()) {
+      errs.push(t("err_good_result"));
+      const requiredResult = document.getElementById("onboarding-good-result");
+      if (requiredResult instanceof HTMLInputElement) {
+        requiredResult.setCustomValidity(t("err_good_result"));
+        requiredResult.reportValidity();
+      }
+    }
+
+    setCurrentErrors(errs);
+    return errs.length === 0;
+  };
+
+  const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+  const isValidWebsite = (value: string) => {
+    try {
+      const candidate = /^https?:\/\//i.test(value.trim()) ? value.trim() : `https://${value.trim()}`;
+      const parsed = new URL(candidate);
+      return (parsed.protocol === "http:" || parsed.protocol === "https:") && parsed.hostname.includes(".");
+    } catch {
+      return false;
+    }
+  };
+
   const handleNext = () => {
-    if (validateCurrentStep()) {
-      setCurrentStep((prev) => {
-        const nextStep = prev + 1;
-        if (!hasTrackedOnboardingStartRef.current && nextStep > 0) {
-          hasTrackedOnboardingStartRef.current = true;
-          trackFormStart({
-            form_name: "onboarding",
-            form_surface: "onboarding-flow",
-            page_path: "/cliente/onboarding"
-          });
-        }
-        trackFormStep({
+    if (validateCurrentQuestion()) {
+      const questionCount = getQuestionCount(currentStep);
+      const nextQuestion = currentQuestion + 1;
+
+      if (!hasTrackedOnboardingStartRef.current) {
+        hasTrackedOnboardingStartRef.current = true;
+        trackFormStart({
           form_name: "onboarding",
           form_surface: "onboarding-flow",
-          step: nextStep,
-          total_steps: steps.length - 1,
           page_path: "/cliente/onboarding"
         });
-        return nextStep;
+      }
+
+      if (nextQuestion < questionCount) {
+        setCurrentQuestion(nextQuestion);
+      } else {
+        setCurrentStep((prev) => prev + 1);
+        setCurrentQuestion(0);
+      }
+      setCurrentErrors([]);
+      trackFormStep({
+        form_name: "onboarding",
+        form_surface: "onboarding-flow",
+        step: currentQuestionNumber + 1,
+        total_steps: totalQuestions,
+        page_path: "/cliente/onboarding"
       });
       window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
     }
@@ -1218,7 +1421,16 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
   const handlePrev = () => {
     setCurrentErrors([]);
-    setCurrentStep(prev => Math.max(0, prev - 1));
+    if (currentQuestion > 0) {
+      setCurrentQuestion((prev) => prev - 1);
+    } else if (currentStep > 1) {
+      const previousStep = currentStep - 1;
+      setCurrentStep(previousStep);
+      setCurrentQuestion(getQuestionCount(previousStep) - 1);
+    } else {
+      setCurrentStep(0);
+      setCurrentQuestion(0);
+    }
     window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
   };
 
@@ -1240,7 +1452,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
       website: companyWebsite,
       instagram: companyInstagram,
       linkedin: companyLinkedin,
-      preferredLanguage
+      preferredLanguage: serviceLanguage
     };
 
     const projectContacts = {
@@ -1333,8 +1545,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     }
     
     // Fallback if none of specifically handled services are chosenãor they choose "Tráfego Pago", "Produção Audiovisual", "Outro"
-    const hasUnmanagedService = selectedServices.some(s => ["Tráfego Pago", "Produção Audiovisual", "Outro"].includes(s));
-    if (hasUnmanagedService || selectedServices.length === 0) {
+    if (hasUnmanagedServiceSelected || selectedServices.length === 0) {
       serviceSpecificBriefing.geral = {
         generalBriefingText
       };
@@ -1342,8 +1553,8 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
     const filesAndLinks = {
       drive: linkDrive,
-      instagram: linkInstagram,
-      site: linkSite,
+      instagram: companyInstagram,
+      site: companyWebsite,
       portfolio: linkPortfolio,
       references: linkReferences,
       documents: linkDocuments,
@@ -1363,7 +1574,8 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     const consent = {
       truthChecked: consentTruth,
       useChecked: consentUsage,
-      noPasswordsChecked: consentNoPasswords
+      noPasswordsChecked: consentNoPasswords,
+      authorizationConfirmedByOperator: submissionMode === "tag08_team" && consentUsage
     };
 
     const submittedAt = new Date().toISOString();
@@ -1412,7 +1624,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
         "Prazo Crtico": importantDeadlines,
         "Ponto Focal TI/Ops": focalPointText,
         "Ponto Focal Financeiro": financePointText,
-        "Idioma de Atendimento": preferredLanguage,
+        "Idioma de Atendimento": serviceLanguage,
         "Status Geral": "Recebido"
       }
     };
@@ -1427,6 +1639,12 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
       serviceSpecificBriefing,
       filesAndLinks,
       consent,
+      submissionContext: {
+        submittedBy: submissionMode,
+        ...(submissionMode === "tag08_team"
+          ? { operatorName: operatorName.trim(), clientAuthorizationConfirmed: consentUsage }
+          : {})
+      },
       submittedAt,
       source: "Assistente Onboarding TAG08",
       status: "Onboarding recebido",
@@ -1456,7 +1674,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
         action: "onboarding_submit",
         surface: "onboarding-flow",
         status: "online",
-        language: preferredLanguage
+        language: uiLanguage
       });
       shouldShowSuccessScreen = true;
     } catch (error) {
@@ -1479,7 +1697,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
           action: "onboarding_submit",
           surface: "onboarding-flow",
           status: "validation_error",
-          language: preferredLanguage
+          language: uiLanguage
         });
       } else {
         try {
@@ -1496,7 +1714,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
             action: "onboarding_submit",
             surface: "onboarding-flow",
             status: "queued",
-            language: preferredLanguage
+            language: uiLanguage
           });
           shouldShowSuccessScreen = true;
         console.warn("Rota /api/onboarding indisponível. Formulário salvo localmente.");
@@ -1513,7 +1731,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
             action: "onboarding_submit",
             surface: "onboarding-flow",
             status: "queue_error",
-            language: preferredLanguage
+            language: uiLanguage
           });
         }
       }
@@ -1534,7 +1752,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
       label: "WhatsApp Brasil",
       url: href,
       surface: "onboarding-fast-track",
-      language: preferredLanguage
+      language: uiLanguage
     });
     window.open(href, "_blank");
   };
@@ -1542,7 +1760,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
   // Helper renderer to represent the current fill-status on the dynamic left-card
   const renderSidebarSummaryBox = () => {
     return (
-      <div className="bg-neutral-900/45 border border-white/[0.04] p-5 rounded-3xl space-y-5 text-left text-xs sticky top-32">
+      <div className="space-y-5 text-left text-xs">
         <div className="flex items-center justify-between border-b border-white/[0.03] pb-3">
           <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-wider">{t("sidebar_title")}</span>
           <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 px-2 py-0.5 rounded border border-brand-secondary/15">{t("live_state")}</span>
@@ -1561,7 +1779,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
             )}
             <div className="flex gap-1 pt-1">
               <span className="px-1.5 py-0.5 bg-white/[0.04] border border-white/[0.06] text-xs rounded text-zinc-300 font-sans uppercase">
-                {t("sidebar_lang_val")}: {preferredLanguage === "pt" ? "Português" : preferredLanguage === "en" ? "English" : "Español"}
+                {t("sidebar_lang_val")}: {serviceLanguage === "pt" ? "Português" : serviceLanguage === "en" ? "English" : "Español"}
               </span>
             </div>
           </div>
@@ -1621,9 +1839,44 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     );
   };
 
-  // Assistant speaks configuration based on active step
+  // One prompt per screen keeps the flow focused without changing its payload.
   const getAssistantSpeak = () => {
-    const lang = (preferredLanguage as Language) || "pt";
+    const questions: Record<number, string[]> = {
+      1: ["question_company_identity", "question_company_location", "question_digital_presence", "question_service_language"],
+      2: submissionMode === "tag08_team"
+        ? ["question_team_operator", "question_project_contact", "question_contact_channels", "question_additional_contacts"]
+        : ["question_project_contact", "question_contact_channels", "question_additional_contacts"],
+      3: ["question_business_moment", "question_priority", "question_maturity"],
+      4: ["question_services"],
+      5: ["question_service_briefing"],
+      6: ["question_materials"],
+      7: ["question_success"],
+      8: ["question_consent"],
+    };
+    const key = questions[currentStep]?.[currentQuestion];
+    return key ? t(key) : getLegacyAssistantSpeak();
+  };
+
+  const handleFlowKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!isFlowActive || event.key !== "Tab") return;
+    const focusable = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter((element) => element.getClientRects().length > 0 && !element.closest("[hidden]"));
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
+  /* legacy prompt map retained below only during this replacement */
+  const getLegacyAssistantSpeak = () => {
+    const lang = uiLanguage;
     const speaks: Record<Language, Record<number, string>> = {
       pt: {
         1: "Vamos começar pelo básico. Qual é o nome oficial da empresa ou projeto que iniciaremos?",
@@ -1660,16 +1913,16 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
     return speaks[lang]?.[currentStep] || (lang === "en" ? "Welcome to our accelerated onboarding." : lang === "es" ? "Bienvenido al onboarding institucional." : "Boas-vindas ao nosso onboarding institucional.");
   };
 
-  return (
-    <div className="bg-charcoal-950 text-white min-h-screen pt-16 pb-20 font-sans">
-      <div className="max-w-7xl mx-auto px-6 relative">
+  const onboardingView = (
+    <div data-onboarding-unsent={isFlowActive ? "true" : undefined} onKeyDown={handleFlowKeyDown} role={isFlowActive ? "dialog" : undefined} aria-modal={isFlowActive ? true : undefined} aria-labelledby={isFlowActive ? "onboarding-question-title" : undefined} className={`bg-charcoal-950 text-white font-sans ${isFlowActive ? "fixed inset-0 z-[9999] h-[100dvh] w-screen overflow-hidden" : "min-h-screen pt-16 pb-20"}`}>
+      <div className={`relative mx-auto ${isFlowActive ? "flex h-full w-full max-w-5xl flex-col px-5 sm:px-8" : "max-w-7xl px-6"}`}>
         
         {/* Subtle ambient blur background decorations */}
-        <div className="absolute top-[10%] right-[-10%] w-[450px] h-[450px] bg-brand/[0.015] rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-[20%] left-[-10%] w-[500px] h-[500px] bg-brand-secondary/[0.01] rounded-full blur-[150px] pointer-events-none" />
+        {!isFlowActive && <div className="absolute top-[10%] right-[-10%] w-[450px] h-[450px] bg-brand/[0.015] rounded-full blur-[140px] pointer-events-none" />}
+        {!isFlowActive && <div className="absolute bottom-[20%] left-[-10%] w-[500px] h-[500px] bg-brand-secondary/[0.01] rounded-full blur-[150px] pointer-events-none" />}
 
-        {/* Responsive Header Row with Integrated Language Switcher */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12 border-b border-white/[0.04] pb-8">
+        {/* Onboarding page heading */}
+        {!isFlowActive && <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12 border-b border-white/[0.04] pb-8">
           <div className="text-center md:text-left space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand/5 border border-brand/20 rounded-full text-brand text-xs font-sans">
               <span className="w-1.5 h-1.5 bg-brand rounded-full animate-pulse" />
@@ -1683,127 +1936,76 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
             </p>
           </div>
 
-          {/* Quick Language Toggle */}
-            <div className="flex items-center justify-center gap-1.5 self-center md:self-end bg-neutral-900/60 p-1.5 rounded-xl border border-white/[0.06] shrink-0">
-            <span className="text-xs font-sans text-zinc-500 uppercase px-2 hidden sm:inline">Idioma / Language:</span>
-            {[
-              { code: "pt", label: "PT", title: "Português" },
-              { code: "en", label: "EN", title: "English" },
-              { code: "es", label: "ES", title: "Español" }
-            ].map((lang) => (
-              <button
-                key={lang.code}
-                type="button"
-                onClick={() => setPreferredLanguage(lang.code)}
-                className={`min-h-11 px-3 py-1.5 rounded-lg text-xs font-sans font-bold uppercase transition-[background-color,color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 ${
-                  preferredLanguage === lang.code
-                    ? "bg-brand-secondary text-black shadow-[0_4px_12px_rgba(var(--color-brand-secondary-rgb),0.15)]"
-                    : "text-zinc-400 hover:text-white hover:bg-white/[0.03]"
-                }`}
-                title={lang.title}
-              >
-                {lang.label}
-              </button>
-            ))}
-          </div>
-        </div>
+        </div>}
 
-        {/* Global Progress Bar Bar (From steps 1 to 9, hiding in welcome step 0 and submit step 9) */}
-        {currentStep > 0 && currentStep < 9 && (
-          <div className="mb-12 space-y-3">
+        {/* Question progress; the introductory screen stays in the normal page flow. */}
+        {isFlowActive && (
+          <div className="sticky top-0 z-20 -mx-5 flex items-center gap-4 border-b border-white/[0.08] bg-charcoal-950 px-5 py-3 sm:-mx-8 sm:px-8">
+            <button type="button" onClick={() => window.confirm(t("confirm_exit_flow")) && onNavigate("/")} className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg px-2 text-sm text-zinc-300 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary">
+              <ArrowLeft className="h-4 w-4" />{t("exit_flow")}
+            </button>
+            <div className="flex-1 space-y-2">
             <div className="flex items-center justify-between text-xs font-sans text-zinc-500">
               <span className="uppercase tracking-widest text-brand-secondary font-semibold text-xs">
-                {t("step_label")} {currentStep} {t("step_of")} {steps.length - 1} : {steps[currentStep].title}
+                {t("question_label")} {currentQuestionNumber} {t("step_of")} {totalQuestions}
               </span>
-              <span>{Math.round((currentStep / (steps.length - 1)) * 100)}% {t("completed")}</span>
+              <span>{Math.round((currentQuestionNumber / totalQuestions) * 100)}% {t("completed")}</span>
             </div>
             <div
               className="h-1.5 w-full bg-white/[0.03] border border-white/[0.05] rounded-full overflow-hidden"
               role="progressbar"
               aria-valuemin={0}
               aria-valuemax={100}
-              aria-valuenow={Math.round((currentStep / (steps.length - 1)) * 100)}
-              aria-valuetext={`${t("step_label")} ${currentStep} ${t("step_of")} ${steps.length - 1}`}
-              aria-label={t("step_label")}
+              aria-valuenow={Math.round((currentQuestionNumber / totalQuestions) * 100)}
+              aria-valuetext={`${t("question_label")} ${currentQuestionNumber} ${t("step_of")} ${totalQuestions}`}
+              aria-label={t("question_label")}
             >
               <div 
                 className="h-full bg-brand-secondary transition-[width] duration-200 ease-out motion-reduce:transition-none shadow-[0_0_8px_rgba(var(--color-brand-secondary-rgb),0.3)]"
-                style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+                style={{ width: `${(currentQuestionNumber / totalQuestions) * 100}%` }}
               />
+            </div>
             </div>
           </div>
         )}
 
-        {/* MAIN WIZARD INTERFACES */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          
-          {/* LEFT SIDEBAR (Resumo Lateral) - visible only in steps 2 to 8 */}
-          <div className="lg:col-span-4 order-last lg:order-first">
-            {currentStep > 1 && currentStep < 9 ? (
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                {renderSidebarSummaryBox()}
-              </motion.div>
-            ) : currentStep === 0 ? (
-              <div className="p-6 rounded-3xl bg-neutral-900/30 border border-white/[0.04] text-left space-y-5">
-                <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-wider font-bold block">{t("privacy_title")}</span>
-                <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                  {t("privacy_desc")}
-                </p>
-                <div className="p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] space-y-2 text-xs text-zinc-400">
-                  <span className="text-white font-sans uppercase text-xs font-black block">{t("privacy_indicators")}</span>
-                  <p>{t("privacy_p1")}</p>
-                  <p>{t("privacy_p2")}</p>
-                  <p>{t("privacy_p3")}</p>
-                </div>
-              </div>
-            ) : (
-              <div className="p-6 rounded-3xl bg-neutral-900/20 border border-white/[0.03] text-left text-xs text-zinc-500 font-sans space-y-4">
-                <span>PLANO TÁTICO INICIAL TAG08 // SOBERANIA EMPRESARIAL</span>
-                <p className="leading-relaxed">Nosso foco  dar clareza de posicionamento visual, desenvolvimento de engenharia web limpa e automação de playbooks de processos corporativos.</p>
-              </div>
-            )}
-          </div>
+        <div className={`mx-auto w-full ${isFlowActive ? "flex min-h-0 flex-1 flex-col" : "max-w-3xl"}`}>
+          {!isFlowActive && currentStep > 1 && currentStep < 9 ? (
+            <details className="mb-5 rounded-xl border border-white/[0.06] bg-neutral-900/30 px-4 py-3">
+              <summary className="min-h-11 cursor-pointer flex items-center text-sm font-semibold text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary">
+                {t("sidebar_title")}
+              </summary>
+              <div className="pt-4">{renderSidebarSummaryBox()}</div>
+            </details>
+          ) : null}
 
-          {/* RIGHT CONTAINER - INTERACTIVE ASSISTANT FORM CARD */}
-          <div className="lg:col-span-8">
-            <div className="bg-charcoal-900/70 border border-white/[0.06] rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-md relative overflow-hidden flex flex-col justify-between">
-              
-              <form id="onboarding-form" onSubmit={handleSubmit}>
+          <div className={isFlowActive ? "flex min-h-0 flex-1 flex-col" : "relative rounded-2xl border border-white/[0.06] bg-charcoal-900/70 p-5 sm:p-8"}>
+              <form id="onboarding-form" noValidate onSubmit={handleSubmit} className={isFlowActive ? "flex min-h-0 flex-1 flex-col" : undefined}>
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={currentStep}
+                  key={`${currentStep}-${currentQuestion}`}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: "easeOut" }}
-                  className="space-y-8 text-left h-full flex flex-col justify-between"
+                  className={isFlowActive ? "flex min-h-0 flex-1 flex-col justify-between overflow-x-hidden overflow-y-auto overscroll-contain text-left" : "space-y-8 text-left h-full flex flex-col justify-between"}
                 >
                   
-                  {/* Step Speak section (if not step 0 or 9) */}
-                  {currentStep > 0 && currentStep < 9 && (
-                    <div className="flex gap-4 p-5 rounded-2xl bg-brand-secondary/[0.02] border border-brand-secondary/5 items-start">
-                      <div className="w-10 h-10 rounded-full bg-brand/10 border border-brand/20 flex items-center justify-center shrink-0 text-brand text-xs font-sans font-black shadow-[0_0_12px_rgba(var(--color-brand-rgb),0.15)]">
-                        08
-                      </div>
-                      <div className="space-y-1">
-                        <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black block">{t("chat_header_assistant")}</span>
-                        <p className="text-zinc-200 text-xs sm:text-sm font-sans font-medium leading-relaxed font-sans">
-                          "{getAssistantSpeak()}"
-                        </p>
-                      </div>
+                  {currentStep > 0 && currentStep < 9 ? (
+                    <div className="mx-auto w-full max-w-3xl space-y-3 border-b border-white/[0.06] pb-6 pt-8 sm:pt-12">
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{steps[currentStep].title}</p>
+                      <h2 id="onboarding-question-title" ref={stepHeadingRef} tabIndex={-1} className="max-w-2xl scroll-mt-24 text-2xl font-semibold leading-snug tracking-tight text-white focus:outline-none sm:text-4xl" aria-live="polite">
+                        {getAssistantSpeak()}
+                      </h2>
                     </div>
+                  ) : (
+                    <h2 ref={stepHeadingRef} tabIndex={-1} className="sr-only focus:outline-none" aria-live="polite">
+                      {currentStep === 9 ? t("finalized_title") : t("welcome_title").replace("<br />", " ")}
+                    </h2>
                   )}
 
-                  <h2 ref={stepHeadingRef} tabIndex={-1} className="sr-only focus:outline-none" aria-live="polite">
-                    {currentStep === 9 ? t("finalized_title") : currentStep === 0 ? t("welcome_title").replace("<br />", " ") : `${steps[currentStep].title}: ${steps[currentStep].desc}`}
-                  </h2>
-
                   {/* STEP 0: WELCOME SCREEN */}
-                  {currentStep === 0 && (
+                  {!isFlowActive && currentStep === 0 && (
                     <div className="space-y-8 py-4">
                       <div className="space-y-4">
                         <div className="flex items-center gap-2 px-3 py-1 bg-brand-secondary/10 border border-brand-secondary/20 rounded-full text-brand-secondary text-xs tag08-meta tracking-widest uppercase w-fit select-none">
@@ -1816,9 +2018,42 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-3xl">
                           {t("welcome_desc")}
                         </p>
+                        <fieldset className="space-y-3">
+                          <legend className="text-xs font-bold uppercase tracking-wider text-zinc-300">{t("submission_mode_title")}</legend>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {(["client", "tag08_team"] as const).map((mode) => (
+                              <button
+                                key={mode}
+                                type="button"
+                                aria-pressed={submissionMode === mode}
+                                onClick={() => setSubmissionMode(mode)}
+                                className={`min-h-11 rounded-xl border px-4 py-3 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary ${submissionMode === mode ? "border-brand-secondary bg-brand-secondary/10 text-white" : "border-white/[0.08] bg-zinc-950/40 text-zinc-300 hover:border-white/20"}`}
+                              >
+                                {t(mode === "client" ? "submission_mode_client" : "submission_mode_team")}
+                              </button>
+                            ))}
+                          </div>
+                          {submissionMode === "tag08_team" ? <p className="text-xs leading-relaxed text-zinc-400">{t("submission_mode_team_note")}</p> : null}
+                        </fieldset>
+                        <details className="space-y-3 border-t border-white/[0.06] pt-4">
+                          <summary className="min-h-11 cursor-pointer text-xs font-semibold text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary">
+                            {t("privacy_title")}
+                          </summary>
+                          <div className="space-y-2 text-xs leading-relaxed text-zinc-400">
+                            <p>{t("privacy_desc")}</p>
+                            <p className="font-semibold text-zinc-300">{t("privacy_indicators")}</p>
+                            <p>{t("privacy_p1")}</p>
+                            <p>{t("privacy_p2")}</p>
+                            <p>{t("privacy_p3")}</p>
+                          </div>
+                        </details>
                       </div>
 
-                      {/* TACTICAL PROGRESSION FRAMEWORK GRID (Inspired by reference presentation slideshow) */}
+                      <details className="border-t border-white/[0.06] pt-4">
+                        <summary className="min-h-11 cursor-pointer text-sm font-semibold text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary">
+                          {t("welcome_steps_title")}
+                        </summary>
+                        <div className="pt-4">
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
                         {getWelcomeSteps().map((item, index) => {
                           const IconComp = index === 0 ? ClipboardCheck : index === 1 ? Cpu : Sparkles;
@@ -1869,6 +2104,8 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           );
                         })}
                       </div>
+                        </div>
+                      </details>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-4">
                         <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] hover:border-white/[0.08] transition-colors space-y-1.5 font-sans text-left">
@@ -1893,7 +2130,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       <div className="border-t border-white/[0.04] pt-6 flex justify-start">
                         <button
                           type="button"
-                          onClick={() => setCurrentStep(1)}
+                          onClick={() => { setCurrentQuestion(0); setCurrentErrors([]); setCurrentStep(1); }}
                           className="inline-flex min-h-11 items-center gap-2.5 px-7 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-[background-color,box-shadow] duration-200 cursor-pointer shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900"
                         >
                           {t("btn_start")} <ArrowRight className="w-4 h-4" />
@@ -1904,8 +2141,8 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                   {/* STEP 1: DADOS DA EMPRESA */}
                   {currentStep === 1 && (
-                    <div className="space-y-6 py-2">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="mx-auto w-full max-w-3xl space-y-6 py-8 sm:py-12">
+                      <div hidden={currentQuestion !== 0} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <label htmlFor="onboarding-company-name" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("empresa_label_name")}
@@ -1942,7 +2179,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div hidden={currentQuestion !== 1 && currentQuestion !== 2} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <label htmlFor="onboarding-city" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("empresa_label_city")}
@@ -1961,7 +2198,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           </div>
                         </div>
 
-                        <div className="space-y-2">
+                        <div hidden={currentQuestion !== 2} className="space-y-2">
                           <label htmlFor="onboarding-website" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("empresa_label_site")}
                           </label>
@@ -1980,7 +2217,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-2">
+                      <div hidden={currentQuestion !== 2} className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-2">
                         <div className="space-y-2">
                           <label htmlFor="onboarding-instagram" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("empresa_label_insta")}
@@ -2019,7 +2256,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       </div>
 
                       {/* IDIOMA PREFERENCIAL DE ATENDIMENTO */}
-                      <div className="space-y-4 pt-4 border-t border-white/[0.04]">
+                      <div hidden={currentQuestion !== 3} className="space-y-4 pt-4 border-t border-white/[0.04]">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                           <h3 className="text-xs tag08-meta text-zinc-300 tracking-wider font-bold">
                             {t("empresa_lang_title")}
@@ -2032,7 +2269,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           {t("empresa_lang_desc")}
                         </p>
                         
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div role="group" aria-label={t("empresa_lang_title")} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                           {[
                             { value: "pt", title: "Português", desc: t("empresa_lang_pt_desc") },
                             { value: "en", title: "English", desc: t("empresa_lang_en_desc") },
@@ -2041,17 +2278,17 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                             <button
                               key={lang.value}
                               type="button"
-                              onClick={() => setPreferredLanguage(lang.value)}
-                              aria-pressed={preferredLanguage === lang.value}
+                              onClick={() => setServiceLanguage(lang.value as Language)}
+                              aria-pressed={serviceLanguage === lang.value}
                               className={`min-h-11 p-4 rounded-xl border text-left transition-[background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary ${
-                                preferredLanguage === lang.value
+                                serviceLanguage === lang.value
                                   ? "bg-brand-secondary/10 border-brand-secondary text-white"
                                   : "bg-zinc-950/40 border-white/[0.08] hover:border-white/[0.18] text-zinc-300"
                               }`}
                             >
                               <div className="font-sans text-xs font-extrabold uppercase flex items-center justify-between">
                                 <span>{lang.title}</span>
-                                {preferredLanguage === lang.value && (
+                                {serviceLanguage === lang.value && (
                                   <div className="w-1.5 h-1.5 rounded-full bg-brand-secondary" />
                                 )}
                               </div>
@@ -2065,8 +2302,24 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                   {/* STEP 2: RESPONSVEIS PELO PROJETO */}
                   {currentStep === 2 && (
-                    <div className="space-y-6 py-2">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="mx-auto w-full max-w-3xl space-y-6 py-8 sm:py-12">
+                      {submissionMode === "tag08_team" ? (
+                        <div hidden={currentQuestion !== 0} className="space-y-2">
+                          <label htmlFor="onboarding-operator-name" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">{t("operator_label_name")}</label>
+                          <input
+                            id="onboarding-operator-name"
+                            name="operatorName"
+                            autoComplete="name"
+                            required
+                            type="text"
+                            value={operatorName}
+                            onChange={(event) => setOperatorName(event.target.value)}
+                            className="w-full rounded-xl border border-white/[0.08] bg-zinc-950 px-4 py-3 text-sm text-white focus:border-brand focus:outline-none"
+                            placeholder={t("operator_placeholder_name")}
+                          />
+                        </div>
+                      ) : null}
+                      <div hidden={currentQuestion !== (submissionMode === "tag08_team" ? 1 : 0)} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <label htmlFor="onboarding-responsible-name" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("equipe_label_name")}
@@ -2103,7 +2356,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div hidden={currentQuestion !== (submissionMode === "tag08_team" ? 2 : 1)} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <label htmlFor="onboarding-responsible-email" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("equipe_label_email")}
@@ -2145,10 +2398,12 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         </div>
                       </div>
 
-                      <div className="border-t border-white/[0.04] pt-4 space-y-4">
-                        <span className="text-xs tag08-meta uppercase tracking-widest text-zinc-500 font-bold block">{t("equipe_section_focal")}</span>
-                        
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <details hidden={currentQuestion !== (submissionMode === "tag08_team" ? 3 : 2)} className="border-t border-white/[0.04] pt-4">
+                        <summary className="min-h-11 cursor-pointer text-sm font-semibold text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary">
+                          {t("equipe_additional_contacts")}
+                        </summary>
+                        <div className="space-y-4 pt-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                           <div className="space-y-1.5">
                             <label className="text-xs font-sans text-zinc-400 uppercase">{t("equipe_label_ti")}</label>
                             <input
@@ -2181,22 +2436,23 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                               className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-secondary"
                             />
                           </div>
+                          </div>
                         </div>
-                      </div>
+                      </details>
                     </div>
                   )}
 
                   {/* STEP 3: RADAR DO MOMENTO */}
                   {currentStep === 3 && (
-                    <div className="space-y-6 py-2">
-                      <div className="space-y-3">
+                    <div className="mx-auto w-full max-w-3xl space-y-6 py-8 sm:py-12">
+                      <div hidden={currentQuestion !== 0} className="space-y-3">
                         <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider block">
                           {t("radar_label_moment")}
                         </label>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5" role="radiogroup" aria-label={t("radar_label_moment")}>
-                          {momentOptions[preferredLanguage as keyof typeof momentOptions].map((opt, idx) => (
+                          {momentOptions[uiLanguage].map((opt) => (
                             <div
-                              key={idx}
+                              key={opt.value}
                               onClick={() => setBusinessMoment(opt.value)}
                               onKeyDown={(event) => activateOnKeyboard(event, () => setBusinessMoment(opt.value))}
                               role="radio"
@@ -2208,24 +2464,21 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                                   : "bg-neutral-900/40 border-white/[0.04] hover:bg-neutral-900/60 hover:border-white/[0.12]"
                               }`}
                             >
-                              <p className="text-zinc-200 text-xs font-sans leading-relaxed flex-grow">
-                                {opt.label}
-                              </p>
-                              <div className="flex items-center justify-between pt-2 border-t border-white/[0.02] text-xs font-sans text-zinc-500">
-                                <span>{preferredLanguage === "en" ? "OPTION CODE" : preferredLanguage === "es" ? "OPCIÓN CÓD" : "OPÇÃO COD"} {idx+1}</span>
-                                {businessMoment === opt.value && <span className="text-brand-secondary font-extrabold font-sans">{preferredLanguage === "en" ? "SELECTED" : preferredLanguage === "es" ? "SELECCIONADO" : "SELECIONADO"}</span>}
+                              <div className="flex items-start justify-between gap-3">
+                                <p className="text-zinc-200 text-xs font-sans leading-relaxed flex-grow">{opt.label}</p>
+                                {businessMoment === opt.value && <Check aria-hidden="true" className="h-4 w-4 shrink-0 text-brand-secondary" />}
                               </div>
                             </div>
                           ))}
                         </div>
                       </div>
 
-                      <div className="space-y-3 pt-2">
+                      <div hidden={currentQuestion !== 1} className="space-y-3 pt-2">
                         <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider block">
                           {t("radar_label_priority")}
                         </label>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3" role="radiogroup" aria-label={t("radar_label_priority")}>
-                          {priorityOptions[preferredLanguage as keyof typeof priorityOptions].map((opt, idx) => (
+                          {priorityOptions[uiLanguage].map((opt, idx) => (
                             <div
                               key={idx}
                               onClick={() => setPriorityMap(opt.value)}
@@ -2245,7 +2498,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         </div>
                       </div>
 
-                      <div className="space-y-3 pt-4 border-t border-white/[0.03]">
+                      <div hidden={currentQuestion !== 2} className="space-y-3 pt-4 border-t border-white/[0.03]">
                         <div className="flex items-center justify-between">
                           <label className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
                             {t("radar_label_term")}
@@ -2327,7 +2580,6 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                                 <p className={`text-xs font-display uppercase tracking-tight font-bold ${active ? "text-white" : "text-zinc-300"}`}>
                                   {opt.label}
                                 </p>
-                                <span className="text-xs font-sans text-zinc-500 uppercase">SYS MODULE</span>
                               </div>
                             </div>
                           );
@@ -2355,12 +2607,18 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                   {currentStep === 5 && (
                     <div className="space-y-6 py-2 pr-2">
                       <div className="space-y-2 bg-neutral-950 p-4 rounded-xl border border-white/[0.03] mb-4">
-                        <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black uppercase inline-block">MÓDULO CUSTOMIZADO ATIVO</span>
+                        <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded font-black uppercase inline-block">{t("briefing_module_title")}</span>
                         <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                          Sua empresa contratou <strong>{selectedServices.join(", ")}</strong>. Responda abaixo os detalhes operacionais que ditou nossa produção técnica:
+                          {t("briefing_module_desc").replace("{services}", selectedServices.join(", "))}
                         </p>
                       </div>
 
+                      {(["Gestão de Redes Sociais", "Branding & Identidade", "Desenvolvimento Web", "Process Intelligence", "Process Activation"].some((service) => isSelected(service))) && (
+                        <details className="space-y-4 border-t border-white/[0.06] pt-3">
+                          <summary className="min-h-11 cursor-pointer text-sm font-semibold text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary">
+                            {t("briefing_optional_details")}
+                          </summary>
+                          <div className="space-y-5 pt-2">
                       {/* 5a. GESTO DE REDES SOCIAIS BRIEFING */}
                       {isSelected("Gestão de Redes Sociais") && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 p-5 rounded-2xl border border-white/[0.05] bg-neutral-900/30 text-left">
@@ -2697,9 +2955,12 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           </div>
                         </motion.div>
                       )}
+                          </div>
+                        </details>
+                      )}
 
                       {/* General fallback fields for other types */}
-                      {(!isSelected("Gestão de Redes Sociais") && !isSelected("Branding & Identidade") && !isSelected("Desenvolvimento Web") && !isSelected("Process Intelligence") && !isSelected("Process Activation")) && (
+                      {(hasUnmanagedServiceSelected || selectedServices.length === 0) && (
                         <div className="space-y-3 font-sans">
                           <label className="text-xs text-zinc-400">{t("briefing_not_selected_desc")}</label>
                           <textarea value={generalBriefingText} onChange={(e) => setGeneralBriefingText(e.target.value)} rows={5} placeholder={t("briefing_not_selected_placeholder")} className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-xs text-white resize-none" />
@@ -2716,47 +2977,37 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                         <p className="text-zinc-400 text-xs font-sans leading-relaxed">
                           {t("materiais_desc")}
                         </p>
-                        <div className="text-xs text-amber-300 font-semibold flex items-center gap-1 font-sans pt-1">
-                          <AlertCircle className="w-3.5 h-3.5" /> 
-                          <span>{t("materiais_warning")}</span>
-                        </div>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-2">
-                        <div className="space-y-1.5 font-sans">
-                          <label className="text-xs text-zinc-400">{t("materiais_label_drive")}</label>
-                          <input type="url" value={linkDrive} onChange={(e) => setLinkDrive(e.target.value)} placeholder="https://drive.google.com/..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                      <div className="space-y-4 pb-2">
+                        <div className="max-w-2xl space-y-1.5 font-sans">
+                          <label htmlFor="onboarding-drive-link" className="text-xs text-zinc-400">{t("materiais_label_drive")}</label>
+                          <input id="onboarding-drive-link" type="url" value={linkDrive} onChange={(e) => setLinkDrive(e.target.value)} placeholder="https://drive.google.com/..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                         </div>
-                        <div className="space-y-1.5 font-sans">
-                          <label className="text-xs text-zinc-400">{t("materiais_label_insta")}</label>
-                          <input type="url" value={linkInstagram} onChange={(e) => setLinkInstagram(e.target.value)} placeholder="https://instagram.com/..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
-                        </div>
-                      </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-sans">
-                        <div className="space-y-1.5 text-left">
-                          <label className="text-xs text-zinc-400">{t("materiais_label_site")}</label>
-                          <input type="url" value={linkSite} onChange={(e) => setLinkSite(e.target.value)} placeholder="https://suasite.com.br" className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
-                        </div>
-                        <div className="space-y-1.5 font-sans">
-                          <label className="text-xs text-zinc-400">{t("materiais_label_portfolio")}</label>
-                          <input type="url" value={linkPortfolio} onChange={(e) => setLinkPortfolio(e.target.value)} placeholder="https://..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-sans">
-                        <div className="space-y-1 text-left">
-                          <label className="text-xs text-zinc-400">{t("materiais_label_references")}</label>
-                          <input type="url" value={linkReferences} onChange={(e) => setLinkReferences(e.target.value)} placeholder="https://..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white font-sans" />
-                        </div>
-                        <div className="space-y-1 font-sans">
-                          <label className="text-xs text-zinc-400">{t("materiais_label_documents")}</label>
-                          <input type="url" value={linkDocuments} onChange={(e) => setLinkDocuments(e.target.value)} placeholder="https://..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white font-sans" />
-                        </div>
-                        <div className="space-y-1 font-sans">
-                          <label className="text-xs text-zinc-400">{t("materiais_label_commercial")}</label>
-                          <input type="url" value={linkCommercial} onChange={(e) => setLinkCommercial(e.target.value)} placeholder="https://..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white font-sans" />
-                        </div>
+                        <details className="border-t border-white/[0.06] pt-3">
+                          <summary className="min-h-11 cursor-pointer text-sm font-semibold text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary">
+                            {t("materiais_more_links")}
+                          </summary>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3">
+                            <div className="space-y-1.5 font-sans">
+                              <label htmlFor="onboarding-portfolio-link" className="text-xs text-zinc-400">{t("materiais_label_portfolio")}</label>
+                              <input id="onboarding-portfolio-link" type="url" value={linkPortfolio} onChange={(e) => setLinkPortfolio(e.target.value)} placeholder="https://..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                            </div>
+                            <div className="space-y-1 font-sans">
+                              <label htmlFor="onboarding-reference-link" className="text-xs text-zinc-400">{t("materiais_label_references")}</label>
+                              <input id="onboarding-reference-link" type="url" value={linkReferences} onChange={(e) => setLinkReferences(e.target.value)} placeholder="https://..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white font-sans" />
+                            </div>
+                            <div className="space-y-1 font-sans">
+                              <label htmlFor="onboarding-documents-link" className="text-xs text-zinc-400">{t("materiais_label_documents")}</label>
+                              <input id="onboarding-documents-link" type="url" value={linkDocuments} onChange={(e) => setLinkDocuments(e.target.value)} placeholder="https://..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white font-sans" />
+                            </div>
+                            <div className="space-y-1 font-sans">
+                              <label htmlFor="onboarding-commercial-link" className="text-xs text-zinc-400">{t("materiais_label_commercial")}</label>
+                              <input id="onboarding-commercial-link" type="url" value={linkCommercial} onChange={(e) => setLinkCommercial(e.target.value)} placeholder="https://..." className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white font-sans" />
+                            </div>
+                          </div>
+                        </details>
                       </div>
                     </div>
                   )}
@@ -2764,25 +3015,31 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                    {/* STEP 7: EXPECTATIVAS PARA PRÓXIMOS 90 DIAS */}
                   {currentStep === 7 && (
                     <div className="space-y-6 py-2 pr-2 font-sans">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="space-y-1.5">
-                          <label className="text-xs text-zinc-400">{t("expectativas_subtitle")}</label>
-                          <input type="text" value={whySeekTag08} onChange={(e) => setWhySeekTag08(e.target.value)} placeholder={t("expectativas_placeholder_1")} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
-                        </div>
-                        <div className="space-y-1.5">
-                          <label className="text-xs text-zinc-400">{t("expectativas_label_tried")}</label>
-                          <input type="text" value={whatTriedBefore} onChange={(e) => setWhatTriedBefore(e.target.value)} placeholder={t("expectativas_placeholder_tried")} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
-                        </div>
+                      <div className="max-w-2xl space-y-2">
+                        <label htmlFor="onboarding-good-result" className="text-sm font-semibold text-zinc-200">{t("expectativas_answer_label")}</label>
+                        <input id="onboarding-good-result" type="text" required value={goodResult90Days} onChange={(e) => { e.currentTarget.setCustomValidity(""); setGoodResult90Days(e.target.value); }} placeholder={t("expectativas_placeholder_good_result")} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-3 text-sm text-white" />
                       </div>
+
+                      <details className="space-y-4 border-t border-white/[0.06] pt-4">
+                        <summary className="min-h-11 cursor-pointer text-sm font-semibold text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary">
+                          {t("expectativas_optional_context")}
+                        </summary>
+                        <div className="space-y-5 pt-2">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="space-y-1.5">
+                              <label className="text-xs text-zinc-400">{t("expectativas_subtitle")}</label>
+                              <input type="text" value={whySeekTag08} onChange={(e) => setWhySeekTag08(e.target.value)} placeholder={t("expectativas_placeholder_1")} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                            </div>
+                            <div className="space-y-1.5">
+                              <label className="text-xs text-zinc-400">{t("expectativas_label_tried")}</label>
+                              <input type="text" value={whatTriedBefore} onChange={(e) => setWhatTriedBefore(e.target.value)} placeholder={t("expectativas_placeholder_tried")} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                            </div>
+                          </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-1.5">
                           <label className="text-xs text-zinc-400">{t("expectativas_label_did_not_work")}</label>
                           <input type="text" value={whatDidNotWork} onChange={(e) => setWhatDidNotWork(e.target.value)} placeholder={t("expectativas_placeholder_did_not_work")} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
-                        </div>
-                        <div className="space-y-1.5">
-                          <label className="text-xs text-zinc-400 font-bold text-brand-secondary">{t("expectativas_label_good_result")}</label>
-                          <input type="text" required value={goodResult90Days} onChange={(e) => setGoodResult90Days(e.target.value)} placeholder={t("expectativas_placeholder_good_result")} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                         </div>
                       </div>
 
@@ -2792,15 +3049,16 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           <input type="text" value={biggestUrgency} onChange={(e) => setBiggestUrgency(e.target.value)} placeholder={t("expectativas_placeholder_urgency")} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
                         </div>
                         <div className="space-y-1.5">
-                          <label className="text-xs text-zinc-400">{preferredLanguage === "en" ? "Are there important deadlines/launch dates?" : preferredLanguage === "es" ? "Tiene plazos de entrega/kickoff importantes?" : "Existe algum prazo importante ou kickoff agendado?"}</label>
-                          <input type="text" value={importantDeadlines} onChange={(e) => setImportantDeadlines(e.target.value)} placeholder={preferredLanguage === "en" ? "e.g., Launch complete site by 30th" : preferredLanguage === "es" ? "Ej: Lanzar la web estratégica para el día 30" : "Ex: Lançar o site estratégico até o dia 30"} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                          <label className="text-xs text-zinc-400">{uiLanguage === "en" ? "Are there important deadlines or launch dates?" : uiLanguage === "es" ? "¿Hay fechas límite o de lanzamiento importantes?" : "Existe algum prazo importante ou kickoff agendado?"}</label>
+                          <input type="text" value={importantDeadlines} onChange={(e) => setImportantDeadlines(e.target.value)} placeholder={uiLanguage === "en" ? "e.g., Launch the new website by the 30th" : uiLanguage === "es" ? "Ej.: lanzar el nuevo sitio antes del día 30" : "Ex.: lançar o novo site até o dia 30"} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white" />
+                          </div>
                         </div>
-                      </div>
-
-                      <div className="space-y-1.5">
+                          <div className="space-y-1.5">
                         <label className="text-xs text-zinc-400">{t("expectativas_label_not_err")}</label>
                         <textarea value={notToMakeMistakes} onChange={(e) => setNotToMakeMistakes(e.target.value)} rows={2} placeholder={t("expectativas_placeholder_not_err")} className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-xs text-white resize-none" />
                       </div>
+                        </div>
+                      </details>
                     </div>
                   )}
 
@@ -2838,7 +3096,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                             className="mt-1 w-4 h-4 accent-brand-secondary bg-zinc-900 border-white/[0.1] rounded shrink-0"
                           />
                           <p className="text-zinc-300 text-xs leading-relaxed">
-                            {t("consent_opt2")}
+                            {t(submissionMode === "tag08_team" ? "consent_opt2_team" : "consent_opt2")}
                           </p>
                         </label>
 
@@ -2861,17 +3119,19 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                   {currentStep === 9 && isSubmitted && (
                     <div className="space-y-8 py-2 font-sans">
                       <div className="space-y-4">
-                        <div className="w-16 h-16 rounded-3xl bg-brand-secondary/10 border border-brand-secondary/20 text-brand-secondary flex items-center justify-center shadow-xl mb-4">
-                          <ClipboardCheck className="w-8 h-8" />
+                        <div className={`w-16 h-16 rounded-3xl border flex items-center justify-center shadow-xl mb-4 ${deliveryState === "queued" ? "bg-amber-400/10 border-amber-400/20 text-amber-300" : "bg-brand-secondary/10 border-brand-secondary/20 text-brand-secondary"}`}>
+                          {deliveryState === "queued" ? <Clock className="w-8 h-8" /> : <ClipboardCheck className="w-8 h-8" />}
                         </div>
-                      <span className="tag08-meta text-xs text-brand-secondary uppercase font-black tracking-widest block">{t("finalized_badge")}</span>
+                      <span className={`tag08-meta text-xs uppercase font-black tracking-widest block ${deliveryState === "queued" ? "text-amber-300" : "text-brand-secondary"}`}>{t(deliveryState === "queued" ? "finalized_queued_badge" : "finalized_badge")}</span>
                         <h2 className="font-display font-medium text-2xl sm:text-3xl text-white tracking-tight leading-tight">
-                          {t("finalized_title")}
+                          {t(deliveryState === "queued" ? "finalized_queued_title" : "finalized_title")}
                         </h2>
-                        <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">
-                          {t("finalized_desc_1")}
-                        </p>
-                        {deliveryMessage ? (
+                        {deliveryState === "queued" ? (
+                          <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">{t("finalized_queued_desc")}</p>
+                        ) : (
+                          <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">{t("finalized_desc_1")}</p>
+                        )}
+                        {deliveryMessage && deliveryState !== "queued" ? (
                           <p className="text-xs text-brand-secondary leading-relaxed">{deliveryMessage}</p>
                         ) : null}
                         {deliveryState === "queued" && pendingQueueCount > 0 ? (
@@ -2882,44 +3142,42 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                       </div>
 
                       {/* Onboarding automatic system checks */}
-                      <div className="p-5 rounded-2xl bg-neutral-950 border border-white/[0.03] space-y-4 text-left">
+                      {deliveryState !== "queued" ? <div className="p-5 rounded-2xl bg-neutral-950 border border-white/[0.03] space-y-4 text-left">
                         <span className="font-sans text-xs text-brand-secondary uppercase font-black block">
-                          {preferredLanguage === "en" ? "RECEIPT CHECKLIST // SYSTEM INDICATORS" : preferredLanguage === "es" ? "LISTA DE RECEPCIÓN // INDICADORES DEL SISTEMA" : "CHECKLIST DE RECEBIMENTO // SINALIZADORES SISTÊMICOS"}
+                          {uiLanguage === "en" ? "SUBMISSION STATUS" : uiLanguage === "es" ? "ESTADO DEL ENVÍO" : "STATUS DO ENVIO"}
                         </span>
                         
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300">
                             <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-xs"><Check className="w-3 h-3" /></div>
-                            <span>{preferredLanguage === "en" ? "Registration data received" : preferredLanguage === "es" ? "Datos de registro recibidos" : "Dados cadastrais recebidos"}</span>
+                            <span>{uiLanguage === "en" ? "Registration data received" : uiLanguage === "es" ? "Datos de registro recibidos" : "Dados cadastrais recebidos"}</span>
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300">
                             <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-xs"><Check className="w-3 h-3" /></div>
-                            <span>{preferredLanguage === "en" ? "Production briefing registered" : preferredLanguage === "es" ? "Briefing de producción registrado" : "Briefing de produção registrado"}</span>
+                            <span>{uiLanguage === "en" ? "Project briefing registered" : uiLanguage === "es" ? "Briefing del proyecto registrado" : "Briefing do projeto registrado"}</span>
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300">
                             <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-xs"><Check className="w-3 h-3" /></div>
-                            <span>{deliveryState === "queued"
-                              ? (preferredLanguage === "en" ? "Waiting to synchronize with TAG08" : preferredLanguage === "es" ? "Pendiente de sincronización con TAG08" : "Aguardando sincronização com a TAG08")
-                              : (preferredLanguage === "en" ? "Notification sent to TAG08 board" : preferredLanguage === "es" ? "Notificación enviada a la directiva" : "Notificação enviada à diretoria TAG08")}</span>
+                            <span>{uiLanguage === "en" ? "Notification sent to TAG08" : uiLanguage === "es" ? "Notificación enviada a TAG08" : "Notificação enviada à TAG08"}</span>
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300 animate-pulse">
                             <div className="w-3 h-3 rounded-full bg-amber-400 shrink-0 shadow-[0_0_8px_#fbbf24]" />
-                            <span className="text-zinc-400">{preferredLanguage === "en" ? "Next step: Internal review" : preferredLanguage === "es" ? "Siguiente etapa: Revisão interna" : "Próxima etapa: Conferência interna"}</span>
+                            <span className="text-zinc-400">{uiLanguage === "en" ? "Next step: internal review" : uiLanguage === "es" ? "Siguiente paso: revisión interna" : "Próxima etapa: conferência interna"}</span>
                           </div>
                         </div>
-                      </div>
+                      </div> : null}
 
                       <div className="space-y-4 p-5 rounded-2xl bg-white/[0.01] border border-white/[0.04] text-left">
                         <span className="font-sans text-xs text-zinc-500 uppercase font-black block mb-1">
-                          {preferredLanguage === "en" ? "DURING THIS INTERVAL, YOU CAN PREPARE:" : preferredLanguage === "es" ? "DURANTE ESTE INTERVALO, PUEDE PREPARAR:" : "DURANTE ESSE INTERVALO, VOCÊ PODE SEPARAR:"}
+                          {uiLanguage === "en" ? "DURING THIS INTERVAL, YOU CAN PREPARE:" : uiLanguage === "es" ? "DURANTE ESTE INTERVALO, PUEDE PREPARAR:" : "DURANTE ESSE INTERVALO, VOCÊ PODE SEPARAR:"}
                         </span>
                         
                         <ul className="space-y-1.5 text-zinc-400 text-xs">
-                          <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Original brand assets (.EPS or vector Logo)" : preferredLanguage === "es" ? "Archivos originales de marca (.EPS o vector de Logo)" : "Arquivos originais da marca (.EPS ou vetor do Logotipo)"}</li>
-                          <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Links and basic credentials of current channels" : preferredLanguage === "es" ? "Enlaces y credenciales básicas de canales actuales" : "Links e credenciais básicas dos canais atuais"}</li>
-                          <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Image bank (team photos, physical workspace, or clinic)" : preferredLanguage === "es" ? "Banco de imagens (fotos del equipo, espacio físico o clínica)" : "Acervo de imagens (fotos da equipe, operação fsica ou clínica)"}</li>
-                          <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Additional reference documents for scripts" : preferredLanguage === "es" ? "Documentos de referência adicionales para guiones" : "Documentos de referência adicionais para os roteiros"}</li>
-                          <li className="flex gap-2 items-center">{preferredLanguage === "en" ? "Access details to be requested via secure & auditable channel" : preferredLanguage === "es" ? "Detalles de acceso que se solicitarán por canal seguro y auditable" : "Acessos que serão solicitados por canal seguro e auditável"}</li>
+                          <li className="flex gap-2 items-center">{uiLanguage === "en" ? "Original brand assets (.EPS or vector Logo)" : uiLanguage === "es" ? "Archivos originales de marca (.EPS o vector de Logo)" : "Arquivos originais da marca (.EPS ou vetor do Logotipo)"}</li>
+                          <li className="flex gap-2 items-center">{uiLanguage === "en" ? "Links and basic credentials of current channels" : uiLanguage === "es" ? "Enlaces y credenciales básicas de canales actuales" : "Links e credenciais básicas dos canais atuais"}</li>
+                          <li className="flex gap-2 items-center">{uiLanguage === "en" ? "Image bank (team photos, physical workspace, or clinic)" : uiLanguage === "es" ? "Banco de imagens (fotos del equipo, espacio físico o clínica)" : "Acervo de imagens (fotos da equipe, operação fsica ou clínica)"}</li>
+                          <li className="flex gap-2 items-center">{uiLanguage === "en" ? "Additional reference documents for scripts" : uiLanguage === "es" ? "Documentos de referência adicionales para guiones" : "Documentos de referência adicionais para os roteiros"}</li>
+                          <li className="flex gap-2 items-center">{uiLanguage === "en" ? "Access details to be requested via secure & auditable channel" : uiLanguage === "es" ? "Detalles de acceso que se solicitarán por canal seguro y auditable" : "Acessos que serão solicitados por canal seguro e auditável"}</li>
                         </ul>
                       </div>
 
@@ -2929,7 +3187,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           onClick={() => onNavigate("/")}
                           className="font-sans text-xs text-zinc-500 hover:text-white uppercase tracking-wider transition-colors pt-1.5"
                         >
-                          &larr; {preferredLanguage === "en" ? "Back to home" : preferredLanguage === "es" ? "Volver al inicio" : "Voltar para o início"}
+                          &larr; {uiLanguage === "en" ? "Back to home" : uiLanguage === "es" ? "Volver al inicio" : "Voltar para o início"}
                         </button>
 
                         <button
@@ -2937,7 +3195,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           onClick={handleLaunchWhatsAppOnboardingFastTrack}
                           className="inline-flex min-h-11 items-center gap-2 px-6 py-4 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-[background-color,box-shadow] duration-200 cursor-pointer shadow-[0_8px_30px_rgba(16,185,129,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                         >
-                          <MessageCircle className="w-4 h-4" /> {preferredLanguage === "en" ? "Talk to TAG08 on WhatsApp" : preferredLanguage === "es" ? "Hablar con TAG08 en WhatsApp" : "Falar com a TAG08 no WhatsApp"}
+                          <MessageCircle className="w-4 h-4" /> {uiLanguage === "en" ? "Talk to TAG08 on WhatsApp" : uiLanguage === "es" ? "Hablar con TAG08 en WhatsApp" : "Falar com a TAG08 no WhatsApp"}
                         </button>
                       </div>
                     </div>
@@ -2945,13 +3203,13 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
 
                   {/* BOTTOM CONTROLS FOR THE WIZARD */}
                   {currentStep > 0 && currentStep < 9 && (
-                    <div className="pt-6 border-t border-white/[0.04] flex items-center justify-between mt-8">
+                    <div className="sticky bottom-0 z-10 -mx-5 mt-auto flex items-center justify-between gap-3 border-t border-white/[0.08] bg-charcoal-950 px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 sm:-mx-8 sm:px-8">
                       <button
                         type="button"
                         onClick={handlePrev}
                         className="inline-flex min-h-11 items-center gap-1.5 px-5 py-3 border border-white/[0.08] hover:border-white/[0.18] hover:bg-white/[0.01] rounded-xl text-xs font-sans uppercase tracking-wider text-zinc-300 hover:text-white transition-[background-color,border-color,color] duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/70"
                       >
-                        <ArrowLeft className="w-4 h-4" /> Voltar
+                        <ArrowLeft className="w-4 h-4" /> {t("btn_back")}
                       </button>
 
                       {currentErrors.length > 0 && (
@@ -2967,7 +3225,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                           onClick={handleNext}
                           className="inline-flex min-h-11 items-center gap-1.5 px-6 py-3.5 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-[background-color,box-shadow] duration-200 cursor-pointer shadow-[0_4px_20px_rgba(var(--color-brand-secondary-rgb),0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70"
                         >
-                          Avançar <ArrowRight className="w-4 h-4" />
+                          {t("btn_next")} <ArrowRight className="w-4 h-4" />
                         </button>
                       ) : (
                         <button
@@ -2982,7 +3240,7 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
                             </>
                           ) : (
                             <>
-                              Enviar Onboarding Completo <Send className="w-4 h-4" />
+                              {t("btn_submit")} <Send className="w-4 h-4" />
                             </>
                           )}
                         </button>
@@ -3003,13 +3261,15 @@ export default function ClienteOnboarding({ onNavigate }: ClienteOnboardingProps
               </form>
 
             </div>
-          </div>
-
         </div>
 
       </div>
     </div>
   );
+
+  return isFlowActive && typeof document !== "undefined"
+    ? createPortal(onboardingView, document.body)
+    : onboardingView;
 }
 
 

@@ -50,7 +50,13 @@ export interface OnboardingPayload {
     truthChecked?: boolean;
     useChecked?: boolean;
     noPasswordsChecked?: boolean;
+    authorizationConfirmedByOperator?: boolean;
     [key: string]: unknown;
+  };
+  submissionContext?: {
+    submittedBy: "client" | "tag08_team";
+    operatorName?: string;
+    clientAuthorizationConfirmed?: boolean;
   };
   submittedAt: string;
   source: string;
@@ -212,6 +218,34 @@ export const parseAndValidatePayload = (
   };
   normalized.projectContacts.email = normalizeEmail(normalized.projectContacts.email);
   normalized.projectContacts.whatsapp = normalizePhone(normalized.projectContacts.whatsapp);
+
+  if (parsed.submissionContext !== undefined) {
+    const submissionContext = parsed.submissionContext;
+    if (!submissionContext || typeof submissionContext !== "object" || Array.isArray(submissionContext)) {
+      errors.push("Contexto de preenchimento invalido.");
+    } else if (submissionContext.submittedBy !== "client" && submissionContext.submittedBy !== "tag08_team") {
+      errors.push("Responsavel pelo preenchimento invalido.");
+    } else {
+      const normalizedSubmissionContext: NonNullable<OnboardingPayload["submissionContext"]> = {
+        submittedBy: submissionContext.submittedBy,
+        ...(submissionContext.submittedBy === "tag08_team"
+          ? {
+              operatorName: normalizeText(submissionContext.operatorName).slice(0, 100),
+              clientAuthorizationConfirmed: submissionContext.clientAuthorizationConfirmed === true
+            }
+          : {})
+      };
+      normalized.submissionContext = normalizedSubmissionContext;
+      if (
+        submissionContext.submittedBy === "tag08_team" &&
+        (!requiredText(normalizedSubmissionContext.operatorName) ||
+          normalizedSubmissionContext.clientAuthorizationConfirmed !== true ||
+          normalized.consent.authorizationConfirmedByOperator !== true)
+      ) {
+        errors.push("Preenchimento da equipe requer identificação e autorização confirmada pelo cliente.");
+      }
+    }
+  }
 
   if (!requiredText(normalized.clientData?.companyName)) {
     errors.push("Nome da empresa e campo obrigatorio.");

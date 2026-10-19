@@ -14,6 +14,6 @@ test("only routes with complete, reviewed copy are published outside Portuguese"
   assert.ok(onboarding);
   assert.deepEqual(getPublishedLocales(home), ["pt"]);
   assert.equal(isRouteLocalePublished(home, "en"), false);
-  assert.deepEqual(getPublishedLocales(onboarding), ["pt", "en", "es"]);
-  assert.equal(isRouteLocalePublished(onboarding, "en"), true);
+  assert.deepEqual(getPublishedLocales(onboarding), ["pt"]);
+  assert.equal(isRouteLocalePublished(onboarding, "en"), false);
 });

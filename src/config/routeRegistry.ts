@@ -238,8 +238,8 @@ export const routeRegistry: RouteDefinition[] = [
     changefreq: "monthly",
     priority: "0.4",
     title: "Assistente de Onboarding | TAG08",
-    // The onboarding flow owns and maintains complete PT, EN and ES copy.
-    publishedLocales: ROUTE_LOCALES,
+    // Foreign-language copy remains hidden until reviewed and approved.
+    publishedLocales: ["pt"],
     description: "Organize o início de seu projeto de forma leve, fluida e estratégica de forma rápida e conversacional."
   },
   {

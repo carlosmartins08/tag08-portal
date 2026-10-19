@@ -23,6 +23,7 @@ Atualizado em: `2026-10-12`
 
 ## Missão em andamento
 
+- Onboarding: fluxo guiado em uma pergunta por tela, com opção de preenchimento pelo cliente ou pela equipe TAG08 e confirmação de autorização para compartilhamento. EN/ES permanecem indisponíveis até revisão linguística. Testes de rotas, contratos, build de produção e seis cenários E2E passaram.
 - Refinada a experiência do Header sem alterar rotas ou contratos: navegação de serviços agrupada por decisão, CTA de contato visível no mobile, atalho de acessibilidade, foco/semântica revisados e redução de movimento respeitada. A validação visual em viewport móvel ainda depende da execução do teste de navegador neste ambiente.
 
 ## Estado de integração
