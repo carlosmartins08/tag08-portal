@@ -146,7 +146,7 @@ test.describe("acessibilidade das jornadas criticas", () => {
             return rect.width > 0 && rect.height > 0 && rect.top < window.innerHeight && rect.bottom > 0;
           })
           .map((element) => getComputedStyle(element).color)
-          .filter((color) => color !== "rgb(212, 255, 0)")
+          .filter((color) => color !== "rgb(221, 248, 29)")
       );
       expect(invalidBrandColors, "O token visual de destaque deve manter contraste sobre o tema escuro.").toEqual([]);
     });
@@ -154,6 +154,36 @@ test.describe("acessibilidade das jornadas criticas", () => {
 });
 
 test.describe("mapa de solucoes da Home", () => {
+  test("M-02 preserva sua altura mínima nos breakpoints principais", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+
+    const card = page.getByRole("link", { name: "Conhecer Branding e Identidade" });
+    for (const { width, minHeight } of [
+      { width: 390, minHeight: 220 },
+      { width: 768, minHeight: 260 },
+      { width: 1440, minHeight: 260 }
+    ]) {
+      await page.setViewportSize({ width, height: 900 });
+      await expect(card).toBeVisible();
+      const box = await card.boundingBox();
+      if (!box) throw new Error(`M-02 precisa ter dimensões renderizadas em ${width}px.`);
+      expect(box.height).toBeGreaterThanOrEqual(minHeight);
+    }
+  });
+
+  test("M-07 fecha alinhado à base do M-04 no desktop", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+
+    const m04 = page.getByRole("link", { name: "Conhecer Desenvolvimento Web Estratégico" });
+    const m07 = page.getByRole("button", { name: "Iniciar diagnóstico" });
+    const [m04Box, m07Box] = await Promise.all([m04.boundingBox(), m07.boundingBox()]);
+
+    if (!m04Box || !m07Box) throw new Error("M-04 e M-07 precisam estar visíveis para validar o alinhamento.");
+    expect(Math.abs(m04Box.y + m04Box.height - (m07Box.y + m07Box.height))).toBeLessThan(2);
+  });
+
   const getCardBoxes = async (page: Page) => {
     await page.goto("/#servicos-principais", { waitUntil: "domcontentloaded" });
     const cards = page.getByTestId("solution-map-card");
@@ -204,7 +234,87 @@ test.describe("mapa de solucoes da Home", () => {
   });
 });
 
+test.describe("avaliacoes da Home", () => {
+  test("mantem a avaliacao selecionada ate uma acao da pessoa", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.route("**/api/official-content?*", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          ok: true,
+          status: "live",
+          sources: { youtube: "fallback", googleBusiness: "live" },
+          youtubeVideos: [],
+          gmbReviews: [
+            {
+              name: "Reviewer One",
+              role: "Cliente",
+              avatar: "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=200",
+              time: "há 1 semana",
+              tagline: "Primeira avaliação de teste",
+              text: "Conteúdo de teste para verificar a estabilidade da leitura.",
+              category: "TESTE",
+              source: "live"
+            },
+            {
+              name: "Reviewer Two",
+              role: "Cliente",
+              avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
+              time: "há 2 semanas",
+              tagline: "Segunda avaliação de teste",
+              text: "Segundo conteúdo para verificar a seleção manual.",
+              category: "TESTE",
+              source: "live"
+            }
+          ]
+        })
+      })
+    );
+
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const reviews = page.locator("#avaliacoes-gmb");
+    await expect(reviews).toBeVisible();
+    await expect(reviews.getByRole("heading", { name: "Primeira avaliação de teste" })).toBeVisible();
+
+    await page.waitForTimeout(9_000);
+    await expect(reviews.getByRole("heading", { name: "Primeira avaliação de teste" })).toBeVisible();
+
+    const secondReview = reviews.getByRole("button", { name: "Ver avaliação de Reviewer Two" });
+    await expect(secondReview).toHaveAttribute("type", "button");
+    await secondReview.focus();
+    await page.keyboard.press("Enter");
+    await expect(reviews.getByRole("heading", { name: "Segunda avaliação de teste" })).toBeVisible();
+  });
+});
+
+test.describe("canais de contato da Home", () => {
+  test("links identificados como WhatsApp abrem os canais oficiais", async ({ page }) => {
+    await page.goto("/#prova", { waitUntil: "domcontentloaded" });
+
+    const contactLinks = page.locator("#prova a");
+    await expect(contactLinks).toHaveCount(2);
+    for (const link of await contactLinks.all()) {
+      await expect(link).toHaveAttribute("href", /^https:\/\/wa\.me\/\d+\?text=/);
+      await expect(link).toHaveAttribute("target", "_blank");
+      await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    }
+  });
+});
+
 test.describe("palco editorial da Hero", () => {
+  test("apresenta as categorias como atalhos secundarios para Solucoes", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+
+    const shortcuts = page.getByRole("navigation", { name: "Atalhos para as soluções da TAG08" });
+    const links = shortcuts.getByRole("link");
+    await expect(links).toHaveCount(6);
+    await expect(links.first()).toHaveAttribute("href", "#servicos-principais");
+    await links.first().click();
+    await expect(page.locator("#servicos-principais")).toBeInViewport();
+  });
+
   test("reage a luz no desktop sem deslocar a composicao", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/", { waitUntil: "domcontentloaded" });

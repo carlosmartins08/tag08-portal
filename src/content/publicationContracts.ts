@@ -24,7 +24,7 @@ export const PUBLICATION_CONTRACTS: readonly PublicationContract[] = [
   { route: "/sobre", section: "team-profiles", evidenceKeys: keysBy("team"), publicBehavior: "hide-when-empty", reviewBehavior: "show-all-except-removed" },
   { route: "/sobre", section: "client-logo-wall", evidenceKeys: keysBy("client-logo"), publicBehavior: "publish-approved-items", reviewBehavior: "show-all-except-removed" },
   { route: "/", section: "home-client-cases", evidenceKeys: keysBy("home-case"), publicBehavior: "hide-when-empty", reviewBehavior: "show-all-except-removed" },
-  { route: "/", section: "home-portfolio-candidates", evidenceKeys: keysBy("portfolio-candidate"), publicBehavior: "hide-when-empty", reviewBehavior: "show-all-except-removed" },
+  { route: "/", section: "portfolio-review-inventory", evidenceKeys: keysBy("portfolio-candidate"), publicBehavior: "hide-when-empty", reviewBehavior: "show-all-except-removed" },
   ...keysBy("case-study").map((evidenceKey) => ({
     route: PUBLIC_EVIDENCE[evidenceKey].allowedRoutes[0],
     section: "case-study-detail",

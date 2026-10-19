@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Compass, ShieldCheck, Workflow } from "lucide-react";
+import type { HomeDiagnosticDiagramCopy } from "../i18n/homeCopy";
 
 interface DiagnosticPillar {
   id: "posicionamento" | "canais" | "processos";
@@ -43,10 +44,11 @@ const PILLAR_ICONS = {
   processos: ShieldCheck
 };
 
-export default function DiagnosticDiagram() {
+export default function DiagnosticDiagram({ copy }: { copy?: HomeDiagnosticDiagramCopy }) {
   const [activePillarId, setActivePillarId] = useState<DiagnosticPillar["id"]>("posicionamento");
   const prefersReducedMotion = useReducedMotion();
   const activePillar = PILLARS.find((pillar) => pillar.id === activePillarId) ?? PILLARS[0];
+  const activePillarCopy = copy?.pillars[activePillar.id];
   const radius = 76;
   const circumference = 2 * Math.PI * radius;
   const dashOffset = circumference - (activePillar.score / 100) * circumference;
@@ -58,18 +60,18 @@ export default function DiagnosticDiagram() {
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
         <div className="space-y-5 text-left lg:col-span-4">
           <span className="inline-flex items-center rounded-md border border-brand/20 bg-brand/10 px-2.5 py-1 tag08-meta text-xs font-bold uppercase tracking-wider text-brand">
-            Nível de maturidade
+            {copy?.maturity ?? "Nível de maturidade"}
           </span>
           <div className="space-y-3">
             <h3 className="font-display text-3xl font-bold leading-tight tracking-tight text-white">
-              O diagnóstico<br />da realidade
+              {copy ? <>{copy.titleFirstLine}<br />{copy.titleSecondLine}</> : <>O diagnóstico<br />da realidade</>}
             </h3>
             <p className="max-w-sm font-sans text-xs leading-relaxed text-zinc-400 sm:text-xs">
-              Uma análise de eficiência sobre os três pilares estratégicos da presença corporativa.
+              {copy?.description ?? "Uma análise de eficiência sobre os três pilares estratégicos da presença corporativa."}
             </p>
           </div>
           <p className="border-t border-white/5 pt-4 tag08-meta text-xs uppercase tracking-wider text-zinc-400">
-            Selecione um pilar para ver o contexto.
+            {copy?.instruction ?? "Selecione um pilar para ver o contexto."}
           </p>
         </div>
 
@@ -94,7 +96,7 @@ export default function DiagnosticDiagram() {
 
             <div className="relative z-10 flex h-[172px] w-[172px] flex-col items-center justify-center rounded-full border border-white/[0.05] bg-[#0a0a0c] px-5 text-center shadow-xl">
               <span className="tag08-meta text-xs font-black uppercase tracking-widest text-zinc-400">
-                {activePillar.label}
+                {activePillarCopy?.label ?? activePillar.label}
               </span>
               <motion.div
                 key={activePillar.score}
@@ -105,7 +107,7 @@ export default function DiagnosticDiagram() {
               >
                 {activePillar.score}<span className="text-xl leading-none text-brand">%</span>
               </motion.div>
-              <p className="mt-2 tag08-meta text-xs font-bold uppercase tracking-wider text-zinc-400">Índice médio</p>
+              <p className="mt-2 tag08-meta text-xs font-bold uppercase tracking-wider text-zinc-400">{copy?.meanIndex ?? "Índice médio"}</p>
             </div>
           </div>
         </div>
@@ -134,14 +136,14 @@ export default function DiagnosticDiagram() {
                   <span className="min-w-0 flex-1">
                     <span className="flex items-center justify-between gap-3">
                       <span className={`font-sans text-xs font-bold uppercase tracking-wide ${isActive ? "text-brand" : "text-zinc-300"}`}>
-                        {pillar.name}
+                        {copy?.pillars[pillar.id].name ?? pillar.name}
                       </span>
                       <span className={`rounded px-1.5 py-0.5 font-sans text-xs font-bold ${isActive ? "bg-brand/15 text-brand" : "bg-white/5 text-zinc-400"}`}>
                         {pillar.score}%
                       </span>
                     </span>
                     <span className="mt-1 block text-xs leading-relaxed text-zinc-300">
-                      {pillar.description}
+                      {copy?.pillars[pillar.id].description ?? pillar.description}
                     </span>
                   </span>
                 </div>
