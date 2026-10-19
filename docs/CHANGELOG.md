@@ -1,5 +1,9 @@
 # CHANGELOG - TAG08
 
+## 2026-10-12
+
+- Adicionados os assets locais aprovados da Darker Grotesque (Regular 400, SemiBold 600 e Bold 700) e a licença SIL Open Font License 1.1; a fonte ainda não foi integrada à interface.
+
 ## 2026-09-30
 
 - Corrigido o foco de teclado do primeiro servico no painel agrupado do Header.
