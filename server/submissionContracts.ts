@@ -25,6 +25,10 @@ export const contactLeadSchema = z.object({
   email,
   service: boundedText(120),
   stage: boundedText(120),
+  // Additive fields: older queued submissions remain valid and receive neutral defaults.
+  requestType: z.enum(["new_project", "existing_client", "partnership", "unspecified"]).optional().default("unspecified"),
+  serviceInterests: z.array(boundedText(120)).max(9).refine((values) => new Set(values).size === values.length, "Service interests must be unique").optional().default([]),
+  needsServiceGuidance: z.boolean().optional().default(false),
   message: optionalText(4000),
   consent: z.literal(true),
   consentVersion,

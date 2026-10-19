@@ -36,7 +36,24 @@ test("contact contract normalizes fields and requires consent", () => {
   const parsed = contactLeadSchema.parse(validContact);
   assert.equal(parsed.email, "ana@example.com");
   assert.equal(parsed.whatsapp, "+5583999999999");
+  assert.equal(parsed.requestType, "unspecified");
+  assert.deepEqual(parsed.serviceInterests, []);
+  assert.equal(parsed.needsServiceGuidance, false);
   assert.equal(contactLeadSchema.safeParse({ ...validContact, consent: false }).success, false);
+});
+
+test("contact contract accepts guided intake and bounds service interests", () => {
+  const parsed = contactLeadSchema.parse({
+    ...validContact,
+    requestType: "new_project",
+    serviceInterests: ["branding", "desenvolvimento-web"],
+    needsServiceGuidance: false
+  });
+  assert.equal(parsed.requestType, "new_project");
+  assert.deepEqual(parsed.serviceInterests, ["branding", "desenvolvimento-web"]);
+  assert.equal(contactLeadSchema.safeParse({ ...validContact, serviceInterests: [" "] }).success, false);
+  assert.equal(contactLeadSchema.safeParse({ ...validContact, serviceInterests: Array(10).fill("branding") }).success, false);
+  assert.equal(contactLeadSchema.safeParse({ ...validContact, serviceInterests: ["branding", "branding"] }).success, false);
 });
 
 test("talent contract requires professional links and consent", () => {

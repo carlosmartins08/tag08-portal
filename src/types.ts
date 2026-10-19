@@ -59,6 +59,10 @@ export interface ContactFormData {
   company: string;
   whatsapp: string;
   email: string;
+  requestType: "new_project" | "existing_client" | "partnership" | "";
+  serviceInterests: string[];
+  needsServiceGuidance: boolean;
+  /** Legacy fields retained for queued submissions and existing integrations. */
   service: string;
   stage: string;
   message: string;

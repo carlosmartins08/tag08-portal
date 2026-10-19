@@ -25,6 +25,19 @@ import { COOKIE_CONSENT_EVENT, readCookiePreferences, type CookiePreferences } f
 import CountryFlag from "../../../components/CountryFlag";
 import type { RouteLocale } from "../../../config/routeRegistry";
 
+const CONTACT_SERVICE_OPTIONS = [
+  ["redes-sociais", "Conteúdo e redes sociais"],
+  ["branding", "Branding e identidade"],
+  ["desenvolvimento-web", "Desenvolvimento web"],
+  ["trafego-performance", "Tráfego e performance"],
+  ["process-intelligence", "Process Intelligence"],
+  ["process-activation", "Process Activation"],
+  ["producao-audiovisual", "Produção audiovisual"],
+  ["assessoria-estrategica", "Assessoria estratégica"],
+  ["hospedagem", "Hospedagem e infraestrutura"]
+] as const;
+const CONTACT_SERVICE_LABELS = Object.fromEntries(CONTACT_SERVICE_OPTIONS) as Record<string, string>;
+
 export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [copiedStates, setCopiedStates] = useState<Record<string, boolean>>({});
@@ -103,10 +116,15 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
     company: "",
     whatsapp: "",
     email: "",
-    service: "redes-sociais",
-    stage: "improviso",
+    requestType: "",
+    serviceInterests: [],
+    needsServiceGuidance: false,
+    service: "not_applicable",
+    stage: "not_collected",
     message: ""
   });
+  const [activeStep, setActiveStep] = useState(1);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -121,7 +139,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
     }
   }, [success]);
 
-  const validate = () => {
+  const validateContact = () => {
     const tempErrors: Partial<ContactFormData> = {};
     if (!formData.name.trim()) tempErrors.name = "O nome é de preenchimento obrigatório.";
     if (!formData.company.trim()) tempErrors.company = "Insira o nome corporativo da empresa.";
@@ -139,6 +157,45 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
       });
     }
     return Object.keys(tempErrors).length === 0;
+  };
+
+  const goToStep = (step: number) => {
+    setActiveStep(step);
+    window.requestAnimationFrame(() => stepHeadingRef.current?.focus());
+  };
+
+  const continueFromStep = () => {
+    if (activeStep === 1 && !formData.requestType) {
+      setSubmitError("Escolha o motivo do contato para continuar.");
+      return;
+    }
+    if (activeStep === 2 && formData.requestType === "new_project" && !formData.needsServiceGuidance && formData.serviceInterests.length === 0) {
+      setSubmitError("Selecione ao menos um serviço ou escolha a opção de orientação.");
+      return;
+    }
+    setSubmitError("");
+    goToStep(activeStep + 1);
+  };
+
+  const handleRequestTypeChange = (requestType: ContactFormData["requestType"]) => {
+    setFormData((prev) => ({
+      ...prev,
+      requestType,
+      serviceInterests: requestType === "new_project" ? prev.serviceInterests : [],
+      needsServiceGuidance: requestType === "new_project" ? prev.needsServiceGuidance : false
+    }));
+    setSubmitError("");
+  };
+
+  const toggleServiceInterest = (service: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      serviceInterests: prev.serviceInterests.includes(service)
+        ? prev.serviceInterests.filter((item) => item !== service)
+        : [...prev.serviceInterests, service],
+      needsServiceGuidance: false
+    }));
+    setSubmitError("");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -159,7 +216,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formIsValid = validate();
+    const formIsValid = validateContact();
     setConsentError(!consent);
     if (!formIsValid || !consent) {
       if (!formIsValid) {
@@ -176,8 +233,22 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
     setConsentError(false);
     const idempotencyKey = crypto.randomUUID();
     const searchParams = new URLSearchParams(window.location.search);
+    const isNewProject = formData.requestType === "new_project";
+    const serviceInterests = isNewProject ? formData.serviceInterests : [];
+    const needsServiceGuidance = isNewProject && formData.needsServiceGuidance;
+    const legacyService = !isNewProject
+      ? "not_applicable"
+      : needsServiceGuidance
+        ? "not_sure"
+        : serviceInterests.length === 1
+          ? serviceInterests[0]
+          : "multiple";
     const payload = {
       ...formData,
+      serviceInterests,
+      needsServiceGuidance,
+      service: legacyService,
+      stage: "not_collected",
       website: honeypotRef.current?.value || "",
       consent,
       consentVersion: "contact-v1",
@@ -247,28 +318,19 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   };
 
   const handleLaunchWhatsAppFastTrack = (contact = TAG08_WHATSAPP_CONTACTS[0]) => {
-    const serviceLabels: Record<string, string> = {
-      "redes-sociais": "Gestão de Redes Sociais",
-      "branding": "Branding & Identidade",
-      "desenvolvimento-web": "Desenvolvimento Web",
-      "trafego-performance": "Tráfego Pago & Performance",
-      "process-intelligence": "Process Intelligence",
-      "process-activation": "Process Activation"
+    const requestLabels: Record<string, string> = {
+      new_project: "Novo projeto",
+      existing_client: "Cliente atual",
+      partnership: "Parceria"
     };
 
-    const stageLabels: Record<string, string> = {
-      "improviso": "Estamos operando no improviso",
-      "estruturação": "Queremos organizar nossa equipe",
-      "escala": "Buscamos escala e performance",
-      "outro": "Outro momento corporativo"
-    };
-
-    const text = `Olá, preenchi os dados no formulário e quero agilizar meu contato tático.
+    const selectedServices = formData.serviceInterests.map((service) => CONTACT_SERVICE_LABELS[service] || service).join(", ");
+    const text = `Olá, preenchi os dados no formulário e quero agilizar meu contato.
+- Motivo: ${requestLabels[formData.requestType] || "Contato"}
 - Nome: ${formData.name}
 - Empresa: ${formData.company}
 - E-mail: ${formData.email}
-- Divisão de Interesse: ${serviceLabels[formData.service] || formData.service}
-- Momento Da Empresa: ${stageLabels[formData.stage] || formData.stage}
+- Serviços de interesse: ${formData.needsServiceGuidance ? "Preciso de ajuda para decidir" : selectedServices || "Não informado"}
 - Mensagem: ${formData.message}`;
 
     const href = buildWhatsAppUrl(contact.phoneE164, text);
@@ -277,7 +339,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
       url: href,
       surface: "contact-fast-track"
     });
-    window.open(href, "_blank");
+    window.open(href, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -291,16 +353,17 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
               <span>Sessão de Alinhamento</span>
             </div>
             <h1 className="font-display font-medium text-4xl sm:text-5xl text-gradient leading-[1.1] tracking-tight">
-              Vamos entender o melhor <br />
+              Vamos entender o melhor{" "}
               <span className="text-brand">caminho para sua marca?</span>
             </h1>
             <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
-              Conte um pouco sobre o seu momento. A TAG08 vai analisar sua necessidade e indicar uma solução com clareza, responsabilidade e direção.
+              Conte o que trouxe você até aqui. Nossa equipe fará a triagem do pedido e usará suas respostas para preparar uma conversa mais útil.
             </p>
           </div>
 
           <div className="tag08-contact__directory space-y-4 border-t border-b border-white/[0.04] py-8 font-sans">
             <h2 className="sr-only">Canais de contato</h2>
+            <div className="tag08-contact__direct-contacts space-y-4">
 
             {/* Email Contact Card */}
             <div className="flex gap-4 items-center justify-between group/item p-3 -mx-3 rounded-xl hover:bg-white/[0.02] border border-transparent hover:border-white/[0.03] transition-[background-color,border-color] duration-200">
@@ -317,7 +380,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                 type="button"
                 onClick={() => copyToClipboard("contato@tag08.com.br", "email")}
                 aria-label="Copiar e-mail da diretoria"
-                className="min-h-11 min-w-11 justify-center text-zinc-400 sm:opacity-70 sm:group-hover/item:opacity-100 focus-visible:opacity-100 transition-[opacity,color,background-color,border-color] duration-200 text-xs rounded-lg hover:text-brand hover:bg-brand/10 border border-transparent hover:border-brand/20 flex items-center gap-1.5 font-sans uppercase font-bold select-none cursor-pointer shrink-0"
+                className="min-h-11 min-w-11 justify-center text-zinc-400 sm:opacity-70 sm:group-hover/item:opacity-100 focus-visible:opacity-100 transition-[transform,opacity,color,background-color,border-color] duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100 text-xs rounded-lg hover:text-brand hover:bg-brand/10 border border-transparent hover:border-brand/20 flex items-center gap-1.5 font-sans uppercase font-bold select-none cursor-pointer shrink-0"
               >
                 {copiedStates["email"] ? (
                   <>
@@ -332,7 +395,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                 )}
               </button>
             </div>
-            {copiedStates["email-error"] && <p className="-mt-2 text-xs text-amber-300">Não foi possível copiar. Selecione o e-mail manualmente.</p>}
+            {copiedStates["email-error"] && <p className="-mt-2 text-xs text-state-warning">Não foi possível copiar. Selecione o e-mail manualmente.</p>}
 
             <div className="grid grid-cols-1 gap-4">
               {TAG08_WHATSAPP_CONTACTS.map((contact) => (
@@ -341,11 +404,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                     className="flex gap-4 items-center justify-between group/item p-3 -mx-3 rounded-xl hover:bg-white/[0.02] border border-transparent hover:border-white/[0.03] transition-[background-color,border-color] duration-200"
                   >
                   <div className="flex gap-4 items-start">
-                    <div className={`w-9 h-9 rounded border flex items-center justify-center shrink-0 ${
-                      contact.key === "brazil"
-                        ? "bg-brand/5 border-brand/20 text-brand"
-                        : "bg-brand-secondary/5 border-brand-secondary/20 text-brand-secondary"
-                    }`}>
+                    <div className="w-9 h-9 rounded border flex items-center justify-center shrink-0 bg-brand/5 border-brand/20 text-brand">
                       <Phone className="w-4.5 h-4.5" />
                     </div>
                     <div>
@@ -357,9 +416,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         target="_blank"
                         rel="noreferrer"
                         onClick={() => trackOutboundClick({ label: `WhatsApp ${contact.label}`, url: buildWhatsAppUrl(contact.phoneE164, "Olá, gostaria de falar com a TAG08."), surface: "contact-directory-whatsapp" })}
-                        className={`text-sm font-sans font-medium underline-offset-4 hover:underline ${
-                        contact.key === "brazil" ? "text-zinc-400" : "text-brand-secondary"
-                      }`}>
+                        className="text-sm font-sans font-medium text-zinc-400 underline-offset-4 hover:text-brand hover:underline">
                         {contact.display}
                       </a>
                     </div>
@@ -368,16 +425,12 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                     type="button"
                     onClick={() => copyToClipboard(contact.phoneE164.replace("+", ""), contact.key)}
                     aria-label={`Copiar WhatsApp ${contact.label}`}
-                    className={`min-h-11 min-w-11 justify-center sm:opacity-70 sm:group-hover/item:opacity-100 focus-visible:opacity-100 transition-[opacity,color,background-color,border-color] duration-200 p-2 rounded-lg border border-transparent flex items-center gap-1.5 font-sans text-xs uppercase font-bold select-none cursor-pointer shrink-0 ${
-                      contact.key === "brazil"
-                        ? "text-zinc-400 hover:text-brand hover:bg-brand/10 hover:border-brand/20"
-                        : "text-zinc-400 hover:text-brand-secondary hover:bg-brand-secondary/10 hover:border-brand-secondary/20"
-                    }`}
+                    className="min-h-11 min-w-11 justify-center sm:opacity-70 sm:group-hover/item:opacity-100 focus-visible:opacity-100 transition-[transform,opacity,color,background-color,border-color] duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100 p-2 rounded-lg border border-transparent flex items-center gap-1.5 font-sans text-xs uppercase font-bold select-none cursor-pointer shrink-0 text-zinc-400 hover:text-brand hover:bg-brand/10 hover:border-brand/20"
                   >
                     {copiedStates[contact.key] ? (
                       <>
-                        <CheckCircle className={`w-3.5 h-3.5 ${contact.key === "brazil" ? "text-brand" : "text-brand-secondary"}`} />
-                        <span className={contact.key === "brazil" ? "text-brand" : "text-brand-secondary"}>Copiado</span>
+                        <CheckCircle className="w-3.5 h-3.5 text-brand" />
+                        <span className="text-brand">Copiado</span>
                       </>
                     ) : (
                       <>
@@ -387,7 +440,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                     )}
                   </button>
                   </div>
-                  {copiedStates[`${contact.key}-error`] && <p className="-mt-2 text-xs text-amber-300">Não foi possível copiar este número.</p>}
+                  {copiedStates[`${contact.key}-error`] && <p className="-mt-2 text-xs text-state-warning">Não foi possível copiar este número.</p>}
                 </React.Fragment>
               ))}
             </div>
@@ -415,7 +468,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                 type="button"
                 onClick={() => copyToClipboard(TAG08_OFFICIAL_CONTACT.address, "address")}
                 aria-label="Copiar endereço do escritório"
-                className="min-h-11 min-w-11 justify-center text-zinc-400 sm:opacity-70 sm:group-hover/item:opacity-100 focus-visible:opacity-100 transition-[opacity,color,background-color,border-color] duration-200 text-xs rounded-lg hover:text-brand hover:bg-brand/10 border border-transparent hover:border-brand/20 flex items-center gap-1.5 font-sans uppercase font-bold select-none cursor-pointer shrink-0"
+                className="min-h-11 min-w-11 justify-center text-zinc-400 sm:opacity-70 sm:group-hover/item:opacity-100 focus-visible:opacity-100 transition-[transform,opacity,color,background-color,border-color] duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100 text-xs rounded-lg hover:text-brand hover:bg-brand/10 border border-transparent hover:border-brand/20 flex items-center gap-1.5 font-sans uppercase font-bold select-none cursor-pointer shrink-0"
               >
                 {copiedStates["address"] ? (
                   <>
@@ -430,8 +483,9 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                 )}
               </button>
             </div>
+            </div>
 
-            <div className="rounded-2xl border border-white/[0.05] bg-black/20 overflow-hidden shadow-[0_12px_30px_rgba(0,0,0,0.24)]">
+            <div className="tag08-contact__map-card rounded-xl border border-white/[0.05] bg-black/20 overflow-hidden shadow-[0_12px_30px_rgba(0,0,0,0.24)]">
               <div className="flex items-center justify-between gap-4 px-4 pt-4">
                 <div className="space-y-1">
                   <p className="text-xs uppercase tracking-widest tag08-meta text-brand font-black">Google Maps</p>
@@ -448,7 +502,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                       surface: "contact-google-maps"
                     })
                   }
-                  className="inline-flex items-center gap-2 rounded-xl border border-brand/20 bg-brand/10 px-3 py-2 text-xs tag08-meta font-black uppercase tracking-widest text-brand transition-colors hover:bg-brand hover:text-black"
+                  className="inline-flex items-center gap-2 rounded-lg border border-brand/20 bg-brand/10 px-3 py-2 text-xs tag08-meta font-black uppercase tracking-widest text-brand transition-colors hover:bg-brand hover:text-black"
                 >
                   Abrir no Maps
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -473,7 +527,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                       href={TAG08_OFFICIAL_CONTACT.googleBusinessUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="rounded-xl border border-brand/30 bg-brand/10 px-4 py-2 text-xs tag08-meta font-black uppercase tracking-widest text-brand transition-colors hover:bg-brand hover:text-black"
+                      className="rounded-lg border border-brand/30 bg-brand/10 px-4 py-2 text-xs tag08-meta font-black uppercase tracking-widest text-brand transition-colors hover:bg-brand hover:text-black"
                     >
                       Abrir no Google Maps
                     </a>
@@ -505,7 +559,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
             </div>
             </div>
 
-          <div className="tag08-contact__channels rounded-2xl border border-white/[0.05] bg-white/[0.02] p-5 space-y-4">
+          <div className="tag08-contact__channels rounded-xl border border-white/[0.05] bg-white/[0.02] p-5 space-y-4">
             <div className="flex items-center gap-2">
               <MessageSquare className="w-4 h-4 text-brand" />
               <h3 className="text-white font-semibold text-xs tracking-wider tag08-meta">
@@ -564,14 +618,26 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                 >
                   <div className="tag08-contact__form-intro">
                     <span className="tag08-label">Diagnóstico inicial</span>
-                    <h2 className="font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl">Conte o que precisa mudar</h2>
-                    <p className="text-sm leading-relaxed text-zinc-400">Leva poucos minutos. Usaremos estas informações para preparar uma conversa que já comece no ponto certo.</p>
+                    <h2 ref={stepHeadingRef} tabIndex={-1} className="font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl">{activeStep === 1 ? "Como podemos ajudar?" : activeStep === 2 ? "Vamos entender o contexto" : "Como falar com você?"}</h2>
+                    <p className="text-sm leading-relaxed text-zinc-400">Etapa {activeStep} de 3 · Suas respostas ajudam nossa equipe a chegar mais preparada.</p>
+                    <div className="mt-4 flex gap-2" role="progressbar" aria-label="Progresso do formulário" aria-valuemin={1} aria-valuemax={3} aria-valuenow={activeStep}>
+                      {[1, 2, 3].map((step) => <span key={step} className={`h-1 flex-1 rounded-full ${step <= activeStep ? "bg-brand" : "bg-white/10"}`} />)}
+                    </div>
                   </div>
                   <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
                     <label htmlFor="contact-website">Não preencha este campo</label>
                     <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" ref={honeypotRef} />
                   </div>
+                  {activeStep === 1 && <fieldset className="space-y-3">
+                    <legend className="text-sm font-semibold text-white">Qual é o motivo do seu contato?</legend>
+                    {[["new_project", "Quero iniciar um projeto"], ["existing_client", "Já sou cliente"], ["partnership", "Quero propor uma parceria"]].map(([value, label]) => (
+                      <label key={value} className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-colors ${formData.requestType === value ? "border-brand bg-brand/10 text-white" : "border-white/[0.08] text-zinc-300 hover:border-white/20"}`}>
+                        <input type="radio" name="requestType" value={value} checked={formData.requestType === value} onChange={() => handleRequestTypeChange(value as ContactFormData["requestType"])} className="accent-[var(--color-brand)]" />{label}
+                      </label>
+                    ))}
+                  </fieldset>}
                   {/* Row Name and company */}
+                  {activeStep === 3 && <div className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <label htmlFor="form-name" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
@@ -587,13 +653,13 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         onChange={handleChange}
                         aria-invalid={Boolean(errors.name)}
                         aria-describedby={errors.name ? "form-name-error" : undefined}
-                        className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 ${
-                          errors.name ? "border-red-500/50" : "border-white/[0.08]"
+                        className={`w-full bg-zinc-950 border rounded-lg p-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 ${
+                          errors.name ? "border-state-danger/50" : "border-white/[0.08]"
                         }`}
                         placeholder="Ex: Fernando Guedes"
                       />
                       {errors.name && (
-                        <p id="form-name-error" className="text-xs text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.name}</p>
+                        <p id="form-name-error" className="text-xs text-state-danger flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.name}</p>
                       )}
                     </div>
 
@@ -611,13 +677,13 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         onChange={handleChange}
                         aria-invalid={Boolean(errors.company)}
                         aria-describedby={errors.company ? "form-company-error" : undefined}
-                        className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 ${
-                          errors.company ? "border-red-500/50" : "border-white/[0.08]"
+                        className={`w-full bg-zinc-950 border rounded-lg p-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 ${
+                          errors.company ? "border-state-danger/50" : "border-white/[0.08]"
                         }`}
                         placeholder="Ex: Clínica Guedes Ltda"
                       />
                       {errors.company && (
-                        <p id="form-company-error" className="text-xs text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.company}</p>
+                        <p id="form-company-error" className="text-xs text-state-danger flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.company}</p>
                       )}
                     </div>
                   </div>
@@ -638,13 +704,13 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         onChange={handleChange}
                         aria-invalid={Boolean(errors.whatsapp)}
                         aria-describedby={errors.whatsapp ? "form-whatsapp-error" : undefined}
-                        className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 ${
-                          errors.whatsapp ? "border-red-500/50" : "border-white/[0.08]"
+                        className={`w-full bg-zinc-950 border rounded-lg p-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 ${
+                          errors.whatsapp ? "border-state-danger/50" : "border-white/[0.08]"
                         }`}
                         placeholder="Ex: (11) 99999-9999"
                       />
                       {errors.whatsapp && (
-                        <p id="form-whatsapp-error" className="text-xs text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.whatsapp}</p>
+                        <p id="form-whatsapp-error" className="text-xs text-state-danger flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.whatsapp}</p>
                       )}
                     </div>
 
@@ -662,76 +728,55 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         onChange={handleChange}
                         aria-invalid={Boolean(errors.email)}
                         aria-describedby={errors.email ? "form-email-error" : undefined}
-                        className={`w-full bg-zinc-950 border rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 ${
-                          errors.email ? "border-red-500/50" : "border-white/[0.08]"
+                        className={`w-full bg-zinc-950 border rounded-lg p-3 text-sm focus:outline-none focus:border-brand text-white transition-[border-color,box-shadow] duration-200 ${
+                          errors.email ? "border-state-danger/50" : "border-white/[0.08]"
                         }`}
                         placeholder="Ex: fernando@clinicaguedes.com"
                       />
                       {errors.email && (
-                        <p id="form-email-error" className="text-xs text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.email}</p>
+                        <p id="form-email-error" className="text-xs text-state-danger flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.email}</p>
                       )}
                     </div>
                   </div>
 
-                  {/* Dropdowns */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="form-service" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
-                        Serviço de maior interesse
-                      </label>
-                      <select
-                        id="form-service"
-                        name="service"
-                        value={formData.service}
-                        onChange={handleChange}
-                        className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-zinc-300"
-                      >
-                        <option value="redes-sociais">Gestão de Redes Sociais</option>
-                        <option value="branding">Branding &amp; Identidade Visual</option>
-                        <option value="desenvolvimento-web">Desenvolvimento Web</option>
-                        <option value="trafego-performance">Tráfego Pago &amp; Performance</option>
-                        <option value="process-intelligence">Process Intelligence</option>
-                        <option value="process-activation">Process Activation</option>
-                      </select>
-                    </div>
+                  </div>}
 
-                    <div className="space-y-2">
-                      <label htmlFor="form-stage" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
-                        Momento Atual da Marca
+                  {activeStep === 2 && <div className="space-y-5">
+                    {formData.requestType === "new_project" ? <fieldset className="space-y-3">
+                      <legend className="text-sm font-semibold text-white">Quais frentes fazem sentido? <span className="font-normal text-zinc-400">(pode selecionar mais de uma)</span></legend>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {CONTACT_SERVICE_OPTIONS.map(([value, label]) => (
+                          <label key={value} className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 text-sm transition-colors ${formData.serviceInterests.includes(value) ? "border-brand bg-brand/10 text-white" : "border-white/[0.08] text-zinc-300 hover:border-white/20"}`}>
+                            <input type="checkbox" checked={formData.serviceInterests.includes(value)} onChange={() => toggleServiceInterest(value)} className="accent-[var(--color-brand)]" />{label}
+                          </label>
+                        ))}
+                      </div>
+                      <label className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 text-sm ${formData.needsServiceGuidance ? "border-brand bg-brand/10 text-white" : "border-white/[0.08] text-zinc-300"}`}>
+                        <input type="checkbox" checked={formData.needsServiceGuidance} onChange={(event) => { setFormData((prev) => ({ ...prev, needsServiceGuidance: event.target.checked, serviceInterests: event.target.checked ? [] : prev.serviceInterests })); setSubmitError(""); }} className="accent-[var(--color-brand)]" />Preciso de ajuda para decidir
                       </label>
-                      <select
-                        id="form-stage"
-                        name="stage"
-                        value={formData.stage}
-                        onChange={handleChange}
-                        className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-zinc-300"
-                      >
-                        <option value="improviso">Produzimos conteúdo sem direção estratégica</option>
-                        <option value="estruturação">Queremos documentar playbooks e processos</option>
-                        <option value="escala">Temos posicionamento claro e queremos escalar</option>
-                        <option value="outro">Recém iniciando no setor comercial digital</option>
-                      </select>
+                    </fieldset> : <p className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 text-sm leading-relaxed text-zinc-300">{formData.requestType === "existing_client" ? "Conte o que você precisa agora e, se souber, identifique o projeto ou serviço." : "Conte brevemente qual parceria propõe e quem gostaria de envolver."}</p>}
+                    <div className="space-y-2">
+                      <label htmlFor="form-message" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">{formData.requestType === "existing_client" ? "O que você precisa agora?" : formData.requestType === "partnership" ? "Qual parceria você propõe?" : "Qual resultado você busca?"} <span className="normal-case">(opcional)</span></label>
+                      <textarea id="form-message" name="message" value={formData.message} onChange={handleChange} rows={4} maxLength={4000} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg p-3 text-sm focus:outline-none focus:border-brand text-white resize-y" placeholder="Compartilhe apenas o necessário. Não inclua senhas ou dados confidenciais." />
                     </div>
+                  </div>}
+
+                  {activeStep === 3 && <>
+                    <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 text-sm text-zinc-300">
+                      <p><strong className="text-white">Motivo:</strong> {formData.requestType === "new_project" ? "Novo projeto" : formData.requestType === "existing_client" ? "Cliente atual" : "Parceria"}</p>
+                      {formData.requestType === "new_project" && <p className="mt-1"><strong className="text-white">Frentes:</strong> {formData.needsServiceGuidance ? "Preciso de ajuda para decidir" : formData.serviceInterests.map((service) => CONTACT_SERVICE_LABELS[service] || service).join(", ")}</p>}
+                    </div>
+                    <p className="text-xs text-zinc-400">A triagem inicial é feita pela equipe; não há encaminhamento automático.</p>
+                  </>}
+                  {submitError ? <p role="alert" className="text-xs text-state-danger">{submitError}</p> : null}
+                  <div className="flex gap-3 pt-2">
+                    {activeStep > 1 && <button type="button" onClick={() => { setSubmitError(""); goToStep(activeStep - 1); }} className="min-h-11 rounded-lg border border-white/10 px-5 text-sm text-white hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand transition-transform duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100">Voltar</button>}
+                    {activeStep < 3 && <button type="button" onClick={continueFromStep} className="min-h-11 flex-1 rounded-lg bg-brand px-5 text-sm font-bold text-black hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand transition-transform duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100">Continuar <ArrowRight className="ml-2 inline h-4 w-4" /></button>}
                   </div>
 
-                  {/* Message field */}
-                  <div className="space-y-2">
-                    <label htmlFor="form-message" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">
-                      Conte mais detalhes sobre suas metas corporativas
-                    </label>
-                    <textarea
-                      id="form-message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={4}
-                      className="w-full bg-zinc-950 border border-white/[0.08] rounded-xl p-3 text-sm focus:outline-none focus:border-brand text-white resize-none"
-                      placeholder="Fale brevemente sobre o seu modelo de negócio, seus principais canais atuais e quais são os gargalos de posicionamento e processos hoje..."
-                    />
-                  </div>
-
+                  {activeStep === 3 && <>
                   {/* LGPD Compliance badge & Data Security Lock Notice */}
-                  <label htmlFor="form-consent" className={`flex items-start gap-2.5 px-4 py-3 rounded-xl bg-white/[0.02] border cursor-pointer ${consentError ? "border-red-400/70" : "border-white/[0.05]"}`}>
+                  <label htmlFor="form-consent" className={`flex items-start gap-2.5 px-4 py-3 rounded-xl bg-white/[0.02] border cursor-pointer ${consentError ? "border-state-danger/70" : "border-white/[0.05]"}`}>
                     <input
                       id="form-consent"
                       type="checkbox"
@@ -748,23 +793,22 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                       Autorizo o uso destes dados para retorno sobre esta solicitação, conforme o aviso de privacidade da TAG08.
                     </span>
                   </label>
-                  {consentError && <p id="form-consent-error" className="text-xs text-red-300" role="alert">Confirme o consentimento para enviar seus dados.</p>}
+                  {consentError && <p id="form-consent-error" className="text-xs text-state-danger" role="alert">Confirme o consentimento para enviar seus dados.</p>}
                   <div className="flex items-start gap-2.5 px-4 py-3 rounded-xl bg-white/[0.02] border border-white/[0.05]">
                     <div className="w-1.5 h-1.5 rounded-full bg-brand shrink-0 mt-1.5 motion-safe:animate-pulse" aria-hidden="true" />
                     <p className="text-xs text-zinc-400 leading-relaxed font-sans">
                       <strong>Uso responsável dos dados:</strong> Usaremos estas informações apenas para responder à solicitação e seguir o aviso de privacidade da TAG08. Em falhas temporárias, a solicitação pode ser armazenada localmente para nova tentativa automática.
                     </p>
                   </div>
-
-                  {submitError ? <p role="alert" className="text-xs text-red-400">{submitError}</p> : null}
+                  </>}
 
                   {/* Button Submit */}
-                  <div className="pt-2">
+                  {activeStep === 3 && <div className="pt-2">
                     <button
                       id="btn-form-submit"
                       type="submit"
                       disabled={loading}
-                      className="min-h-11 w-full bg-brand hover:bg-brand-dark text-black font-bold font-sans text-xs uppercase py-4 rounded-xl transition-[background-color,box-shadow,opacity] duration-200 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_25px_rgba(var(--color-brand-rgb),0.15)]"
+                      className="min-h-11 w-full bg-brand hover:bg-brand-dark text-black font-bold font-sans text-xs uppercase py-4 rounded-lg transition-[transform,background-color,box-shadow,opacity] duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_25px_rgba(var(--color-brand-rgb),0.15)]"
                     >
                       {loading ? (
                         <span className="flex items-center gap-2">
@@ -772,11 +816,11 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         </span>
                       ) : (
                         <span className="flex items-center gap-1.5">
-                          Solicitar Análise de Posicionamento <ArrowRight className="w-4 h-4" />
+                          Enviar solicitação à TAG08 <ArrowRight className="w-4 h-4" />
                         </span>
                       )}
                     </button>
-                  </div>
+                  </div>}
                 </motion.form>
               ) : (
                 <motion.div
@@ -796,10 +840,10 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   <div className="space-y-3 max-w-lg mx-auto">
                     <h3 className="font-display font-semibold text-2xl text-white">Mensagem Enviada!</h3>
                     <p className="text-zinc-300 text-sm leading-relaxed">
-                      Prezado(a) <strong>{formData.name}</strong>, agradecemos a sua confiança. A equipe de consultoria estratégica da <strong>TAG08</strong> já foi informada do seu interesse.
+                      Obrigado, <strong>{formData.name}</strong>. Sua solicitação foi recebida pela TAG08 e será revisada pela equipe responsável pela triagem.
                     </p>
                     <p className="text-zinc-400 text-xs font-sans">
-                      Em até 6 horas úteis, entraremos em contato pelo WhatsApp para confirmar o próximo passo sobre o cenário da sua empresa <strong>{formData.company}</strong>.
+                      Em até 6 horas úteis, entraremos em contato pelo WhatsApp para confirmar o próximo passo da sua solicitação para <strong>{formData.company}</strong>.
                     </p>
                   </div>
 
@@ -810,7 +854,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                       <span className="tag08-meta text-xs tracking-widest text-brand uppercase">Fast Track Recomendado</span>
                     </div>
                     <p className="text-xs text-zinc-300 leading-relaxed font-sans">
-                      Deseja agilizar os passos e bater um papo imediato por WhatsApp com o consultor agora mesmo? Nosso sistema condensou suas respostas abaixo:
+                      Ao abrir o WhatsApp, o resumo das respostas será pré-preenchido para você revisar. Ele só será enviado à equipe TAG08 se você tocar em Enviar no aplicativo.
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {TAG08_WHATSAPP_CONTACTS.map((contact) => (
@@ -818,11 +862,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                           key={contact.key}
                           type="button"
                           onClick={() => handleLaunchWhatsAppFastTrack(contact)}
-                          className={`w-full font-semibold text-xs font-sans py-3.5 rounded-lg transition-colors flex items-center justify-center gap-2 ${
-                            contact.key === "brazil"
-                              ? "bg-brand hover:bg-brand-dark text-black"
-                              : "bg-brand-secondary hover:bg-brand-secondary/90 text-black"
-                          }`}
+                          className="w-full font-semibold text-xs font-sans py-3.5 rounded-lg transition-[transform,background-color] duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100 flex items-center justify-center gap-2 bg-brand text-black hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                         >
                           Falar no WhatsApp {contact.label}
                         </button>
@@ -843,14 +883,14 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
         {/* Próximos Passos (Timeline) */}
         <div className="tag08-contact__steps space-y-12">
           <div className="text-center md:text-left space-y-4">
-            <span className="tag08-meta text-xs tracking-widest text-brand uppercase bg-brand/5 border border-brand/20 px-3 py-1 rounded-full">
-              PROCESSO DE ANALISE // TRANSPARENCIA
+                  <span className="tag08-meta text-xs tracking-widest text-brand uppercase bg-brand/5 border border-brand/20 px-3 py-1 rounded-full">
+              PRÓXIMOS PASSOS // TRANSPARÊNCIA
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white">
-              O que acontece após o envio dos seus dados?
+              O que acontece depois do envio?
             </h2>
             <p className="text-zinc-400 text-sm max-w-2xl leading-relaxed">
-              Respeitamos o seu tempo e o de sua equipe. Nosso processo comercial é focado em clareza técnica imediata, eliminando reuniões comerciais vazias.
+              A equipe revisa sua solicitação e organiza o próximo contato de acordo com o motivo e o contexto informado.
             </p>
           </div>
 
@@ -861,14 +901,14 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                 01
               </div>
               <div className="space-y-2">
-                <h3 className="text-white font-display font-semibold text-lg">Análise Preliminar</h3>
+                <h3 className="text-white font-display font-semibold text-lg">Solicitação organizada</h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                  Estudamos os canais atuais de sua marca, concorrentes mapeados e velocidade de carregamento dos seus criativos e sites. Criamos hipóteses válidas antes de qualquer contato.
+                  Suas respostas chegam junto com a identificação do motivo do contato e, quando aplicável, das frentes de interesse.
                 </p>
               </div>
             <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-400">
                 <Clock className="w-3 h-3 text-brand motion-safe:animate-pulse" />
-                <span>Início da análise após o envio</span>
+                <span>Sem repetir o que você já contou</span>
               </div>
             </div>
 
@@ -878,14 +918,14 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                 02
               </div>
               <div className="space-y-2">
-                <h3 className="text-white font-display font-semibold text-lg">Retorno Diagnóstico</h3>
+                <h3 className="text-white font-display font-semibold text-lg">Triagem manual</h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                  Enviamos as primeiras impressões táticas direto no seu WhatsApp de forma resumida e direta. Se houver fit de trabalho inicial, propomos uma agenda rápida de alinhamento.
+                  Uma pessoa da equipe revisa o pedido e identifica quem deve dar continuidade. O encaminhamento não é automatizado.
                 </p>
               </div>
             <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-400">
                 <MessageSquare className="w-3 h-3 text-brand" />
-                <span>Prazo: até 6h úteis totais</span>
+                <span>Prazo de retorno: até 6h úteis</span>
               </div>
             </div>
 
@@ -895,14 +935,14 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                 03
               </div>
               <div className="space-y-2">
-                <h3 className="text-white font-display font-semibold text-lg">Chamada de Alinhamento</h3>
+                <h3 className="text-white font-display font-semibold text-lg">Próximo passo claro</h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                  Uma conversa de 15 minutos baseada em soluções técnicas. Sanamos suas dúvidas sobre nossos playbooks operacionais de processos e apresentamos o plano de expansão ideal.
+                  Entraremos em contato pelo WhatsApp para confirmar o entendimento e combinar a continuidade adequada para sua solicitação.
                 </p>
               </div>
             <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-400">
                 <CheckCircle className="w-3 h-3 text-brand" />
-                <span>Duração: Chamada ágil de 15 min</span>
+                <span>Contato pelo canal informado</span>
               </div>
             </div>
           </div>
@@ -948,7 +988,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                     id={`faq-question-${index}`}
                     aria-expanded={isOpen}
                     aria-controls={`faq-panel-${index}`}
-                    className="min-h-11 w-full flex justify-between items-center text-left py-3 gap-4 text-white hover:text-brand transition-colors focus:outline-none"
+                    className="min-h-11 w-full flex justify-between items-center text-left py-3 gap-4 text-white hover:text-brand transition-[transform,color] duration-150 motion-reduce:transition-none active:scale-[0.99] motion-reduce:active:scale-100 focus:outline-none"
                   >
                     <span className="font-display font-medium text-sm sm:text-base leading-snug">
                       {faq.question}

@@ -931,9 +931,9 @@ html.high-contrast a:hover {
 }
 
 .tag08-contact__intro h1 {
-  max-width: 12ch;
-  font-size: clamp(2.6rem, 5vw, 4.8rem);
-  letter-spacing: -0.055em;
+  max-width: 20ch;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 
 .tag08-contact__intro p {
@@ -1057,10 +1057,48 @@ html.high-contrast a:hover {
 
 @media (min-width: 1024px) {
   .tag08-contact__overview {
+    display: contents;
+  }
+
+  .tag08-contact__intro {
+    grid-column: 1 / 6;
+    grid-row: 1;
+    align-self: start;
+  }
+
+  .tag08-contact__directory {
+    display: contents;
+  }
+
+  .tag08-contact__direct-contacts {
+    grid-column: 1 / 7;
+    grid-row: 2;
+    align-self: start;
+    padding-block: 1rem;
+    border-block: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .tag08-contact__map-card {
+    grid-column: 7 / 13;
+    grid-row: 2;
+    align-self: start;
+  }
+
+  .tag08-contact__channels {
+    grid-column: 1 / 7;
+    grid-row: 3;
+    align-self: start;
+  }
+
+  .tag08-contact__response-note {
+    grid-column: 7 / 13;
+    grid-row: 3;
     align-self: start;
   }
 
   .tag08-contact__form-column {
+    grid-column: 6 / 13;
+    grid-row: 1;
     position: sticky;
     top: 7.5rem;
   }
