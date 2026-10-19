@@ -43,7 +43,7 @@ export default function RouteContent({ path, locale }: { path: string; locale: R
   else if (path === "/contato") page = <Contato locale={locale} />;
   else if (path === "/trabalhe-conosco") page = <TrabalheConosco onNavigate={navigate} locale={locale} />;
   else if (path === "/insights") page = <Insights onNavigate={navigate} />;
-  else if (path === "/cliente/onboarding") page = <ClienteOnboarding onNavigate={navigate} />;
+  else if (path === "/cliente/onboarding") page = <ClienteOnboarding onNavigate={navigate} locale={locale} />;
   else if (path === "/sebraetec-impulsionando-empreendedores") page = <Sebraetec onNavigate={navigate} />;
   else if (path === "/programa-afiliados") page = <ProgramaAfiliados onNavigate={navigate} />;
   else if (path === "/hospedagem-manutencao-sites") page = <HospedagemManutencaoSites onNavigate={navigate} />;

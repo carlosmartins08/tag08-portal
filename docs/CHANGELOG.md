@@ -3,7 +3,7 @@
 ## 2026-10-19
 
 - Refinada a Home: removida a seção redundante de portfólio em validação, alinhado o mapa de soluções, desativada a troca automática de avaliações e ajustados os links de contato. Os rascunhos EN/ES continuam bloqueados para publicação até revisão linguística; build e 94 testes E2E críticos passaram.
-- Atualizada a jornada de Onboarding para apresentação guiada, suporte ao preenchimento pela equipe TAG08 com identificação e confirmação de autorização, e aviso antes de sair com respostas não enviadas. Testes de rotas, contratos, build e seis cenários E2E passaram; EN/ES ficam bloqueados até revisão linguística.
+- Atualizada a jornada de Onboarding para apresentação guiada, suporte ao preenchimento pela equipe TAG08 com identificação e confirmação de autorização, e aviso antes de sair com respostas não enviadas. A rota passa o idioma resolvido ao fluxo, sem liberar EN/ES antes da revisão linguística. Testes de rotas, contratos, build e seis cenários E2E passaram.
 
 - Evoluída a jornada de Contato para qualificar novos projetos, clientes atuais e parcerias; novos projetos aceitam múltiplos interesses ou pedido de orientação, mantendo o contrato compatível com envios antigos.
 
