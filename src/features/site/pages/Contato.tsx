@@ -25,17 +25,36 @@ import { COOKIE_CONSENT_EVENT, readCookiePreferences, type CookiePreferences } f
 import CountryFlag from "../../../components/CountryFlag";
 import type { RouteLocale } from "../../../config/routeRegistry";
 
-const CONTACT_SERVICE_OPTIONS = [
-  ["redes-sociais", "Conteúdo e redes sociais"],
-  ["branding", "Branding e identidade"],
-  ["desenvolvimento-web", "Desenvolvimento web"],
-  ["trafego-performance", "Tráfego e performance"],
-  ["process-intelligence", "Process Intelligence"],
-  ["process-activation", "Process Activation"],
-  ["producao-audiovisual", "Produção audiovisual"],
-  ["assessoria-estrategica", "Assessoria estratégica"],
-  ["hospedagem", "Continuidade tecnológica (hospedagem e manutenção)"]
-] as const;
+const CONTACT_INTENT_GROUPS: { label: string; options: readonly (readonly [string, string])[] }[] = [
+  {
+    label: "Presença, comunicação e marca",
+    options: [
+      ["redes-sociais", "Melhorar presença digital e redes sociais"],
+      ["producao-audiovisual", "Produzir conteúdo audiovisual"],
+      ["branding", "Organizar marca ou posicionamento"]
+    ]
+  },
+  {
+    label: "Estratégia e tecnologia",
+    options: [
+      ["assessoria-estrategica", "Obter direção estratégica para o negócio"],
+      ["desenvolvimento-web", "Desenvolver site, e-commerce ou solução digital"],
+      ["hospedagem", "Dar continuidade à hospedagem ou manutenção do projeto digital"]
+    ]
+  },
+  {
+    label: "Processos e operação",
+    options: [
+      ["process-intelligence", "Entender e organizar processos"],
+      ["process-activation", "Ativar melhorias na operação"]
+    ]
+  },
+  {
+    label: "Capacidades que podem apoiar uma frente",
+    options: [["trafego-performance", "Tráfego, SEO, copywriting ou performance"]]
+  }
+];
+const CONTACT_SERVICE_OPTIONS = CONTACT_INTENT_GROUPS.flatMap((group) => group.options);
 const CONTACT_SERVICE_LABELS = Object.fromEntries(CONTACT_SERVICE_OPTIONS) as Record<string, string>;
 
 export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
@@ -330,7 +349,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
 - Nome: ${formData.name}
 - Empresa: ${formData.company}
 - E-mail: ${formData.email}
-- Serviços de interesse: ${formData.needsServiceGuidance ? "Preciso de ajuda para decidir" : selectedServices || "Não informado"}
+- Serviços de interesse: ${formData.needsServiceGuidance ? "Preciso de orientação ou tenho outra necessidade" : selectedServices || "Não informado"}
 - Mensagem: ${formData.message}`;
 
     const href = buildWhatsAppUrl(contact.phoneE164, text);
@@ -743,16 +762,24 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
 
                   {activeStep === 2 && <div className="space-y-5">
                     {formData.requestType === "new_project" ? <fieldset className="space-y-3">
-                      <legend className="text-sm font-semibold text-white">Quais frentes fazem sentido? <span className="font-normal text-zinc-400">(pode selecionar mais de uma)</span></legend>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {CONTACT_SERVICE_OPTIONS.map(([value, label]) => (
-                          <label key={value} className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 text-sm transition-colors ${formData.serviceInterests.includes(value) ? "border-brand bg-brand/10 text-white" : "border-white/[0.08] text-zinc-300 hover:border-white/20"}`}>
-                            <input type="checkbox" checked={formData.serviceInterests.includes(value)} onChange={() => toggleServiceInterest(value)} className="accent-[var(--color-brand)]" />{label}
-                          </label>
+                      <legend className="text-sm font-semibold text-white">Qual necessidade você quer encaminhar? <span className="font-normal text-zinc-400">(pode selecionar mais de uma)</span></legend>
+                      <div className="space-y-4">
+                        {CONTACT_INTENT_GROUPS.map((group) => (
+                          <div key={group.label} role="group" aria-label={group.label} className="space-y-2">
+                            <p className="tag08-meta text-xs font-semibold uppercase tracking-wider text-zinc-400">{group.label}</p>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                              {group.options.map(([value, label]) => (
+                                <label key={value} className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 text-sm transition-colors ${formData.serviceInterests.includes(value) ? "border-brand bg-brand/10 text-white" : "border-white/[0.08] text-zinc-300 hover:border-white/20"}`}>
+                                  <input type="checkbox" checked={formData.serviceInterests.includes(value)} onChange={() => toggleServiceInterest(value)} className="accent-[var(--color-brand)]" />{label}
+                                </label>
+                              ))}
+                            </div>
+                          </div>
                         ))}
                       </div>
+                      <p className="text-xs leading-relaxed text-zinc-400">Tráfego, SEO, copywriting e performance são capacidades de apoio, não famílias independentes. Se a sua necessidade não estiver clara, descreva o contexto abaixo ou escolha a opção de orientação.</p>
                       <label className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 text-sm ${formData.needsServiceGuidance ? "border-brand bg-brand/10 text-white" : "border-white/[0.08] text-zinc-300"}`}>
-                        <input type="checkbox" checked={formData.needsServiceGuidance} onChange={(event) => { setFormData((prev) => ({ ...prev, needsServiceGuidance: event.target.checked, serviceInterests: event.target.checked ? [] : prev.serviceInterests })); setSubmitError(""); }} className="accent-[var(--color-brand)]" />Preciso de ajuda para decidir
+                        <input type="checkbox" checked={formData.needsServiceGuidance} onChange={(event) => { setFormData((prev) => ({ ...prev, needsServiceGuidance: event.target.checked, serviceInterests: event.target.checked ? [] : prev.serviceInterests })); setSubmitError(""); }} className="accent-[var(--color-brand)]" />Preciso de orientação ou tenho outra necessidade
                       </label>
                     </fieldset> : <p className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 text-sm leading-relaxed text-zinc-300">{formData.requestType === "existing_client" ? "Conte o que você precisa agora e, se souber, identifique o projeto ou serviço." : "Conte brevemente qual parceria propõe e quem gostaria de envolver."}</p>}
                     <div className="space-y-2">
@@ -764,7 +791,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   {activeStep === 3 && <>
                     <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 text-sm text-zinc-300">
                       <p><strong className="text-white">Motivo:</strong> {formData.requestType === "new_project" ? "Novo projeto" : formData.requestType === "existing_client" ? "Cliente atual" : "Parceria"}</p>
-                      {formData.requestType === "new_project" && <p className="mt-1"><strong className="text-white">Frentes:</strong> {formData.needsServiceGuidance ? "Preciso de ajuda para decidir" : formData.serviceInterests.map((service) => CONTACT_SERVICE_LABELS[service] || service).join(", ")}</p>}
+                      {formData.requestType === "new_project" && <p className="mt-1"><strong className="text-white">Frentes:</strong> {formData.needsServiceGuidance ? "Preciso de orientação ou tenho outra necessidade" : formData.serviceInterests.map((service) => CONTACT_SERVICE_LABELS[service] || service).join(", ")}</p>}
                     </div>
                     <p className="text-xs text-zinc-400">A triagem inicial é feita pela equipe; não há encaminhamento automático.</p>
                   </>}

@@ -35,18 +35,18 @@ test.describe("experiencia de contato", () => {
     await page.getByRole("radio", { name: /Quero iniciar um projeto/ }).check();
     await page.getByRole("button", { name: "Continuar" }).click();
     await expect(page.getByRole("heading", { name: "Vamos entender o contexto" })).toBeVisible();
-    await page.getByRole("checkbox", { name: "Branding e identidade" }).check();
-    await page.getByRole("checkbox", { name: "Desenvolvimento web" }).check();
-    await page.getByRole("checkbox", { name: "Preciso de ajuda para decidir" }).check();
-    await expect(page.getByRole("checkbox", { name: "Branding e identidade" })).not.toBeChecked();
-    await page.getByRole("checkbox", { name: "Preciso de ajuda para decidir" }).uncheck();
-    await page.getByRole("checkbox", { name: "Branding e identidade" }).check();
-    await page.getByRole("checkbox", { name: "Desenvolvimento web" }).check();
+    await page.getByRole("checkbox", { name: "Organizar marca ou posicionamento" }).check();
+    await page.getByRole("checkbox", { name: "Desenvolver site, e-commerce ou solução digital" }).check();
+    await page.getByRole("checkbox", { name: "Preciso de orientação ou tenho outra necessidade" }).check();
+    await expect(page.getByRole("checkbox", { name: "Organizar marca ou posicionamento" })).not.toBeChecked();
+    await page.getByRole("checkbox", { name: "Preciso de orientação ou tenho outra necessidade" }).uncheck();
+    await page.getByRole("checkbox", { name: "Organizar marca ou posicionamento" }).check();
+    await page.getByRole("checkbox", { name: "Desenvolver site, e-commerce ou solução digital" }).check();
     await page.getByRole("button", { name: "Continuar" }).click();
     await expect(page.getByText("Frentes:")).toBeVisible();
     await page.getByRole("button", { name: "Voltar", exact: true }).click();
-    await expect(page.getByRole("checkbox", { name: "Branding e identidade" })).toBeChecked();
-    await expect(page.getByRole("checkbox", { name: "Desenvolvimento web" })).toBeChecked();
+    await expect(page.getByRole("checkbox", { name: "Organizar marca ou posicionamento" })).toBeChecked();
+    await expect(page.getByRole("checkbox", { name: "Desenvolver site, e-commerce ou solução digital" })).toBeChecked();
   });
 
   test("permite cliente atual e parceria sem perguntas de aquisição", async ({ page }) => {
@@ -75,13 +75,13 @@ test.describe("experiencia de contato", () => {
     await page.goto("/contato", { waitUntil: "domcontentloaded" });
     await page.getByRole("radio", { name: /Quero iniciar um projeto/ }).check();
     await page.getByRole("button", { name: "Continuar" }).click();
-    await page.getByRole("checkbox", { name: "Branding e identidade" }).check();
-    await page.getByRole("checkbox", { name: "Desenvolvimento web" }).check();
+    await page.getByRole("checkbox", { name: "Organizar marca ou posicionamento" }).check();
+    await page.getByRole("checkbox", { name: "Desenvolver site, e-commerce ou solução digital" }).check();
 
     await page.getByRole("button", { name: "Voltar", exact: true }).click();
     await page.getByRole("radio", { name: "Já sou cliente" }).check();
     await page.getByRole("button", { name: "Continuar" }).click();
-    await expect(page.getByRole("checkbox", { name: "Branding e identidade" })).toHaveCount(0);
+    await expect(page.getByRole("checkbox", { name: "Organizar marca ou posicionamento" })).toHaveCount(0);
     await page.getByRole("button", { name: "Continuar" }).click();
 
     await page.getByLabel("Qual o seu nome?").fill("Ana Silva");

@@ -23,7 +23,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
   const SERVICE_DOMAINS = [
     {
       num: "01",
-      title: "Presença Digital Recorrente",
+      title: "Gestão de Redes Sociais / Presença Digital",
       tags: ["Start", "Base", "Performance", "Consistência"],
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
       subservices: [
@@ -33,11 +33,12 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       ],
       description: "Para profissionais e negócios que precisam organizar uma rotina de comunicação compatível com seu momento, sua maturidade e sua capacidade de participação.",
       ctaLabel: "CONHECER PRESENÇA DIGITAL",
-      ctaPage: "/servicos/gestao-de-redes-sociais"
+      ctaPage: "/servicos/gestao-de-redes-sociais",
+      secondaryCta: null
     },
     {
       num: "02",
-      title: "Marca e Posicionamento",
+      title: "Branding / Posicionamento",
       tags: ["Identidade", "Reposicionamento", "Percepção", "Coerência"],
       image: "https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?auto=format&fit=crop&q=80&w=1200",
       subservices: [
@@ -47,7 +48,8 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       ],
       description: "Para marcas cuja expressão visual ou posicionamento já não representam adequadamente o valor, o público ou a fase atual do negócio.",
       ctaLabel: "CONHECER MARCA E POSICIONAMENTO",
-      ctaPage: "/servicos/branding-identidade"
+      ctaPage: "/servicos/branding-identidade",
+      secondaryCta: null
     },
     {
       num: "03",
@@ -61,22 +63,54 @@ export default function Servicos({ onNavigate }: ServicosProps) {
       ],
       description: "Para empresas, especialistas e projetos que precisam transformar conhecimento, presença, ambiente ou material bruto em comunicação audiovisual com função definida.",
       ctaLabel: "CONHECER AUDIOVISUAL",
-      ctaPage: "/servicos/producao-audiovisual"
+      ctaPage: "/servicos/producao-audiovisual",
+      secondaryCta: null
     },
     {
       num: "04",
-      title: "Web e Unidade Digital",
-      tags: ["Sites", "Landing pages", "E-commerce", "Estrutura digital"],
+      title: "Tecnologia",
+      tags: ["Websites", "E-commerce", "Soluções digitais", "Continuidade"],
       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200",
       subservices: [
         { name: "Desenvolvimento Web Estratégico", desc: "Sites e páginas construídos a partir de objetivo, público, conteúdo, jornada e função." },
         { name: "Landing pages", desc: "Estruturas específicas para campanhas, ofertas ou objetivos definidos." },
         { name: "Unidade Digital e E-commerce", desc: "Diagnóstico e modelagem da operação antes do desenvolvimento quando a empresa pretende vender online." },
-        { name: "Prontidão operacional", desc: "Catálogo, estoque, logística, atendimento, políticas e responsabilidades precisam ser suficientemente claros antes da tecnologia." }
+        { name: "Prontidão operacional", desc: "Catálogo, estoque, logística, atendimento, políticas e responsabilidades precisam ser suficientemente claros antes da tecnologia." },
+        { name: "Hospedagem e Manutenção", desc: "Continuidade tecnológica adjacente à família Tecnologia/Web após a publicação." }
       ],
-      description: "Para negócios que precisam de um canal próprio para apresentar, gerar confiança, apoiar conversão ou estruturar uma operação digital.",
-      ctaLabel: "CONHECER WEB E UNIDADE DIGITAL",
-      ctaPage: "/servicos/desenvolvimento-web"
+      description: "Para organizações que precisam estruturar websites, e-commerce ou soluções digitais específicas. O caminho considera prontidão operacional antes do desenvolvimento.",
+      ctaLabel: "CONHECER TECNOLOGIA",
+      ctaPage: "/servicos/desenvolvimento-web",
+      secondaryCta: { label: "CONTINUIDADE WEB", page: "/hospedagem-manutencao-sites" }
+    },
+    {
+      num: "05",
+      title: "Assessoria Estratégica / Negócios",
+      tags: ["Direção", "Prioridades", "Canais", "Planejamento"],
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1200",
+      subservices: [
+        { name: "Direção estratégica", desc: "Organização de prioridades e escolhas para o momento do negócio." },
+        { name: "Posicionamento e canais", desc: "Clareza sobre percepção, comunicação e papel dos canais sem substituir Branding ou execução de mídia." },
+        { name: "Planejamento", desc: "Definição de próximos passos coerentes com objetivos e capacidade de execução." }
+      ],
+      description: "Para empresas que precisam de direção estratégica para organizar prioridades, posicionamento, canais e planejamento antes de ampliar a execução.",
+      ctaLabel: "CONHECER ASSESSORIA ESTRATÉGICA",
+      ctaPage: "/servicos/assessoria-marketing-digital-estrategico",
+      secondaryCta: null
+    },
+    {
+      num: "06",
+      title: "Processos / Operação",
+      tags: ["Process Intelligence", "Process Activation", "Rotina", "Previsibilidade"],
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1200",
+      subservices: [
+        { name: "Process Intelligence", desc: "Diagnóstico e organização de fluxos, responsabilidades e conhecimento operacional." },
+        { name: "Process Activation", desc: "Ativação acompanhada de processos e práticas já definidos para a operação." }
+      ],
+      description: "Para empresas em que crescimento, demandas ou conhecimento dependem demais de poucas pessoas, memória ou decisões informais.",
+      ctaLabel: "CONHECER PROCESS INTELLIGENCE",
+      ctaPage: "/servicos/process-intelligence",
+      secondaryCta: { label: "CONHECER PROCESS ACTIVATION", page: "/servicos/process-activation" }
     }
   ];
 
@@ -104,7 +138,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 Soluções para organizar presença, posicionamento e crescimento com direção.
               </h1>
               <p className="text-zinc-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl">
-                A TAG08 organiza soluções de presença digital recorrente e projetos estratégicos de marca, conteúdo, audiovisual, web e unidade digital. A recomendação depende do gargalo, da maturidade e da capacidade de execução do negócio.
+                A TAG08 atua em seis famílias: Gestão de Redes Sociais / Presença Digital, Produção Audiovisual, Tecnologia, Assessoria Estratégica / Negócios, Branding / Posicionamento e Processos / Operação. SEO, tráfego, copywriting e performance são capacidades aplicadas quando adequadas à necessidade.
               </p>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-xl">
                 Antes de indicar uma solução, a TAG08 procura entender o momento atual, o que está travando o avanço e qual estrutura consegue sustentar o próximo passo.
@@ -112,7 +146,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
               {/* Grid tags of our core expertise */}
               <div className="flex flex-wrap gap-2 pt-2">
-                {["Presença", "Marca", "Audiovisual", "Web"].map((tag, idx) => (
+                {["Redes Sociais / Presença", "Produção Audiovisual", "Tecnologia", "Assessoria Estratégica", "Branding / Posicionamento", "Processos / Operação"].map((tag, idx) => (
                   <span
                     key={idx}
                     className="tag08-meta text-xs tracking-wider uppercase px-3 py-1.5 border border-white/5 rounded-full bg-white/[0.02] text-zinc-300 hover:border-brand/40 hover:text-brand transition-colors cursor-default"
@@ -158,41 +192,16 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                       <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
                       <span className="tag08-meta text-xs uppercase tracking-widest text-brand-secondary">MAPA DE SOLUÇÕES</span>
                     </div>
-                    <span className="font-sans text-xs text-zinc-300">QUATRO FRENTES</span>
+                    <span className="font-sans text-xs text-zinc-300">SEIS FAMÍLIAS</span>
                   </div>
 
-                  <div className="space-y-5">
-                    <div className="flex items-baseline justify-between">
-                      <div>
-                        <span className="tag08-meta text-xs text-zinc-300 tracking-widest">Presença</span>
-                        <p className="text-zinc-300 text-xs mt-0.5">Rotina de comunicação compatível com o momento do negócio.</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
+                    {SERVICE_DOMAINS.map((domain) => (
+                      <div key={domain.num} className="border-t border-white/[0.04] pt-3">
+                        <span className="tag08-meta text-xs text-zinc-300 tracking-widest">{domain.title}</span>
+                        <p className="text-zinc-400 text-xs mt-1 leading-relaxed">{domain.description}</p>
                       </div>
-                      <span className="font-display font-black text-3xl text-white">Presença</span>
-                    </div>
-
-                    <div className="flex items-baseline justify-between border-t border-white/[0.04] pt-4">
-                      <div>
-                        <span className="tag08-meta text-xs text-zinc-300 tracking-widest">Marca</span>
-                        <p className="text-zinc-300 text-xs mt-0.5">Expressão e posicionamento coerentes com a fase atual.</p>
-                      </div>
-                      <span className="font-display font-black text-3xl text-brand-secondary">Marca</span>
-                    </div>
-
-                    <div className="flex items-baseline justify-between border-t border-white/[0.04] pt-4">
-                      <div>
-                        <span className="tag08-meta text-xs text-zinc-300 tracking-widest">Audiovisual</span>
-                        <p className="text-zinc-300 text-xs mt-0.5">Vídeo com direção e função definida para a comunicação.</p>
-                      </div>
-                      <span className="font-display font-black text-3xl text-brand">Audiovisual</span>
-                    </div>
-
-                    <div className="flex items-baseline justify-between border-t border-white/[0.04] pt-4">
-                      <div>
-                        <span className="tag08-meta text-xs text-zinc-300 tracking-widest">Web</span>
-                        <p className="text-zinc-300 text-xs mt-0.5">Canal próprio para apresentar, converter ou operar no digital.</p>
-                      </div>
-                      <span className="font-display font-black text-3xl text-white">Web</span>
-                    </div>
+                    ))}
                   </div>
 
                   <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex items-center gap-3">
@@ -226,7 +235,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
               </h2>
             </div>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm md:pb-1">
-              Nem toda marca precisa começar pelo mesmo serviço. Algumas precisam de clareza de posicionamento, outras de conteúdo, presença visual, estrutura digital ou organização operacional. Esta matriz ajuda a identificar o ponto de partida mais coerente.
+              Nem todo negócio precisa começar pelo mesmo caminho. A matriz liga sinais de necessidade a uma família ou oferta adjacente, sem transformar capacidades em novas frentes.
             </p>
           </div>
 
@@ -263,13 +272,31 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                 problem: "Meu site ou estrutura digital não acompanha o negócio",
                 solution: "Quando a empresa precisa organizar apresentação, credibilidade, conversão ou validar uma estrutura própria para operar no digital.",
                 slug: "/servicos/desenvolvimento-web",
-                label: "Web e unidade digital"
+                label: "Tecnologia"
+              },
+              {
+                problem: "Preciso de direção estratégica para decidir prioridades e próximos passos.",
+                solution: "Quando posicionamento, canais e planejamento precisam responder aos objetivos e à capacidade real do negócio.",
+                slug: "/servicos/assessoria-marketing-digital-estrategico",
+                label: "Assessoria Estratégica / Negócios"
+              },
+              {
+                problem: "A operação depende demais de poucas pessoas ou de decisões informais.",
+                solution: "Process Intelligence ajuda a entender e organizar o fluxo; Process Activation atua na ativação acompanhada das práticas definidas.",
+                slug: "/servicos/process-intelligence",
+                label: "Processos / Operação"
+              },
+              {
+                problem: "Meu projeto digital precisa de continuidade depois da publicação.",
+                solution: "Hospedagem e Manutenção são uma oferta adjacente de continuidade tecnológica, dentro do ecossistema Tecnologia/Web.",
+                slug: "/hospedagem-manutencao-sites",
+                label: "Continuidade tecnológica"
               },
               {
                 problem: "Ainda não sei qual é o principal gargalo.",
                 solution: "Quando o problema aparece em várias frentes e ainda não está claro o que precisa vir primeiro.",
                 slug: "/contato",
-                label: "Diagnóstico inicial"
+                label: "Conversa inicial"
               }
             ].map((item, idx) => (
               <div
@@ -340,7 +367,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                     <span className="font-display font-black text-3xl sm:text-4xl text-zinc-500 group-hover:text-brand-secondary transition-colors uppercase" aria-hidden="true">
                       {domain.num}.
                     </span>
-                    <div className="flex items-center gap-1.5 tag08-meta text-xs text-zinc-500 uppercase tracking-widest">
+                    <div className="flex items-center gap-1.5 tag08-meta text-xs text-zinc-400 uppercase tracking-widest">
                       <span>CAMINHO {domain.num}</span>
                       <div className="w-1.5 h-1.5 rounded-full bg-brand-secondary/40" />
                     </div>
@@ -375,7 +402,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                       {/* Scope Deliverables Bullet List */}
                       <div className="space-y-4 pt-4 border-t border-white/[0.04]">
-                        <p className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest leading-none font-bold">
+                        <p className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest leading-none font-bold">
                           Caminhos dentro desta frente
                         </p>
                         <div className="grid gap-3.5 pl-1">
@@ -402,6 +429,15 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                           <span>{domain.ctaLabel}</span>
                           <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform" />
                         </button>
+                        {domain.secondaryCta && (
+                          <button
+                            type="button"
+                            onClick={() => handleLinkClick(domain.secondaryCta!.page)}
+                            className="inline-flex min-h-11 items-center gap-2 border border-white/10 hover:border-brand/50 text-xs text-zinc-300 hover:text-white tag08-meta font-semibold uppercase tracking-widest py-3 px-4 rounded-xl transition-colors duration-200"
+                          >
+                            {domain.secondaryCta.label}
+                          </button>
+                        )}
                       </div>
 
                     </div>
@@ -702,7 +738,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                 <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
                   {([
-                    "Não. O primeiro passo é entender o momento do negócio e o principal gargalo. A partir disso, a TAG08 avalia se o caminho envolve presença recorrente, marca e posicionamento, audiovisual, web, unidade digital ou uma combinação coerente.",
+                    "Não. O primeiro passo é entender o momento do negócio e o principal gargalo. A partir disso, a TAG08 avalia qual das seis famílias — ou qual combinação coerente — responde melhor à necessidade.",
                     "Existem soluções e produtos definidos, mas a recomendação não é automática. Momento, maturidade, capacidade de investimento e participação necessária do cliente influenciam a indicação.",
                     "Sim. Quando uma única frente resolve o problema identificado, não há motivo para ampliar o escopo. Combinações só fazem sentido quando o diagnóstico mostra dependência entre diferentes necessidades.",
                     "Porque o pedido inicial nem sempre corresponde ao problema real. Diagnóstico reduz risco de escopo errado, expectativa desalinhada e investimento fora de prioridade.",

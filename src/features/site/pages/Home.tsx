@@ -768,58 +768,58 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
 
   const MAPA_SOLUCOES_DATA = [
     {
-      id: "estrategia-posicionamento",
-      title: "Estratégia e posicionamento",
-      subtitle: "Clareza antes da execução",
-      desc: "Para empresas e profissionais cuja comunicação já não representa corretamente o valor, o público ou a fase atual do negócio.",
-      related: "Assessoria Estratégica, Reposicionamento Estratégico e Identidade de Marca.",
-      cta: "Conhecer estratégia e posicionamento",
-      slug: "/servicos/assessoria-marketing-digital-estrategico"
-    },
-    {
       id: "conteudo-redes-sociais",
-      title: "Conteúdo e redes sociais",
+      title: "Gestão de Redes Sociais / Presença Digital",
       subtitle: "Presença com linha editorial",
-      desc: "Para negócios que precisam sair da produção solta e construir uma rotina de comunicação com temas, formatos, frequência e intenção definidos.",
-      related: "Start, Base, Performance, Gestão de Redes Sociais e Edição de Reels.",
-      cta: "Conhecer conteúdo e redes sociais",
+      desc: "Para negócios que precisam organizar comunicação, conteúdo e frequência de acordo com o momento e a capacidade de execução.",
+      related: "Planos Start, Base e Performance; capacidades como copywriting e tráfego são aplicadas quando fizerem sentido.",
+      cta: "Conhecer presença digital",
       slug: "/servicos/gestao-de-redes-sociais"
     },
     {
       id: "producao-audiovisual",
-      title: "Produção audiovisual",
+      title: "Produção Audiovisual",
       subtitle: "Imagem, fala e bastidores com função",
-      desc: "Para empresas, especialistas e projetos que precisam transformar conhecimento, presença e acontecimentos em materiais úteis para comunicação e posicionamento.",
-      related: "Captação Audiovisual, Reels e produções específicas.",
+      desc: "Para empresas e especialistas que precisam transformar conhecimento, presença ou acontecimentos em conteúdo audiovisual com direção.",
+      related: "Captação, edição e produções alinhadas ao uso previsto.",
       cta: "Conhecer produção audiovisual",
       slug: "/servicos/producao-audiovisual"
     },
     {
       id: "desenvolvimento-web",
-      title: "Web e estruturas digitais",
-      subtitle: "Um canal próprio com função clara",
-      desc: "Para marcas que precisam organizar informação, fortalecer credibilidade e facilitar o caminho entre interesse e contato.",
-      related: "Sites Estratégicos, Landing Pages e projetos web. E-commerce depende de diagnóstico de prontidão operacional.",
-      cta: "Conhecer desenvolvimento web",
+      title: "Tecnologia",
+      subtitle: "Estruturas digitais adequadas ao negócio",
+      desc: "Para organizações que precisam de websites, e-commerce/unidade digital ou soluções digitais específicas, com prontidão operacional avaliada antes da execução.",
+      related: "Hospedagem e Manutenção são continuidade tecnológica adjacente à família Web.",
+      cta: "Conhecer soluções de Tecnologia",
       slug: "/servicos/desenvolvimento-web"
     },
     {
-      id: "processos-operacao",
-      title: "Processos e operação",
-      subtitle: "Menos improviso, mais previsibilidade",
-      desc: "Para empresas em que crescimento, demandas ou conhecimento começaram a depender demais de poucas pessoas, memória ou decisões informais.",
-      related: "Process Intelligence e Process Activation.",
-      cta: "Conhecer processos e operação",
-      slug: "/servicos/process-intelligence"
+      id: "assessoria-estrategica",
+      title: "Assessoria Estratégica / Negócios",
+      subtitle: "Direção para decisões do negócio",
+      desc: "Para empresas que precisam organizar prioridades, posicionamento, canais e planejamento antes de ampliar a execução.",
+      related: "Direção estratégica sem substituir Branding, Processos ou a execução de mídia.",
+      cta: "Conhecer Assessoria Estratégica",
+      slug: "/servicos/assessoria-marketing-digital-estrategico"
     },
     {
-      id: "hospedagem-manutencao",
-      title: "Continuidade digital",
-      subtitle: "O projeto continua depois da publicação",
-      desc: "Para negócios que precisam manter estruturas digitais acompanhadas, atualizadas e tecnicamente sustentáveis ao longo do tempo.",
-      related: "Continuidade tecnológica ligada à família Tecnologia/Web.",
-      cta: "Conhecer continuidade digital",
-      slug: "/hospedagem-manutencao-sites"
+      id: "branding-posicionamento",
+      title: "Branding / Posicionamento",
+      subtitle: "Coerência entre identidade e fase do negócio",
+      desc: "Para marcas cuja identidade, percepção ou mensagem já não representam adequadamente seu valor ou momento atual.",
+      related: "Identidade, posicionamento e reposicionamento dentro da mesma família.",
+      cta: "Conhecer Branding e Posicionamento",
+      slug: "/servicos/branding-identidade"
+    },
+    {
+      id: "processos-operacao",
+      title: "Processos / Operação",
+      subtitle: "Mais previsibilidade para executar",
+      desc: "Para empresas em que crescimento, demandas ou conhecimento dependem demais de poucas pessoas, memória ou decisões informais.",
+      related: "Process Intelligence e Process Activation permanecem ofertas distintas dentro desta família.",
+      cta: "Conhecer Processos e Operação",
+      slug: "/servicos/process-intelligence"
     }
   ];
   const MAPA_SOLUCOES_PAIRS = Array.from(
@@ -1329,7 +1329,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                           {pilotCopy?.mosaic.m03.title ?? "Marca em crescimento"}
                         </h3>
                         <p className="text-zinc-400 text-xs font-sans leading-relaxed mt-1.5">
-                          {pilotCopy?.mosaic.m03.description ?? "Existe necessidade de integrar planejamento, vídeo, produção, publicação e acompanhamento com maior profundidade. Caminhos possíveis: Performance, Produção Audiovisual ou Reposicionamento Estratégico."}
+                          {pilotCopy?.mosaic.m03.description ?? "Existe necessidade de integrar planejamento, vídeo, produção, publicação e acompanhamento. O caminho pode combinar Gestão de Redes Sociais, Produção Audiovisual e Branding/Posicionamento conforme o diagnóstico."}
                         </p>
                       </div>
                     </div>
@@ -2096,7 +2096,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                     <span className="font-sans text-xs font-bold text-black/70">{methodCopy?.method ?? "MÉTODO"}</span>
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
-                    <span className="font-display font-black text-3xl text-black tracking-tighter block leading-none">{methodCopy?.fourFronts ?? "QUATRO FRENTES"}</span>
+                    <span className="font-display font-black text-3xl text-black tracking-tighter block leading-none">{methodCopy?.fourFronts ?? "QUATRO PILARES"}</span>
                     <p className="text-black font-display font-bold text-xs uppercase tracking-wider">{methodCopy?.integratedStrategy ?? "ESTRATÉGIA INTEGRADA"}</p>
                     <p className="text-black/60 text-xs leading-snug font-medium">{methodCopy?.fourFrontsDescription ?? "Conteúdo, design, tecnologia e operação trabalhando no mesmo sentido."}</p>
                   </div>
