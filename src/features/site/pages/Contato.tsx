@@ -20,7 +20,7 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ContactFormData } from "../../../types";
 import { TAG08_OFFICIAL_CHANNELS, TAG08_OFFICIAL_CONTACT, TAG08_WHATSAPP_CONTACTS, buildGoogleMapsEmbedUrl } from "../../../config/siteNetwork";
 import { trackFormError, trackFormStart, trackFormSubmit, trackLeadEvent, trackOutboundClick } from "../../../lib/analytics";
-import { queueFormSubmission } from "../../../lib/formQueue";
+import { queueFormSubmission, removeQueuedSubmission } from "../../../lib/formQueue";
 import { COOKIE_CONSENT_EVENT, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
 import CountryFlag from "../../../components/CountryFlag";
 import type { RouteLocale } from "../../../config/routeRegistry";
@@ -305,7 +305,10 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
         term: searchParams.get("utm_term") || ""
       }
     };
-    let queuedForRetry = false;
+    // Preserve the same key and payload while the request is in flight so a page reload
+    // can replay this exact submission instead of creating a second record.
+    queueFormSubmission({ endpoint: "/api/contact", idempotencyKey, payload });
+    let queuedForRetry = true;
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -318,16 +321,17 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
 
       if (!response.ok) {
         if (response.status >= 500) {
-          queueFormSubmission({ endpoint: "/api/contact", idempotencyKey, payload });
-          queuedForRetry = true;
           throw new Error("submission_queued");
         }
         setSubmitError("Revise os campos obrigatórios e tente novamente.");
+        removeQueuedSubmission(idempotencyKey);
+        queuedForRetry = false;
         setLoading(false);
         return;
       }
 
       setLoading(false);
+      removeQueuedSubmission(idempotencyKey);
       setSuccess(true);
       trackFormSubmit({
         form_name: "contact",

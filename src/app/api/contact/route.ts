@@ -1,4 +1,4 @@
-import { contactLeadSchema } from "../../../../server/submissionContracts";
+import { contactIdempotencyKeySchema, contactLeadSchema } from "../../../../server/submissionContracts";
 import { getPersistenceErrorCode, isPersistenceUnavailable, persistContactLead } from "../../../../server/submissionStore";
 import {
   CONTACT_REQUEST_MAX_BYTES,
@@ -31,11 +31,18 @@ export async function POST(request: Request) {
     return jsonResponse({ ok: false, error: "invalid_payload", requestId }, 400, request);
   }
 
+  const parsedIdempotencyKey = contactIdempotencyKeySchema.safeParse(request.headers.get("idempotency-key"));
+  if (!parsedIdempotencyKey.success) {
+    return jsonResponse({ ok: false, error: "idempotency_key_required", requestId }, 400, request);
+  }
+
   try {
-    const idempotencyKey = request.headers.get("idempotency-key") || requestId;
-    const result = await persistContactLead(parsed.data, idempotencyKey);
+    const result = await persistContactLead(parsed.data, parsedIdempotencyKey.data);
     return jsonResponse({ ok: true, leadId: result.id, status: "accepted", replayed: !result.created, requestId }, 202, request);
   } catch (error) {
+    if (error instanceof Error && error.message === "idempotency_key_conflict") {
+      return jsonResponse({ ok: false, error: "idempotency_key_conflict", requestId }, 409, request);
+    }
     if (isPersistenceUnavailable(error)) {
       console.error(JSON.stringify({ event: "contact_persistence_unavailable", requestId, error: getPersistenceErrorCode(error) }));
       return jsonResponse({ ok: false, error: "persistence_unavailable", requestId }, 503, request);

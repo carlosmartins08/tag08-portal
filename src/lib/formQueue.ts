@@ -36,6 +36,10 @@ export const queueFormSubmission = (submission: Omit<QueuedSubmission, "attempts
   writeQueue(queue);
 };
 
+export const removeQueuedSubmission = (idempotencyKey: string) => {
+  writeQueue(readQueue().filter((entry) => entry.idempotencyKey !== idempotencyKey));
+};
+
 export const flushFormQueue = async () => {
   const now = Date.now();
   const pending = readQueue().filter((entry) => now - Date.parse(entry.createdAt) < MAX_AGE_MS && entry.attempts < MAX_ATTEMPTS);

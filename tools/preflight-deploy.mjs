@@ -95,7 +95,10 @@ if (sheetsEnabled) {
 }
 
 if (clickUpEnabled) {
-  for (const name of ["CLICKUP_API_TOKEN", "CLICKUP_TALENT_LIST_ID", "CLICKUP_ONBOARDING_LIST_ID"]) requireValue(name);
+  for (const name of ["CLICKUP_API_TOKEN", "CLICKUP_PRE_SALES_LIST_ID", "CLICKUP_TALENT_LIST_ID", "CLICKUP_ONBOARDING_LIST_ID"]) requireValue(name);
+  for (const name of ["CLICKUP_PRE_SALES_LIST_ID", "CLICKUP_TALENT_LIST_ID", "CLICKUP_ONBOARDING_LIST_ID"]) {
+    if (present(name) && !/^\d+$/.test(process.env[name].trim())) invalid.push(`${name} must be numeric`);
+  }
 }
 
 if (missing.length || invalid.length) {

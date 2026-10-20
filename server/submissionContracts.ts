@@ -7,6 +7,7 @@ const phone = z.string().trim().min(8).max(30).transform((value) => value.replac
 const locale = z.enum(["pt", "en", "es"]).default("pt");
 const consentVersion = z.string().trim().min(1).max(64).default("site-v1");
 const source = z.string().trim().min(1).max(120).default("site");
+export const contactIdempotencyKeySchema = z.string().trim().min(1).max(128).regex(/^[A-Za-z0-9._:-]+$/);
 const utm = z
   .object({
     source: optionalText(120),

@@ -1,9 +1,19 @@
 import { createSign } from "node:crypto";
 import pg from "pg";
+import {
+  buildContactClickUpTask,
+  findSheetRowReference,
+  getDeliveryFailure,
+  IntegrationDeliveryError,
+  integrationHttpError,
+  MAX_AUTOMATIC_DELIVERY_ATTEMPTS,
+  resolveClickUpListId,
+  TERMINAL_RETRY_AT,
+  unwrapDeliveryPayload
+} from "./integrationDelivery.mjs";
 
 const { Pool } = pg;
 const MAX_BATCH_SIZE = 20;
-const MAX_RETRY_SECONDS = 3600;
 const MAX_CLICKUP_LOOKUP_PAGES = 100;
 const PROCESSING_LEASE_SECONDS = Number.parseInt(process.env.INTEGRATION_PROCESSING_LEASE_SECONDS || "900", 10);
 const DELIVERY_ID_FILTER = process.env.INTEGRATION_DELIVERY_ID?.trim() || null;
@@ -16,18 +26,6 @@ const validateIntegrationConfiguration = () => {
   const sheetsEnabled = process.env.GOOGLE_SHEETS_ENABLED === "true";
   const clickUpEnabled = process.env.CLICKUP_ENABLED === "true";
   if (!sheetsEnabled && !clickUpEnabled) throw new Error("integration_target_not_configured");
-
-  if (sheetsEnabled) {
-    if (!process.env.GOOGLE_SHEETS_SPREADSHEET_ID) throw new Error("google_sheets_not_configured");
-    const serviceAccount = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON || "{}");
-    if (!serviceAccount.client_email || !serviceAccount.private_key) throw new Error("google_service_account_not_configured");
-  }
-
-  if (clickUpEnabled) {
-    if (!process.env.CLICKUP_API_TOKEN || !process.env.CLICKUP_TALENT_LIST_ID || !process.env.CLICKUP_ONBOARDING_LIST_ID) {
-      throw new Error("clickup_not_configured");
-    }
-  }
 };
 
 validateIntegrationConfiguration();
@@ -48,14 +46,19 @@ const pool = new Pool({
 const toBase64Url = (value) => Buffer.from(value).toString("base64url");
 const logEvent = (event, details = {}) => console.log(JSON.stringify({ event, ...details }));
 const safeErrorCode = (error) => {
-  const code = error instanceof Error ? error.message : "integration_delivery_failed";
+  const code = error && typeof error === "object" && "code" in error ? error.code : error instanceof Error ? error.message : "integration_delivery_failed";
   return /^[a-z0-9_]+$/i.test(code) ? code : "integration_delivery_failed";
 };
 
 const getGoogleAccessToken = async () => {
-  const serviceAccount = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON || "{}");
+  let serviceAccount;
+  try {
+    serviceAccount = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON || "{}");
+  } catch {
+    throw new IntegrationDeliveryError("google_service_account_invalid");
+  }
   if (!serviceAccount.client_email || !serviceAccount.private_key) {
-    throw new Error("google_service_account_not_configured");
+    throw new IntegrationDeliveryError("google_service_account_not_configured");
   }
   const privateKey = String(serviceAccount.private_key).replace(/\\n/g, "\n");
 
@@ -73,24 +76,29 @@ const getGoogleAccessToken = async () => {
   const response = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    signal: AbortSignal.timeout(15000),
     body: new URLSearchParams({
       grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
       assertion
     })
   });
-  if (!response.ok) throw new Error("google_token_exchange_failed");
-  return (await response.json()).access_token;
+  if (!response.ok) throw integrationHttpError("google_token_exchange_failed", response.status);
+  const tokenResponse = await response.json().catch(() => null);
+  if (!tokenResponse || typeof tokenResponse.access_token !== "string" || !tokenResponse.access_token) {
+    throw new IntegrationDeliveryError("google_token_response_invalid");
+  }
+  return tokenResponse.access_token;
 };
 
 const appendToSheet = async (delivery) => {
-  if (!process.env.GOOGLE_SHEETS_SPREADSHEET_ID) throw new Error("google_sheets_not_configured");
+  if (!process.env.GOOGLE_SHEETS_SPREADSHEET_ID) throw new IntegrationDeliveryError("google_sheets_not_configured");
   const tabs = {
     contact_lead: "Leads",
     onboarding_submission: "Onboarding",
     talent_application: "Talentos"
   };
   const tab = tabs[delivery.aggregate_type];
-  if (!tab) throw new Error("google_sheet_tab_not_configured");
+  if (!tab) throw new IntegrationDeliveryError("google_sheet_tab_not_configured");
 
   const token = await getGoogleAccessToken();
   const idRange = encodeURIComponent(`${tab}!A:A`);
@@ -98,21 +106,29 @@ const appendToSheet = async (delivery) => {
     `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEETS_SPREADSHEET_ID}/values/${idRange}`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
-  if (!existing.ok) throw new Error("google_sheets_lookup_failed");
-  const existingValues = (await existing.json()).values || [];
-  if (existingValues.some((row) => row[0] === delivery.id)) return delivery.id;
+  if (!existing.ok) throw integrationHttpError("google_sheets_lookup_failed", existing.status);
+  const existingBody = await existing.json();
+  if (!existingBody || typeof existingBody !== "object" || (existingBody.values !== undefined && !Array.isArray(existingBody.values))) {
+    throw new IntegrationDeliveryError("google_sheets_lookup_response_invalid");
+  }
+  const existingValues = existingBody.values || [];
+  const existingReference = findSheetRowReference(existingBody.range, existingValues, delivery.id);
+  if (existingReference) return existingReference;
 
   const range = encodeURIComponent(`${tab}!A:D`);
+  const payload = unwrapDeliveryPayload(delivery.payload);
   const response = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEETS_SPREADSHEET_ID}/values/${range}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
     {
       method: "POST",
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ values: [[delivery.id, delivery.aggregate_id, delivery.created_at, JSON.stringify(delivery.payload)]] })
+      body: JSON.stringify({ values: [[delivery.id, delivery.aggregate_id, delivery.created_at, JSON.stringify(payload)]] }),
+      signal: AbortSignal.timeout(15000)
     }
   );
-  if (!response.ok) throw new Error("google_sheets_append_failed");
-  return delivery.id;
+  if (!response.ok) throw integrationHttpError("google_sheets_append_failed", response.status);
+  const appended = await response.json();
+  return appended.updates?.updatedRange || delivery.id;
 };
 
 const findClickUpTaskByDelivery = async (listId, taskName) => {
@@ -123,12 +139,14 @@ const findClickUpTaskByDelivery = async (listId, taskName) => {
       page: String(page)
     });
     const response = await fetch(`https://api.clickup.com/api/v2/list/${listId}/task?${query}`, {
-      headers: { Authorization: process.env.CLICKUP_API_TOKEN }
+      headers: { Authorization: process.env.CLICKUP_API_TOKEN },
+      signal: AbortSignal.timeout(15000)
     });
-    if (!response.ok) throw new Error("clickup_task_lookup_failed");
+    if (!response.ok) throw integrationHttpError("clickup_task_lookup_failed", response.status);
 
-    const body = await response.json();
-    const tasks = Array.isArray(body.tasks) ? body.tasks : [];
+    const body = await response.json().catch(() => null);
+    if (!body || !Array.isArray(body.tasks)) throw new IntegrationDeliveryError("clickup_task_lookup_response_invalid");
+    const tasks = body.tasks;
     const existing = tasks.find((task) => task.name === taskName);
     if (existing?.id) return existing.id;
 
@@ -140,12 +158,12 @@ const findClickUpTaskByDelivery = async (listId, taskName) => {
 };
 
 const createClickUpTask = async (delivery) => {
-  const listId = delivery.aggregate_type === "talent_application"
-    ? process.env.CLICKUP_TALENT_LIST_ID
-    : process.env.CLICKUP_ONBOARDING_LIST_ID;
-  if (!process.env.CLICKUP_API_TOKEN || !listId) throw new Error("clickup_not_configured");
+  const listId = resolveClickUpListId(delivery.aggregate_type, process.env);
+  if (!process.env.CLICKUP_API_TOKEN) throw new IntegrationDeliveryError("clickup_not_configured");
 
-  const taskName = `${delivery.aggregate_type}:${delivery.id}`;
+  const payload = unwrapDeliveryPayload(delivery.payload);
+  const contactTask = delivery.aggregate_type === "contact_lead" ? buildContactClickUpTask(delivery, payload) : null;
+  const taskName = contactTask?.name || `${delivery.aggregate_type}:${delivery.id}`;
   const existingTaskId = await findClickUpTaskByDelivery(listId, taskName);
   if (existingTaskId) return existingTaskId;
 
@@ -157,12 +175,17 @@ const createClickUpTask = async (delivery) => {
     },
     body: JSON.stringify({
       name: taskName,
-      description: JSON.stringify(delivery.payload),
-      tags: ["tag08", delivery.aggregate_type]
-    })
+      description: contactTask?.description || JSON.stringify(payload),
+      tags: contactTask?.tags || ["tag08", delivery.aggregate_type]
+    }),
+    signal: AbortSignal.timeout(15000)
   });
-  if (!response.ok) throw new Error("clickup_task_create_failed");
-  return (await response.json()).id;
+  if (!response.ok) throw integrationHttpError("clickup_task_create_failed", response.status);
+  const createdTask = await response.json().catch(() => null);
+  if (!createdTask || typeof createdTask.id !== "string" || !createdTask.id) {
+    throw new IntegrationDeliveryError("clickup_task_response_invalid");
+  }
+  return createdTask.id;
 };
 
 const enabledTargets = () => {
@@ -180,6 +203,7 @@ const claimDeliveries = async (client, targets) => {
       SELECT id FROM integration_deliveries
       WHERE status IN ('PENDING'::"DeliveryStatus", 'FAILED'::"DeliveryStatus")
         AND next_attempt_at <= NOW()
+        AND attempts < $4
       AND target = ANY($2::"DeliveryTarget"[])
       AND ($3::text IS NULL OR id = $3)
       ORDER BY created_at
@@ -191,7 +215,7 @@ const claimDeliveries = async (client, targets) => {
     FROM candidates
     WHERE d.id = candidates.id
     RETURNING d.*`,
-    [MAX_BATCH_SIZE, targets, DELIVERY_ID_FILTER]
+    [MAX_BATCH_SIZE, targets, DELIVERY_ID_FILTER, MAX_AUTOMATIC_DELIVERY_ATTEMPTS]
   );
   return result.rows;
 };
@@ -217,13 +241,14 @@ const markDelivered = (client, id, externalReference) =>
     [id, externalReference]
   );
 
-const markFailed = (client, delivery, code) => {
-  const retrySeconds = Math.min(2 ** Math.min(Number(delivery.attempts), 12), MAX_RETRY_SECONDS);
+const markFailed = (client, delivery, error) => {
+  const failure = getDeliveryFailure(error, Number(delivery.attempts));
+  const retryAt = failure.retry ? failure.retryAt : TERMINAL_RETRY_AT;
   return client.query(
     `UPDATE integration_deliveries
-     SET status = 'FAILED'::"DeliveryStatus", next_attempt_at = NOW() + ($2 * INTERVAL '1 second'), processing_started_at = NULL, last_error_code = $3, last_error_at = NOW(), updated_at = NOW()
+     SET status = 'FAILED'::"DeliveryStatus", next_attempt_at = $2, processing_started_at = NULL, last_error_code = $3, last_error_at = NOW(), updated_at = NOW()
      WHERE id = $1`,
-    [delivery.id, retrySeconds, code]
+    [delivery.id, retryAt, failure.code]
   );
 };
 
@@ -231,7 +256,10 @@ const processDelivery = async (delivery) => {
   if (process.env.INTEGRATIONS_ENABLED !== "true") return "disabled";
   if (MOCK_INTEGRATION_MODE) {
     if (MOCK_INTEGRATION_FAILURE) {
-      throw new Error(`integration_mock_${MOCK_INTEGRATION_FAILURE}`);
+      const error = new Error(`integration_mock_${MOCK_INTEGRATION_FAILURE}`);
+      error.retryable = true;
+      error.code = error.message;
+      throw error;
     }
     return `mock:${delivery.target.toLowerCase()}:${delivery.id}`;
   }
@@ -274,8 +302,16 @@ if (targets.length === 0) {
         }
       } catch (error) {
         const code = safeErrorCode(error);
-        await markFailed(client, delivery, code);
-        logEvent("integration_delivery_failed", { deliveryId: delivery.id, target: delivery.target, aggregateType: delivery.aggregate_type, code });
+        const failure = getDeliveryFailure(error, Number(delivery.attempts));
+        await markFailed(client, delivery, error);
+        logEvent("integration_delivery_failed", {
+          deliveryId: delivery.id,
+          target: delivery.target,
+          aggregateType: delivery.aggregate_type,
+          code,
+          retryScheduled: failure.retry,
+          terminal: !failure.retry
+        });
       }
     }
   } finally {

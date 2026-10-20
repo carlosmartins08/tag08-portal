@@ -30,9 +30,10 @@ if (sheetsEnabled) {
 
 if (clickUpEnabled) {
   requireValue("CLICKUP_API_TOKEN");
+  requireValue("CLICKUP_PRE_SALES_LIST_ID");
   requireValue("CLICKUP_TALENT_LIST_ID");
   requireValue("CLICKUP_ONBOARDING_LIST_ID");
-  for (const name of ["CLICKUP_TALENT_LIST_ID", "CLICKUP_ONBOARDING_LIST_ID"]) {
+  for (const name of ["CLICKUP_PRE_SALES_LIST_ID", "CLICKUP_TALENT_LIST_ID", "CLICKUP_ONBOARDING_LIST_ID"]) {
     if (present(name) && !/^\d+$/.test(process.env[name].trim())) invalid.push(`${name} must be numeric`);
   }
 }

@@ -19,6 +19,7 @@ export async function POST(request: Request) {
     where: deliveryId ? { id: deliveryId, status: DeliveryStatus.FAILED } : { status: DeliveryStatus.FAILED },
     data: {
       status: DeliveryStatus.PENDING,
+      attempts: 0,
       nextAttemptAt: new Date(),
       processingStartedAt: null,
       lastErrorCode: null,

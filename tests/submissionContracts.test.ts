@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { contactLeadSchema, talentApplicationSchema } from "../server/submissionContracts";
+import { contactIdempotencyKeySchema, contactLeadSchema, talentApplicationSchema } from "../server/submissionContracts";
 
 const validContact = {
   name: "Ana Pessoa",
@@ -54,6 +54,25 @@ test("contact contract accepts guided intake and bounds service interests", () =
   assert.equal(contactLeadSchema.safeParse({ ...validContact, serviceInterests: [" "] }).success, false);
   assert.equal(contactLeadSchema.safeParse({ ...validContact, serviceInterests: Array(10).fill("branding") }).success, false);
   assert.equal(contactLeadSchema.safeParse({ ...validContact, serviceInterests: ["branding", "branding"] }).success, false);
+});
+
+test("contact idempotency key is required, bounded and opaque", () => {
+  assert.equal(contactIdempotencyKeySchema.safeParse("4d46c90e-c774-4d4d-b48d-8ddeae33fd54").success, true);
+  assert.equal(contactIdempotencyKeySchema.safeParse("STAGING_TEST:run:contact").success, true);
+  assert.equal(contactIdempotencyKeySchema.safeParse(null).success, false);
+  assert.equal(contactIdempotencyKeySchema.safeParse("ana@example.com").success, false);
+  assert.equal(contactIdempotencyKeySchema.safeParse("key with spaces").success, false);
+  assert.equal(contactIdempotencyKeySchema.safeParse("k".repeat(129)).success, false);
+});
+
+test("contact contract preserves contextual source and multiple intentions", () => {
+  const parsed = contactLeadSchema.parse({
+    ...validContact,
+    source: "contact-page:offer",
+    serviceInterests: ["technology", "branding"]
+  });
+  assert.equal(parsed.source, "contact-page:offer");
+  assert.deepEqual(parsed.serviceInterests, ["technology", "branding"]);
 });
 
 test("talent contract requires professional links and consent", () => {
