@@ -148,7 +148,7 @@ export default function MiniCases({
     <section 
       id="mini-cases-section" 
       data-testid="mini-cases"
-      className="tag08-section w-full px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/20 text-left font-sans"
+      className="tag08-contextual-section tag08-section w-full px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/20 text-left font-sans"
     >
       <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
         

@@ -210,49 +210,49 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
-            <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
-              <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
+            <div className="group rounded-3xl border border-[color:var(--color-text-secondary)] bg-[color:var(--color-text-primary)] p-6 text-[color:var(--color-main)] shadow-[var(--shadow-base)] transition-[border-color,box-shadow,transform] duration-200 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[color:var(--color-accent-readable)] motion-safe:hover:shadow-[var(--shadow-emphasis)] motion-reduce:transform-none">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[color:var(--color-charcoal-700)] bg-[color:var(--color-main)]">
                 <Zap className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-white font-display font-black text-sm">Implantação Imediata</h3>
-                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
+                <h3 className="font-display text-sm font-black text-[color:var(--color-main)]">Implantação Imediata</h3>
+                <p className="text-xs font-medium leading-relaxed text-[color:var(--color-charcoal-700)] sm:text-xs">
                   Organizamos ritos práticos de introdução por meio de checklists dinâmicos no dia a dia do colaborador, vinculando as wikis aos cards de tarefas reais de forma rápida.
                 </p>
               </div>
             </div>
 
-            <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
-              <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
+            <div className="group rounded-3xl border border-[color:var(--color-text-secondary)] bg-[color:var(--color-text-primary)] p-6 text-[color:var(--color-main)] shadow-[var(--shadow-base)] transition-[border-color,box-shadow,transform] duration-200 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[color:var(--color-accent-readable)] motion-safe:hover:shadow-[var(--shadow-emphasis)] motion-reduce:transform-none">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[color:var(--color-charcoal-700)] bg-[color:var(--color-main)]">
                 <BookOpen className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-white font-display font-black text-sm">Workshops Dedicados</h3>
-                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
+                <h3 className="font-display text-sm font-black text-[color:var(--color-main)]">Workshops Dedicados</h3>
+                <p className="text-xs font-medium leading-relaxed text-[color:var(--color-charcoal-700)] sm:text-xs">
                   Workshops interativos em vídeo com o time focado no uso das ferramentas, gravação de dúvidas conceituais das wikis, e preenchimento de métricas comerciais de rotina operacional.
                 </p>
               </div>
             </div>
 
-            <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
-              <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
+            <div className="group rounded-3xl border border-[color:var(--color-text-secondary)] bg-[color:var(--color-text-primary)] p-6 text-[color:var(--color-main)] shadow-[var(--shadow-base)] transition-[border-color,box-shadow,transform] duration-200 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[color:var(--color-accent-readable)] motion-safe:hover:shadow-[var(--shadow-emphasis)] motion-reduce:transform-none">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[color:var(--color-charcoal-700)] bg-[color:var(--color-main)]">
                 <Target className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-white font-display font-black text-sm">Auditoria Recorrente</h3>
-                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
+                <h3 className="font-display text-sm font-black text-[color:var(--color-main)]">Auditoria Recorrente</h3>
+                <p className="text-xs font-medium leading-relaxed text-[color:var(--color-charcoal-700)] sm:text-xs">
                   Analises de adesão periódicas no cronograma das wikis. Destacómos condutas exemplares e auxiliamos os colaboradores com dificuldades técnicas no funil operacional da empresa.
                 </p>
               </div>
             </div>
 
-            <div className="bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 duration-300 rounded-3xl p-6 space-y-4 group">
-              <div className="w-10 h-10 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
+            <div className="group rounded-3xl border border-[color:var(--color-text-secondary)] bg-[color:var(--color-text-primary)] p-6 text-[color:var(--color-main)] shadow-[var(--shadow-base)] transition-[border-color,box-shadow,transform] duration-200 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[color:var(--color-accent-readable)] motion-safe:hover:shadow-[var(--shadow-emphasis)] motion-reduce:transform-none">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[color:var(--color-charcoal-700)] bg-[color:var(--color-main)]">
                 <RefreshCw className="w-5 h-5 text-brand" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-white font-display font-black text-sm">Ajustes Incrementais</h3>
-                <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
+                <h3 className="font-display text-sm font-black text-[color:var(--color-main)]">Ajustes Incrementais</h3>
+                <p className="text-xs font-medium leading-relaxed text-[color:var(--color-charcoal-700)] sm:text-xs">
                   A rotina prática esbarra em atritos inevitáveis. Customizamos e polimos as regras e os playbooks de forma orgânica de acordo com o crescimento real das suas divisões táticas.
                 </p>
               </div>
@@ -392,9 +392,13 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 </div>
 
                 {/* Vertical Timeline Steps */}
-                <div className="space-y-4">
-                  {roadmap.phases.map((phase) => (
-                    <div key={phase.step} className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04] flex items-start gap-4 hover:border-brand/20 transition-colors duration-200">
+                <div key={activeLevel} className="space-y-4">
+                  {roadmap.phases.map((phase, phaseIndex) => (
+                    <div
+                      key={phase.step}
+                      className="roadmap-phase-enter p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04] flex items-start gap-4 hover:border-brand/20 transition-colors duration-200"
+                      style={{ animationDelay: `${phaseIndex * 45}ms` }}
+                    >
                       <div className="font-sans text-xs font-black text-brand bg-brand/5 border border-brand/10 rounded px-2.5 py-1 shrink-0 mt-0.5">
                         {phase.step}
                       </div>
@@ -667,9 +671,12 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 { title: "3. Briefing de Resultados", desc: "Reunião rápida semanal com a diretoria para relatar o cumprimento exato dos indicadores de aderência dos times." },
                 { title: "4. Calibragem Mensal", desc: "Encontros de fim de ciclo para ajustar fluxos que geram ruído estrutural ou gargalos operacionais frequentes." }
               ].map((step, idx) => (
-                <div key={idx} className="p-5 rounded-2xl bg-charcoal-900 border border-white/[0.04] space-y-2">
-                  <h3 className="text-white font-display font-semibold text-xs sm:text-sm tracking-tight text-brand">{step.title}</h3>
-                  <p className="text-zinc-400 text-xs leading-relaxed font-sans">{step.desc}</p>
+                <div
+                  key={idx}
+                  className="group rounded-2xl border border-[color:var(--color-text-secondary)] bg-[color:var(--color-text-primary)] p-5 text-[color:var(--color-main)] shadow-[var(--shadow-base)] transition-[border-color,box-shadow,transform] duration-200 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[color:var(--color-accent-readable)] motion-safe:hover:shadow-[var(--shadow-emphasis)] motion-reduce:transform-none"
+                >
+                  <h3 className="font-display text-xs font-semibold tracking-tight text-[color:var(--color-main)] sm:text-sm">{step.title}</h3>
+                  <p className="font-sans text-xs leading-relaxed text-[color:var(--color-charcoal-700)]">{step.desc}</p>
                 </div>
               ))}
             </div>
@@ -732,10 +739,10 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
           </div>
 
           {/* CTA para Ativação */}
-          <div className="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-6 text-left">
+          <div className="flex flex-col items-center justify-between gap-6 rounded-2xl border border-[color:var(--color-text-secondary)] bg-[color:var(--color-text-primary)] p-6 text-left text-[color:var(--color-main)] shadow-[var(--shadow-base)] transition-[border-color,box-shadow] duration-200 sm:flex-row sm:p-8 motion-safe:hover:border-[color:var(--color-accent-readable)] motion-safe:hover:shadow-[var(--shadow-emphasis)]">
             <div className="space-y-1">
-              <h3 className="font-display font-semibold text-lg text-white">Sua equipe precisa de acompanhamento operacional sênior?</h3>
-              <p className="text-zinc-400 text-xs sm:text-sm font-sans max-w-xl leading-relaxed">
+              <h3 className="font-display text-lg font-semibold text-[color:var(--color-main)]">Sua equipe precisa de acompanhamento operacional sênior?</h3>
+              <p className="max-w-xl font-sans text-xs leading-relaxed text-[color:var(--color-charcoal-700)] sm:text-sm">
                 Fale com nossos engenheiros de processos e agende um diagnóstico sobre a atual taxa de adesão a manuais e playbooks da sua empresa.
               </p>
             </div>
@@ -744,7 +751,7 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
                 onNavigate("/contato");
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="min-h-11 px-6 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs tag08-meta font-bold uppercase tracking-widest rounded-xl transition-colors duration-200 active:scale-[0.98] shrink-0"
+              className="min-h-11 shrink-0 rounded-xl border border-[color:var(--color-main)] bg-[color:var(--color-main)] px-6 py-4 text-xs font-bold uppercase tracking-widest text-[color:var(--color-text-primary)] transition-[background-color,border-color,transform] duration-200 hover:border-[color:var(--color-charcoal-700)] hover:bg-[color:var(--color-charcoal-700)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent-readable)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-text-primary)]"
             >
               Auditar Adesão de Processos
             </button>
@@ -753,7 +760,11 @@ export default function ProcessActivation({ onNavigate }: ActivationProps) {
         </div>
       </section>
 
-      <ServiceInsightsBridge servicePath="/servicos/process-activation" onNavigate={onNavigate} />
+      <ServiceInsightsBridge
+        servicePath="/servicos/process-activation"
+        onNavigate={onNavigate}
+        variant="editorial-light"
+      />
 
       {/* SECTION - FAQ */}
       <section className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
