@@ -1,6 +1,130 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("experiencia de contato", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.route("**/*", async (route) => {
+      const url = new URL(route.request().url());
+      if (url.hostname !== "127.0.0.1" && url.hostname !== "localhost") {
+        await route.abort();
+        return;
+      }
+      await route.continue();
+    });
+  });
+
+  test("mantem acesso direto neutro e preseleciona somente contexto valido e editavel", async ({ page }) => {
+    await page.goto("/contato", { waitUntil: "domcontentloaded" });
+    const newProject = page.getByRole("radio", { name: /Quero iniciar um projeto/ });
+    await newProject.focus();
+    await expect(newProject).toBeFocused();
+    await page.keyboard.press("Space");
+    await expect(newProject).toBeChecked();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await expect(page.getByRole("checkbox", { name: "Organizar marca ou posicionamento" })).not.toBeChecked();
+    await expect(page.getByRole("checkbox", { name: /Preciso de orienta/ })).not.toBeChecked();
+
+    await page.goto("/contato?intent=branding&origin=offer", { waitUntil: "domcontentloaded" });
+    await page.getByRole("radio", { name: /Quero iniciar um projeto/ }).check();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    const branding = page.getByRole("checkbox", { name: "Organizar marca ou posicionamento" });
+    await expect(branding).toBeChecked();
+    await expect(page.getByRole("status").filter({ hasText: "página de oferta" })).toBeVisible();
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await page.getByRole("radio", { name: /Quero iniciar um projeto/ }).check();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    const restoredBranding = page.getByRole("checkbox", { name: "Organizar marca ou posicionamento" });
+    await expect(restoredBranding).toBeChecked();
+    await restoredBranding.uncheck();
+    await page.getByRole("checkbox", { name: /Desenvolver site, e-commerce ou/ }).check();
+    await expect(branding).not.toBeChecked();
+    await expect(page.getByRole("checkbox", { name: /Desenvolver site, e-commerce ou/ })).toBeChecked();
+    expect(new URL(page.url()).search).toBe("?intent=branding&origin=offer");
+
+    await page.getByRole("button", { name: "Voltar", exact: true }).click();
+    await page.getByRole("radio", { name: /sou cliente/ }).check();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await expect(page.getByRole("status")).toHaveCount(0);
+    await expect(page.getByText(/identifique o projeto/)).toBeVisible();
+  });
+
+  test("ignora contexto invÃ¡lido sem bloquear o router neutro", async ({ page }) => {
+    await page.goto("/contato?intent=cliente&origin=crm&campaign=unknown", { waitUntil: "domcontentloaded" });
+    await page.getByRole("radio", { name: /Quero iniciar um projeto/ }).check();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await expect(page.getByRole("status")).toHaveCount(0);
+    await expect(page.getByRole("checkbox", { name: "Organizar marca ou posicionamento" })).not.toBeChecked();
+    await expect(page.getByRole("checkbox", { name: /Preciso de orienta/ })).not.toBeChecked();
+    const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
+    expect(new URL(canonical!).pathname).toBe("/contato");
+    expect(new URL(canonical!).search).toBe("");
+  });
+
+  test("trÃ¡fego e performance continuam como capacidade contextual", async ({ page }) => {
+    await page.goto("/contato?intent=trafego-performance&origin=offer", { waitUntil: "domcontentloaded" });
+    await page.getByRole("radio", { name: /Quero iniciar um projeto/ }).check();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    const capabilityGroup = page.getByRole("group", { name: "Capacidades que podem apoiar uma frente" });
+    await expect(capabilityGroup.getByRole("checkbox", { name: /SEO, copywriting ou performance/ })).toBeChecked();
+  });
+
+  test("Home, hub e oferta levam somente contexto allowlisted; Sebraetec preserva origem sem virar famÃ­lia", async ({ page }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.getByRole("button", { name: /Ir para contato e solicitar diagn/i }).click();
+    await expect(page).toHaveURL(/\/contato\?intent=orientacao&origin=home$/);
+    await page.goBack();
+    await expect(page).toHaveURL(/\/$/);
+    await page.goForward();
+    await expect(page).toHaveURL(/\/contato\?intent=orientacao&origin=home$/);
+
+    await page.goto("/servicos", { waitUntil: "domcontentloaded" });
+    await page.getByRole("button", { name: /QUERO ENTENDER MEU MELHOR CAMINHO/ }).first().click();
+    await expect(page).toHaveURL(/\/contato\?intent=orientacao&origin=services$/);
+
+    await page.goto("/servicos/desenvolvimento-web", { waitUntil: "domcontentloaded" });
+    await page.getByRole("button", { name: /PLANEJAR MEU SITE/i }).click();
+    await expect(page).toHaveURL(/\/contato\?intent=desenvolvimento-web&origin=offer$/);
+
+    await page.goto("/sebraetec-impulsionando-empreendedores", { waitUntil: "domcontentloaded" });
+    await page.getByRole("button", { name: /IR PARA O CONTATO/i }).click();
+    await expect(page).toHaveURL(/\/contato\?origin=sebraetec$/);
+    await page.getByRole("radio", { name: /Quero iniciar um projeto/ }).check();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await expect(page.getByRole("status").filter({ hasText: "Sebraetec" })).toBeVisible();
+  });
+
+  test("submete a intencao contextual sem PII na URL e preserva a confirmacao aprovada", async ({ page }) => {
+    let submittedPayload: Record<string, unknown> | undefined;
+    await page.route("**/api/contact", async (route) => {
+      submittedPayload = route.request().postDataJSON() as Record<string, unknown>;
+      await route.fulfill({ status: 200, contentType: "application/json", body: "{}" });
+    });
+
+    await page.goto("/contato?intent=desenvolvimento-web&origin=offer", { waitUntil: "domcontentloaded" });
+    expect(new URL(page.url()).search).not.toMatch(/name|email|phone|message/i);
+    await page.getByRole("radio", { name: /Quero iniciar um projeto/ }).check();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await expect(page.getByRole("checkbox", { name: /Desenvolver site, e-commerce ou/ })).toBeChecked();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await expect(page.getByText("Frentes:")).toBeVisible();
+    await expect(page.getByText(/Desenvolver site, e-commerce ou/)).toBeVisible();
+    await page.getByLabel("Qual o seu nome?").fill("Ana Silva");
+    await page.getByLabel("Nome da Empresa").fill("TAG08 Cliente");
+    await page.locator("#form-whatsapp").fill("83999999999");
+    await page.getByLabel("E-mail Corporativo").fill("ana@example.com");
+    await page.getByLabel(/Autorizo o uso destes dados/).check();
+    await page.getByRole("button", { name: /Enviar solicita/i }).click();
+
+    await expect(page.getByRole("heading", { name: "Mensagem Enviada!" })).toBeVisible();
+    await expect(page.getByText(/recebida pela TAG08/)).toBeVisible();
+    await expect(page.getByText(/onboarding/i)).toHaveCount(0);
+    expect(submittedPayload).toMatchObject({
+      requestType: "new_project",
+      serviceInterests: ["desenvolvimento-web"],
+      source: "contact-page:offer",
+      message: ""
+    });
+  });
+
   test("prioriza o formulario antes dos canais no mobile", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/contato", { waitUntil: "domcontentloaded" });

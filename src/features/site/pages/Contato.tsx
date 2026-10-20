@@ -24,6 +24,7 @@ import { queueFormSubmission } from "../../../lib/formQueue";
 import { COOKIE_CONSENT_EVENT, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
 import CountryFlag from "../../../components/CountryFlag";
 import type { RouteLocale } from "../../../config/routeRegistry";
+import { getContactJourneyOriginSource, parseContactJourneyContext, type ContactJourneyOrigin } from "../../../lib/contactJourney";
 
 const CONTACT_INTENT_GROUPS: { label: string; options: readonly (readonly [string, string])[] }[] = [
   {
@@ -56,6 +57,16 @@ const CONTACT_INTENT_GROUPS: { label: string; options: readonly (readonly [strin
 ];
 const CONTACT_SERVICE_OPTIONS = CONTACT_INTENT_GROUPS.flatMap((group) => group.options);
 const CONTACT_SERVICE_LABELS = Object.fromEntries(CONTACT_SERVICE_OPTIONS) as Record<string, string>;
+const CONTACT_INTENT_CONTEXT_LABELS: Record<string, string> = {
+  ...CONTACT_SERVICE_LABELS,
+  orientacao: "Orientação ou outra necessidade"
+};
+const CONTACT_ORIGIN_LABELS: Record<ContactJourneyOrigin, string> = {
+  home: "Home",
+  services: "Serviços",
+  offer: "página de oferta",
+  sebraetec: "página do Sebraetec"
+};
 
 export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -142,6 +153,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
     stage: "not_collected",
     message: ""
   });
+  const [journeyContext, setJourneyContext] = useState<ReturnType<typeof parseContactJourneyContext>>({});
   const [activeStep, setActiveStep] = useState(1);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
 
@@ -151,6 +163,18 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   const [consent, setConsent] = useState(false);
   const [consentError, setConsentError] = useState(false);
   const [submitError, setSubmitError] = useState("");
+
+  useEffect(() => {
+    const context = parseContactJourneyContext(window.location.search);
+    setJourneyContext(context);
+    if (!context.intent) return;
+
+    setFormData((previous) => ({
+      ...previous,
+      serviceInterests: context.intent === "orientacao" ? [] : [context.intent],
+      needsServiceGuidance: context.intent === "orientacao"
+    }));
+  }, []);
 
   useEffect(() => {
     if (success) {
@@ -272,7 +296,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
       consent,
       consentVersion: "contact-v1",
       locale,
-      source: "contact-page",
+      source: getContactJourneyOriginSource(journeyContext.origin),
       utm: {
         source: searchParams.get("utm_source") || "",
         medium: searchParams.get("utm_medium") || "",
@@ -761,6 +785,12 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   </div>}
 
                   {activeStep === 2 && <div className="space-y-5">
+                    {formData.requestType === "new_project" && journeyContext.intent && <p className="rounded-lg border border-brand/20 bg-brand/5 px-3 py-2 text-xs leading-relaxed text-zinc-300" role="status">
+                      Sugestão a partir de {journeyContext.origin ? CONTACT_ORIGIN_LABELS[journeyContext.origin] : "sua escolha"}: <strong className="text-white">{CONTACT_INTENT_CONTEXT_LABELS[journeyContext.intent]}</strong>. Você pode alterar ou complementar abaixo.
+                    </p>}
+                    {formData.requestType === "new_project" && !journeyContext.intent && journeyContext.origin === "sebraetec" && <p className="rounded-lg border border-white/[0.08] bg-white/[0.02] px-3 py-2 text-xs leading-relaxed text-zinc-300" role="status">
+                      Você veio da página do Sebraetec. Registre a necessidade que deseja encaminhar ou escolha outra opção.
+                    </p>}
                     {formData.requestType === "new_project" ? <fieldset className="space-y-3">
                       <legend className="text-sm font-semibold text-white">Qual necessidade você quer encaminhar? <span className="font-normal text-zinc-400">(pode selecionar mais de uma)</span></legend>
                       <div className="space-y-4">

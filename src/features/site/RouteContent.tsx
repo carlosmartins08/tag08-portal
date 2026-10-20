@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import ErrorBoundary from "../../components/ErrorBoundary";
 import { canonicalizeRoute, getContentReviewRouteByPath, getLocalizedPath, getRouteByPath, type RouteLocale } from "../../config/routeRegistry";
+import { contextualizeContactTarget } from "../../lib/contactJourney";
 
 const Home = dynamic(() => import("./pages/Home"));
 const Sobre = dynamic(() => import("./pages/Sobre"));
@@ -26,7 +27,14 @@ const ProducaoAudiovisual = dynamic(() => import("./pages/ProducaoAudiovisual"))
 
 export default function RouteContent({ path, locale }: { path: string; locale: RouteLocale }) {
   const router = useRouter();
-  const navigate = (targetPath: string) => router.push(getLocalizedPath(canonicalizeRoute(targetPath), locale));
+  const navigate = (targetPath: string) => {
+    const contextualTarget = contextualizeContactTarget(path, targetPath);
+    const [targetWithoutHash] = contextualTarget.split("#", 1);
+    const queryIndex = targetWithoutHash.indexOf("?");
+    const targetRoute = queryIndex === -1 ? targetWithoutHash : targetWithoutHash.slice(0, queryIndex);
+    const query = queryIndex === -1 ? "" : targetWithoutHash.slice(queryIndex);
+    router.push(`${getLocalizedPath(canonicalizeRoute(targetRoute), locale)}${query}`);
+  };
   const route = getRouteByPath(path) ?? getContentReviewRouteByPath(path);
 
   let page = null;
