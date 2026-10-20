@@ -218,13 +218,13 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                 <Radio className="w-3.5 h-3.5 animate-pulse" /> INFRAESTRUTURA DE SOBERANIDADE CORPORATIVA
               </span>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter">
-                HOSPEDAGEM E MANUTENÇÃO: <br />
-                <span className="text-brand">SEU PORTAL PARA O FUTURO DIGITAL.</span>
+                CONTINUIDADE TECNOLÓGICA <br />
+                <span className="text-brand">PARA ESTRUTURAS WEB EM OPERAÇÃO.</span>
               </h1>
             </div>
             <div className="lg:col-span-5 space-y-4 pt-1 lg:pt-8">
               <p className="text-zinc-400 text-sm sm:text-base leading-relaxed font-sans font-medium">
-                Bem-vindo ao ecossistema da Agência TAG08, onde cada byte e pixel é supervisionado por especialistas para garantir que seu site permaneça estável, rápido e confiável. Aqui, nossa jornada de engenharia é guiada por inovação, previsibilidade e suporte contínuo para sua operação digital.
+                Hospedagem e manutenção são serviços de continuidade tecnológica ligados ao ecossistema de Tecnologia/Web. A página mantém as informações comerciais existentes, ainda sujeitas à validação específica de valores, limites, SLA e condições.
               </p>
               <div className="pt-2 flex flex-col sm:flex-row gap-3">
                 <a

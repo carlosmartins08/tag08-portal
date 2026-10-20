@@ -28,10 +28,10 @@ test("prévia local abre case em investigação sem adicioná-lo à produção",
 test("prévia local apresenta leitura inicial e os dois canais de WhatsApp da Assessoria", async ({ page }) => {
   await page.goto("/servicos/assessoria-marketing-digital-estrategico", { waitUntil: "domcontentloaded" });
   await page.waitForLoadState("networkidle");
-  await expect(page).toHaveTitle("Assessoria de Marketing Estratégico | TAG08");
+  await expect(page).toHaveTitle("Assessoria Estratégica de Negócios | TAG08");
   await expect(page.locator('meta[name="description"]')).toHaveAttribute(
     "content",
-    "Assessoria de marketing estratégico para empresas que precisam organizar posicionamento, prioridades, comunicação, canais e planejamento antes de ampliar a execução."
+    "Assessoria Estratégica de Negócios para organizar posicionamento, prioridades, comunicação, canais e planejamento antes de ampliar a execução."
   );
 
   const answers = [

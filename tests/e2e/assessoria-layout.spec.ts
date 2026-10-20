@@ -57,7 +57,7 @@ test("Assessoria usa accordion sem tabs e preserva foco no quiz", async ({ page 
   await acceptCookiesForInteraction(page);
   await expect(page.getByRole("tablist")).toHaveCount(0);
 
-  const faqButton = page.getByRole("button", { name: "O que é a Assessoria de Marketing Estratégico da TAG08?" });
+  const faqButton = page.getByRole("button", { name: "O que é a Assessoria Estratégica de Negócios da TAG08?" });
   await expect(faqButton).toHaveAttribute("aria-expanded", "true");
   const panelId = await faqButton.getAttribute("aria-controls");
   expect(panelId).toBeTruthy();

@@ -53,7 +53,7 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
 
   const faqs = [
     {
-      q: "Quem pode se cadastrar no Programa de Afiliados?",
+      q: "Quem pode se cadastrar no Programa de Parceria?",
       a: "Qualquer pessoa física ou jurídica que possua relacionamento comercial com outras empresas. Ideal para freelancers, consultores de marketing, agências de publicidade complementares, designers, gestores de tráfego, contadores ou parceiros que confiam e indicam o trabalho da TAG08."
     },
     {
@@ -90,10 +90,10 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta self-start">
-                PROGRAMA DE AFILIADOS // INDIQUE E GANHE
+                PROGRAMA DE PARCERIA // INDICAÇÕES
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter">
-                INDIQUE CLIENTES, <br />
+                FAÇA PARCERIAS, <br />
                 <span className="text-brand-secondary">RECEBA COMISSÕES POR INDICAÇÕES.</span>
               </h1>
             </div>
@@ -108,9 +108,9 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
           <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px] overflow-visible">
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[4/3] sm:aspect-[2.39/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
               <ResilientImage
-                fallbackLabel="Programa de afiliados TAG08"
+                fallbackLabel="Programa de Parceria TAG08"
                 src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1600"
-                alt="Programa de Afiliados e Parceiros Comerciais TAG08"
+                alt="Programa de Parceria e parceiros comerciais TAG08"
                 sizes="(max-width: 640px) 100vw, (max-width: 1280px) 100vw, 1280px"
                 className="w-full h-full object-cover grayscale brightness-40 transition-transform duration-200 ease-out motion-safe:group-hover:scale-[1.01]"
                 referrerPolicy="no-referrer"
@@ -120,10 +120,10 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
 
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(45px)" }}>
                 <TrackedOutboundLink
-                  href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20me%20cadastrar%20no%20Programa%20de%20Afiliados%20da%20TAG08%20para%20fazer%20indicações!")}
+                  href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20me%20cadastrar%20no%20Programa%20de%20Parceria%20da%20TAG08%20para%20fazer%20indicações!")}
                   target="_blank"
                   rel="noreferrer"
-                  label="Cadastrar no programa de afiliados"
+                  label="Cadastrar no Programa de Parceria"
                   surface="affiliate-hero"
                   className="group min-h-11 bg-brand-secondary text-black font-sans font-black text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] motion-safe:hover:scale-105 transition-[background-color,box-shadow,transform] duration-200 border border-brand-secondary hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-black flex items-center gap-2 cursor-pointer z-20"
                 >
@@ -305,7 +305,7 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
                   href={buildBrazilWhatsAppUrl(`Olá,%20fiz%20uma%20simulação%20no%20site%20da%20TAG08!%20Gostaria%20de%20indicar%20oportunidades%20para%20Branding%20(${numBranding}%20proj),%20Sites%20(${numWebsites}%20proj)%20e%20Redes%20Sociais%20(${numRedesSociais}%20mensais).`)}
                   target="_blank"
                   rel="noreferrer"
-                  label="Enviar simulação de afiliados"
+                  label="Enviar simulação do Programa de Parceria"
                   surface="affiliate-simulator"
                   onClick={() => trackAffiliateSimulator("cta_clicked")}
                   className="group min-h-11 w-full bg-brand-secondary text-black font-sans font-black text-xs uppercase tracking-widest py-3.5 px-6 rounded-full shadow-[0_15px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] flex items-center justify-center gap-1.5 motion-safe:hover:scale-[1.02] transition-[background-color,box-shadow,transform] duration-200 cursor-pointer text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900"
@@ -402,7 +402,7 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
           <HelpCircle className="w-8 h-8 text-brand mx-auto" />
           <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">DÚVIDAS FREQUENTES SOBRE O PROGRAMA</h2>
           <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-            Confira detalhes operacionais e tire todas as suas dúvidas sobre o andamento e compensação dos afiliados.
+            Confira os detalhes do Programa de Parceria e tire suas dúvidas sobre o acompanhamento das indicações.
           </p>
         </div>
 
@@ -450,7 +450,7 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
           </span>
           
           <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white tracking-tighter leading-tight max-w-3xl mx-auto z-10">
-            PRONTO PARA ENTRAR NO <span className="text-brand-secondary">PROGRAMA DE AFILIADOS?</span>
+            PRONTO PARA ENTRAR NO <span className="text-brand-secondary">PROGRAMA DE PARCERIA?</span>
           </h2>
           
           <p className="text-zinc-400 text-xs sm:text-sm font-medium max-w-2xl mx-auto z-10 leading-relaxed">
@@ -459,10 +459,10 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 z-10 relative">
             <TrackedOutboundLink
-              href={buildBrazilWhatsAppUrl("Olá,%20acabei%20de%20acessar%20a%20página%20de%20afiliados%20e%20gostaria%20de%20me%20cadastrar%20como%20parceiro.%20Quero%20entender%20as%20regras%20e%20enviar%20minhas%20indicações.")}
+              href={buildBrazilWhatsAppUrl("Olá,%20acabei%20de%20acessar%20a%20página%20do%20Programa%20de%20Parceria%20e%20gostaria%20de%20me%20cadastrar.%20Quero%20entender%20as%20condições%20vigentes%20e%20enviar%20minhas%20indicações.")}
               target="_blank"
               rel="noreferrer"
-              label="Entrar no programa de afiliados"
+              label="Entrar no Programa de Parceria"
               surface="affiliate-final-cta"
               className="group min-h-11 bg-brand-secondary text-black font-sans font-black text-xs uppercase tracking-widest py-4 px-10 rounded-full shadow-[0_20px_50px_rgba(var(--color-brand-secondary-rgb),0.3)] motion-safe:hover:scale-[1.02] transition-[background-color,box-shadow,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900 flex items-center gap-2 cursor-pointer"
             >

@@ -48,7 +48,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-sm leading-relaxed font-sans font-medium">
-                A TAG08 desenvolve sites, landing pages, cat&aacute;logos e outras estruturas web para empresas que precisam apresentar melhor sua oferta, organizar informa&ccedil;&otilde;es, facilitar a navega&ccedil;&atilde;o e apoiar a jornada comercial com uma presen&ccedil;a digital pr&oacute;pria.
+                A família Tecnologia contempla websites, e-commerce/unidade digital e soluções digitais específicas. A TAG08 desenvolve essas estruturas conforme diagnóstico, modelagem, validação e estruturação; em e-commerce, a prontidão operacional também faz parte da decisão.
               </p>
             </div>
           </div>

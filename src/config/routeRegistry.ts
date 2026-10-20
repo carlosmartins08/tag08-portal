@@ -250,9 +250,9 @@ export const routeRegistry: RouteDefinition[] = [
     includeInSitemap: true,
     changefreq: "weekly",
     priority: "0.7",
-    title: "Sebraetec: Impulsionando Empreendedores | TAG08",
+    title: "Sebraetec | Consulte as condições regionais — TAG08",
     description:
-      "Inove na sua empresa com o programa Sebraetec da TAG08. Identidade visual, canais e websites de alto padrão com até 70% de subsídio financeiro."
+      "O Sebrae pode subsidiar parte do projeto, conforme regras, disponibilidade e aprovação aplicáveis na sua região. Consulte as condições vigentes do Sebraetec junto ao Sebrae da sua região."
   },
   {
     key: "programa-afiliados",
@@ -262,7 +262,7 @@ export const routeRegistry: RouteDefinition[] = [
     includeInSitemap: true,
     changefreq: "monthly",
     priority: "0.6",
-    title: "Programa de Afiliados: Indique e Ganhe Conexões | TAG08",
+    title: "Programa de Parceria | TAG08",
     description:
       "Ganhe até 10% de repasses em comissões únicas ou recorrentes indicando clientes para websites, de luxo, branding e gestão de redes sociais na TAG08."
   },
@@ -286,9 +286,9 @@ export const routeRegistry: RouteDefinition[] = [
     includeInSitemap: true,
     changefreq: "weekly",
     priority: "0.8",
-    title: "Assessoria de Marketing Estratégico | TAG08",
+    title: "Assessoria Estratégica de Negócios | TAG08",
     description:
-      "Assessoria de marketing estratégico para empresas que precisam organizar posicionamento, prioridades, comunicação, canais e planejamento antes de ampliar a execução.",
+      "Assessoria Estratégica de Negócios para organizar posicionamento, prioridades, comunicação, canais e planejamento antes de ampliar a execução.",
     isServicePage: true,
     aliases: ["/assessoria-marketing-digital-estrategico"]
   },

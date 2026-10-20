@@ -34,7 +34,7 @@ const CONTACT_SERVICE_OPTIONS = [
   ["process-activation", "Process Activation"],
   ["producao-audiovisual", "Produção audiovisual"],
   ["assessoria-estrategica", "Assessoria estratégica"],
-  ["hospedagem", "Hospedagem e infraestrutura"]
+  ["hospedagem", "Continuidade tecnológica (hospedagem e manutenção)"]
 ] as const;
 const CONTACT_SERVICE_LABELS = Object.fromEntries(CONTACT_SERVICE_OPTIONS) as Record<string, string>;
 

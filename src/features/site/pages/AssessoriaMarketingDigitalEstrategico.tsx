@@ -89,7 +89,7 @@ const NON_FIT_SIGNALS = [
 ] as const;
 
 const FAQ_ITEMS = [
-  { question: "O que é a Assessoria de Marketing Estratégico da TAG08?", answer: "É um acompanhamento para organizar posicionamento, prioridades, comunicação, canais e próximos passos antes de ampliar a execução. O foco é melhorar a qualidade das decisões de marketing e reduzir ações soltas." },
+  { question: "O que é a Assessoria Estratégica de Negócios da TAG08?", answer: "É um acompanhamento para organizar posicionamento, prioridades, comunicação, canais e próximos passos antes de ampliar a execução. O foco é melhorar a qualidade das decisões de negócio e reduzir ações soltas." },
   { question: "A assessoria inclui execução de marketing?", answer: "Depende do escopo. Em alguns casos, a assessoria orienta decisões e organiza o planejamento. Em outros, ela se conecta a soluções específicas da TAG08. A proposta define o que está incluído, quem executa e quais decisões seguem com a empresa." },
   { question: "Quando a assessoria faz sentido?", answer: "Quando decisões, canais, equipes ou parceiros precisam trabalhar com uma direção comum. Pode não ser o melhor caminho para uma entrega pontual, para quem espera execução sem participação ou quando não há uma pessoa disponível para decidir e acompanhar." },
   { question: "Qual é o ritmo e a participação esperada?", answer: "O ritmo é definido no escopo. A marca compartilha contexto, indica uma pessoa com poder de decisão e participa dos retornos combinados. A TAG08 organiza a condução; decisões de negócio continuam sendo da empresa." },
@@ -110,7 +110,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
   const questionHeadingRef = useRef<HTMLHeadingElement>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const trackSimulator = useSimulatorTracking("marketing_assessment_quiz", 1, "/servicos/assessoria-marketing-digital-estrategico");
-  const brazilConsultationWhatsappUrl = buildBrazilWhatsAppUrl("Olá TAG08! Gostaria de conversar sobre Assessoria de Marketing Estratégico e entender os próximos passos para a minha empresa.");
+  const brazilConsultationWhatsappUrl = buildBrazilWhatsAppUrl("Olá TAG08! Gostaria de conversar sobre Assessoria Estratégica de Negócios e entender os próximos passos para a minha empresa.");
 
   const handleLinkClick = (page: string) => {
     onNavigate(page);
@@ -179,7 +179,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
       : totalScore <= 100
         ? { level: "Boa direção", tone: "text-brand", description: "A marca tem um caminho mais consistente, mas ainda pode ganhar clareza na sustentação da rotina.", focus: "Foco em acompanhamento, revisão e continuidade do que já foi estruturado.", recommendation: "O próximo passo é consolidar método e manter a execução responsável." }
         : { level: "Direção mais consolidada", tone: "text-brand", description: "Existe uma base organizada para decidir e executar, embora prioridades e contexto precisem ser revistos com a operação.", focus: "Prioridade em consistência, revisão e continuidade.", recommendation: "A leitura não substitui uma análise completa, mas indica uma base estruturada para os próximos passos." };
-  const brazilDiagnosticWhatsappUrl = buildBrazilWhatsAppUrl(`Olá TAG08! Concluí a leitura inicial de maturidade para Assessoria de Marketing Estratégico. Minha leitura foi "${diagnostic.level}" (${totalScore}/120). Foco indicado: ${diagnostic.focus} Próxima recomendação: ${diagnostic.recommendation}`);
+  const brazilDiagnosticWhatsappUrl = buildBrazilWhatsAppUrl(`Olá TAG08! Concluí a leitura inicial de maturidade para Assessoria Estratégica de Negócios. Minha leitura foi "${diagnostic.level}" (${totalScore}/120). Foco indicado: ${diagnostic.focus} Próxima recomendação: ${diagnostic.recommendation}`);
   const internationalDiagnosticWhatsappUrl = buildInternationalWhatsAppUrl(`Hello TAG08! I completed the initial Strategic Marketing Advisory assessment. My reading was "${diagnostic.level}" (${totalScore}/120). Recommended focus: ${diagnostic.focus} Next recommendation: ${diagnostic.recommendation}`);
   const quizProgress = quizCompleted ? 100 : Math.round(((currentQuestionIdx + 1) / AUDIT_QUESTIONS.length) * 100);
   const quizTransition = prefersReducedMotion ? { duration: 0 } : { duration: 0.2, ease: [0.23, 1, 0.32, 1] as const };
@@ -190,9 +190,9 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
         <div className="mx-auto max-w-7xl space-y-10 sm:space-y-14">
           <div className="grid grid-cols-1 items-end gap-7 lg:grid-cols-12 lg:gap-12">
             <div className="space-y-5 lg:col-span-7">
-              <p className="text-sm font-bold uppercase tracking-[0.14em] text-brand">Assessoria de marketing estratégico</p>
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-brand">Assessoria Estratégica de Negócios</p>
               <h1 className="max-w-4xl font-display text-4xl font-black leading-[0.98] tracking-[-0.04em] text-white sm:text-5xl md:text-6xl">
-                Direção de marketing <span className="text-brand">antes de ampliar a execução.</span>
+                Direção estratégica para <span className="text-brand">prioridades e decisões de negócio.</span>
               </h1>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <a data-testid="assessoria-hero-contact" href={brazilConsultationWhatsappUrl} onClick={() => handleConsultationWhatsAppClick("assessoria-hero")} target="_blank" rel="noreferrer" aria-label="Falar com a TAG08 pelo WhatsApp, abre em nova guia" className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-brand px-5 py-3 text-xs font-black uppercase tracking-widest text-black shadow-[0_12px_36px_rgba(var(--color-brand-rgb),0.18)] ${actionTransition}`}>
@@ -203,7 +203,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                 </button>
               </div>
             </div>
-            <p className="max-w-xl text-sm leading-relaxed text-zinc-300 lg:col-span-5 lg:pb-1">A TAG08 organiza contexto, posicionamento, prioridades, comunicação e próximos passos para que decisões de marketing deixem de nascer da urgência e passem a seguir critérios mais claros.</p>
+            <p className="max-w-xl text-sm leading-relaxed text-zinc-300 lg:col-span-5 lg:pb-1">A TAG08 organiza contexto, posicionamento, prioridades, canais e próximos passos para que decisões de negócio deixem de nascer da urgência e passem a seguir critérios mais claros.</p>
           </div>
 
           <div className="relative aspect-[16/10] overflow-hidden rounded-[24px] border border-white/[0.08] bg-charcoal-900 shadow-2xl sm:aspect-[2.39/1] sm:rounded-[32px]">

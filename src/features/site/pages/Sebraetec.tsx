@@ -23,15 +23,15 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
   const faqs = [
     {
       q: "O que é o Programa SEBRAETEC?",
-      a: "O SEBRAETEC é um programa do SEBRAE que facilita o acesso de micro e pequenas empresas à inovação e tecnologia. Ele conecta sua empresa a prestadores de serviços tecnológicos e pode oferecer subsídio conforme as regras da região e do projeto."
+      a: "O Sebrae pode subsidiar parte de um projeto, conforme as regras, a disponibilidade e a aprovação aplicáveis na região. Consulte as condições vigentes do Sebraetec diretamente com o Sebrae da sua região."
     },
     {
       q: "Quem pode se beneficiar do subsídio?",
-      a: "Em geral, o programa atende Microempreendedores Individuais (MEI), Microempresas (ME) e Empresas de Pequeno Porte (EPP). Os critérios de faturamento, regularidade cadastral e elegibilidade devem ser confirmados com o Sebrae da sua região."
+      a: "A elegibilidade depende das regras vigentes do Sebrae da região, do perfil da empresa e do projeto, da disponibilidade e da análise do Sebrae. Consulte as condições aplicáveis diretamente com o Sebrae da sua região."
     },
     {
       q: "Quais serviços da TAG08 podem receber o subsídio SEBRAETEC?",
-      a: "Os principais serviços cobertos incluem Design de Identidade Visual (Branding Completo), Desenvolvimento de Websites Institucionais, Landing Pages de Conversão, E-commerces Estratégicos, Design de Embalagens e Diagnósticos de Otimização de Processos Digitais."
+      a: "A disponibilidade de serviços e projetos depende das regras vigentes do Sebrae da região e da análise do escopo. Confirme com o Sebrae da sua região quais serviços podem ser considerados antes de tratar qualquer oferta como elegível."
     },
     {
       q: "Como funciona o fluxo de aprovação?",
@@ -59,16 +59,16 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-baseline text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta self-start">
-                PARCERIAS E INOVAÇÃO SUBSIDIADA // SEBRAETEC
+                ORIENTAÇÃO SOBRE CONDIÇÕES REGIONAIS // SEBRAETEC
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter">
                 SEBRAETEC + TAG08 <br />
-                <span className="text-brand-secondary">Inovação ao seu alcance com subsídio sujeito à aprovação.</span>
+                <span className="text-brand-secondary">Consulte as condições vigentes na sua região.</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-medium">
-                Sua empresa pode avaliar projetos de presença digital, branding e processos dentro do programa SEBRAETEC. O percentual de apoio, a elegibilidade e a aprovação dependem do Sebrae regional e do projeto apresentado.
+                O Sebrae pode subsidiar parte do projeto, conforme regras, disponibilidade e aprovação aplicáveis na sua região. Consulte as condições vigentes do Sebraetec junto ao Sebrae da sua região.
               </p>
             </div>
           </div>
@@ -89,14 +89,14 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
 
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(45px)" }}>
                 <TrackedOutboundLink
-                  label="Solicitar consulta subsidiada"
+                  label="Consultar condições do Sebraetec"
                   surface="sebraetec-hero-cta"
-                  href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20saber%20como%20utilizar%20o%20subsídio%20do%20SEBRAETEC%20com%20a%20TAG08!")}
+                  href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20consultar%20as%20condições%20vigentes%20do%20Sebraetec%20na%20minha%20região.")}
                   target="_blank"
                   rel="noreferrer"
                   className="group min-h-11 bg-brand-secondary text-black font-sans font-black text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] motion-safe:hover:scale-105 transition-[background-color,box-shadow,transform] duration-200 border border-brand-secondary hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-black flex items-center gap-2 cursor-pointer z-20"
                 >
-                  <span>SOLICITAR CONSULTA SUBSIDIADA</span>
+                  <span>CONSULTAR CONDIÇÕES VIGENTES</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
                 </TrackedOutboundLink>
               </div>
@@ -127,12 +127,12 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
               <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-widest leading-normal">Contrapartida conforme<br/>as regras aplicáveis</span>
             </div>
             <div className="space-y-2">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-white">MEIs e PMEs</span>
-              <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-widest leading-normal">MEI, ME e EPP<br/>sujeitos à elegibilidade</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-white">Perfil regional</span>
+              <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-widest leading-normal">Elegibilidade definida<br/>pelo Sebrae da região</span>
             </div>
             <div className="space-y-2">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Completo</span>
-              <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-widest leading-normal">Branding, Web, Identidade<br/>e processos digitais</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Sob análise</span>
+              <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-widest leading-normal">Serviços conforme regras,<br/>disponibilidade e aprovação</span>
             </div>
           </div>
 
@@ -153,7 +153,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
                 Por que usar o Sebraetec em seu projeto?
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
-                O programa pode reduzir o investimento inicial de pequenos negócios, mas a elegibilidade, o percentual de apoio e a aprovação dependem da análise regional do Sebrae.
+                O Sebrae pode subsidiar parte do projeto, conforme regras, disponibilidade e aprovação aplicáveis na sua região. Consulte as condições vigentes diretamente com o Sebrae regional.
               </p>
               
               <div className="p-5 rounded-2xl bg-brand-secondary/[0.01] border border-brand-secondary/5 text-xs text-zinc-400 font-sans">
@@ -232,9 +232,9 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
         <div className="max-w-7xl mx-auto space-y-16">
           <div className="text-left space-y-2 max-w-2xl">
             <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">DIVERSIDADE EM SERVIçOS CREDENCIADOS</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">O que você pode criar com a TAG08 via SEBRAETEC</h2>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">Projetos que podem ser avaliados no Sebraetec</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              Utilize o subsídio financeiro do SEBRAE para acessar as maiores linhas de inovação digital e visual disponíveis no mercado moderno.
+              O Sebrae define quais serviços podem ser considerados, conforme as regras vigentes, disponibilidade e análise regional do projeto. Os exemplos abaixo descrevem capacidades da TAG08 e não confirmam cobertura ou elegibilidade no programa.
             </p>
           </div>
 
@@ -297,9 +297,9 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
             <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/15 px-2.5 py-1 rounded-md inline-block">
               JORNADA DO CLIENTE // FLUXO SEGURO
             </span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">Como solicitar seu projeto subsidiado passo-a-passo</h2>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">Como consultar as condições do Sebraetec</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-              Um fluxo rigorosamente estruturado que reduz a burocracia das solicitações do cliente e acelera a formalidade do termo final.
+              A TAG08 pode apoiar a estruturação técnica da proposta. A elegibilidade, a aprovação, a disponibilidade e as condições são definidas pelo Sebrae da região.
             </p>
           </div>
 
@@ -323,14 +323,14 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
             <TrackedOutboundLink
-              label="Iniciar diagnóstico subsidiado"
+              label="Consultar condições do Sebraetec"
               surface="sebraetec-diagnostic-cta"
-              href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20solicitar%20um%20diagnóstico%20técnico%20para%20o%20SEBRAETEC!")}
+              href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20consultar%20as%20condições%20vigentes%20do%20Sebraetec%20na%20minha%20região.")}
               target="_blank"
               rel="noreferrer"
               className="group min-h-11 bg-brand-secondary text-black font-sans font-black text-xs uppercase tracking-widest py-3.5 px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.22)] motion-safe:hover:scale-[1.02] transition-[background-color,box-shadow,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900 flex items-center gap-2 cursor-pointer"
             >
-              <span>INICIAR DIAGNÓSTICO DE VIABILIDADE</span>
+              <span>CONSULTAR CONDIÇÕES VIGENTES</span>
               <ArrowRight className="w-4 h-4" />
             </TrackedOutboundLink>
             <button
@@ -350,7 +350,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
           <HelpCircle className="w-8 h-8 text-brand mx-auto" />
           <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">DÚVIDAS FREQUENTES SOBRE SEBRAETEC</h2>
           <p className="text-zinc-400 text-xs sm:text-sm font-medium">
-            Entenda de forma clara e objetiva os principais limites de atuação e solicitação do subsídio.
+            Entenda os limites de atuação da TAG08 e confirme as regras e condições vigentes diretamente com o Sebrae da sua região.
           </p>
         </div>
 
@@ -405,14 +405,14 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 z-10 relative">
             <TrackedOutboundLink
-              label="Verificar elegibilidade do projeto"
+              label="Consultar condições com o Sebrae regional"
               surface="sebraetec-final-cta"
               href={buildBrazilWhatsAppUrl("Olá,%20acabei%20de%20acessar%20a%20página%20do%20SEBRAETEC%20e%20gostaria%20de%20verificar%20a%20elegibilidade%20e%20a%20viabilidade%20do%20meu%20projeto%20conforme%20as%20regras%20da%20minha%20região.")}
               target="_blank"
               rel="noreferrer"
               className="group min-h-11 bg-brand-secondary text-black font-sans font-black text-xs uppercase tracking-widest py-4 px-10 rounded-full shadow-[0_20px_50px_rgba(var(--color-brand-secondary-rgb),0.3)] motion-safe:hover:scale-[1.02] transition-[background-color,box-shadow,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900 flex items-center gap-2 cursor-pointer"
             >
-              <span>VERIFICAR ELEGIBILIDADE DO PROJETO</span>
+              <span>CONSULTAR CONDIÇÕES REGIONAIS</span>
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
             </TrackedOutboundLink>
           </div>

@@ -75,23 +75,45 @@ for (const path of indexedRoutePaths) {
 const assessoriaPath = "/servicos/assessoria-marketing-digital-estrategico";
 const assessoriaRoute = getRouteByPath(assessoriaPath);
 assert.ok(assessoriaRoute, "Assessoria route must resolve");
-assert.equal(assessoriaRoute.title, "Assessoria de Marketing Estratégico | TAG08");
+assert.equal(assessoriaRoute.title, "Assessoria Estratégica de Negócios | TAG08");
 assert.equal(
   assessoriaRoute.description,
-  "Assessoria de marketing estratégico para empresas que precisam organizar posicionamento, prioridades, comunicação, canais e planejamento antes de ampliar a execução."
+  "Assessoria Estratégica de Negócios para organizar posicionamento, prioridades, comunicação, canais e planejamento antes de ampliar a execução."
 );
 assert.deepEqual(getRouteSeo(assessoriaRoute, assessoriaPath, "pt"), {
-  title: "Assessoria de Marketing Estratégico | TAG08",
-  description: "Assessoria de marketing estratégico para empresas que precisam organizar posicionamento, prioridades, comunicação, canais e planejamento antes de ampliar a execução."
+  title: "Assessoria Estratégica de Negócios | TAG08",
+  description: "Assessoria Estratégica de Negócios para organizar posicionamento, prioridades, comunicação, canais e planejamento antes de ampliar a execução."
 });
 assert.equal(
   i18n.pt.header.servicePages.find((service) => service.path === assessoriaPath)?.desc,
-  "Diagnóstico, prioridades e planejamento de marketing"
+  "Posicionamento, prioridades e decisões de negócio"
 );
 assert.equal(
   i18n.pt.breadcrumbs.servicePages.find((service) => service.path === assessoriaPath)?.name,
-  "Assessoria de Marketing Estratégico"
+  "Assessoria Estratégica de Negócios"
 );
+
+const partnershipRoute = getRouteByPath("/programa-afiliados");
+assert.ok(partnershipRoute, "The approved public program name must preserve its current route");
+assert.equal(partnershipRoute.canonicalPath, "/programa-afiliados");
+assert.equal(getRouteSeo(partnershipRoute, "/programa-afiliados", "pt").title, "Programa de Parceria | TAG08");
+
+const hostingRoute = getRouteByPath("/hospedagem-manutencao-sites");
+assert.ok(hostingRoute, "Hosting remains available as a technology-continuity service");
+assert.equal(hostingRoute.canonicalPath, "/hospedagem-manutencao-sites");
+
+const sebraetecRoute = getRouteByPath("/sebraetec-impulsionando-empreendedores");
+assert.ok(sebraetecRoute, "Sebraetec retains its dedicated route");
+assert.equal(sebraetecRoute.canonicalPath, "/sebraetec-impulsionando-empreendedores");
+assert.doesNotMatch(getRouteSeo(sebraetecRoute, sebraetecRoute.canonicalPath, "pt").description, /(?:70|30)%/,
+  "Public Sebraetec metadata must not promise a uniform subsidy percentage");
+
+const onboardingRoute = getRouteByPath("/cliente/onboarding");
+assert.ok(onboardingRoute, "The onboarding route remains available for its current flow");
+assert.equal(onboardingRoute.indexable, false);
+assert.equal(onboardingRoute.includeInSitemap, false);
+assert.ok(!i18n.pt.footer.institutionLinks.some((link) => "path" in link && String(link.path) === "/cliente/onboarding"),
+  "Onboarding must not appear as a generic public footer link");
 
 assert.deepEqual(
   CASE_STUDIES.filter((caseStudy) => getVisibleEvidence([caseStudy], (item) => `case-study/${item.id}`, `/casos/${caseStudy.id}`).length > 0),

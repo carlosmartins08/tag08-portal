@@ -72,7 +72,7 @@ const DEVELOPMENT_WEB_BRIDGE: ServiceInsightsBridgeConfig = {
 
 const ASSESSORIA_MARKETING_BRIDGE: ServiceInsightsBridgeConfig = {
   servicePath: "/servicos/assessoria-marketing-digital-estrategico",
-  serviceTitle: "Assessoria de Marketing",
+  serviceTitle: "Assessoria Estratégica de Negócios",
   title: "Leituras que ajudam a decidir melhor antes de executar",
   intro:
     "A ponte editorial aqui existe para reduzir dúvida antes da conversa. Os temas abaixo tratam de diagnóstico, objetivo, contexto e próximos passos de marketing.",
@@ -272,7 +272,7 @@ const HOSPEDAGEM_BRIDGE: ServiceInsightsBridgeConfig = {
 
 const AFFILIATE_PROGRAM_BRIDGE: ServiceInsightsBridgeConfig = {
   servicePath: "/programa-afiliados",
-  serviceTitle: "Programa de Afiliados",
+  serviceTitle: "Programa de Parceria",
   title: "Leituras para indicar oportunidades com mais clareza",
   intro:
     "Uma indicação útil começa ao entender o problema, o momento e o próximo passo da empresa indicada. Estes conteúdos ajudam a qualificar a conversa antes do contato.",

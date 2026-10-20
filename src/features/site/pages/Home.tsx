@@ -817,7 +817,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
       title: "Continuidade digital",
       subtitle: "O projeto continua depois da publicação",
       desc: "Para negócios que precisam manter estruturas digitais acompanhadas, atualizadas e tecnicamente sustentáveis ao longo do tempo.",
-      related: "Hospedagem e Manutenção.",
+      related: "Continuidade tecnológica ligada à família Tecnologia/Web.",
       cta: "Conhecer continuidade digital",
       slug: "/hospedagem-manutencao-sites"
     }
@@ -2325,7 +2325,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
         },
         {
           id: "hospedagem-manutencao",
-          title: "Hospedagem e manutenção",
+          title: "Continuidade tecnológica",
           subtitle: "Continuidade depois da entrega",
           desc: "Para negócios que precisam manter seus sites ativos, seguros, atualizados e acompanhados depois da publicação.",
           slug: "/hospedagem-manutencao-sites"
