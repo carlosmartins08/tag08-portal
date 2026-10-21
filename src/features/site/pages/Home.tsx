@@ -2075,7 +2075,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 <div className="w-9 h-9 rounded-full bg-white/[0.03] border border-white/[0.08] text-white flex items-center justify-center">
                     <Plus className="w-4 h-4 text-white font-black" />
                   </div>
-                  <span className="tag08-meta text-xs text-zinc-500 tracking-wider uppercase font-bold">{methodCopy?.delivery ?? "ENTREGA"}</span>
+                  <span className="tag08-meta text-xs text-zinc-400 tracking-wider uppercase font-bold">{methodCopy?.delivery ?? "ENTREGA"}</span>
                 </div>
                 <div className="mt-4 space-y-1">
                   <h3 className="font-display font-black text-xs sm:text-sm text-white tracking-tight">{methodCopy?.strategyTitle ?? "Estratégia com entrega"}</h3>
@@ -2112,7 +2112,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   <div className="space-y-1 relative z-10 mt-3">
                     <span className="font-display font-black text-3xl text-white tracking-tighter block leading-none">{methodCopy?.clarity ?? "CLAREZA"}</span>
                     <p className="text-white font-display font-bold text-xs uppercase tracking-wider">{methodCopy?.betterChoices ?? "ESCOLHAS MELHORES"}</p>
-                    <p className="text-zinc-500 text-xs leading-snug font-medium">{methodCopy?.clarityDescription ?? "Cada entrega respeita contexto, escopo e capacidade real da operação."}</p>
+                    <p className="text-zinc-400 text-xs leading-snug font-medium">{methodCopy?.clarityDescription ?? "Cada entrega respeita contexto, escopo e capacidade real da operação."}</p>
                   </div>
                 </div>
 
@@ -2179,13 +2179,13 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[135px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl group-hover:bg-white/[0.03] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">03 // {methodCopy?.process ?? "PROCESSO"}</span>
+                    <span className="font-sans text-xs font-black uppercase text-zinc-400 bg-white/5 px-2 py-0.5 rounded border border-white/5">03 // {methodCopy?.process ?? "PROCESSO"}</span>
                     <Wifi className="w-3.5 h-3.5 text-zinc-400 group-hover:text-brand-secondary transition-colors" />
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
                     <span className="font-display font-black text-2xl text-white tracking-tighter block leading-none">{methodCopy?.editorialContinuity ?? "CONTINUIDADE"}</span>
                     <p className="text-white font-display font-bold text-xs uppercase tracking-wider">{methodCopy?.followThrough ?? "PROCESSO E ACOMPANHAMENTO"}</p>
-                    <p className="text-zinc-500 text-xs leading-snug font-medium">{methodCopy?.followThroughDescription ?? "Briefing, aprovação e documentação reduzem improviso ao longo do trabalho."}</p>
+                    <p className="text-zinc-400 text-xs leading-snug font-medium">{methodCopy?.followThroughDescription ?? "Briefing, aprovação e documentação reduzem improviso ao longo do trabalho."}</p>
                   </div>
                 </div>
 
@@ -2193,13 +2193,13 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                 <div className="bg-[#121214] border border-white/[0.05] hover:border-brand/20 p-5 rounded-[24px] text-left flex flex-col justify-between min-h-[135px] relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/[0.01] rounded-full blur-xl group-hover:bg-brand-secondary/[0.02] transition-all pointer-events-none" />
                   <div className="flex items-center justify-between relative z-10">
-                    <span className="font-sans text-xs font-black uppercase text-zinc-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">{methodCopy?.technology ?? "04 // TECNOLOGIA"}</span>
+                    <span className="font-sans text-xs font-black uppercase text-zinc-400 bg-white/5 px-2 py-0.5 rounded border border-white/5">{methodCopy?.technology ?? "04 // TECNOLOGIA"}</span>
                     <Layers className="w-3.5 h-3.5 text-zinc-400 group-hover:text-brand transition-colors" />
                   </div>
                   <div className="space-y-1 relative z-10 mt-3">
                     <span className="font-display font-black text-2xl text-white tracking-tighter block leading-none">{methodCopy?.clearFunction ?? "FUNÇÃO CLARA"}</span>
                     <p className="text-white font-display font-bold text-xs uppercase tracking-wider">{methodCopy?.appliedTechnology ?? "TECNOLOGIA APLICADA"}</p>
-                    <p className="text-zinc-500 text-xs leading-snug font-medium">{methodCopy?.technologyDescription ?? "Ferramentas e desenvolvimento entram quando ajudam a cumprir uma função real."}</p>
+                    <p className="text-zinc-400 text-xs leading-snug font-medium">{methodCopy?.technologyDescription ?? "Ferramentas e desenvolvimento entram quando ajudam a cumprir uma função real."}</p>
                   </div>
                 </div>
 
@@ -2237,7 +2237,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   <div className="mt-3 relative z-10 text-left">
                     <span className="font-display font-black text-2xl sm:text-3xl text-white tracking-tighter leading-none block">{methodCopy?.clarity ?? "CLAREZA"}</span>
                     <p className="text-white font-display font-bold text-xs uppercase tracking-wider mt-0.5">{methodCopy?.noPromise ?? "NO DIAGNÓSTICO"}</p>
-                    <p className="text-zinc-500 text-xs leading-snug">{methodCopy?.proofDescription ?? "A confiança não vem de promessa pronta. Vem de clareza no diagnóstico, coerência na estratégia e responsabilidade na execução."}</p>
+                    <p className="text-zinc-400 text-xs leading-snug">{methodCopy?.proofDescription ?? "A confiança não vem de promessa pronta. Vem de clareza no diagnóstico, coerência na estratégia e responsabilidade na execução."}</p>
                   </div>
                 </div>
 
@@ -2255,7 +2255,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   <div className="mt-3 relative z-10 text-left">
                     <span className="font-display font-black text-2xl sm:text-3xl text-brand-secondary tracking-tighter leading-none block">{methodCopy?.methodValue ?? "MÉTODO"}</span>
                     <p className="text-white font-display font-bold text-xs uppercase tracking-wider mt-0.5">{methodCopy?.coherence ?? "COERÊNCIA"}</p>
-                    <p className="text-zinc-500 text-xs leading-snug">{methodCopy?.trustDescription ?? "Confiança se constrói com clareza, método e entrega coerente."}</p>
+                    <p className="text-zinc-400 text-xs leading-snug">{methodCopy?.trustDescription ?? "Confiança se constrói com clareza, método e entrega coerente."}</p>
                   </div>
                 </div>
 
