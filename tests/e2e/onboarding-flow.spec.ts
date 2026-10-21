@@ -1,154 +1,221 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
-async function advance(page: Page) {
-  await page.getByRole("button", { name: /Avan|Next|Siguiente/ }).click();
-}
-
-async function reachConsent(page: Page) {
-  await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
-  await expect(page.getByText(/respostas n.{0,3}o enviadas/i)).toBeVisible();
-  await page.getByRole("button", { name: /equipe TAG08/ }).click();
-  await page.getByRole("button", { name: /Onboarding/ }).click();
-
-  await page.locator("#onboarding-company-name").fill("Empresa de teste TAG08");
-  await advance(page);
-  await page.locator("#onboarding-city").fill("João Pessoa - PB");
-  await advance(page);
-  await advance(page);
-  await advance(page);
-
-  await page.locator("#onboarding-operator-name").fill("Ana TAG08");
-  await advance(page);
-  await page.locator("#onboarding-responsible-name").fill("Contato do cliente");
-  await advance(page);
-  await page.locator("#onboarding-responsible-email").fill("contato@example.com");
-  await page.locator("#onboarding-responsible-whatsapp").fill("+55 11 99999-9999");
-  await advance(page);
-  await advance(page);
-
-  await page.locator('[role="radiogroup"]').nth(0).getByRole("radio").first().click();
-  await advance(page);
-  await page.locator('[role="radiogroup"]').nth(1).getByRole("radio").first().click();
-  await advance(page);
-  await advance(page);
-
-  await page.getByRole("checkbox", { name: /Gest.o de Redes Sociais/ }).click();
-  await page.getByRole("checkbox", { name: /Tr.fego Pago/ }).click();
-  await advance(page);
-
-  const trafficGoal = page.getByPlaceholder(/Se houver algo relevante que ficou de fora/);
-  await expect(trafficGoal).toBeVisible();
-  await trafficGoal.fill("Aumentar pedidos qualificados");
-  await advance(page);
-  await advance(page);
-  await advance(page);
-
-  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "94");
-  await page.locator("#onboarding-good-result").fill("Aumentar pedidos qualificados nos primeiros 90 dias");
-  await advance(page);
-
-  await expect(page.getByRole("checkbox")).toHaveCount(3);
-  await page.getByRole("checkbox").nth(0).check();
-  await page.getByRole("checkbox").nth(1).check();
-  await page.getByRole("checkbox").nth(2).check();
-}
-
-test("abre o onboarding acima do header e do footer globais", async ({ page }) => {
-  await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
-  await page.getByRole("button", { name: /Onboarding$/ }).click();
-
-  const flowLayer = page.locator('[data-onboarding-unsent="true"]');
-  await expect(flowLayer).toHaveCSS("position", "fixed");
-  expect(await flowLayer.evaluate((element) => element.parentElement === document.body)).toBe(true);
+test.beforeEach(async ({ page, baseURL }) => {
+  const localOrigin = new URL(baseURL || "http://127.0.0.1:3211").origin;
+  await page.route("**/*", (route) => {
+    if (new URL(route.request().url()).origin === localOrigin) return route.continue();
+    return route.abort();
+  });
 });
 
-test("registra preenchimento da equipe e preserva briefing ao combinar servicos", async ({ page }) => {
-  let submittedPayload: Record<string, unknown> | undefined;
-  await page.route("**/api/onboarding", async (route) => {
-    submittedPayload = route.request().postDataJSON() as Record<string, unknown>;
-    await route.fulfill({
-      status: 200,
-      contentType: "application/json",
-      body: JSON.stringify({ ok: true, submissionId: "onboarding-test", status: "accepted", receivedAt: "2026-10-06T12:00:00.000Z" })
+test("acesso direto sem sessão mostra estado neutro e não renderiza o formulário privado", async ({ page }) => {
+  const response = await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
+  expect(response?.status()).toBe(200);
+  await expect(page.getByRole("heading", { name: "Acesso ao onboarding" })).toBeVisible();
+  await expect(page.getByText(/Este acesso é destinado a clientes com projeto confirmado/)).toBeVisible();
+  await expect(page.locator("#onboarding-company-name")).toHaveCount(0);
+  await expect(page.locator("meta[name=robots]")).toHaveAttribute("content", /noindex/);
+  expect(response?.headers()["referrer-policy"]).toBe("no-referrer");
+  expect(response?.headers()["cache-control"]).toContain("no-store");
+});
+
+test("API privada rejeita leitura e submissão sem sessão", async ({ page }) => {
+  await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
+  const progress = await page.evaluate(async () => {
+    const response = await fetch("/api/onboarding/progress", { cache: "no-store" });
+    return { status: response.status, body: await response.json() };
+  });
+  expect(progress.status).toBe(401);
+  expect(progress.body).toMatchObject({ ok: false, error: "access_unavailable" });
+
+  const submission = await page.evaluate(async () => {
+    const response = await fetch("/api/onboarding", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ clientData: { companyName: "SYNTHETIC TEST" } })
     });
+    return { status: response.status, body: await response.json() };
   });
-
-  await reachConsent(page);
-  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "100");
-  await page.getByRole("button", { name: /Enviar Onboarding Completo/ }).click();
-
-  await expect(page.getByText("ONBOARDING ENVIADO COM SUCESSO")).toBeVisible();
-  expect(submittedPayload?.submissionContext).toEqual({
-    submittedBy: "tag08_team",
-    operatorName: "Ana TAG08",
-    clientAuthorizationConfirmed: true
-  });
-  expect(submittedPayload?.consent).toMatchObject({ authorizationConfirmedByOperator: true });
-  expect(submittedPayload?.serviceSpecificBriefing).toMatchObject({
-    geral: { generalBriefingText: "Aumentar pedidos qualificados" }
-  });
+  expect(submission.status).toBe(401);
+  expect(submission.body).toMatchObject({ ok: false, error: "access_unavailable" });
 });
 
-test("bloqueia avancar sem identificar o operador", async ({ page }) => {
-  let onboardingRequests = 0;
-  await page.route("**/api/onboarding", async (route) => {
-    onboardingRequests += 1;
-    await route.abort("failed");
+test("abrir e recarregar o link não resgata até ação explícita", async ({ page }) => {
+  let redeemRequests = 0;
+  await page.route("**/api/onboarding/access/redeem", async (route) => {
+    redeemRequests += 1;
+    await route.fulfill({ status: 400, contentType: "application/json", body: JSON.stringify({ ok: false, error: "access_unavailable" }) });
+  });
+  const token = "C".repeat(43);
+  await page.goto(`/cliente/onboarding#access_token=${token}`, { waitUntil: "domcontentloaded" });
+  await expect(page.getByRole("button", { name: "Continuar para o onboarding" })).toBeVisible();
+  await expect.poll(() => page.evaluate(() => window.location.hash)).toBe("");
+  expect(redeemRequests).toBe(0);
+  await page.reload({ waitUntil: "domcontentloaded" });
+  expect(redeemRequests).toBe(0);
+});
+
+test("token inválido só é resgatado após confirmação e recebe resposta pública neutra", async ({ page }) => {
+  const token = "A".repeat(43);
+  let redeemRequests = 0;
+  await page.route("**/api/onboarding/access/redeem", async (route) => {
+    redeemRequests += 1;
+    expect(route.request().postDataJSON()).toEqual({ token });
+    await route.fulfill({ status: 400, contentType: "application/json", body: JSON.stringify({ ok: false, error: "access_unavailable" }) });
   });
 
+  await page.goto(`/cliente/onboarding#access_token=${token}`, { waitUntil: "domcontentloaded" });
+  await expect(page.getByRole("heading", { name: "Acesso ao onboarding" })).toBeVisible();
+  const continueButton = page.getByRole("button", { name: "Continuar para o onboarding" });
+  await expect(continueButton).toBeVisible();
+  await continueButton.focus();
+  await expect(continueButton).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator('p[role="alert"]')).toContainText("Não foi possível validar este link");
+  expect(redeemRequests).toBe(1);
+  await expect.poll(() => page.evaluate(() => window.location.hash)).toBe("");
+  expect(page.url()).not.toContain(token);
+  await expect(page.locator("#onboarding-company-name")).toHaveCount(0);
+});
+
+test("canonical e indexação permanecem neutros e sem token", async ({ page }) => {
+  const token = "B".repeat(43);
+  await page.goto(`/cliente/onboarding#access_token=${token}`, { waitUntil: "domcontentloaded" });
+  const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
+  expect(canonical).not.toContain(token);
+  await expect(page.locator("meta[name=robots]")).toHaveAttribute("content", /noindex/);
+  const sitemapHasOnboarding = await page.evaluate(async () => {
+    const response = await fetch("/sitemap.xml", { cache: "no-store" });
+    return (await response.text()).includes("/cliente/onboarding");
+  });
+  expect(sitemapHasOnboarding).toBe(false);
+});
+
+test("estado sem autorização permanece legível sem overflow nos breakpoints principais", async ({ page }) => {
   await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
-  await page.getByRole("button", { name: /equipe TAG08/ }).click();
-  await page.getByRole("button", { name: /Onboarding/ }).click();
-  await page.locator("#onboarding-company-name").fill("Empresa de teste TAG08");
-  await advance(page);
-  await advance(page);
-  await advance(page);
-  await advance(page);
-  await advance(page);
-  await expect(page.getByRole("alert").filter({ hasText: /Informe seu nome para identificar o preenchimento pela equipe TAG08/ })).toBeVisible();
-  expect(onboardingRequests).toBe(0);
+  for (const width of [390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await expect(page.getByRole("heading", { name: "Acesso ao onboarding" })).toBeVisible();
+    const overflows = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+    expect(overflows, `horizontal overflow at ${width}px`).toBe(false);
+  }
 });
 
-test("identifica quando o envio permanece na fila local", async ({ page }) => {
-  await page.route("**/api/onboarding", (route) => route.abort("failed"));
-  await reachConsent(page);
-  await page.getByRole("button", { name: /Enviar Onboarding Completo/ }).click();
+test("PostgreSQL isolado: resgate explícito, progresso retomável, submissão idempotente e revogação", async ({ page }) => {
+  const databaseUrl = process.env.ONBOARDING_TEST_DATABASE_URL;
+  test.skip(!databaseUrl, "requires the explicitly provisioned disposable PostgreSQL 16 database");
+  const parsedUrl = new URL(databaseUrl!);
+  expect(["127.0.0.1", "localhost"]).toContain(parsedUrl.hostname);
+  expect(parsedUrl.pathname).toBe("/tag08_p1_2e2_qa");
+  expect(decodeURIComponent(parsedUrl.username)).toBe("tag08_qa");
+  expect(!process.env.DATABASE_URL || process.env.DATABASE_URL === databaseUrl).toBe(true);
+  process.env.DATABASE_URL = databaseUrl!;
 
-  await expect(page.getByText(/AGUARDANDO/)).toBeVisible();
-  await expect(page.getByRole("heading", { name: /Envio ainda n/ })).toBeVisible();
-  await expect(page.getByText("ONBOARDING ENVIADO COM SUCESSO")).toHaveCount(0);
-});
-
-test("idioma de atendimento nao altera idioma da assistente", async ({ page }) => {
-  await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
-  await page.getByRole("button", { name: /Onboarding$/ }).click();
-  await page.locator("#onboarding-company-name").fill("Empresa TAG08 Teste");
-  await advance(page);
-  await advance(page);
-  await advance(page);
-
-  const supportLanguage = page.getByRole("group", {
-    name: "Em qual idioma o cliente prefere receber o atendimento?"
+  const [{ getPrisma }, access] = await Promise.all([
+    import("../../src/lib/server/prisma"),
+    import("../../server/onboardingAccess")
+  ]);
+  const prisma = getPrisma();
+  const commercialReference = `SYNTHETIC-BROWSER-${crypto.randomUUID()}`;
+  const created = await access.createOnboardingJourneyWithLink(prisma, {
+    operator: "P1.2E.2 synthetic browser QA",
+    commercialReference,
+    reason: "Explicit redeem browser regression",
+    now: new Date()
   });
-  const english = supportLanguage.getByRole("button", { name: /English/ });
+  const tokenHash = access.hashOpaqueSecret(created.token);
 
-  await english.click();
-  await expect(english).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator("h2[aria-live='polite']").filter({ hasText: /Em qual idioma o cliente prefere receber/ })).toBeVisible();
-  await expect(page.getByRole("button", { name: /Navegar em Portugu/ })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Navegar em English" })).toHaveCount(0);
-  await expect(supportLanguage).toBeVisible();
-});
+  try {
+    await page.setViewportSize({ width: 390, height: 900 });
+    await page.goto(`/cliente/onboarding#access_token=${created.token}`, { waitUntil: "domcontentloaded" });
+    await expect(page.getByRole("button", { name: "Continuar para o onboarding" })).toBeVisible();
+    expect((await prisma.onboardingMagicLink.findUniqueOrThrow({ where: { tokenHash } })).usedAt).toBeNull();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
+    expect(new URL(page.url()).hash).toBe("");
+    await page.getByRole("button", { name: "Continuar para o onboarding" }).focus();
+    await expect(page.getByRole("button", { name: "Continuar para o onboarding" })).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(page.getByRole("button", { name: "Começar Onboarding" })).toBeVisible();
 
-test("avisa antes de descartar respostas ao sair do fluxo", async ({ page }) => {
-  await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
-  await page.getByRole("button", { name: /Onboarding$/ }).click();
-  await page.locator("#onboarding-company-name").fill("Resposta que deve ser protegida");
-  page.once("dialog", (dialog) => dialog.dismiss());
-  await page.getByRole("button", { name: "Sair do preenchimento" }).click();
-  await expect(page.locator("#onboarding-company-name")).toHaveValue("Resposta que deve ser protegida");
+    await page.getByRole("button", { name: "Começar Onboarding" }).click();
+    const companyField = page.locator("#onboarding-company-name");
+    await expect(companyField).toBeVisible();
+    for (const width of [390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
+    }
+    await companyField.fill("TAG08 TESTE SINTÉTICO P1.2E.2");
+    await expect.poll(async () => {
+      const journey = await prisma.onboardingJourney.findUniqueOrThrow({ where: { id: created.journeyId } });
+      return (journey.draft as { values?: { companyName?: string } } | null)?.values?.companyName;
+    }).toBe("TAG08 TESTE SINTÉTICO P1.2E.2");
 
-  page.once("dialog", (dialog) => dialog.accept());
-  await page.getByRole("button", { name: "Sair do preenchimento" }).click();
-  await expect(page).toHaveURL(/\/$/);
+    const otherJourney = await access.createOnboardingJourneyWithLink(prisma, {
+      operator: "P1.2E.2 synthetic browser QA",
+      commercialReference: `SYNTHETIC-BROWSER-OTHER-${crypto.randomUUID()}`,
+      reason: "Cross-journey access regression",
+      now: new Date()
+    });
+    const savedDraft = (await prisma.onboardingJourney.findUniqueOrThrow({ where: { id: created.journeyId } })).draft;
+    const crossJourneyAttempt = await page.evaluate(async ({ journeyId, draft }) => {
+      const response = await fetch("/api/onboarding/progress", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ journeyId, draft })
+      });
+      return response.status;
+    }, { journeyId: otherJourney.journeyId, draft: savedDraft });
+    expect(crossJourneyAttempt).toBe(200);
+    expect((await prisma.onboardingJourney.findUniqueOrThrow({ where: { id: otherJourney.journeyId } })).draft).toBeNull();
+
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await expect(page.locator("#onboarding-company-name")).toHaveValue("TAG08 TESTE SINTÉTICO P1.2E.2");
+    const payload = {
+      clientData: { companyName: "TAG08 TESTE SINTÉTICO P1.2E.2", preferredLanguage: "pt" },
+      projectContacts: { responsibleName: "QA Sintético", email: "p12e2@example.invalid", whatsapp: "+15005550006" },
+      selectedServices: ["Process Intelligence"],
+      businessMoment: {},
+      generalBriefing: {},
+      serviceSpecificBriefing: {},
+      filesAndLinks: {},
+      consent: { truthChecked: true, useChecked: true, noPasswordsChecked: true },
+      submittedAt: new Date().toISOString(),
+      source: "synthetic-p1.2e.2"
+    };
+    const idempotencyKey = `synthetic-p1-2e-2-${crypto.randomUUID()}`;
+    const first = await page.evaluate(async (submission) => {
+      const response = await fetch("/api/onboarding", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Idempotency-Key": submission.idempotencyKey },
+        body: JSON.stringify(submission)
+      });
+      return { status: response.status, body: await response.json() };
+    }, { ...payload, idempotencyKey });
+    expect(first.status).toBe(202);
+    const replay = await page.evaluate(async (submission) => {
+      const response = await fetch("/api/onboarding", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Idempotency-Key": submission.idempotencyKey },
+        body: JSON.stringify(submission)
+      });
+      return { status: response.status, body: await response.json() };
+    }, { ...payload, idempotencyKey });
+    expect(replay.status).toBe(202);
+    expect(replay.body.submissionId).toBe(first.body.submissionId);
+    expect(await prisma.onboardingSubmission.count({ where: { journeyId: created.journeyId } })).toBe(1);
+    expect(await prisma.integrationDelivery.count({ where: { aggregateId: first.body.submissionId } })).toBe(2);
+
+    await access.revokeOnboardingAccess(prisma, {
+      journeyId: created.journeyId,
+      operator: "P1.2E.2 synthetic browser QA",
+      commercialReference,
+      reason: "Revoke browser regression",
+      now: new Date()
+    });
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await expect(page.getByRole("heading", { name: "Acesso ao onboarding" })).toBeVisible();
+    await expect(page.locator("#onboarding-company-name")).toHaveCount(0);
+  } finally {
+    await prisma.$disconnect();
+  }
 });

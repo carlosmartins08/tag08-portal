@@ -40,14 +40,18 @@ const resolveRoute = async (params: RoutePageProps["params"]) => {
 };
 
 export const generateStaticParams = () =>
-  staticRouteSegments().map((segments) => {
+  staticRouteSegments()
+    // The authenticated onboarding has its own dynamic route and must never
+    // be emitted by this public catchall as a static page.
+    .filter((segments) => resolveLocalizedPath(segments).path !== "/cliente/onboarding")
+    .map((segments) => {
     const resolved = resolveLocalizedPath(segments);
 
     return {
       locale: resolved.locale,
       segments: resolved.path === "/" ? undefined : resolved.path.slice(1).split("/")
     };
-  });
+    });
 
 export async function generateMetadata({ params }: RoutePageProps): Promise<Metadata> {
   const { locale, validLocale, canonicalPath, route } = await resolveRoute(params);

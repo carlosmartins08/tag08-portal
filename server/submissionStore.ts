@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
 import { DeliveryStatus, DeliveryTarget, SubmissionStatus } from "../src/generated/prisma/enums";
 import { getPrisma } from "../src/lib/server/prisma";
+import { hashOpaqueSecret } from "./onboardingAccess";
 import type { ContactLeadInput, TalentApplicationInput } from "./submissionContracts";
 import type { OnboardingPayload } from "./onboardingContract";
 
@@ -128,11 +129,33 @@ export const persistTalentApplication = async (payload: TalentApplicationInput, 
   });
 };
 
-export const persistOnboardingSubmission = async (payload: OnboardingPayload, idempotencyKey: string): Promise<PersistResult> => {
+export const persistOnboardingSubmission = async (
+  payload: OnboardingPayload,
+  idempotencyKey: string,
+  access: { journeyId: string; sessionId: string; sessionSecret: string }
+): Promise<PersistResult> => {
   const prisma = getPrisma();
   return prisma.$transaction(async (tx) => {
+    const now = new Date();
+    const session = await tx.onboardingSession.findFirst({
+      where: {
+        id: access.sessionId,
+        journeyId: access.journeyId,
+        tokenHash: hashOpaqueSecret(access.sessionSecret),
+        revokedAt: null,
+        expiresAt: { gt: now }
+      },
+      include: { journey: true }
+    });
+    if (!session || session.journey.accessRevokedAt || session.journey.status === "CLOSED") throw new Error("onboarding_session_invalid");
+
     const existing = await tx.onboardingSubmission.findUnique({ where: { idempotencyKey } });
-    if (existing) return { id: existing.id, created: false };
+    if (existing) {
+      if (existing.journeyId !== access.journeyId || !isDeepStrictEqual(existing.payload, payload)) throw new Error("idempotency_key_conflict");
+      return { id: existing.id, created: false };
+    }
+
+    if (session.journey.status !== "ACTIVE") throw new Error("onboarding_already_completed");
 
     const id = randomUUID();
     await tx.onboardingSubmission.create({
@@ -146,7 +169,8 @@ export const persistOnboardingSubmission = async (payload: OnboardingPayload, id
         schemaVersion: payload.schemaVersion || 1,
         source: payload.source,
         status: SubmissionStatus.ACCEPTED,
-        retentionUntil: retentionUntil()
+        retentionUntil: retentionUntil(),
+        journeyId: access.journeyId
       }
     });
     await tx.integrationDelivery.createMany({
@@ -155,8 +179,15 @@ export const persistOnboardingSubmission = async (payload: OnboardingPayload, id
         queueDelivery(DeliveryTarget.CLICKUP, "onboarding_submission", id, payload)
       ]
     });
+    await tx.onboardingJourney.update({
+      where: { id: access.journeyId },
+      data: { status: "COMPLETED", completedAt: now, draft: null }
+    });
+    await tx.onboardingAuditEvent.create({
+      data: { id: randomUUID(), journeyId: access.journeyId, event: "onboarding_completed", result: "accepted" }
+    });
     return { id, created: true };
-  });
+  }, { isolationLevel: "Serializable" });
 };
 
 export const isPersistenceUnavailable = (error: unknown) =>
@@ -164,6 +195,8 @@ export const isPersistenceUnavailable = (error: unknown) =>
 
 export const getPersistenceErrorCode = (error: unknown) => {
   if (isPersistenceUnavailable(error)) return "database_configuration_unavailable";
+  if (error && typeof error === "object" && "code" in error && typeof error.code === "string" && /^P\d{4}$/.test(error.code)) return error.code;
+  if (error instanceof Error && ["onboarding_session_invalid", "onboarding_already_completed", "idempotency_key_conflict"].includes(error.message)) return error.message;
   if (error instanceof Error) return error.name || "database_operation_failed";
   return "database_operation_failed";
 };

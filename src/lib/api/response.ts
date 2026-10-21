@@ -29,12 +29,13 @@ export const corsHeadersForRequest = (request?: Request): Record<string, string>
   };
 };
 
-export const jsonResponse = (body: unknown, status = 200, request?: Request) =>
+export const jsonResponse = (body: unknown, status = 200, request?: Request, extraHeaders: Record<string, string> = {}) =>
   NextResponse.json(body, {
     status,
     headers: {
       ...corsHeadersForRequest(request),
-      "Cache-Control": "no-store"
+      "Cache-Control": "no-store",
+      ...extraHeaders
     }
   });
 

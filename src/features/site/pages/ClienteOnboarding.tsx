@@ -32,20 +32,16 @@ import {
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { activateOnKeyboard } from "../../../lib/keyboard";
 import {
-  ONBOARDING_QUEUE_MAX_AGE_DAYS,
-  ONBOARDING_QUEUE_MAX_RETRIES,
-  ONBOARDING_QUEUE_SYNC_WINDOW_SECONDS,
   ONBOARDING_PAYLOAD_VERSION
 } from "../../../../server/onboardingContract";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
 import type { RouteLocale } from "../../../config/routeRegistry";
-import { trackFormStart, trackFormStep, trackFormSubmit, trackLeadEvent, trackOutboundClick } from "../../../lib/analytics";
+import { ONBOARDING_DRAFT_VERSION, parseOnboardingDraft, type OnboardingDraft } from "../../../lib/onboardingDraft";
 
 type Language = "pt" | "en" | "es";
 type SubmissionMode = "client" | "tag08_team";
-type DeliveryState = "idle" | "online" | "queued" | "error";
-type QueueStatus = "pending" | "sent" | "retrying" | "error";
-type OnboardingDeliveryStatus = "received" | "accepted" | "queued" | "failed";
+type DeliveryState = "idle" | "online" | "error";
+type OnboardingDeliveryStatus = "received" | "accepted" | "failed";
 type OnboardingSubmitResult = {
   ok: boolean;
   submissionId: string;
@@ -54,18 +50,6 @@ type OnboardingSubmitResult = {
   error?: string;
 };
 type OnboardingSubmissionPayload = Record<string, unknown>;
-type OnboardingQueueEntry = {
-  id: string;
-  submittedAt: string;
-  payload: OnboardingSubmissionPayload;
-  attempts: number;
-  status: QueueStatus;
-  lastAttemptAt?: string;
-  nextAttemptAt?: string;
-  lastError?: string;
-};
-
-const ONBOARDING_QUEUE_KEY = "tag08_onboarding_queue";
 type OnboardingSubmitErrorKind = "validation" | "transport" | "payload";
 type OnboardingSubmitErrorData = {
   kind: OnboardingSubmitErrorKind;
@@ -95,7 +79,7 @@ const isValidSubmissionResult = (value: unknown): value is OnboardingSubmitResul
     typeof candidate.submissionId === "string" &&
     typeof candidate.receivedAt === "string" &&
     typeof candidate.status === "string" &&
-    ["received", "accepted", "queued", "failed"].includes(candidate.status)
+    ["received", "accepted", "failed"].includes(candidate.status)
   );
 };
 
@@ -108,7 +92,7 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Privacy Sidebar
     privacy_title: "TRATAMENTO RESPONSÁVEL DE DADOS",
-    privacy_desc: "Usamos estas informações para preparar o projeto, organizar o briefing e encaminhar o atendimento da TAG08. Se a conexão cair, o envio pode ficar temporariamente em fila local. Evite enviar senhas ou dados desnecessários.",
+    privacy_desc: "As informações ficam vinculadas à jornada autorizada e são usadas para preparar o projeto. Não envie senhas ou dados desnecessários.",
     privacy_indicators: "COMO OS DADOS SÃO USADOS:",
     privacy_p1: "Tratamento conforme a LGPD",
     privacy_p2: "Links e materiais usados apenas no briefing",
@@ -317,7 +301,7 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Privacy Sidebar
     privacy_title: "RESPONSIBLE DATA HANDLING",
-    privacy_desc: "We use this information to prepare the project, organize the briefing, and route TAG08 delivery. If the connection drops, the submission may remain temporarily in a local queue. Do not submit passwords or unnecessary data.",
+    privacy_desc: "This information is linked to the authorized journey and used to prepare the project. Do not submit passwords or unnecessary data.",
     privacy_indicators: "HOW DATA IS USED:",
     privacy_p1: "Processing under applicable privacy rules",
     privacy_p2: "Links and assets used for the briefing",
@@ -525,7 +509,7 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Privacy Sidebar
     privacy_title: "TRATAMIENTO RESPONSABLE DE DATOS",
-    privacy_desc: "Usamos esta información para preparar el proyecto, organizar el briefing y encaminar la atención de TAG08. Si falla la conexión, el envío puede quedar temporalmente en una cola local. No envíe contraseñas ni datos innecesarios.",
+    privacy_desc: "La información queda vinculada a la jornada autorizada y se usa para preparar el proyecto. No envíe contraseñas ni datos innecesarios.",
     privacy_indicators: "CÓMO SE USAN LOS DATOS:",
     privacy_p1: "Tratamiento conforme a las reglas aplicables",
     privacy_p2: "Enlaces y materiales usados para el briefing",
@@ -794,14 +778,17 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [deliveryState, setDeliveryState] = useState<DeliveryState>("idle");
   const [deliveryMessage, setDeliveryMessage] = useState("");
-  const [pendingQueueCount, setPendingQueueCount] = useState(0);
+  const [isDraftLoaded, setIsDraftLoaded] = useState(false);
+  const [draftLoadError, setDraftLoadError] = useState(false);
+  const [draftSaveState, setDraftSaveState] = useState<"saved" | "saving" | "error">("saved");
+  const submissionKeyRef = useRef("");
+  const submissionTimestampRef = useRef("");
   const [submissionMode, setSubmissionMode] = useState<SubmissionMode>("client");
   const [operatorName, setOperatorName] = useState("");
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const isFlowActive = currentStep > 0 && currentStep < 9;
   
-  const hasTrackedOnboardingStartRef = useRef(false);
 
   useEffect(() => {
     if (isFlowActive) {
@@ -932,68 +919,95 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
   // Errors state
   const [currentErrors, setCurrentErrors] = useState<string[]>([]);
 
-  const getQueuedOnboardingEntries = (): OnboardingQueueEntry[] => {
-    try {
-      const raw = localStorage.getItem(ONBOARDING_QUEUE_KEY);
-      if (!raw) return [];
-      const parsed = JSON.parse(raw);
-      const items = Array.isArray(parsed) ? (parsed as OnboardingQueueEntry[]) : [];
-      const now = Date.now();
-      const maxAgeMs = ONBOARDING_QUEUE_MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
+  const draftValues: Record<string, string | number | boolean | string[]> = {
+    currentQuestion, submissionMode, operatorName, companyName, cnpjCpf, cityState, companyWebsite, companyInstagram, companyLinkedin, serviceLanguage,
+    responsibleName, responsibleRole, responsibleEmail, responsibleWhatsapp, focalPointText, approverText, financePointText,
+    businessMoment, priorityMap, maturityScore, selectedServices, customServiceText,
+    smChannels, smTargetAudience, smPriorityProducts, smCompetitors, smHasBrandIdentity, smHasMediaBank, smRecordsVideos, smApprovesContent, smForbiddenTopics,
+    brBrandExists, brReasonForChange, brDesiredAttributes, brReferencesLink, brAvoidBrands, brBrandNeverBeLike, brHasNameSelected, brHasSloganText, brRequiredApplications,
+    webHasDomain, webHasHosting, webCurrentSite, webMainGoal, webRequiredPages, webHasBrandIdentity, webHasTextsReady, webHasFilesReady, webIntegrateWhatsApp, webIntegrateForm, webIntegrateCRM, webNeedsBlog, webReferenceUrls,
+    piTeamSize, piDepartments, piDisorganizedAreas, piPersonDependent, piReworkTasks, piCurrentTools, piHasDocumentation, piHasOrgChart, piHasMeetings, piMainBottleneck,
+    paHasPiDiagnose, paDocumentedProcesses, paUnappliedProcesses, paTeamsToTrain, paResponsibleLeader, paBiggestDifficulty, paHasTimeForTraining,
+    generalBriefingText, linkDrive, linkPortfolio, linkReferences, linkDocuments, linkCommercial,
+    whySeekTag08, whatTriedBefore, whatDidNotWork, goodResult90Days, biggestUrgency, notToMakeMistakes, importantDeadlines,
+    consentTruth, consentUsage, consentNoPasswords
+  };
+  const draftSetters: Record<string, (value: unknown) => void> = {
+    currentQuestion: (value) => setCurrentQuestion(Number(value)),
+    submissionMode: (value) => setSubmissionMode(value === "tag08_team" ? "tag08_team" : "client"),
+    operatorName: (value) => setOperatorName(String(value)), companyName: (value) => setCompanyName(String(value)), cnpjCpf: (value) => setCnpjCpf(String(value)),
+    cityState: (value) => setCityState(String(value)), companyWebsite: (value) => setCompanyWebsite(String(value)), companyInstagram: (value) => setCompanyInstagram(String(value)),
+    companyLinkedin: (value) => setCompanyLinkedin(String(value)), serviceLanguage: (value) => setServiceLanguage(value === "en" || value === "es" ? value : "pt"),
+    responsibleName: (value) => setResponsibleName(String(value)), responsibleRole: (value) => setResponsibleRole(String(value)), responsibleEmail: (value) => setResponsibleEmail(String(value)),
+    responsibleWhatsapp: (value) => setResponsibleWhatsapp(String(value)), focalPointText: (value) => setFocalPointText(String(value)), approverText: (value) => setApproverText(String(value)), financePointText: (value) => setFinancePointText(String(value)),
+    businessMoment: (value) => setBusinessMoment(String(value)), priorityMap: (value) => setPriorityMap(String(value)), maturityScore: (value) => setMaturityScore(Number(value)),
+    selectedServices: (value) => setSelectedServices(Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : []), customServiceText: (value) => setCustomServiceText(String(value)),
+    smChannels: (value) => setSmChannels(String(value)), smTargetAudience: (value) => setSmTargetAudience(String(value)), smPriorityProducts: (value) => setSmPriorityProducts(String(value)), smCompetitors: (value) => setSmCompetitors(String(value)),
+    smHasBrandIdentity: (value) => setSmHasBrandIdentity(String(value)), smHasMediaBank: (value) => setSmHasMediaBank(String(value)), smRecordsVideos: (value) => setSmRecordsVideos(String(value)), smApprovesContent: (value) => setSmApprovesContent(String(value)), smForbiddenTopics: (value) => setSmForbiddenTopics(String(value)),
+    brBrandExists: (value) => setBrBrandExists(String(value)), brReasonForChange: (value) => setBrReasonForChange(String(value)), brDesiredAttributes: (value) => setBrDesiredAttributes(String(value)), brReferencesLink: (value) => setBrReferencesLink(String(value)), brAvoidBrands: (value) => setBrAvoidBrands(String(value)), brBrandNeverBeLike: (value) => setBrBrandNeverBeLike(String(value)), brHasNameSelected: (value) => setBrHasNameSelected(String(value)), brHasSloganText: (value) => setBrHasSloganText(String(value)), brRequiredApplications: (value) => setBrRequiredApplications(String(value)),
+    webHasDomain: (value) => setWebHasDomain(String(value)), webHasHosting: (value) => setWebHasHosting(String(value)), webCurrentSite: (value) => setWebCurrentSite(String(value)), webMainGoal: (value) => setWebMainGoal(String(value)), webRequiredPages: (value) => setWebRequiredPages(String(value)), webHasBrandIdentity: (value) => setWebHasBrandIdentity(String(value)), webHasTextsReady: (value) => setWebHasTextsReady(String(value)), webHasFilesReady: (value) => setWebHasFilesReady(String(value)),
+    webIntegrateWhatsApp: (value) => setWebIntegrateWhatsApp(value === true), webIntegrateForm: (value) => setWebIntegrateForm(value === true), webIntegrateCRM: (value) => setWebIntegrateCRM(value === true), webNeedsBlog: (value) => setWebNeedsBlog(value === true), webReferenceUrls: (value) => setWebReferenceUrls(String(value)),
+    piTeamSize: (value) => setPiTeamSize(String(value)), piDepartments: (value) => setPiDepartments(String(value)), piDisorganizedAreas: (value) => setPiDisorganizedAreas(String(value)), piPersonDependent: (value) => setPiPersonDependent(String(value)), piReworkTasks: (value) => setPiReworkTasks(String(value)), piCurrentTools: (value) => setPiCurrentTools(String(value)), piHasDocumentation: (value) => setPiHasDocumentation(String(value)), piHasOrgChart: (value) => setPiHasOrgChart(String(value)), piHasMeetings: (value) => setPiHasMeetings(String(value)), piMainBottleneck: (value) => setPiMainBottleneck(String(value)),
+    paHasPiDiagnose: (value) => setPaHasPiDiagnose(String(value)), paDocumentedProcesses: (value) => setPaDocumentedProcesses(String(value)), paUnappliedProcesses: (value) => setPaUnappliedProcesses(String(value)), paTeamsToTrain: (value) => setPaTeamsToTrain(String(value)), paResponsibleLeader: (value) => setPaResponsibleLeader(String(value)), paBiggestDifficulty: (value) => setPaBiggestDifficulty(String(value)), paHasTimeForTraining: (value) => setPaHasTimeForTraining(String(value)),
+    generalBriefingText: (value) => setGeneralBriefingText(String(value)), linkDrive: (value) => setLinkDrive(String(value)), linkPortfolio: (value) => setLinkPortfolio(String(value)), linkReferences: (value) => setLinkReferences(String(value)), linkDocuments: (value) => setLinkDocuments(String(value)), linkCommercial: (value) => setLinkCommercial(String(value)),
+    whySeekTag08: (value) => setWhySeekTag08(String(value)), whatTriedBefore: (value) => setWhatTriedBefore(String(value)), whatDidNotWork: (value) => setWhatDidNotWork(String(value)), goodResult90Days: (value) => setGoodResult90Days(String(value)), biggestUrgency: (value) => setBiggestUrgency(String(value)), notToMakeMistakes: (value) => setNotToMakeMistakes(String(value)), importantDeadlines: (value) => setImportantDeadlines(String(value)),
+    consentTruth: (value) => setConsentTruth(value === true), consentUsage: (value) => setConsentUsage(value === true), consentNoPasswords: (value) => setConsentNoPasswords(value === true)
+  };
 
-      const filtered = items.filter((entry) => {
-        const submitted = new Date(entry.submittedAt || 0).getTime();
-        const age = now - submitted;
-        const canRetry = entry.status === "pending" || entry.status === "retrying";
-        const isFailure = entry.status === "error";
-        const isSent = entry.status === "sent";
-        return (
-          submitted > 0 &&
-          age <= maxAgeMs &&
-          (canRetry || isFailure || isSent) &&
-          Boolean(entry.payload) &&
-          entry.attempts <= ONBOARDING_QUEUE_MAX_RETRIES + 1
-        );
+  useEffect(() => {
+    let active = true;
+    fetch("/api/onboarding/progress", { cache: "no-store" })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("access_unavailable");
+        return response.json();
+      })
+      .then((result) => {
+        if (!active) return;
+        const draft = parseOnboardingDraft(result?.draft);
+        if (draft) {
+          setCurrentStep(draft.currentStep);
+          Object.entries(draft.values).forEach(([key, value]) => draftSetters[key]?.(value));
+        }
+        if (result?.completed === true) {
+          setIsSubmitted(true);
+          setCurrentStep(9);
+          setDeliveryState("online");
+        }
+        setIsDraftLoaded(true);
+      })
+      .catch(() => {
+        if (!active) return;
+        setDraftLoadError(true);
+        setIsDraftLoaded(true);
       });
+    return () => { active = false; };
+  }, []);
 
-      const staleRemoved = items.length - filtered.length;
-      if (staleRemoved > 0) {
-        setQueuedOnboardingEntries(filtered);
+  useEffect(() => {
+    if (!isDraftLoaded || isSubmitted || currentStep >= 9) return;
+    const draft: OnboardingDraft = { version: ONBOARDING_DRAFT_VERSION, currentStep, values: draftValues };
+    const timer = window.setTimeout(async () => {
+      setDraftSaveState("saving");
+      try {
+        const response = await fetch("/api/onboarding/progress", {
+          method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ draft }), cache: "no-store"
+        });
+        if (!response.ok) throw new Error("progress_unavailable");
+        setDraftSaveState("saved");
+      } catch {
+        setDraftSaveState("error");
       }
+    }, 700);
+    return () => window.clearTimeout(timer);
+  }, [isDraftLoaded, isSubmitted, currentStep, JSON.stringify(draftValues)]);
 
-      return filtered;
-    } catch {
-      return [];
-    }
-  };
-  const setQueuedOnboardingEntries = (entries: OnboardingQueueEntry[]) => {
-    try {
-      localStorage.setItem(ONBOARDING_QUEUE_KEY, JSON.stringify(entries));
-    } catch {
-      // Mantém apenas estado em memória se localStorage estiver indisponível.
-    }
-    setPendingQueueCount(entries.filter((entry) => entry.status === "pending" || entry.status === "retrying").length);
-  };
-
-  const buildRetryDelayMs = (attempt: number) => {
-    const multiplier = Math.pow(2, Math.max(0, attempt - 1));
-    return Math.min(Math.max(multiplier, 1), 10) * ONBOARDING_QUEUE_SYNC_WINDOW_SECONDS * 1000;
-  };
-
-  const sendToBackend = async (
-    payload: OnboardingSubmissionPayload,
-    fromQueue = false
-  ) => {
+  const sendToBackend = async (payload: OnboardingSubmissionPayload) => {
+    if (!submissionKeyRef.current) submissionKeyRef.current = crypto.randomUUID();
     const response = await fetch("/api/onboarding", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...payload,
-        meta: {
-          ...(typeof payload === "object" && payload !== null ? ((payload as { meta?: Record<string, unknown> }).meta || {}) : {}),
-          replayedFromQueue: fromQueue
-        }
-      }),
+      headers: { "Content-Type": "application/json", "Idempotency-Key": submissionKeyRef.current },
+      body: JSON.stringify(payload),
+      cache: "no-store"
     });
 
     const parsedResult = await response.json().catch(() => null);
@@ -1019,87 +1033,6 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
 
     return parsedResult;
   };
-
-  const enqueueSubmission = (payload: OnboardingSubmissionPayload) => {
-    const entries = getQueuedOnboardingEntries();
-    const now = new Date();
-    const entry: OnboardingQueueEntry = {
-      id: `onb_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-      submittedAt: now.toISOString(),
-      payload,
-      attempts: 0,
-      status: "pending",
-      nextAttemptAt: now.toISOString()
-    };
-    const entriesWithoutSameSubmission = entries.filter((item) => JSON.stringify(item.payload) !== JSON.stringify(payload));
-    setQueuedOnboardingEntries([...entriesWithoutSameSubmission, entry]);
-    return entry;
-  };
-
-  const flushQueuedSubmissions = async () => {
-    if (!navigator.onLine) return;
-
-    const entries = getQueuedOnboardingEntries();
-    if (!entries.length) return;
-
-    const remaining: OnboardingQueueEntry[] = [];
-    for (const entry of entries) {
-      if (entry.status === "sent") {
-        remaining.push(entry);
-        continue;
-      }
-
-      if (entry.status === "error") {
-        continue;
-      }
-
-      const shouldWait = entry.nextAttemptAt ? new Date(entry.nextAttemptAt).getTime() - Date.now() : 0;
-      if (shouldWait > 0) {
-        remaining.push(entry);
-        continue;
-      }
-      try {
-        await sendToBackend(entry.payload, true);
-        entry.status = "sent";
-        entry.lastAttemptAt = new Date().toISOString();
-        entry.lastError = undefined;
-      } catch (error) {
-        entry.attempts += 1;
-        entry.lastError = error instanceof Error ? error.message : "Erro desconhecido ao reenviar";
-        entry.lastAttemptAt = new Date().toISOString();
-
-        if (entry.attempts >= ONBOARDING_QUEUE_MAX_RETRIES) {
-          entry.status = "error";
-          entry.nextAttemptAt = undefined;
-        } else {
-          entry.status = "retrying";
-          entry.nextAttemptAt = new Date(Date.now() + buildRetryDelayMs(entry.attempts)).toISOString();
-          remaining.push(entry);
-        }
-      }
-    }
-
-    setQueuedOnboardingEntries(remaining);
-  };
-  useEffect(() => {
-    setPendingQueueCount(getQueuedOnboardingEntries().filter((entry) => entry.status === "pending" || entry.status === "retrying").length);
-    const syncQueueIfPossible = () => {
-      if (!navigator.onLine) return;
-      flushQueuedSubmissions().catch(() => {
-        setDeliveryState("error");
-        setDeliveryMessage(t("status_sync_error"));
-      });
-    };
-
-    syncQueueIfPossible();
-    window.addEventListener("online", syncQueueIfPossible);
-    const timer = window.setInterval(syncQueueIfPossible, Math.max(ONBOARDING_QUEUE_SYNC_WINDOW_SECONDS * 1000, 20000));
-
-    return () => {
-      window.removeEventListener("online", syncQueueIfPossible);
-      window.clearInterval(timer);
-    };
-  }, []);
 
   useEffect(() => {
     if (currentStep === 0 || currentStep === 9) return;
@@ -1392,15 +1325,6 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
       const questionCount = getQuestionCount(currentStep);
       const nextQuestion = currentQuestion + 1;
 
-      if (!hasTrackedOnboardingStartRef.current) {
-        hasTrackedOnboardingStartRef.current = true;
-        trackFormStart({
-          form_name: "onboarding",
-          form_surface: "onboarding-flow",
-          page_path: "/cliente/onboarding"
-        });
-      }
-
       if (nextQuestion < questionCount) {
         setCurrentQuestion(nextQuestion);
       } else {
@@ -1408,13 +1332,6 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
         setCurrentQuestion(0);
       }
       setCurrentErrors([]);
-      trackFormStep({
-        form_name: "onboarding",
-        form_surface: "onboarding-flow",
-        step: currentQuestionNumber + 1,
-        total_steps: totalQuestions,
-        page_path: "/cliente/onboarding"
-      });
       window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
     }
   };
@@ -1578,7 +1495,8 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
       authorizationConfirmedByOperator: submissionMode === "tag08_team" && consentUsage
     };
 
-    const submittedAt = new Date().toISOString();
+    if (!submissionTimestampRef.current) submissionTimestampRef.current = new Date().toISOString();
+    const submittedAt = submissionTimestampRef.current;
 
     // Prepare ClickUp custom checklists and format task
     const primaryService = selectedServices[0] || "Escopo Customizado";
@@ -1663,19 +1581,6 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
           .replace("{submissionId}", response.submissionId)
           .replace("{receivedAt}", response.receivedAt)
       );
-      await flushQueuedSubmissions();
-      trackFormSubmit({
-        form_name: "onboarding",
-        form_surface: "onboarding-flow",
-        status: "success",
-        page_path: "/cliente/onboarding"
-      });
-      trackLeadEvent({
-        action: "onboarding_submit",
-        surface: "onboarding-flow",
-        status: "online",
-        language: uiLanguage
-      });
       shouldShowSuccessScreen = true;
     } catch (error) {
       const submitError = error instanceof OnboardingSubmitError ? error : null;
@@ -1687,53 +1592,9 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
           t("status_validation_error").replace("{details}", message)
         );
         setCurrentErrors([message]);
-        trackFormSubmit({
-          form_name: "onboarding",
-          form_surface: "onboarding-flow",
-          status: "validation_error",
-          page_path: "/cliente/onboarding"
-        });
-        trackLeadEvent({
-          action: "onboarding_submit",
-          surface: "onboarding-flow",
-          status: "validation_error",
-          language: uiLanguage
-        });
       } else {
-        try {
-          enqueueSubmission(finalPayload);
-          setDeliveryState("queued");
-          setDeliveryMessage(t("status_queue_fallback"));
-          trackFormSubmit({
-            form_name: "onboarding",
-            form_surface: "onboarding-flow",
-            status: "queued",
-            page_path: "/cliente/onboarding"
-          });
-          trackLeadEvent({
-            action: "onboarding_submit",
-            surface: "onboarding-flow",
-            status: "queued",
-            language: uiLanguage
-          });
-          shouldShowSuccessScreen = true;
-        console.warn("Rota /api/onboarding indisponível. Formulário salvo localmente.");
-        } catch {
-          setDeliveryState("error");
-          setDeliveryMessage(t("status_queue_store_error"));
-          trackFormSubmit({
-            form_name: "onboarding",
-            form_surface: "onboarding-flow",
-            status: "error",
-            page_path: "/cliente/onboarding"
-          });
-          trackLeadEvent({
-            action: "onboarding_submit",
-            surface: "onboarding-flow",
-            status: "queue_error",
-            language: uiLanguage
-          });
-        }
+        setDeliveryState("error");
+        setDeliveryMessage(t("status_validation_error").replace("{details}", "Não foi possível enviar agora. Tente novamente."));
       }
     } finally {
       await new Promise(resolve => setTimeout(resolve, 1800));
@@ -1746,14 +1607,8 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
   };
 
   const handleLaunchWhatsAppOnboardingFastTrack = () => {
-    const text = `Olá time TAG08! Concluímos o preenchimento do nosso onboarding institucional via Assistente Conversacional.\n\nEmpresa: ${companyName}\nRepresentante: ${responsibleName}\nMeta dos próximos 90 dias: ${goodResult90Days || "(Preenchido no formulário)"}.\n\nAguardamos contato técnico para agendarmos nosso kickoff!`;
+    const text = "Olá, concluí o onboarding e gostaria de confirmar o recebimento.";
     const href = buildBrazilWhatsAppUrl(text);
-    trackOutboundClick({
-      label: "WhatsApp Brasil",
-      url: href,
-      surface: "onboarding-fast-track",
-      language: uiLanguage
-    });
     window.open(href, "_blank");
   };
 
@@ -1915,6 +1770,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
 
   const onboardingView = (
     <div data-onboarding-unsent={isFlowActive ? "true" : undefined} onKeyDown={handleFlowKeyDown} role={isFlowActive ? "dialog" : undefined} aria-modal={isFlowActive ? true : undefined} aria-labelledby={isFlowActive ? "onboarding-question-title" : undefined} className={`bg-charcoal-950 text-white font-sans ${isFlowActive ? "fixed inset-0 z-[9999] h-[100dvh] w-screen overflow-hidden" : "min-h-screen pt-16 pb-20"}`}>
+      <p className="sr-only" aria-live="polite">{draftSaveState === "saving" ? "Salvando progresso" : draftSaveState === "error" ? "Não foi possível salvar o progresso" : "Progresso salvo"}</p>
       <div className={`relative mx-auto ${isFlowActive ? "flex h-full w-full max-w-5xl flex-col px-5 sm:px-8" : "max-w-7xl px-6"}`}>
         
         {/* Subtle ambient blur background decorations */}
@@ -3119,30 +2975,21 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                   {currentStep === 9 && isSubmitted && (
                     <div className="space-y-8 py-2 font-sans">
                       <div className="space-y-4">
-                        <div className={`w-16 h-16 rounded-3xl border flex items-center justify-center shadow-xl mb-4 ${deliveryState === "queued" ? "bg-amber-400/10 border-amber-400/20 text-amber-300" : "bg-brand-secondary/10 border-brand-secondary/20 text-brand-secondary"}`}>
-                          {deliveryState === "queued" ? <Clock className="w-8 h-8" /> : <ClipboardCheck className="w-8 h-8" />}
+                        <div className="w-16 h-16 rounded-3xl border flex items-center justify-center shadow-xl mb-4 bg-brand-secondary/10 border-brand-secondary/20 text-brand-secondary">
+                          <ClipboardCheck className="w-8 h-8" />
                         </div>
-                      <span className={`tag08-meta text-xs uppercase font-black tracking-widest block ${deliveryState === "queued" ? "text-amber-300" : "text-brand-secondary"}`}>{t(deliveryState === "queued" ? "finalized_queued_badge" : "finalized_badge")}</span>
+                      <span className="tag08-meta text-xs uppercase font-black tracking-widest block text-brand-secondary">{t("finalized_badge")}</span>
                         <h2 className="font-display font-medium text-2xl sm:text-3xl text-white tracking-tight leading-tight">
-                          {t(deliveryState === "queued" ? "finalized_queued_title" : "finalized_title")}
+                          {t("finalized_title")}
                         </h2>
-                        {deliveryState === "queued" ? (
-                          <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">{t("finalized_queued_desc")}</p>
-                        ) : (
-                          <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">{t("finalized_desc_1")}</p>
-                        )}
-                        {deliveryMessage && deliveryState !== "queued" ? (
+                        <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">{t("finalized_desc_1")}</p>
+                        {deliveryMessage ? (
                           <p className="text-xs text-brand-secondary leading-relaxed">{deliveryMessage}</p>
-                        ) : null}
-                        {deliveryState === "queued" && pendingQueueCount > 0 ? (
-                          <p className="text-xs text-zinc-400">
-                            {t("status_queue_summary").replace("{count}", String(pendingQueueCount))}
-                          </p>
                         ) : null}
                       </div>
 
                       {/* Onboarding automatic system checks */}
-                      {deliveryState !== "queued" ? <div className="p-5 rounded-2xl bg-neutral-950 border border-white/[0.03] space-y-4 text-left">
+                      <div className="p-5 rounded-2xl bg-neutral-950 border border-white/[0.03] space-y-4 text-left">
                         <span className="font-sans text-xs text-brand-secondary uppercase font-black block">
                           {uiLanguage === "en" ? "SUBMISSION STATUS" : uiLanguage === "es" ? "ESTADO DEL ENVÍO" : "STATUS DO ENVIO"}
                         </span>
@@ -3165,7 +3012,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                             <span className="text-zinc-400">{uiLanguage === "en" ? "Next step: internal review" : uiLanguage === "es" ? "Siguiente paso: revisión interna" : "Próxima etapa: conferência interna"}</span>
                           </div>
                         </div>
-                      </div> : null}
+                      </div>
 
                       <div className="space-y-4 p-5 rounded-2xl bg-white/[0.01] border border-white/[0.04] text-left">
                         <span className="font-sans text-xs text-zinc-500 uppercase font-black block mb-1">
@@ -3266,6 +3113,13 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
       </div>
     </div>
   );
+
+  if (!isDraftLoaded || draftLoadError) {
+    return <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-charcoal-950 px-6 text-center text-zinc-200" aria-live="polite">
+      <p>{draftLoadError ? "Não foi possível carregar seu onboarding. Verifique a conexão ou solicite um novo link de acesso." : "Carregando seu onboarding seguro…"}</p>
+      {draftLoadError ? <button type="button" className="min-h-11 rounded-lg border border-white/20 px-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary" onClick={() => window.location.reload()}>Tentar novamente</button> : null}
+    </main>;
+  }
 
   return isFlowActive && typeof document !== "undefined"
     ? createPortal(onboardingView, document.body)

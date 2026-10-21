@@ -1,5 +1,5 @@
 import { ONBOARDING_PAYLOAD_VERSION, parseAndValidatePayload } from "../../../../server/onboardingContract";
-import { isPersistenceUnavailable, persistOnboardingSubmission } from "../../../../server/submissionStore";
+import { getPersistenceErrorCode, isPersistenceUnavailable, persistOnboardingSubmission } from "../../../../server/submissionStore";
 import {
   ONBOARDING_REQUEST_MAX_BYTES,
   createRequestId,
@@ -8,20 +8,19 @@ import {
   optionsResponse,
   readJsonBody
 } from "../../../lib/api/response";
+import { getOnboardingSecretFromRequest, isSameOriginMutation, resolveRequestOnboardingSession } from "../../../../server/onboardingAccess";
 
 export const runtime = "nodejs";
-
-const resolveQueueHint = (payload: unknown): boolean => {
-  if (!payload || typeof payload !== "object") return false;
-  const meta = (payload as { meta?: { replayedFromQueue?: unknown } }).meta;
-  return meta?.replayedFromQueue === true;
-};
 
 export async function OPTIONS(request: Request) {
   return optionsResponse(request);
 }
 
 export async function POST(request: Request) {
+  if (!isSameOriginMutation(request)) return jsonResponse({ ok: false, status: "failed", error: "access_unavailable" }, 400, request);
+  const session = await resolveRequestOnboardingSession(request);
+  const sessionSecret = getOnboardingSecretFromRequest(request);
+  if (!session || !sessionSecret) return jsonResponse({ ok: false, status: "failed", error: "access_unavailable" }, 401, request);
   const requestId = createRequestId();
   const body = await readJsonBody(request, ONBOARDING_REQUEST_MAX_BYTES);
   if (body.ok === false) {
@@ -37,7 +36,6 @@ export async function POST(request: Request) {
     return jsonResponse({ ok: false, status: "failed", error: "invalid_payload", requestId }, 400, request);
   }
 
-  const fromQueue = resolveQueueHint(payload);
   const result = parseAndValidatePayload(payload);
 
   if (result.errors.length > 0) {
@@ -47,14 +45,22 @@ export async function POST(request: Request) {
 
   result.payload.schemaVersion = ONBOARDING_PAYLOAD_VERSION;
   result.payload.status = "accepted";
-  result.payload.meta = { ...result.payload.meta, replayedFromQueue: fromQueue };
+  result.payload.submissionContext = { submittedBy: "client" };
+  result.payload.consent.authorizationConfirmedByOperator = false;
 
   try {
-    const idempotencyKey = request.headers.get("idempotency-key") || result.payload.meta?.queueEntryId || requestId;
-    const persisted = await persistOnboardingSubmission(result.payload, idempotencyKey);
+    const idempotencyKey = request.headers.get("idempotency-key");
+    if (!idempotencyKey || idempotencyKey.length > 128 || !/^[A-Za-z0-9_.:-]+$/.test(idempotencyKey)) {
+      return jsonResponse({ ok: false, status: "failed", error: "idempotency_key_required", requestId }, 400, request);
+    }
+    const persisted = await persistOnboardingSubmission(result.payload, idempotencyKey, {
+      journeyId: session.journeyId,
+      sessionId: session.id,
+      sessionSecret
+    });
     const receivedAt = new Date().toISOString();
 
-    console.log(JSON.stringify({ event: "onboarding_submission_accepted", requestId, submissionId: persisted.id, fromQueue, replayed: !persisted.created }));
+    console.log(JSON.stringify({ event: "onboarding_submission_accepted", requestId, submissionId: persisted.id, replayed: !persisted.created }));
 
     return jsonResponse({ ok: true, submissionId: persisted.id, status: "accepted", schemaVersion: ONBOARDING_PAYLOAD_VERSION, receivedAt, requestId }, 202, request);
   } catch (error) {
@@ -62,7 +68,7 @@ export async function POST(request: Request) {
       return jsonResponse({ ok: false, status: "failed", error: "persistence_unavailable", requestId }, 503, request);
     }
 
-    console.error(JSON.stringify({ event: "onboarding_submission_failed", requestId, error: "persistence_error" }));
+    console.error(JSON.stringify({ event: "onboarding_submission_failed", requestId, error: "persistence_error", code: getPersistenceErrorCode(error) }));
     return jsonResponse({ ok: false, status: "failed", error: "persistence_error", requestId }, 500, request);
   }
 }

@@ -55,6 +55,20 @@ const nextConfig: NextConfig = {
           },
           { key: contentSecurityPolicyHeader, value: contentSecurityPolicy }
         ]
+      },
+      {
+        source: "/cliente/onboarding",
+        headers: [
+          { key: "Referrer-Policy", value: "no-referrer" },
+          { key: "Cache-Control", value: "private, no-store, max-age=0" }
+        ]
+      },
+      {
+        source: "/:locale/cliente/onboarding",
+        headers: [
+          { key: "Referrer-Policy", value: "no-referrer" },
+          { key: "Cache-Control", value: "private, no-store, max-age=0" }
+        ]
       }
     ];
   }
