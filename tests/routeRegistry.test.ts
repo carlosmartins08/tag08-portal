@@ -61,8 +61,10 @@ assert.equal(notFoundRegistryEntry?.includeInSitemap, false, "The /404 registry 
 assert.doesNotMatch(routeContentSource, /path === "\/404"/, "RouteContent currently has no dedicated /404 renderer");
 assert.match(catchAllPageSource, /const route = getRouteByPath\(canonicalPath\) \?\? getContentReviewRouteByPath\(canonicalPath\)/,
   "The catch-all currently resolves direct /404 through the route registry");
-assert.match(catchAllPageSource, /if \(!validLocale \|\| !route\) \{\s*notFound\(\);\s*\}/,
-  "The catch-all invokes Next notFound only when locale or registry route is missing");
+assert.match(catchAllPageSource, /if \(!validLocale \|\| !route \|\| route\.key === "not-found"\) \{\s*notFound\(\);\s*\}/,
+  "The catch-all sends unknown paths and the technical /404 entry to Next not-found");
+assert.match(catchAllPageSource, /if \(!validLocale \|\| !route \|\| route\.key === "not-found"\) \{\s*return \{ robots: \{ index: false, follow: true \} \};\s*\}/,
+  "The technical /404 route has no canonical metadata");
 assert.match(notFoundPageSource, /return <NotFoundRoute locale=\{locale\} \/>/,
   "The framework not-found route renders the dedicated NotFoundRoute");
 assert.equal(getRouteByPath("/casos/case-not-registered"), undefined,

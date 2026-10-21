@@ -55,7 +55,7 @@ export const generateStaticParams = () =>
 
 export async function generateMetadata({ params }: RoutePageProps): Promise<Metadata> {
   const { locale, validLocale, canonicalPath, route } = await resolveRoute(params);
-  if (!validLocale || !route) {
+  if (!validLocale || !route || route.key === "not-found") {
     return { robots: { index: false, follow: true } };
   }
 
@@ -90,7 +90,7 @@ export async function generateMetadata({ params }: RoutePageProps): Promise<Meta
 export default async function RoutePage({ params }: RoutePageProps) {
   const { locale, path, validLocale, canonicalPath, route } = await resolveRoute(params);
 
-  if (!validLocale || !route) {
+  if (!validLocale || !route || route.key === "not-found") {
     notFound();
   }
 
