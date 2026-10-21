@@ -92,6 +92,35 @@ test.describe("experiencia de contato", () => {
     await expect(page.getByRole("status").filter({ hasText: "Sebraetec" })).toBeVisible();
   });
 
+  test("explica a Unidade Digital e mantém o CTA contextual de Tecnologia", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/servicos/desenvolvimento-web", { waitUntil: "domcontentloaded" });
+
+    for (const viewport of [
+      { width: 390, height: 844 },
+      { width: 768, height: 1024 },
+      { width: 1440, height: 900 }
+    ]) {
+      await page.setViewportSize(viewport);
+      const hasNoHorizontalOverflow = await page.evaluate(() =>
+        document.documentElement.scrollWidth <= window.innerWidth + 1
+      );
+      expect(hasNoHorizontalOverflow, `Sem overflow horizontal em ${viewport.width}px`).toBeTruthy();
+    }
+
+    const ecommerceQuestion = page.getByRole("button", { name: /O que envolve uma Unidade Digital de e-commerce/ });
+    await ecommerceQuestion.focus();
+    await expect(ecommerceQuestion).toBeFocused();
+    await page.keyboard.press("Enter");
+
+    const ecommerceAnswer = page.getByRole("region", { name: /O que envolve uma Unidade Digital de e-commerce/ });
+    await expect(ecommerceAnswer).toContainText("A condução passa por diagnóstico, modelagem, validação estratégica, estruturação operacional, desenvolvimento, testes, ativação, treinamento e acompanhamento.");
+    await expect(ecommerceAnswer).toContainText("catálogo, estoque, logística, pagamentos, políticas comerciais, atendimento e responsabilidades");
+
+    await page.getByRole("button", { name: /PLANEJAR MEU SITE/i }).click();
+    await expect(page).toHaveURL(/\/contato\?intent=desenvolvimento-web&origin=offer$/);
+  });
+
   test("submete a intencao contextual sem PII na URL e preserva a confirmacao aprovada", async ({ page }) => {
     let submittedPayload: Record<string, unknown> | undefined;
     await page.route("**/api/contact", async (route) => {

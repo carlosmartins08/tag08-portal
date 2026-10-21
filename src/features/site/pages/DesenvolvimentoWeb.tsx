@@ -482,7 +482,8 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                   { id: 2, title: "O site considera o apoio ao comercial?" },
                   { id: 3, title: "O projeto inclui responsividade e adaptação para celular?" },
                   { id: 4, title: "Depois da publicação, o site pode evoluir?" },
-                  { id: 5, title: "Como a TAG08 define o escopo do site?" }
+                  { id: 5, title: "Como a TAG08 define o escopo do site?" },
+                  { id: 6, title: "O que envolve uma Unidade Digital de e-commerce?" }
                 ]).map((item) => (
                   <button
                     key={item.id}
@@ -536,7 +537,8 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                     "O site considera o apoio ao comercial?",
                     "O projeto inclui responsividade e adaptação para celular?",
                     "Depois da publicação, o site pode evoluir?",
-                    "Como a TAG08 define o escopo do site?"
+                    "Como a TAG08 define o escopo do site?",
+                    "O que envolve uma Unidade Digital de e-commerce?"
                   ])[activeFaq]}
                 </span>
 
@@ -547,7 +549,8 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                     "O site considera o apoio ao comercial?",
                     "O projeto inclui responsividade e adaptação para celular?",
                     "Depois da publicação, o site pode evoluir?",
-                    "Como a TAG08 define o escopo do site?"
+                    "Como a TAG08 define o escopo do site?",
+                    "O que envolve uma Unidade Digital de e-commerce?"
                   ])[activeFaq]}
                 </h3>
 
@@ -558,7 +561,8 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                     "Pode considerar. O site pode organizar informações, ofertas, dúvidas e caminhos de contato para apoiar a conversa comercial, mas não tratamos vendas ou conversão como resultado automático.",
                     "Sim. A interface é planejada para diferentes tamanhos de tela, preservando legibilidade, hierarquia, navegação e acesso às informações.",
                     "Sim. Conforme a estrutura técnica e o escopo, o site pode receber novas páginas, conteúdos, integrações ou melhorias à medida que surgem novas necessidades.",
-                    "O escopo é definido a partir do objetivo da estrutura, do momento da marca, da quantidade de páginas, dos conteúdos, das integrações necessárias e dos pontos de contato envolvidos."
+                    "O escopo é definido a partir do objetivo da estrutura, do momento da marca, da quantidade de páginas, dos conteúdos, das integrações necessárias e dos pontos de contato envolvidos.",
+                    "Uma Unidade Digital integra a experiência de compra à operação que a sustenta; o e-commerce não começa apenas pela tecnologia. A condução passa por diagnóstico, modelagem, validação estratégica, estruturação operacional, desenvolvimento, testes, ativação, treinamento e acompanhamento. Conforme o negócio, a prontidão considera catálogo, estoque, logística, pagamentos, políticas comerciais, atendimento e responsabilidades. Essa leitura orienta a conversa e o escopo; não representa diagnóstico automático nem exige um checklist prévio do visitante."
                   ])[activeFaq]}
                 </p>
               </div>
