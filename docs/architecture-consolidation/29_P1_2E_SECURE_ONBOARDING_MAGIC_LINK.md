@@ -299,3 +299,32 @@ Como `COMMIT READINESS = READY`, recomenda-se um único commit para a unidade in
 Antes do futuro commit: conferir novamente branch/HEAD e `git status`; revisar `git diff` e `git diff --cached`; verificar lista exata staged; executar `git diff --cached --check`; confirmar ausência de segredo/arquivo local e manter os resultados de teste atribuídos à P1.2E.2. Não repetir PostgreSQL/E2E sem evidência de mudança posterior. Antes de deploy, executar gates da topologia alvo; antes de ativação, fechar os blockers operacionais desta seção.
 
 **Próxima ação recomendada:** revisão humana final e, se aprovada, commit único da P1.2E. O veredito `READY` é somente para commit local. P1.2E continua bloqueada para deploy e para ativação operacional; não houve commit, push ou início de nova fase.
+
+## P1.2E.7 — Hardening incremental do CLI administrativo
+
+Adendo de 2026-10-21. A alteração cobre somente o CLI de administração, seus testes focados, o script de contratos e este registro. O estado preexistente de `next-env.d.ts` foi preservado e não pertence a esta missão.
+
+### Correções aplicadas
+
+- Emissão e reemissão agora exigem stdin e stdout conectados a TTY e recusam ambientes CI reconhecidos. A checagem ocorre antes da inicialização do cliente Prisma e é repetida imediatamente antes da escrita do link. Saída redirecionada/piped e execução não interativa falham fechadas com código neutro; a função de escrita não é chamada.
+- O carregamento de dotenv foi movido para depois da recusa de CI/TTY: o teste subprocesso encontrou uma mensagem de dotenv em stdout antes do gate na primeira versão; após mover o gate, a recusa ocorre sem qualquer saída stdout.
+- As operações administrativas exigem identidade esperada do destino: `ONBOARDING_ADMIN_EXPECTED_DATABASE_NAME` e `ONBOARDING_ADMIN_EXPECTED_PG_SYSTEM_IDENTIFIER`. Esses pins são capturados do ambiente pai antes do carregamento de `.env`, não podem ser supridos pelo arquivo dotenv e não são aceitos como argumentos da CLI. Ausência, formato inválido, erro de leitura ou divergência interrompem a operação antes de create/reissue/revoke. Erros de consulta não são repassados ao terminal.
+- A identidade observada consulta `current_database()` e `pg_control_system().system_identifier`; valores reais, URL, credenciais e identificadores não são impressos. A verificação preserva os helpers transacionais existentes, histórico, auditoria, TTL, uso único e locking.
+- O novo teste de contrato está incluído em `test:contracts`. Não foi executada a CLI contra qualquer banco; o teste de processo usa CI e stdio não interativo com URL sintética `.invalid`, devendo ser recusado antes da conexão.
+
+### Limites e evidência pendente
+
+Os pins ainda não estão provisionados neste ambiente e nenhum destino PostgreSQL foi consultado. Portanto, não há prova operacional de isolamento nem autorização para executar emissão. Um administrador deve obter o nome do database e o `system_identifier` diretamente do PostgreSQL descartável/staging aprovado, validar por canal independente que a instância é dedicada, e provisionar ambos os pins fora de `.env` (por exemplo, environment controlado/secret manager). A permissão de leitura de `pg_control_system()` também precisa ser validada no destino; falha de privilégio bloqueia o CLI, não deve ser contornada.
+
+O `system_identifier` identifica o cluster, não a origem/proveniência dos dados; clones físicos podem conservar o mesmo identificador. Em conjunto com `current_database()`, o pin reduz seleção acidental de destino, mas não prova ausência de dados copiados de produção. Essa proveniência e a gestão segura dos pins permanecem responsabilidade de infraestrutura e bloqueiam ativação operacional até validação humana. A identidade do operador continua autodeclarada, e um terminal interativo ainda pode ter gravação de sessão/transcript habilitada; a barreira TTY/CI não protege contra captura deliberada ou gravação local. Não há garantia de entrega protegida pelo CLI.
+
+### Validação e vereditos
+
+- Teste focado `tests/onboardingAccessCli.test.ts`: PASS, incluindo subprocesso com CI/stdin/stdout não interativos, stdout vazio, nenhuma conexão ao host `.invalid`, validação de pin ausente/inválido, correspondência/divergência de identidade e sanitização de falha de consulta.
+- `tests/onboardingAccess.test.ts`: PASS (contratos existentes de token, sessão, revogação e draft).
+- `npx tsc --noEmit`: PASS.
+- `git diff --check`: PASS.
+- Não foram repetidos PostgreSQL, migrations, E2E, build ou auditorias P1.2E.2/.3; esta missão não acessou banco nem infraestrutura externa.
+- **Prontidão para commit local:** READY para staging explícito apenas de `tools/onboarding-access.ts`, `tests/onboardingAccessCli.test.ts`, `package.json` e deste adendo, sujeito à revisão humana final. `next-env.d.ts` é alteração preexistente e deve permanecer fora. Nenhum commit foi criado.
+- **Prontidão para deploy:** BLOCKED — configuração efetiva de proxy/topologia e validação dos pins no ambiente alvo continuam pendentes.
+- **Ativação operacional:** BLOCKED — pins confiáveis ainda não provisionados/verificados, proveniência do banco não comprovada, operador autodeclarado e risco de captura local do terminal permanecem.
