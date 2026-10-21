@@ -9,6 +9,14 @@ import { readFileSync } from "node:fs";
 const routeContentSource = readFileSync("src/features/site/RouteContent.tsx", "utf8");
 const catchAllPageSource = readFileSync("src/app/[locale]/[[...segments]]/page.tsx", "utf8");
 const notFoundPageSource = readFileSync("src/app/[locale]/not-found.tsx", "utf8");
+const onboardingPageSource = readFileSync("src/app/[locale]/cliente/onboarding/page.tsx", "utf8");
+
+const dispatchedPaths = Array.from(routeContentSource.matchAll(/(?:if|else if) \(path === "([^"]+)"\)/g), (match) => match[1]);
+for (const path of dispatchedPaths) {
+  const route = getRouteByPath(path);
+  assert.ok(route, `RouteContent dispatch has no registry route: ${path}`);
+  assert.notEqual(route.key, "not-found", `RouteContent must not render a technical not-found route: ${path}`);
+}
 
 for (const route of routeRegistry.filter((entry) => entry.key !== "not-found" && !entry.dynamic)) {
   const canonical = canonicalizeRoute(route.canonicalPath);
@@ -25,6 +33,18 @@ for (const route of routeRegistry.filter((entry) => entry.key !== "not-found" &&
 for (const path of renderableRoutePaths) {
   const route = getRouteByPath(path);
   assert.ok(route, `Renderable path has no registry route: ${path}`);
+
+  if (route.key === "cliente-onboarding") {
+    assert.match(catchAllPageSource, /\.filter\(\(segments\) => resolveLocalizedPath\(segments\)\.path !== "\/cliente\/onboarding"\)/,
+      "The dedicated onboarding route remains excluded from public catch-all static params");
+    assert.match(onboardingPageSource, /export default async function OnboardingRoute/,
+      "Onboarding is rendered by its dedicated App Router page");
+    assert.match(onboardingPageSource, /OnboardingAccessGate[\s\S]*OnboardingSessionClient/,
+      "The dedicated onboarding page preserves its access gate and authenticated renderer");
+    assert.doesNotMatch(routeContentSource, /path === "\/cliente\/onboarding"/,
+      "The generic dispatcher does not retain an unreachable duplicate onboarding renderer");
+    continue;
+  }
 
   if (route.dynamic && route.routeCategory === "case-study") {
     assert.match(routeContentSource, /route\?\.routeCategory === "case-study"\) page = <CaseStudyDetail/,
