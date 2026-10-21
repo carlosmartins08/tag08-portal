@@ -2,9 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import ResilientImage from "../../../components/ResilientImage";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import {
-  Briefcase, 
-  MapPin, 
-  Clock, 
   User, 
   Mail, 
   Phone, 
@@ -16,33 +13,18 @@ import {
   ArrowUpRight,
   Sparkles, 
   Terminal, 
-  HeartHandshake, 
-  Cpu, 
-  Flame,
-  Plus,
   Lock,
-  Eye,
-  Type,
-  TrendingUp,
-  Award
 } from "lucide-react";
 import { trackFormError, trackFormStart, trackFormStep, trackFormSubmit, trackOutboundClick } from "../../../lib/analytics";
 import { queueFormSubmission } from "../../../lib/formQueue";
 import type { RouteLocale } from "../../../config/routeRegistry";
 
-interface Vacancy {
+interface TalentApplicationContext {
   id: string;
   title: string;
-  department: string;
-  type: string;
-  location: string;
-  reward: string;
-  description: string;
-  requirements: string[];
 }
 
 export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavigate: (page: string) => void; locale?: RouteLocale }) {
-  const [selectedVacancy, setSelectedVacancy] = useState<string>("copywriter");
   const [formName, setFormName] = useState("");
   const [formEmail, setFormEmail] = useState("");
   const [formPhone, setFormPhone] = useState("");
@@ -137,72 +119,12 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
     setCurrentStep(prev => Math.max(1, prev - 1));
   };
 
-  const vacancies: Vacancy[] = [
-    {
-      id: "copywriter",
-      title: "Copywriter Estratégico Sênior",
-      department: "Editorial & Estratégia",
-      type: "PJ / Híbrido",
-      location: "Joinville/SC ou São Paulo/SP",
-      reward: "R$ 6k - R$ 9k + Bônus",
-      description: "Buscamos um construtor de narrativas sênior focado em reestruturar a percepção de marcas B2B e infoprodutos. Profissional com domínio absoluto sobre funis de conversão ativa, manual de voz e storytelling sofisticado.",
-      requirements: [
-        "Portfólio comprovado com projetos de alto ticket B2B ou infoprodutos de alto posicionamento",
-        "Capacidade técnica de criar diretrizes e playbooks de voz",
-        "Conhecimento de SEO, marketing de conteúdo B2B e redação publicitária clássica",
-        "Perfil altamente orientado a prazos rígidos, processos claros e consistência"
-      ]
-    },
-    {
-      id: "ui-designer",
-      title: "UI/UX & Web Designer Sênior",
-      department: "Criação & Tecnologia",
-      type: "PJ / Remoto",
-      location: "Foco Nacional",
-      reward: "R$ 7k - R$ 10k",
-      description: "Profissional obsessivo por estética limpa, tipografia, contraste e arquiteturas de páginas que convertem. Você será responsável por traduzir o posicionamento das marcas em interfaces memoráveis e leves usando Figma.",
-      requirements: [
-        "Figma em nível avançado (Auto Layout, Sistemas de Cores, Componentização robusta)",
-        "Sensibilidade estética apurada (Suíço, Brutalista, Minimalista)",
-        "Desejável entendimento prático de HTML/CSS para facilitar o handoff",
-        "Organização extrema com arquivos, prazos e entrega"
-      ]
-    },
-    {
-      id: "trafego-performance",
-      title: "Gestor de Performance & Mídia Paga",
-      department: "Mídia & Inteligência",
-      type: "PJ / Híbrido",
-      location: "Joinville/SC ou São Paulo/SP",
-      reward: "Fixo + Variável sobre ROAS",
-      description: "Orientado por dados e conversões reais. Responsável por planejar e executar as campanhas pagas de tráfego (Meta Ads & Google Ads) conectadas diretamente aos funis de autoria e canais dos nossos parceiros estrategizados.",
-      requirements: [
-        "Mínimo de 3 anos liderando mídias pagas em escala (alto investimento)",
-        "Domínio sobre funis complexos, tagueamento analítico (GTM, GA4) e captação B2B",
-        "Habilidade para gerar relatórios visuais claros focados em margem e ROI",
-        "Proatividade total para sugerir melhorias drásticas nas Landing Pages"
-      ]
-    },
-    {
-      id: "espontanea",
-      title: "Banco de Talentos / Candidatura Espontânea",
-      department: "Todas as áreas",
-      type: "PJ ou Freelance",
-      location: "Híbrido ou Remoto",
-      reward: "A combinar",
-      description: "Não encontrou uma vaga aberta que se encaixe no seu momento atual? Envie suas informações e portfólio para nosso banco de talentos prioritário. Avaliamos novas fichas semanalmente.",
-      requirements: [
-        "Extrema dedicação pela excelência em sua especialidade",
-        "Vontade de trabalhar sob processos organizados e playbooks rigorosos",
-        "Autonomia extrema para gerenciar o próprio escopo técnico"
-      ]
-    }
-  ];
+  const talentPath: TalentApplicationContext = {
+    id: "espontanea",
+    title: "Banco de Talentos / Candidatura Espontânea"
+  };
 
-  const activeVacancy = vacancies.find(v => v.id === selectedVacancy) || vacancies[0];
-
-  const handleApply = (id: string) => {
-    setSelectedVacancy(id);
+  const handleApply = () => {
     setCurrentStep(1);
     setErrors({});
     setSubmitSuccess(false);
@@ -240,8 +162,8 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
     try {
       const idempotencyKey = globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
       const payload = {
-        vacancyId: activeVacancy.id,
-        vacancyTitle: activeVacancy.title,
+        vacancyId: talentPath.id,
+        vacancyTitle: talentPath.title,
         name: formName,
         email: formEmail,
         phone: formPhone,
@@ -313,26 +235,27 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
             </div>
             
             <h1 className="font-display font-black text-4xl sm:text-5xl text-white tracking-tighter leading-[1.0]">
-              Trabalhe com uma equipe que acredita em <br/>
-              <span className="text-brand">direção, responsabilidade e evolução constante.</span>
+              Banco de Talentos da TAG08
+              <br />
+              <span className="text-brand">Compartilhe seu perfil profissional.</span>
             </h1>
             
             <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-lg">
-              Buscamos profissionais obsessivos por estética limpa, tipografia, contraste e arquiteturas de conteúdo que convertem de verdade. Venha trabalhar de forma inteligente, organizada e síncrona.
+              Você pode compartilhar seu perfil profissional para o Banco de Talentos da TAG08, mesmo quando não há uma vaga aberta. Ele poderá ser considerado em oportunidades futuras, sem garantia de contato ou contratação.
             </p>
             
             <div className="flex flex-wrap gap-4 pt-2">
               <a 
-                href="#vagas-abertas-anchor" 
+                href="#banco-de-talentos-anchor"
                 className="inline-flex min-h-11 items-center gap-2 px-6 py-3 bg-brand text-black tag08-action font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 transition-[background-color,box-shadow] duration-200 shadow-[0_8px_25px_rgba(var(--color-brand-rgb),0.15)]"
               >
-                Ver Vagas Abertas <ArrowRight className="w-3.5 h-3.5" />
+                Conhecer o Banco de Talentos <ArrowRight className="w-3.5 h-3.5" />
               </a>
               <a 
                 href="#aplicacao-direta-anchor" 
                 className="inline-flex min-h-11 items-center px-6 py-3 bg-white/5 text-zinc-300 tag08-action text-xs uppercase tracking-widest rounded-xl border border-white/10 hover:border-white/25 hover:text-white focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 transition-[border-color,color,background-color] duration-200"
               >
-                Banco de Talentos
+                Enviar meu perfil
               </a>
             </div>
           </div>
@@ -411,10 +334,10 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                 </p>
               </div>
               <a 
-                href="#vagas-abertas-anchor"
+                href="#banco-de-talentos-anchor"
                 className="inline-flex min-h-11 items-center self-start px-4 py-2 bg-zinc-950 text-white tag08-action font-bold text-xs uppercase tracking-wider rounded-lg hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 transition-[background-color] duration-200"
               >
-                Conhecer o processo
+                Como funciona o Banco de Talentos
               </a>
             </div>
 
@@ -427,14 +350,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                   Crescer com <br />direção e parceria
                 </h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans mt-2">
-                  Oferecer serviços com prazos cirúrgicos e processos bem documentados. Esse é nosso pacto. Se você compartilha disso, estamos esperando sua candidatura.
+                  Oferecer serviços com prazos claros e processos bem documentados faz parte do nosso trabalho. Se você se identifica com essa forma de atuação, compartilhe seu perfil para possíveis oportunidades futuras.
                 </p>
               </div>
               <a 
                 href="#aplicacao-direta-anchor"
                 className="inline-flex min-h-11 items-center self-start px-4 py-2.5 bg-white text-zinc-950 hover:bg-brand tag08-action font-bold text-xs uppercase tracking-widest rounded-xl transition-[background-color,color] duration-200 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
               >
-                Iniciar Cadastro Exclusivo
+                Enviar meu perfil
               </a>
             </div>
 
@@ -687,123 +610,35 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
 
           </div>
 
-          {/* ACTIVE OPPORTUNITIES AREA */}
-          <div id="vagas-abertas-anchor" className="space-y-10 pt-8 border-t border-zinc-100">
+          {/* Permanent talent bank */}
+          <div id="banco-de-talentos-anchor" className="space-y-10 pt-8 border-t border-zinc-100">
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-zinc-100 pb-5">
               <div className="text-left space-y-1">
-                <span className="tag08-meta text-xs text-brand bg-black px-2 py-0.5 rounded uppercase tracking-widest font-black">CARREIRA CORPORATIVA // SELEÇÃO RÍGIDA</span>
+                <span className="tag08-meta text-xs text-brand bg-black px-2 py-0.5 rounded uppercase tracking-widest font-black">CANDIDATURA ESPONTÂNEA // TAG08</span>
                 <h2 className="font-display font-black text-2xl sm:text-3xl text-zinc-900 tracking-tight">
-                  Vagas em Aberto
+                  Banco de Talentos
                 </h2>
               </div>
-              <p className="text-zinc-400 text-xs tag08-meta uppercase tracking-widest">
-                {vacancies.length} POSIÇÕES DISPONÍVEIS
+              <p className="max-w-md text-zinc-500 text-xs leading-relaxed">
+                Compartilhe seu perfil mesmo quando não houver vaga aberta. Ele poderá ser considerado em oportunidades futuras, sem garantia de contato ou contratação.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              
-              {/* LEFT SIDE: Navigation buttons */}
-              <div className="lg:col-span-5 space-y-2.5">
-                {vacancies.map((v) => {
-                  const isActive = selectedVacancy === v.id;
-                  return (
-                    <button
-                      key={v.id}
-                      type="button"
-                      onClick={() => setSelectedVacancy(v.id)}
-                      aria-pressed={isActive}
-                      aria-controls="active-vacancy-details"
-                      className={`w-full min-h-11 p-4 rounded-2xl border text-left flex flex-col justify-between items-start transition-[background-color,border-color,box-shadow,color] duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${
-                        isActive
-                          ? "bg-zinc-950 border-zinc-950 text-white shadow-lg"
-                          : "bg-zinc-50 border-zinc-100 text-zinc-800 hover:bg-zinc-100/60"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between w-full">
-                        <span className={`font-sans text-xs font-bold px-2 py-0.5 rounded uppercase ${
-                          isActive ? "bg-brand/20 text-brand" : "bg-zinc-200 text-zinc-600"
-                        }`}>
-                          {v.department}
-                        </span>
-                        <span className={`text-xs font-sans ${isActive ? "text-zinc-400" : "text-zinc-500"}`}>
-                          {v.type}
-                        </span>
-                      </div>
-                      <h3 className={`font-display font-bold text-sm sm:text-base mt-2`}>
-                        {v.title}
-                      </h3>
-                    </button>
-                  );
-                })}
+            <div className="bg-zinc-50 border border-zinc-100 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+              <div className="space-y-2">
+                <h3 className="font-display font-black text-xl text-zinc-900">Compartilhe sua trajetória profissional</h3>
+                <p className="text-zinc-600 text-sm leading-relaxed max-w-2xl">Conte sobre sua experiência, área de atuação e projetos. O envio não representa candidatura a uma vaga aberta nem garante contato ou contratação.</p>
               </div>
-
-              {/* RIGHT SIDE: Rich specifications card wrapper inside White Area */}
-              <div id="active-vacancy-details" aria-live="polite" className="lg:col-span-7 bg-zinc-50 border border-zinc-100 rounded-3xl p-6 sm:p-8 space-y-6 relative overflow-hidden text-left shadow-sm">
-                
-                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-200/65 pb-5">
-                  <div>
-                    <h3 className="font-display font-black text-xl sm:text-2xl text-zinc-900 tracking-tight leading-none">
-                      {activeVacancy.title}
-                    </h3>
-                    <p className="text-zinc-400 tag08-meta text-xs uppercase tracking-wider mt-1">
-                      {activeVacancy.department} ⬢ {activeVacancy.type}
-                    </p>
-                  </div>
-                  <div className="px-3 py-1.5 bg-zinc-950 text-brand rounded-xl text-xs font-sans font-bold tracking-wide">
-                    {activeVacancy.reward}
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="tag08-meta text-xs font-bold text-zinc-700 tracking-wider mb-1.5">
-                      Descrição do Escopo Técnico
-                    </h4>
-                    <p className="text-zinc-600 text-xs sm:text-xs leading-relaxed">
-                      {activeVacancy.description}
-                    </p>
-                  </div>
-
-                  <div className="space-y-2 pt-1">
-                    <h4 className="tag08-meta text-xs font-bold text-zinc-700 tracking-wider mb-2.5">
-                      Requisitos Desejáveis para Handoff Perfeito
-                    </h4>
-                    <div className="grid grid-cols-1 gap-2">
-                      {activeVacancy.requirements.map((req, i) => (
-                        <div key={i} className="flex gap-2.5 items-start bg-white border border-zinc-100 p-3 rounded-xl shadow-xs">
-                          <CheckCircle2 className="w-4 h-4 text-zinc-900 shrink-0 mt-0.5 stroke-[2.5]" />
-                          <span className="text-xs text-zinc-700 leading-relaxed font-sans">{req}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-4 pt-5 border-t border-zinc-200/60 text-xs font-sans text-zinc-400 justify-between">
-                    <div className="flex items-center gap-3.5">
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5 text-zinc-400" /> {activeVacancy.location}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5 text-zinc-400" /> Imediata
-                      </span>
-                    </div>
-                    
-                    <button
-                      onClick={() => handleApply(activeVacancy.id)}
-                      className="inline-flex min-h-11 items-center gap-1.5 px-4 py-2.5 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 transition-[background-color] duration-200 cursor-pointer"
-                    >
-                      Preencher Formulário <ArrowRight className="w-3.5 h-3.5 text-brand" />
-                    </button>
-                  </div>
-
-                </div>
-
-              </div>
+              <button
+                onClick={handleApply}
+                className="inline-flex min-h-11 shrink-0 items-center justify-center gap-1.5 px-4 py-2.5 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 transition-[background-color] duration-200 cursor-pointer"
+              >
+                Enviar meu perfil <ArrowRight className="w-3.5 h-3.5 text-brand" />
+              </button>
             </div>
           </div>
 
-          {/* NOVO BLOCO CENTRAL: DIRETRIZES DE CULTURA, REQUISITOS, TIPO DE CONTRATO E ETAPAS DE SELEÇÃO */}
+          {/* Cultura e orientações sobre o Banco de Talentos */}
           <div className="space-y-12 pt-12 border-t border-zinc-100 text-left">
             
             {/* Cultura e Expectativas */}
@@ -835,60 +670,12 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
               </div>
             </div>
 
-            {/* Tipos de Vínculos de Trabalho */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-zinc-950 text-white space-y-6">
-              <div className="space-y-2">
-                <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black block">OPÇÕES DE PARCERIA // CONDIÇÕES CONTRATUAIS</span>
-                <h3 className="font-display font-black text-xl">Formatos de Contratação e Atuação Disponíveis</h3>
-                <p className="text-zinc-400 text-xs leading-relaxed font-sans max-w-xl">
-                  Estamos constantemente em busca das melhores mentes do mercado independente de sua preferência logística comercial de contratação:
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                {[
-                  { title: "Regime PJ (Prestador)", focus: "FLEXIBILIDADE E ESCALA", desc: "Ideal para consultores seniores autorais e designers que preferem emitir Notas Fiscais com flexibilidade de horas." },
-                  { title: "Regime CLT (Fixo)", focus: "ESTABILIDADE & SUPORTE", desc: "Para profissionais focados em dedicação integral e desenvolvimento contínuo nos escritórios de Joinville ou São Paulo." },
-                  { title: "Banco de Freelance", focus: "DEMANDAS SOB ESCALA", desc: "Projetos isolados pontuais pagos por frentes de entrega específicas sênior de Branding, Web ou Criação de Identidades." },
-                  { title: "Estágio de Criação", focus: "FORMAÇÃO OPERACIONAL", desc: "Para mentes promissoras acadêmicas dispostas a adotar nossa rigorosa cultura e metodologia de design e processos." }
-                ].map((bond, idx) => (
-                  <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2 text-left">
-                    <span className="font-sans text-xs text-brand border border-brand/15 bg-brand/5 px-2 py-0.5 rounded uppercase block w-max">
-                      {bond.focus}
-                    </span>
-                    <h4 className="text-white font-display font-bold text-xs">{bond.title}</h4>
-                    <p className="text-zinc-400 text-xs leading-relaxed font-sans">{bond.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Etapas do Processo de Avaliação de Candidatos */}
-            <div className="space-y-6 pt-6 border-t border-zinc-100">
-              <div className="space-y-1">
-                <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest font-bold block">workflow seletivo // sem desvios</span>
-                <h3 className="font-display font-black text-xl text-zinc-900">Como avaliamos e integramos novos talentos</h3>
-                <p className="text-zinc-500 text-xs sm:text-sm font-sans leading-relaxed max-w-xl">
-                  Nosso processo de recrutamento é transparente, rápido e focado em competência operacional técnica real:
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                {[
-                  { step: "01", title: "Ficha & Triagem", desc: "Revisão detalhada de seu portfólio de especialista, histórico de links e e-mail de contato." },
-                  { step: "02", title: "Entrevista de Sintonia", desc: "Conversa rápida de 15 minutos para avaliar sinergia com nossa rigorosa cultura e expectativas PJ/CLT." },
-                  { step: "03", title: "Desafio Técnico Real", desc: "Um teste prático real remunerado focado no seu escopo imediato operacional de entrega diária." },
-                  { step: "04", title: "Alinhamento & Onboarding", desc: "Assinatura segura de contratos, entrega do seu manual de onboarding e liberação de seus acessos centrais." }
-                ].map((st, sIdx) => (
-                  <div key={sIdx} className="p-4 rounded-xl border border-zinc-100 bg-zinc-50/50 flex gap-4">
-                    <div className="font-sans font-black text-zinc-300 text-2xl shrink-0 mt-0.5">{st.step}</div>
-                    <div className="space-y-0.5 text-left">
-                      <h4 className="text-zinc-900 font-display font-bold text-xs tracking-tight">{st.title}</h4>
-                      <p className="text-zinc-500 text-xs leading-relaxed font-sans">{st.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="space-y-4 pt-6 border-t border-zinc-100">
+              <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest font-bold block">BANCO PERMANENTE DE TALENTOS</span>
+              <h3 className="font-display font-black text-xl text-zinc-900">O que acontece depois do envio</h3>
+              <p className="text-zinc-500 text-xs sm:text-sm font-sans leading-relaxed max-w-2xl">
+                Após o envio confirmado, seu perfil poderá ser considerado em oportunidades futuras compatíveis. A candidatura espontânea não corresponde a uma vaga aberta e não garante avaliação em prazo específico, contato ou contratação.
+              </p>
             </div>
 
           </div>
@@ -961,7 +748,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     </h2>
                     <p className="text-zinc-700 text-xs">
                       {currentStep === 1 
-                        ? `Apresente-se brevemente para iniciarmos seu processo de seleção para a vaga de ${activeVacancy.title}.`
+                        ? "Apresente sua trajetória para integrar o Banco de Talentos da TAG08."
                         : currentStep === 2 
                           ? `Excelente, ${formName.split(" ")[0]}! Agora, compartilhe os links onde seu trabalho é exposto.`
                           : `Quase lá! Para finalizar, compartilhe uma apresentação profissional e seus principais cases.`}
@@ -1115,7 +902,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                             />
                           </div>
                           <p className="text-xs text-zinc-600 leading-tight">
-                            Gostamos de analisar cases práticos. Recomendamos inserir seu portfólio para ganhar destaque preferencial na triagem.
+                            Se desejar, inclua seu portfólio para contextualizar sua experiência.
                           </p>
                         </div>
                       </motion.div>
@@ -1168,7 +955,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                             aria-describedby={submitError && !consent ? "talent-consent-error" : undefined}
                             className="mt-0.5 h-4 w-4 accent-[var(--color-brand)]"
                           />
-                          <span>Autorizo o uso destes dados para avaliar minha candidatura às vagas atuais e ao Banco de Talentos da TAG08.</span>
+                          <span>Autorizo o uso destes dados para considerar meu perfil no Banco de Talentos da TAG08 em oportunidades futuras.</span>
                         </label>
                         {submitError ? <p id={!consent ? "talent-consent-error" : undefined} role="alert" className="text-xs text-red-600">{submitError}</p> : null}
                       </motion.div>
@@ -1233,7 +1020,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       Candidatura Recebida!
                     </h3>
                     <p className="text-zinc-700 text-xs sm:text-sm mt-2 max-w-sm leading-relaxed">
-                      Sua triagem de competência para a vaga de <span className="text-zinc-950 font-bold">{activeVacancy.title}</span> foi consolidada. Retornaremos em breve.
+                      Recebemos e registramos sua candidatura no Banco de Talentos da TAG08. Seu perfil poderá ser considerado em oportunidades futuras, sem garantia de contato ou contratação.
                     </p>
                     
                     <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -1267,14 +1054,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                   Como funciona a candidatura
                 </h3>
                 <p className="text-zinc-700 text-xs leading-relaxed">
-                  Seus dados são enviados com consentimento para a seleção e o Banco de Talentos. Em caso de falha temporária, o navegador pode manter a candidatura em uma fila local até que o reenvio seja concluído.
+                  Seus dados são enviados com consentimento para o Banco de Talentos. Em caso de falha temporária, o navegador pode manter a candidatura em uma fila local até que o reenvio seja concluído.
                 </p>
 
                 <div className="space-y-2.5 pt-1 border border-dashed border-zinc-200 rounded-2xl p-5 text-left">
                   <p className="text-zinc-700 text-xs font-semibold">1. Recebimento e confirmação</p>
                   <p className="text-zinc-700 text-xs leading-relaxed">A candidatura é registrada antes da confirmação exibida na tela.</p>
-                  <p className="text-zinc-700 text-xs font-semibold">2. Triagem interna</p>
-                  <p className="text-zinc-700 text-xs leading-relaxed">A equipe analisa o perfil no Banco de Talentos e entra em contato pelos canais informados, se houver aderência. Você pode solicitar a revisão ou exclusão dos dados pelo canal de contato da TAG08.</p>
+                  <p className="text-zinc-700 text-xs font-semibold">2. Possíveis oportunidades futuras</p>
+                  <p className="text-zinc-700 text-xs leading-relaxed">Se surgir uma oportunidade compatível, seu perfil poderá ser considerado. O envio não garante prazo de retorno, contato ou contratação. Você pode solicitar a revisão ou exclusão dos dados pelo canal de contato da TAG08.</p>
                 </div>
               </div>
 
@@ -1288,7 +1075,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                   Pacto de Alinhamento de Valor
                 </h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                  Desenvolvemos pessoas que gostam de processos independentes com metas claras de performance e transparência. Se você procura um lugar sem drama operacional com alto ticket B2B, faça sua candidatura.
+                  Se você se identifica com a forma de trabalho da TAG08, compartilhe seu perfil para possíveis oportunidades futuras.
                 </p>
               </div>
 

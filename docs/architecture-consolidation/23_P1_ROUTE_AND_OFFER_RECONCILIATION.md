@@ -451,3 +451,7 @@ Os itens abaixo são recomendações ou parâmetros propostos nas seções anter
 - **Sebraetec** não pode ser apresentado como aprovação garantida, elegibilidade garantida ou percentual uniforme nacional. Percentual e condições exigem confirmação oficial aplicável à UF, oferta e momento.
 
 Este freeze registra a fronteira entre decisões confirmadas e recomendações ainda pendentes; não modifica produto nem transforma as recomendações acima em autorização de implementação.
+
+### Nota de implementação — Banco de Talentos
+
+Em 2026-10-21, a página `/trabalhe-conosco` foi alinhada à decisão já aprovada de candidatura espontânea para o banco permanente: a comunicação de vagas, remunerações e etapas seletivas sem comprovação foi removida; rota, canonical, indexabilidade, sitemap e contrato do formulário foram preservados. Esta nota registra a implementação e não altera o diagnóstico histórico das seções anteriores.

@@ -414,6 +414,61 @@ test.describe("navegação, sobreposições e controles acessíveis", () => {
 });
 
 test.describe("regressões de responsividade e movimento", () => {
+  test("Banco de Talentos apresenta candidatura espontânea sem sugerir vaga ativa", async ({ page }) => {
+    for (const width of [390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/trabalhe-conosco", { waitUntil: "domcontentloaded" });
+      await expect(page.getByRole("heading", { level: 1 })).toContainText("Compartilhe seu perfil profissional.");
+      await expect(page.getByRole("heading", { name: "Banco de Talentos", exact: true })).toBeVisible();
+      await expect(page.getByRole("link", { name: "Conhecer o Banco de Talentos" })).toBeVisible();
+      await expect(page.getByText(/Vagas em Aberto|POSIÇÕES DISPONÍVEIS|R\$ 6k|R\$ 7k|Retornaremos em breve/i)).toHaveCount(0);
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /\/trabalhe-conosco$/);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBeTruthy();
+      const applyLink = page.getByRole("link", { name: "Enviar meu perfil", exact: true }).first();
+      await applyLink.focus();
+      await expect(applyLink).toBeFocused();
+      await page.keyboard.press("Enter");
+      await expect(page).toHaveURL(/#aplicacao-direta-anchor$/);
+    }
+  });
+
+  test("formulário envia candidatura espontânea e confirma somente o registro", async ({ page }) => {
+    let submittedPayload: Record<string, unknown> | undefined;
+    await page.route("**/api/talent-applications", async (route) => {
+      submittedPayload = route.request().postDataJSON() as Record<string, unknown>;
+      await route.fulfill({
+        status: 202,
+        contentType: "application/json",
+        body: JSON.stringify({ ok: true, applicationId: "synthetic-application", status: "accepted" })
+      });
+    });
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/trabalhe-conosco", { waitUntil: "domcontentloaded" });
+    await page.locator("#talent-name").waitFor();
+    await page.waitForTimeout(750);
+    await page.getByRole("link", { name: "Enviar meu perfil", exact: true }).first().click();
+    await page.getByLabel("Nome Completo *").fill("Pessoa Sintética QA");
+    await page.getByLabel("E-mail de Contato *").fill("qa@example.test");
+    await page.getByLabel("WhatsApp de Contato *").fill("+5500000000000");
+    await expect(page.getByLabel("Nome Completo *")).toHaveValue("Pessoa Sintética QA");
+    await page.getByRole("button", { name: /Continuar/ }).click();
+    await page.getByLabel("Perfil do LinkedIn *").fill("https://www.linkedin.com/in/pessoa-sintetica");
+    await page.getByRole("button", { name: /Continuar/ }).click();
+    await page.getByLabel("Diferencial & Foco em Resultados *").fill("Experiência sintética para validar a candidatura ao banco de talentos.");
+    await page.getByRole("checkbox").check();
+    await page.getByRole("button", { name: /Enviar Candidatura/ }).click();
+
+    await expect(page.getByText(/Recebemos e registramos sua candidatura no Banco de Talentos/)).toBeVisible();
+    expect(submittedPayload).toMatchObject({
+      vacancyId: "espontanea",
+      vacancyTitle: "Banco de Talentos / Candidatura Espontânea",
+      consent: true,
+      source: "talent-page"
+    });
+    await expect(page.getByText(/Retornaremos em breve|triagem.*consolidada/i)).toHaveCount(0);
+  });
+
   test("cards da equipe sofrem reflow em 320 px sem corte horizontal", async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 844 });
     await page.goto("/trabalhe-conosco", { waitUntil: "domcontentloaded" });

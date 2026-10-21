@@ -199,9 +199,9 @@ export const routeRegistry: RouteDefinition[] = [
     includeInSitemap: true,
     changefreq: "monthly",
     priority: "0.6",
-    title: "Trabalhe Conosco | Direção e Evolução Constante - TAG08",
+    title: "Banco de Talentos TAG08 | Candidatura Espontânea",
     description:
-      "Faça parte de uma equipe que acredita em direção, responsabilidade e evolução constante. Candidate-se a nossas vagas em marketing e processos."
+      "Compartilhe seu perfil profissional com o Banco de Talentos da TAG08 para consideração em oportunidades futuras, sem garantia de vaga, contato ou contratação."
   },
   {
     key: "insights",

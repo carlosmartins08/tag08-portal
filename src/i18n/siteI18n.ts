@@ -254,8 +254,8 @@ export const i18n = {
           description: "Fale com a TAG08 para alinhar prioridades e acelerar a execução de receita e operação.",
         },
         "/trabalhe-conosco": {
-          title: "Trabalhe Conosco | Equipe TAG08",
-          description: "Faça parte de uma operação com padrão alto de execução, clareza e responsabilidade.",
+          title: "Banco de Talentos TAG08 | Candidatura Espontânea",
+          description: "Compartilhe seu perfil profissional com o Banco de Talentos da TAG08 para consideração em oportunidades futuras, sem garantia de vaga, contato ou contratação.",
         },
         "/insights": {
           title: "Insights Estratégicos | TAG08",

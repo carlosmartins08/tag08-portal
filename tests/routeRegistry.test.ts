@@ -115,6 +115,16 @@ assert.equal(onboardingRoute.includeInSitemap, false);
 assert.ok(!i18n.pt.footer.institutionLinks.some((link) => "path" in link && String(link.path) === "/cliente/onboarding"),
   "Onboarding must not appear as a generic public footer link");
 
+const talentRoute = getRouteByPath("/trabalhe-conosco");
+assert.ok(talentRoute, "The permanent talent-bank route must remain available");
+assert.equal(talentRoute.canonicalPath, "/trabalhe-conosco");
+assert.equal(talentRoute.indexable, true);
+assert.equal(talentRoute.includeInSitemap, true);
+assert.deepEqual(getRouteSeo(talentRoute, talentRoute.canonicalPath, "pt"), {
+  title: "Banco de Talentos TAG08 | Candidatura Espontânea",
+  description: "Compartilhe seu perfil profissional com o Banco de Talentos da TAG08 para consideração em oportunidades futuras, sem garantia de vaga, contato ou contratação."
+});
+
 assert.deepEqual(
   CASE_STUDIES.filter((caseStudy) => getVisibleEvidence([caseStudy], (item) => `case-study/${item.id}`, `/casos/${caseStudy.id}`).length > 0),
   [],
