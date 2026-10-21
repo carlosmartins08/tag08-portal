@@ -134,10 +134,15 @@ test("PostgreSQL isolado: resgate explícito, progresso retomável, submissão i
     expect(new URL(page.url()).hash).toBe("");
     await page.getByRole("button", { name: "Continuar para o onboarding" }).focus();
     await expect(page.getByRole("button", { name: "Continuar para o onboarding" })).toBeFocused();
+    const progressResponsePromise = page.waitForResponse((response) => response.url().endsWith("/api/onboarding/progress"));
     await page.keyboard.press("Enter");
+    const progressResponse = await progressResponsePromise;
+    expect(progressResponse.status()).toBe(200);
     await expect(page.getByRole("button", { name: "Começar Onboarding" })).toBeVisible();
 
     await page.getByRole("button", { name: "Começar Onboarding" }).click();
+    await expect(page.getByRole("button", { name: "Sou da equipe TAG08" })).toHaveCount(0);
+    await expect(page.locator("#onboarding-operator-name")).toHaveCount(0);
     const companyField = page.locator("#onboarding-company-name");
     await expect(companyField).toBeVisible();
     for (const width of [390, 768, 1440]) {
@@ -170,40 +175,106 @@ test("PostgreSQL isolado: resgate explícito, progresso retomável, submissão i
 
     await page.reload({ waitUntil: "domcontentloaded" });
     await expect(page.locator("#onboarding-company-name")).toHaveValue("TAG08 TESTE SINTÉTICO P1.2E.2");
-    const payload = {
-      clientData: { companyName: "TAG08 TESTE SINTÉTICO P1.2E.2", preferredLanguage: "pt" },
-      projectContacts: { responsibleName: "QA Sintético", email: "p12e2@example.invalid", whatsapp: "+15005550006" },
-      selectedServices: ["Process Intelligence"],
-      businessMoment: {},
-      generalBriefing: {},
-      serviceSpecificBriefing: {},
-      filesAndLinks: {},
-      consent: { truthChecked: true, useChecked: true, noPasswordsChecked: true },
-      submittedAt: new Date().toISOString(),
-      source: "synthetic-p1.2e.2"
-    };
-    const idempotencyKey = `synthetic-p1-2e-2-${crypto.randomUUID()}`;
-    const first = await page.evaluate(async (submission) => {
-      const response = await fetch("/api/onboarding", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Idempotency-Key": submission.idempotencyKey },
-        body: JSON.stringify(submission)
-      });
-      return { status: response.status, body: await response.json() };
-    }, { ...payload, idempotencyKey });
+    const next = page.getByRole("button", { name: "Avançar" });
+    await page.getByRole("button", { name: "Voltar" }).click();
+    await page.getByRole("button", { name: "Começar Onboarding" }).click();
+    await companyField.fill("");
+    await next.click();
+    await expect(page.locator('div[role="alert"]:visible').filter({ hasText: "O nome da sua empresa é essencial" })).toBeVisible();
+    await companyField.fill("TAG08 TESTE SINTÉTICO P1.2F.1");
+    await next.click();
+    await page.locator("#onboarding-city").fill("Cidade sintética");
+    await next.click();
+    await page.locator("#onboarding-website").fill("https://example.invalid");
+    await next.click();
+    await page.getByRole("button", { name: "Português" }).click();
+    await next.click();
+
+    await expect(page.getByRole("button", { name: "Sou da equipe TAG08" })).toHaveCount(0);
+    await expect(page.locator("#onboarding-operator-name")).toHaveCount(0);
+    await page.locator("#onboarding-responsible-name").fill("QA Sintético P1.2F.1");
+    await next.click();
+    await page.locator("#onboarding-responsible-email").fill("email-inválido");
+    await page.locator("#onboarding-responsible-whatsapp").fill("+15005550006");
+    await next.click();
+    await expect(page.locator('div[role="alert"]:visible').filter({ hasText: "Insira um endereço de e-mail corporativo válido" })).toBeVisible();
+    await page.locator("#onboarding-responsible-email").fill("p12f1@example.invalid");
+    await next.click();
+    await page.getByRole("button", { name: "Voltar" }).click();
+    await expect(page.locator("#onboarding-responsible-email")).toHaveValue("p12f1@example.invalid");
+    await next.click();
+    await next.click();
+
+    await page.getByRole("radio").first().click();
+    await next.click();
+    await page.getByRole("radio").first().click();
+    await next.click();
+    await next.click();
+    await page.getByRole("checkbox", { name: "Gestão de Redes Sociais" }).click();
+    await next.click();
+    await next.click();
+    await next.click();
+    await page.locator("#onboarding-good-result").fill("Resultado sintético para teste de onboarding.");
+    await next.click();
+    const consents = page.getByRole("checkbox");
+    await expect(consents).toHaveCount(3);
+    for (let index = 0; index < 3; index += 1) await consents.nth(index).check();
+
+    const submissionResponsePromise = page.waitForResponse((response) =>
+      response.url().includes("/api/onboarding") && response.request().method() === "POST"
+    );
+    await page.getByRole("button", { name: "Enviar Onboarding Completo" }).click();
+    const submissionResponse = await submissionResponsePromise;
+    const first = { status: submissionResponse.status(), body: await submissionResponse.json() };
     expect(first.status).toBe(202);
-    const replay = await page.evaluate(async (submission) => {
+    await expect(page.locator("h2").filter({ hasText: "Informações registradas com sucesso" }).last()).toBeVisible();
+    await expect(page.getByText("Envio recebido e registrado")).toBeVisible();
+    await expect(page.getByText("Notificação enviada à TAG08")).toHaveCount(0);
+    for (const width of [390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await expect(page.locator("h2").filter({ hasText: "Informações registradas com sucesso" }).last()).toBeVisible();
+      const layout = await page.evaluate(() => ({
+        scrollWidth: document.documentElement.scrollWidth,
+        innerWidth: window.innerWidth,
+        overflowing: Array.from(document.querySelectorAll<HTMLElement>("body *"))
+          .map((element) => ({ element, rect: element.getBoundingClientRect() }))
+          .filter(({ rect }) => rect.right > window.innerWidth + 1 || rect.left < -1)
+          .map(({ element, rect }) => `${element.tagName.toLowerCase()}.${String(element.className).replace(/\s+/g, ".").slice(0, 80)}:${Math.round(rect.left)}..${Math.round(rect.right)}`)
+          .slice(0, 6)
+      }));
+      expect(layout.scrollWidth > layout.innerWidth, `horizontal overflow at ${width}px: ${JSON.stringify(layout)}`).toBe(false);
+    }
+
+    const idempotencyKey = submissionResponse.request().headers()["idempotency-key"];
+    const submittedPayload = submissionResponse.request().postData();
+    expect(idempotencyKey).toBeTruthy();
+    expect(submittedPayload).toBeTruthy();
+    const replay = await page.evaluate(async ({ idempotencyKey, payload }) => {
       const response = await fetch("/api/onboarding", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Idempotency-Key": submission.idempotencyKey },
-        body: JSON.stringify(submission)
+        headers: { "Content-Type": "application/json", "Idempotency-Key": idempotencyKey },
+        body: payload
       });
       return { status: response.status, body: await response.json() };
-    }, { ...payload, idempotencyKey });
+    }, { idempotencyKey, payload: submittedPayload! });
     expect(replay.status).toBe(202);
     expect(replay.body.submissionId).toBe(first.body.submissionId);
+    await expect(page.getByRole("button", { name: "Enviar Onboarding Completo" })).toHaveCount(0);
     expect(await prisma.onboardingSubmission.count({ where: { journeyId: created.journeyId } })).toBe(1);
     expect(await prisma.integrationDelivery.count({ where: { aggregateId: first.body.submissionId } })).toBe(2);
+    const deliveries = await prisma.integrationDelivery.findMany({
+      where: { aggregateId: first.body.submissionId },
+      select: { target: true, status: true, attempts: true, externalReference: true }
+    });
+    expect(deliveries.map(({ target }) => target).sort()).toEqual(["CLICKUP", "GOOGLE_SHEETS"]);
+    expect(deliveries.every(({ status, attempts, externalReference }) => status === "PENDING" && attempts === 0 && externalReference === null)).toBe(true);
+    const persistedSubmission = await prisma.onboardingSubmission.findUniqueOrThrow({ where: { id: first.body.submissionId } });
+    expect((persistedSubmission.payload as { submissionContext?: { submittedBy?: string } }).submissionContext).toEqual({ submittedBy: "client" });
+
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await expect(page.locator("h2").filter({ hasText: "Informações registradas com sucesso" }).last()).toBeVisible();
+    await expect(page.getByText("Envio recebido e registrado")).toBeVisible();
+    await expect(page.getByText("Notificação enviada à TAG08")).toHaveCount(0);
 
     await access.revokeOnboardingAccess(prisma, {
       journeyId: created.journeyId,

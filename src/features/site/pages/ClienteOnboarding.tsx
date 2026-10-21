@@ -39,7 +39,6 @@ import type { RouteLocale } from "../../../config/routeRegistry";
 import { ONBOARDING_DRAFT_VERSION, parseOnboardingDraft, type OnboardingDraft } from "../../../lib/onboardingDraft";
 
 type Language = "pt" | "en" | "es";
-type SubmissionMode = "client" | "tag08_team";
 type DeliveryState = "idle" | "online" | "error";
 type OnboardingDeliveryStatus = "received" | "accepted" | "failed";
 type OnboardingSubmitResult = {
@@ -126,10 +125,6 @@ const translations: Record<Language, Record<string, string>> = {
     // Step 0: Welcome Screen
     welcome_title: "Bem-vindo  TAG08. <br />Vamos organizar o início do seu projeto.",
     welcome_desc: "Este assistente vai reunir as informações essenciais para preparar sua jornada com clareza, segurança e direção. Responda no seu ritmo. O objetivo não burocratizar o início, mas evitar retrabalho e preparar nossa equipe para te atender melhor.",
-    submission_mode_title: "Quem está preenchendo este onboarding?",
-    submission_mode_client: "Sou o contato do cliente",
-    submission_mode_team: "Sou da equipe TAG08",
-    submission_mode_team_note: "A equipe pode preencher sozinha. No envio, será necessário confirmar que já recebeu autorização do cliente para compartilhar estas informações.",
     welcome_steps_title: "Como funciona",
     question_label: "PERGUNTA",
     exit_flow: "Sair do preenchimento",
@@ -138,7 +133,6 @@ const translations: Record<Language, Record<string, string>> = {
     question_company_location: "Onde sua empresa está localizada?",
     question_digital_presence: "Onde podemos conhecer sua presença digital?",
     question_service_language: "Em qual idioma o cliente prefere receber atendimento?",
-    question_team_operator: "Quem da equipe TAG08 está conduzindo este preenchimento?",
     question_project_contact: "Quem será o contato principal do projeto?",
     question_contact_channels: "Como podemos falar com essa pessoa?",
     question_additional_contacts: "Há outros contatos que devem participar do projeto?",
@@ -191,8 +185,6 @@ const translations: Record<Language, Record<string, string>> = {
     // Step 2: Responsável / Contatos
     equipe_label_name: "Nome do contato responsável pelo projeto *",
     equipe_placeholder_name: "Ex: Dr. Fernando Guedes",
-    operator_label_name: "Seu nome na equipe TAG08 *",
-    operator_placeholder_name: "Informe seu nome para identificar o atendimento",
     equipe_label_role: "Cargo / Função na Empresa",
     equipe_placeholder_role: "Ex: Fundador e Diretor Clínico",
     equipe_label_email: "E-mail de Contato Comercial *",
@@ -267,17 +259,16 @@ const translations: Record<Language, Record<string, string>> = {
     consent_desc: "Leia e marque as caixas abaixo para fins operacionais imediatos de kick-off.",
     consent_opt1: "Declaro que todas as informações corporativas prestadas são íntegras e verdadeiras.",
     consent_opt2: "Autorizo o uso destes dados unicamente pela equipe técnica da TAG08 para estrutura estratégica.",
-    consent_opt2_team: "Confirmo que já recebi autorização do cliente para compartilhar estes dados com a equipe TAG08 para preparar o serviço contratado.",
     consent_opt3: "Confirmo que não forneci qualquer credencial de acesso direto ou senha de segurança neste fluxo.",
     
     // Step 9: Finalizado (WhatsApp)
-    finalized_badge: "ONBOARDING ENVIADO COM SUCESSO",
+    finalized_badge: "ONBOARDING RECEBIDO",
     finalized_queued_badge: "AGUARDANDO SINCRONIZAÇÃO",
-    finalized_title: "Integração operacional em andamento!",
+    finalized_title: "Informações registradas com sucesso",
     finalized_queued_title: "Envio ainda não recebido pela TAG08",
-    finalized_desc_1: "Seus dados de direção corporativa foram consolidados com sucesso e já está na fila de triagem técnica de nossa equipe de engenharia e branding.",
+    finalized_desc_1: "Suas informações foram recebidas e registradas para o projeto contratado.",
     finalized_queued_desc: "O envio está na fila local deste navegador. O sistema tentará novamente quando a conexão voltar; confira este status mais tarde.",
-    finalized_desc_2: "Para acelerar seu kickoff e confirmar o recebimento direto com o diretor técnico do seu projeto, clique no link abaixo para nos notificar via WhatsApp corporativo.",
+    finalized_desc_2: "A TAG08 dará continuidade às próximas etapas do processo. Se quiser, você também pode falar com a equipe pelo WhatsApp.",
     whatsapp_template_msg: "Olá time TAG08! Concluímos o preenchimento do nosso onboarding institucional via Assistente Conversacional.\\n\\nEmpresa: {company}\\nRepresentante: {name}\\nMeta dos próximos 90 dias: {goal}.\\n\\nAguardamos contato técnico para agendarmos nosso kickoff!",
     
     // Errors
@@ -289,7 +280,6 @@ const translations: Record<Language, Record<string, string>> = {
     err_business_moment: "Por favor, selecione a alternativa que mais condiz com o momento de sua empresa.",
     err_priority_map: "Por favor, assinale qual área de prioridade podemos te auxiliar primeiro.",
     err_selected_services: "Selecione ao menos um dos formatos ou serviços contratados de seu projeto.",
-    err_operator_name: "Informe seu nome para identificar o preenchimento pela equipe TAG08.",
     err_good_result: "Descreva o que seria um bom resultado nos primeiros 90 dias.",
     err_consent: "Você precisa estar ciente e marcar todos os 3 tópicos de consentimento sob LGPD para submeter o onboarding."
   },
@@ -335,10 +325,6 @@ const translations: Record<Language, Record<string, string>> = {
     // Step 0: Welcome Screen
     welcome_title: "Welcome to TAG08. <br />Let's organize the start of your project.",
     welcome_desc: "This assistant will gather the essential information to prepare your journey with clarity, security, and direction. Answer at your own pace. The goal is not to create bureaucracy, but to avoid rework and prepare our team to serve you better.",
-    submission_mode_title: "Who is completing this onboarding?",
-    submission_mode_client: "I am the client's project contact",
-    submission_mode_team: "I am on the TAG08 team",
-    submission_mode_team_note: "The TAG08 team can complete this form on the client's behalf. Before submitting, confirm that the client has authorized sharing this information.",
     welcome_steps_title: "How it works",
     question_label: "QUESTION",
     exit_flow: "Exit onboarding",
@@ -347,7 +333,6 @@ const translations: Record<Language, Record<string, string>> = {
     question_company_location: "Where is your company located?",
     question_digital_presence: "Where can we learn about your digital presence?",
     question_service_language: "Which language does the client prefer for support?",
-    question_team_operator: "Who on the TAG08 team is completing this onboarding?",
     question_project_contact: "Who will be the primary project contact?",
     question_contact_channels: "How can we reach this person?",
     question_additional_contacts: "Are there other contacts who should be involved?",
@@ -400,8 +385,6 @@ const translations: Record<Language, Record<string, string>> = {
     // Step 2: Responsável / Contatos
     equipe_label_name: "Name of the client's project contact *",
     equipe_placeholder_name: "e.g., Mary Smith",
-    operator_label_name: "Your name as a TAG08 team member *",
-    operator_placeholder_name: "Enter your name to identify this submission",
     equipe_label_role: "Role / Position in Company",
     equipe_placeholder_role: "e.g., Founder & Clinical Director",
     equipe_label_email: "Business Contact Email *",
@@ -476,16 +459,16 @@ const translations: Record<Language, Record<string, string>> = {
     consent_desc: "Read and check the fields below for immediate kick-off onboarding setup.",
     consent_opt1: "I declare that all corporate information provided is honest and true.",
     consent_opt2: "I authorize the use of this data solely by the TAG08 technical team for strategic structure setup.",
-    consent_opt2_team: "I confirm that I have received the client's authorization to share this information with TAG08 to prepare the contracted service.",
     consent_opt3: "I confirm that I have not provided any direct passwords or security credentials in this wizard.",
     
     // Step 9: Finalizado (WhatsApp)
-    finalized_badge: "ONBOARDING SUBMITTED SUCCESSFULLY",
+    finalized_badge: "ONBOARDING RECEIVED",
     finalized_queued_badge: "SYNC PENDING",
-    finalized_title: "Integration setup starts now!",
+    finalized_title: "Information recorded successfully",
     finalized_queued_title: "TAG08 has not received this submission yet",
-    finalized_desc_1: "Your integration data has been integrated on your systems and is currently being analyzed by our senior creative and engineering teams.",
+    finalized_desc_1: "Your information has been received and recorded for the contracted project.",
     finalized_queued_desc: "The submission is in this browser's local queue. The app will retry when the connection returns; check this status again later.",
+    finalized_desc_2: "TAG08 will continue with the next steps. If you wish, you can also contact the team on WhatsApp.",
     whatsapp_template_msg: "Hello TAG08 team! I have completed our Onboarding Guidelines via the Conversational Assistant.\\n\\nCompany: {company}\\nRepresentative: {name}\\nTarget 90 days: {goal}.\\n\\nLooking forward to scheduling our kickoff!",
     
     // Errors
@@ -497,7 +480,6 @@ const translations: Record<Language, Record<string, string>> = {
     err_business_moment: "Please select both the challenge and priority (Step 3).",
     err_priority_map: "Please select which area of priority we can assist you with first.",
     err_selected_services: "Please select at least one of the contracted services for your project.",
-    err_operator_name: "Enter your name to identify this submission by the TAG08 team.",
     err_good_result: "Describe what a good result in the first 90 days would look like.",
     err_consent: "You must review and check all 3 consent fields under regulation policies to submit onboarding."
   },
@@ -543,10 +525,6 @@ const translations: Record<Language, Record<string, string>> = {
     // Step 0: Welcome Screen
     welcome_title: "Bienvenido a TAG08. <br />Vamos a organizar el inicio de su proyecto.",
     welcome_desc: "Este asistente reunir la información esencial para trazar su camino estratégico con claridad, seguridad y dirección. Responda a su propio ritmo. El objetivo no es burocratizar el inicio, sino evitar el retrabajo y preparar a nuestro equipo para servirle mejor.",
-    submission_mode_title: "¿Quién está completando este onboarding?",
-    submission_mode_client: "Soy la persona de contacto del cliente",
-    submission_mode_team: "Soy parte del equipo TAG08",
-    submission_mode_team_note: "El equipo TAG08 puede completar este formulario en nombre del cliente. Antes de enviarlo, confirme que el cliente autorizó compartir esta información.",
     welcome_steps_title: "Cómo funciona",
     question_label: "PREGUNTA",
     exit_flow: "Salir del onboarding",
@@ -555,7 +533,6 @@ const translations: Record<Language, Record<string, string>> = {
     question_company_location: "¿Dónde está ubicada su empresa?",
     question_digital_presence: "¿Dónde podemos conocer su presencia digital?",
     question_service_language: "¿En qué idioma prefiere recibir atención el cliente?",
-    question_team_operator: "¿Quién del equipo TAG08 está completando este onboarding?",
     question_project_contact: "¿Quién será el contacto principal del proyecto?",
     question_contact_channels: "¿Cómo podemos comunicarnos con esta persona?",
     question_additional_contacts: "¿Hay otros contactos que deban participar en el proyecto?",
@@ -608,8 +585,6 @@ const translations: Record<Language, Record<string, string>> = {
     // Step 2: Responsável / Contatos
     equipe_label_name: "Nombre del contacto responsable del proyecto *",
     equipe_placeholder_name: "ej. Mara Silva",
-    operator_label_name: "Su nombre como integrante del equipo TAG08 *",
-    operator_placeholder_name: "Indique su nombre para identificar este envío",
     equipe_label_role: "Cargo / Función en la Empresa",
     equipe_placeholder_role: "ej. Fundador y Director Clínico",
     equipe_label_email: "Correo Electrónico de Contacto *",
@@ -684,17 +659,16 @@ const translations: Record<Language, Record<string, string>> = {
     consent_desc: "Marque las opciones de consentimiento para realizar el envío definitivo del onboarding.",
     consent_opt1: "Declaro que toda la información corporativa proporcionada es honesta y verídica.",
     consent_opt2: "Autorizo el uso de estos datos únicamente por el equipo técnico de TAG08 para definir la estrategia táctica.",
-    consent_opt2_team: "Confirmo que ya recibí autorización del cliente para compartir esta información con TAG08 y preparar el servicio contratado.",
     consent_opt3: "Confirmo que no he proporcionado ninguna credencial directa de acceso ni contraseñas en este flujo.",
     
     // Step 9: Finalizado (WhatsApp)
-    finalized_badge: "ONBOARDING ENVIADO CON ÉXITO",
+    finalized_badge: "ONBOARDING RECIBIDO",
     finalized_queued_badge: "PENDIENTE DE SINCRONIZACIÓN",
-    finalized_title: "Integración Operativa en proceso!",
+    finalized_title: "Información registrada con éxito",
     finalized_queued_title: "TAG08 aún no ha recibido este envío",
-    finalized_desc_1: "Sus directrices operativas han sido integradas en nuestro sistema de forma exitosa y se encuentran en nuestra cola de revisión técnica por los equipos creativo y de ingeniería.",
+    finalized_desc_1: "Su información fue recibida y registrada para el proyecto contratado.",
     finalized_queued_desc: "El envío está en la cola local de este navegador. Se volverá a intentar cuando se restablezca la conexión; revise este estado más tarde.",
-    finalized_desc_2: "Para acelerar la programación de su sesión de arranque (kickoff) y confirmar el recibimiento técnico con el director del proyecto, haga clic a continuación para notificarnos via WhatsApp.",
+    finalized_desc_2: "TAG08 dará continuidad a las próximas etapas del proceso. Si lo desea, también puede hablar con el equipo por WhatsApp.",
     whatsapp_template_msg: "Hola equipo TAG08! Completé nuestro onboarding de integración con el asistente conversacional.\\n\\nEmpresa: {company}\\nRepresentante: {name}\\nMeta de 90 días: {goal}.\\n\\n¡Quedamos atentos para agendar nuestro kickoff!",
     
     // Errors
@@ -706,7 +680,6 @@ const translations: Record<Language, Record<string, string>> = {
     err_business_moment: "Por favor, seleccione la opción que mejor se ajuste al momento actual de su empresa.",
     err_priority_map: "Por favor, indique qué área de prioridad podemos ayudarle a resolver primero.",
     err_selected_services: "Seleccione al menos uno de los servicios o formatos contratados para su proyecto.",
-    err_operator_name: "Indique su nombre para identificar el envío realizado por el equipo TAG08.",
     err_good_result: "Describa cómo sería un buen resultado durante los primeros 90 días.",
     err_consent: "Debe revisar y marcar las 3 casillas de consentimiento para continuar."
   }
@@ -783,8 +756,6 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
   const [draftSaveState, setDraftSaveState] = useState<"saved" | "saving" | "error">("saved");
   const submissionKeyRef = useRef("");
   const submissionTimestampRef = useRef("");
-  const [submissionMode, setSubmissionMode] = useState<SubmissionMode>("client");
-  const [operatorName, setOperatorName] = useState("");
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const isFlowActive = currentStep > 0 && currentStep < 9;
@@ -920,7 +891,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
   const [currentErrors, setCurrentErrors] = useState<string[]>([]);
 
   const draftValues: Record<string, string | number | boolean | string[]> = {
-    currentQuestion, submissionMode, operatorName, companyName, cnpjCpf, cityState, companyWebsite, companyInstagram, companyLinkedin, serviceLanguage,
+    currentQuestion, companyName, cnpjCpf, cityState, companyWebsite, companyInstagram, companyLinkedin, serviceLanguage,
     responsibleName, responsibleRole, responsibleEmail, responsibleWhatsapp, focalPointText, approverText, financePointText,
     businessMoment, priorityMap, maturityScore, selectedServices, customServiceText,
     smChannels, smTargetAudience, smPriorityProducts, smCompetitors, smHasBrandIdentity, smHasMediaBank, smRecordsVideos, smApprovesContent, smForbiddenTopics,
@@ -934,8 +905,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
   };
   const draftSetters: Record<string, (value: unknown) => void> = {
     currentQuestion: (value) => setCurrentQuestion(Number(value)),
-    submissionMode: (value) => setSubmissionMode(value === "tag08_team" ? "tag08_team" : "client"),
-    operatorName: (value) => setOperatorName(String(value)), companyName: (value) => setCompanyName(String(value)), cnpjCpf: (value) => setCnpjCpf(String(value)),
+    companyName: (value) => setCompanyName(String(value)), cnpjCpf: (value) => setCnpjCpf(String(value)),
     cityState: (value) => setCityState(String(value)), companyWebsite: (value) => setCompanyWebsite(String(value)), companyInstagram: (value) => setCompanyInstagram(String(value)),
     companyLinkedin: (value) => setCompanyLinkedin(String(value)), serviceLanguage: (value) => setServiceLanguage(value === "en" || value === "es" ? value : "pt"),
     responsibleName: (value) => setResponsibleName(String(value)), responsibleRole: (value) => setResponsibleRole(String(value)), responsibleEmail: (value) => setResponsibleEmail(String(value)),
@@ -966,7 +936,14 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
         const draft = parseOnboardingDraft(result?.draft);
         if (draft) {
           setCurrentStep(draft.currentStep);
-          Object.entries(draft.values).forEach(([key, value]) => draftSetters[key]?.(value));
+          const storedQuestion = Number(draft.values.currentQuestion ?? 0);
+          const restoredQuestion = draft.currentStep === 2 && draft.values.submissionMode === "tag08_team"
+            ? Math.max(0, Math.min(2, storedQuestion - 1))
+            : storedQuestion;
+          setCurrentQuestion(restoredQuestion);
+          Object.entries(draft.values).forEach(([key, value]) => {
+            if (key !== "currentQuestion") draftSetters[key]?.(value);
+          });
         }
         if (result?.completed === true) {
           setIsSubmitted(true);
@@ -1167,7 +1144,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
 
   const getQuestionCount = (step: number) => {
     if (step === 1) return 4;
-    if (step === 2) return submissionMode === "tag08_team" ? 4 : 3;
+    if (step === 2) return 3;
     if (step === 3) return 3;
     return step > 0 && step < 9 ? 1 : 0;
   };
@@ -1250,7 +1227,6 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
       if (!companyName.trim()) errs.push(t("err_company_name"));
       if (companyWebsite.trim() && !isValidWebsite(companyWebsite)) errs.push(t("err_company_website"));
     } else if (currentStep === 2) {
-      if (submissionMode === "tag08_team" && !operatorName.trim()) errs.push(t("err_operator_name"));
       if (!responsibleName.trim()) errs.push(t("err_responsible_name"));
       if (!isValidEmail(responsibleEmail)) errs.push(t("err_responsible_email"));
       if (!responsibleWhatsapp.trim()) errs.push(t("err_responsible_whatsapp"));
@@ -1282,14 +1258,9 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
     if (currentStep === 1 && currentQuestion === 0 && !companyName.trim()) {
       errs.push(t("err_company_name"));
     } else if (currentStep === 2) {
-      if (submissionMode === "tag08_team" && currentQuestion === 0 && !operatorName.trim()) {
-        errs.push(t("err_operator_name"));
-      }
-      const contactQuestion = submissionMode === "tag08_team" ? 1 : 0;
-      const channelsQuestion = submissionMode === "tag08_team" ? 2 : 1;
-      if (currentQuestion === contactQuestion && !responsibleName.trim()) errs.push(t("err_responsible_name"));
-      if (currentQuestion === channelsQuestion && !isValidEmail(responsibleEmail)) errs.push(t("err_responsible_email"));
-      if (currentQuestion === channelsQuestion && !responsibleWhatsapp.trim()) errs.push(t("err_responsible_whatsapp"));
+      if (currentQuestion === 0 && !responsibleName.trim()) errs.push(t("err_responsible_name"));
+      if (currentQuestion === 1 && !isValidEmail(responsibleEmail)) errs.push(t("err_responsible_email"));
+      if (currentQuestion === 1 && !responsibleWhatsapp.trim()) errs.push(t("err_responsible_whatsapp"));
     } else if (currentStep === 3 && currentQuestion === 0 && !businessMoment) {
       errs.push(t("err_business_moment"));
     } else if (currentStep === 3 && currentQuestion === 1 && !priorityMap) {
@@ -1492,7 +1463,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
       truthChecked: consentTruth,
       useChecked: consentUsage,
       noPasswordsChecked: consentNoPasswords,
-      authorizationConfirmedByOperator: submissionMode === "tag08_team" && consentUsage
+      authorizationConfirmedByOperator: false
     };
 
     if (!submissionTimestampRef.current) submissionTimestampRef.current = new Date().toISOString();
@@ -1557,12 +1528,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
       serviceSpecificBriefing,
       filesAndLinks,
       consent,
-      submissionContext: {
-        submittedBy: submissionMode,
-        ...(submissionMode === "tag08_team"
-          ? { operatorName: operatorName.trim(), clientAuthorizationConfirmed: consentUsage }
-          : {})
-      },
+      submissionContext: { submittedBy: "client" },
       submittedAt,
       source: "Assistente Onboarding TAG08",
       status: "Onboarding recebido",
@@ -1698,9 +1664,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
   const getAssistantSpeak = () => {
     const questions: Record<number, string[]> = {
       1: ["question_company_identity", "question_company_location", "question_digital_presence", "question_service_language"],
-      2: submissionMode === "tag08_team"
-        ? ["question_team_operator", "question_project_contact", "question_contact_channels", "question_additional_contacts"]
-        : ["question_project_contact", "question_contact_channels", "question_additional_contacts"],
+      2: ["question_project_contact", "question_contact_channels", "question_additional_contacts"],
       3: ["question_business_moment", "question_priority", "question_maturity"],
       4: ["question_services"],
       5: ["question_service_briefing"],
@@ -1769,7 +1733,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
   };
 
   const onboardingView = (
-    <div data-onboarding-unsent={isFlowActive ? "true" : undefined} onKeyDown={handleFlowKeyDown} role={isFlowActive ? "dialog" : undefined} aria-modal={isFlowActive ? true : undefined} aria-labelledby={isFlowActive ? "onboarding-question-title" : undefined} className={`bg-charcoal-950 text-white font-sans ${isFlowActive ? "fixed inset-0 z-[9999] h-[100dvh] w-screen overflow-hidden" : "min-h-screen pt-16 pb-20"}`}>
+    <div data-onboarding-unsent={isFlowActive ? "true" : undefined} onKeyDown={handleFlowKeyDown} role={isFlowActive ? "dialog" : undefined} aria-modal={isFlowActive ? true : undefined} aria-labelledby={isFlowActive ? "onboarding-question-title" : undefined} className={`bg-charcoal-950 text-white font-sans ${isFlowActive ? "fixed inset-0 z-[9999] h-[100dvh] w-screen overflow-hidden" : "min-h-screen overflow-x-clip pt-16 pb-20"}`}>
       <p className="sr-only" aria-live="polite">{draftSaveState === "saving" ? "Salvando progresso" : draftSaveState === "error" ? "Não foi possível salvar o progresso" : "Progresso salvo"}</p>
       <div className={`relative mx-auto ${isFlowActive ? "flex h-full w-full max-w-5xl flex-col px-5 sm:px-8" : "max-w-7xl px-6"}`}>
         
@@ -1874,23 +1838,6 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                         <p className="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-3xl">
                           {t("welcome_desc")}
                         </p>
-                        <fieldset className="space-y-3">
-                          <legend className="text-xs font-bold uppercase tracking-wider text-zinc-300">{t("submission_mode_title")}</legend>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            {(["client", "tag08_team"] as const).map((mode) => (
-                              <button
-                                key={mode}
-                                type="button"
-                                aria-pressed={submissionMode === mode}
-                                onClick={() => setSubmissionMode(mode)}
-                                className={`min-h-11 rounded-xl border px-4 py-3 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary ${submissionMode === mode ? "border-brand-secondary bg-brand-secondary/10 text-white" : "border-white/[0.08] bg-zinc-950/40 text-zinc-300 hover:border-white/20"}`}
-                              >
-                                {t(mode === "client" ? "submission_mode_client" : "submission_mode_team")}
-                              </button>
-                            ))}
-                          </div>
-                          {submissionMode === "tag08_team" ? <p className="text-xs leading-relaxed text-zinc-400">{t("submission_mode_team_note")}</p> : null}
-                        </fieldset>
                         <details className="space-y-3 border-t border-white/[0.06] pt-4">
                           <summary className="min-h-11 cursor-pointer text-xs font-semibold text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary">
                             {t("privacy_title")}
@@ -2159,23 +2106,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                   {/* STEP 2: RESPONSVEIS PELO PROJETO */}
                   {currentStep === 2 && (
                     <div className="mx-auto w-full max-w-3xl space-y-6 py-8 sm:py-12">
-                      {submissionMode === "tag08_team" ? (
-                        <div hidden={currentQuestion !== 0} className="space-y-2">
-                          <label htmlFor="onboarding-operator-name" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">{t("operator_label_name")}</label>
-                          <input
-                            id="onboarding-operator-name"
-                            name="operatorName"
-                            autoComplete="name"
-                            required
-                            type="text"
-                            value={operatorName}
-                            onChange={(event) => setOperatorName(event.target.value)}
-                            className="w-full rounded-xl border border-white/[0.08] bg-zinc-950 px-4 py-3 text-sm text-white focus:border-brand focus:outline-none"
-                            placeholder={t("operator_placeholder_name")}
-                          />
-                        </div>
-                      ) : null}
-                      <div hidden={currentQuestion !== (submissionMode === "tag08_team" ? 1 : 0)} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div hidden={currentQuestion !== 0} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <label htmlFor="onboarding-responsible-name" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("equipe_label_name")}
@@ -2212,7 +2143,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                         </div>
                       </div>
 
-                      <div hidden={currentQuestion !== (submissionMode === "tag08_team" ? 2 : 1)} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div hidden={currentQuestion !== 1} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <label htmlFor="onboarding-responsible-email" className="text-xs tag08-meta text-zinc-300 uppercase tracking-wider">
                             {t("equipe_label_email")}
@@ -2254,7 +2185,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                         </div>
                       </div>
 
-                      <details hidden={currentQuestion !== (submissionMode === "tag08_team" ? 3 : 2)} className="border-t border-white/[0.04] pt-4">
+                      <details hidden={currentQuestion !== 2} className="border-t border-white/[0.04] pt-4">
                         <summary className="min-h-11 cursor-pointer text-sm font-semibold text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary">
                           {t("equipe_additional_contacts")}
                         </summary>
@@ -2952,7 +2883,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                             className="mt-1 w-4 h-4 accent-brand-secondary bg-zinc-900 border-white/[0.1] rounded shrink-0"
                           />
                           <p className="text-zinc-300 text-xs leading-relaxed">
-                            {t(submissionMode === "tag08_team" ? "consent_opt2_team" : "consent_opt2")}
+                            {t("consent_opt2")}
                           </p>
                         </label>
 
@@ -3005,11 +2936,11 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300">
                             <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-xs"><Check className="w-3 h-3" /></div>
-                            <span>{uiLanguage === "en" ? "Notification sent to TAG08" : uiLanguage === "es" ? "Notificación enviada a TAG08" : "Notificação enviada à TAG08"}</span>
+                            <span>{uiLanguage === "en" ? "Submission received and recorded" : uiLanguage === "es" ? "Envío recibido y registrado" : "Envio recebido e registrado"}</span>
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300 animate-pulse">
                             <div className="w-3 h-3 rounded-full bg-amber-400 shrink-0 shadow-[0_0_8px_#fbbf24]" />
-                            <span className="text-zinc-400">{uiLanguage === "en" ? "Next step: internal review" : uiLanguage === "es" ? "Siguiente paso: revisión interna" : "Próxima etapa: conferência interna"}</span>
+                            <span className="text-zinc-400">{uiLanguage === "en" ? "TAG08 will continue the next steps" : uiLanguage === "es" ? "TAG08 dará continuidad a las próximas etapas" : "A TAG08 dará continuidade às próximas etapas"}</span>
                           </div>
                         </div>
                       </div>

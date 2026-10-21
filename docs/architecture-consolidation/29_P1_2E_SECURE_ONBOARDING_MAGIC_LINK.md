@@ -328,3 +328,60 @@ O `system_identifier` identifica o cluster, não a origem/proveniência dos dado
 - **Prontidão para commit local:** READY para staging explícito apenas de `tools/onboarding-access.ts`, `tests/onboardingAccessCli.test.ts`, `package.json` e deste adendo, sujeito à revisão humana final. `next-env.d.ts` é alteração preexistente e deve permanecer fora. Nenhum commit foi criado.
 - **Prontidão para deploy:** BLOCKED — configuração efetiva de proxy/topologia e validação dos pins no ambiente alvo continuam pendentes.
 - **Ativação operacional:** BLOCKED — pins confiáveis ainda não provisionados/verificados, proveniência do banco não comprovada, operador autodeclarado e risco de captura local do terminal permanecem.
+
+## P1.2F — Fechamento funcional do onboarding
+
+Adendo de 2026-10-21. Esta execução preservou a implementação P1.2E e não alterou código. O estado inicial permanece na branch `p2-home-cases-consolidation`, HEAD `7e338eb58176f4a227f9d70eb9fe77117268e471`, com dois commits locais à frente do upstream. A única alteração tracked preexistente continua sendo `next-env.d.ts` e foi preservada.
+
+### O que foi comprovado
+
+- A suíte browser não dependente de banco passou: 6/6 (`tests/e2e/onboarding-flow.spec.ts`, excluído o cenário que requer PostgreSQL isolado). Cobriu acesso direto sem sessão, rejeição de APIs privadas, ausência de resgate em abertura/reload, resgate explícito para token inválido com erro neutro, canonical/indexação sem token e ausência de overflow nos breakpoints 390, 768 e 1440 px.
+- O contrato existente continua distinguindo leitura/progresso da jornada e submissão; a submissão é protegida por sessão, revalida a jornada dentro da transação e, ao aceitar, persiste submissão e duas entregas de outbox atomicamente, marca a jornada concluída e limpa o draft. O replay usa chave idempotente e payload/jornada compatíveis.
+- A evidência PostgreSQL 16 isolada e os sete cenários E2E registrados na P1.2E.2 são históricos e permanecem válidos para aquele estado; não foram repetidos nesta execução nem são apresentados como comprovação da experiência UI ponta a ponta da P1.2F.
+
+### Limite de validação e lacunas observadas
+
+- Não foi possível executar o percurso autenticado completo contra banco efêmero: `ONBOARDING_TEST_DATABASE_URL` não está configurada e o daemon Docker negou acesso. Nenhum valor de `DATABASE_URL` existente foi lido/usado e nenhum banco/volume persistente foi acessado. Assim, preenchimento visual de todas as etapas, autosave real, retomada autenticada, submissão pela UI e outbox após submissão não foram comprovados nesta missão.
+- A E2E PostgreSQL existente cobre autenticação, progresso/reload e submissão/outbox por chamada API direta; não preenche todas as etapas pelo wizard. Para fechar o critério da P1.2F, ainda é necessário executar o teste browser autenticado existente ou ampliado com banco descartável comprovadamente isolado, submetendo a jornada pelo UI.
+- A interface permite modo `tag08_team` e inclui operador/consentimento no payload, enquanto `/api/onboarding` deliberadamente sobrescreve esses campos para `submittedBy: client` e autorização do operador `false`. A fronteira server-side evita confiar em valores do navegador, mas o modo de equipe não representa o resultado persistido. Não foi alterado: habilitar esse modo exige definir autoridade confiável ou remover/desabilitar a opção, decisão fora do fechamento funcional do cliente contratado.
+- A tela de sucesso contém afirmações de que a submissão já está em triagem e de que uma notificação foi enviada à TAG08. O código observado apenas confirma persistência e cria deliveries pendentes na outbox; não confirma processamento downstream ou notificação humana. A mensagem de sucesso deve ser revisada para comunicar recebimento/persistência sem prometer entrega ou análise. Não foi alterada sem executar o caminho autenticado que a exibe e validar o estado visual completo.
+
+### Validação executada e conclusão
+
+- `npm run test:browser -- tests/e2e/onboarding-flow.spec.ts --grep-invert 'PostgreSQL isolado'`: PASS, 6/6.
+- `npm run test:contracts`: BLOCKED por restrição ambiental de subprocesso em `tests/onboardingAccessCli.test.ts` (linha 78: `spawnSync` retornou `status: null`; verificação diagnóstica de `spawnSync(process.execPath, ["--version"])` retornou `error: EPERM`). Os testes de onboarding contract/access executados antes desse ponto passaram; as suítes posteriores ao subprocesso não foram executadas por causa do encerramento do comando.
+- PostgreSQL descartável, E2E autenticado completo, preenchimento integral por UI, persistência real e outbox: NÃO EXECUTADOS, por falta de ambiente isolado comprovável.
+- Nenhum arquivo de produto/teste foi alterado. O único arquivo modificado por esta missão é este relatório; `next-env.d.ts` permanece a alteração preexistente. Não houve staging, commit, push, migration ou integração externa.
+- **Conclusão P1.2F: PARTIAL / BLOCKED para aceite ponta a ponta.** Os controles públicos sem sessão e o resgate explícito foram exercitados, mas a jornada autenticada UI + PostgreSQL/outbox não foi comprovada. Próxima ação: disponibilizar acesso autorizado a PostgreSQL 16 efêmero isolado (sem volume compartilhado), repetir a jornada completa no navegador e decidir a correção da copy de sucesso e do modo `tag08_team` antes de declarar fechamento. Nenhum bloqueio depende de acesso a produção; deploy e ativação operacional continuam bloqueados conforme P1.2E.3.
+
+## P1.2F.1 — Correção funcional e validação final do onboarding
+
+Adendo de 2026-10-21. Esta execução continua o trabalho local da P1.2F, preserva integralmente o histórico acima e não reabre a arquitetura ou os controles de segurança da P1.2E. O estado inicial foi branch `p2-home-cases-consolidation`, HEAD `7e338eb58176f4a227f9d70eb9fe77117268e471`, upstream `origin/p2-home-cases-consolidation`, ahead/behind `2/0`. `next-env.d.ts` já estava modificado para referenciar `.next-review/dev/types/routes.d.ts`; foi preservado exatamente e mantido fora desta unidade funcional.
+
+### Correções mínimas e comportamento confirmado
+
+- **Modo de envio:** removidos da interface pública o seletor `tag08_team`, o campo de operador e os ramos de validação/UI exclusivos da equipe. O cliente continua enviando `submissionContext.submittedBy: "client"` e `authorizationConfirmedByOperator: false`; o backend, os contratos internos de submissão e a imposição server-side não foram alterados. Rascunhos antigos da opção de equipe continuam legíveis: a pergunta antiga do operador é ajustada ao índice correspondente do fluxo de cliente, sem restaurar identidade de equipe.
+- **Confirmação:** PT/EN/ES agora confirmam recebimento/registro e continuidade das próximas etapas, sem afirmar triagem, notificação ou processamento do ClickUp/Sheets. A tela de sucesso continua condicionada à resposta válida do backend (`202` com payload reconhecido); não é exibida como resultado otimista de clique. A mensagem auxiliar de status mantém apenas o estado de aceite/registro e identificador/horário retornados pela persistência.
+- **Overflow no sucesso:** o QA encontrou que os dois glows decorativos absolutos de 450/500 px extrapolavam a viewport em 390 px. Foi aplicado `overflow-x-clip` apenas ao contêiner externo quando o wizard não está ativo; layout e campos do formulário não foram redesenhados.
+
+### Validação isolada
+
+- Foi utilizado exclusivamente um container PostgreSQL 16.15 descartável: database/user sintéticos, porta dinâmica ligada a `127.0.0.1`, diretório de dados em `tmpfs`, sem mounts/volumes (`Mounts: []`) e sem vínculo com o container/volume persistente `site26_tag08_tag08_postgres_data`. A identidade do banco foi consultada antes das migrations. Nenhuma `DATABASE_URL` preexistente foi usada.
+- Aplicadas ao banco efêmero as migrations `202607160001_init`, `202607190001_outbox_processing_lease` e `202610200001_onboarding_magic_link`. Fixtures criaram apenas jornadas e credencial sintéticas pelos helpers existentes; a CLI operacional não foi executada.
+- Runtime Playwright local isolado; ClickUp e Google Sheets explicitamente desativados. Nenhum worker ou integração externa foi iniciado. A submissão autenticada persistiu exatamente uma submissão e duas `IntegrationDelivery` para ClickUp/Google Sheets, ambas `PENDING`, `attempts=0` e sem `externalReference`, comprovando registro da outbox sem processamento downstream.
+- O teste confirmou resgate explícito, token consumido, leitura de progresso `200`, autosave no PostgreSQL, refresh/retomada, validação de empresa/e-mail, correção de resposta, retorno/avanço entre perguntas e etapas, submissão via UI, confirmação, payload persistido como `client`, replay idempotente sem segunda submissão, uma submissão, duas deliveries e revogação que impede acesso. A interface não oferece nova ação de envio após conclusão.
+- Overflow horizontal verificado nos estados de acesso neutro e nos estados de formulário inicial e confirmação em 390, 768 e 1440 px. O percurso funcional completo foi exercitado em browser; larguras foram explicitamente alternadas no início e na conclusão.
+- O container descartável foi parado e removido após os testes. Não houve acesso a banco persistente, emissão operacional, worker, ClickUp, Sheets, migration persistente, commit ou push.
+
+### Testes e estado final
+
+- `npx playwright test tests/e2e/onboarding-flow.spec.ts`: PASS, 7/7, incluindo E2E autenticado no PostgreSQL 16 descartável.
+- `npm test`: PASS (rotas e contratos, incluindo onboarding e teste CLI com subprocesso).
+- `npx tsc --noEmit`: PASS.
+- `npm run continuity:check`: PASS na execução autorizada; primeira tentativa no sandbox foi impedida por `spawnSync git EPERM`, sem mudança de código.
+- `npm run build`: PASS após o ajuste pontual de overflow; geração de páginas e rotas de onboarding concluídas. `i18n:check` informou `translations_autopublish_disabled` e finalizou com sucesso conforme configuração atual. O build regenerou `next-env.d.ts`; a alteração preexistente foi reaplicada exatamente.
+- `git diff --check`: PASS.
+- As primeiras repetições do E2E encontraram somente problemas no setup/assertions do novo percurso (navegação para a pergunta da empresa, seletor responsivo duplicado e avanço de materiais para expectativas); foram corrigidos no teste, sem enfraquecer assertions. A única correção adicional de produto foi o clipping horizontal descrito acima.
+- Arquivos desta execução: `src/features/site/pages/ClienteOnboarding.tsx`, `tests/e2e/onboarding-flow.spec.ts` e este adendo. `next-env.d.ts` continua como alteração preexistente e fora da unidade; resultados/cache Playwright são ignorados.
+- **P1.2F funcional: VALIDADA localmente** para o percurso exercitado com PostgreSQL isolado e evidência de persistência/outbox. Pronta para revisão e commit local, sem commit nesta missão.
+- **Deploy: BLOCKED. Ativação operacional: BLOCKED**, conforme P1.2E.3. Esta execução não validou topologia de deployment, pins administrativos ou autorização de emissão em ambiente operacional e não libera deploy nem ativação.
