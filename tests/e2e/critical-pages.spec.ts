@@ -16,6 +16,146 @@ const viewports = [
   { label: "mobile", width: 390, height: 844 }
 ] as const;
 
+function assertHomeContactTarget(url: URL) {
+  expect(url.pathname).toBe("/contato");
+  expect(url.search).toBe("?intent=orientacao&origin=home");
+  expect(Array.from(url.searchParams.entries())).toEqual([
+    ["intent", "orientacao"],
+    ["origin", "home"]
+  ]);
+}
+
+async function holdScriptsUntilContactNavigation(page: Page) {
+  let releaseScripts!: () => void;
+  let notifyScriptRequest!: () => void;
+  const scriptsReleased = new Promise<void>((resolve) => { releaseScripts = resolve; });
+  const scriptRequested = new Promise<void>((resolve) => { notifyScriptRequest = resolve; });
+  let scriptRequestCount = 0;
+  let released = false;
+  let navigationStartedBeforeRelease = false;
+
+  await page.route("**/*", async (route) => {
+    const url = new URL(route.request().url());
+    if (url.hostname !== "127.0.0.1") return route.abort();
+
+    if (route.request().resourceType() === "script") {
+      scriptRequestCount += 1;
+      notifyScriptRequest();
+      await scriptsReleased;
+      return route.continue();
+    }
+
+    if (route.request().isNavigationRequest() && url.pathname === "/contato") {
+      navigationStartedBeforeRelease = scriptRequestCount > 0 && !released;
+      released = true;
+      releaseScripts();
+    }
+
+    return route.continue();
+  });
+
+  return {
+    scriptRequested,
+    navigationStartedBeforeRelease: () => navigationStartedBeforeRelease
+  };
+}
+
+test.describe("CTA principal da Hero", () => {
+  test("navega por link nativo enquanto os scripts permanecem pendentes", async ({ page }) => {
+    const gate = await holdScriptsUntilContactNavigation(page);
+    await page.goto("/", { waitUntil: "commit" });
+
+    const contact = page.getByRole("link", { name: /Ir para contato e solicitar diagn/i });
+    await expect(contact).toBeVisible();
+    await expect(contact).toBeEnabled();
+    await expect(contact).toHaveAttribute("href", "/contato?intent=orientacao&origin=home");
+    await gate.scriptRequested;
+
+    for (const viewport of viewports) {
+      await page.setViewportSize(viewport);
+      const box = await contact.boundingBox();
+      expect(box, `O CTA da Hero deve estar renderizado em ${viewport.width}px.`).not.toBeNull();
+      expect(box!.width).toBeGreaterThan(0);
+      expect(box!.height).toBeGreaterThan(0);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBeTruthy();
+    }
+
+    const navigation = page.waitForURL((url) => url.pathname === "/contato");
+    await contact.click();
+    await navigation;
+    expect(gate.navigationStartedBeforeRelease()).toBeTruthy();
+    assertHomeContactTarget(new URL(page.url()));
+  });
+
+  test("Enter também navega antes da hidratação", async ({ page }) => {
+    const gate = await holdScriptsUntilContactNavigation(page);
+    await page.goto("/", { waitUntil: "commit" });
+
+    const contact = page.getByRole("link", { name: /Ir para contato e solicitar diagn/i });
+    await expect(contact).toBeVisible();
+    await expect(contact).toHaveAttribute("href", "/contato?intent=orientacao&origin=home");
+    await gate.scriptRequested;
+
+    await contact.focus();
+    await expect(contact).toBeFocused();
+    const navigation = page.waitForURL((url) => url.pathname === "/contato");
+    await page.keyboard.press("Enter");
+    await navigation;
+    expect(gate.navigationStartedBeforeRelease()).toBeTruthy();
+    assertHomeContactTarget(new URL(page.url()));
+  });
+
+  test("mantem navegação client-side após hidratação sem duplicar histórico", async ({ page }) => {
+    await page.route("**/*", (route) =>
+      new URL(route.request().url()).hostname === "127.0.0.1" ? route.continue() : route.abort()
+    );
+    let documentNavigations = 0;
+    page.on("request", (request) => {
+      if (request.isNavigationRequest() && request.frame() === page.mainFrame()) documentNavigations += 1;
+    });
+
+    await page.goto("/", { waitUntil: "networkidle" });
+    const initialDocumentNavigations = documentNavigations;
+    const contact = page.getByRole("link", { name: /Ir para contato e solicitar diagn/i });
+    await expect(contact).toBeVisible();
+    await contact.click();
+    await expect.poll(() => new URL(page.url()).pathname).toBe("/contato");
+    assertHomeContactTarget(new URL(page.url()));
+    expect(documentNavigations).toBe(initialDocumentNavigations);
+
+    await page.goBack();
+    await expect(page).toHaveURL(/\/$/);
+    await page.getByRole("link", { name: /Ir para contato e solicitar diagn/i }).focus();
+    await page.keyboard.press("Enter");
+    await expect.poll(() => new URL(page.url()).pathname).toBe("/contato");
+    assertHomeContactTarget(new URL(page.url()));
+    expect(documentNavigations).toBe(initialDocumentNavigations);
+    await page.goBack();
+    await expect(page).toHaveURL(/\/$/);
+  });
+
+  test("o href continua funcional sem JavaScript", async ({ page }) => {
+    await page.route("**/*", (route) => {
+      const url = new URL(route.request().url());
+      if (url.hostname !== "127.0.0.1") return route.abort();
+      if (route.request().resourceType() === "script") return route.abort();
+      return route.continue();
+    });
+
+    await page.goto("/", { waitUntil: "commit" });
+    const contact = page.getByRole("link", { name: /Ir para contato e solicitar diagn/i });
+    await expect(contact).toBeVisible();
+    await expect(contact).toHaveAttribute("href", "/contato?intent=orientacao&origin=home");
+
+    const response = page.waitForResponse((candidate) =>
+      candidate.request().isNavigationRequest() && new URL(candidate.url()).pathname === "/contato"
+    );
+    await contact.click();
+    expect((await response).status()).toBe(200);
+    assertHomeContactTarget(new URL(page.url()));
+  });
+});
+
 async function assertPageFrame(page: Page) {
   await expect(page.locator("main")).toBeVisible();
   expect((await page.title()).trim(), "Toda rota deve ter titulo proprio.").not.toBe("");

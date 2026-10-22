@@ -26,19 +26,20 @@ const ProducaoAudiovisual = dynamic(() => import("./pages/ProducaoAudiovisual"))
 
 export default function RouteContent({ path, locale }: { path: string; locale: RouteLocale }) {
   const router = useRouter();
-  const navigate = (targetPath: string) => {
+  const getNavigationHref = (targetPath: string) => {
     const contextualTarget = contextualizeContactTarget(path, targetPath);
     const [targetWithoutHash] = contextualTarget.split("#", 1);
     const queryIndex = targetWithoutHash.indexOf("?");
     const targetRoute = queryIndex === -1 ? targetWithoutHash : targetWithoutHash.slice(0, queryIndex);
     const query = queryIndex === -1 ? "" : targetWithoutHash.slice(queryIndex);
-    router.push(`${getLocalizedPath(canonicalizeRoute(targetRoute), locale)}${query}`);
+    return `${getLocalizedPath(canonicalizeRoute(targetRoute), locale)}${query}`;
   };
+  const navigate = (targetPath: string) => router.push(getNavigationHref(targetPath));
   const route = getRouteByPath(path) ?? getContentReviewRouteByPath(path);
 
   let page = null;
   if (route?.routeCategory === "case-study") page = <CaseStudyDetail caseId={path.replace("/casos/", "")} onNavigate={navigate} />;
-  else if (path === "/") page = <Home onNavigate={navigate} locale={locale} />;
+  else if (path === "/") page = <Home onNavigate={navigate} contactHref={getNavigationHref("/contato")} locale={locale} />;
   else if (path === "/sobre") page = <Sobre onNavigate={navigate} />;
   else if (path === "/servicos") page = <Servicos onNavigate={navigate} />;
   else if (path === "/servicos/process-intelligence") page = <ProcessIntelligence onNavigate={navigate} />;

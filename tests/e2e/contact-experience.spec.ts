@@ -69,7 +69,7 @@ test.describe("experiencia de contato", () => {
 
   test("Home, hub e oferta levam somente contexto allowlisted; Sebraetec preserva origem sem virar famÃ­lia", async ({ page }) => {
     await page.goto("/", { waitUntil: "domcontentloaded" });
-    await page.getByRole("button", { name: /Ir para contato e solicitar diagn/i }).click();
+    await page.getByRole("link", { name: /Ir para contato e solicitar diagn/i }).click();
     await expect(page).toHaveURL(/\/contato\?intent=orientacao&origin=home$/);
     await page.goBack();
     await expect(page).toHaveURL(/\/$/);

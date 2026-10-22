@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ArrowUpRight, Check, CheckCircle2, TrendingUp, Cpu, Sparkles, Award, Shield, UserCheck, Play, HelpCircle, ArrowRight, MessageSquare, X, Star, Layers, ArrowDown, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import Image from "next/image";
 import { SERVICES, PLANS } from "../../../data";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
@@ -695,10 +696,11 @@ function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
 
 interface HomeProps {
   onNavigate: (page: string) => void;
+  contactHref: string;
   locale?: RouteLocale;
 }
 
-export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
+export default function Home({ onNavigate, contactHref, locale = "pt" }: HomeProps) {
   const prefersReducedMotion = useReducedMotion();
   const scrollBehavior = prefersReducedMotion ? "auto" : "smooth";
   const [activeSlide, setActiveSlide] = useState(0);
@@ -1023,9 +1025,8 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
               </div>
 
               {/* Lower audio signal interactable widget exactly like reference image */}
-              <button
-                type="button"
-                onClick={() => handleLinkClick("/contato")}
+              <Link
+                href={contactHref}
                 aria-label={pilotCopy?.hero.contactLabel ?? "Ir para contato e solicitar diagnóstico"}
                 className="bg-black/35 hover:bg-black/55 transition-[background-color,border-color,box-shadow] duration-200 border border-white/15 p-5 rounded-2xl flex flex-col gap-4 max-w-sm cursor-pointer shadow-sm backdrop-blur-sm group text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
@@ -1057,7 +1058,7 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
                   </span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </div>
-              </button>
+              </Link>
             </div>
 
             {/* The image is now the stage itself; this column preserves the editorial reading space. */}
