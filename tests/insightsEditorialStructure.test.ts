@@ -2,6 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { BLOG_POSTS } from "../src/data";
 import { getRouteByPath } from "../src/config/routeRegistry";
+import { i18n } from "../src/i18n/siteI18n";
+
+const ASSESSORIA_ROUTE = "/servicos/assessoria-marketing-digital-estrategico";
 
 test("every insight follows the TAG08 editorial reading contract", () => {
   const ids = new Set<string>();
@@ -36,5 +39,23 @@ test("every insight follows the TAG08 editorial reading contract", () => {
     assert.ok(post.relatedServiceTitle.trim(), `${post.id} must name its related service.`);
     assert.ok(post.strategicSynthesis.problem.trim(), `${post.id} must state the problem it addresses.`);
     assert.ok(post.strategicSynthesis.nextStep.trim(), `${post.id} must state a practical next step.`);
+  }
+});
+
+test("insight service labels match the approved Assessoria public name", () => {
+  const approvedName = i18n.pt.header.servicePages.find(
+    (service) => service.path === ASSESSORIA_ROUTE,
+  )?.name;
+
+  assert.ok(approvedName, "Assessoria must have an approved Portuguese public name.");
+
+  const relatedInsights = BLOG_POSTS.filter(
+    (post) => post.relatedServicePath === ASSESSORIA_ROUTE,
+  );
+
+  assert.ok(relatedInsights.length > 0, "Assessoria must retain its related insight records.");
+  for (const post of relatedInsights) {
+    assert.equal(post.relatedServiceTitle, approvedName, `${post.id} must use the approved related-service name.`);
+    assert.equal(post.serviceTitle, approvedName, `${post.id} fallback must use the approved service name.`);
   }
 });

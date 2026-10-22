@@ -5,10 +5,10 @@
 | Source | Type / current role | Consumers and overlap |
 | --- | --- | --- |
 | `src/features/site/pages/*.tsx` | Page-local copy, page composition and often interaction logic. | All pages are loaded through `RouteContent`; Home, onboarding, contact and major service pages have locale-specific or form-specific content embedded in large modules. |
-| `src/data.ts` | Shared structured data, including service offerings, simulators and `CASE_STUDIES`. | Used by route registry, case detail, Insights and service/page components. Example data begins around lines 36 and 214; articles/cases extend through this single large module. |
+| `src/data.ts` | Shared structured data, including service offerings, simulators, `CASE_STUDIES` and the `BLOG_POSTS` article records. For an insight, its record owns article content and the related-service target/label consumed by the article CTA. | Used by route registry, case detail, Insights and service/page components. Article/case records extend through this single large module. |
 | `src/content/publicEvidence.ts` | Evidence/permission state for content items and allowed routes; public visibility requires approved state. | Filters case-study route generation and content; validation requires date/reference for approval (`:119-142`). |
 | `src/content/publicationContracts.ts` | Publication-oriented contracts for page/content release. | Related to evidence status and route/sitemap inclusion; exact full dependency mapping remains a future task. |
-| `src/content/serviceInsightsBridge.ts` | Bridges service offerings and relevant insight content. | Consumed by service pages and editorial features; overlaps conceptually with service/article relationships embedded in data/pages. |
+| `src/content/serviceInsightsBridge.ts` | Owns service-page insight module curation: module title/intro, ordered published `postId` references and planned-topic presentation. It does not own or duplicate the referenced article records. | Consumed by service pages and editorial features; published article content remains in `src/data.ts`. |
 | `src/content/simulatorInventory.ts` | Catalog of interactive simulators. | Simulator pages and tests use the inventory; `tests/simulatorInventory.test.ts` covers it. |
 | `src/content/googleReviews.ts` | Local snapshot/fallback review content. | Fallback for official-content API when external source is unavailable; separate from live Google Business responses. |
 | `src/i18n/siteI18n.ts`, `homeCopy.ts`, `notFoundCopy.ts` | Runtime global UI and page-specific locale copy. | Coexists with catalogs and dictionaries embedded directly in Home/Onboarding. |
@@ -34,5 +34,11 @@ Official content has a live API path and snapshot/fallback path. Home maintains 
 - Exact authoritative ownership for each insight article and service description is not declared in a central content schema.
 - Whether all generated i18n files are reproducible from committed source catalogs is a tooling question; verify via generator/check contract before consolidation.
 - CMS use or externally managed content beyond the code/API files was not evidenced in the repository scan; classify as **INCERTO**, not absent.
+
+## P2.3 — Ownership and parity finding
+
+The code establishes separate, complementary ownership: `BLOG_POSTS` in `src/data.ts` owns each structured insight and its related-service link/label; `serviceInsightsBridge.ts` owns the curated, ordered relationship shown on service pages, referencing published records by stable post ID and holding planned topics locally. `routeRegistry` resolves route policy/metadata and is not an editorial source. The bridge resolver omits an unknown published ID; the current bridge test checks canonical coverage and a minimum resolved count, not one-to-one resolution of every configured published reference. No missing reference was confirmed in this bounded review, so this remains a narrowly scoped coverage opportunity rather than a proven runtime defect.
+
+This review found eight insight records linked to `/servicos/assessoria-marketing-digital-estrategico` whose CTA labels used the superseded “Assessoria de Marketing” name. They were aligned to the already approved Portuguese public name “Assessoria Estratégica de Negócios”; route, article body, bridge ordering, publication state and evidence gates were not changed. `tests/insightsEditorialStructure.test.ts` now protects this label parity, including the fallback field.
 
 Evidence: `src/data.ts`; `src/content/*`; `src/features/site/pages/*`; `src/i18n/*`; `server/officialContent.ts`; `src/app/api/official-content/route.ts`.
