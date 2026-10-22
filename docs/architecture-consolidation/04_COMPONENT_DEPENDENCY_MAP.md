@@ -38,3 +38,7 @@ Current line counts: `Home.tsx` 3,978; `ClienteOnboarding.tsx` 3,291; `Hospedage
 ## Evidence references
 
 `src/features/site/RouteContent.tsx:3-25,27-52`; `src/features/site/SiteShell.tsx`; `src/components/`; `src/content/publicEvidence.ts:119-142`; `package.json` dependencies; `src/app/[locale]/[[...segments]]/page.tsx:113-115`.
+
+## P3.1 — Home method presentation boundary
+
+The static institutional/method presentation previously embedded in `Home.tsx` is now owned by `HomeMethodSection.tsx`. `Home` remains responsible for locale selection and contact navigation; the section receives localized method copy, the hero eyebrow, and a contact callback. Its anchor, markup, copy fallbacks, visual classes, motion, imagery and CTA behavior remain unchanged. The interactive `#servicos-principais` solution map was deliberately left in `Home` because it owns decision/navigation behavior and already has focused responsive geometry coverage.

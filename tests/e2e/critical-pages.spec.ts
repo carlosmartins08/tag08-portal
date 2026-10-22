@@ -234,6 +234,67 @@ test.describe("mapa de solucoes da Home", () => {
   });
 });
 
+test.describe("apresentacao do metodo da Home", () => {
+  test("preserva a secao institucional e seu proximo passo de contato", async ({ page }) => {
+    await page.route("**/*", async (route) => {
+      const url = new URL(route.request().url());
+      if (url.hostname !== "127.0.0.1") return route.abort();
+      if (url.pathname === "/api/official-content") {
+        return route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify({ ok: true, status: "fallback", sources: { youtube: "fallback", googleBusiness: "fallback" }, youtubeVideos: [], gmbReviews: [] })
+        });
+      }
+      if (url.pathname === "/_next/image" && url.searchParams.get("url")?.startsWith("http")) return route.abort();
+      return route.continue();
+    });
+
+    for (const viewport of [
+      { width: 390, height: 844 },
+      { width: 768, height: 1024 },
+      { width: 1440, height: 900 }
+    ]) {
+      await page.setViewportSize(viewport);
+      await page.goto("/#solucao", { waitUntil: "domcontentloaded" });
+
+      const section = page.locator("#solucao");
+      await expect(section.getByRole("heading", { level: 2, name: "Por que marcas em evolução escolhem a TAG08." })).toBeVisible();
+      await expect(section.getByText("Porque a TAG08 não entra apenas para executar demandas soltas.", { exact: false })).toBeVisible();
+      await expect(section.getByText("Estratégia, conteúdo, tecnologia e processos", { exact: true })).toBeVisible();
+      await expect(section).toHaveAttribute("id", "solucao");
+      await expect(section.locator("[id]")).toHaveCount(0);
+      await expect(section.getByRole("heading", { level: 2 })).toHaveCount(1);
+      await expect(section.getByRole("link")).toHaveCount(0);
+      const layout = await section.evaluate((element) => {
+        const content = element.querySelector(".max-w-7xl");
+        if (!content) throw new Error("O container da seção #solucao não foi renderizado.");
+        const bounds = content.getBoundingClientRect();
+        const sectionStyles = getComputedStyle(element);
+        return {
+          sectionWidth: element.clientWidth,
+          contentWidth: bounds.width,
+          display: sectionStyles.display,
+          backgroundColor: sectionStyles.backgroundColor
+        };
+      });
+      expect(layout.contentWidth, `O conteúdo deve caber na seção em ${viewport.width}px.`).toBeLessThanOrEqual(layout.sectionWidth + 1);
+      expect(layout.display).toBe("block");
+      expect(layout.backgroundColor).not.toBe("rgba(0, 0, 0, 0)");
+      const hasPageOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+      expect(hasPageOverflow, `A Home não deve ter overflow em ${viewport.width}px.`).toBeFalsy();
+    }
+
+    const section = page.locator("#solucao");
+    const contact = section.getByRole("button", { name: "FALAR COM A TAG08" });
+    await expect(contact).toBeVisible();
+    await contact.focus();
+    await expect(contact).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(/\/contato\?intent=orientacao&origin=home$/);
+  });
+});
+
 test.describe("avaliacoes da Home", () => {
   test("mantem a avaliacao selecionada ate uma acao da pessoa", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
