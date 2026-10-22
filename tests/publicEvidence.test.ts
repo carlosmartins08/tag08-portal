@@ -53,6 +53,8 @@ try {
   mutableEnvironment.NODE_ENV = "development";
   mutableEnvironment.NEXT_PUBLIC_TAG08_CONTENT_REVIEW = "1";
   const investigateBadge = renderToStaticMarkup(createElement(EvidenceReviewBadge, { evidenceKey: "team/carlos-henrique-martins" }));
+  const homeInvestigateBadge = renderToStaticMarkup(createElement(EvidenceReviewBadge, { evidenceKey: "home-case/alan-rocha" }));
+  assert.match(homeInvestigateBadge, /Em investiga/, "Home cases under investigation use the review-only status instead of an approval claim");
   assert.match(investigateBadge, /Em investigação — não publicado/, "Review mode labels investigate distinctly from approved");
   assert.equal(renderToStaticMarkup(createElement(EvidenceReviewBadge, { evidenceKey: "client-logo/cayuca" })), "", "Approved records do not receive an investigation badge");
   assert.match(renderToStaticMarkup(createElement(ContentReviewBanner)), /content-review-banner/, "Review mode signals unpublished investigations");

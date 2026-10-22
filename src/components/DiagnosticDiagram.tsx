@@ -6,7 +6,6 @@ import type { HomeDiagnosticDiagramCopy } from "../i18n/homeCopy";
 interface DiagnosticPillar {
   id: "posicionamento" | "canais" | "processos";
   name: string;
-  score: number;
   label: string;
   description: string;
 }
@@ -15,7 +14,6 @@ const PILLARS: DiagnosticPillar[] = [
   {
     id: "posicionamento",
     name: "Posicionamento e percepção",
-    score: 34,
     label: "Maturidade de marca",
     description:
       "Esforço invisível no digital. Postagens genéricas não atraem o público correspondente ao calibre do serviço."
@@ -23,7 +21,6 @@ const PILLARS: DiagnosticPillar[] = [
   {
     id: "canais",
     name: "Sincronia de canais",
-    score: 48,
     label: "Eficiência de funil",
     description:
       "Anúncios rodam sem um funil estruturado de conversão. Cliques se perdem antes de se tornarem propostas viáveis."
@@ -31,7 +28,6 @@ const PILLARS: DiagnosticPillar[] = [
   {
     id: "processos",
     name: "Sistemas e playbooks",
-    score: 21,
     label: "Maturidade operacional",
     description:
       "A ausência de fluxos consolidados deixa a equipe dependente do tempo e da validação do dono para avançar."
@@ -49,12 +45,9 @@ export default function DiagnosticDiagram({ copy }: { copy?: HomeDiagnosticDiagr
   const prefersReducedMotion = useReducedMotion();
   const activePillar = PILLARS.find((pillar) => pillar.id === activePillarId) ?? PILLARS[0];
   const activePillarCopy = copy?.pillars[activePillar.id];
-  const radius = 76;
-  const circumference = 2 * Math.PI * radius;
-  const dashOffset = circumference - (activePillar.score / 100) * circumference;
 
   return (
-    <div className="relative mt-12 overflow-hidden rounded-[32px] border border-white/[0.05] bg-charcoal-900/30 px-6 py-10 sm:px-10 sm:py-12">
+    <div data-testid="diagnostic-diagram" className="relative mt-12 overflow-hidden rounded-[32px] border border-white/[0.05] bg-charcoal-900/30 px-6 py-10 sm:px-10 sm:py-12">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.018)_1px,transparent_1px)] [background-size:24px_24px]" />
 
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
@@ -78,20 +71,7 @@ export default function DiagnosticDiagram({ copy }: { copy?: HomeDiagnosticDiagr
         <div className="flex justify-center py-2 lg:col-span-4">
           <div className="relative flex h-60 w-60 items-center justify-center">
             <svg viewBox="0 0 200 200" className="absolute inset-0 h-full w-full -rotate-90" aria-hidden="true">
-              <circle cx="100" cy="100" r={radius} stroke="rgba(255, 255, 255, 0.06)" strokeWidth="5" fill="none" />
-              <motion.circle
-                cx="100"
-                cy="100"
-                r={radius}
-                stroke="var(--color-brand)"
-                strokeWidth="6"
-                fill="none"
-                strokeDasharray={circumference}
-                initial={{ strokeDashoffset: prefersReducedMotion ? dashOffset : circumference }}
-                animate={{ strokeDashoffset: dashOffset }}
-                transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.55, ease: "easeOut" }}
-                strokeLinecap="round"
-              />
+              <circle cx="100" cy="100" r="76" stroke="rgba(255, 255, 255, 0.06)" strokeWidth="5" fill="none" />
             </svg>
 
             <div className="relative z-10 flex h-[172px] w-[172px] flex-col items-center justify-center rounded-full border border-white/[0.05] bg-[#0a0a0c] px-5 text-center shadow-xl">
@@ -99,15 +79,19 @@ export default function DiagnosticDiagram({ copy }: { copy?: HomeDiagnosticDiagr
                 {activePillarCopy?.label ?? activePillar.label}
               </span>
               <motion.div
-                key={activePillar.score}
+                data-testid="diagnostic-focus"
+                role="status"
+                aria-live="polite"
+                aria-atomic="true"
+                key={activePillar.id}
                 initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.92 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.2 }}
-                className="mt-2 flex items-center justify-center gap-1 font-display text-5xl font-black leading-none tracking-tighter text-white"
+                className="mt-1 px-2 text-center font-display text-lg font-black leading-tight tracking-tight text-white sm:text-xl"
               >
-                {activePillar.score}<span className="text-xl leading-none text-brand">%</span>
+                {activePillarCopy?.name ?? activePillar.name}
               </motion.div>
-              <p className="mt-2 tag08-meta text-xs font-bold uppercase tracking-wider text-zinc-400">{copy?.meanIndex ?? "Índice médio"}</p>
+              <p className="mt-2 tag08-meta text-[10px] font-bold uppercase tracking-wider text-zinc-400">{copy?.qualitativeLabel ?? "Leitura qualitativa"}</p>
             </div>
           </div>
         </div>
@@ -137,9 +121,6 @@ export default function DiagnosticDiagram({ copy }: { copy?: HomeDiagnosticDiagr
                     <span className="flex items-center justify-between gap-3">
                       <span className={`font-sans text-xs font-bold uppercase tracking-wide ${isActive ? "text-brand" : "text-zinc-300"}`}>
                         {copy?.pillars[pillar.id].name ?? pillar.name}
-                      </span>
-                      <span className={`rounded px-1.5 py-0.5 font-sans text-xs font-bold ${isActive ? "bg-brand/15 text-brand" : "bg-white/5 text-zinc-400"}`}>
-                        {pillar.score}%
                       </span>
                     </span>
                     <span className="mt-1 block text-xs leading-relaxed text-zinc-300">

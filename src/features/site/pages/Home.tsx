@@ -3167,8 +3167,8 @@ export default function Home({ onNavigate, locale = "pt" }: HomeProps) {
 
                   {/* BOTTOM PROFILE WRAPPER MATCHING USER MOCKUP */}
                   <div className="relative z-10 flex items-center justify-between border-t border-white/[0.08] pt-4 mt-5">
-                    <div className="tag08-meta text-xs text-white/40 tracking-widest font-extrabold uppercase hidden sm:block">
-                      VERIFICADO // CO-PILOTO TAG08
+                    <div className="hidden sm:block">
+                      <EvidenceReviewBadge evidenceKey={`home-case/${visibleClientCases[activeSlide].id}`} />
                     </div>
 
                     {/* Profile card absolute design accuracy */}

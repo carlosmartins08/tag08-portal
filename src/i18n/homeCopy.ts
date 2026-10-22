@@ -101,7 +101,7 @@ const HOME_EN_COPY = {
       titleSecondLine: "business assessment",
       description: "An efficiency assessment across the three strategic pillars of a business’s digital presence.",
       instruction: "Select a pillar to see its context.",
-      meanIndex: "Average index",
+      qualitativeLabel: "Qualitative reading",
       pillars: {
         posicionamento: { name: "Positioning and perception", label: "Brand maturity", description: "Digital efforts go unnoticed. Generic posts fail to attract the audience that matches the service’s level." },
         canais: { name: "Channel alignment", label: "Funnel efficiency", description: "Ads run without a structured conversion funnel. Clicks are lost before they become viable proposals." },
@@ -413,7 +413,7 @@ export const HOME_PILOT_COPY: Record<Exclude<RouteLocale, "pt">, WidenCopy<typeo
       titleSecondLine: "de la realidad",
       description: "Un análisis de eficiencia de los tres pilares estratégicos de la presencia empresarial.",
       instruction: "Selecciona un pilar para ver el contexto.",
-      meanIndex: "Índice medio",
+      qualitativeLabel: "Lectura cualitativa",
       pillars: {
         posicionamento: { name: "Posicionamiento y percepción", label: "Madurez de marca", description: "El esfuerzo digital pasa desapercibido. Las publicaciones genéricas no atraen al público adecuado para el nivel del servicio." },
         canais: { name: "Sincronía de canales", label: "Eficiencia del embudo", description: "Los anuncios circulan sin un embudo de conversión estructurado. Los clics se pierden antes de convertirse en propuestas viables." },
