@@ -93,7 +93,7 @@ Confirmação humana/documental da aprovação de 24/09: verificar se cobre todo
 
 ### Exige ambiente isolado
 
-Verificações de persistência/idempotência, criação de outbox, retry/lease/reprocess e retenção continuam pendentes de banco sintético isolado e dados controlados. Esta missão não executou operações de banco ou serviços externos.
+Registro histórico: na execução da P0.1, verificações de persistência/idempotência, criação de outbox, retry/lease/reprocess e retenção permaneciam pendentes de banco sintético isolado e dados controlados; aquela missão não executou operações de banco ou serviços externos. Atualização em 23/10/2026: o ciclo local do worker/outbox foi posteriormente validado com PostgreSQL 16 descartável e mocks, cobrindo entrega, idempotência, timeout/retry e recuperação de lease. Essa evidência não representa homologação de entregas reais ClickUp/Sheets nem validação de staging/produção; a referência mock do ClickUp após retry também não possui asserção explícita comprovada no verificador.
 
 ## 6. Arquivos desta etapa e garantia de escopo
 
