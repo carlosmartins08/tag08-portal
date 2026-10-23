@@ -24,7 +24,7 @@ Atualizado em: `2026-10-19`
 ## Missão em andamento
 
 - Home: removida a vitrine redundante de portfólio em validação, refinado o mapa de soluções e mantida a navegação dos cases. O conteúdo EN/ES existe apenas como rascunho gated; a prontidão permanece pendente de revisão linguística. Build e 94 testes E2E críticos passaram.
-- Onboarding: fluxo guiado em uma pergunta por tela, com opção de preenchimento pelo cliente ou pela equipe TAG08 e confirmação de autorização para compartilhamento. A rota entrega explicitamente o idioma resolvido ao fluxo; EN/ES permanecem indisponíveis até revisão linguística. Testes de rotas, contratos, build de produção e seis cenários E2E passaram.
+- Onboarding: jornada autenticada por magic link para clientes de projetos/contratos confirmados; a interface pública não oferece modo de envio `tag08_team`, e a submissão permanece vinculada à sessão e à jornada autorizada. Contato e Banco de Talentos são canais públicos separados. EN/ES permanecem indisponíveis até revisão linguística. A validação posterior P1.2F.1 passou em 7/7 E2Es, com PostgreSQL sintético isolado.
 - Refinada a experiência do Header sem alterar rotas ou contratos: navegação de serviços agrupada por decisão, CTA de contato visível no mobile, atalho de acessibilidade, foco/semântica revisados e redução de movimento respeitada. QA responsivo concluído em cópia isolada do HEAD (build oficial PASS) nos viewports 390, 768 e 1440 px: variantes, menu/CTA, teclado e foco, Escape, navegação e ausência de overflow aprovados. A identidade da antiga instância `localhost:3101` não foi comprovada; ela não foi usada como evidência.
 
 ## Estado de integração

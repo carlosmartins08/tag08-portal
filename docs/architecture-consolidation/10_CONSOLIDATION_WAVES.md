@@ -60,7 +60,7 @@ No implementation is authorized by this plan. Each wave starts with a fresh Git 
 - **Tests:** contracts, outbox, retry/lease/reprocess, retention, backup/restore and staging canary with synthetic records/reconciliation.
 - **Acceptance:** contact → ClickUp Pré-venda; onboarding → Onboarding Novos; talent → Banco de Talentos; Sheets remains staging/support; retry and only relevant escalation; simulator tasks only for needed human action.
 - **Rollback:** stop new routing without deleting outbox rows; no destructive migration; reconcile external duplicates.
-- **Dependencies:** list-specific ClickUp configuration, external credential management, production worker schedule, retention/privacy sign-off. CRM identity is decided; contact Sheets-only is a known implementation gap.
+- **Dependencies:** list-specific ClickUp configuration, external credential management, production worker schedule, and retention/privacy sign-off. P1.2D implements transactional creation of both ClickUp and Google Sheets deliveries in the outbox. End-to-end worker processing against disposable PostgreSQL remains locally unvalidated while the Docker Engine is unavailable; actual delivery to external services remains subject to authorized staging homologation. CRM identity is decided.
 
 ## P6 — Progressive implementation of approved architecture
 
