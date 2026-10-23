@@ -35,3 +35,5 @@ FROM runtime AS jobs
 COPY --from=build /app/server ./server
 
 CMD ["node", "server/integrationWorker.mjs"]
+
+FROM runtime AS web
