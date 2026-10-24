@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { permanentRedirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { ROUTE_LOCALES, getRouteByPath, getPublishedLocales, type RouteLocale } from "../../../../config/routeRegistry";
 import { getAbsoluteLocalizedUrl, getAlternates } from "../../../../lib/seo";
@@ -27,7 +28,7 @@ export default async function OnboardingRoute({ params }: PageProps) {
   const locale = (ROUTE_LOCALES.includes(rawLocale as RouteLocale) ? rawLocale : "pt") as RouteLocale;
   const route = getRouteByPath("/cliente/onboarding");
   if (route && !getPublishedLocales(route).includes(locale)) {
-    return <OnboardingAccessGate locale="pt" />;
+    permanentRedirect(route.canonicalPath);
   }
   const cookieStore = await cookies();
   const secret = cookieStore.get(ONBOARDING_SESSION_COOKIE)?.value;

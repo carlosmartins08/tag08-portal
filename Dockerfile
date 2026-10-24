@@ -8,6 +8,7 @@ ENV NEXT_PUBLIC_GA4_ID=$NEXT_PUBLIC_GA4_ID
 ENV NEXT_PUBLIC_GSC_VERIFICATION=$NEXT_PUBLIC_GSC_VERIFICATION
 
 COPY package.json package-lock.json ./
+COPY tools/configure-git-hooks.mjs ./tools/configure-git-hooks.mjs
 RUN npm ci
 
 COPY . .
@@ -23,6 +24,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY package.json package-lock.json ./
+COPY tools/configure-git-hooks.mjs ./tools/configure-git-hooks.mjs
 RUN npm ci --omit=dev
 COPY --from=build /app/.next/standalone ./
 

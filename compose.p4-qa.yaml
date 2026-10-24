@@ -1,0 +1,72 @@
+# Local QA overlay. Always combine with compose.yaml and a unique Compose project.
+# Requires Docker Compose v2.24.4+ for !reset / !override.
+services:
+  translation:
+    container_name: "tag08-p4qa-${P4_QA_RUN:?Generate a unique P4_QA_RUN}-translation"
+    restart: "no"
+    ports: !override []
+    volumes: !reset []
+
+  postgres:
+    container_name: "tag08-p4qa-${P4_QA_RUN:?Generate a unique P4_QA_RUN}-postgres"
+    restart: "no"
+    environment:
+      POSTGRES_DB: tag08_p1_2e2_qa
+      POSTGRES_USER: tag08_qa
+      POSTGRES_PASSWORD: ${P4_QA_DB_PASSWORD:?Generate a synthetic P4_QA_DB_PASSWORD}
+    ports: !override
+      - "127.0.0.1:${P4_QA_DB_PORT:?Choose an available P4_QA_DB_PORT}:5432"
+    volumes: !reset []
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tag08_qa -d tag08_p1_2e2_qa"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  web:
+    image: "tag08-p4qa-${P4_QA_RUN:?Generate a unique P4_QA_RUN}-web:local"
+    container_name: "tag08-p4qa-${P4_QA_RUN:?Generate a unique P4_QA_RUN}-web"
+    restart: "no"
+    depends_on: !reset []
+    build:
+      args:
+        NEXT_PUBLIC_GA4_ID: ""
+        NEXT_PUBLIC_GSC_VERIFICATION: ""
+    ports: !override
+      - "127.0.0.1:${P4_QA_WEB_PORT:?Choose an available P4_QA_WEB_PORT}:3000"
+    environment:
+      DATABASE_URL: postgresql://tag08_qa:${P4_QA_DB_PASSWORD:?Generate a synthetic P4_QA_DB_PASSWORD}@postgres:5432/tag08_p1_2e2_qa
+      DATABASE_SSL: "false"
+      ALLOWED_ORIGINS: "http://127.0.0.1:${P4_QA_WEB_PORT:?Choose an available P4_QA_WEB_PORT}"
+      INTEGRATIONS_ENABLED: "false"
+      GOOGLE_SHEETS_ENABLED: "false"
+      CLICKUP_ENABLED: "false"
+      GOOGLE_SERVICE_ACCOUNT_JSON: ""
+      GOOGLE_SHEETS_SPREADSHEET_ID: ""
+      CLICKUP_API_TOKEN: ""
+      INTERNAL_API_TOKEN: ${P4_QA_INTERNAL_API_TOKEN:?Generate a synthetic P4_QA_INTERNAL_API_TOKEN}
+      YOUTUBE_API_KEY: ""
+      YOUTUBE_CHANNEL_ID: ""
+      YOUTUBE_CHANNEL_HANDLE: ""
+      TRANSLATION_SERVICE_TOKEN: ""
+
+  migrate:
+    image: "tag08-p4qa-${P4_QA_RUN:?Generate a unique P4_QA_RUN}-migrate:local"
+    restart: "no"
+    environment:
+      DATABASE_URL: postgresql://tag08_qa:${P4_QA_DB_PASSWORD:?Generate a synthetic P4_QA_DB_PASSWORD}@postgres:5432/tag08_p1_2e2_qa
+      DATABASE_SSL: "false"
+
+  integration-worker:
+    profiles: ["jobs"]
+    restart: "no"
+    environment:
+      INTEGRATIONS_ENABLED: "false"
+      GOOGLE_SHEETS_ENABLED: "false"
+      CLICKUP_ENABLED: "false"
+
+  retention-worker:
+    profiles: ["jobs"]
+    restart: "no"

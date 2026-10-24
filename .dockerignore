@@ -1,5 +1,7 @@
 node_modules
 .next
+.next-dev
+.next-review
 .git
 .env
 .env.*
@@ -8,4 +10,10 @@ node_modules
 coverage
 dist
 build
+.audit*/
+.lighthouseci/
+test-results/
+playwright-report/
+backups/
+*.tsbuildinfo
 src/generated
