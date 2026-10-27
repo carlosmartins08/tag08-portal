@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   buildContactClickUpTask,
+  CONTACT_STAGING_CLICKUP_INITIAL_STATUS,
+  CONTACT_STAGING_CLICKUP_LIST_ID,
   findSheetRowReference,
   getDeliveryFailure,
   integrationHttpError,
@@ -206,4 +208,28 @@ test("ClickUp adapter keeps Contact in Pre-sales, sends intent without status, a
   assert.equal(routingError?.code, "clickup_contact_not_pre_sales");
   assert.equal(getDeliveryFailure(routingError, 1).retry, false);
   assert.equal(blockedCalls, 0);
+});
+
+test("Contact staging ClickUp task is explicitly created in the existing open status only for the staging list", async () => {
+  let createBody;
+  const delivery = {
+    id: "delivery-synthetic-contact-stage",
+    aggregate_id: "record-synthetic-contact-stage",
+    aggregate_type: "contact_lead",
+    created_at: "2026-10-26T12:00:00.000Z",
+    payload: { version: 1, data: { name: "Synthetic", requestType: "new_project" } }
+  };
+  const env = {
+    CLICKUP_PRE_SALES_LIST_ID: CONTACT_STAGING_CLICKUP_LIST_ID,
+    CLICKUP_API_TOKEN: "synthetic-token"
+  };
+  const fetchImpl = async (_url, init = {}) => {
+    if (!init.method) return new Response(JSON.stringify({ tasks: [] }), { status: 200 });
+    createBody = JSON.parse(init.body);
+    return new Response(JSON.stringify({ id: "synthetic-staging-task" }), { status: 200 });
+  };
+
+  await createClickUpTask(delivery, { env, fetchImpl });
+  assert.equal(createBody.status, CONTACT_STAGING_CLICKUP_INITIAL_STATUS);
+  assert.equal(CONTACT_STAGING_CLICKUP_INITIAL_STATUS, "em aberto \u{1F9E0}");
 });

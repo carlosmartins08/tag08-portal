@@ -1,5 +1,7 @@
 export const MAX_AUTOMATIC_DELIVERY_ATTEMPTS = 8;
 export const TERMINAL_RETRY_AT = new Date("9999-12-31T23:59:59.999Z");
+export const CONTACT_STAGING_CLICKUP_LIST_ID = "901327894264";
+export const CONTACT_STAGING_CLICKUP_INITIAL_STATUS = "em aberto \u{1F9E0}";
 
 export class IntegrationDeliveryError extends Error {
   constructor(code, retryable = false) {

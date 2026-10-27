@@ -1,5 +1,7 @@
 import {
   buildContactClickUpTask,
+  CONTACT_STAGING_CLICKUP_INITIAL_STATUS,
+  CONTACT_STAGING_CLICKUP_LIST_ID,
   findSheetRowReference,
   IntegrationDeliveryError,
   integrationHttpError,
@@ -106,14 +108,19 @@ export const createClickUpTask = async (delivery, {
   const existingTaskId = await findClickUpTaskByName(listId, taskName, apiToken, fetchImpl);
   if (existingTaskId) return existingTaskId;
 
+  const taskBody = {
+    name: taskName,
+    description: contactTask?.description || JSON.stringify(payload),
+    tags: contactTask?.tags || ["tag08", delivery.aggregate_type]
+  };
+  if (delivery.aggregate_type === "contact_lead" && listId === CONTACT_STAGING_CLICKUP_LIST_ID) {
+    taskBody.status = CONTACT_STAGING_CLICKUP_INITIAL_STATUS;
+  }
+
   const response = await fetchImpl(`https://api.clickup.com/api/v2/list/${listId}/task`, {
     method: "POST",
     headers: { Authorization: apiToken, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: taskName,
-      description: contactTask?.description || JSON.stringify(payload),
-      tags: contactTask?.tags || ["tag08", delivery.aggregate_type]
-    }),
+    body: JSON.stringify(taskBody),
     signal: AbortSignal.timeout(15000)
   });
   if (!response.ok) throw integrationHttpError("clickup_task_create_failed", response.status);
