@@ -1,10 +1,12 @@
 import { randomUUID } from "node:crypto";
 import { getOnboardingPrisma, getOnboardingSecretFromRequest, getClearedOnboardingSessionCookie, hashOpaqueSecret, isSameOriginMutation, isSecureCookieRequest, resolveRequestOnboardingSession } from "../../../../../server/onboardingAccess";
 import { jsonResponse } from "../../../../lib/api/response";
+import { isOnboardingEnabled } from "../../../../../server/onboardingAvailability.mjs";
 
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
+  if (!isOnboardingEnabled()) return jsonResponse({ ok: false, error: "access_unavailable" }, 404, request);
   const session = await resolveRequestOnboardingSession(request);
   return session
     ? jsonResponse({ ok: true, expiresAt: session.expiresAt.toISOString(), completed: session.status === "COMPLETED" }, 200, request)
@@ -12,6 +14,7 @@ export async function GET(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  if (!isOnboardingEnabled()) return jsonResponse({ ok: false, error: "access_unavailable" }, 404, request);
   if (!isSameOriginMutation(request)) return jsonResponse({ ok: false, error: "access_unavailable" }, 400, request);
   const session = await resolveRequestOnboardingSession(request);
   const secret = getOnboardingSecretFromRequest(request);

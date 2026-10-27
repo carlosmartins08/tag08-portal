@@ -9,14 +9,17 @@ import {
   readJsonBody
 } from "../../../lib/api/response";
 import { getOnboardingSecretFromRequest, isSameOriginMutation, resolveRequestOnboardingSession } from "../../../../server/onboardingAccess";
+import { isOnboardingEnabled } from "../../../../server/onboardingAvailability.mjs";
 
 export const runtime = "nodejs";
 
 export async function OPTIONS(request: Request) {
+  if (!isOnboardingEnabled()) return jsonResponse({ ok: false, status: "failed", error: "unavailable" }, 404, request);
   return optionsResponse(request);
 }
 
 export async function POST(request: Request) {
+  if (!isOnboardingEnabled()) return jsonResponse({ ok: false, status: "failed", error: "unavailable" }, 404, request);
   if (!isSameOriginMutation(request)) return jsonResponse({ ok: false, status: "failed", error: "access_unavailable" }, 400, request);
   const session = await resolveRequestOnboardingSession(request);
   const sessionSecret = getOnboardingSecretFromRequest(request);

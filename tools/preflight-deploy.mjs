@@ -9,7 +9,14 @@ const requireValue = (name) => {
   if (!present(name)) missing.push(name);
 };
 
-for (const name of ["DATABASE_URL", "ALLOWED_ORIGINS", "INTERNAL_API_TOKEN"]) requireValue(name);
+for (const name of ["DATABASE_URL", "ALLOWED_ORIGINS", "INTERNAL_API_TOKEN", "ONBOARDING_ENABLED"]) requireValue(name);
+
+const onboardingEnabled = process.env.ONBOARDING_ENABLED?.trim().toLowerCase();
+if (!['true', 'false'].includes(onboardingEnabled || '')) {
+  invalid.push("ONBOARDING_ENABLED must be explicitly set to true or false");
+} else if (target === "production" && onboardingEnabled !== "false") {
+  invalid.push("ONBOARDING_ENABLED must be false for production until Onboarding is homologated");
+}
 
 if (present("DATABASE_URL")) {
   try {
@@ -112,6 +119,7 @@ console.log(JSON.stringify({
   integrationsEnabled,
   sheetsEnabled,
   clickUpEnabled,
+  onboardingEnabled: onboardingEnabled === "true",
   translationsAutopublish,
   processingLeaseSeconds,
   databaseSsl: process.env.DATABASE_SSL === "true"

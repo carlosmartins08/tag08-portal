@@ -2,6 +2,8 @@
 
 ## 2026-10-27
 
+- Added a fail-closed production release gate for the database-backed Onboarding journey and required explicit availability configuration in deploy preflight. No application data, external integration, or database was accessed.
+
 - Added a gated Sheets canonical submission path for Contact and Talent with stable IDs, delivery tracking, and mocked retry/idempotency coverage; external writes remain disabled. Onboarding retains PostgreSQL for its secure access control plane pending a safe replacement decision.
 - Evoluida a candidatura publica ao Banco de Talentos para o contrato v2, com multiplas areas, links profissionais opcionais, perguntas condicionais agrupadas, revisao editavel e preservacao do contrato v1. Os testes de runtime direcionados nao executaram neste ambiente porque o esbuild retornou `spawn EPERM`; TypeScript passou. Nenhuma integracao externa foi ativada.
 

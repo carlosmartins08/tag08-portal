@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import { permanentRedirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { ROUTE_LOCALES, getRouteByPath, getPublishedLocales, type RouteLocale } from "../../../../config/routeRegistry";
 import { getAbsoluteLocalizedUrl, getAlternates } from "../../../../lib/seo";
 import { ONBOARDING_SESSION_COOKIE, resolveOnboardingSession, getOnboardingPrisma } from "../../../../../server/onboardingAccess";
 import { OnboardingAccessGate, OnboardingSessionClient } from "../../../../features/site/onboarding/OnboardingRouteClient";
+import { isOnboardingEnabled } from "../../../../../server/onboardingAvailability.mjs";
 
 export const dynamic = "force-dynamic";
 
 type PageProps = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  if (!isOnboardingEnabled()) return { robots: { index: false, follow: false } };
   const { locale: rawLocale } = await params;
   const locale = ROUTE_LOCALES.includes(rawLocale as RouteLocale) ? rawLocale as RouteLocale : "pt";
   return {
@@ -24,6 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function OnboardingRoute({ params }: PageProps) {
+  if (!isOnboardingEnabled()) notFound();
   const { locale: rawLocale } = await params;
   const locale = (ROUTE_LOCALES.includes(rawLocale as RouteLocale) ? rawLocale : "pt") as RouteLocale;
   const route = getRouteByPath("/cliente/onboarding");

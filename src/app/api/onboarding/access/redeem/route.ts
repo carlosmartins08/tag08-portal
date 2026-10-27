@@ -1,9 +1,11 @@
 import { redeemOnboardingMagicLink, allowMagicLinkAttempt, getOnboardingPrisma, getOnboardingSessionCookie, isSameOriginMutation, isSecureCookieRequest } from "../../../../../../server/onboardingAccess";
 import { jsonResponse, readJsonBody } from "../../../../../lib/api/response";
+import { isOnboardingEnabled } from "../../../../../../server/onboardingAvailability.mjs";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  if (!isOnboardingEnabled()) return jsonResponse({ ok: false, error: "access_unavailable" }, 404, request);
   if (!isSameOriginMutation(request)) return jsonResponse({ ok: false, error: "access_unavailable" }, 400);
   if (!allowMagicLinkAttempt(request)) return jsonResponse({ ok: false, error: "access_unavailable" }, 429);
   const body = await readJsonBody(request, 2_048);

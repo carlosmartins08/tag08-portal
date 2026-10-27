@@ -2,6 +2,7 @@ import { config as loadDotenv } from "dotenv";
 import { getOnboardingPrisma, createOnboardingJourneyWithLink, reissueOnboardingMagicLink, revokeOnboardingAccess } from "../server/onboardingAccess";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isOnboardingEnabled } from "../server/onboardingAvailability.mjs";
 
 const args = process.argv.slice(2);
 const action = args[0];
@@ -126,6 +127,8 @@ const main = async () => {
   if (!["create", "reissue", "revoke"].includes(action || "")) throw new Error("unknown_action");
   if (action === "create" || action === "reissue") assertInteractiveLinkOutput(getLinkOutputContext());
   loadDotenv();
+
+  if (!isOnboardingEnabled()) throw new Error("onboarding_disabled");
 
   if (process.env.NODE_ENV === "production" || !["local", "staging"].includes(process.env.ONBOARDING_ADMIN_ENV || "")) {
     throw new Error("authorized_nonproduction_environment_required");

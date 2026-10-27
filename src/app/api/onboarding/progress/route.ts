@@ -1,10 +1,12 @@
 import { hashOpaqueSecret, getOnboardingPrisma, getOnboardingSecretFromRequest, isSameOriginMutation, resolveRequestOnboardingSession } from "../../../../../server/onboardingAccess";
 import { parseOnboardingDraft } from "../../../../lib/onboardingDraft";
 import { jsonResponse, readJsonBody } from "../../../../lib/api/response";
+import { isOnboardingEnabled } from "../../../../../server/onboardingAvailability.mjs";
 
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
+  if (!isOnboardingEnabled()) return jsonResponse({ ok: false, error: "access_unavailable" }, 404, request);
   const session = await resolveRequestOnboardingSession(request);
   if (!session) return jsonResponse({ ok: false, error: "access_unavailable" }, 401, request);
   try {
@@ -29,6 +31,7 @@ export async function GET(request: Request) {
 }
 
 export async function PUT(request: Request) {
+  if (!isOnboardingEnabled()) return jsonResponse({ ok: false, error: "access_unavailable" }, 404, request);
   if (!isSameOriginMutation(request)) return jsonResponse({ ok: false, error: "access_unavailable" }, 400, request);
   const session = await resolveRequestOnboardingSession(request);
   const secret = getOnboardingSecretFromRequest(request);

@@ -1,6 +1,16 @@
 import assert from "node:assert/strict";
+import { isOnboardingEnabled } from "../server/onboardingAvailability.mjs";
 
 const baseUrl = process.env.BASE_URL || "http://127.0.0.1:3000";
+
+if (!isOnboardingEnabled()) {
+  const health = await fetch(new URL("/api/onboarding/health", baseUrl));
+  assert.equal(health.status, 404, "Disabled Onboarding health route must remain unavailable");
+  const metrics = await fetch(new URL("/api/onboarding/metrics", baseUrl));
+  assert.equal(metrics.status, 404, "Disabled Onboarding metrics route must remain unavailable");
+  console.log(JSON.stringify({ event: "onboarding_disabled_verified" }));
+  process.exit(0);
+}
 
 const health = await fetch(new URL("/api/onboarding/health", baseUrl));
 assert.equal(health.status, 200, "Health endpoint is unavailable");

@@ -1,6 +1,7 @@
 import { ONBOARDING_PAYLOAD_VERSION } from "../../../../../server/onboardingContract";
 import { jsonResponse, optionsResponse } from "../../../../lib/api/response";
 import { getPrisma, getSafePersistenceErrorDetails } from "../../../../lib/server/prisma";
+import { isOnboardingEnabled } from "../../../../../server/onboardingAvailability.mjs";
 
 export const runtime = "nodejs";
 const DATABASE_HEALTH_TIMEOUT_MS = 5_000;
@@ -13,10 +14,12 @@ const checkDatabase = () => Promise.race([
 ]);
 
 export async function OPTIONS(request: Request) {
+  if (!isOnboardingEnabled()) return jsonResponse({ ok: false, error: "unavailable" }, 404, request);
   return optionsResponse(request);
 }
 
 export async function GET(request: Request) {
+  if (!isOnboardingEnabled()) return jsonResponse({ ok: false, error: "unavailable" }, 404, request);
   try {
     // A bounded query detects an unavailable database without exposing its details.
     await checkDatabase();

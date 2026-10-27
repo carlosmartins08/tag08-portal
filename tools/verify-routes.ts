@@ -6,8 +6,10 @@ import {
   renderableRoutePaths,
   routeRegistry
 } from "../src/config/routeRegistry";
+import { isOnboardingEnabled } from "../server/onboardingAvailability.mjs";
 
 const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+const onboardingEnabled = isOnboardingEnabled();
 
 const check = async (path: string, expectedStatus: number) => {
   const response = await fetch(`${baseUrl}${path}`, { redirect: "manual" });
@@ -16,14 +18,14 @@ const check = async (path: string, expectedStatus: number) => {
 };
 
 for (const path of renderableRoutePaths) {
-  await check(path, 200);
+  await check(path, path === "/cliente/onboarding" && !onboardingEnabled ? 404 : 200);
   const route = getRouteByPath(path);
   assert.ok(route, `Missing route registry entry for ${path}`);
 
   for (const locale of ["en", "es"] as const) {
     const localizedPath = getLocalizedPath(path, locale);
     const isPublished = isRouteLocalePublished(route, locale);
-    await check(localizedPath, isPublished ? 200 : 308);
+    await check(localizedPath, path === "/cliente/onboarding" && !onboardingEnabled ? 404 : isPublished ? 200 : 308);
   }
 }
 
@@ -38,8 +40,8 @@ const onboardingRoute = getRouteByPath("/cliente/onboarding");
 assert.ok(onboardingRoute, "The protected onboarding route must remain registered");
 for (const locale of ["en", "es"] as const) {
   const localizedPath = getLocalizedPath(onboardingRoute.canonicalPath, locale);
-  const response = await check(localizedPath, 308);
-  assert.equal(response.headers.get("location"), onboardingRoute.canonicalPath);
+  const response = await check(localizedPath, onboardingEnabled ? 308 : 404);
+  if (onboardingEnabled) assert.equal(response.headers.get("location"), onboardingRoute.canonicalPath);
 }
 
 const languageRedirect = await check("/sobre?lang=en&utm_source=route-check", 308);
