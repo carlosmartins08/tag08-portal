@@ -828,7 +828,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
     if (isFlowActive) {
       requestAnimationFrame(() => stepHeadingRef.current?.focus({ preventScroll: true }));
     }
-  }, [currentStep, currentQuestion, isFlowActive]);
+  }, [currentStep, currentQuestion, isFlowActive, isReviewing]);
 
   useEffect(() => {
     if (!isFlowActive) return;

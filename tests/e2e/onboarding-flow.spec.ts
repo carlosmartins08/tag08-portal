@@ -223,6 +223,7 @@ test("PostgreSQL isolado: resgate explícito, progresso retomável, submissão i
 
     await page.getByRole("button", { name: "Revisar onboarding" }).click();
     await expect(page.getByRole("heading", { name: "Revise todas as informações antes de enviar" })).toBeVisible();
+    await expect(page.locator("#onboarding-question-title")).toBeFocused();
     await expect(page.getByText("TAG08 TESTE SINTÉTICO P1.2F.1", { exact: true })).toBeVisible();
     await expect(page.getByText("QA Sintético P1.2F.1", { exact: true })).toBeVisible();
     await expect(page.getByText("Resultado sintético para teste de onboarding.", { exact: true })).toBeVisible();
