@@ -144,7 +144,8 @@ test.describe("experiencia de contato", () => {
     await page.getByRole("button", { name: /Enviar solicita/i }).click();
 
     await expect(page.getByRole("heading", { name: "Mensagem Enviada!" })).toBeVisible();
-    await expect(page.getByText(/recebida pela TAG08/)).toBeVisible();
+    await expect(page.getByText(/Suas informações foram enviadas com sucesso/)).toBeVisible();
+    await expect(page.getByText(/recebida pela TAG08|6 horas úteis/i)).toHaveCount(0);
     await expect(page.getByText(/onboarding/i)).toHaveCount(0);
     expect(submittedPayload).toMatchObject({
       requestType: "new_project",

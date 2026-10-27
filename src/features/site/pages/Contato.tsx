@@ -645,7 +645,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
           <div className="tag08-contact__response-note bg-charcoal-900 border border-white/[0.04] p-5 rounded-lg flex items-start gap-3">
             <ClipboardCheck className="w-5 h-5 text-brand shrink-0 mt-0.5" />
             <p className="text-xs text-zinc-400 leading-relaxed">
-              <strong>Procedimento pós-envio:</strong> Respondemos em até 6 horas úteis pelo WhatsApp para confirmar o próximo passo e orientar a conversa inicial.
+              <strong>Após o envio:</strong> Você verá uma confirmação nesta página e poderá seguir pelos canais de contato direto, se preferir.
             </p>
           </div>
         </div>
@@ -901,10 +901,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   <div className="space-y-3 max-w-lg mx-auto">
                     <h3 className="font-display font-semibold text-2xl text-white">Mensagem Enviada!</h3>
                     <p className="text-zinc-300 text-sm leading-relaxed">
-                      Obrigado, <strong>{formData.name}</strong>. Sua solicitação foi recebida pela TAG08 e será revisada pela equipe responsável pela triagem.
-                    </p>
-                    <p className="text-zinc-400 text-xs font-sans">
-                      Em até 6 horas úteis, entraremos em contato pelo WhatsApp para confirmar o próximo passo da sua solicitação para <strong>{formData.company}</strong>.
+                      Obrigado, <strong>{formData.name}</strong>. Suas informações foram enviadas com sucesso. Se for necessário, a equipe poderá entrar em contato pelos canais informados para entender melhor sua necessidade.
                     </p>
                   </div>
 
@@ -986,7 +983,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
               </div>
             <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-400">
                 <MessageSquare className="w-3 h-3 text-brand" />
-                <span>Prazo de retorno: até 6h úteis</span>
+                <span>Próximo passo: se necessário, a equipe poderá orientar a continuidade.</span>
               </div>
             </div>
 
