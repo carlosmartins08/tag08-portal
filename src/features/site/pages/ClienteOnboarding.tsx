@@ -55,6 +55,8 @@ type OnboardingSubmitErrorData = {
   message: string;
   status?: number;
 };
+type OnboardingReviewValue = string | number | boolean | string[];
+type OnboardingReviewField = [label: string, value: OnboardingReviewValue];
 
 class OnboardingSubmitError extends Error {
   kind: OnboardingSubmitErrorKind;
@@ -108,7 +110,27 @@ const translations: Record<Language, Record<string, string>> = {
     btn_start: "Começar Onboarding",
     btn_back: "Voltar",
     btn_next: "Avançar",
-    btn_submit: "Enviar Onboarding Completo",
+    btn_review: "Revisar onboarding",
+    btn_confirm_submit: "Confirmar e enviar",
+    review_title: "Revise todas as informações antes de enviar",
+    review_desc: "Confira o projeto, os responsáveis, os serviços contratados, os briefings e os materiais. Você pode voltar a qualquer etapa para editar.",
+    review_company: "Empresa e projeto",
+    review_contacts: "Responsáveis",
+    review_context: "Contexto e expectativas",
+    review_services: "Serviços contratados",
+    review_briefing: "Briefing por serviço",
+    review_materials: "Materiais e referências",
+    review_consent: "Consentimentos",
+    review_empty: "Não informado",
+    review_yes: "Sim",
+    review_no: "Não",
+    review_edit_company: "Editar empresa",
+    review_edit_contacts: "Editar responsáveis",
+    review_edit_context: "Editar contexto",
+    review_edit_services: "Editar serviços",
+    review_edit_briefing: "Editar briefing",
+    review_edit_materials: "Editar materiais",
+    review_edit_consent: "Editar consentimentos",
     btn_submitting: "Enviando dados...",
     btn_whatsapp: "Falar com a TAG08 no WhatsApp",
     back_to_start: "  Voltar para o início",
@@ -262,11 +284,11 @@ const translations: Record<Language, Record<string, string>> = {
     consent_opt3: "Confirmo que não forneci qualquer credencial de acesso direto ou senha de segurança neste fluxo.",
     
     // Step 9: Finalizado (WhatsApp)
-    finalized_badge: "ONBOARDING RECEBIDO",
+    finalized_badge: "ONBOARDING ENVIADO",
     finalized_queued_badge: "AGUARDANDO SINCRONIZAÇÃO",
-    finalized_title: "Informações registradas com sucesso",
+    finalized_title: "Informações enviadas com sucesso",
     finalized_queued_title: "Envio ainda não recebido pela TAG08",
-    finalized_desc_1: "Suas informações foram recebidas e registradas para o projeto contratado.",
+    finalized_desc_1: "As informações do onboarding foram enviadas com sucesso e seguirão para o fluxo de ativação do novo projeto.",
     finalized_queued_desc: "O envio está na fila local deste navegador. O sistema tentará novamente quando a conexão voltar; confira este status mais tarde.",
     finalized_desc_2: "A TAG08 dará continuidade às próximas etapas do processo. Se quiser, você também pode falar com a equipe pelo WhatsApp.",
     whatsapp_template_msg: "Olá time TAG08! Concluímos o preenchimento do nosso onboarding institucional via Assistente Conversacional.\\n\\nEmpresa: {company}\\nRepresentante: {name}\\nMeta dos próximos 90 dias: {goal}.\\n\\nAguardamos contato técnico para agendarmos nosso kickoff!",
@@ -308,7 +330,27 @@ const translations: Record<Language, Record<string, string>> = {
     btn_start: "Start Onboarding",
     btn_back: "Back",
     btn_next: "Next",
-    btn_submit: "Submit Onboarding Guidelines",
+    btn_review: "Review onboarding",
+    btn_confirm_submit: "Confirm and submit",
+    review_title: "Review all information before submitting",
+    review_desc: "Check the project, owners, contracted services, briefings, and materials. You can return to any step to edit.",
+    review_company: "Company and project",
+    review_contacts: "Project owners",
+    review_context: "Context and expectations",
+    review_services: "Contracted services",
+    review_briefing: "Service briefings",
+    review_materials: "Materials and references",
+    review_consent: "Consents",
+    review_empty: "Not provided",
+    review_yes: "Yes",
+    review_no: "No",
+    review_edit_company: "Edit company",
+    review_edit_contacts: "Edit owners",
+    review_edit_context: "Edit context",
+    review_edit_services: "Edit services",
+    review_edit_briefing: "Edit briefing",
+    review_edit_materials: "Edit materials",
+    review_edit_consent: "Edit consents",
     btn_submitting: "Submitting Data...",
     btn_whatsapp: "Message TAG08 on WhatsApp",
     back_to_start: "  Back to home",
@@ -462,11 +504,11 @@ const translations: Record<Language, Record<string, string>> = {
     consent_opt3: "I confirm that I have not provided any direct passwords or security credentials in this wizard.",
     
     // Step 9: Finalizado (WhatsApp)
-    finalized_badge: "ONBOARDING RECEIVED",
+    finalized_badge: "ONBOARDING SUBMITTED",
     finalized_queued_badge: "SYNC PENDING",
-    finalized_title: "Information recorded successfully",
+    finalized_title: "Information submitted successfully",
     finalized_queued_title: "TAG08 has not received this submission yet",
-    finalized_desc_1: "Your information has been received and recorded for the contracted project.",
+    finalized_desc_1: "Your onboarding information was submitted successfully and will follow the new project activation flow.",
     finalized_queued_desc: "The submission is in this browser's local queue. The app will retry when the connection returns; check this status again later.",
     finalized_desc_2: "TAG08 will continue with the next steps. If you wish, you can also contact the team on WhatsApp.",
     whatsapp_template_msg: "Hello TAG08 team! I have completed our Onboarding Guidelines via the Conversational Assistant.\\n\\nCompany: {company}\\nRepresentative: {name}\\nTarget 90 days: {goal}.\\n\\nLooking forward to scheduling our kickoff!",
@@ -508,7 +550,27 @@ const translations: Record<Language, Record<string, string>> = {
     btn_start: "Comenzar Onboarding",
     btn_back: "Volver",
     btn_next: "Siguiente",
-    btn_submit: "Enviar Onboarding Completo",
+    btn_review: "Revisar onboarding",
+    btn_confirm_submit: "Confirmar y enviar",
+    review_title: "Revise toda la información antes de enviarla",
+    review_desc: "Verifique el proyecto, los responsables, los servicios contratados, los briefings y los materiales. Puede volver a cualquier etapa para editar.",
+    review_company: "Empresa y proyecto",
+    review_contacts: "Responsables",
+    review_context: "Contexto y expectativas",
+    review_services: "Servicios contratados",
+    review_briefing: "Briefing por servicio",
+    review_materials: "Materiales y referencias",
+    review_consent: "Consentimientos",
+    review_empty: "No informado",
+    review_yes: "Sí",
+    review_no: "No",
+    review_edit_company: "Editar empresa",
+    review_edit_contacts: "Editar responsables",
+    review_edit_context: "Editar contexto",
+    review_edit_services: "Editar servicios",
+    review_edit_briefing: "Editar briefing",
+    review_edit_materials: "Editar materiales",
+    review_edit_consent: "Editar consentimientos",
     btn_submitting: "Transmitiendo datos...",
     btn_whatsapp: "Contactar a TAG08 en WhatsApp",
     back_to_start: "  Volver al inicio",
@@ -662,11 +724,11 @@ const translations: Record<Language, Record<string, string>> = {
     consent_opt3: "Confirmo que no he proporcionado ninguna credencial directa de acceso ni contraseñas en este flujo.",
     
     // Step 9: Finalizado (WhatsApp)
-    finalized_badge: "ONBOARDING RECIBIDO",
+    finalized_badge: "ONBOARDING ENVIADO",
     finalized_queued_badge: "PENDIENTE DE SINCRONIZACIÓN",
-    finalized_title: "Información registrada con éxito",
+    finalized_title: "Información enviada con éxito",
     finalized_queued_title: "TAG08 aún no ha recibido este envío",
-    finalized_desc_1: "Su información fue recibida y registrada para el proyecto contratado.",
+    finalized_desc_1: "La información del onboarding se envió con éxito y seguirá el flujo de activación del nuevo proyecto.",
     finalized_queued_desc: "El envío está en la cola local de este navegador. Se volverá a intentar cuando se restablezca la conexión; revise este estado más tarde.",
     finalized_desc_2: "TAG08 dará continuidad a las próximas etapas del proceso. Si lo desea, también puede hablar con el equipo por WhatsApp.",
     whatsapp_template_msg: "Hola equipo TAG08! Completé nuestro onboarding de integración con el asistente conversacional.\\n\\nEmpresa: {company}\\nRepresentante: {name}\\nMeta de 90 días: {goal}.\\n\\n¡Quedamos atentos para agendar nuestro kickoff!",
@@ -747,6 +809,7 @@ interface ClienteOnboardingProps {
 export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboardingProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [isReviewing, setIsReviewing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [deliveryState, setDeliveryState] = useState<DeliveryState>("idle");
@@ -785,6 +848,10 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
   const [companyLinkedin, setCompanyLinkedin] = useState("");
   const [serviceLanguage, setServiceLanguage] = useState<Language>("pt");
   const uiLanguage: Language = locale;
+  const t = (key: string): string => {
+    const dict = translations[uiLanguage] || translations.pt;
+    return dict[key] || translations.pt[key] || "";
+  };
 
   // STEP 2: Responsáveis pelo projeto
   const [responsibleName, setResponsibleName] = useState("");
@@ -902,6 +969,11 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
     generalBriefingText, linkDrive, linkPortfolio, linkReferences, linkDocuments, linkCommercial,
     whySeekTag08, whatTriedBefore, whatDidNotWork, goodResult90Days, biggestUrgency, notToMakeMistakes, importantDeadlines,
     consentTruth, consentUsage, consentNoPasswords
+  };
+  const reviewValue = (value: OnboardingReviewValue) => {
+    if (Array.isArray(value)) return value.length ? value.join(", ") : t("review_empty");
+    if (typeof value === "boolean") return value ? t("review_yes") : t("review_no");
+    return String(value).trim() || t("review_empty");
   };
   const draftSetters: Record<string, (value: unknown) => void> = {
     currentQuestion: (value) => setCurrentQuestion(Number(value)),
@@ -1021,13 +1093,6 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
     window.addEventListener("beforeunload", warnBeforeLeaving);
     return () => window.removeEventListener("beforeunload", warnBeforeLeaving);
   }, [currentStep]);
-
-  // Access key translations
-  const t = (key: string): string => {
-    const lang = uiLanguage;
-    const dict = translations[lang] || translations.pt;
-    return dict[key] || translations.pt[key] || "";
-  };
 
   // Dynamic steps translation
   const getSteps = () => {
@@ -1325,8 +1390,80 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
   // Check if a specific service briefing is required based on selection
   const isSelected = (serviceId: string) => selectedServices.includes(serviceId);
 
+  const reviewSections: Array<{ title: string; edit: string; step: number; fields: OnboardingReviewField[] }> = [
+    {
+      title: t("review_company"), edit: t("review_edit_company"), step: 1,
+      fields: [
+        ["Nome da empresa/projeto", companyName], ["CNPJ/CPF", cnpjCpf], ["Cidade/Estado", cityState],
+        ["Site", companyWebsite], ["Instagram", companyInstagram], ["LinkedIn", companyLinkedin], ["Idioma de atendimento", serviceLanguage]
+      ]
+    },
+    {
+      title: t("review_contacts"), edit: t("review_edit_contacts"), step: 2,
+      fields: [
+        ["Responsável principal", responsibleName], ["Cargo", responsibleRole], ["E-mail", responsibleEmail], ["WhatsApp", responsibleWhatsapp],
+        ["Ponto focal", focalPointText || "Mesmo que o responsável de onboarding"],
+        ["Aprovador", approverText || "Mesmo que o responsável de onboarding"],
+        ["Contato financeiro", financePointText || "Mesmo que o responsável de onboarding"]
+      ]
+    },
+    {
+      title: t("review_context"), edit: t("review_edit_context"), step: 3,
+      fields: [
+        ["Momento do negócio", businessMoment], ["Prioridades", priorityMap], ["Maturidade", maturityScore],
+        ["Por que buscou a TAG08", whySeekTag08], ["O que já tentou", whatTriedBefore], ["O que não funcionou", whatDidNotWork],
+        ["Resultado esperado em 90 dias", goodResult90Days], ["Urgência", biggestUrgency], ["O que evitar", notToMakeMistakes], ["Prazos importantes", importantDeadlines]
+      ]
+    },
+    {
+      title: t("review_services"), edit: t("review_edit_services"), step: 4,
+      fields: [["Serviços contratados", selectedServices], ["Escopo personalizado", customServiceText]]
+    },
+    {
+      title: t("review_briefing"), edit: t("review_edit_briefing"), step: 5,
+      fields: [
+        ...(selectedServices.includes("Gestão de Redes Sociais") ? ([
+          ["Redes sociais — canais", smChannels], ["Redes sociais — público", smTargetAudience], ["Redes sociais — produtos prioritários", smPriorityProducts],
+          ["Redes sociais — concorrentes", smCompetitors], ["Redes sociais — identidade visual", smHasBrandIdentity], ["Redes sociais — banco de mídia", smHasMediaBank],
+          ["Redes sociais — gravação de vídeos", smRecordsVideos], ["Redes sociais — aprovação de conteúdo", smApprovesContent], ["Redes sociais — temas proibidos", smForbiddenTopics]
+        ] as OnboardingReviewField[]) : []),
+        ...(selectedServices.includes("Branding & Identidade") ? ([
+          ["Branding — marca existente", brBrandExists], ["Branding — motivo da mudança", brReasonForChange], ["Branding — atributos desejados", brDesiredAttributes],
+          ["Branding — referências", brReferencesLink], ["Branding — marcas a evitar", brAvoidBrands], ["Branding — não se parecer com", brBrandNeverBeLike],
+          ["Branding — nome definido", brHasNameSelected], ["Branding — slogan", brHasSloganText], ["Branding — aplicações", brRequiredApplications]
+        ] as OnboardingReviewField[]) : []),
+        ...(selectedServices.includes("Desenvolvimento Web") ? ([
+          ["Web — domínio", webHasDomain], ["Web — hospedagem", webHasHosting], ["Web — site atual", webCurrentSite], ["Web — objetivo", webMainGoal],
+          ["Web — páginas necessárias", webRequiredPages], ["Web — identidade visual", webHasBrandIdentity], ["Web — textos prontos", webHasTextsReady],
+          ["Web — arquivos prontos", webHasFilesReady], ["Web — referências", webReferenceUrls], ["Web — integrações", `WhatsApp: ${reviewValue(webIntegrateWhatsApp)}; formulário: ${reviewValue(webIntegrateForm)}; CRM: ${reviewValue(webIntegrateCRM)}; blog: ${reviewValue(webNeedsBlog)}`]
+        ] as OnboardingReviewField[]) : []),
+        ...(selectedServices.includes("Process Intelligence") ? ([
+          ["Process Intelligence — tamanho da equipe", piTeamSize], ["Process Intelligence — departamentos", piDepartments], ["Process Intelligence — áreas desorganizadas", piDisorganizedAreas],
+          ["Process Intelligence — dependência de pessoas", piPersonDependent], ["Process Intelligence — retrabalho", piReworkTasks], ["Process Intelligence — ferramentas", piCurrentTools],
+          ["Process Intelligence — documentação", piHasDocumentation], ["Process Intelligence — organograma", piHasOrgChart], ["Process Intelligence — reuniões", piHasMeetings], ["Process Intelligence — gargalo", piMainBottleneck]
+        ] as OnboardingReviewField[]) : []),
+        ...(selectedServices.includes("Process Activation") ? ([
+          ["Process Activation — diagnóstico anterior", paHasPiDiagnose], ["Process Activation — processos documentados", paDocumentedProcesses],
+          ["Process Activation — processos não aplicados", paUnappliedProcesses], ["Process Activation — equipes para treinar", paTeamsToTrain],
+          ["Process Activation — liderança responsável", paResponsibleLeader], ["Process Activation — dificuldade", paBiggestDifficulty], ["Process Activation — disponibilidade para treinamento", paHasTimeForTraining]
+        ] as OnboardingReviewField[]) : []),
+        ...(hasUnmanagedServiceSelected || selectedServices.length === 0 ? ([ ["Briefing complementar", generalBriefingText] ] as OnboardingReviewField[]) : [])
+      ]
+    },
+    {
+      title: t("review_materials"), edit: t("review_edit_materials"), step: 6,
+      fields: [["Pasta compartilhada", linkDrive], ["Portfólio", linkPortfolio], ["Referências", linkReferences], ["Documentos", linkDocuments], ["Materiais comerciais", linkCommercial]]
+    },
+    {
+      title: t("review_consent"), edit: t("review_edit_consent"), step: 8,
+      fields: [["Informações verdadeiras", consentTruth], ["Uso dos dados", consentUsage], ["Não envio de senhas", consentNoPasswords]]
+    }
+  ];
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (currentStep !== 8 || !isReviewing) return;
     if (!validateCurrentStep()) return;
 
     setIsSubmitting(true);
@@ -1662,6 +1799,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
 
   // One prompt per screen keeps the flow focused without changing its payload.
   const getAssistantSpeak = () => {
+    if (currentStep === 8 && isReviewing) return t("review_title");
     const questions: Record<number, string[]> = {
       1: ["question_company_identity", "question_company_location", "question_digital_presence", "question_service_language"],
       2: ["question_project_contact", "question_contact_channels", "question_additional_contacts"],
@@ -1813,7 +1951,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                   
                   {currentStep > 0 && currentStep < 9 ? (
                     <div className="mx-auto w-full max-w-3xl space-y-3 border-b border-white/[0.06] pb-6 pt-8 sm:pt-12">
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{steps[currentStep].title}</p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{currentStep === 8 && isReviewing ? t("review_title") : steps[currentStep].title}</p>
                       <h2 id="onboarding-question-title" ref={stepHeadingRef} tabIndex={-1} className="max-w-2xl scroll-mt-24 text-2xl font-semibold leading-snug tracking-tight text-white focus:outline-none sm:text-4xl" aria-live="polite">
                         {getAssistantSpeak()}
                       </h2>
@@ -2899,6 +3037,38 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                           </p>
                         </label>
                       </div>
+                      {isReviewing && (
+                        <div className="space-y-5 border-t border-white/[0.08] pt-6" aria-label={t("review_title")}>
+                          <p className="text-sm leading-relaxed text-zinc-300">{t("review_desc")}</p>
+                          {reviewSections.map((section) => (
+                            <section key={section.title} className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4" aria-label={section.title}>
+                              <div className="mb-3 flex items-center justify-between gap-3">
+                                <h3 className="text-sm font-semibold text-white">{section.title}</h3>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setCurrentStep(section.step);
+                                    setCurrentQuestion(0);
+                                    setCurrentErrors([]);
+                                    setIsReviewing(false);
+                                  }}
+                                  className="min-h-11 rounded-lg px-3 text-xs font-semibold text-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary"
+                                >
+                                  {section.edit}
+                                </button>
+                              </div>
+                              <dl className="grid gap-3 sm:grid-cols-2">
+                                {section.fields.map(([label, value]) => (
+                                  <div key={label} className="min-w-0 border-t border-white/[0.05] pt-2">
+                                    <dt className="text-xs text-zinc-500">{label}</dt>
+                                    <dd className="mt-1 whitespace-pre-wrap break-words text-sm text-zinc-200">{reviewValue(value)}</dd>
+                                  </div>
+                                ))}
+                              </dl>
+                            </section>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -2936,7 +3106,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300">
                             <div className="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-black font-extrabold text-xs"><Check className="w-3 h-3" /></div>
-                            <span>{uiLanguage === "en" ? "Submission received and recorded" : uiLanguage === "es" ? "Envío recibido y registrado" : "Envio recebido e registrado"}</span>
+                            <span>{uiLanguage === "en" ? "Submission recorded by TAG08" : uiLanguage === "es" ? "Envío registrado por TAG08" : "Envio registrado na TAG08"}</span>
                           </div>
                           <div className="flex gap-2.5 items-center text-xs text-zinc-300 animate-pulse">
                             <div className="w-3 h-3 rounded-full bg-amber-400 shrink-0 shadow-[0_0_8px_#fbbf24]" />
@@ -2984,7 +3154,14 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                     <div className="sticky bottom-0 z-10 -mx-5 mt-auto flex items-center justify-between gap-3 border-t border-white/[0.08] bg-charcoal-950 px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 sm:-mx-8 sm:px-8">
                       <button
                         type="button"
-                        onClick={handlePrev}
+                        onClick={() => {
+                          if (currentStep === 8 && isReviewing) {
+                            setIsReviewing(false);
+                            setCurrentErrors([]);
+                            return;
+                          }
+                          handlePrev();
+                        }}
                         className="inline-flex min-h-11 items-center gap-1.5 px-5 py-3 border border-white/[0.08] hover:border-white/[0.18] hover:bg-white/[0.01] rounded-xl text-xs font-sans uppercase tracking-wider text-zinc-300 hover:text-white transition-[background-color,border-color,color] duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/70"
                       >
                         <ArrowLeft className="w-4 h-4" /> {t("btn_back")}
@@ -3005,6 +3182,16 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                         >
                           {t("btn_next")} <ArrowRight className="w-4 h-4" />
                         </button>
+                      ) : !isReviewing ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (validateCurrentStep()) setIsReviewing(true);
+                          }}
+                          className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-brand-secondary px-6 py-3.5 text-xs font-sans font-bold uppercase tracking-widest text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70"
+                        >
+                          {t("btn_review")} <ArrowRight className="h-4 w-4" />
+                        </button>
                       ) : (
                         <button
                           type="submit"
@@ -3018,7 +3205,7 @@ export default function ClienteOnboarding({ onNavigate, locale }: ClienteOnboard
                             </>
                           ) : (
                             <>
-                              {t("btn_submit")} <Send className="w-4 h-4" />
+                              {t("btn_confirm_submit")} <Send className="w-4 h-4" />
                             </>
                           )}
                         </button>

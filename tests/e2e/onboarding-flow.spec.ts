@@ -219,20 +219,47 @@ test("PostgreSQL isolado: resgate explícito, progresso retomável, submissão i
     const consents = page.getByRole("checkbox");
     await expect(consents).toHaveCount(3);
     for (let index = 0; index < 3; index += 1) await consents.nth(index).check();
+    await expect(page.getByRole("button", { name: "Confirmar e enviar" })).toHaveCount(0);
+
+    await page.getByRole("button", { name: "Revisar onboarding" }).click();
+    await expect(page.getByRole("heading", { name: "Revise todas as informações antes de enviar" })).toBeVisible();
+    await expect(page.getByText("TAG08 TESTE SINTÉTICO P1.2F.1", { exact: true })).toBeVisible();
+    await expect(page.getByText("QA Sintético P1.2F.1", { exact: true })).toBeVisible();
+    await expect(page.getByText("Resultado sintético para teste de onboarding.", { exact: true })).toBeVisible();
+    await expect(page.getByText("Gestão de Redes Sociais", { exact: true })).toBeVisible();
+    for (const section of ["Empresa e projeto", "Responsáveis", "Contexto e expectativas", "Serviços contratados", "Briefing por serviço", "Materiais e referências", "Consentimentos"]) {
+      await expect(page.locator(`section[aria-label="${section}"]`)).toBeVisible();
+    }
+    for (const width of [390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      const reviewLayout = await page.evaluate(() => ({
+        scrollWidth: document.documentElement.scrollWidth,
+        innerWidth: window.innerWidth
+      }));
+      expect(reviewLayout.scrollWidth > reviewLayout.innerWidth, `review overflow at ${width}px`).toBe(false);
+    }
+    await page.getByRole("button", { name: "Editar responsáveis" }).click();
+    await expect(page.locator("#onboarding-responsible-name")).toHaveValue("QA Sintético P1.2F.1");
+    await page.locator("#onboarding-responsible-email").fill("revisado-p12f1@example.invalid");
+    for (const steps of [3, 3, 1, 1, 1, 1, 1]) {
+      for (let index = 0; index < steps; index += 1) await next.click();
+    }
+    await page.getByRole("button", { name: "Revisar onboarding" }).click();
+    await expect(page.getByText("revisado-p12f1@example.invalid", { exact: true })).toBeVisible();
 
     const submissionResponsePromise = page.waitForResponse((response) =>
       response.url().includes("/api/onboarding") && response.request().method() === "POST"
     );
-    await page.getByRole("button", { name: "Enviar Onboarding Completo" }).click();
+    await page.getByRole("button", { name: "Confirmar e enviar" }).click();
     const submissionResponse = await submissionResponsePromise;
     const first = { status: submissionResponse.status(), body: await submissionResponse.json() };
     expect(first.status).toBe(202);
-    await expect(page.locator("h2").filter({ hasText: "Informações registradas com sucesso" }).last()).toBeVisible();
-    await expect(page.getByText("Envio recebido e registrado")).toBeVisible();
+    await expect(page.locator("h2").filter({ hasText: "Informações enviadas com sucesso" }).last()).toBeVisible();
+    await expect(page.getByText("Envio registrado na TAG08")).toBeVisible();
     await expect(page.getByText("Notificação enviada à TAG08")).toHaveCount(0);
     for (const width of [390, 768, 1440]) {
       await page.setViewportSize({ width, height: 900 });
-      await expect(page.locator("h2").filter({ hasText: "Informações registradas com sucesso" }).last()).toBeVisible();
+      await expect(page.locator("h2").filter({ hasText: "Informações enviadas com sucesso" }).last()).toBeVisible();
       const layout = await page.evaluate(() => ({
         scrollWidth: document.documentElement.scrollWidth,
         innerWidth: window.innerWidth,
@@ -249,6 +276,7 @@ test("PostgreSQL isolado: resgate explícito, progresso retomável, submissão i
     const submittedPayload = submissionResponse.request().postData();
     expect(idempotencyKey).toBeTruthy();
     expect(submittedPayload).toBeTruthy();
+    expect(JSON.parse(submittedPayload!).projectContacts.email).toBe("revisado-p12f1@example.invalid");
     const replay = await page.evaluate(async ({ idempotencyKey, payload }) => {
       const response = await fetch("/api/onboarding", {
         method: "POST",
@@ -259,7 +287,7 @@ test("PostgreSQL isolado: resgate explícito, progresso retomável, submissão i
     }, { idempotencyKey, payload: submittedPayload! });
     expect(replay.status).toBe(202);
     expect(replay.body.submissionId).toBe(first.body.submissionId);
-    await expect(page.getByRole("button", { name: "Enviar Onboarding Completo" })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Confirmar e enviar" })).toHaveCount(0);
     expect(await prisma.onboardingSubmission.count({ where: { journeyId: created.journeyId } })).toBe(1);
     expect(await prisma.integrationDelivery.count({ where: { aggregateId: first.body.submissionId } })).toBe(2);
     const deliveries = await prisma.integrationDelivery.findMany({
@@ -272,8 +300,8 @@ test("PostgreSQL isolado: resgate explícito, progresso retomável, submissão i
     expect((persistedSubmission.payload as { submissionContext?: { submittedBy?: string } }).submissionContext).toEqual({ submittedBy: "client" });
 
     await page.reload({ waitUntil: "domcontentloaded" });
-    await expect(page.locator("h2").filter({ hasText: "Informações registradas com sucesso" }).last()).toBeVisible();
-    await expect(page.getByText("Envio recebido e registrado")).toBeVisible();
+    await expect(page.locator("h2").filter({ hasText: "Informações enviadas com sucesso" }).last()).toBeVisible();
+    await expect(page.getByText("Envio registrado na TAG08")).toBeVisible();
     await expect(page.getByText("Notificação enviada à TAG08")).toHaveCount(0);
 
     await access.revokeOnboardingAccess(prisma, {
