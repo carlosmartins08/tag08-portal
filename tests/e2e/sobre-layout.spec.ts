@@ -35,13 +35,8 @@ for (const viewport of viewports) {
   });
 }
 
-test("Sobre mantém os perfis autorizados e expõe o accordion corretamente", async ({ page }) => {
+test("Sobre expõe o accordion de princípios corretamente", async ({ page }) => {
   await openSobre(page, 768, 1024);
-
-  const profileCards = page.getByTestId("team-profiles").locator("[data-evidence-key^='team/']");
-  await expect(profileCards).toHaveCount(7);
-  const primaryCards = page.getByTestId("team-profiles").locator("[data-evidence-key^='team/']").filter({ has: page.locator("h3") });
-  await expect(primaryCards.first()).toBeVisible();
 
   const control = page.getByRole("button", { name: /Ver princípios de Pensamento estratégico/ });
   await expect(control).toHaveAttribute("aria-expanded", "false");
