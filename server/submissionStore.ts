@@ -5,6 +5,7 @@ import { getPrisma } from "../src/lib/server/prisma";
 import { hashOpaqueSecret } from "./onboardingAccess";
 import type { ContactLeadInput, TalentApplicationInput } from "./submissionContracts";
 import { buildContactDeliveryPayload, isCommercialContactRequest } from "./integrationDelivery.mjs";
+import { buildOnboardingClickUpDeliveryProjection, buildOnboardingSheetsDeliveryProjection } from "./onboardingDeliveryProjection.mjs";
 import type { OnboardingPayload } from "./onboardingContract";
 import { getPersistenceErrorCode, isPersistenceUnavailable } from "./submissionErrors";
 
@@ -180,8 +181,8 @@ export const persistOnboardingSubmission = async (
     });
     await tx.integrationDelivery.createMany({
       data: [
-        queueDelivery(DeliveryTarget.GOOGLE_SHEETS, "onboarding_submission", id, payload),
-        queueDelivery(DeliveryTarget.CLICKUP, "onboarding_submission", id, payload)
+        queueDelivery(DeliveryTarget.GOOGLE_SHEETS, "onboarding_submission", id, buildOnboardingSheetsDeliveryProjection(payload)),
+        queueDelivery(DeliveryTarget.CLICKUP, "onboarding_submission", id, buildOnboardingClickUpDeliveryProjection(payload))
       ]
     });
     await tx.onboardingJourney.update({

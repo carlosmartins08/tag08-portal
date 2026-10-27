@@ -11,6 +11,10 @@ import {
   unwrapDeliveryPayload
 } from "./integrationDelivery.mjs";
 import {
+  buildOnboardingClickUpDeliveryProjection,
+  buildOnboardingSheetsDeliveryProjection
+} from "./onboardingDeliveryProjection.mjs";
+import {
   buildContactSheetsV1Row,
   buildMinimalSheetsPayloadEnvelope,
   CONTACT_DELIVERY_HEADERS,
@@ -117,7 +121,10 @@ export const appendToGoogleSheets = async (delivery, {
     };
   }
 
-  const payload = unwrapDeliveryPayload(delivery.payload);
+  const unwrappedPayload = unwrapDeliveryPayload(delivery.payload);
+  const payload = delivery.aggregate_type === "onboarding_submission"
+    ? buildOnboardingSheetsDeliveryProjection(unwrappedPayload)
+    : unwrappedPayload;
   const isContact = delivery.aggregate_type === "contact_lead";
   const isTalent = delivery.aggregate_type === "talent_application";
   const range = encodeURIComponent(`${tab}!A:${operationalMode ? lastColumn : isContact ? "P" : "D"}`);
@@ -247,7 +254,10 @@ export const createClickUpTask = async (delivery, {
   apiToken = env.CLICKUP_API_TOKEN,
   fetchImpl = globalThis.fetch
 } = {}) => {
-  const payload = unwrapDeliveryPayload(delivery.payload);
+  const unwrappedPayload = unwrapDeliveryPayload(delivery.payload);
+  const payload = delivery.aggregate_type === "onboarding_submission"
+    ? buildOnboardingClickUpDeliveryProjection(unwrappedPayload)
+    : unwrappedPayload;
   if (delivery.aggregate_type === "contact_lead" && !isCommercialContactRequest(payload.requestType)) {
     throw new IntegrationDeliveryError("clickup_contact_not_pre_sales");
   }

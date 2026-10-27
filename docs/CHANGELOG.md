@@ -5,6 +5,8 @@
 - Added a gated Sheets canonical submission path for Contact and Talent with stable IDs, delivery tracking, and mocked retry/idempotency coverage; external writes remain disabled. Onboarding retains PostgreSQL for its secure access control plane pending a safe replacement decision.
 - Evoluida a candidatura publica ao Banco de Talentos para o contrato v2, com multiplas areas, links profissionais opcionais, perguntas condicionais agrupadas, revisao editavel e preservacao do contrato v1. Os testes de runtime direcionados nao executaram neste ambiente porque o esbuild retornou `spawn EPERM`; TypeScript passou. Nenhuma integracao externa foi ativada.
 
+- Added server-built, destination-specific Onboarding projections to the existing Sheets/ClickUp outbox; sensitive auth fields, browser-prepared projections, and credential-bearing URLs are excluded, including legacy outbox replays. PostgreSQL remains required for secure session and completion state. Synthetic adapter/store tests: 32/32 PASS; TypeScript PASS; isolated build blocked by spawn EPERM. No external writes.
+
 ## 2026-10-19
 
 - Reconciliadas referências documentais após a aposentadoria de documentos históricos: PROJECT_STATE, README e instruções de agentes agora apontam para os mapas atuais de arquitetura, rotas, riscos e ondas. Os 29 arquivos-fonte editoriais ainda referenciados pelo gerador legado não foram restaurados; seu destino permanece pendente.
