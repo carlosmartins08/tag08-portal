@@ -18,7 +18,7 @@ export type ContactJourneyIntent = typeof CONTACT_JOURNEY_INTENTS[number];
 export const CONTACT_JOURNEY_ORIGINS = ["home", "services", "offer", "sebraetec", "partnership-program"] as const;
 export type ContactJourneyOrigin = typeof CONTACT_JOURNEY_ORIGINS[number];
 
-export const CONTACT_JOURNEY_REQUEST_TYPES = ["partnership"] as const;
+export const CONTACT_JOURNEY_REQUEST_TYPES = ["diagnostic", "partnership"] as const;
 export type ContactJourneyRequestType = typeof CONTACT_JOURNEY_REQUEST_TYPES[number];
 
 export type ContactJourneyContext = {

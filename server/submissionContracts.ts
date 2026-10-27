@@ -28,7 +28,7 @@ export const contactLeadSchema = z.object({
   service: boundedText(120),
   stage: boundedText(120),
   // Additive fields: older queued submissions remain valid and receive neutral defaults.
-  requestType: z.enum(["new_project", "existing_client", "partnership", "unspecified"]).optional().default("unspecified"),
+  requestType: z.enum(["new_project", "diagnostic", "existing_client", "partnership", "unspecified"]).optional().default("unspecified"),
   partnershipApplication: z.object({
     version: z.literal(1),
     modality: z.enum(PARTNERSHIP_MODALITY_VALUES)

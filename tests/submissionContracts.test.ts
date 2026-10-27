@@ -105,6 +105,17 @@ test("partnership modality is structured and versioned while legacy partnership 
   }).success, false);
 });
 
+test("diagnostic intent is a distinct backward-compatible Contact request type", () => {
+  const parsed = contactLeadSchema.parse({
+    ...validContact,
+    requestType: "diagnostic",
+    serviceInterests: [],
+    needsServiceGuidance: true
+  });
+  assert.equal(parsed.requestType, "diagnostic");
+  assert.equal(parsed.needsServiceGuidance, true);
+});
+
 test("talent contract requires professional links and consent", () => {
   const parsed = talentApplicationSchema.parse(validTalent);
   assert.equal(parsed.email, "ana@example.com");

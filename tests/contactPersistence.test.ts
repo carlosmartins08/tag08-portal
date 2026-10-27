@@ -232,3 +232,28 @@ test("partnership Contact intake preserves its source in PostgreSQL/outbox witho
     /idempotency_key_conflict/
   );
 });
+
+test("diagnostic Contact intake persists its intention and queues only the existing Sheets mirror", async () => {
+  const { prisma, leads, deliveries } = createFakePrisma();
+  const diagnosticPayload = {
+    ...payload,
+    requestType: "diagnostic" as const,
+    serviceInterests: [],
+    needsServiceGuidance: true,
+    service: "not_sure",
+    source: "contact-page:home"
+  };
+
+  const result = await persistContactLeadWithClient(prisma, diagnosticPayload, "synthetic-diagnostic-intake");
+
+  assert.equal(result.created, true);
+  assert.equal(leads.length, 1);
+  assert.deepEqual(deliveries.map(({ target }) => target), ["GOOGLE_SHEETS"]);
+  assert.equal((leads[0].payload as { requestType: string }).requestType, "diagnostic");
+  const deliveryData = (deliveries[0].payload as { version: number; data: { requestType: string; needsServiceGuidance: boolean; source: string; serviceInterests: string[] } });
+  assert.equal(deliveryData.version, 1);
+  assert.equal(deliveryData.data.requestType, "diagnostic");
+  assert.equal(deliveryData.data.needsServiceGuidance, true);
+  assert.deepEqual(deliveryData.data.serviceInterests, []);
+  assert.equal(deliveryData.data.source, "contact-page:home");
+});

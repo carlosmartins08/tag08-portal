@@ -18,6 +18,11 @@ test("parses only allowlisted intent and origin values", () => {
     requestType: "partnership",
     origin: "partnership-program"
   });
+  assert.deepEqual(parseContactJourneyContext("?requestType=diagnostic&intent=orientacao&origin=home"), {
+    requestType: "diagnostic",
+    intent: "orientacao",
+    origin: "home"
+  });
 });
 
 test("maps approved family pages and independent Sebraetec origin", () => {
@@ -59,7 +64,7 @@ test("adds context only to Contact and drops unapproved query fields", () => {
   );
   assert.equal(
     contextualizeContactTarget("/programa-afiliados", "/contato?requestType=existing_client&campaign=untrusted"),
-    "/contato?origin=partnership-program"
+    "/contato?origin=partnership-program&requestType=partnership"
   );
   assert.equal(contextualizeContactTarget("/", "/servicos?debug=drop-me"), "/servicos");
 });

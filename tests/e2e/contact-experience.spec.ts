@@ -174,6 +174,42 @@ test.describe("experiencia de contato", () => {
     });
   });
 
+  test("Home preserva a orientação como diagnóstico separado de contato comercial", async ({ page }) => {
+    let submittedPayload: Record<string, unknown> | undefined;
+    await page.route("**/api/contact", async (route) => {
+      submittedPayload = route.request().postDataJSON() as Record<string, unknown>;
+      await route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ status: "accepted" }) });
+    });
+
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.getByRole("link", { name: /Ir para contato e solicitar diagn/i }).click();
+    await expect(page).toHaveURL(/\/contato\?intent=orientacao&origin=home$/);
+    const diagnostic = page.getByRole("radio", { name: "Quero orientação para entender o que resolver" });
+    await expect(diagnostic).toBeChecked();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await expect(page.getByRole("checkbox", { name: /Preciso de orientação ou tenho outra necessidade/ })).toBeChecked();
+    await page.getByLabel("Que contexto geral devemos considerar?").fill("Contexto sintético para avaliar uma necessidade.");
+    await page.getByRole("button", { name: "Continuar" }).click();
+
+    await page.getByLabel("Qual o seu nome?").fill("Pessoa Sintética");
+    await page.getByLabel("Nome da Empresa").fill("Empresa Sintética");
+    await page.locator("#form-whatsapp").fill("83999999999");
+    await page.getByLabel("E-mail Corporativo").fill("diagnostico@example.invalid");
+    await expect(page.getByText(/Diagnóstico \/ orientação/)).toBeVisible();
+    await page.getByLabel(/Autorizo o uso destes dados/).check();
+    await page.getByRole("button", { name: "Enviar pedido de orientação" }).click();
+
+    await expect(page.getByRole("heading", { name: "Pedido de orientação enviado" })).toBeVisible();
+    await expect(page.getByText(/somente o envio; não representa diagnóstico concluído nem recomendação automática/)).toBeVisible();
+    expect(submittedPayload).toMatchObject({
+      requestType: "diagnostic",
+      serviceInterests: [],
+      needsServiceGuidance: true,
+      service: "not_sure",
+      source: "contact-page:home"
+    });
+  });
+
   test("inscrição de parceria registra modalidade, permite revisão editável e exige confirmação explícita", async ({ page }) => {
     let submittedPayload: Record<string, unknown> | undefined;
     await page.route("**/api/contact", async (route) => {

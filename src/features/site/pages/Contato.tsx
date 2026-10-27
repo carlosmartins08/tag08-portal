@@ -172,6 +172,8 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   const [partnershipSendConfirmationError, setPartnershipSendConfirmationError] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const isPartnership = formData.requestType === "partnership";
+  const isDiagnostic = formData.requestType === "diagnostic";
+  const collectsServiceContext = formData.requestType === "new_project" || isDiagnostic;
   const finalStep = isPartnership ? 4 : 3;
   const isSubmitStep = activeStep === finalStep;
 
@@ -182,7 +184,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
 
     setFormData((previous) => ({
       ...previous,
-      ...(context.requestType ? { requestType: context.requestType } : {}),
+      ...(context.requestType ? { requestType: context.requestType } : context.intent === "orientacao" ? { requestType: "diagnostic" as const } : {}),
       ...(context.intent ? {
         serviceInterests: context.intent === "orientacao" ? [] : [context.intent],
         needsServiceGuidance: context.intent === "orientacao"
@@ -230,7 +232,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
       setSubmitError("Escolha a modalidade de parceria para continuar.");
       return;
     }
-    if (activeStep === 2 && formData.requestType === "new_project" && !formData.needsServiceGuidance && formData.serviceInterests.length === 0) {
+    if (activeStep === 2 && collectsServiceContext && !formData.needsServiceGuidance && formData.serviceInterests.length === 0) {
       setSubmitError("Selecione ao menos um serviço ou escolha a opção de orientação.");
       return;
     }
@@ -247,11 +249,12 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
       setPartnershipSendConfirmed(false);
       setPartnershipSendConfirmationError(false);
     }
+    const retainsServiceContext = requestType === "new_project" || requestType === "diagnostic";
     setFormData((prev) => ({
       ...prev,
       requestType,
-      serviceInterests: requestType === "new_project" ? prev.serviceInterests : [],
-      needsServiceGuidance: requestType === "new_project" ? prev.needsServiceGuidance : false
+      serviceInterests: retainsServiceContext ? prev.serviceInterests : [],
+      needsServiceGuidance: retainsServiceContext ? prev.needsServiceGuidance : false
     }));
     setSubmitError("");
   };
@@ -307,9 +310,10 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
     const idempotencyKey = crypto.randomUUID();
     const searchParams = new URLSearchParams(window.location.search);
     const isNewProject = formData.requestType === "new_project";
-    const serviceInterests = isNewProject ? formData.serviceInterests : [];
-    const needsServiceGuidance = isNewProject && formData.needsServiceGuidance;
-    const legacyService = !isNewProject
+    const includesServiceContext = isNewProject || isDiagnostic;
+    const serviceInterests = includesServiceContext ? formData.serviceInterests : [];
+    const needsServiceGuidance = includesServiceContext && formData.needsServiceGuidance;
+    const legacyService = !includesServiceContext
       ? "not_applicable"
       : needsServiceGuidance
         ? "not_sure"
@@ -707,8 +711,8 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                     <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" ref={honeypotRef} />
                   </div>
                   {activeStep === 1 && <fieldset className="space-y-3">
-                    <legend className="text-sm font-semibold text-white">Qual é o motivo do seu contato?</legend>
-                    {[["new_project", "Quero iniciar um projeto"], ["existing_client", "Já sou cliente"], ["partnership", "Quero propor uma parceria"]].map(([value, label]) => (
+                    <legend className="text-sm font-semibold text-white">{isDiagnostic ? "O que você deseja resolver?" : "Qual é o motivo do seu contato?"}</legend>
+                    {[["new_project", "Quero iniciar um projeto"], ["diagnostic", "Quero orientação para entender o que resolver"], ["existing_client", "Já sou cliente"], ["partnership", "Quero propor uma parceria"]].map(([value, label]) => (
                       <label key={value} className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-colors ${formData.requestType === value ? "border-brand bg-brand/10 text-white" : "border-white/[0.08] text-zinc-300 hover:border-white/20"}`}>
                         <input type="radio" name="requestType" value={value} checked={formData.requestType === value} onChange={() => handleRequestTypeChange(value as ContactFormData["requestType"])} className="accent-[var(--color-brand)]" />{label}
                       </label>
@@ -828,14 +832,14 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   </div>}
 
                   {activeStep === 2 && <div className="space-y-5">
-                    {formData.requestType === "new_project" && journeyContext.intent && <p className="rounded-lg border border-brand/20 bg-brand/5 px-3 py-2 text-xs leading-relaxed text-zinc-300" role="status">
+                    {collectsServiceContext && journeyContext.intent && <p className="rounded-lg border border-brand/20 bg-brand/5 px-3 py-2 text-xs leading-relaxed text-zinc-300" role="status">
                       Sugestão a partir de {journeyContext.origin ? CONTACT_ORIGIN_LABELS[journeyContext.origin] : "sua escolha"}: <strong className="text-white">{CONTACT_INTENT_CONTEXT_LABELS[journeyContext.intent]}</strong>. Você pode alterar ou complementar abaixo.
                     </p>}
                     {formData.requestType === "new_project" && !journeyContext.intent && journeyContext.origin === "sebraetec" && <p className="rounded-lg border border-white/[0.08] bg-white/[0.02] px-3 py-2 text-xs leading-relaxed text-zinc-300" role="status">
                       Você veio da página do Sebraetec. Registre a necessidade que deseja encaminhar ou escolha outra opção.
                     </p>}
-                    {formData.requestType === "new_project" ? <fieldset className="space-y-3">
-                      <legend className="text-sm font-semibold text-white">Qual necessidade você quer encaminhar? <span className="font-normal text-zinc-400">(pode selecionar mais de uma)</span></legend>
+                    {collectsServiceContext ? <fieldset className="space-y-3">
+                      <legend className="text-sm font-semibold text-white">{isDiagnostic ? "Qual necessidade ou contexto deseja entender?" : "Qual necessidade você quer encaminhar?"} <span className="font-normal text-zinc-400">(pode selecionar mais de uma)</span></legend>
                       <div className="space-y-4">
                         {CONTACT_INTENT_GROUPS.map((group) => (
                           <div key={group.label} role="group" aria-label={group.label} className="space-y-2">
@@ -856,15 +860,15 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                       </label>
                     </fieldset> : <p className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 text-sm leading-relaxed text-zinc-300">{formData.requestType === "existing_client" ? "Conte o que você precisa agora e, se souber, identifique o projeto ou serviço." : "Conte brevemente qual parceria propõe e quem gostaria de envolver."}</p>}
                     <div className="space-y-2">
-                      <label htmlFor="form-message" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">{formData.requestType === "existing_client" ? "O que você precisa agora?" : formData.requestType === "partnership" ? "Qual parceria você propõe?" : "Qual resultado você busca?"} <span className="normal-case">(opcional)</span></label>
+                      <label htmlFor="form-message" className="text-xs tag08-meta text-zinc-400 uppercase tracking-wider">{formData.requestType === "existing_client" ? "O que você precisa agora?" : formData.requestType === "partnership" ? "Qual parceria você propõe?" : isDiagnostic ? "Que contexto geral devemos considerar?" : "Qual resultado você busca?"} <span className="normal-case">(opcional)</span></label>
                       <textarea id="form-message" name="message" value={formData.message} onChange={handleChange} rows={4} maxLength={4000} className="w-full bg-zinc-950 border border-white/[0.08] rounded-lg p-3 text-sm focus:outline-none focus:border-brand text-white resize-y" placeholder="Compartilhe apenas o necessário. Não inclua senhas ou dados confidenciais." />
                     </div>
                   </div>}
 
                   {activeStep === 3 && <>
                     <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 text-sm text-zinc-300">
-                      <p><strong className="text-white">Motivo:</strong> {formData.requestType === "new_project" ? "Novo projeto" : formData.requestType === "existing_client" ? "Cliente atual" : "Parceria"}</p>
-                      {formData.requestType === "new_project" && <p className="mt-1"><strong className="text-white">Frentes:</strong> {formData.needsServiceGuidance ? "Preciso de orientação ou tenho outra necessidade" : formData.serviceInterests.map((service) => CONTACT_SERVICE_LABELS[service] || service).join(", ")}</p>}
+                      <p><strong className="text-white">Motivo:</strong> {isDiagnostic ? "Diagnóstico / orientação" : formData.requestType === "new_project" ? "Novo projeto" : formData.requestType === "existing_client" ? "Cliente atual" : "Parceria"}</p>
+                      {collectsServiceContext && <p className="mt-1"><strong className="text-white">Frentes:</strong> {formData.needsServiceGuidance ? "Preciso de orientação ou tenho outra necessidade" : formData.serviceInterests.map((service) => CONTACT_SERVICE_LABELS[service] || service).join(", ")}</p>}
                     </div>
                     <p className="text-xs text-zinc-400">Confira o motivo e as frentes informados antes de enviar sua solicitação.</p>
                   </>}
@@ -937,7 +941,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         </span>
                       ) : (
                         <span className="flex items-center gap-1.5">
-                          {isPartnership ? "Confirmar e enviar inscrição" : "Enviar solicitação à TAG08"} <ArrowRight className="w-4 h-4" />
+                          {isPartnership ? "Confirmar e enviar inscrição" : isDiagnostic ? "Enviar pedido de orientação" : "Enviar solicitação à TAG08"} <ArrowRight className="w-4 h-4" />
                         </span>
                       )}
                     </button>
@@ -959,10 +963,12 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   </div>
                   
                   <div className="space-y-3 max-w-lg mx-auto">
-                    <h3 className="font-display font-semibold text-2xl text-white">{isPartnership ? "Inscrição enviada" : "Mensagem Enviada!"}</h3>
+                    <h3 className="font-display font-semibold text-2xl text-white">{isPartnership ? "Inscrição enviada" : isDiagnostic ? "Pedido de orientação enviado" : "Mensagem Enviada!"}</h3>
                     <p className="text-zinc-300 text-sm leading-relaxed">
                       {isPartnership
                         ? <>Obrigado, <strong>{formData.name}</strong>. Sua inscrição para <strong>{partnershipModality ? PARTNERSHIP_MODALITY_LABELS[partnershipModality] : "parceria"}</strong> foi enviada com sucesso. Esta confirmação registra somente o envio, sem indicar aprovação ou contratação.</>
+                        : isDiagnostic
+                          ? <>Obrigado, <strong>{formData.name}</strong>. Seu pedido de orientação foi enviado com sucesso. Esta confirmação registra somente o envio; não representa diagnóstico concluído nem recomendação automática.</>
                         : <>Obrigado, <strong>{formData.name}</strong>. Suas informações foram enviadas com sucesso. Se for necessário, a equipe poderá entrar em contato pelos canais informados para entender melhor sua necessidade.</>}
                     </p>
                   </div>
