@@ -101,14 +101,20 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
 
   const handleNextStep = () => {
     if (validateStep(currentStep)) {
+      if (currentStep === 3 && !consent) {
+        setSubmitError("Confirme o consentimento para revisar sua candidatura.");
+        requestAnimationFrame(() => document.getElementById("talent-consent")?.focus());
+        return;
+      }
       setErrors({});
+      setSubmitError("");
       const nextStep = currentStep + 1;
       setCurrentStep(nextStep);
       trackFormStep({
         form_name: "talent_application",
         form_surface: "talent-page",
         step: nextStep,
-        total_steps: 3,
+        total_steps: 4,
         page_path: "/trabalhe-conosco"
       });
     }
@@ -144,11 +150,18 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
     setErrors({});
     setSubmitError("");
 
-    if (!validateStep(3) || !consent) {
-      if (!consent) {
-        setSubmitError("Confirme o consentimento para enviar sua candidatura.");
-        requestAnimationFrame(() => document.getElementById("talent-consent")?.focus());
-      }
+    if (currentStep !== 4) return;
+
+    const invalidStep = [1, 2, 3].find((step) => !validateStep(step));
+    if (invalidStep !== undefined) {
+      setCurrentStep(invalidStep);
+      return;
+    }
+
+    if (!consent) {
+      setCurrentStep(3);
+      setSubmitError("Confirme o consentimento para enviar sua candidatura.");
+      requestAnimationFrame(() => document.getElementById("talent-consent")?.focus());
       trackFormSubmit({
         form_name: "talent_application",
         form_surface: "talent-page",
@@ -691,26 +704,28 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                 {/* Visual Step Progress Indicator */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    {[1, 2, 3].map((step) => (
+                    {[1, 2, 3, 4].map((step) => (
                       <React.Fragment key={step}>
                         <button
                           type="button"
                           onClick={() => {
-                            // Let users go back to previous steps by clicking on the indicator if validated
                             if (step < currentStep) {
                               setCurrentStep(step);
-                            } else if (step > currentStep) {
-                              // If they try to skip ahead, validate step by step
-                              if (currentStep === 1 && validateStep(1)) {
-                                if (step === 3 && validateStep(2)) {
-                                  setCurrentStep(3);
-                                } else if (step === 2) {
-                                  setCurrentStep(2);
-                                }
-                              } else if (currentStep === 2 && validateStep(2) && step === 3) {
-                                setCurrentStep(3);
+                              setErrors({});
+                              return;
+                            }
+
+                            for (let stepToValidate = currentStep; stepToValidate < step; stepToValidate += 1) {
+                              if (!validateStep(stepToValidate)) return;
+                              if (stepToValidate === 3 && !consent) {
+                                setSubmitError("Confirme o consentimento para revisar sua candidatura.");
+                                requestAnimationFrame(() => document.getElementById("talent-consent")?.focus());
+                                return;
                               }
                             }
+
+                            setSubmitError("");
+                            setCurrentStep(step);
                           }}
                           aria-current={currentStep === step ? "step" : undefined}
                           aria-label={`Ir para a etapa ${step}${currentStep === step ? ", etapa atual" : ""}`}
@@ -724,7 +739,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         >
                           {currentStep > step ? <CheckCircle2 className="w-4 h-4 stroke-[2.5]" /> : step}
                         </button>
-                        {step < 3 && (
+                        {step < 4 && (
                           <div className="flex-1 h-0.5 rounded-full overflow-hidden bg-zinc-200">
                             <motion.div 
                               className="h-full bg-green-600"
@@ -741,17 +756,19 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                   {/* Header text containing dynamic personalization */}
                   <div className="space-y-1 text-left">
                     <span className="tag08-meta text-xs text-brand bg-black px-2 py-0.5 rounded font-black uppercase tracking-widest inline-block">
-                      ETAPA {currentStep} DE 3 · {currentStep === 1 ? "DADOS PESSOAIS" : currentStep === 2 ? "LINKS PROFISSIONAIS" : "APRESENTAÇÃO & EVIDÊNCIAS"}
+                      ETAPA {currentStep} DE 4 · {currentStep === 1 ? "DADOS PESSOAIS" : currentStep === 2 ? "LINKS PROFISSIONAIS" : currentStep === 3 ? "APRESENTAÇÃO & EVIDÊNCIAS" : "REVISÃO FINAL"}
                     </span>
                     <h2 ref={stepHeadingRef} tabIndex={-1} className="font-display font-black text-2xl text-zinc-900 tracking-tight focus:outline-none">
-                      {currentStep === 1 ? "Identificação Primária" : currentStep === 2 ? "Presença na Web" : "Ficha & Conquistas"}
+                      {currentStep === 1 ? "Identificação Primária" : currentStep === 2 ? "Presença na Web" : currentStep === 3 ? "Ficha & Conquistas" : "Revise sua candidatura"}
                     </h2>
                     <p className="text-zinc-700 text-xs">
                       {currentStep === 1 
                         ? "Apresente sua trajetória para integrar o Banco de Talentos da TAG08."
-                        : currentStep === 2 
+                        : currentStep === 2
                           ? `Excelente, ${formName.split(" ")[0]}! Agora, compartilhe os links onde seu trabalho é exposto.`
-                          : `Quase lá! Para finalizar, compartilhe uma apresentação profissional e seus principais cases.`}
+                          : currentStep === 3
+                            ? `Quase lá! Para finalizar, compartilhe uma apresentação profissional e seus principais cases.`
+                            : "Confira seus dados e edite qualquer etapa antes do envio."}
                     </p>
                   </div>
                 </div>
@@ -961,6 +978,51 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       </motion.div>
                     )}
 
+                    {currentStep === 4 && (
+                      <motion.div
+                        key="step-4"
+                        initial={{ opacity: 0, x: -15 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 15 }}
+                        transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
+                        className="space-y-4"
+                        data-testid="talent-application-review"
+                      >
+                        {submitError ? <p role="alert" className="text-xs text-red-600">{submitError}</p> : null}
+                        <div className="rounded-2xl border border-zinc-200 bg-white p-4 text-left">
+                          <div className="flex items-center justify-between gap-3">
+                            <h3 className="font-display text-lg font-bold text-zinc-900">Dados pessoais</h3>
+                            <button type="button" onClick={() => setCurrentStep(1)} className="min-h-11 rounded-lg px-3 text-xs font-bold text-zinc-700 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand" aria-label="Editar dados pessoais">Editar</button>
+                          </div>
+                          <dl className="mt-2 grid gap-2 text-xs text-zinc-700 sm:grid-cols-2">
+                            <div><dt className="font-bold">Nome</dt><dd>{formName}</dd></div>
+                            <div><dt className="font-bold">E-mail</dt><dd>{formEmail}</dd></div>
+                            <div><dt className="font-bold">Telefone</dt><dd>{formPhone}</dd></div>
+                          </dl>
+                        </div>
+
+                        <div className="rounded-2xl border border-zinc-200 bg-white p-4 text-left">
+                          <div className="flex items-center justify-between gap-3">
+                            <h3 className="font-display text-lg font-bold text-zinc-900">Links profissionais</h3>
+                            <button type="button" onClick={() => setCurrentStep(2)} className="min-h-11 rounded-lg px-3 text-xs font-bold text-zinc-700 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand" aria-label="Editar links profissionais">Editar</button>
+                          </div>
+                          <dl className="mt-2 grid gap-2 text-xs text-zinc-700">
+                            <div><dt className="font-bold">LinkedIn</dt><dd className="break-all">{formLinkedin}</dd></div>
+                            {formPortfolio.trim() ? <div><dt className="font-bold">Portfólio</dt><dd className="break-all">{formPortfolio}</dd></div> : null}
+                          </dl>
+                        </div>
+
+                        <div className="rounded-2xl border border-zinc-200 bg-white p-4 text-left">
+                          <div className="flex items-center justify-between gap-3">
+                            <h3 className="font-display text-lg font-bold text-zinc-900">Apresentação</h3>
+                            <button type="button" onClick={() => setCurrentStep(3)} className="min-h-11 rounded-lg px-3 text-xs font-bold text-zinc-700 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand" aria-label="Editar apresentação">Editar</button>
+                          </div>
+                          <p className="mt-2 whitespace-pre-wrap text-xs text-zinc-700">{formCoverLetter}</p>
+                          <p className="mt-3 text-xs text-zinc-600">Consentimento para consideração em oportunidades futuras: confirmado.</p>
+                        </div>
+                      </motion.div>
+                    )}
+
                   </AnimatePresence>
                 </form>
 
@@ -983,13 +1045,13 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     </button>
                   )}
                   
-                  {currentStep < 3 ? (
+                  {currentStep < 4 ? (
                     <button
                       type="button"
                       onClick={handleNextStep}
                       className="inline-flex min-h-11 w-full sm:w-auto items-center justify-center gap-1.5 px-6 py-3 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-[background-color] duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
                     >
-                      Continuar <ArrowRight className="w-3.5 h-3.5 text-brand" />
+                      {currentStep === 3 ? "Revisar candidatura" : "Continuar"} <ArrowRight className="w-3.5 h-3.5 text-brand" />
                     </button>
                   ) : (
                     <button
@@ -998,7 +1060,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       disabled={submitting}
                       className="inline-flex min-h-11 w-full sm:w-auto items-center justify-center gap-1.5 px-6 py-3 bg-brand hover:bg-brand-dark disabled:hover:bg-brand text-black font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-[background-color,box-shadow] duration-200 shadow-[0_4px_12px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      {submitting ? "Enviando..." : "Enviar Candidatura"} <Send className="w-3.5 h-3.5 shrink-0" />
+                      {submitting ? "Enviando..." : "Enviar informações"} <Send className="w-3.5 h-3.5 shrink-0" />
                     </button>
                   )}
                 </div>
@@ -1012,15 +1074,16 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     className="absolute inset-0 bg-white/95 backdrop-blur-xs flex flex-col items-center justify-center text-center p-6 z-30"
+                    data-testid="talent-application-success"
                   >
                     <div className="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center mb-5 border border-green-200">
                       <CheckCircle2 className="w-8 h-8" />
                     </div>
                     <h3 className="font-display font-black text-xl text-zinc-900 tracking-tight">
-                      Candidatura Recebida!
+                      Candidatura enviada!
                     </h3>
                     <p className="text-zinc-700 text-xs sm:text-sm mt-2 max-w-sm leading-relaxed">
-                      Recebemos e registramos sua candidatura no Banco de Talentos da TAG08. Seu perfil poderá ser considerado em oportunidades futuras, sem garantia de contato ou contratação.
+                      Agradecemos seu interesse em fazer parte da TAG08. Suas informações foram enviadas com sucesso e poderão ser consideradas em oportunidades futuras compatíveis. Caso exista interesse em avançar, poderemos entrar em contato pelos canais informados.
                     </p>
                     
                     <div className="mt-6 flex flex-wrap justify-center gap-3">

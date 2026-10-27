@@ -658,9 +658,27 @@ test.describe("regressões de responsividade e movimento", () => {
     await page.getByRole("button", { name: /Continuar/ }).click();
     await page.getByLabel("Diferencial & Foco em Resultados *").fill("Experiência sintética para validar a candidatura ao banco de talentos.");
     await page.getByRole("checkbox").check();
-    await page.getByRole("button", { name: /Enviar Candidatura/ }).click();
+    await page.getByRole("button", { name: "Revisar candidatura" }).click();
 
-    await expect(page.getByText(/Recebemos e registramos sua candidatura no Banco de Talentos/)).toBeVisible();
+    const review = page.getByTestId("talent-application-review");
+    await expect(review).toBeVisible();
+    await expect(review).toContainText("Pessoa Sintética QA");
+    await expect(review).toContainText("qa@example.test");
+    await expect(review).toContainText("Experiência sintética para validar a candidatura ao banco de talentos.");
+    expect(submittedPayload).toBeUndefined();
+
+    await page.getByRole("button", { name: "Editar dados pessoais" }).click();
+    await expect(page.getByLabel("Nome Completo *")).toHaveValue("Pessoa Sintética QA");
+    await page.getByRole("button", { name: /Continuar/ }).click();
+    await expect(page.getByLabel("Perfil do LinkedIn *")).toHaveValue("https://www.linkedin.com/in/pessoa-sintetica");
+    await page.getByRole("button", { name: /Continuar/ }).click();
+    await expect(page.getByLabel("Diferencial & Foco em Resultados *")).toHaveValue("Experiência sintética para validar a candidatura ao banco de talentos.");
+    await page.getByRole("button", { name: "Revisar candidatura" }).click();
+    await page.getByRole("button", { name: "Enviar informações" }).click();
+
+    const success = page.getByTestId("talent-application-success");
+    await expect(success).toContainText(/Suas informações foram enviadas com sucesso/);
+    await expect(success).not.toContainText(/Recebemos|leitura humana|triagem concluída|contratação garantida/i);
     expect(submittedPayload).toMatchObject({
       vacancyId: "espontanea",
       vacancyTitle: "Banco de Talentos / Candidatura Espontânea",
