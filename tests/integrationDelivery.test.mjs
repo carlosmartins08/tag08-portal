@@ -234,6 +234,50 @@ test("Contact staging ClickUp task is explicitly created in the existing open st
   assert.equal(CONTACT_STAGING_CLICKUP_INITIAL_STATUS, "em aberto \u{1F9E0}");
 });
 
+test("Talent staging delivery uses the approved shared staging list and preserves multiple areas without sensitive extras", async () => {
+  let createRequest;
+  const delivery = {
+    id: "delivery-synthetic-talent-stage",
+    aggregate_id: "record-synthetic-talent-stage",
+    aggregate_type: "talent_application",
+    payload: { version: 1, data: {
+      contractVersion: 2,
+      interestAreas: ["design", "technology_development"],
+      name: "Synthetic Talent",
+      email: "talent@synthetic.invalid",
+      phone: "+5500000000000",
+      experienceSummary: "Synthetic experience",
+      relevantProjects: "Synthetic project",
+      relevantExperience: "",
+      motivation: "Must not be shared to ClickUp",
+      availability: "Must not be shared to ClickUp",
+      linkedin: "https://linkedin.com/in/synthetic",
+      portfolio: "https://portfolio.synthetic.invalid",
+      consent: true,
+      source: "synthetic"
+    } }
+  };
+  const env = {
+    CLICKUP_TALENT_LIST_ID: CONTACT_STAGING_CLICKUP_LIST_ID,
+    CLICKUP_API_TOKEN: "synthetic-token"
+  };
+  const fetchImpl = async (url, init = {}) => {
+    if (!init.method) return new Response(JSON.stringify({ tasks: [] }), { status: 200 });
+    createRequest = { url: String(url), body: JSON.parse(init.body) };
+    return new Response(JSON.stringify({ id: "synthetic-talent-staging-task" }), { status: 200 });
+  };
+
+  await createClickUpTask(delivery, { env, fetchImpl });
+  assert.match(createRequest.url, /list\/901327894264\/task/);
+  assert.match(createRequest.body.name, /^TAG08 Talent record-synthetic-talent-stage$/);
+  assert.match(createRequest.body.description, /design, technology_development/);
+  assert.equal(createRequest.body.description.includes("Must not be shared"), false);
+  assert.equal(createRequest.body.description.includes("linkedin.com"), false);
+  assert.equal(createRequest.body.description.includes("portfolio.synthetic"), false);
+  assert.equal(Object.hasOwn(createRequest.body, "status"), false);
+  assert.deepEqual(createRequest.body.tags, ["tag08", "talent_application"]);
+});
+
 test("ClickUp network failure after create request is classified as an uncertain outcome", async () => {
   let createAttempted = false;
   const delivery = {
