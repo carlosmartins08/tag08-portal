@@ -1,5 +1,6 @@
 import { contactIdempotencyKeySchema, contactLeadSchema } from "./submissionContracts";
-import { getPersistenceErrorCode, isPersistenceUnavailable, persistContactLead } from "./submissionStore";
+import { getPersistenceErrorCode, isPersistenceUnavailable } from "./submissionErrors";
+import { persistContactLeadToSheets } from "./operationalSubmissionStore.mjs";
 import {
   CONTACT_REQUEST_MAX_BYTES,
   createRequestId,
@@ -8,9 +9,9 @@ import {
   readJsonBody
 } from "../src/lib/api/response";
 
-type ContactPersist = typeof persistContactLead;
+type ContactPersist = typeof persistContactLeadToSheets;
 
-export const createContactPostHandler = (persist: ContactPersist = persistContactLead) => async (request: Request) => {
+export const createContactPostHandler = (persist: ContactPersist = persistContactLeadToSheets) => async (request: Request) => {
   const requestId = createRequestId();
   const body = await readJsonBody(request, CONTACT_REQUEST_MAX_BYTES);
   if (body.ok === false) {
@@ -33,12 +34,19 @@ export const createContactPostHandler = (persist: ContactPersist = persistContac
 
   try {
     const result = await persist(parsed.data, parsedIdempotencyKey.data);
-    return jsonResponse({ ok: true, leadId: result.id, status: "accepted", replayed: !result.created, requestId }, 202, request);
+    return jsonResponse({
+      ok: true,
+      leadId: result.id,
+      status: "accepted",
+      replayed: !result.created,
+      ...(result.clickUpStatus ? { deliveryStatus: { sheets: "delivered", sheetsRowReference: result.sheetsRowReference, clickUp: result.clickUpStatus } } : {}),
+      requestId
+    }, 202, request);
   } catch (error) {
     if (error instanceof Error && error.message === "idempotency_key_conflict") {
       return jsonResponse({ ok: false, error: "idempotency_key_conflict", requestId }, 409, request);
     }
-    if (isPersistenceUnavailable(error)) {
+    if (isPersistenceUnavailable(error) || (error && typeof error === "object" && "code" in error && /^(google_|submission_)/.test(String(error.code)))) {
       console.error(JSON.stringify({ event: "contact_persistence_unavailable", requestId, error: getPersistenceErrorCode(error) }));
       return jsonResponse({ ok: false, error: "persistence_unavailable", requestId }, 503, request);
     }

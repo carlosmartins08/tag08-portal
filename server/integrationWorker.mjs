@@ -1,18 +1,18 @@
-import { createSign } from "node:crypto";
 import pg from "pg";
 import {
   getDeliveryFailure,
   IntegrationDeliveryError,
-  integrationHttpError,
   MAX_AUTOMATIC_DELIVERY_ATTEMPTS,
   TERMINAL_RETRY_AT,
 } from "./integrationDelivery.mjs";
 import { appendToGoogleSheets, createClickUpTask } from "./integrationAdapters.mjs";
+import { getGoogleSheetsAccessToken } from "./googleSheetsAuth.mjs";
 
 const { Pool } = pg;
 const MAX_BATCH_SIZE = 20;
 const PROCESSING_LEASE_SECONDS = Number.parseInt(process.env.INTEGRATION_PROCESSING_LEASE_SECONDS || "900", 10);
 const DELIVERY_ID_FILTER = process.env.INTEGRATION_DELIVERY_ID?.trim() || null;
+const SHEETS_CANONICAL_SUBMISSIONS_ENABLED = process.env.SUBMISSIONS_ENABLED === "true";
 const MOCK_INTEGRATION_MODE = process.env.INTEGRATION_MOCK_MODE === "true";
 const MOCK_INTEGRATION_FAILURE = process.env.INTEGRATION_MOCK_FAILURE?.trim() || null;
 
@@ -39,56 +39,15 @@ const pool = new Pool({
   ssl: process.env.DATABASE_SSL === "true" ? { rejectUnauthorized: false } : undefined
 });
 
-const toBase64Url = (value) => Buffer.from(value).toString("base64url");
 const logEvent = (event, details = {}) => console.log(JSON.stringify({ event, ...details }));
 const safeErrorCode = (error) => {
   const code = error && typeof error === "object" && "code" in error ? error.code : error instanceof Error ? error.message : "integration_delivery_failed";
   return /^[a-z0-9_]+$/i.test(code) ? code : "integration_delivery_failed";
 };
 
-const getGoogleAccessToken = async () => {
-  let serviceAccount;
-  try {
-    serviceAccount = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON || "{}");
-  } catch {
-    throw new IntegrationDeliveryError("google_service_account_invalid");
-  }
-  if (!serviceAccount.client_email || !serviceAccount.private_key) {
-    throw new IntegrationDeliveryError("google_service_account_not_configured");
-  }
-  const privateKey = String(serviceAccount.private_key).replace(/\\n/g, "\n");
-
-  const now = Math.floor(Date.now() / 1000);
-  const unsignedToken = `${toBase64Url(JSON.stringify({ alg: "RS256", typ: "JWT" }))}.${toBase64Url(JSON.stringify({
-    iss: serviceAccount.client_email,
-    scope: "https://www.googleapis.com/auth/spreadsheets",
-    aud: "https://oauth2.googleapis.com/token",
-    iat: now,
-    exp: now + 3600
-  }))}`;
-  const signer = createSign("RSA-SHA256");
-  signer.update(unsignedToken);
-  const assertion = `${unsignedToken}.${signer.sign(privateKey, "base64url")}`;
-  const response = await fetch("https://oauth2.googleapis.com/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    signal: AbortSignal.timeout(15000),
-    body: new URLSearchParams({
-      grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
-      assertion
-    })
-  });
-  if (!response.ok) throw integrationHttpError("google_token_exchange_failed", response.status);
-  const tokenResponse = await response.json().catch(() => null);
-  if (!tokenResponse || typeof tokenResponse.access_token !== "string" || !tokenResponse.access_token) {
-    throw new IntegrationDeliveryError("google_token_response_invalid");
-  }
-  return tokenResponse.access_token;
-};
-
 const appendToSheet = async (delivery) => {
   if (!process.env.GOOGLE_SHEETS_SPREADSHEET_ID) throw new IntegrationDeliveryError("google_sheets_not_configured");
-  const token = await getGoogleAccessToken();
+  const token = await getGoogleSheetsAccessToken();
   return appendToGoogleSheets(delivery, {
     spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
     accessToken: token
@@ -113,6 +72,7 @@ const claimDeliveries = async (client, targets) => {
         AND attempts < $4
       AND target = ANY($2::"DeliveryTarget"[])
       AND ($3::text IS NULL OR id = $3)
+      AND ($5::boolean = FALSE OR aggregate_type = 'onboarding_submission')
       ORDER BY created_at
       LIMIT $1
       FOR UPDATE SKIP LOCKED
@@ -122,7 +82,7 @@ const claimDeliveries = async (client, targets) => {
     FROM candidates
     WHERE d.id = candidates.id
     RETURNING d.*`,
-    [MAX_BATCH_SIZE, targets, DELIVERY_ID_FILTER, MAX_AUTOMATIC_DELIVERY_ATTEMPTS]
+    [MAX_BATCH_SIZE, targets, DELIVERY_ID_FILTER, MAX_AUTOMATIC_DELIVERY_ATTEMPTS, SHEETS_CANONICAL_SUBMISSIONS_ENABLED]
   );
   return result.rows;
 };
@@ -136,8 +96,9 @@ const reclaimStalledDeliveries = (client, targets) =>
        AND processing_started_at < NOW() - ($1 * INTERVAL '1 second')
        AND target = ANY($2::"DeliveryTarget"[])
        AND ($3::text IS NULL OR id = $3)
+       AND ($4::boolean = FALSE OR aggregate_type = 'onboarding_submission')
      RETURNING id, target, aggregate_type`,
-    [PROCESSING_LEASE_SECONDS, targets, DELIVERY_ID_FILTER]
+    [PROCESSING_LEASE_SECONDS, targets, DELIVERY_ID_FILTER, SHEETS_CANONICAL_SUBMISSIONS_ENABLED]
   );
 
 const markDelivered = (client, id, externalReference) =>

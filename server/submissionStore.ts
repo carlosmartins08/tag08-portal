@@ -4,8 +4,9 @@ import { DeliveryStatus, DeliveryTarget, SubmissionStatus } from "../src/generat
 import { getPrisma } from "../src/lib/server/prisma";
 import { hashOpaqueSecret } from "./onboardingAccess";
 import type { ContactLeadInput, TalentApplicationInput } from "./submissionContracts";
-import { isCommercialContactRequest } from "./integrationDelivery.mjs";
+import { buildContactDeliveryPayload, isCommercialContactRequest } from "./integrationDelivery.mjs";
 import type { OnboardingPayload } from "./onboardingContract";
+import { getPersistenceErrorCode, isPersistenceUnavailable } from "./submissionErrors";
 
 const RETENTION_MONTHS = 12;
 
@@ -40,23 +41,7 @@ const assertSameTalentRequest = (existing: { id: string; payload: unknown }, pay
 const isUniqueConstraintError = (error: unknown) =>
   Boolean(error && typeof error === "object" && "code" in error && error.code === "P2002");
 
-export const buildContactDeliveryPayload = (payload: ContactLeadInput) => ({
-  name: payload.name,
-  company: payload.company,
-  whatsapp: payload.whatsapp,
-  email: payload.email,
-  service: payload.service,
-  stage: payload.stage,
-  requestType: payload.requestType,
-  ...(payload.partnershipApplication ? { partnershipApplication: payload.partnershipApplication } : {}),
-  serviceInterests: payload.serviceInterests,
-  needsServiceGuidance: payload.needsServiceGuidance,
-  message: payload.message,
-  consentVersion: payload.consentVersion,
-  locale: payload.locale,
-  source: payload.source,
-  utm: payload.utm
-});
+export { buildContactDeliveryPayload };
 
 export const persistContactLeadWithClient = async (
   prisma: ReturnType<typeof getPrisma>,
@@ -210,16 +195,7 @@ export const persistOnboardingSubmission = async (
   }, { isolationLevel: "Serializable" });
 };
 
-export const isPersistenceUnavailable = (error: unknown) =>
-  error instanceof Error && error.message === "persistence_unavailable";
-
-export const getPersistenceErrorCode = (error: unknown) => {
-  if (isPersistenceUnavailable(error)) return "database_configuration_unavailable";
-  if (error && typeof error === "object" && "code" in error && typeof error.code === "string" && /^P\d{4}$/.test(error.code)) return error.code;
-  if (error instanceof Error && ["onboarding_session_invalid", "onboarding_already_completed", "idempotency_key_conflict"].includes(error.message)) return error.message;
-  if (error instanceof Error) return error.name || "database_operation_failed";
-  return "database_operation_failed";
-};
+export { getPersistenceErrorCode, isPersistenceUnavailable };
 
 export const getOperationalMetrics = async () => {
   const prisma = getPrisma();

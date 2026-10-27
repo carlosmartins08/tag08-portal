@@ -1,5 +1,6 @@
 import { talentApplicationSchema } from "./submissionContracts";
-import { isPersistenceUnavailable, persistTalentApplication } from "./submissionStore";
+import { isPersistenceUnavailable } from "./submissionErrors";
+import { persistTalentApplicationToSheets } from "./operationalSubmissionStore.mjs";
 import {
   CONTACT_REQUEST_MAX_BYTES,
   createRequestId,
@@ -8,9 +9,9 @@ import {
   readJsonBody
 } from "../src/lib/api/response";
 
-type TalentPersist = typeof persistTalentApplication;
+type TalentPersist = typeof persistTalentApplicationToSheets;
 
-export const createTalentApplicationPostHandler = (persist: TalentPersist = persistTalentApplication) => async (request: Request) => {
+export const createTalentApplicationPostHandler = (persist: TalentPersist = persistTalentApplicationToSheets) => async (request: Request) => {
   const requestId = createRequestId();
   const body = await readJsonBody(request, CONTACT_REQUEST_MAX_BYTES);
   if (body.ok === false) {
@@ -29,12 +30,19 @@ export const createTalentApplicationPostHandler = (persist: TalentPersist = pers
   try {
     const idempotencyKey = request.headers.get("idempotency-key") || requestId;
     const result = await persist(parsed.data, idempotencyKey);
-    return jsonResponse({ ok: true, applicationId: result.id, status: "accepted", replayed: !result.created, requestId }, 202, request);
+    return jsonResponse({
+      ok: true,
+      applicationId: result.id,
+      status: "accepted",
+      replayed: !result.created,
+      ...(result.clickUpStatus ? { deliveryStatus: { sheets: "delivered", sheetsRowReference: result.sheetsRowReference, clickUp: result.clickUpStatus } } : {}),
+      requestId
+    }, 202, request);
   } catch (error) {
     if (error instanceof Error && error.message === "idempotency_key_conflict") {
       return jsonResponse({ ok: false, error: "idempotency_key_conflict", requestId }, 409, request);
     }
-    if (isPersistenceUnavailable(error)) {
+    if (isPersistenceUnavailable(error) || (error && typeof error === "object" && "code" in error && /^(google_|submission_)/.test(String(error.code)))) {
       return jsonResponse({ ok: false, error: "persistence_unavailable", requestId }, 503, request);
     }
 

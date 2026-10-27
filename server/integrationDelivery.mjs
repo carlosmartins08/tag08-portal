@@ -59,6 +59,24 @@ export const resolveClickUpListId = (aggregateType, env) => {
 
 export const isCommercialContactRequest = (requestType) => requestType === "new_project";
 
+export const buildContactDeliveryPayload = (payload) => ({
+  name: payload.name,
+  company: payload.company,
+  whatsapp: payload.whatsapp,
+  email: payload.email,
+  service: payload.service,
+  stage: payload.stage,
+  requestType: payload.requestType,
+  ...(payload.partnershipApplication ? { partnershipApplication: payload.partnershipApplication } : {}),
+  serviceInterests: payload.serviceInterests,
+  needsServiceGuidance: payload.needsServiceGuidance,
+  message: payload.message,
+  consentVersion: payload.consentVersion,
+  locale: payload.locale,
+  source: payload.source,
+  utm: payload.utm
+});
+
 const plain = (value) => typeof value === "string" && value.trim() ? value.trim() : "—";
 
 export const buildContactClickUpTask = (delivery, payload) => {

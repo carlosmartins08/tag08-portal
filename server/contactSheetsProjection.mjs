@@ -24,6 +24,42 @@ export const CONTACT_SHEETS_V1_HEADERS = Object.freeze([
   "utm_json"
 ]);
 
+export const CONTACT_DELIVERY_HEADERS = Object.freeze([
+  "sheets_row_reference",
+  "clickup_status",
+  "clickup_task_id",
+  "clickup_attempts",
+  "clickup_last_error_code",
+  "sheets_status",
+  "updated_at"
+]);
+
+export const TALENT_SHEETS_V1_HEADERS = Object.freeze([
+  "projection_version",
+  "name",
+  "email",
+  "phone",
+  "interest_areas_json",
+  "other_specialty",
+  "experience_summary",
+  "availability",
+  "motivation",
+  "relevant_projects",
+  "relevant_experience",
+  "source",
+  "locale"
+]);
+
+export const TALENT_DELIVERY_HEADERS = Object.freeze([
+  "sheets_row_reference",
+  "clickup_status",
+  "clickup_task_id",
+  "clickup_attempts",
+  "clickup_last_error_code",
+  "sheets_status",
+  "updated_at"
+]);
+
 const isRecord = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
 const cell = (value) => value === null || value === undefined ? "" : value;
 const jsonCell = (value) => value === null || value === undefined ? "" : JSON.stringify(value);
@@ -64,5 +100,27 @@ export const buildContactSheetsV1Row = (delivery, payload) => {
     delivery.created_at,
     JSON.stringify(payload),
     ...projection
+  ];
+};
+
+/** Versioned, structured Talentos projection. The legacy A:D envelope is assembled by the adapter. */
+export const buildTalentSheetsV1Projection = (payload) => {
+  if (!isRecord(payload)) throw new TypeError("talent_sheet_payload_invalid");
+  const isV2 = payload.contractVersion === 2;
+  const areas = isV2 && Array.isArray(payload.interestAreas) ? payload.interestAreas : [];
+  return [
+    1,
+    cell(payload.name),
+    cell(payload.email),
+    cell(payload.phone),
+    jsonCell(areas),
+    cell(payload.otherSpecialty),
+    cell(payload.experienceSummary),
+    cell(payload.availability),
+    cell(payload.motivation),
+    cell(payload.relevantProjects),
+    cell(payload.relevantExperience),
+    cell(payload.source),
+    cell(payload.locale)
   ];
 };
