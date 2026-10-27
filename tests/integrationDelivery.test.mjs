@@ -9,6 +9,7 @@ import {
   resolveClickUpListId,
   unwrapDeliveryPayload
 } from "../server/integrationDelivery.mjs";
+import { appendToGoogleSheets, createClickUpTask } from "../server/integrationAdapters.mjs";
 
 test("contact routes to approved Pre-venda list without changing other aggregate lists", () => {
   const env = {
@@ -69,4 +70,140 @@ test("failure codes never expose arbitrary error text or personal data", () => {
   const failure = getDeliveryFailure(new Error("request from Maria Silva maria@example.test failed"), 1);
   assert.equal(failure.code, "integration_delivery_failed");
   assert.equal(failure.code.includes("maria@example.test"), false);
+});
+
+test("Contact Sheets adapter appends the structured A:P row and deduplicates by column A", async () => {
+  const requests = [];
+  const rows = [];
+  const delivery = {
+    id: "delivery-synthetic-contact",
+    aggregate_id: "record-synthetic-contact",
+    aggregate_type: "contact_lead",
+    created_at: "2026-10-26T12:00:00.000Z",
+    payload: { version: 1, data: { name: "Synthetic", requestType: "new_project", serviceInterests: [], utm: {} } }
+  };
+  const fetchImpl = async (url, init = {}) => {
+    requests.push({ url: String(url), init });
+    if (!init.method) {
+      return new Response(JSON.stringify({
+        range: rows.length ? `Leads!A2:A${rows.length + 1}` : "Leads!A1:A1",
+        values: rows.map((row) => [row[0]])
+      }), { status: 200 });
+    }
+    const body = JSON.parse(init.body);
+    rows.push(body.values[0]);
+    return new Response(JSON.stringify({ updates: { updatedRange: `Leads!A${rows.length + 1}:P${rows.length + 1}` } }), { status: 200 });
+  };
+
+  const firstReference = await appendToGoogleSheets(delivery, {
+    spreadsheetId: "synthetic-spreadsheet-id",
+    accessToken: "synthetic-token",
+    fetchImpl
+  });
+  const duplicateReference = await appendToGoogleSheets(delivery, {
+    spreadsheetId: "synthetic-spreadsheet-id",
+    accessToken: "synthetic-token",
+    fetchImpl
+  });
+
+  assert.equal(firstReference, "Leads!A2:P2");
+  assert.equal(duplicateReference, "Leads!A2:D2");
+  assert.equal(requests.filter(({ init }) => init.method === "POST").length, 1);
+  assert.match(requests.find(({ init }) => init.method === "POST").url, /Leads!A%3AP/);
+  assert.equal(rows[0].length, 16);
+  assert.equal(rows[0][0], delivery.id);
+  assert.equal(rows[0][4], 1);
+});
+
+test("non-Contact Sheets deliveries keep the existing A:D envelope", async () => {
+  let appended;
+  const delivery = {
+    id: "delivery-synthetic-talent",
+    aggregate_id: "record-synthetic-talent",
+    aggregate_type: "talent_application",
+    created_at: "2026-10-26T12:00:00.000Z",
+    payload: { version: 1, data: { name: "Synthetic applicant" } }
+  };
+  const fetchImpl = async (url, init = {}) => {
+    if (!init.method) return new Response(JSON.stringify({ range: "Talentos!A1:A1", values: [] }), { status: 200 });
+    appended = { url: String(url), body: JSON.parse(init.body) };
+    return new Response(JSON.stringify({ updates: { updatedRange: "Talentos!A2:D2" } }), { status: 200 });
+  };
+
+  await appendToGoogleSheets(delivery, { spreadsheetId: "synthetic-id", accessToken: "synthetic-token", fetchImpl });
+  assert.match(appended.url, /Talentos!A%3AD/);
+  assert.deepEqual(appended.body.values[0], [delivery.id, delivery.aggregate_id, delivery.created_at, JSON.stringify({ name: "Synthetic applicant" })]);
+});
+
+test("Sheets retry after an uncertain append checks Delivery ID before sending again", async () => {
+  const delivery = {
+    id: "delivery-synthetic-retry",
+    aggregate_id: "record-synthetic-retry",
+    aggregate_type: "contact_lead",
+    created_at: "2026-10-26T12:00:00.000Z",
+    payload: { version: 1, data: { name: "Synthetic", requestType: "new_project" } }
+  };
+  const rows = [];
+  let posts = 0;
+  const fetchImpl = async (_url, init = {}) => {
+    if (!init.method) {
+      return new Response(JSON.stringify({ range: "Leads!A2:A2", values: rows.map((row) => [row[0]]) }), { status: 200 });
+    }
+    posts += 1;
+    rows.push(JSON.parse(init.body).values[0]);
+    return new Response("temporary append response failure", { status: 503 });
+  };
+
+  let failure;
+  try {
+    await appendToGoogleSheets(delivery, { spreadsheetId: "synthetic-id", accessToken: "synthetic-token", fetchImpl });
+  } catch (error) {
+    failure = error;
+  }
+  assert.equal(failure?.code, "google_sheets_append_failed_503");
+  assert.equal(getDeliveryFailure(failure, 1).retry, true);
+
+  const retryReference = await appendToGoogleSheets(delivery, { spreadsheetId: "synthetic-id", accessToken: "synthetic-token", fetchImpl });
+  assert.equal(retryReference, "Leads!A2:D2");
+  assert.equal(posts, 1);
+  assert.equal(rows.length, 1);
+});
+
+test("ClickUp adapter keeps Contact in Pre-sales, sends intent without status, and blocks other Contact journeys", async () => {
+  const requests = [];
+  const env = { CLICKUP_PRE_SALES_LIST_ID: "900700475931", CLICKUP_API_TOKEN: "synthetic-token" };
+  const delivery = {
+    id: "delivery-synthetic-clickup",
+    aggregate_id: "record-synthetic-clickup",
+    aggregate_type: "contact_lead",
+    created_at: "2026-10-26T12:00:00.000Z",
+    payload: { version: 1, data: { name: "Synthetic", requestType: "new_project", service: "multiple" } }
+  };
+  const fetchImpl = async (url, init = {}) => {
+    requests.push({ url: String(url), init });
+    if (!init.method) return new Response(JSON.stringify({ tasks: [] }), { status: 200 });
+    return new Response(JSON.stringify({ id: "synthetic-clickup-task" }), { status: 200 });
+  };
+
+  const taskId = await createClickUpTask(delivery, { env, fetchImpl });
+  const createRequest = requests.find(({ init }) => init.method === "POST");
+  const taskBody = JSON.parse(createRequest.init.body);
+  assert.equal(taskId, "synthetic-clickup-task");
+  assert.match(createRequest.url, /list\/900700475931\/task/);
+  assert.match(taskBody.description, /new_project/);
+  assert.equal(Object.hasOwn(taskBody, "status"), false);
+
+  let blockedCalls = 0;
+  let routingError;
+  try {
+    await createClickUpTask({ ...delivery, payload: { version: 1, data: { requestType: "partnership" } } }, {
+      env,
+      fetchImpl: async () => { blockedCalls += 1; throw new Error("must_not_call_external"); }
+    });
+  } catch (error) {
+    routingError = error;
+  }
+  assert.equal(routingError?.code, "clickup_contact_not_pre_sales");
+  assert.equal(getDeliveryFailure(routingError, 1).retry, false);
+  assert.equal(blockedCalls, 0);
 });

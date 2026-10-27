@@ -55,6 +55,8 @@ export const resolveClickUpListId = (aggregateType, env) => {
   return listId;
 };
 
+export const isCommercialContactRequest = (requestType) => requestType === "new_project";
+
 const plain = (value) => typeof value === "string" && value.trim() ? value.trim() : "—";
 
 export const buildContactClickUpTask = (delivery, payload) => {

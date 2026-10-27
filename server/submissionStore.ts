@@ -4,6 +4,7 @@ import { DeliveryStatus, DeliveryTarget, SubmissionStatus } from "../src/generat
 import { getPrisma } from "../src/lib/server/prisma";
 import { hashOpaqueSecret } from "./onboardingAccess";
 import type { ContactLeadInput, TalentApplicationInput } from "./submissionContracts";
+import { isCommercialContactRequest } from "./integrationDelivery.mjs";
 import type { OnboardingPayload } from "./onboardingContract";
 
 const RETENTION_MONTHS = 12;
@@ -76,12 +77,11 @@ export const persistContactLeadWithClient = async (
     }
   });
   const versionedPayload = { version: 1, data: JSON.parse(JSON.stringify(buildContactDeliveryPayload(payload))) };
-  await tx.integrationDelivery.createMany({
-    data: [
-      queueDelivery(DeliveryTarget.CLICKUP, "contact_lead", id, versionedPayload),
-      queueDelivery(DeliveryTarget.GOOGLE_SHEETS, "contact_lead", id, versionedPayload)
-    ]
-  });
+  const contactDeliveries = [queueDelivery(DeliveryTarget.GOOGLE_SHEETS, "contact_lead", id, versionedPayload)];
+  if (isCommercialContactRequest(payload.requestType)) {
+    contactDeliveries.push(queueDelivery(DeliveryTarget.CLICKUP, "contact_lead", id, versionedPayload));
+  }
+  await tx.integrationDelivery.createMany({ data: contactDeliveries });
   return { id, created: true };
 });
 

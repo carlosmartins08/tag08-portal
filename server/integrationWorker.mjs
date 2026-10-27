@@ -1,20 +1,16 @@
 import { createSign } from "node:crypto";
 import pg from "pg";
 import {
-  buildContactClickUpTask,
-  findSheetRowReference,
   getDeliveryFailure,
   IntegrationDeliveryError,
   integrationHttpError,
   MAX_AUTOMATIC_DELIVERY_ATTEMPTS,
-  resolveClickUpListId,
   TERMINAL_RETRY_AT,
-  unwrapDeliveryPayload
 } from "./integrationDelivery.mjs";
+import { appendToGoogleSheets, createClickUpTask } from "./integrationAdapters.mjs";
 
 const { Pool } = pg;
 const MAX_BATCH_SIZE = 20;
-const MAX_CLICKUP_LOOKUP_PAGES = 100;
 const PROCESSING_LEASE_SECONDS = Number.parseInt(process.env.INTEGRATION_PROCESSING_LEASE_SECONDS || "900", 10);
 const DELIVERY_ID_FILTER = process.env.INTEGRATION_DELIVERY_ID?.trim() || null;
 const MOCK_INTEGRATION_MODE = process.env.INTEGRATION_MOCK_MODE === "true";
@@ -92,100 +88,11 @@ const getGoogleAccessToken = async () => {
 
 const appendToSheet = async (delivery) => {
   if (!process.env.GOOGLE_SHEETS_SPREADSHEET_ID) throw new IntegrationDeliveryError("google_sheets_not_configured");
-  const tabs = {
-    contact_lead: "Leads",
-    onboarding_submission: "Onboarding",
-    talent_application: "Talentos"
-  };
-  const tab = tabs[delivery.aggregate_type];
-  if (!tab) throw new IntegrationDeliveryError("google_sheet_tab_not_configured");
-
   const token = await getGoogleAccessToken();
-  const idRange = encodeURIComponent(`${tab}!A:A`);
-  const existing = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEETS_SPREADSHEET_ID}/values/${idRange}`,
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-  if (!existing.ok) throw integrationHttpError("google_sheets_lookup_failed", existing.status);
-  const existingBody = await existing.json();
-  if (!existingBody || typeof existingBody !== "object" || (existingBody.values !== undefined && !Array.isArray(existingBody.values))) {
-    throw new IntegrationDeliveryError("google_sheets_lookup_response_invalid");
-  }
-  const existingValues = existingBody.values || [];
-  const existingReference = findSheetRowReference(existingBody.range, existingValues, delivery.id);
-  if (existingReference) return existingReference;
-
-  const range = encodeURIComponent(`${tab}!A:D`);
-  const payload = unwrapDeliveryPayload(delivery.payload);
-  const response = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEETS_SPREADSHEET_ID}/values/${range}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
-    {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ values: [[delivery.id, delivery.aggregate_id, delivery.created_at, JSON.stringify(payload)]] }),
-      signal: AbortSignal.timeout(15000)
-    }
-  );
-  if (!response.ok) throw integrationHttpError("google_sheets_append_failed", response.status);
-  const appended = await response.json();
-  return appended.updates?.updatedRange || delivery.id;
-};
-
-const findClickUpTaskByDelivery = async (listId, taskName) => {
-  for (let page = 0; page < MAX_CLICKUP_LOOKUP_PAGES; page += 1) {
-    const query = new URLSearchParams({
-      include_closed: "true",
-      include_timl: "true",
-      page: String(page)
-    });
-    const response = await fetch(`https://api.clickup.com/api/v2/list/${listId}/task?${query}`, {
-      headers: { Authorization: process.env.CLICKUP_API_TOKEN },
-      signal: AbortSignal.timeout(15000)
-    });
-    if (!response.ok) throw integrationHttpError("clickup_task_lookup_failed", response.status);
-
-    const body = await response.json().catch(() => null);
-    if (!body || !Array.isArray(body.tasks)) throw new IntegrationDeliveryError("clickup_task_lookup_response_invalid");
-    const tasks = body.tasks;
-    const existing = tasks.find((task) => task.name === taskName);
-    if (existing?.id) return existing.id;
-
-    // The API returns at most 100 tasks. A shorter page is the end of this List.
-    if (tasks.length < 100 || body.last_page === true) return null;
-  }
-
-  throw new Error("clickup_task_lookup_page_limit_reached");
-};
-
-const createClickUpTask = async (delivery) => {
-  const listId = resolveClickUpListId(delivery.aggregate_type, process.env);
-  if (!process.env.CLICKUP_API_TOKEN) throw new IntegrationDeliveryError("clickup_not_configured");
-
-  const payload = unwrapDeliveryPayload(delivery.payload);
-  const contactTask = delivery.aggregate_type === "contact_lead" ? buildContactClickUpTask(delivery, payload) : null;
-  const taskName = contactTask?.name || `${delivery.aggregate_type}:${delivery.id}`;
-  const existingTaskId = await findClickUpTaskByDelivery(listId, taskName);
-  if (existingTaskId) return existingTaskId;
-
-  const response = await fetch(`https://api.clickup.com/api/v2/list/${listId}/task`, {
-    method: "POST",
-    headers: {
-      Authorization: process.env.CLICKUP_API_TOKEN,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      name: taskName,
-      description: contactTask?.description || JSON.stringify(payload),
-      tags: contactTask?.tags || ["tag08", delivery.aggregate_type]
-    }),
-    signal: AbortSignal.timeout(15000)
+  return appendToGoogleSheets(delivery, {
+    spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
+    accessToken: token
   });
-  if (!response.ok) throw integrationHttpError("clickup_task_create_failed", response.status);
-  const createdTask = await response.json().catch(() => null);
-  if (!createdTask || typeof createdTask.id !== "string" || !createdTask.id) {
-    throw new IntegrationDeliveryError("clickup_task_response_invalid");
-  }
-  return createdTask.id;
 };
 
 const enabledTargets = () => {
