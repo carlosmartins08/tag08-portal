@@ -42,10 +42,13 @@ const talent = () => ({
   utm: { source: "", medium: "", campaign: "", content: "", term: "" }
 });
 
-const setup = ({ failFirstClickUp = false, clickUpEnabled = true } = {}) => {
+const setup = ({ failFirstClickUp = false, unknownFirstClickUp = false, clickUpEnabled = true } = {}) => {
   const rows = new Map();
   const calls = { appends: 0, updates: 0, tasks: 0 };
   let shouldFail = failFirstClickUp;
+  let shouldBeUnknown = unknownFirstClickUp;
+  let taskAvailableForReconciliation = false;
+  let reconciliations = 0;
   const store = createOperationalSubmissionStore({
     env: {
       SUBMISSIONS_ENABLED: "true",
@@ -81,8 +84,16 @@ const setup = ({ failFirstClickUp = false, clickUpEnabled = true } = {}) => {
         clickupLastErrorCode: state.clickupLastErrorCode
       });
     },
+    findTask: async () => {
+      reconciliations += 1;
+      return taskAvailableForReconciliation ? "synthetic-clickup-task" : null;
+    },
     createTask: async () => {
       calls.tasks += 1;
+      if (shouldBeUnknown) {
+        shouldBeUnknown = false;
+        throw new IntegrationDeliveryError("clickup_task_create_outcome_unknown", true, true);
+      }
       if (shouldFail) {
         shouldFail = false;
         throw new IntegrationDeliveryError("clickup_task_create_failed_503", true);
@@ -90,7 +101,7 @@ const setup = ({ failFirstClickUp = false, clickUpEnabled = true } = {}) => {
       return "synthetic-task-id";
     }
   });
-  return { store, rows, calls };
+  return { store, rows, calls, get reconciliations() { return reconciliations; }, setTaskAvailableForReconciliation: (value) => { taskAvailableForReconciliation = value; } };
 };
 
 test("Contact stores a stable Sheets record and routes only new projects to ClickUp", async () => {
@@ -130,6 +141,50 @@ test("replay is idempotent, changed content conflicts, and a ClickUp failure rec
     /idempotency_key_conflict/
   );
   assert.deepEqual(calls, { appends: 1, updates: 2, tasks: 2 });
+});
+
+test("uncertain ClickUp creation is reconciled by stable name and never blindly recreated", async () => {
+  const setupResult = setup({ unknownFirstClickUp: true });
+  const first = await setupResult.store.persistContactLead(contact(), "synthetic-unknown-clickup-key");
+  assert.equal(first.clickUpStatus, "UNKNOWN");
+  assert.equal(setupResult.calls.tasks, 1);
+  const unresolved = await setupResult.store.persistContactLead(contact(), "synthetic-unknown-clickup-key");
+  assert.equal(unresolved.clickUpStatus, "UNKNOWN");
+  assert.equal(setupResult.calls.tasks, 1);
+  assert.equal(setupResult.reconciliations, 1);
+
+  setupResult.setTaskAvailableForReconciliation(true);
+  const reconciled = await setupResult.store.persistContactLead(contact(), "synthetic-unknown-clickup-key");
+  assert.equal(reconciled.clickUpStatus, "DELIVERED");
+  assert.equal(reconciled.clickUpTaskId, "synthetic-clickup-task");
+  assert.equal(setupResult.calls.tasks, 1);
+  assert.equal(setupResult.reconciliations, 2);
+});
+
+test("ClickUp replay stops at the configured attempt ceiling", async () => {
+  let createCalls = 0;
+  let savedState;
+  const store = createOperationalSubmissionStore({
+    env: { SUBMISSIONS_ENABLED: "true", GOOGLE_SHEETS_ENABLED: "true", INTEGRATIONS_ENABLED: "true", CLICKUP_ENABLED: "true", GOOGLE_SHEETS_SPREADSHEET_ID: "synthetic-sheet" },
+    tokenProvider: async () => "synthetic-access-token",
+    appendSheet: async (delivery) => ({
+      rowNumber: 2,
+      rowReference: "Leads!A2:W2",
+      existing: true,
+      createdAt: delivery.created_at,
+      clickupStatus: "FAILED",
+      clickupTaskId: "",
+      clickupAttempts: 8,
+      clickupLastErrorCode: "clickup_task_create_failed_400"
+    }),
+    updateSheetState: async (_delivery, state) => { savedState = state; },
+    createTask: async () => { createCalls += 1; return "unexpected-task"; }
+  });
+  const result = await store.persistContactLead(contact(), "synthetic-attempt-limit-key");
+  assert.equal(result.clickUpStatus, "FAILED");
+  assert.equal(result.clickUpLastErrorCode, "clickup_attempt_limit_reached");
+  assert.equal(savedState.clickupAttempts, 8);
+  assert.equal(createCalls, 0);
 });
 
 test("disabled submissions fail closed without invoking external adapters", async () => {

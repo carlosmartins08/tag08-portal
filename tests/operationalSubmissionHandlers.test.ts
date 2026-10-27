@@ -43,11 +43,15 @@ const createMockedStore = () => {
   return store;
 };
 
-const postRequest = (path: string, payload: unknown, idempotencyKey: string) => new Request(`https://tag08.example.test${path}`, {
-  method: "POST",
-  headers: { "content-type": "application/json", "idempotency-key": idempotencyKey },
-  body: JSON.stringify(payload)
-});
+const postRequest = (path: string, payload: unknown, idempotencyKey?: string) => {
+  const headers = new Headers({ "content-type": "application/json" });
+  if (idempotencyKey) headers.set("idempotency-key", idempotencyKey);
+  return new Request(`https://tag08.example.test${path}`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(payload)
+  });
+};
 
 test("Contact API accepts a Sheets-canonical submission and reports ClickUp delivery separately", async () => {
   const store = createMockedStore();
@@ -103,4 +107,34 @@ test("Talent API preserves multiple areas through Sheets and reports human-routi
   assert.equal(body.status, "accepted");
   assert.equal(body.deliveryStatus.sheets, "delivered");
   assert.equal(body.deliveryStatus.clickUp, "DELIVERED");
+});
+
+test("Talent API rejects a missing idempotency key instead of creating a fresh record ID", async () => {
+  let persistenceCalls = 0;
+  const handler = createTalentApplicationPostHandler(async () => {
+    persistenceCalls += 1;
+    return { id: "unused", created: true, clickUpStatus: "PENDING", sheetsRowReference: "Talentos!A2:X2" };
+  });
+  const response = await handler(postRequest("/api/talent-applications", {
+    contractVersion: 2,
+    interestAreas: ["design"],
+    name: "Candidata Sintetica",
+    email: "talent@example.test",
+    phone: "+5583999999999",
+    linkedin: "",
+    resumeUrl: "",
+    portfolio: "",
+    experienceSummary: "Experiencia sintetica",
+    availability: "A combinar",
+    motivation: "Teste",
+    relevantProjects: "",
+    relevantExperience: "",
+    consent: true,
+    consentVersion: "v2",
+    locale: "pt",
+    source: "test"
+  }));
+  assert.equal(response.status, 400);
+  assert.equal((await response.json()).error, "idempotency_key_required");
+  assert.equal(persistenceCalls, 0);
 });

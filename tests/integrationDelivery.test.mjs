@@ -233,3 +233,31 @@ test("Contact staging ClickUp task is explicitly created in the existing open st
   assert.equal(createBody.status, CONTACT_STAGING_CLICKUP_INITIAL_STATUS);
   assert.equal(CONTACT_STAGING_CLICKUP_INITIAL_STATUS, "em aberto \u{1F9E0}");
 });
+
+test("ClickUp network failure after create request is classified as an uncertain outcome", async () => {
+  let createAttempted = false;
+  const delivery = {
+    id: "delivery-synthetic-unknown",
+    aggregate_id: "record-synthetic-unknown",
+    aggregate_type: "contact_lead",
+    created_at: "2026-10-26T12:00:00.000Z",
+    payload: { version: 1, data: { name: "Synthetic", requestType: "new_project" } }
+  };
+  let error;
+  try {
+    await createClickUpTask(delivery, {
+    env: { CLICKUP_PRE_SALES_LIST_ID: "900700475931", CLICKUP_API_TOKEN: "synthetic-token" },
+    fetchImpl: async (_url, init = {}) => {
+      if (!init.method) return new Response(JSON.stringify({ tasks: [] }), { status: 200 });
+      createAttempted = true;
+      throw new TypeError("synthetic network interruption");
+    }
+    });
+  } catch (caught) {
+    error = caught;
+  }
+  assert.equal(createAttempted, true);
+  assert.equal(error.code, "clickup_task_create_outcome_unknown");
+  assert.equal(error.retryable, true);
+  assert.equal(error.outcomeUnknown, true);
+});

@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import {
   buildContactClickUpTask,
   CONTACT_STAGING_CLICKUP_INITIAL_STATUS,
@@ -11,6 +12,7 @@ import {
 } from "./integrationDelivery.mjs";
 import {
   buildContactSheetsV1Row,
+  buildMinimalSheetsPayloadEnvelope,
   CONTACT_DELIVERY_HEADERS,
   CONTACT_SHEETS_V1_HEADERS,
   buildTalentSheetsV1Projection,
@@ -19,6 +21,23 @@ import {
 } from "./contactSheetsProjection.mjs";
 
 const MAX_CLICKUP_LOOKUP_PAGES = 100;
+
+const matchesOperationalPayload = (storedValue, payload) => {
+  if (typeof storedValue !== "string") return false;
+  try {
+    const stored = JSON.parse(storedValue);
+    if (stored?.envelopeVersion === 2) {
+      const canonicalHash = JSON.parse(buildMinimalSheetsPayloadEnvelope(payload)).payloadSha256;
+      // Rows produced by the preceding v2 implementation hashed insertion-order JSON.
+      const previousV2Hash = createHash("sha256").update(JSON.stringify(payload)).digest("hex");
+      return stored.payloadSha256 === canonicalHash || stored.payloadSha256 === previousV2Hash;
+    }
+  } catch {
+    return false;
+  }
+  // Rows written before the operational envelope contain the legacy raw JSON.
+  return storedValue === JSON.stringify(payload);
+};
 
 /**
  * @param {object} delivery
@@ -67,13 +86,20 @@ export const appendToGoogleSheets = async (delivery, {
   }
 
   const existingIndex = existingRows.findIndex((row) => row?.[0] === delivery.id);
+  const existingIndexes = existingRows.reduce((indexes, row, index) => {
+    if (row?.[0] === delivery.id) indexes.push(index);
+    return indexes;
+  }, []);
+  if (operationalMode && existingIndexes.length > 1) {
+    throw new IntegrationDeliveryError("google_sheets_delivery_duplicate_requires_reconciliation");
+  }
   const lastColumn = operationalMode
     ? columnName(3 + expectedHeaders.length)
     : delivery.aggregate_type === "contact_lead" ? "P" : "D";
   if (existingIndex >= 0) {
     const existingRow = existingRows[existingIndex];
     const payload = unwrapDeliveryPayload(delivery.payload);
-    if (operationalMode && (existingRow[1] !== delivery.aggregate_id || existingRow[3] !== JSON.stringify(payload))) {
+    if (operationalMode && (existingRow[1] !== delivery.aggregate_id || !matchesOperationalPayload(existingRow[3], payload))) {
       throw new IntegrationDeliveryError("google_sheets_idempotency_conflict");
     }
     const startRow = Number(existingBody.range?.match(/![A-Z]+(\d+)/i)?.[1] || 1);
@@ -86,7 +112,8 @@ export const appendToGoogleSheets = async (delivery, {
       createdAt: existingRow[2],
       clickupStatus: operationalMode ? existingRow[4 + expectedHeaders.length - 6] : undefined,
       clickupTaskId: operationalMode ? existingRow[5 + expectedHeaders.length - 6] : undefined,
-      clickupAttempts: operationalMode ? Number(existingRow[6 + expectedHeaders.length - 6] || 0) : undefined
+      clickupAttempts: operationalMode ? Number(existingRow[6 + expectedHeaders.length - 6] || 0) : undefined,
+      clickupLastErrorCode: operationalMode ? existingRow[7 + expectedHeaders.length - 6] || "" : undefined
     };
   }
 
@@ -94,17 +121,17 @@ export const appendToGoogleSheets = async (delivery, {
   const isContact = delivery.aggregate_type === "contact_lead";
   const isTalent = delivery.aggregate_type === "talent_application";
   const range = encodeURIComponent(`${tab}!A:${operationalMode ? lastColumn : isContact ? "P" : "D"}`);
-  // D intentionally stays the legacy full JSON payload. Narrowing it requires
-  // a separately approved/versioned consumer contract; E+ is the explicit v1 allowlist.
+  // Legacy workers retain their raw D payload; direct operational rows use a
+  // versioned digest envelope to avoid duplicating personal data.
   const needsClickUp = delivery.aggregate_type === "talent_application" ||
     (isContact && payload.requestType === "new_project");
   const metadata = operationalMode
     ? ["", needsClickUp ? "PENDING" : "NOT_ROUTED", "", 0, "", "DELIVERED", delivery.created_at]
     : [];
   const row = isContact
-    ? [...buildContactSheetsV1Row(delivery, payload), ...metadata]
+    ? [...buildContactSheetsV1Row(delivery, payload, { minimalEnvelope: operationalMode }), ...metadata]
     : operationalMode && isTalent
-      ? [delivery.id, delivery.aggregate_id, delivery.created_at, JSON.stringify(payload), ...buildTalentSheetsV1Projection(payload), ...metadata]
+      ? [delivery.id, delivery.aggregate_id, delivery.created_at, buildMinimalSheetsPayloadEnvelope(payload), ...buildTalentSheetsV1Projection(payload), ...metadata]
       : [delivery.id, delivery.aggregate_id, delivery.created_at, JSON.stringify(payload)];
   const response = await fetchImpl(
     `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
@@ -116,10 +143,13 @@ export const appendToGoogleSheets = async (delivery, {
     }
   );
   if (!response.ok) throw integrationHttpError("google_sheets_append_failed", response.status);
-  const appended = await response.json();
-  const updatedRange = appended.updates?.updatedRange || `${tab}!A${existingRows.length + 1}:${lastColumn}${existingRows.length + 1}`;
-  if (!operationalMode) return updatedRange;
-  const rowNumber = Number(updatedRange.match(/![A-Z]+(\d+)/i)?.[1]);
+  const appended = await response.json().catch(() => null);
+  const updatedRange = appended?.updates?.updatedRange;
+  if (!operationalMode) return updatedRange || delivery.id;
+  const rowMatch = typeof updatedRange === "string" ? updatedRange.match(new RegExp(`^${tab}!A([1-9]\\d*):${lastColumn}\\1$`)) : null;
+  if (!rowMatch) throw new IntegrationDeliveryError("google_sheets_append_unconfirmed", true);
+  const rowNumber = Number(rowMatch[1]);
+  if (rowNumber < 2) throw new IntegrationDeliveryError("google_sheets_append_unconfirmed", true);
   return { rowReference: updatedRange, rowNumber, existing: false, createdAt: delivery.created_at, clickupStatus: needsClickUp ? "PENDING" : "NOT_ROUTED", clickupTaskId: "", clickupAttempts: 0 };
 };
 
@@ -142,7 +172,10 @@ export const updateGoogleSheetsDeliveryState = async (delivery, state, {
   if (!spreadsheetId || !accessToken) throw new IntegrationDeliveryError("google_sheets_not_configured");
   const tab = delivery.aggregate_type === "contact_lead" ? "Leads" :
     delivery.aggregate_type === "talent_application" ? "Talentos" : null;
-  if (!tab || !Number.isSafeInteger(state.rowNumber) || state.rowNumber < 2) {
+  const validStates = new Set(["PENDING", "DELIVERED", "FAILED", "UNKNOWN", "NOT_ROUTED"]);
+  if (!tab || !Number.isSafeInteger(state.rowNumber) || state.rowNumber < 2 ||
+      typeof state.sheetsRowReference !== "string" || !state.sheetsRowReference ||
+      !validStates.has(state.clickupStatus) || !Number.isSafeInteger(state.clickupAttempts) || state.clickupAttempts < 0) {
     throw new IntegrationDeliveryError("google_sheets_delivery_reference_invalid");
   }
   const projectionHeaders = delivery.aggregate_type === "contact_lead" ? CONTACT_SHEETS_V1_HEADERS : TALENT_SHEETS_V1_HEADERS;
@@ -159,6 +192,11 @@ export const updateGoogleSheetsDeliveryState = async (delivery, state, {
     }
   );
   if (!response.ok) throw integrationHttpError("google_sheets_delivery_state_update_failed", response.status);
+  const body = await response.json().catch(() => null);
+  const expectedRange = `${tab}!${start}${state.rowNumber}:${end}${state.rowNumber}`;
+  if (!body || body.updatedRows !== 1 || body.updatedRange !== expectedRange) {
+    throw new IntegrationDeliveryError("google_sheets_delivery_state_update_unconfirmed", true);
+  }
   return true;
 };
 
@@ -178,6 +216,26 @@ const findClickUpTaskByName = async (listId, taskName, apiToken, fetchImpl) => {
     if (body.tasks.length < 100 || body.last_page === true) return null;
   }
   throw new Error("clickup_task_lookup_page_limit_reached");
+};
+
+export const findExistingClickUpTask = async (delivery, {
+  env = process.env,
+  apiToken = env.CLICKUP_API_TOKEN,
+  fetchImpl = globalThis.fetch
+} = {}) => {
+  const payload = unwrapDeliveryPayload(delivery.payload);
+  if (delivery.aggregate_type === "contact_lead" && !isCommercialContactRequest(payload.requestType)) {
+    throw new IntegrationDeliveryError("clickup_contact_not_pre_sales");
+  }
+  if (!["contact_lead", "talent_application"].includes(delivery.aggregate_type)) {
+    throw new IntegrationDeliveryError("clickup_aggregate_not_supported");
+  }
+  const listId = resolveClickUpListId(delivery.aggregate_type, env);
+  if (!apiToken) throw new IntegrationDeliveryError("clickup_not_configured");
+  const task = delivery.aggregate_type === "contact_lead"
+    ? buildContactClickUpTask(delivery, payload)
+    : buildTalentClickUpTask(delivery, payload);
+  return findClickUpTaskByName(listId, task.name, apiToken, fetchImpl);
 };
 
 /**
@@ -212,16 +270,26 @@ export const createClickUpTask = async (delivery, {
     taskBody.status = CONTACT_STAGING_CLICKUP_INITIAL_STATUS;
   }
 
-  const response = await fetchImpl(`https://api.clickup.com/api/v2/list/${listId}/task`, {
-    method: "POST",
-    headers: { Authorization: apiToken, "Content-Type": "application/json" },
-    body: JSON.stringify(taskBody),
-    signal: AbortSignal.timeout(15000)
-  });
-  if (!response.ok) throw integrationHttpError("clickup_task_create_failed", response.status);
+  let response;
+  try {
+    response = await fetchImpl(`https://api.clickup.com/api/v2/list/${listId}/task`, {
+      method: "POST",
+      headers: { Authorization: apiToken, "Content-Type": "application/json" },
+      body: JSON.stringify(taskBody),
+      signal: AbortSignal.timeout(15000)
+    });
+  } catch {
+    throw new IntegrationDeliveryError("clickup_task_create_outcome_unknown", true, true);
+  }
+  if (!response.ok) {
+    if (response.status === 408 || response.status >= 500) {
+      throw new IntegrationDeliveryError(`clickup_task_create_outcome_unknown_${response.status}`, true, true);
+    }
+    throw integrationHttpError("clickup_task_create_failed", response.status);
+  }
   const createdTask = await response.json().catch(() => null);
   if (!createdTask || typeof createdTask.id !== "string" || !createdTask.id) {
-    throw new IntegrationDeliveryError("clickup_task_response_invalid");
+    throw new IntegrationDeliveryError("clickup_task_create_outcome_unknown", true, true);
   }
   return createdTask.id;
 };

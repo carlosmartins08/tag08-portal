@@ -1,4 +1,4 @@
-import { talentApplicationSchema } from "./submissionContracts";
+import { contactIdempotencyKeySchema, talentApplicationSchema } from "./submissionContracts";
 import { isPersistenceUnavailable } from "./submissionErrors";
 import { persistTalentApplicationToSheets } from "./operationalSubmissionStore.mjs";
 import {
@@ -27,9 +27,13 @@ export const createTalentApplicationPostHandler = (persist: TalentPersist = pers
     return jsonResponse({ ok: false, error: "invalid_payload", requestId }, 400, request);
   }
 
+  const parsedIdempotencyKey = contactIdempotencyKeySchema.safeParse(request.headers.get("idempotency-key"));
+  if (!parsedIdempotencyKey.success) {
+    return jsonResponse({ ok: false, error: "idempotency_key_required", requestId }, 400, request);
+  }
+
   try {
-    const idempotencyKey = request.headers.get("idempotency-key") || requestId;
-    const result = await persist(parsed.data, idempotencyKey);
+    const result = await persist(parsed.data, parsedIdempotencyKey.data);
     return jsonResponse({
       ok: true,
       applicationId: result.id,

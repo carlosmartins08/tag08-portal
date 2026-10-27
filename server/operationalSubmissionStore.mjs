@@ -1,9 +1,10 @@
 import { createHash } from "node:crypto";
-import { appendToGoogleSheets, createClickUpTask, updateGoogleSheetsDeliveryState } from "./integrationAdapters.mjs";
+import { appendToGoogleSheets, createClickUpTask, findExistingClickUpTask, updateGoogleSheetsDeliveryState } from "./integrationAdapters.mjs";
 import { getGoogleSheetsAccessToken } from "./googleSheetsAuth.mjs";
 import { buildContactDeliveryPayload, IntegrationDeliveryError, isCommercialContactRequest } from "./integrationDelivery.mjs";
 
 const locks = new Map();
+const MAX_CLICKUP_REPLAY_ATTEMPTS = 8;
 
 const withKeyLock = async (key, action) => {
   const previous = locks.get(key) || Promise.resolve();
@@ -43,7 +44,8 @@ export const createOperationalSubmissionStore = ({
   tokenProvider = getGoogleSheetsAccessToken,
   appendSheet = appendToGoogleSheets,
   updateSheetState = updateGoogleSheetsDeliveryState,
-  createTask = createClickUpTask
+  createTask = createClickUpTask,
+  findTask = findExistingClickUpTask
 } = {}) => {
   const submit = async (aggregateType, input, idempotencyKey) => {
     if (!tabByType[aggregateType]) throw new IntegrationDeliveryError("submission_type_not_supported");
@@ -93,7 +95,7 @@ export const createOperationalSubmissionStore = ({
           clickupStatus: status,
           clickupTaskId: stored.clickupTaskId || "",
           clickupAttempts: Number.isSafeInteger(stored.clickupAttempts) ? stored.clickupAttempts : 0,
-          clickupLastErrorCode: "",
+          clickupLastErrorCode: stored.clickupLastErrorCode || "",
           updatedAt: now().toISOString()
         }, { spreadsheetId: env.GOOGLE_SHEETS_SPREADSHEET_ID, accessToken, fetchImpl });
         return { id: recordId, created: !stored.existing, clickUpStatus: status, sheetsRowReference: stored.rowReference };
@@ -103,8 +105,52 @@ export const createOperationalSubmissionStore = ({
         return { id: recordId, created: !stored.existing, clickUpStatus: "DELIVERED", clickUpTaskId: stored.clickupTaskId, sheetsRowReference: stored.rowReference };
       }
 
-      const attempts = Number.isSafeInteger(stored.clickupAttempts) ? stored.clickupAttempts + 1 : 1;
       const clickUpDelivery = { ...delivery, created_at: stored.createdAt || delivery.created_at };
+      const currentAttempts = Number.isSafeInteger(stored.clickupAttempts) ? stored.clickupAttempts : 0;
+      if (stored.clickupStatus === "UNKNOWN") {
+        let recoveredTaskId = "";
+        let reconciliationError = "";
+        try {
+          recoveredTaskId = await findTask(clickUpDelivery, { env, fetchImpl }) || "";
+        } catch (error) {
+          reconciliationError = safeCode(error);
+        }
+        const reconciledStatus = recoveredTaskId ? "DELIVERED" : "UNKNOWN";
+        const lastError = recoveredTaskId ? "" : reconciliationError || stored.clickupLastErrorCode || "clickup_task_create_outcome_unknown";
+        await updateSheetState(delivery, {
+          rowNumber: stored.rowNumber,
+          sheetsRowReference: stored.rowReference,
+          clickupStatus: reconciledStatus,
+          clickupTaskId: recoveredTaskId || stored.clickupTaskId || "",
+          clickupAttempts: currentAttempts,
+          clickupLastErrorCode: lastError,
+          updatedAt: now().toISOString()
+        }, { spreadsheetId: env.GOOGLE_SHEETS_SPREADSHEET_ID, accessToken, fetchImpl });
+        return {
+          id: recordId,
+          created: !stored.existing,
+          clickUpStatus: reconciledStatus,
+          sheetsRowReference: stored.rowReference,
+          ...(recoveredTaskId ? { clickUpTaskId: recoveredTaskId } : {}),
+          ...(lastError ? { clickUpLastErrorCode: lastError } : {})
+        };
+      }
+
+      if (currentAttempts >= MAX_CLICKUP_REPLAY_ATTEMPTS) {
+        const lastError = "clickup_attempt_limit_reached";
+        await updateSheetState(delivery, {
+          rowNumber: stored.rowNumber,
+          sheetsRowReference: stored.rowReference,
+          clickupStatus: "FAILED",
+          clickupTaskId: stored.clickupTaskId || "",
+          clickupAttempts: currentAttempts,
+          clickupLastErrorCode: lastError,
+          updatedAt: now().toISOString()
+        }, { spreadsheetId: env.GOOGLE_SHEETS_SPREADSHEET_ID, accessToken, fetchImpl });
+        return { id: recordId, created: !stored.existing, clickUpStatus: "FAILED", sheetsRowReference: stored.rowReference, clickUpLastErrorCode: lastError };
+      }
+
+      const attempts = currentAttempts + 1;
       let clickUpTaskId = "";
       let clickUpStatus = "FAILED";
       let clickUpLastErrorCode = "";
@@ -116,6 +162,7 @@ export const createOperationalSubmissionStore = ({
         clickUpStatus = "DELIVERED";
       } catch (error) {
         clickUpLastErrorCode = safeCode(error);
+        if (error?.outcomeUnknown === true) clickUpStatus = "UNKNOWN";
       }
 
       await updateSheetState(delivery, {

@@ -4,11 +4,12 @@ export const CONTACT_STAGING_CLICKUP_LIST_ID = "901327894264";
 export const CONTACT_STAGING_CLICKUP_INITIAL_STATUS = "em aberto \u{1F9E0}";
 
 export class IntegrationDeliveryError extends Error {
-  constructor(code, retryable = false) {
+  constructor(code, retryable = false, outcomeUnknown = false) {
     super(code);
     this.name = "IntegrationDeliveryError";
     this.code = code;
     this.retryable = retryable;
+    this.outcomeUnknown = outcomeUnknown;
   }
 }
 

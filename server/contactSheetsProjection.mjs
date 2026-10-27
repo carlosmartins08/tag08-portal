@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 /**
  * Contact v1 projection for the Leads sheet.
  *
@@ -5,8 +7,8 @@
  * envelope remains byte-compatible at the cell-value level; E+ is a fixed,
  * versioned allowlist of fields already present in the Contact delivery
  * payload. Its adapter is wired for Contact only, but the existing integration
- * enable flags remain required. D stays full legacy JSON until a separately
- * versioned minimization contract is approved for existing consumers.
+ * enable flags remain required. Newly accepted operational rows use a
+ * versioned hash envelope in D; legacy rows remain readable for replay.
  */
 
 export const CONTACT_SHEETS_V1_HEADERS = Object.freeze([
@@ -63,13 +65,25 @@ export const TALENT_DELIVERY_HEADERS = Object.freeze([
 const isRecord = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
 const cell = (value) => value === null || value === undefined ? "" : value;
 const jsonCell = (value) => value === null || value === undefined ? "" : JSON.stringify(value);
+const canonicalize = (value) => {
+  if (Array.isArray(value)) return value.map(canonicalize);
+  if (isRecord(value)) {
+    return Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonicalize(value[key])]));
+  }
+  return value;
+};
+
+export const buildMinimalSheetsPayloadEnvelope = (payload) => JSON.stringify({
+  envelopeVersion: 2,
+  payloadSha256: createHash("sha256").update(JSON.stringify(canonicalize(payload))).digest("hex")
+});
 
 /**
- * Return a Sheets row that preserves the established A:D envelope and adds
- * the Contact v1 projection in E:P. The caller must pass the already-unwrapped
- * delivery payload, matching the current worker's existing behavior.
+ * Return a Sheets row with the established A:D shape and Contact v1 projection
+ * in E:P. Legacy callers keep raw D; the operational writer opts into a
+ * versioned hash envelope. The payload is already unwrapped by the caller.
  */
-export const buildContactSheetsV1Row = (delivery, payload) => {
+export const buildContactSheetsV1Row = (delivery, payload, { minimalEnvelope = false } = {}) => {
   if (!isRecord(delivery) || delivery.aggregate_type !== "contact_lead") {
     throw new TypeError("contact_sheet_delivery_invalid");
   }
@@ -98,7 +112,7 @@ export const buildContactSheetsV1Row = (delivery, payload) => {
     delivery.id,
     delivery.aggregate_id,
     delivery.created_at,
-    JSON.stringify(payload),
+    minimalEnvelope ? buildMinimalSheetsPayloadEnvelope(payload) : JSON.stringify(payload),
     ...projection
   ];
 };
