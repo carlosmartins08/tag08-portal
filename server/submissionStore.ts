@@ -32,6 +32,11 @@ const assertSameContactRequest = (existing: { id: string; payload: unknown }, pa
   return { id: existing.id, created: false };
 };
 
+const assertSameTalentRequest = (existing: { id: string; payload: unknown }, payload: TalentApplicationInput) => {
+  if (!isDeepStrictEqual(existing.payload, payload)) throw new Error("idempotency_key_conflict");
+  return { id: existing.id, created: false };
+};
+
 const isUniqueConstraintError = (error: unknown) =>
   Boolean(error && typeof error === "object" && "code" in error && error.code === "P2002");
 
@@ -98,37 +103,50 @@ export const persistContactLead = async (payload: ContactLeadInput, idempotencyK
   }
 };
 
-export const persistTalentApplication = async (payload: TalentApplicationInput, idempotencyKey: string): Promise<PersistResult> => {
-  const prisma = getPrisma();
-  return prisma.$transaction(async (tx) => {
-    const existing = await tx.talentApplication.findUnique({ where: { idempotencyKey } });
-    if (existing) return { id: existing.id, created: false };
+export const persistTalentApplicationWithClient = async (
+  prisma: ReturnType<typeof getPrisma>,
+  payload: TalentApplicationInput,
+  idempotencyKey: string
+): Promise<PersistResult> => {
+  try {
+    return await prisma.$transaction(async (tx) => {
+      const existing = await tx.talentApplication.findUnique({ where: { idempotencyKey } });
+      if (existing) return assertSameTalentRequest(existing, payload);
 
-    const id = randomUUID();
-    await tx.talentApplication.create({
-      data: {
-        id,
-        idempotencyKey,
-        payload: JSON.parse(JSON.stringify(payload)),
-        name: payload.name,
-        email: payload.email,
-        vacancyId: payload.vacancyId,
-        locale: payload.locale,
-        consentVersion: payload.consentVersion,
-        source: payload.source,
-        status: SubmissionStatus.ACCEPTED,
-        retentionUntil: retentionUntil()
-      }
+      const id = randomUUID();
+      await tx.talentApplication.create({
+        data: {
+          id,
+          idempotencyKey,
+          payload: JSON.parse(JSON.stringify(payload)),
+          name: payload.name,
+          email: payload.email,
+          vacancyId: payload.vacancyId,
+          locale: payload.locale,
+          consentVersion: payload.consentVersion,
+          source: payload.source,
+          status: SubmissionStatus.ACCEPTED,
+          retentionUntil: retentionUntil()
+        }
+      });
+      await tx.integrationDelivery.createMany({
+        data: [
+          queueDelivery(DeliveryTarget.GOOGLE_SHEETS, "talent_application", id, payload),
+          queueDelivery(DeliveryTarget.CLICKUP, "talent_application", id, payload)
+        ]
+      });
+      return { id, created: true };
     });
-    await tx.integrationDelivery.createMany({
-      data: [
-        queueDelivery(DeliveryTarget.GOOGLE_SHEETS, "talent_application", id, payload),
-        queueDelivery(DeliveryTarget.CLICKUP, "talent_application", id, payload)
-      ]
-    });
-    return { id, created: true };
-  });
+  } catch (error) {
+    if (!isUniqueConstraintError(error)) throw error;
+    const existing = await prisma.talentApplication.findUnique({ where: { idempotencyKey } });
+    if (!existing) throw error;
+    return assertSameTalentRequest(existing, payload);
+  }
 };
+
+export const persistTalentApplication = async (payload: TalentApplicationInput, idempotencyKey: string): Promise<PersistResult> =>
+  persistTalentApplicationWithClient(getPrisma(), payload, idempotencyKey);
 
 export const persistOnboardingSubmission = async (
   payload: OnboardingPayload,
