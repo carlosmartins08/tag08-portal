@@ -65,7 +65,8 @@ const CONTACT_ORIGIN_LABELS: Record<ContactJourneyOrigin, string> = {
   home: "Home",
   services: "Serviços",
   offer: "página de oferta",
-  sebraetec: "página do Sebraetec"
+  sebraetec: "página do Sebraetec",
+  "partnership-program": "Programa de Parceria"
 };
 
 export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
@@ -167,12 +168,15 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   useEffect(() => {
     const context = parseContactJourneyContext(window.location.search);
     setJourneyContext(context);
-    if (!context.intent) return;
+    if (!context.intent && !context.requestType) return;
 
     setFormData((previous) => ({
       ...previous,
-      serviceInterests: context.intent === "orientacao" ? [] : [context.intent],
-      needsServiceGuidance: context.intent === "orientacao"
+      ...(context.requestType ? { requestType: context.requestType } : {}),
+      ...(context.intent ? {
+        serviceInterests: context.intent === "orientacao" ? [] : [context.intent],
+        needsServiceGuidance: context.intent === "orientacao"
+      } : {})
     }));
   }, []);
 

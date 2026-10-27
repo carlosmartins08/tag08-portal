@@ -4,16 +4,15 @@ import { Sparkles, ArrowUpRight, Shield, ArrowRight, Layers, Percent, TrendingUp
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
-import TrackedOutboundLink from "../../../components/TrackedOutboundLink";
-import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
-import { trackSimulatorEvent } from "../../../lib/analytics";
+import { trackCtaClick, trackSimulatorEvent } from "../../../lib/analytics";
 import { calculateAffiliateCommission } from "../../../lib/simulators/affiliateCommission";
 
 interface ProgramaAfiliadosProps {
   onNavigate: (page: string) => void;
+  contactHref: string;
 }
 
-export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps) {
+export default function ProgramaAfiliados({ onNavigate, contactHref }: ProgramaAfiliadosProps) {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const trackedSimulatorActions = useRef(new Set<string>());
   
@@ -119,17 +118,14 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
               <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-transparent pointer-events-none" />
 
               <div className="absolute inset-0 flex items-center justify-center pointer-events-auto" style={{ transform: "translateZ(45px)" }}>
-                <TrackedOutboundLink
-                  href={buildBrazilWhatsAppUrl("Olá,%20gostaria%20de%20me%20cadastrar%20no%20Programa%20de%20Parceria%20da%20TAG08%20para%20fazer%20indicações!")}
-                  target="_blank"
-                  rel="noreferrer"
-                  label="Cadastrar no Programa de Parceria"
-                  surface="affiliate-hero"
+                <a
+                  href={contactHref}
+                  onClick={() => trackCtaClick({ cta_name: "Iniciar conversa sobre parceria", cta_location: "affiliate-hero", cta_type: "internal", page_path: "/programa-afiliados" })}
                   className="group min-h-11 bg-brand-secondary text-black font-sans font-black text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.35)] motion-safe:hover:scale-105 transition-[background-color,box-shadow,transform] duration-200 border border-brand-secondary hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-black flex items-center gap-2 cursor-pointer z-20"
                 >
-                  <span>CADASTRAR MINHA INDICAÇÃO</span>
+                  <span>INICIAR CONVERSA SOBRE PARCERIA</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-                </TrackedOutboundLink>
+                </a>
               </div>
 
               {/* Absolutes tags in corners */}
@@ -301,18 +297,17 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
                   Valores estimados com base nos tickets médios de referência de Branding, Desenvolvimento Web e Gestão de Redes Sociais. O valor real depende do contrato fechado e dos pagamentos compensados.
                 </p>
 
-                <TrackedOutboundLink
-                  href={buildBrazilWhatsAppUrl(`Olá,%20fiz%20uma%20simulação%20no%20site%20da%20TAG08!%20Gostaria%20de%20indicar%20oportunidades%20para%20Branding%20(${numBranding}%20proj),%20Sites%20(${numWebsites}%20proj)%20e%20Redes%20Sociais%20(${numRedesSociais}%20mensais).`)}
-                  target="_blank"
-                  rel="noreferrer"
-                  label="Enviar simulação do Programa de Parceria"
-                  surface="affiliate-simulator"
-                  onClick={() => trackAffiliateSimulator("cta_clicked")}
+                <a
+                  href={contactHref}
+                  onClick={() => {
+                    trackAffiliateSimulator("cta_clicked");
+                    trackCtaClick({ cta_name: "Falar sobre parceria", cta_location: "affiliate-simulator", cta_type: "internal", page_path: "/programa-afiliados" });
+                  }}
                   className="group min-h-11 w-full bg-brand-secondary text-black font-sans font-black text-xs uppercase tracking-widest py-3.5 px-6 rounded-full shadow-[0_15px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] flex items-center justify-center gap-1.5 motion-safe:hover:scale-[1.02] transition-[background-color,box-shadow,transform] duration-200 cursor-pointer text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900"
                 >
-                  <span>GARANTIR MINHAS INDICAÇÕES</span>
+                  <span>FALAR SOBRE PARCERIA</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </TrackedOutboundLink>
+                </a>
               </div>
             </div>
           </div>
@@ -458,17 +453,14 @@ export default function ProgramaAfiliados({ onNavigate }: ProgramaAfiliadosProps
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 z-10 relative">
-            <TrackedOutboundLink
-              href={buildBrazilWhatsAppUrl("Olá,%20acabei%20de%20acessar%20a%20página%20do%20Programa%20de%20Parceria%20e%20gostaria%20de%20me%20cadastrar.%20Quero%20entender%20as%20condições%20vigentes%20e%20enviar%20minhas%20indicações.")}
-              target="_blank"
-              rel="noreferrer"
-              label="Entrar no Programa de Parceria"
-              surface="affiliate-final-cta"
+            <a
+              href={contactHref}
+              onClick={() => trackCtaClick({ cta_name: "Entrar no Programa de Parceria", cta_location: "affiliate-final-cta", cta_type: "internal", page_path: "/programa-afiliados" })}
               className="group min-h-11 bg-brand-secondary text-black font-sans font-black text-xs uppercase tracking-widest py-4 px-10 rounded-full shadow-[0_20px_50px_rgba(var(--color-brand-secondary-rgb),0.3)] motion-safe:hover:scale-[1.02] transition-[background-color,box-shadow,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900 flex items-center gap-2 cursor-pointer"
             >
-              <span>QUERO ENTRAR NO PROGRAMA</span>
+              <span>CONVERSAR SOBRE PARCERIA</span>
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-                </TrackedOutboundLink>
+            </a>
           </div>
         </div>
       </section>

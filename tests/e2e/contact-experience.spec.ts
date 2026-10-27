@@ -12,6 +12,25 @@ test.describe("experiencia de contato", () => {
     });
   });
 
+  test("Programa de Parceria encaminha ao Contato com parceria preselecionada e editável", async ({ page }) => {
+    await page.goto("/programa-afiliados", { waitUntil: "domcontentloaded" });
+    const ctas = [
+      page.getByRole("link", { name: /INICIAR CONVERSA SOBRE PARCERIA/i }),
+      page.getByRole("link", { name: /FALAR SOBRE PARCERIA/i }),
+      page.getByRole("link", { name: /CONVERSAR SOBRE PARCERIA/i })
+    ];
+    for (const cta of ctas) {
+      await expect(cta).toHaveAttribute("href", "/contato?origin=partnership-program&requestType=partnership");
+    }
+
+    await ctas[0].click();
+    await expect(page).toHaveURL(/\/contato\?origin=partnership-program&requestType=partnership$/);
+    const partnership = page.getByRole("radio", { name: /Quero propor uma parceria/ });
+    await expect(partnership).toBeChecked();
+    await page.getByRole("radio", { name: /Já sou cliente/ }).check();
+    await expect(partnership).not.toBeChecked();
+  });
+
   test("mantem acesso direto neutro e preseleciona somente contexto valido e editavel", async ({ page }) => {
     await page.goto("/contato", { waitUntil: "domcontentloaded" });
     const newProject = page.getByRole("radio", { name: /Quero iniciar um projeto/ });

@@ -13,6 +13,11 @@ test("parses only allowlisted intent and origin values", () => {
     origin: "offer"
   });
   assert.deepEqual(parseContactJourneyContext("?intent=not-real&origin=unknown"), {});
+  assert.deepEqual(parseContactJourneyContext("?requestType=existing_client&origin=unknown"), {});
+  assert.deepEqual(parseContactJourneyContext("?requestType=partnership&origin=partnership-program"), {
+    requestType: "partnership",
+    origin: "partnership-program"
+  });
 });
 
 test("maps approved family pages and independent Sebraetec origin", () => {
@@ -33,7 +38,10 @@ test("maps approved family pages and independent Sebraetec origin", () => {
   assert.deepEqual(getContactJourneyContextForPath("/sebraetec-impulsionando-empreendedores"), {
     origin: "sebraetec"
   });
-  assert.deepEqual(getContactJourneyContextForPath("/programa-afiliados"), {});
+  assert.deepEqual(getContactJourneyContextForPath("/programa-afiliados"), {
+    requestType: "partnership",
+    origin: "partnership-program"
+  });
 });
 
 test("adds context only to Contact and drops unapproved query fields", () => {
@@ -45,10 +53,19 @@ test("adds context only to Contact and drops unapproved query fields", () => {
     contextualizeContactTarget("/", "/contato?intent=branding&origin=home"),
     "/contato?intent=branding&origin=home"
   );
+  assert.equal(
+    contextualizeContactTarget("/programa-afiliados", "/contato"),
+    "/contato?origin=partnership-program&requestType=partnership"
+  );
+  assert.equal(
+    contextualizeContactTarget("/programa-afiliados", "/contato?requestType=existing_client&campaign=untrusted"),
+    "/contato?origin=partnership-program"
+  );
   assert.equal(contextualizeContactTarget("/", "/servicos?debug=drop-me"), "/servicos");
 });
 
 test("encodes controlled origin in the existing source field", () => {
   assert.equal(getContactJourneyOriginSource("sebraetec"), "contact-page:sebraetec");
+  assert.equal(getContactJourneyOriginSource("partnership-program"), "contact-page:partnership-program");
   assert.equal(getContactJourneyOriginSource(), "contact-page");
 });

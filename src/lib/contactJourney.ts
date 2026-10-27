@@ -15,12 +15,16 @@ export const CONTACT_JOURNEY_INTENTS = [
 
 export type ContactJourneyIntent = typeof CONTACT_JOURNEY_INTENTS[number];
 
-export const CONTACT_JOURNEY_ORIGINS = ["home", "services", "offer", "sebraetec"] as const;
+export const CONTACT_JOURNEY_ORIGINS = ["home", "services", "offer", "sebraetec", "partnership-program"] as const;
 export type ContactJourneyOrigin = typeof CONTACT_JOURNEY_ORIGINS[number];
+
+export const CONTACT_JOURNEY_REQUEST_TYPES = ["partnership"] as const;
+export type ContactJourneyRequestType = typeof CONTACT_JOURNEY_REQUEST_TYPES[number];
 
 export type ContactJourneyContext = {
   intent?: ContactJourneyIntent;
   origin?: ContactJourneyOrigin;
+  requestType?: ContactJourneyRequestType;
 };
 
 const offerIntentByPath: Record<string, ContactJourneyIntent> = {
@@ -40,14 +44,19 @@ const isContactJourneyIntent = (value: string | null): value is ContactJourneyIn
 const isContactJourneyOrigin = (value: string | null): value is ContactJourneyOrigin =>
   value !== null && CONTACT_JOURNEY_ORIGINS.includes(value as ContactJourneyOrigin);
 
+const isContactJourneyRequestType = (value: string | null): value is ContactJourneyRequestType =>
+  value !== null && CONTACT_JOURNEY_REQUEST_TYPES.includes(value as ContactJourneyRequestType);
+
 export const parseContactJourneyContext = (search: string): ContactJourneyContext => {
   const params = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
   const intent = params.get("intent");
   const origin = params.get("origin");
+  const requestType = params.get("requestType");
 
   return {
     ...(isContactJourneyIntent(intent) ? { intent } : {}),
-    ...(isContactJourneyOrigin(origin) ? { origin } : {})
+    ...(isContactJourneyOrigin(origin) ? { origin } : {}),
+    ...(isContactJourneyRequestType(requestType) ? { requestType } : {})
   };
 };
 
@@ -57,6 +66,7 @@ export const getContactJourneyContextForPath = (currentPath: string): ContactJou
   if (canonicalPath === "/") return { intent: "orientacao", origin: "home" };
   if (canonicalPath === "/servicos") return { intent: "orientacao", origin: "services" };
   if (canonicalPath === "/sebraetec-impulsionando-empreendedores") return { origin: "sebraetec" };
+  if (canonicalPath === "/programa-afiliados") return { requestType: "partnership", origin: "partnership-program" };
 
   const intent = offerIntentByPath[canonicalPath];
   return intent ? { intent, origin: "offer" } : {};
@@ -66,6 +76,7 @@ const serializeContactJourneyContext = (context: ContactJourneyContext): string 
   const params = new URLSearchParams();
   if (context.intent) params.set("intent", context.intent);
   if (context.origin) params.set("origin", context.origin);
+  if (context.requestType) params.set("requestType", context.requestType);
   const query = params.toString();
   return query ? `?${query}` : "";
 };

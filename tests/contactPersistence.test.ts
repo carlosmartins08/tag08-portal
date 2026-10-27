@@ -201,3 +201,15 @@ test("non-commercial Contact requests remain on Sheets and are not routed to Pre
     assert.deepEqual(deliveries.map(({ target }) => target), ["GOOGLE_SHEETS"]);
   }
 });
+
+test("partnership Contact intake preserves its source in PostgreSQL/outbox without queuing ClickUp Pre-sales", async () => {
+  const { prisma, leads, deliveries } = createFakePrisma();
+  const partnershipPayload = { ...payload, requestType: "partnership" as const, source: "contact-page:partnership-program" };
+  const result = await persistContactLeadWithClient(prisma, partnershipPayload, "synthetic-partnership-intake");
+
+  assert.equal(result.created, true);
+  assert.equal(leads.length, 1);
+  assert.deepEqual(deliveries.map(({ target }) => target), ["GOOGLE_SHEETS"]);
+  assert.equal((deliveries[0].payload as { data: { requestType: string; source: string } }).data.requestType, "partnership");
+  assert.equal((deliveries[0].payload as { data: { source: string } }).data.source, "contact-page:partnership-program");
+});
