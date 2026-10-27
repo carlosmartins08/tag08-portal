@@ -1,6 +1,6 @@
 # Estado do projeto — TAG08
 
-Atualizado em: `2026-10-19`
+Atualizado em: `2026-10-27`
 
 ## Validacao da missao atual
 
@@ -22,6 +22,8 @@ Atualizado em: `2026-10-19`
 - No piloto da Home, 10 glows decorativos deixaram de usar o verde e passaram a usar neutros translúcidos; CTAs, foco e estados ativos foram preservados.
 
 ## Missão em andamento
+
+- Talentos: o formulário passou a aceitar múltiplas áreas e respostas adaptativas em contrato v2; o contrato v1 e o identificador legado de persistência foram preservados. TypeScript passou; testes de persistência e E2E foram adicionados/atualizados, mas não executaram neste ambiente devido a `spawn EPERM` no esbuild. Integrações externas continuam desativadas.
 
 - Home: removida a vitrine redundante de portfólio em validação, refinado o mapa de soluções e mantida a navegação dos cases. O conteúdo EN/ES existe apenas como rascunho gated; a prontidão permanece pendente de revisão linguística. Build e 94 testes E2E críticos passaram.
 - Onboarding: jornada autenticada por magic link para clientes de projetos/contratos confirmados; a interface pública não oferece modo de envio `tag08_team`, e a submissão permanece vinculada à sessão e à jornada autorizada. Contato e Banco de Talentos são canais públicos separados. EN/ES permanecem indisponíveis até revisão linguística. A validação posterior P1.2F.1 passou em 7/7 E2Es, com PostgreSQL sintético isolado.

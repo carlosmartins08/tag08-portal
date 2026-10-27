@@ -5,17 +5,21 @@ import { persistTalentApplicationWithClient } from "../server/submissionStore";
 import { talentApplicationSchema } from "../server/submissionContracts";
 
 const payload = talentApplicationSchema.parse({
-  vacancyId: "espontanea",
-  vacancyTitle: "Banco de Talentos / Candidatura Espontânea",
-  name: "Candidata Sintética",
-  email: "candidata@example.test",
+  contractVersion: 2,
+  interestAreas: ["sales_sdr", "design"],
+  name: "Synthetic Candidate",
+  email: "candidate@example.test",
   phone: "+5500000000000",
-  linkedin: "https://www.linkedin.com/in/candidata-sintetica",
+  linkedin: "",
+  resumeUrl: "",
   portfolio: "",
-  coverLetter: "Experiência sintética para validar idempotência.",
-  resumeFileName: "",
+  experienceSummary: "Synthetic experience for idempotency validation.",
+  availability: "To be agreed",
+  motivation: "Synthetic interest in future opportunities.",
+  relevantProjects: "Synthetic design project.",
+  relevantExperience: "Synthetic sales experience.",
   consent: true,
-  consentVersion: "talent-v1",
+  consentVersion: "talent-v2",
   locale: "pt",
   source: "talent-test"
 });
@@ -56,7 +60,35 @@ test("Talent replay with the same idempotency key and payload creates no duplica
   assert.equal(replay.id, first.id);
   assert.equal(replay.created, false);
   assert.equal(applications.length, 1);
+  assert.equal(applications[0].vacancyId, "espontanea");
+  assert.deepEqual((applications[0].payload as { interestAreas: string[] }).interestAreas, ["design", "sales_sdr"]);
   assert.deepEqual(deliveries.map(({ target }) => target).sort(), ["CLICKUP", "GOOGLE_SHEETS"]);
+  assert.ok(deliveries.every(({ payload: deliveryPayload }) => (deliveryPayload as { contractVersion: number }).contractVersion === 2));
+  assert.ok(deliveries.every(({ payload: deliveryPayload }) => (deliveryPayload as { interestAreas: string[] }).interestAreas.join(",") === "design,sales_sdr"));
+});
+
+test("legacy Talent v1 payload remains accepted and retains its vacancy identifier", async () => {
+  const legacyPayload = talentApplicationSchema.parse({
+    vacancyId: "copywriter",
+    vacancyTitle: "Copywriter",
+    name: "Legacy Candidate",
+    email: "legacy@example.test",
+    phone: "+5500000000000",
+    linkedin: "https://www.linkedin.com/in/legacy-candidate",
+    portfolio: "",
+    coverLetter: "Legacy synthetic application kept for compatibility.",
+    resumeFileName: "",
+    consent: true,
+    consentVersion: "talent-v1",
+    locale: "pt",
+    source: "legacy-test"
+  });
+  assert.equal("contractVersion" in legacyPayload, false);
+  const { prisma, applications, deliveries } = createFakePrisma();
+  await persistTalentApplicationWithClient(prisma, legacyPayload, "synthetic-talent-v1-key");
+  assert.equal(applications[0].vacancyId, "copywriter");
+  assert.equal((applications[0].payload as { vacancyTitle: string }).vacancyTitle, "Copywriter");
+  assert.equal(deliveries.length, 2);
 });
 
 test("Talent rejects reuse of an idempotency key with a changed payload", async () => {
@@ -64,7 +96,7 @@ test("Talent rejects reuse of an idempotency key with a changed payload", async 
   await persistTalentApplicationWithClient(prisma, payload, "synthetic-talent-key");
 
   await assert.rejects(
-    persistTalentApplicationWithClient(prisma, { ...payload, coverLetter: "Conteúdo alterado para o mesmo identificador." }, "synthetic-talent-key"),
+    persistTalentApplicationWithClient(prisma, { ...payload, motivation: "Conteúdo alterado para o mesmo identificador." }, "synthetic-talent-key"),
     /idempotency_key_conflict/
   );
   assert.equal(applications.length, 1);
@@ -89,7 +121,7 @@ test("concurrent Talent requests with one key and different payloads conflict wi
   const { prisma, applications, deliveries, getUniqueCollisions } = createFakePrisma();
   const results = await Promise.allSettled([
     persistTalentApplicationWithClient(prisma, payload, "synthetic-talent-conflict-key"),
-    persistTalentApplicationWithClient(prisma, { ...payload, coverLetter: "Conteúdo divergente na chamada concorrente." }, "synthetic-talent-conflict-key")
+    persistTalentApplicationWithClient(prisma, { ...payload, motivation: "Conteúdo divergente na chamada concorrente." }, "synthetic-talent-conflict-key")
   ]);
 
   assert.equal(getUniqueCollisions(), 1);
@@ -112,7 +144,7 @@ test("Talent API returns 409 for a changed-payload idempotency conflict", async 
 
   const first = await post(requestFor(payload));
   const replay = await post(requestFor(payload));
-  const conflict = await post(requestFor({ ...payload, coverLetter: "Conteúdo divergente na mesma chave." }));
+  const conflict = await post(requestFor({ ...payload, motivation: "Conteúdo divergente na mesma chave." }));
 
   assert.equal(first.status, 202);
   assert.equal((await replay.json()).replayed, true);

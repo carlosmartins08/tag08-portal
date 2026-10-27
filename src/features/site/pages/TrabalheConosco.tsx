@@ -18,6 +18,12 @@ import {
 import { trackFormError, trackFormStart, trackFormStep, trackFormSubmit, trackOutboundClick } from "../../../lib/analytics";
 import { queueFormSubmission } from "../../../lib/formQueue";
 import type { RouteLocale } from "../../../config/routeRegistry";
+import {
+  TALENT_COMMERCIAL_OPERATIONAL_AREAS,
+  TALENT_CREATIVE_TECHNICAL_AREAS,
+  TALENT_INTEREST_AREAS,
+  type TalentInterestArea
+} from "../../../types/talent";
 
 interface TalentApplicationContext {
   id: string;
@@ -29,8 +35,15 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
   const [formEmail, setFormEmail] = useState("");
   const [formPhone, setFormPhone] = useState("");
   const [formLinkedin, setFormLinkedin] = useState("");
+  const [formResumeUrl, setFormResumeUrl] = useState("");
   const [formPortfolio, setFormPortfolio] = useState("");
-  const [formCoverLetter, setFormCoverLetter] = useState("");
+  const [interestAreas, setInterestAreas] = useState<TalentInterestArea[]>([]);
+  const [otherSpecialty, setOtherSpecialty] = useState("");
+  const [experienceSummary, setExperienceSummary] = useState("");
+  const [availability, setAvailability] = useState("");
+  const [motivation, setMotivation] = useState("");
+  const [relevantProjects, setRelevantProjects] = useState("");
+  const [relevantExperience, setRelevantExperience] = useState("");
   
   // File Onboarding Wizard state
   const [currentStep, setCurrentStep] = useState(1);
@@ -43,6 +56,24 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
   const honeypotRef = useRef<HTMLInputElement>(null);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const hasCreativeTechnicalArea = interestAreas.some((area) => TALENT_CREATIVE_TECHNICAL_AREAS.includes(area));
+  const hasCommercialOperationalArea = interestAreas.some((area) => TALENT_COMMERCIAL_OPERATIONAL_AREAS.includes(area));
+
+  const toggleInterestArea = (area: TalentInterestArea, checked: boolean) => {
+    const nextAreas = checked
+      ? [...new Set([...interestAreas, area])]
+      : interestAreas.filter((selectedArea) => selectedArea !== area);
+    setInterestAreas(nextAreas);
+    setErrors((currentErrors) => {
+      const nextErrors = { ...currentErrors };
+      delete nextErrors.interestAreas;
+      delete nextErrors.otherSpecialty;
+      return nextErrors;
+    });
+    if (!nextAreas.includes("other_specialties")) setOtherSpecialty("");
+    if (!nextAreas.some((selectedArea) => TALENT_CREATIVE_TECHNICAL_AREAS.includes(selectedArea))) setRelevantProjects("");
+    if (!nextAreas.some((selectedArea) => TALENT_COMMERCIAL_OPERATIONAL_AREAS.includes(selectedArea))) setRelevantExperience("");
+  };
 
   useEffect(() => {
     if (currentStep > 1) {
@@ -61,40 +92,38 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
   const validateStep = (step: number): boolean => {
     const newErrors: Record<string, string> = {};
     if (step === 1) {
-      if (!formName.trim()) {
-        newErrors.name = "Nome é obrigatório";
-      }
-      if (!/^\S+@\S+\.\S+$/.test(formEmail.trim())) {
-        newErrors.email = "E-mail válido é obrigatório";
-      }
-      if (!formPhone.trim()) {
-        newErrors.phone = "Telefone é obrigatório";
-      }
+      if (interestAreas.length === 0) newErrors.interestAreas = "Selecione pelo menos uma \u00e1rea de interesse.";
+      if (interestAreas.includes("other_specialties") && !otherSpecialty.trim()) newErrors.otherSpecialty = "Descreva a especialidade que deseja indicar.";
+      if (!formName.trim()) newErrors.name = "Nome \u00e9 obrigat\u00f3rio";
+      if (!/^\S+@\S+\.\S+$/.test(formEmail.trim())) newErrors.email = "E-mail v\u00e1lido \u00e9 obrigat\u00f3rio";
+      if (!formPhone.trim()) newErrors.phone = "Telefone \u00e9 obrigat\u00f3rio";
     } else if (step === 2) {
-      try {
-        const linkedinUrl = new URL(formLinkedin.trim());
-        if (linkedinUrl.protocol !== "https:" || !["linkedin.com", "www.linkedin.com"].includes(linkedinUrl.hostname)) {
-          throw new Error("invalid_linkedin");
+      const validHttpsUrl = (value: string) => {
+        if (!value.trim()) return true;
+        try {
+          return new URL(value.trim()).protocol === "https:";
+        } catch {
+          return false;
         }
-      } catch {
-        newErrors.linkedin = "Insira uma URL válida do LinkedIn, começando por https://www.linkedin.com/";
+      };
+      if (formLinkedin.trim()) {
+        try {
+          const linkedinUrl = new URL(formLinkedin.trim());
+          if (linkedinUrl.protocol !== "https:" || !["linkedin.com", "www.linkedin.com"].includes(linkedinUrl.hostname)) throw new Error("invalid_linkedin");
+        } catch {
+          newErrors.linkedin = "Use um link v\u00e1lido do LinkedIn com HTTPS.";
+        }
       }
-    } else if (step === 3) {
-      if (!formCoverLetter.trim() || formCoverLetter.length < 20) {
-        newErrors.coverLetter = "Sua mini-carta de apresentação deve ter pelo menos 20 caracteres";
-      }
+      if (!validHttpsUrl(formResumeUrl)) newErrors.resumeUrl = "Use um link seguro (HTTPS) para o curr\u00edculo.";
+      if (!validHttpsUrl(formPortfolio)) newErrors.portfolio = "Use um link seguro (HTTPS) para o portf\u00f3lio.";
     }
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
       const firstInvalidField = Object.keys(newErrors)[0];
-      requestAnimationFrame(() => document.getElementById(`talent-${firstInvalidField === "coverLetter" ? "cover-letter" : firstInvalidField}`)?.focus());
-      trackFormError({
-        form_name: "talent_application",
-        form_surface: "talent-page",
-        error_count: Object.keys(newErrors).length,
-        page_path: "/trabalhe-conosco"
-      });
+      const focusTargets: Record<string, string> = { interestAreas: "talent-area-design", otherSpecialty: "talent-other-specialty", resumeUrl: "talent-resume-url" };
+      requestAnimationFrame(() => document.getElementById(focusTargets[firstInvalidField] || "talent-" + firstInvalidField)?.focus());
+      trackFormError({ form_name: "talent_application", form_surface: "talent-page", error_count: Object.keys(newErrors).length, page_path: "/trabalhe-conosco" });
     }
     return Object.keys(newErrors).length === 0;
   };
@@ -123,11 +152,6 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
   const handlePrevStep = () => {
     setErrors({});
     setCurrentStep(prev => Math.max(1, prev - 1));
-  };
-
-  const talentPath: TalentApplicationContext = {
-    id: "espontanea",
-    title: "Banco de Talentos / Candidatura Espontânea"
   };
 
   const handleApply = () => {
@@ -175,18 +199,23 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
     try {
       const idempotencyKey = globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
       const payload = {
-        vacancyId: talentPath.id,
-        vacancyTitle: talentPath.title,
+        contractVersion: 2,
+        interestAreas: TALENT_INTEREST_AREAS.filter(({ value }) => interestAreas.includes(value)).map(({ value }) => value),
+        ...(interestAreas.includes("other_specialties") ? { otherSpecialty } : {}),
         name: formName,
         email: formEmail,
         phone: formPhone,
         linkedin: formLinkedin,
+        resumeUrl: formResumeUrl,
         portfolio: formPortfolio,
-        coverLetter: formCoverLetter,
-        resumeFileName: "",
-        website: honeypotRef.current?.value || "",
+        experienceSummary,
+        availability,
+        motivation,
+        ...(hasCreativeTechnicalArea ? { relevantProjects } : {}),
+        ...(hasCommercialOperationalArea ? { relevantExperience } : {}),
+        ...(honeypotRef.current?.value ? { website: honeypotRef.current.value } : {}),
         consent,
-        consentVersion: "talent-v1",
+        consentVersion: "talent-v2",
         locale,
         source: "talent-page"
       };
@@ -211,8 +240,15 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
       setFormEmail("");
       setFormPhone("");
       setFormLinkedin("");
+      setFormResumeUrl("");
       setFormPortfolio("");
-      setFormCoverLetter("");
+      setInterestAreas([]);
+      setOtherSpecialty("");
+      setExperienceSummary("");
+      setAvailability("");
+      setMotivation("");
+      setRelevantProjects("");
+      setRelevantExperience("");
       setConsent(false);
       trackFormSubmit({
         form_name: "talent_application",
@@ -756,19 +792,19 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                   {/* Header text containing dynamic personalization */}
                   <div className="space-y-1 text-left">
                     <span className="tag08-meta text-xs text-brand bg-black px-2 py-0.5 rounded font-black uppercase tracking-widest inline-block">
-                      ETAPA {currentStep} DE 4 · {currentStep === 1 ? "DADOS PESSOAIS" : currentStep === 2 ? "LINKS PROFISSIONAIS" : currentStep === 3 ? "APRESENTAÇÃO & EVIDÊNCIAS" : "REVISÃO FINAL"}
+                      ETAPA {currentStep} DE 4 ? {currentStep === 1 ? "AREAS E DADOS" : currentStep === 2 ? "LINKS OPCIONAIS" : currentStep === 3 ? "EXPERIENCIA E CONTEXTO" : "REVISAO FINAL"}
                     </span>
                     <h2 ref={stepHeadingRef} tabIndex={-1} className="font-display font-black text-2xl text-zinc-900 tracking-tight focus:outline-none">
-                      {currentStep === 1 ? "Identificação Primária" : currentStep === 2 ? "Presença na Web" : currentStep === 3 ? "Ficha & Conquistas" : "Revise sua candidatura"}
+                      {currentStep === 1 ? "Areas e dados" : currentStep === 2 ? "Links opcionais" : currentStep === 3 ? "Experiencia e contexto" : "Revise sua candidatura"}
                     </h2>
                     <p className="text-zinc-700 text-xs">
-                      {currentStep === 1 
-                        ? "Apresente sua trajetória para integrar o Banco de Talentos da TAG08."
+                      {currentStep === 1
+                        ? "Escolha uma ou mais areas e informe seus dados."
                         : currentStep === 2
-                          ? `Excelente, ${formName.split(" ")[0]}! Agora, compartilhe os links onde seu trabalho é exposto.`
+                          ? "LinkedIn, curriculo e portfolio sao opcionais."
                           : currentStep === 3
-                            ? `Quase lá! Para finalizar, compartilhe uma apresentação profissional e seus principais cases.`
-                            : "Confira seus dados e edite qualquer etapa antes do envio."}
+                            ? "Compartilhe apenas o contexto profissional que considerar relevante."
+                            : "Confira os dados e edite qualquer etapa antes do envio."}
                     </p>
                   </div>
                 </div>
@@ -791,6 +827,48 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
                         className="space-y-4"
                       >
+                        <fieldset className="space-y-3 text-left" aria-describedby={errors.interestAreas ? "talent-interest-areas-error" : undefined}>
+                          <legend className="text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
+                            Áreas de interesse * <span className="normal-case tracking-normal font-normal">(selecione uma ou mais)</span>
+                          </legend>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            {TALENT_INTEREST_AREAS.map(({ value, label }) => (
+                              <label key={value} htmlFor={`talent-area-${value}`} className="flex min-h-11 items-center gap-3 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-800 cursor-pointer focus-within:ring-2 focus-within:ring-brand">
+                                <input
+                                  id={`talent-area-${value}`}
+                                  type="checkbox"
+                                  name="interestAreas"
+                                  value={value}
+                                  checked={interestAreas.includes(value)}
+                                  onChange={(event) => toggleInterestArea(value, event.target.checked)}
+                                  aria-invalid={Boolean(errors.interestAreas)}
+                                  aria-describedby={errors.interestAreas ? "talent-interest-areas-error" : undefined}
+                                  className="h-4 w-4 shrink-0 accent-[var(--color-brand)]"
+                                />
+                                <span>{label}</span>
+                              </label>
+                            ))}
+                          </div>
+                          {errors.interestAreas ? <p id="talent-interest-areas-error" role="alert" className="text-xs text-red-600">{errors.interestAreas}</p> : null}
+                        </fieldset>
+
+                        {interestAreas.includes("other_specialties") ? (
+                          <div className="space-y-1.5 text-left">
+                            <label htmlFor="talent-other-specialty" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">Qual especialidade?</label>
+                            <input
+                              id="talent-other-specialty"
+                              type="text"
+                              maxLength={120}
+                              value={otherSpecialty}
+                              onChange={(event) => setOtherSpecialty(event.target.value)}
+                              aria-invalid={Boolean(errors.otherSpecialty)}
+                              aria-describedby={errors.otherSpecialty ? "talent-other-specialty-error" : undefined}
+                              className="w-full bg-white border border-zinc-200 rounded-xl py-3 px-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                            />
+                            {errors.otherSpecialty ? <p id="talent-other-specialty-error" role="alert" className="text-xs text-red-600">{errors.otherSpecialty}</p> : null}
+                          </div>
+                        ) : null}
+
                         <div id="field-name" className="space-y-1.5 text-left">
                           <label htmlFor="talent-name" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
                             Nome Completo *
@@ -879,7 +957,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       >
                         <div id="field-linkedin" className="space-y-1.5 text-left">
                           <label htmlFor="talent-linkedin" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
-                            Perfil do LinkedIn *
+                            Perfil do LinkedIn (opcional)
                           </label>
                           <div className="relative">
                             <Linkedin className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400" />
@@ -888,7 +966,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                               type="url"
                               name="linkedin"
                               autoComplete="url"
-                              placeholder="Ex: linkedin.com/in/seunome"
+                              placeholder="https://www.linkedin.com/in/seunome"
                               value={formLinkedin}
                               onChange={(e) => setFormLinkedin(e.target.value)}
                               aria-invalid={Boolean(errors.linkedin)}
@@ -899,6 +977,23 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                             />
                           </div>
                           {errors.linkedin && <span id="talent-linkedin-error" role="alert" className="text-red-500 text-xs font-sans block mt-1">{errors.linkedin}</span>}
+                        </div>
+
+                        <div className="space-y-1.5 text-left">
+                          <label htmlFor="talent-resume-url" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">Link do currículo (opcional)</label>
+                          <input
+                            id="talent-resume-url"
+                            type="url"
+                            name="resumeUrl"
+                            autoComplete="url"
+                            placeholder="https://..."
+                            value={formResumeUrl}
+                            onChange={(event) => setFormResumeUrl(event.target.value)}
+                            aria-invalid={Boolean(errors.resumeUrl)}
+                            aria-describedby={errors.resumeUrl ? "talent-resume-url-error" : undefined}
+                            className="w-full bg-white border border-zinc-200 rounded-xl py-3 px-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                          />
+                          {errors.resumeUrl ? <p id="talent-resume-url-error" role="alert" className="text-xs text-red-600">{errors.resumeUrl}</p> : null}
                         </div>
 
                         <div className="space-y-1.5 text-left">
@@ -936,31 +1031,33 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         className="space-y-4"
                       >
                         <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-left">
-                          <p className="text-xs tag08-meta font-bold uppercase tracking-widest text-zinc-700">Apresentação e evidências</p>
-                          <p className="mt-1 text-xs leading-relaxed text-zinc-700">
-                            Nesta etapa não recebemos arquivos. Use o LinkedIn, o portfólio e esta apresentação para que a equipe avalie sua experiência com segurança.
-                          </p>
+                          <p className="text-xs tag08-meta font-bold uppercase tracking-widest text-zinc-700">Experi&ecirc;ncia e contexto</p>
+                          <p className="mt-1 text-xs leading-relaxed text-zinc-700">Compartilhe apenas o que considerar relevante. N&atilde;o recebemos arquivos nesta etapa.</p>
                         </div>
-
-                        {/* Miniature Pitch Letter */}
-                        <div id="field-coverLetter" className="space-y-1.5 text-left">
-                          <label htmlFor="talent-cover-letter" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
-                            Diferencial &amp; Foco em Resultados *
-                          </label>
-                          <textarea
-                            id="talent-cover-letter"
-                            rows={3}
-                            placeholder="Conte em poucas linhas seus maiores cases de conversão sólida ou reestruturação estética..."
-                            value={formCoverLetter}
-                            onChange={(e) => setFormCoverLetter(e.target.value)}
-                            aria-invalid={Boolean(errors.coverLetter)}
-                            aria-describedby={errors.coverLetter ? "talent-cover-letter-error" : undefined}
-                            className={`w-full bg-white border rounded-xl p-3 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans leading-relaxed ${
-                              errors.coverLetter ? "border-red-500" : "border-zinc-200"
-                            }`}
-                          />
-                          {errors.coverLetter && <span id="talent-cover-letter-error" role="alert" className="text-red-500 text-xs font-sans block mt-1">{errors.coverLetter}</span>}
+                        <div className="space-y-1.5 text-left">
+                          <label htmlFor="talent-experience-summary" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">Experi&ecirc;ncia profissional (opcional)</label>
+                          <textarea id="talent-experience-summary" rows={3} maxLength={1000} value={experienceSummary} onChange={(event) => setExperienceSummary(event.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl p-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand" />
                         </div>
+                        <div className="space-y-1.5 text-left">
+                          <label htmlFor="talent-availability" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">Disponibilidade (opcional)</label>
+                          <input id="talent-availability" type="text" maxLength={240} value={availability} onChange={(event) => setAvailability(event.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl py-3 px-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand" />
+                        </div>
+                        <div className="space-y-1.5 text-left">
+                          <label htmlFor="talent-motivation" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">O que motiva seu interesse? (opcional)</label>
+                          <textarea id="talent-motivation" rows={2} maxLength={1000} value={motivation} onChange={(event) => setMotivation(event.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl p-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand" />
+                        </div>
+                        {hasCreativeTechnicalArea ? (
+                          <div className="space-y-1.5 text-left">
+                            <label htmlFor="talent-relevant-projects" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">Trabalhos ou projetos relevantes (opcional)</label>
+                            <textarea id="talent-relevant-projects" rows={3} maxLength={2000} value={relevantProjects} onChange={(event) => setRelevantProjects(event.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl p-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand" />
+                          </div>
+                        ) : null}
+                        {hasCommercialOperationalArea ? (
+                          <div className="space-y-1.5 text-left">
+                            <label htmlFor="talent-relevant-experience" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">Conte brevemente uma experi&ecirc;ncia relacionada &agrave;s &aacute;reas (opcional)</label>
+                            <textarea id="talent-relevant-experience" rows={3} maxLength={1200} value={relevantExperience} onChange={(event) => setRelevantExperience(event.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl p-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand" />
+                          </div>
+                        ) : null}
                         <label htmlFor="talent-consent" className="flex items-start gap-2 text-left text-xs text-zinc-700 cursor-pointer">
                           <input
                             type="checkbox"
@@ -998,6 +1095,8 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                             <div><dt className="font-bold">Nome</dt><dd>{formName}</dd></div>
                             <div><dt className="font-bold">E-mail</dt><dd>{formEmail}</dd></div>
                             <div><dt className="font-bold">Telefone</dt><dd>{formPhone}</dd></div>
+                            <div><dt className="font-bold">Áreas de interesse</dt><dd>{TALENT_INTEREST_AREAS.filter(({ value }) => interestAreas.includes(value)).map(({ label }) => label).join(", ")}</dd></div>
+                            {otherSpecialty.trim() ? <div><dt className="font-bold">Outra especialidade</dt><dd>{otherSpecialty}</dd></div> : null}
                           </dl>
                         </div>
 
@@ -1007,7 +1106,8 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                             <button type="button" onClick={() => setCurrentStep(2)} className="min-h-11 rounded-lg px-3 text-xs font-bold text-zinc-700 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand" aria-label="Editar links profissionais">Editar</button>
                           </div>
                           <dl className="mt-2 grid gap-2 text-xs text-zinc-700">
-                            <div><dt className="font-bold">LinkedIn</dt><dd className="break-all">{formLinkedin}</dd></div>
+                            {formLinkedin.trim() ? <div><dt className="font-bold">LinkedIn</dt><dd className="break-all">{formLinkedin}</dd></div> : null}
+                            {formResumeUrl.trim() ? <div><dt className="font-bold">Currículo</dt><dd className="break-all">{formResumeUrl}</dd></div> : null}
                             {formPortfolio.trim() ? <div><dt className="font-bold">Portfólio</dt><dd className="break-all">{formPortfolio}</dd></div> : null}
                           </dl>
                         </div>
@@ -1015,9 +1115,15 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         <div className="rounded-2xl border border-zinc-200 bg-white p-4 text-left">
                           <div className="flex items-center justify-between gap-3">
                             <h3 className="font-display text-lg font-bold text-zinc-900">Apresentação</h3>
-                            <button type="button" onClick={() => setCurrentStep(3)} className="min-h-11 rounded-lg px-3 text-xs font-bold text-zinc-700 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand" aria-label="Editar apresentação">Editar</button>
+                            <button type="button" onClick={() => setCurrentStep(3)} className="min-h-11 rounded-lg px-3 text-xs font-bold text-zinc-700 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand" aria-label="Editar contexto profissional">Editar</button>
                           </div>
-                          <p className="mt-2 whitespace-pre-wrap text-xs text-zinc-700">{formCoverLetter}</p>
+                          <dl className="mt-2 grid gap-2 text-xs text-zinc-700">
+                            {experienceSummary.trim() ? <div><dt className="font-bold">Experiência</dt><dd className="whitespace-pre-wrap">{experienceSummary}</dd></div> : null}
+                            {availability.trim() ? <div><dt className="font-bold">Disponibilidade</dt><dd>{availability}</dd></div> : null}
+                            {motivation.trim() ? <div><dt className="font-bold">Motivação</dt><dd className="whitespace-pre-wrap">{motivation}</dd></div> : null}
+                            {relevantProjects.trim() ? <div><dt className="font-bold">Trabalhos ou projetos relevantes</dt><dd className="whitespace-pre-wrap">{relevantProjects}</dd></div> : null}
+                            {relevantExperience.trim() ? <div><dt className="font-bold">Experiência relacionada</dt><dd className="whitespace-pre-wrap">{relevantExperience}</dd></div> : null}
+                          </dl>
                           <p className="mt-3 text-xs text-zinc-600">Consentimento para consideração em oportunidades futuras: confirmado.</p>
                         </div>
                       </motion.div>
@@ -1060,7 +1166,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       disabled={submitting}
                       className="inline-flex min-h-11 w-full sm:w-auto items-center justify-center gap-1.5 px-6 py-3 bg-brand hover:bg-brand-dark disabled:hover:bg-brand text-black font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-[background-color,box-shadow] duration-200 shadow-[0_4px_12px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      {submitting ? "Enviando..." : "Enviar informações"} <Send className="w-3.5 h-3.5 shrink-0" />
+                      {submitting ? "Enviando..." : "Enviar candidatura"} <Send className="w-3.5 h-3.5 shrink-0" />
                     </button>
                   )}
                 </div>

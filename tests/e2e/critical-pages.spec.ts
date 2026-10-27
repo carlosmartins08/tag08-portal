@@ -633,58 +633,85 @@ test.describe("regressões de responsividade e movimento", () => {
     }
   });
 
-  test("formulário envia candidatura espontânea e confirma somente o registro", async ({ page }) => {
+  test("Talent v2 submits multiple areas and preserves adaptive answers", async ({ page }) => {
     let submittedPayload: Record<string, unknown> | undefined;
     await page.route("**/api/talent-applications", async (route) => {
       submittedPayload = route.request().postDataJSON() as Record<string, unknown>;
-      await route.fulfill({
-        status: 202,
-        contentType: "application/json",
-        body: JSON.stringify({ ok: true, applicationId: "synthetic-application", status: "accepted" })
-      });
+      await route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ ok: true, applicationId: "synthetic-application", status: "accepted" }) });
     });
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/trabalhe-conosco", { waitUntil: "domcontentloaded" });
     await page.locator("#talent-name").waitFor();
-    await page.waitForTimeout(750);
     await page.getByRole("link", { name: "Enviar meu perfil", exact: true }).first().click();
-    await page.getByLabel("Nome Completo *").fill("Pessoa Sintética QA");
+
+    await page.getByRole("button", { name: /Continuar/ }).click();
+    await expect(page.getByRole("alert").filter({ hasText: /Selecione pelo menos uma/ })).toBeVisible();
+    await page.locator("#talent-area-design").check();
+    await page.locator("#talent-area-technology_development").check();
+    await page.locator("#talent-area-sales_sdr").check();
+    await page.locator("#talent-area-other_specialties").check();
+    await page.getByLabel("Qual especialidade?").fill("Pesquisa de usuarios");
+    await page.getByLabel("Nome Completo *").fill("Pessoa Sintetica QA");
     await page.getByLabel("E-mail de Contato *").fill("qa@example.test");
     await page.getByLabel("WhatsApp de Contato *").fill("+5500000000000");
-    await expect(page.getByLabel("Nome Completo *")).toHaveValue("Pessoa Sintética QA");
     await page.getByRole("button", { name: /Continuar/ }).click();
-    await page.getByLabel("Perfil do LinkedIn *").fill("https://www.linkedin.com/in/pessoa-sintetica");
+
+    await expect(page.getByLabel(/Perfil do LinkedIn/)).toBeVisible();
     await page.getByRole("button", { name: /Continuar/ }).click();
-    await page.getByLabel("Diferencial & Foco em Resultados *").fill("Experiência sintética para validar a candidatura ao banco de talentos.");
-    await page.getByRole("checkbox").check();
+    await page.getByLabel(/Experi.ncia profissional/).fill("Experiencia sintetica em projetos.");
+    await page.getByLabel("Disponibilidade (opcional)").fill("A combinar");
+    await page.getByLabel(/O que motiva seu interesse/).fill("Interesse em colaborar em oportunidades futuras.");
+    await page.getByLabel(/Trabalhos ou projetos relevantes/).fill("Projeto sintetico de design.");
+    await page.getByLabel(/Conte brevemente uma experi.ncia relacionada/).fill("Experiencia sintetica em vendas.");
+    await expect(page.getByLabel(/Trabalhos ou projetos relevantes/)).toBeVisible();
+    await expect(page.getByLabel(/Conte brevemente uma experi.ncia relacionada/)).toBeVisible();
+    await page.getByRole("checkbox", { name: /Autorizo o uso destes dados/ }).check();
     await page.getByRole("button", { name: "Revisar candidatura" }).click();
 
     const review = page.getByTestId("talent-application-review");
     await expect(review).toBeVisible();
-    await expect(review).toContainText("Pessoa Sintética QA");
-    await expect(review).toContainText("qa@example.test");
-    await expect(review).toContainText("Experiência sintética para validar a candidatura ao banco de talentos.");
+    await expect(review).toContainText("Design, Tecnologia e Desenvolvimento, Comercial e SDR, Outras Especialidades");
+    await expect(review).toContainText("Projeto sintetico de design.");
+    await expect(review).toContainText("Experiencia sintetica em vendas.");
     expect(submittedPayload).toBeUndefined();
+    for (const width of [390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBeTruthy();
+    }
 
     await page.getByRole("button", { name: "Editar dados pessoais" }).click();
-    await expect(page.getByLabel("Nome Completo *")).toHaveValue("Pessoa Sintética QA");
+    await expect(page.locator("#talent-area-design")).toBeChecked();
+    await expect(page.locator("#talent-area-technology_development")).toBeChecked();
+    await expect(page.getByLabel("Qual especialidade?")).toHaveValue("Pesquisa de usuarios");
+    await expect(page.getByLabel("Nome Completo *")).toHaveValue("Pessoa Sintetica QA");
     await page.getByRole("button", { name: /Continuar/ }).click();
-    await expect(page.getByLabel("Perfil do LinkedIn *")).toHaveValue("https://www.linkedin.com/in/pessoa-sintetica");
     await page.getByRole("button", { name: /Continuar/ }).click();
-    await expect(page.getByLabel("Diferencial & Foco em Resultados *")).toHaveValue("Experiência sintética para validar a candidatura ao banco de talentos.");
+    await expect(page.getByLabel(/Trabalhos ou projetos relevantes/)).toHaveValue("Projeto sintetico de design.");
+    await page.getByLabel(/O que motiva seu interesse/).fill("Motivacao revisada.");
     await page.getByRole("button", { name: "Revisar candidatura" }).click();
-    await page.getByRole("button", { name: "Enviar informações" }).click();
+    await expect(review).toContainText("Motivacao revisada.");
+    await page.getByRole("button", { name: "Enviar candidatura" }).click();
 
     const success = page.getByTestId("talent-application-success");
-    await expect(success).toContainText(/Suas informações foram enviadas com sucesso/);
-    await expect(success).not.toContainText(/Recebemos|leitura humana|triagem concluída|contratação garantida/i);
+    await expect(success).toContainText("Candidatura enviada!");
+    await expect(success).not.toContainText(/triagem concluida|contratacao garantida/i);
     expect(submittedPayload).toMatchObject({
-      vacancyId: "espontanea",
-      vacancyTitle: "Banco de Talentos / Candidatura Espontânea",
+      contractVersion: 2,
+      interestAreas: ["design", "technology_development", "sales_sdr", "other_specialties"],
+      otherSpecialty: "Pesquisa de usuarios",
+      experienceSummary: "Experiencia sintetica em projetos.",
+      availability: "A combinar",
+      motivation: "Motivacao revisada.",
+      relevantProjects: "Projeto sintetico de design.",
+      relevantExperience: "Experiencia sintetica em vendas.",
       consent: true,
+      consentVersion: "talent-v2",
       source: "talent-page"
     });
+    expect(submittedPayload).not.toHaveProperty("vacancyId");
+    expect(submittedPayload).not.toHaveProperty("vacancyTitle");
+    expect(submittedPayload).not.toHaveProperty("resumeFileName");
     await expect(page.getByText(/Retornaremos em breve|triagem.*consolidada/i)).toHaveCount(0);
   });
 

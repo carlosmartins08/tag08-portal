@@ -1,5 +1,10 @@
 import { z } from "zod";
 import { PARTNERSHIP_MODALITY_VALUES } from "../src/types";
+import {
+  TALENT_COMMERCIAL_OPERATIONAL_AREAS,
+  TALENT_CREATIVE_TECHNICAL_AREAS,
+  TALENT_INTEREST_AREA_VALUES
+} from "../src/types/talent";
 
 const boundedText = (max: number) => z.string().trim().min(1).max(max);
 const optionalText = (max: number) => z.string().trim().max(max).optional().default("");
@@ -51,7 +56,7 @@ export const contactLeadSchema = z.object({
   }
 });
 
-export const talentApplicationSchema = z.object({
+const talentApplicationV1Schema = z.object({
   vacancyId: boundedText(120),
   vacancyTitle: boundedText(220),
   name: boundedText(160),
@@ -67,6 +72,66 @@ export const talentApplicationSchema = z.object({
   source,
   utm
 });
+
+const optionalHttpsUrl = z.string().trim().refine((value) => {
+  if (!value) return true;
+  try {
+    return new URL(value).protocol === "https:";
+  } catch {
+    return false;
+  }
+}, "URL must use HTTPS").optional().default("");
+
+const optionalLinkedInUrl = optionalHttpsUrl.refine((value) => {
+  if (!value) return true;
+  try {
+    return ["linkedin.com", "www.linkedin.com"].includes(new URL(value).hostname);
+  } catch {
+    return false;
+  }
+}, "LinkedIn URL must use linkedin.com");
+
+const talentApplicationV2Schema = z.object({
+  contractVersion: z.literal(2),
+  interestAreas: z.array(z.enum(TALENT_INTEREST_AREA_VALUES))
+    .min(1)
+    .max(TALENT_INTEREST_AREA_VALUES.length)
+    .refine((values) => new Set(values).size === values.length, "Interest areas must be unique")
+    .transform((values) => [...values].sort((left, right) => TALENT_INTEREST_AREA_VALUES.indexOf(left) - TALENT_INTEREST_AREA_VALUES.indexOf(right))),
+  otherSpecialty: optionalText(120),
+  name: boundedText(160),
+  email,
+  phone,
+  linkedin: optionalLinkedInUrl,
+  resumeUrl: optionalHttpsUrl,
+  portfolio: optionalHttpsUrl,
+  experienceSummary: optionalText(1000),
+  availability: optionalText(240),
+  motivation: optionalText(1000),
+  relevantProjects: optionalText(2000),
+  relevantExperience: optionalText(1200),
+  consent: z.literal(true),
+  consentVersion,
+  locale,
+  source,
+  utm
+}).strict().superRefine((payload, context) => {
+  const areas = new Set(payload.interestAreas);
+  if (areas.has("other_specialties") && !payload.otherSpecialty) {
+    context.addIssue({ code: "custom", path: ["otherSpecialty"], message: "Describe the selected specialty." });
+  }
+  if (!areas.has("other_specialties") && payload.otherSpecialty) {
+    context.addIssue({ code: "custom", path: ["otherSpecialty"], message: "A specialty description requires the other-specialties area." });
+  }
+  if (!payload.interestAreas.some((area) => TALENT_CREATIVE_TECHNICAL_AREAS.includes(area)) && payload.relevantProjects) {
+    context.addIssue({ code: "custom", path: ["relevantProjects"], message: "Project details require a creative or technical interest area." });
+  }
+  if (!payload.interestAreas.some((area) => TALENT_COMMERCIAL_OPERATIONAL_AREAS.includes(area)) && payload.relevantExperience) {
+    context.addIssue({ code: "custom", path: ["relevantExperience"], message: "Experience details require a commercial or operational interest area." });
+  }
+});
+
+export const talentApplicationSchema = z.union([talentApplicationV1Schema, talentApplicationV2Schema]);
 
 export type ContactLeadInput = z.infer<typeof contactLeadSchema>;
 export type TalentApplicationInput = z.infer<typeof talentApplicationSchema>;

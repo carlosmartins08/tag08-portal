@@ -122,3 +122,67 @@ test("talent contract requires professional links and consent", () => {
   assert.equal(talentApplicationSchema.safeParse({ ...validTalent, linkedin: "not-a-url" }).success, false);
   assert.equal(talentApplicationSchema.safeParse({ ...validTalent, consent: false }).success, false);
 });
+
+test("talent v2 accepts multiple areas and optional links while preserving the legacy contract", () => {
+  const parsed = talentApplicationSchema.parse({
+    contractVersion: 2,
+    interestAreas: ["sales_sdr", "design"],
+    name: "Ana Pessoa",
+    email: "ANA@EXAMPLE.COM",
+    phone: "+55 (83) 99999-9999",
+    linkedin: "",
+    resumeUrl: "",
+    portfolio: "",
+    experienceSummary: "Experiência sintética.",
+    availability: "A combinar",
+    motivation: "Interesse em colaborar.",
+    consent: true,
+    consentVersion: "talent-v2",
+    locale: "pt",
+    source: "test"
+  });
+
+  assert.equal("contractVersion" in parsed ? parsed.contractVersion : undefined, 2);
+  if ("contractVersion" in parsed) {
+    assert.deepEqual(parsed.interestAreas, ["design", "sales_sdr"]);
+    assert.equal(parsed.linkedin, "");
+    assert.equal(parsed.resumeUrl, "");
+    assert.equal(parsed.portfolio, "");
+  }
+  assert.equal(talentApplicationSchema.safeParse(validTalent).success, true);
+});
+
+test("talent v2 validates unique areas, Other details, conditional prompts and HTTPS links", () => {
+  const base = {
+    contractVersion: 2,
+    interestAreas: ["design", "technology_development"],
+    name: "Ana Pessoa",
+    email: "ana@example.com",
+    phone: "+55 83 99999-9999",
+    consent: true,
+    consentVersion: "talent-v2",
+    locale: "pt",
+    source: "test"
+  };
+
+  assert.equal(talentApplicationSchema.safeParse({ ...base, interestAreas: [] }).success, false);
+  assert.equal(talentApplicationSchema.safeParse({ ...base, interestAreas: ["design", "design"] }).success, false);
+  assert.equal(talentApplicationSchema.safeParse({ ...base, interestAreas: ["other_specialties"] }).success, false);
+  assert.equal(talentApplicationSchema.safeParse({ ...base, interestAreas: ["sales_sdr"], relevantProjects: "Projeto fora do contexto" }).success, false);
+  assert.equal(talentApplicationSchema.safeParse({ ...base, interestAreas: ["design"], relevantExperience: "Experiência comercial fora do contexto" }).success, false);
+  assert.equal(talentApplicationSchema.safeParse({ ...base, interestAreas: ["design"], portfolio: "http://portfolio.example.test" }).success, false);
+
+  const withOther = talentApplicationSchema.parse({
+    ...base,
+    interestAreas: ["other_specialties", "administrative_operations"],
+    otherSpecialty: "Pesquisa de usuários",
+    linkedin: "https://www.linkedin.com/in/ana-pessoa",
+    resumeUrl: "https://files.example.test/cv",
+    relevantExperience: "Experiência sintética em operações."
+  });
+  assert.equal("contractVersion" in withOther, true);
+  if ("contractVersion" in withOther) {
+    assert.deepEqual(withOther.interestAreas, ["administrative_operations", "other_specialties"]);
+    assert.equal(withOther.otherSpecialty, "Pesquisa de usuários");
+  }
+});

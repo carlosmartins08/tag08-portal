@@ -121,7 +121,8 @@ export const persistTalentApplicationWithClient = async (
           payload: JSON.parse(JSON.stringify(payload)),
           name: payload.name,
           email: payload.email,
-          vacancyId: payload.vacancyId,
+          // Keep the required legacy column without treating an interest area as a vacancy.
+          vacancyId: "contractVersion" in payload ? "espontanea" : payload.vacancyId,
           locale: payload.locale,
           consentVersion: payload.consentVersion,
           source: payload.source,
