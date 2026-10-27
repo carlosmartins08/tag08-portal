@@ -1154,7 +1154,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                   {currentStep < 4 ? (
                     <button
                       type="button"
-                      onClick={handleNextStep}
+                      onClick={(event) => { event.preventDefault(); handleNextStep(); }}
                       className="inline-flex min-h-11 w-full sm:w-auto items-center justify-center gap-1.5 px-6 py-3 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-[background-color] duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
                     >
                       {currentStep === 3 ? "Revisar candidatura" : "Continuar"} <ArrowRight className="w-3.5 h-3.5 text-brand" />
