@@ -102,7 +102,7 @@ const contactPayload = (marker) => ({
   name: "TAG08 QA Contact Synthetic",
   company: "TAG08 QA Synthetic",
   whatsapp: "+5500000000000",
-  email: `contact-${marker}@synthetic.invalid`,
+  email: `contact-${marker.replace(/:/g, "-")}@synthetic.invalid`,
   service: "strategy",
   stage: "synthetic-test",
   requestType: "new_project",
@@ -120,7 +120,7 @@ const talentPayload = (marker) => ({
   contractVersion: 2,
   interestAreas: ["design", "technology_development"],
   name: "TAG08 QA Talent Synthetic",
-  email: `talent-${marker}@synthetic.invalid`,
+  email: `talent-${marker.replace(/:/g, "-")}@synthetic.invalid`,
   phone: "+5500000000000",
   linkedin: "",
   resumeUrl: "",
@@ -314,9 +314,6 @@ const run = async () => {
   if (mode === "inspect") return;
 
   const runId = randomUUID();
-  const contactMarker = `${runId}-contact`;
-  const talentMarker = `${runId}-talent`;
-  const sourceBase = `${CONTACT_TALENT_STAGING_SYNTHETIC_MARKER}:${runId}`;
   const runEnv = {
     ...env,
     SUBMISSIONS_ENABLED: "true",
@@ -326,12 +323,12 @@ const run = async () => {
   };
   const { store } = createStore(runEnv);
   const flows = [
-    { flow: "contact", marker: contactMarker },
-    { flow: "talent", marker: talentMarker }
+    { flow: "contact", marker: `${runId}:contact` },
+    { flow: "talent", marker: `${runId}:talent` }
   ];
   const cleanup = flows.map(({ flow, marker }) => ({
     flow,
-    marker: `${sourceBase}:${flow}`,
+    marker,
     key: `${IDENTITY_PREFIX}:${runId}:${flow}`
   }));
   let resultError = null;
@@ -339,7 +336,7 @@ const run = async () => {
   try {
     const completed = [];
     for (const { flow, marker } of flows) {
-      completed.push(await deliverFlow({ store, accessToken, flow, marker: `${sourceBase}:${flow}`, runId, env: runEnv }));
+      completed.push(await deliverFlow({ store, accessToken, flow, marker, runId, env: runEnv }));
     }
     safeLog("direct_staging_homologation_passed", {
       runId,
