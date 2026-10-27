@@ -145,7 +145,7 @@ test.describe("experiencia de contato", () => {
 
     await expect(page.getByRole("heading", { name: "Mensagem Enviada!" })).toBeVisible();
     await expect(page.getByText(/Suas informações foram enviadas com sucesso/)).toBeVisible();
-    await expect(page.getByText(/recebida pela TAG08|6 horas úteis/i)).toHaveCount(0);
+    await expect(page.getByText(/recebida pela TAG08|fará a triagem|triagem inicial|triagem manual|revisa sua solicitação|revisa o pedido|respostas chegam junto|6 horas úteis|Entraremos em contato pelo WhatsApp/i)).toHaveCount(0);
     await expect(page.getByText(/onboarding/i)).toHaveCount(0);
     expect(submittedPayload).toMatchObject({
       requestType: "new_project",

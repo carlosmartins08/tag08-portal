@@ -404,7 +404,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
               <span className="text-brand">caminho para sua marca?</span>
             </h1>
             <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
-              Conte o que trouxe você até aqui. Nossa equipe fará a triagem do pedido e usará suas respostas para preparar uma conversa mais útil.
+              Conte o que trouxe você até aqui. Suas respostas ajudam a contextualizar o contato e podem tornar a conversa mais útil.
             </p>
           </div>
 
@@ -827,7 +827,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                       <p><strong className="text-white">Motivo:</strong> {formData.requestType === "new_project" ? "Novo projeto" : formData.requestType === "existing_client" ? "Cliente atual" : "Parceria"}</p>
                       {formData.requestType === "new_project" && <p className="mt-1"><strong className="text-white">Frentes:</strong> {formData.needsServiceGuidance ? "Preciso de orientação ou tenho outra necessidade" : formData.serviceInterests.map((service) => CONTACT_SERVICE_LABELS[service] || service).join(", ")}</p>}
                     </div>
-                    <p className="text-xs text-zinc-400">A triagem inicial é feita pela equipe; não há encaminhamento automático.</p>
+                    <p className="text-xs text-zinc-400">Confira o motivo e as frentes informados antes de enviar sua solicitação.</p>
                   </>}
                   {submitError ? <p role="alert" className="text-xs text-state-danger">{submitError}</p> : null}
                   <div className="flex gap-3 pt-2">
@@ -948,7 +948,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
               O que acontece depois do envio?
             </h2>
             <p className="text-zinc-400 text-sm max-w-2xl leading-relaxed">
-              A equipe revisa sua solicitação e organiza o próximo contato de acordo com o motivo e o contexto informado.
+              Suas respostas ajudam a contextualizar o pedido. Se necessário, a equipe poderá entrar em contato pelos canais informados.
             </p>
           </div>
 
@@ -959,9 +959,9 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                 01
               </div>
               <div className="space-y-2">
-                <h3 className="text-white font-display font-semibold text-lg">Solicitação organizada</h3>
+                <h3 className="text-white font-display font-semibold text-lg">Contexto informado</h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                  Suas respostas chegam junto com a identificação do motivo do contato e, quando aplicável, das frentes de interesse.
+                  O motivo informado e, quando aplicável, as frentes de interesse ajudam a contextualizar o contato.
                 </p>
               </div>
             <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-400">
@@ -976,14 +976,10 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                 02
               </div>
               <div className="space-y-2">
-                <h3 className="text-white font-display font-semibold text-lg">Triagem manual</h3>
+                <h3 className="text-white font-display font-semibold text-lg">Contato, se necessário</h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                  Uma pessoa da equipe revisa o pedido e identifica quem deve dar continuidade. O encaminhamento não é automatizado.
+                  Se for necessário entender melhor sua necessidade, a equipe poderá entrar em contato pelos canais informados.
                 </p>
-              </div>
-            <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-400">
-                <MessageSquare className="w-3 h-3 text-brand" />
-                <span>Próximo passo: se necessário, a equipe poderá orientar a continuidade.</span>
               </div>
             </div>
 
@@ -995,7 +991,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
               <div className="space-y-2">
                 <h3 className="text-white font-display font-semibold text-lg">Próximo passo claro</h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                  Entraremos em contato pelo WhatsApp para confirmar o entendimento e combinar a continuidade adequada para sua solicitação.
+                  Se houver necessidade de continuidade, a equipe poderá alinhar os próximos passos pelos canais informados.
                 </p>
               </div>
             <div className="flex items-center gap-1.5 pt-2 text-xs font-sans text-zinc-400">
