@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, ArrowUpRight, CheckCircle2, TrendingUp, Award, Calendar, ChevronRight, Share2, Copy, Check, MessageSquare, Zap, Target } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CheckCircle2, TrendingUp, Award, Calendar, ChevronRight, Copy, Check, Zap, Target } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { CASE_STUDIES } from "../../../data";
