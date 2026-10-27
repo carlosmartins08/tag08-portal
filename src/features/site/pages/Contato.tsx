@@ -17,7 +17,7 @@ import {
   Copy
 } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { ContactFormData } from "../../../types";
+import { ContactFormData, PARTNERSHIP_MODALITY_VALUES, type PartnershipModality } from "../../../types";
 import { TAG08_OFFICIAL_CHANNELS, TAG08_OFFICIAL_CONTACT, TAG08_WHATSAPP_CONTACTS, buildGoogleMapsEmbedUrl } from "../../../config/siteNetwork";
 import { trackFormError, trackFormStart, trackFormSubmit, trackLeadEvent, trackOutboundClick } from "../../../lib/analytics";
 import { queueFormSubmission, removeQueuedSubmission } from "../../../lib/formQueue";
@@ -67,6 +67,10 @@ const CONTACT_ORIGIN_LABELS: Record<ContactJourneyOrigin, string> = {
   offer: "página de oferta",
   sebraetec: "página do Sebraetec",
   "partnership-program": "Programa de Parceria"
+};
+const PARTNERSHIP_MODALITY_LABELS: Record<PartnershipModality, string> = {
+  referral: "Parceiro de Indicação",
+  active_commercial: "Parceiro Comercial Ativo"
 };
 
 export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
@@ -163,7 +167,13 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   const [errors, setErrors] = useState<Partial<ContactFormData>>({});
   const [consent, setConsent] = useState(false);
   const [consentError, setConsentError] = useState(false);
+  const [partnershipModality, setPartnershipModality] = useState<PartnershipModality>();
+  const [partnershipSendConfirmed, setPartnershipSendConfirmed] = useState(false);
+  const [partnershipSendConfirmationError, setPartnershipSendConfirmationError] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const isPartnership = formData.requestType === "partnership";
+  const finalStep = isPartnership ? 4 : 3;
+  const isSubmitStep = activeStep === finalStep;
 
   useEffect(() => {
     const context = parseContactJourneyContext(window.location.search);
@@ -216,15 +226,27 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
       setSubmitError("Escolha o motivo do contato para continuar.");
       return;
     }
+    if (activeStep === 1 && formData.requestType === "partnership" && !partnershipModality) {
+      setSubmitError("Escolha a modalidade de parceria para continuar.");
+      return;
+    }
     if (activeStep === 2 && formData.requestType === "new_project" && !formData.needsServiceGuidance && formData.serviceInterests.length === 0) {
       setSubmitError("Selecione ao menos um serviço ou escolha a opção de orientação.");
       return;
     }
+    if (activeStep === 3 && isPartnership && !validateContact()) return;
     setSubmitError("");
+    setPartnershipSendConfirmed(false);
+    setPartnershipSendConfirmationError(false);
     goToStep(activeStep + 1);
   };
 
   const handleRequestTypeChange = (requestType: ContactFormData["requestType"]) => {
+    if (requestType !== "partnership") {
+      setPartnershipModality(undefined);
+      setPartnershipSendConfirmed(false);
+      setPartnershipSendConfirmationError(false);
+    }
     setFormData((prev) => ({
       ...prev,
       requestType,
@@ -265,12 +287,16 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
     e.preventDefault();
     const formIsValid = validateContact();
     setConsentError(!consent);
-    if (!formIsValid || !consent) {
+    const requiresPartnershipConfirmation = isPartnership && !partnershipSendConfirmed;
+    setPartnershipSendConfirmationError(requiresPartnershipConfirmation);
+    if (!formIsValid || !consent || !partnershipModality && isPartnership || requiresPartnershipConfirmation) {
       if (!formIsValid) {
         setSubmitError("");
       } else if (!consent) {
         setSubmitError("");
         window.requestAnimationFrame(() => document.getElementById("form-consent")?.focus());
+      } else if (requiresPartnershipConfirmation) {
+        window.requestAnimationFrame(() => document.getElementById("partnership-send-confirmation")?.focus());
       }
       return;
     }
@@ -292,6 +318,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
           : "multiple";
     const payload = {
       ...formData,
+      ...(isPartnership && partnershipModality ? { partnershipApplication: { version: 1, modality: partnershipModality } } : {}),
       serviceInterests,
       needsServiceGuidance,
       service: legacyService,
@@ -668,11 +695,11 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   className="space-y-6 text-left"
                 >
                   <div className="tag08-contact__form-intro">
-                    <span className="tag08-label">Diagnóstico inicial</span>
-                    <h2 ref={stepHeadingRef} tabIndex={-1} className="font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl">{activeStep === 1 ? "Como podemos ajudar?" : activeStep === 2 ? "Vamos entender o contexto" : "Como falar com você?"}</h2>
-                    <p className="text-sm leading-relaxed text-zinc-400">Etapa {activeStep} de 3 · Suas respostas ajudam nossa equipe a chegar mais preparada.</p>
-                    <div className="mt-4 flex gap-2" role="progressbar" aria-label="Progresso do formulário" aria-valuemin={1} aria-valuemax={3} aria-valuenow={activeStep}>
-                      {[1, 2, 3].map((step) => <span key={step} className={`h-1 flex-1 rounded-full ${step <= activeStep ? "bg-brand" : "bg-white/10"}`} />)}
+                    <span className="tag08-label">{isPartnership ? "Programa de Parceria" : "Diagnóstico inicial"}</span>
+                    <h2 ref={stepHeadingRef} tabIndex={-1} className="font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl">{activeStep === 1 ? "Como podemos ajudar?" : activeStep === 2 ? "Vamos entender o contexto" : activeStep === 3 ? "Como falar com você?" : "Revise sua inscrição"}</h2>
+                    <p className="text-sm leading-relaxed text-zinc-400">Etapa {activeStep} de {finalStep} · {isPartnership ? "Revise os dados antes do envio." : "Suas respostas ajudam nossa equipe a chegar mais preparada."}</p>
+                    <div className="mt-4 flex gap-2" role="progressbar" aria-label="Progresso do formulário" aria-valuemin={1} aria-valuemax={finalStep} aria-valuenow={activeStep}>
+                      {Array.from({ length: finalStep }, (_, index) => index + 1).map((step) => <span key={step} className={`h-1 flex-1 rounded-full ${step <= activeStep ? "bg-brand" : "bg-white/10"}`} />)}
                     </div>
                   </div>
                   <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
@@ -684,6 +711,14 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                     {[["new_project", "Quero iniciar um projeto"], ["existing_client", "Já sou cliente"], ["partnership", "Quero propor uma parceria"]].map(([value, label]) => (
                       <label key={value} className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-colors ${formData.requestType === value ? "border-brand bg-brand/10 text-white" : "border-white/[0.08] text-zinc-300 hover:border-white/20"}`}>
                         <input type="radio" name="requestType" value={value} checked={formData.requestType === value} onChange={() => handleRequestTypeChange(value as ContactFormData["requestType"])} className="accent-[var(--color-brand)]" />{label}
+                      </label>
+                    ))}
+                  </fieldset>}
+                  {activeStep === 1 && isPartnership && <fieldset className="space-y-3">
+                    <legend className="text-sm font-semibold text-white">Qual modalidade de parceria deseja propor?</legend>
+                    {PARTNERSHIP_MODALITY_VALUES.map((modality) => (
+                      <label key={modality} className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-colors ${partnershipModality === modality ? "border-brand bg-brand/10 text-white" : "border-white/[0.08] text-zinc-300 hover:border-white/20"}`}>
+                        <input type="radio" name="partnershipModality" value={modality} checked={partnershipModality === modality} onChange={() => { setPartnershipModality(modality); setSubmitError(""); }} className="accent-[var(--color-brand)]" />{PARTNERSHIP_MODALITY_LABELS[modality]}
                       </label>
                     ))}
                   </fieldset>}
@@ -833,13 +868,27 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                     </div>
                     <p className="text-xs text-zinc-400">Confira o motivo e as frentes informados antes de enviar sua solicitação.</p>
                   </>}
+                  {activeStep === 4 && isPartnership && <div className="space-y-4 rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 text-sm text-zinc-300">
+                    <dl className="space-y-3">
+                      <div><dt className="font-semibold text-white">Modalidade</dt><dd>{partnershipModality ? PARTNERSHIP_MODALITY_LABELS[partnershipModality] : "Não selecionada"}</dd></div>
+                      <div><dt className="font-semibold text-white">Nome</dt><dd>{formData.name}</dd></div>
+                      <div><dt className="font-semibold text-white">Empresa</dt><dd>{formData.company}</dd></div>
+                      <div><dt className="font-semibold text-white">E-mail e WhatsApp</dt><dd>{formData.email} · {formData.whatsapp}</dd></div>
+                      <div><dt className="font-semibold text-white">Proposta</dt><dd>{formData.message.trim() || "Nenhum contexto adicional informado."}</dd></div>
+                    </dl>
+                    <div className="flex flex-wrap gap-2">
+                      <button type="button" onClick={() => { setPartnershipSendConfirmed(false); goToStep(1); }} className="min-h-10 rounded-lg border border-white/10 px-4 text-xs text-white hover:bg-white/5">Alterar modalidade</button>
+                      <button type="button" onClick={() => { setPartnershipSendConfirmed(false); goToStep(2); }} className="min-h-10 rounded-lg border border-white/10 px-4 text-xs text-white hover:bg-white/5">Alterar proposta</button>
+                      <button type="button" onClick={() => { setPartnershipSendConfirmed(false); goToStep(3); }} className="min-h-10 rounded-lg border border-white/10 px-4 text-xs text-white hover:bg-white/5">Alterar contato</button>
+                    </div>
+                  </div>}
                   {submitError ? <p role="alert" className="text-xs text-state-danger">{submitError}</p> : null}
                   <div className="flex gap-3 pt-2">
-                    {activeStep > 1 && <button type="button" onClick={() => { setSubmitError(""); goToStep(activeStep - 1); }} className="min-h-11 rounded-lg border border-white/10 px-5 text-sm text-white hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand transition-transform duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100">Voltar</button>}
-                    {activeStep < 3 && <button type="button" onClick={continueFromStep} className="min-h-11 flex-1 rounded-lg bg-brand px-5 text-sm font-bold text-black hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand transition-transform duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100">Continuar <ArrowRight className="ml-2 inline h-4 w-4" /></button>}
+                    {activeStep > 1 && <button type="button" onClick={() => { setSubmitError(""); setPartnershipSendConfirmed(false); goToStep(activeStep - 1); }} className="min-h-11 rounded-lg border border-white/10 px-5 text-sm text-white hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand transition-transform duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100">Voltar</button>}
+                    {activeStep < finalStep && <button type="button" onClick={continueFromStep} className="min-h-11 flex-1 rounded-lg bg-brand px-5 text-sm font-bold text-black hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand transition-transform duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100">{isPartnership && activeStep === 3 ? "Revisar inscrição" : "Continuar"} <ArrowRight className="ml-2 inline h-4 w-4" /></button>}
                   </div>
 
-                  {activeStep === 3 && <>
+                  {((activeStep === 3 && !isPartnership) || isSubmitStep) && <>
                   {/* LGPD Compliance badge & Data Security Lock Notice */}
                   <label htmlFor="form-consent" className={`flex items-start gap-2.5 px-4 py-3 rounded-xl bg-white/[0.02] border cursor-pointer ${consentError ? "border-state-danger/70" : "border-white/[0.05]"}`}>
                     <input
@@ -859,6 +908,13 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                     </span>
                   </label>
                   {consentError && <p id="form-consent-error" className="text-xs text-state-danger" role="alert">Confirme o consentimento para enviar seus dados.</p>}
+                  {isPartnership && isSubmitStep && <>
+                    <label htmlFor="partnership-send-confirmation" className={`flex items-start gap-2.5 px-4 py-3 rounded-xl bg-white/[0.02] border cursor-pointer ${partnershipSendConfirmationError ? "border-state-danger/70" : "border-white/[0.05]"}`}>
+                      <input id="partnership-send-confirmation" type="checkbox" checked={partnershipSendConfirmed} onChange={(event) => { setPartnershipSendConfirmed(event.target.checked); if (event.target.checked) setPartnershipSendConfirmationError(false); }} aria-invalid={partnershipSendConfirmationError} aria-describedby={partnershipSendConfirmationError ? "partnership-send-confirmation-error" : undefined} className="mt-0.5 h-4 w-4 accent-[var(--color-brand)]" />
+                      <span className="text-xs text-zinc-300 leading-relaxed">Confirmo o envio desta inscrição na modalidade selecionada.</span>
+                    </label>
+                    {partnershipSendConfirmationError && <p id="partnership-send-confirmation-error" className="text-xs text-state-danger" role="alert">Confirme o envio da inscrição para continuar.</p>}
+                  </>}
                   <div className="flex items-start gap-2.5 px-4 py-3 rounded-xl bg-white/[0.02] border border-white/[0.05]">
                     <div className="w-1.5 h-1.5 rounded-full bg-brand shrink-0 mt-1.5 motion-safe:animate-pulse" aria-hidden="true" />
                     <p className="text-xs text-zinc-400 leading-relaxed font-sans">
@@ -868,7 +924,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   </>}
 
                   {/* Button Submit */}
-                  {activeStep === 3 && <div className="pt-2">
+                  {isSubmitStep && <div className="pt-2">
                     <button
                       id="btn-form-submit"
                       type="submit"
@@ -881,7 +937,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         </span>
                       ) : (
                         <span className="flex items-center gap-1.5">
-                          Enviar solicitação à TAG08 <ArrowRight className="w-4 h-4" />
+                          {isPartnership ? "Confirmar e enviar inscrição" : "Enviar solicitação à TAG08"} <ArrowRight className="w-4 h-4" />
                         </span>
                       )}
                     </button>
@@ -903,14 +959,16 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   </div>
                   
                   <div className="space-y-3 max-w-lg mx-auto">
-                    <h3 className="font-display font-semibold text-2xl text-white">Mensagem Enviada!</h3>
+                    <h3 className="font-display font-semibold text-2xl text-white">{isPartnership ? "Inscrição enviada" : "Mensagem Enviada!"}</h3>
                     <p className="text-zinc-300 text-sm leading-relaxed">
-                      Obrigado, <strong>{formData.name}</strong>. Suas informações foram enviadas com sucesso. Se for necessário, a equipe poderá entrar em contato pelos canais informados para entender melhor sua necessidade.
+                      {isPartnership
+                        ? <>Obrigado, <strong>{formData.name}</strong>. Sua inscrição para <strong>{partnershipModality ? PARTNERSHIP_MODALITY_LABELS[partnershipModality] : "parceria"}</strong> foi enviada com sucesso. Esta confirmação registra somente o envio, sem indicar aprovação ou contratação.</>
+                        : <>Obrigado, <strong>{formData.name}</strong>. Suas informações foram enviadas com sucesso. Se for necessário, a equipe poderá entrar em contato pelos canais informados para entender melhor sua necessidade.</>}
                     </p>
                   </div>
 
                   {/* Fast track to immediate whatsapp option */}
-                  <div className="bg-zinc-950 p-6 rounded-xl border border-white/[0.04] space-y-4 max-w-md mx-auto">
+                  {!isPartnership && <div className="bg-zinc-950 p-6 rounded-xl border border-white/[0.04] space-y-4 max-w-md mx-auto">
                     <div className="flex justify-center items-center gap-2">
                       <Sparkles className="w-4.5 h-4.5 text-brand" />
                       <span className="tag08-meta text-xs tracking-widest text-brand uppercase">Fast Track Recomendado</span>
@@ -930,7 +988,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         </button>
                       ))}
                     </div>
-                  </div>
+                  </div>}
                 </motion.div>
               )}
             </AnimatePresence>

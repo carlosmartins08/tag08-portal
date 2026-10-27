@@ -67,3 +67,6 @@ export interface ContactFormData {
   stage: string;
   message: string;
 }
+
+export const PARTNERSHIP_MODALITY_VALUES = ["referral", "active_commercial"] as const;
+export type PartnershipModality = typeof PARTNERSHIP_MODALITY_VALUES[number];

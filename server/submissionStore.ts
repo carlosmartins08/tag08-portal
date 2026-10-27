@@ -43,6 +43,7 @@ export const buildContactDeliveryPayload = (payload: ContactLeadInput) => ({
   service: payload.service,
   stage: payload.stage,
   requestType: payload.requestType,
+  ...(payload.partnershipApplication ? { partnershipApplication: payload.partnershipApplication } : {}),
   serviceInterests: payload.serviceInterests,
   needsServiceGuidance: payload.needsServiceGuidance,
   message: payload.message,

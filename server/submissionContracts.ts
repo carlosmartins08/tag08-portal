@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { PARTNERSHIP_MODALITY_VALUES } from "../src/types";
 
 const boundedText = (max: number) => z.string().trim().min(1).max(max);
 const optionalText = (max: number) => z.string().trim().max(max).optional().default("");
@@ -28,6 +29,10 @@ export const contactLeadSchema = z.object({
   stage: boundedText(120),
   // Additive fields: older queued submissions remain valid and receive neutral defaults.
   requestType: z.enum(["new_project", "existing_client", "partnership", "unspecified"]).optional().default("unspecified"),
+  partnershipApplication: z.object({
+    version: z.literal(1),
+    modality: z.enum(PARTNERSHIP_MODALITY_VALUES)
+  }).strict().optional(),
   serviceInterests: z.array(boundedText(120)).max(9).refine((values) => new Set(values).size === values.length, "Service interests must be unique").optional().default([]),
   needsServiceGuidance: z.boolean().optional().default(false),
   message: optionalText(4000),
@@ -36,6 +41,14 @@ export const contactLeadSchema = z.object({
   locale,
   source,
   utm
+}).superRefine((payload, context) => {
+  if (payload.partnershipApplication && payload.requestType !== "partnership") {
+    context.addIssue({
+      code: "custom",
+      path: ["partnershipApplication"],
+      message: "Partnership modality requires a partnership Contact request."
+    });
+  }
 });
 
 export const talentApplicationSchema = z.object({

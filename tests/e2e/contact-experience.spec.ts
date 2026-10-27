@@ -174,6 +174,50 @@ test.describe("experiencia de contato", () => {
     });
   });
 
+  test("inscrição de parceria registra modalidade, permite revisão editável e exige confirmação explícita", async ({ page }) => {
+    let submittedPayload: Record<string, unknown> | undefined;
+    await page.route("**/api/contact", async (route) => {
+      submittedPayload = route.request().postDataJSON() as Record<string, unknown>;
+      await route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ status: "accepted" }) });
+    });
+
+    await page.goto("/contato?origin=partnership-program&requestType=partnership", { waitUntil: "domcontentloaded" });
+    await page.getByRole("radio", { name: "Parceiro de Indicação" }).check();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await page.getByLabel("Qual parceria você propõe?").fill("Indicação sintética para teste local.");
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await page.getByLabel("Qual o seu nome?").fill("Pessoa Sintética");
+    await page.getByLabel("Nome da Empresa").fill("Empresa Sintética");
+    await page.locator("#form-whatsapp").fill("83999999999");
+    await page.getByLabel("E-mail Corporativo").fill("sintetico@example.invalid");
+    await page.getByRole("button", { name: "Revisar inscrição" }).click();
+
+    await expect(page.getByRole("heading", { name: "Revise sua inscrição" })).toBeVisible();
+    await expect(page.getByText("Parceiro de Indicação", { exact: true })).toBeVisible();
+    await page.getByRole("button", { name: "Alterar modalidade" }).click();
+    await page.getByRole("radio", { name: "Parceiro Comercial Ativo" }).check();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await page.getByRole("button", { name: "Revisar inscrição" }).click();
+    await expect(page.getByText("Parceiro Comercial Ativo", { exact: true })).toBeVisible();
+
+    await page.getByLabel(/Autorizo o uso destes dados/).check();
+    await page.getByRole("button", { name: "Confirmar e enviar inscrição" }).click();
+    await expect(page.getByRole("alert").filter({ hasText: "Confirme o envio da inscrição" })).toBeVisible();
+    expect(submittedPayload).toBeUndefined();
+
+    await page.getByRole("checkbox", { name: /Confirmo o envio desta inscrição/ }).check();
+    await page.getByRole("button", { name: "Confirmar e enviar inscrição" }).click();
+    await expect(page.getByRole("heading", { name: "Inscrição enviada" })).toBeVisible();
+    await expect(page.getByText(/sem indicar aprovação ou contratação/)).toBeVisible();
+    await expect(page.getByText("Fast Track Recomendado")).toHaveCount(0);
+    expect(submittedPayload).toMatchObject({
+      requestType: "partnership",
+      partnershipApplication: { version: 1, modality: "active_commercial" },
+      message: "Indicação sintética para teste local."
+    });
+  });
+
   test("prioriza o formulario antes dos canais no mobile", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/contato", { waitUntil: "domcontentloaded" });

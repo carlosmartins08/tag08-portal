@@ -204,7 +204,12 @@ test("non-commercial Contact requests remain on Sheets and are not routed to Pre
 
 test("partnership Contact intake preserves its source in PostgreSQL/outbox without queuing ClickUp Pre-sales", async () => {
   const { prisma, leads, deliveries } = createFakePrisma();
-  const partnershipPayload = { ...payload, requestType: "partnership" as const, source: "contact-page:partnership-program" };
+  const partnershipPayload = {
+    ...payload,
+    requestType: "partnership" as const,
+    partnershipApplication: { version: 1 as const, modality: "active_commercial" as const },
+    source: "contact-page:partnership-program"
+  };
   const result = await persistContactLeadWithClient(prisma, partnershipPayload, "synthetic-partnership-intake");
 
   assert.equal(result.created, true);
@@ -212,4 +217,18 @@ test("partnership Contact intake preserves its source in PostgreSQL/outbox witho
   assert.deepEqual(deliveries.map(({ target }) => target), ["GOOGLE_SHEETS"]);
   assert.equal((deliveries[0].payload as { data: { requestType: string; source: string } }).data.requestType, "partnership");
   assert.equal((deliveries[0].payload as { data: { source: string } }).data.source, "contact-page:partnership-program");
+  assert.deepEqual((leads[0].payload as { partnershipApplication: unknown }).partnershipApplication, { version: 1, modality: "active_commercial" });
+  assert.deepEqual((deliveries[0].payload as { data: { partnershipApplication: unknown } }).data.partnershipApplication, { version: 1, modality: "active_commercial" });
+
+  const replay = await persistContactLeadWithClient(prisma, partnershipPayload, "synthetic-partnership-intake");
+  assert.equal(replay.id, result.id);
+  assert.equal(replay.created, false);
+  assert.equal(deliveries.length, 1);
+  await assert.rejects(
+    persistContactLeadWithClient(prisma, {
+      ...partnershipPayload,
+      partnershipApplication: { version: 1, modality: "referral" }
+    }, "synthetic-partnership-intake"),
+    /idempotency_key_conflict/
+  );
 });

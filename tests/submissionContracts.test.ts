@@ -75,6 +75,36 @@ test("contact contract preserves contextual source and multiple intentions", () 
   assert.deepEqual(parsed.serviceInterests, ["technology", "branding"]);
 });
 
+test("partnership modality is structured and versioned while legacy partnership payloads remain valid", () => {
+  const legacy = contactLeadSchema.parse({ ...validContact, requestType: "partnership" });
+  assert.equal(legacy.partnershipApplication, undefined);
+
+  for (const modality of ["referral", "active_commercial"] as const) {
+    const parsed = contactLeadSchema.parse({
+      ...validContact,
+      requestType: "partnership",
+      partnershipApplication: { version: 1, modality }
+    });
+    assert.deepEqual(parsed.partnershipApplication, { version: 1, modality });
+  }
+
+  assert.equal(contactLeadSchema.safeParse({
+    ...validContact,
+    requestType: "partnership",
+    partnershipApplication: { version: 2, modality: "referral" }
+  }).success, false);
+  assert.equal(contactLeadSchema.safeParse({
+    ...validContact,
+    requestType: "partnership",
+    partnershipApplication: { version: 1, modality: "unapproved" }
+  }).success, false);
+  assert.equal(contactLeadSchema.safeParse({
+    ...validContact,
+    requestType: "new_project",
+    partnershipApplication: { version: 1, modality: "referral" }
+  }).success, false);
+});
+
 test("talent contract requires professional links and consent", () => {
   const parsed = talentApplicationSchema.parse(validTalent);
   assert.equal(parsed.email, "ana@example.com");
