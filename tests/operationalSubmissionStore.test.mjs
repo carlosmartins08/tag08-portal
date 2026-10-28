@@ -20,11 +20,11 @@ const talent = () => ({
 
 const setup = ({ appendFailure } = {}) => {
   const rows = new Map();
-  const calls = { token: 0, appendAttempts: 0, appends: 0, clickUp: 0 };
+  const calls = { token: 0, appendAttempts: 0, appends: 0 };
   const store = createOperationalSubmissionStore({
     env: {
       SUBMISSIONS_ENABLED: "true", GOOGLE_SHEETS_ENABLED: "true", INTEGRATIONS_ENABLED: "true",
-      CLICKUP_ENABLED: "true", GOOGLE_SHEETS_SPREADSHEET_ID: "synthetic-sheet"
+      CLICKUP_ENABLED: "false", GOOGLE_SHEETS_SPREADSHEET_ID: "synthetic-sheet"
     },
     tokenProvider: async () => { calls.token += 1; return "synthetic-access-token"; },
     appendSheet: async (delivery) => {
@@ -48,7 +48,7 @@ const setup = ({ appendFailure } = {}) => {
   return { store, rows, calls };
 };
 
-test("Contact persists directly to Sheets regardless of commercial intent and ClickUp flags", async () => {
+test("Contact persists directly to Sheets regardless of commercial intent with ClickUp disabled", async () => {
   const { store, rows, calls } = setup();
   const first = await store.persistContactLead(contact(), "synthetic-contact-key");
   const nonCommercial = await store.persistContactLead(contact("diagnostic"), "synthetic-diagnostic-key");
@@ -57,7 +57,7 @@ test("Contact persists directly to Sheets regardless of commercial intent and Cl
   assert.match(first.sheetsRowReference, /^Leads!A[2-9]/);
   assert.equal(nonCommercial.created, true);
   assert.equal([...rows.values()].length, 2);
-  assert.deepEqual(calls, { token: 2, appendAttempts: 2, appends: 2, clickUp: 0 });
+  assert.deepEqual(calls, { token: 2, appendAttempts: 2, appends: 2 });
 });
 
 test("Talent retains all selected areas and persists directly to Sheets without ClickUp configuration", async () => {
@@ -67,7 +67,7 @@ test("Talent retains all selected areas and persists directly to Sheets without 
   assert.equal(result.created, true);
   assert.match(result.sheetsRowReference, /^Talentos!A2/);
   assert.equal(rows.get(delivery).payload.includes("technology_development"), true);
-  assert.deepEqual(calls, { token: 1, appendAttempts: 1, appends: 1, clickUp: 0 });
+  assert.deepEqual(calls, { token: 1, appendAttempts: 1, appends: 1 });
 });
 
 test("replay returns the same identity and row, while changed content conflicts", async () => {
@@ -81,7 +81,7 @@ test("replay returns the same identity and row, while changed content conflicts"
     store.persistTalentApplication({ ...talent(), motivation: "Alterada" }, "synthetic-replay-key"),
     /idempotency_key_conflict/
   );
-  assert.deepEqual(calls, { token: 3, appendAttempts: 3, appends: 1, clickUp: 0 });
+  assert.deepEqual(calls, { token: 3, appendAttempts: 3, appends: 1 });
 });
 
 test("same-process concurrent replay appends only one canonical row", async () => {
@@ -94,23 +94,22 @@ test("same-process concurrent replay appends only one canonical row", async () =
   assert.equal([first, replay].filter((item) => item.created).length, 1);
   assert.equal(rows.size, 1);
   assert.equal(calls.appends, 1);
-  assert.equal(calls.clickUp, 0);
 });
 
 test("Sheets failure propagates without reporting acceptance or invoking another destination", async () => {
   const failure = new IntegrationDeliveryError("google_sheets_append_failed_503", true);
   const { store, calls } = setup({ appendFailure: failure });
   await assert.rejects(store.persistContactLead(contact(), "synthetic-failure-key"), /google_sheets_append_failed_503/);
-  assert.deepEqual(calls, { token: 1, appendAttempts: 1, appends: 0, clickUp: 0 });
+  assert.deepEqual(calls, { token: 1, appendAttempts: 1, appends: 0 });
 });
 
 test("disabled submissions fail closed before requesting credentials or writing", async () => {
-  const calls = { token: 0, appendAttempts: 0, appends: 0, clickUp: 0 };
+  const calls = { token: 0, appendAttempts: 0, appends: 0 };
   const store = createOperationalSubmissionStore({
     env: { SUBMISSIONS_ENABLED: "false", GOOGLE_SHEETS_ENABLED: "false" },
     tokenProvider: async () => { calls.token += 1; return "unused"; },
     appendSheet: async () => { calls.appendAttempts += 1; calls.appends += 1; }
   });
   await assert.rejects(store.persistContactLead(contact(), "synthetic-disabled-key"), /submission_store_disabled/);
-  assert.deepEqual(calls, { token: 0, appendAttempts: 0, appends: 0, clickUp: 0 });
+  assert.deepEqual(calls, { token: 0, appendAttempts: 0, appends: 0 });
 });
