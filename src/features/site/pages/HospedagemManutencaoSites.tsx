@@ -26,6 +26,7 @@ import {
   Mail,
   Sliders
 } from "lucide-react";
+import { ArrowNarrowRightIcon } from "../../../components/icons/ItsHoverIcons";
 import { useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { activateOnKeyboard } from "../../../lib/keyboard";
@@ -232,7 +233,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                   className="px-6 py-3.5 bg-brand hover:bg-brand-dark text-black text-xs font-sans font-black uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-[0_12px_40px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer"
                 >
                   <span>Mapear minha hospedagem</span>
-                  <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                  <ArrowNarrowRightIcon className="w-4 h-4 stroke-[2.5]" />
                 </a>
                 <TrackedOutboundLink
                   label="Falar com especialista"
@@ -1527,7 +1528,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                       className="group/btn w-full py-4 rounded-xl bg-brand hover:bg-brand-secondary text-black font-sans text-xs font-black uppercase text-center block tracking-widest transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] shadow-[0_12px_40px_rgba(var(--color-brand-rgb),0.15)] focus:outline-none cursor-pointer flex items-center justify-center gap-2"
                     >
                       <span>SOLICITAR SETUP VIA WHATSAPP</span>
-                      <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                      <ArrowNarrowRightIcon className="w-3.5 h-3.5" />
                     </TrackedOutboundLink>
                     
                     <span className="text-xs text-zinc-550 block text-center pt-3 font-sans">
@@ -2012,7 +2013,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                     className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
                   >
                     <span>Ver Serviços</span>
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                    <ArrowNarrowRightIcon className="w-3.5 h-3.5" />
                   </button>
                 </div>
 

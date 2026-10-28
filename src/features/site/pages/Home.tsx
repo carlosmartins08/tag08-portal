@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ArrowUpRight, Check, CheckCircle2, TrendingUp, Cpu, Sparkles, Award, Shield, UserCheck, Play, HelpCircle, ArrowRight, MessageSquare, X, Star, Layers } from "lucide-react";
+import { ArrowNarrowRightIcon } from "../../../components/icons/ItsHoverIcons";
 import Link from "next/link";
 import Image from "next/image";
 import { SERVICES, PLANS } from "../../../data";
@@ -1196,7 +1197,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
               >
                 <div className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full skew-x-12 motion-safe:group-hover:translate-x-full transition-transform duration-200 ease-out" />
                 <span className="relative z-10 flex items-center gap-2">
-                  {problemCopy?.ctaButton ?? "Identificar meu momento"} <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  {problemCopy?.ctaButton ?? "Identificar meu momento"} <ArrowNarrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
             </div>
@@ -1845,7 +1846,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                           }}
                           className="text-xs text-brand-secondary hover:text-white font-sans font-bold flex items-center gap-1.5 group transition-colors cursor-pointer self-end"
                         >
-                          {diagnosisCopy?.requestDiagnosis ?? "SOLICITAR DIAGNÓSTICO INICIAL"} <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform animate-pulse" />
+                          {diagnosisCopy?.requestDiagnosis ?? "SOLICITAR DIAGNÓSTICO INICIAL"} <ArrowNarrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform animate-pulse" />
                         </button>
                       </div>
 
@@ -1986,7 +1987,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                 className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 font-sans text-sm font-bold text-accent-readable underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-readable focus-visible:ring-offset-2"
               >
                 {solutionMapCopy?.orientationCta ?? "Conte o momento do seu negócio"}
-                <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                <ArrowNarrowRightIcon aria-hidden="true" className="h-4 w-4" />
               </Link>
             </div>
 
@@ -2050,7 +2051,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                                 className="min-h-11 flex items-center gap-1.5 font-sans text-xs font-black uppercase tracking-widest cursor-pointer hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-readable"
                               >
                                 {service.cta}
-                                <ArrowRight aria-hidden="true" className="w-3.5 h-3.5" />
+                                <ArrowNarrowRightIcon aria-hidden="true" className="w-3.5 h-3.5" />
                               </Link>
                               <div className={`text-xs tag08-meta uppercase tracking-widest ${labelColor}`}>
                                 {String(index + 1).padStart(2, "0")}
@@ -2071,7 +2072,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                 className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-black text-white px-5 py-3 text-xs tag08-meta font-black tracking-widest uppercase hover:bg-zinc-800 transition-colors"
               >
                 {solutionMapCopy?.ctaAll ?? "CONHECER SOLUÇÕES"}
-                <ArrowRight className="w-4 h-4" />
+                <ArrowNarrowRightIcon className="w-4 h-4" />
               </button>
             </div>
 
@@ -2525,12 +2526,12 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
               className="inline-flex items-center gap-4 bg-charcoal-900 hover:bg-white/[0.04] border border-white/10 px-5 py-3 rounded-2xl transition-all duration-300 self-start md:self-end group shrink-0 shadow-lg hover:border-brand/35"
             >
               <div className="w-10 h-10 rounded-full bg-brand/10 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-black transition-all shadow-md">
-                <ArrowRight className="w-5 h-5 fill-current" />
+                <ArrowNarrowRightIcon className="w-5 h-5" />
               </div>
               <div className="flex flex-col text-left font-sans">
                 <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest font-bold">{casesCopy?.directContact ?? "Contato direto"}</span>
                 <span className="text-white text-xs font-semibold group-hover:text-brand transition-colors flex items-center gap-1.5 font-sans">
-                  {casesCopy?.contactCta ?? "FALAR COM A TAG08"} <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  {casesCopy?.contactCta ?? "FALAR COM A TAG08"} <ArrowNarrowRightIcon className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </span>
               </div>
             </a>
@@ -3240,7 +3241,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                   className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
                 >
                   <span>{faqCopy?.solutions ?? "VER SOLUÇÕES"}</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  <ArrowNarrowRightIcon className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ResilientImage from "../../../components/ResilientImage";
 import { AlertCircle, ArrowUpRight, ArrowRight, BarChart, Workflow, FileText, Server, Layers, Cpu, CheckCircle, MessageSquare } from "lucide-react";
+import { ArrowNarrowRightIcon } from "../../../components/icons/ItsHoverIcons";
 import { motion } from "motion/react";
 import { buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
@@ -471,7 +472,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                   onClick={() => onNavigate("/contato")}
                   className="text-xs font-sans text-brand font-black uppercase hover:underline flex items-center gap-1.5 cursor-pointer focus:outline-none"
                 >
-                  Mapear Meus Gargalos <ArrowRight className="w-3.5 h-3.5" />
+                  Mapear Meus Gargalos <ArrowNarrowRightIcon className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -893,7 +894,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
                   className="group flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5"
                 >
                   <span>Ver Serviços</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  <ArrowNarrowRightIcon className="w-3.5 h-3.5" />
                 </button>
               </div>
 
@@ -937,7 +938,7 @@ export default function ProcessIntelligence({ onNavigate }: ProcessProps) {
             className="group bg-brand text-black font-sans font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark duration-300 transition-all cursor-pointer flex items-center gap-2 mx-auto"
           >
             <span>ESTRUTURAR MINHA ROTINA OPERACIONAL</span>
-            <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+            <ArrowNarrowRightIcon className="w-3.5 h-3.5 stroke-[2.5]" />
           </button>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Code2, Smartphone, LineChart, ArrowUpRight, ArrowRight, Layers } from "lucide-react";
+import { ArrowNarrowRightIcon } from "../../../components/icons/ItsHoverIcons";
 import { useReducedMotion } from "motion/react";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
@@ -446,7 +447,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                         VER SOLU&Ccedil;&Otilde;ES
                       </span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-black stroke-[2.5]" />
+                    <ArrowNarrowRightIcon className="w-4 h-4 text-black stroke-[2.5]" />
                   </div>
                 </button>
               </div>
@@ -583,7 +584,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
                   className="group min-h-11 flex items-center justify-between text-sm font-sans font-bold text-white hover:text-brand active:scale-[0.99] cursor-pointer select-none pt-2 border-t border-white/5 transition-colors duration-200"
                 >
                   <span>VER SOLU&Ccedil;&Otilde;ES</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  <ArrowNarrowRightIcon className="w-3.5 h-3.5" />
                 </button>
               </div>
 
@@ -629,7 +630,7 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
               className="group min-h-11 bg-brand text-black font-sans font-black text-sm uppercase tracking-widest py-4 px-8 rounded-xl shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark active:scale-[0.98] transition-[background-color,transform] duration-200 cursor-pointer flex items-center gap-2 mx-auto"
             >
               <span>PLANEJAR MEU SITE</span>
-              <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+              <ArrowNarrowRightIcon className="w-3.5 h-3.5 stroke-[2.5]" />
             </button>
           </div>
         </div>

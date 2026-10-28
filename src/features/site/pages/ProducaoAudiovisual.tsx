@@ -7,6 +7,8 @@ import {
   Smartphone, Monitor, ChevronDown, MessageSquare, Award, Tv,
   ListPlus, Plus, Info, HelpCircle
 } from "lucide-react";
+import { ArrowNarrowRightIcon } from "../../../components/icons/ItsHoverIcons";
+import PlugConnectedIcon from "@/components/ui/plug-connected-icon";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import MiniCases from "../../../components/MiniCases";
@@ -962,7 +964,8 @@ Quero conversar sobre o próximo passo com a TAG08.`;
         <div className="max-w-7xl mx-auto space-y-16">
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
+            <span className="tag08-meta inline-flex items-center gap-1.5 rounded-md border border-brand/10 bg-brand/5 px-2.5 py-1 text-xs font-black uppercase tracking-widest text-brand">
+              <PlugConnectedIcon size={14} className="shrink-0" />
               INTEGRAÇÃO ENTRE FRENTES // TAG08
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
@@ -1019,7 +1022,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   className="group min-h-11 flex items-center justify-between text-xs font-sans font-bold text-zinc-300 hover:text-brand cursor-pointer select-none pt-3 border-t border-white/5 w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary transition-colors duration-200"
                 >
                   <span className="uppercase text-xs tracking-widest">{syn.cta}</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  <ArrowNarrowRightIcon className="w-3.5 h-3.5" />
                 </button>
               </div>
             ))}
@@ -1265,7 +1268,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   className="group min-h-11 flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5 transition-colors duration-200"
                 >
                   <span>VER SERVIÇOS</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  <ArrowNarrowRightIcon className="w-3.5 h-3.5" />
                 </button>
               </div>
 
@@ -1286,7 +1289,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   className="group min-h-11 flex items-center justify-between text-xs font-sans font-bold text-black border-t border-black/10 pt-2 cursor-pointer select-none transition-colors duration-200"
                 >
                   <span>CONVERSAR SOBRE MEU AUDIOVISUAL</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  <ArrowNarrowRightIcon className="w-3.5 h-3.5" />
                 </TrackedOutboundLink>
               </div>
             </div>

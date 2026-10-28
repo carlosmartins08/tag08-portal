@@ -1,4 +1,5 @@
 import { Check, ArrowRight, ArrowUpRight, Award } from "lucide-react";
+import { ArrowNarrowRightIcon } from "../../../components/icons/ItsHoverIcons";
 import { useState } from "react";
 import Image from "next/image";
 import { useReducedMotion } from "motion/react";
@@ -176,7 +177,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                   className="inline-flex min-h-11 items-center justify-center gap-2 bg-white/[0.02] border border-white/10 text-white hover:bg-white/[0.08] tag08-meta font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-colors duration-200"
                 >
                   VER SOLUÇÕES
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowNarrowRightIcon className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -427,7 +428,7 @@ export default function Servicos({ onNavigate }: ServicosProps) {
                           className="inline-flex min-h-11 items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-xs text-white tag08-meta font-semibold uppercase tracking-widest py-3 px-6 rounded-xl transition-colors duration-200 group/btn shrink-0"
                         >
                           <span>{domain.ctaLabel}</span>
-                          <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform" />
+                          <ArrowNarrowRightIcon className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform" />
                         </button>
                         {domain.secondaryCta && (
                           <button

@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import ResilientImage from "../../../components/ResilientImage";
-import { Sparkles, ArrowUpRight, Shield, ArrowRight, Layers, Percent, TrendingUp, HelpCircle } from "lucide-react";
+import { Sparkles, ArrowUpRight, Shield, Layers, Percent, TrendingUp, HelpCircle } from "lucide-react";
+import { ArrowNarrowRightIcon } from "../../../components/icons/ItsHoverIcons";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
@@ -306,7 +307,7 @@ export default function ProgramaAfiliados({ onNavigate, contactHref }: ProgramaA
                   className="group min-h-11 w-full bg-brand-secondary text-black font-sans font-black text-xs uppercase tracking-widest py-3.5 px-6 rounded-full shadow-[0_15px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] flex items-center justify-center gap-1.5 motion-safe:hover:scale-[1.02] transition-[background-color,box-shadow,transform] duration-200 cursor-pointer text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900"
                 >
                   <span>FALAR SOBRE PARCERIA</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowNarrowRightIcon className="w-3.5 h-3.5" />
                 </a>
               </div>
             </div>

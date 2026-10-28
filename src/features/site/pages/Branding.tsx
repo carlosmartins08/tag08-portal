@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Compass, Sparkles, BookOpen, Layers, CheckCircle, ArrowUpRight, ArrowRight, Award, Shield, MessageSquare, Search, Image, Grid, ExternalLink, Heart, X, Palette, Type, TrendingUp, Briefcase } from "lucide-react";
+import { ArrowNarrowRightIcon } from "../../../components/icons/ItsHoverIcons";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import ResilientImage from "../../../components/ResilientImage";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
@@ -804,7 +805,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                   className="group inline-flex min-h-11 items-center gap-2 bg-black text-brand font-sans font-black text-xs uppercase tracking-widest py-3.5 px-5 rounded-xl border border-black/10 hover:bg-white transition-colors duration-200 active:scale-[0.98] cursor-pointer"
                 >
                   ORGANIZAR MINHA IDENTIDADE
-                  <ArrowRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-1 transition-transform" />
+                  <ArrowNarrowRightIcon className="w-4 h-4 stroke-[2.5]" />
                 </button>
               </div>
             </div>
@@ -998,7 +999,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                   onClick={() => handleLinkClick("/contato")}
                   className="group relative min-h-11 px-6 py-4 bg-brand-secondary hover:bg-brand-dark text-black text-xs font-sans font-bold uppercase tracking-widest rounded-xl transition-colors duration-200 shrink-0 overflow-hidden shadow-[0_8px_30px_rgba(var(--color-brand-secondary-rgb),0.15)] active:scale-[0.98] relative z-10 cursor-pointer"
                 >
-                  FALAR COM A TAG08 <ArrowRight className="w-4 h-4 ml-1.5 inline-block group-hover:translate-x-1 transition-transform" />
+                  FALAR COM A TAG08 <ArrowNarrowRightIcon className="w-4 h-4 ml-1.5 inline-block" />
                 </button>
               </div>
             </div>
@@ -1131,7 +1132,7 @@ export default function Branding({ onNavigate }: BrandingProps) {
                   className="group flex min-h-11 items-center justify-between gap-3 text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5 transition-colors duration-200"
                 >
                   <span>Ver soluções</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  <ArrowNarrowRightIcon className="w-3.5 h-3.5" />
                 </button>
               </div>
 
@@ -1174,14 +1175,14 @@ export default function Branding({ onNavigate }: BrandingProps) {
             className="group min-h-11 bg-brand text-black font-sans font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark transition-colors duration-200 active:scale-[0.98] cursor-pointer flex items-center gap-2 justify-center"
           >
             <span>ORGANIZAR MINHA IDENTIDADE</span>
-            <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+            <ArrowNarrowRightIcon className="w-3.5 h-3.5 stroke-[2.5]" />
           </button>
           <button
             onClick={() => handleLinkClick('/servicos')}
             className="group min-h-11 border border-white/10 bg-white/[0.03] text-white font-sans font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full hover:border-white/20 hover:bg-white/[0.06] transition-colors duration-200 active:scale-[0.98] cursor-pointer flex items-center gap-2 justify-center"
           >
             <span>VER SOLUÇÕES</span>
-            <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+            <ArrowNarrowRightIcon className="w-3.5 h-3.5 stroke-[2.5]" />
           </button>
         </div>
       </section>

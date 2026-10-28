@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Sparkles, ArrowUpRight, ArrowRight, Layers, FileText, Zap, HelpCircle } from "lucide-react";
+import { Sparkles, ArrowUpRight, Layers, FileText, Zap, HelpCircle } from "lucide-react";
+import { ArrowNarrowRightIcon } from "../../../components/icons/ItsHoverIcons";
 import { useReducedMotion } from "motion/react";
 import ResilientImage from "../../../components/ResilientImage";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
@@ -331,7 +332,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
               className="group min-h-11 bg-brand-secondary text-black font-sans font-black text-xs uppercase tracking-widest py-3.5 px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.22)] motion-safe:hover:scale-[1.02] transition-[background-color,box-shadow,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900 flex items-center gap-2 cursor-pointer"
             >
               <span>CONSULTAR CONDIÇÕES VIGENTES</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowNarrowRightIcon className="w-4 h-4" />
             </TrackedOutboundLink>
             <button
               onClick={() => handleLinkClick("/contato")}

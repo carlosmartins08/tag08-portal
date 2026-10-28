@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowRight, ArrowUpRight, Check, ChevronDown, LineChart, MessageSquare, Settings, Target } from "lucide-react";
+import { ArrowUpRight, Check, ChevronDown, LineChart, MessageSquare, Settings, Target } from "lucide-react";
+import { ArrowNarrowRightIcon } from "../../../components/icons/ItsHoverIcons";
 import ResilientImage from "../../../components/ResilientImage";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import MiniCases from "../../../components/MiniCases";
@@ -199,7 +200,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
                   <span>Falar com a TAG08</span><ArrowUpRight className="h-4 w-4 stroke-[2.5]" />
                 </a>
                 <button type="button" onClick={scrollToDiagnostic} className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-3 text-xs font-bold uppercase tracking-widest text-zinc-200 ${actionTransition}`}>
-                  <span>Fazer leitura inicial</span><ArrowRight className="h-4 w-4" />
+                  <span>Fazer leitura inicial</span><ArrowNarrowRightIcon className="h-4 w-4" />
                 </button>
               </div>
             </div>
@@ -341,7 +342,7 @@ export default function AssessoriaMarketingDigitalEstrategico({ onNavigate }: As
           <div className="max-w-2xl"><h2 className="font-display text-3xl font-black leading-[0.98] tracking-[-0.04em] sm:text-4xl">Vamos entender se a assessoria faz sentido para sua marca?</h2><p className="mt-5 text-sm leading-relaxed text-black/75">Antes de propor qualquer formato, a TAG08 entende contexto, posicionamento, prioridades e capacidade de execução para indicar o caminho mais coerente para este momento.</p></div>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <a href={brazilConsultationWhatsappUrl} onClick={() => handleConsultationWhatsAppClick("assessoria-final-cta")} target="_blank" rel="noreferrer" aria-label="Falar com a TAG08 pelo WhatsApp, abre em nova guia" className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-black px-5 py-3 text-xs font-black uppercase tracking-widest text-white ${actionTransition}`}>Falar com a TAG08<ArrowUpRight className="h-4 w-4" /></a>
-            <button type="button" onClick={() => handleLinkClick("/servicos")} className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-black/15 px-5 py-3 text-xs font-bold uppercase tracking-widest text-black ${actionTransition}`}>Ver outras soluções<ArrowRight className="h-4 w-4" /></button>
+            <button type="button" onClick={() => handleLinkClick("/servicos")} className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-black/15 px-5 py-3 text-xs font-bold uppercase tracking-widest text-black ${actionTransition}`}>Ver outras soluções<ArrowNarrowRightIcon className="h-4 w-4" /></button>
           </div>
         </div>
       </section>

@@ -23,6 +23,7 @@ import { trackFormError, trackFormStart, trackFormSubmit, trackLeadEvent, trackO
 import { queueFormSubmission, removeQueuedSubmission } from "../../../lib/formQueue";
 import { COOKIE_CONSENT_EVENT, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
 import CountryFlag from "../../../components/CountryFlag";
+import { ArrowNarrowRightIcon, SendIcon, type AnimatedIconHandle } from "../../../components/icons/ItsHoverIcons";
 import type { RouteLocale } from "../../../config/routeRegistry";
 import { getContactJourneyOriginSource, parseContactJourneyContext, type ContactJourneyOrigin } from "../../../lib/contactJourney";
 
@@ -81,6 +82,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   const honeypotRef = useRef<HTMLInputElement>(null);
   const requestTypeFirstOptionRef = useRef<HTMLInputElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
+  const contactSendIconRef = useRef<AnimatedIconHandle>(null);
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -891,7 +893,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                   {submitError ? <p id={activeStep === 1 && !formData.requestType ? "contact-request-type-error" : undefined} role="alert" className="text-xs text-state-danger">{submitError}</p> : null}
                   <div className="flex gap-3 pt-2">
                     {activeStep > 1 && <button type="button" onClick={() => { setSubmitError(""); setPartnershipSendConfirmed(false); goToStep(activeStep - 1); }} className="min-h-11 rounded-lg border border-white/10 px-5 text-sm text-white hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand transition-transform duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100">Voltar</button>}
-                    {activeStep < finalStep && <button type="button" onClick={continueFromStep} className="min-h-11 flex-1 rounded-lg bg-brand px-5 text-sm font-bold text-black hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand transition-transform duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100">{isPartnership && activeStep === 3 ? "Revisar inscrição" : "Continuar"} <ArrowRight className="ml-2 inline h-4 w-4" /></button>}
+                    {activeStep < finalStep && <button type="button" onClick={continueFromStep} className="min-h-11 flex-1 rounded-lg bg-brand px-5 text-sm font-bold text-black hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand transition-transform duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100">{isPartnership && activeStep === 3 ? "Revisar inscrição" : "Continuar"} <ArrowNarrowRightIcon className="ml-2 inline h-4 w-4" /></button>}
                   </div>
 
                   {((activeStep === 3 && !isPartnership) || isSubmitStep) && <>
@@ -935,6 +937,10 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                       id="btn-form-submit"
                       type="submit"
                       disabled={loading}
+                      onMouseEnter={() => void contactSendIconRef.current?.startAnimation()}
+                      onMouseLeave={() => contactSendIconRef.current?.stopAnimation()}
+                      onFocus={() => void contactSendIconRef.current?.startAnimation()}
+                      onBlur={() => contactSendIconRef.current?.stopAnimation()}
                       className="min-h-11 w-full bg-brand hover:bg-brand-dark text-black font-bold font-sans text-xs uppercase py-4 rounded-lg transition-[transform,background-color,box-shadow,opacity] duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_25px_rgba(var(--color-brand-rgb),0.15)]"
                     >
                       {loading ? (
@@ -943,7 +949,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         </span>
                       ) : (
                         <span className="flex items-center gap-1.5">
-                          {isPartnership ? "Confirmar e enviar inscrição" : isDiagnostic ? "Enviar pedido de orientação" : "Enviar solicitação à TAG08"} <ArrowRight className="w-4 h-4" />
+                          {isPartnership ? "Confirmar e enviar inscrição" : isDiagnostic ? "Enviar pedido de orientação" : "Enviar solicitação à TAG08"} <SendIcon ref={contactSendIconRef} className="w-4 h-4" />
                         </span>
                       )}
                     </button>

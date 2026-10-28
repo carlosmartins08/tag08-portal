@@ -1,4 +1,5 @@
-import { ChevronRight, Home, ArrowLeft, ArrowRight } from "lucide-react";
+import { ChevronRight, Home, ArrowLeft } from "lucide-react";
+import { ArrowNarrowRightIcon } from "./icons/ItsHoverIcons";
 import { motion } from "motion/react";
 import { CASE_STUDIES } from "../data";
 import { getRouteByPath } from "../config/routeRegistry";
@@ -128,7 +129,7 @@ export default function Breadcrumbs({ currentPage, onNavigate, language }: Bread
                 title={copy.nextServiceLabel}
               >
                 <span>{copy.nextServiceLabel}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowNarrowRightIcon className="w-3.5 h-3.5" />
               </button>
             </div>
           </ContextNav>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { MessageSquare, Sparkles, TrendingUp, ArrowUpRight, ArrowRight, Users, Plus, Minus } from "lucide-react";
+import { MessageSquare, Sparkles, TrendingUp, ArrowUpRight, Users, Plus, Minus } from "lucide-react";
+import { ArrowNarrowRightIcon } from "../../../components/icons/ItsHoverIcons";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
@@ -418,7 +419,7 @@ Próximo passo: conversar com a TAG08 para entender contexto, escopo e direção
                   className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-brand-secondary/40 px-6 py-3 text-xs font-black uppercase tracking-widest text-brand-secondary transition-colors duration-200 hover:bg-brand-secondary/10 active:scale-[0.98]"
                 >
                   FAZER DIAGNÓSTICO EDITORIAL
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowNarrowRightIcon className="h-4 w-4" />
                 </button>
               </div>
             </div>
@@ -1084,7 +1085,7 @@ Próximo passo: conversar com a TAG08 para entender contexto, escopo e direção
                   className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-brand px-5 py-3 tag08-meta text-xs font-black uppercase tracking-widest text-black transition-colors duration-200 hover:bg-brand-dark active:scale-[0.98]"
                 >
                   <span>Compartilhar por WhatsApp</span>
-                  <ArrowRight className="h-4 w-4 stroke-[2.5] transition-transform group-hover:translate-x-1" />
+                  <ArrowNarrowRightIcon className="h-4 w-4 stroke-[2.5]" />
                   </TrackedOutboundLink>
               ) : (
                 <button
@@ -1361,7 +1362,7 @@ Próximo passo: conversar com a TAG08 para entender contexto, escopo e direção
             className="group min-h-11 bg-brand text-black font-sans font-black text-xs uppercase tracking-widest py-3.5 px-7 rounded-full shadow-[0_12px_40px_rgba(var(--color-brand-secondary-rgb),0.22)] hover:bg-brand-dark transition-colors duration-200 active:scale-[0.98] cursor-pointer flex items-center gap-2 mx-auto"
           >
             <span>ENTENDER SE A GESTÃO FAZ SENTIDO</span>
-            <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+            <ArrowNarrowRightIcon className="w-3.5 h-3.5 stroke-[2.5]" />
           </button>
         </div>
       </section>

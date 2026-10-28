@@ -7,9 +7,7 @@ import {
   Phone, 
   Linkedin, 
   Globe, 
-  Send, 
   CheckCircle2, 
-  ArrowRight, 
   ArrowUpRight,
   Sparkles, 
   Terminal, 
@@ -17,6 +15,7 @@ import {
 } from "lucide-react";
 import { trackFormError, trackFormStart, trackFormStep, trackFormSubmit, trackOutboundClick } from "../../../lib/analytics";
 import { queueFormSubmission } from "../../../lib/formQueue";
+import { ArrowNarrowRightIcon, CheckedIcon, SendIcon, type AnimatedIconHandle } from "../../../components/icons/ItsHoverIcons";
 import type { RouteLocale } from "../../../config/routeRegistry";
 import {
   TALENT_COMMERCIAL_OPERATIONAL_AREAS,
@@ -55,6 +54,9 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
   const [submitError, setSubmitError] = useState("");
   const honeypotRef = useRef<HTMLInputElement>(null);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const talentSendIconRef = useRef<AnimatedIconHandle>(null);
+  const successCheckIconRef = useRef<AnimatedIconHandle>(null);
+  const successIconAnimatedRef = useRef(false);
   const prefersReducedMotion = useReducedMotion();
   const hasCreativeTechnicalArea = interestAreas.some((area) => TALENT_CREATIVE_TECHNICAL_AREAS.includes(area));
   const hasCommercialOperationalArea = interestAreas.some((area) => TALENT_COMMERCIAL_OPERATIONAL_AREAS.includes(area));
@@ -80,6 +82,21 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
       requestAnimationFrame(() => stepHeadingRef.current?.focus());
     }
   }, [currentStep]);
+
+  useEffect(() => {
+    if (!submitSuccess) {
+      successIconAnimatedRef.current = false;
+      return;
+    }
+    if (prefersReducedMotion) return;
+
+    const frame = requestAnimationFrame(() => {
+      if (successIconAnimatedRef.current) return;
+      successIconAnimatedRef.current = true;
+      void successCheckIconRef.current?.startAnimation();
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [submitSuccess, prefersReducedMotion]);
 
   const handleOutboundClick = (label: string, url: string, surface: string) => {
     trackOutboundClick({
@@ -298,7 +315,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                 href="#banco-de-talentos-anchor"
                 className="inline-flex min-h-11 items-center gap-2 px-6 py-3 bg-brand text-black tag08-action font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 transition-[background-color,box-shadow] duration-200 shadow-[0_8px_25px_rgba(var(--color-brand-rgb),0.15)]"
               >
-                Conhecer o Banco de Talentos <ArrowRight className="w-3.5 h-3.5" />
+                Conhecer o Banco de Talentos <ArrowNarrowRightIcon className="w-3.5 h-3.5" />
               </a>
               <a 
                 href="#aplicacao-direta-anchor" 
@@ -682,7 +699,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                 onClick={handleApply}
                 className="inline-flex min-h-11 shrink-0 items-center justify-center gap-1.5 px-4 py-2.5 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 transition-[background-color] duration-200 cursor-pointer"
               >
-                Enviar meu perfil <ArrowRight className="w-3.5 h-3.5 text-brand" />
+                Enviar meu perfil <ArrowNarrowRightIcon className="w-3.5 h-3.5 text-brand" />
               </button>
             </div>
           </div>
@@ -1157,16 +1174,20 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       onClick={(event) => { event.preventDefault(); handleNextStep(); }}
                       className="inline-flex min-h-11 w-full sm:w-auto items-center justify-center gap-1.5 px-6 py-3 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-[background-color] duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
                     >
-                      {currentStep === 3 ? "Revisar candidatura" : "Continuar"} <ArrowRight className="w-3.5 h-3.5 text-brand" />
+                      {currentStep === 3 ? "Revisar candidatura" : "Continuar"} <ArrowNarrowRightIcon className="w-3.5 h-3.5 text-brand" />
                     </button>
                   ) : (
                     <button
                       type="submit"
                       form="talent-application-form"
                       disabled={submitting}
+                      onMouseEnter={() => void talentSendIconRef.current?.startAnimation()}
+                      onMouseLeave={() => talentSendIconRef.current?.stopAnimation()}
+                      onFocus={() => void talentSendIconRef.current?.startAnimation()}
+                      onBlur={() => talentSendIconRef.current?.stopAnimation()}
                       className="inline-flex min-h-11 w-full sm:w-auto items-center justify-center gap-1.5 px-6 py-3 bg-brand hover:bg-brand-dark disabled:hover:bg-brand text-black font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-[background-color,box-shadow] duration-200 shadow-[0_4px_12px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      {submitting ? "Enviando..." : "Enviar candidatura"} <Send className="w-3.5 h-3.5 shrink-0" />
+                      {submitting ? "Enviando..." : "Enviar candidatura"} <SendIcon ref={talentSendIconRef} className="w-3.5 h-3.5 shrink-0" />
                     </button>
                   )}
                 </div>
@@ -1183,7 +1204,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     data-testid="talent-application-success"
                   >
                     <div className="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center mb-5 border border-green-200">
-                      <CheckCircle2 className="w-8 h-8" />
+                      <CheckedIcon ref={successCheckIconRef} className="w-8 h-8" />
                     </div>
                     <h3 className="font-display font-black text-xl text-zinc-900 tracking-tight">
                       Candidatura enviada!
