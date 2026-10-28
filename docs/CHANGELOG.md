@@ -1,5 +1,9 @@
 # CHANGELOG - TAG08
 
+## 2026-10-28
+
+- Consolidated the repository's agent instructions in root `AGENTS.md`, removed the unreferenced and stale `.ai-agents` runbook, clarified the release steps while Onboarding is disabled, and aligned the live-route checker with the production fail-closed policy. Build and route checks passed; the aggregate test suite remains blocked by `spawn EPERM` and the lint prehook by the Prisma schema-engine proxy connection.
+
 ## 2026-10-27
 
 - Added a fail-closed production release gate for the database-backed Onboarding journey and required explicit availability configuration in deploy preflight. No application data, external integration, or database was accessed.

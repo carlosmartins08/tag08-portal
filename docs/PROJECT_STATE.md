@@ -1,5 +1,7 @@
 # Estado do projeto — TAG08
 
+> **Autoridade atual (2026-10-28):** este arquivo reúne registros de épocas diferentes. As seções antigas que descrevem `main`, o commit-base `5126504` ou arquitetura de integração anterior são snapshots históricos, não instruções de branch nem arquitetura vigente. O checkout observado nesta data está em `p2-home-cases-consolidation` (`d086c17e06bfc96bc426ff15d781299a71c8fbad`); isso não prova que um processo esteja ativo em `localhost:3101` (a porta estava sem listener na verificação). Contato/Talentos usam o caminho direto Sheets/ClickUp descrito nos registros operacionais mais recentes; Onboarding permanece desativado e conserva seu plano de controle PostgreSQL atual. Consulte o código, preflight e testes atuais antes de qualquer operação.
+
 Atualizado em: `2026-10-27`
 
 ## Validacao da missao atual
@@ -29,7 +31,7 @@ Atualizado em: `2026-10-27`
 - Onboarding: jornada autenticada por magic link para clientes de projetos/contratos confirmados; a interface pública não oferece modo de envio `tag08_team`, e a submissão permanece vinculada à sessão e à jornada autorizada. Contato e Banco de Talentos são canais públicos separados. EN/ES permanecem indisponíveis até revisão linguística. A validação posterior P1.2F.1 passou em 7/7 E2Es, com PostgreSQL sintético isolado.
 - Refinada a experiência do Header sem alterar rotas ou contratos: navegação de serviços agrupada por decisão, CTA de contato visível no mobile, atalho de acessibilidade, foco/semântica revisados e redução de movimento respeitada. QA responsivo concluído em cópia isolada do HEAD (build oficial PASS) nos viewports 390, 768 e 1440 px: variantes, menu/CTA, teclado e foco, Escape, navegação e ausência de overflow aprovados. A identidade da antiga instância `localhost:3101` não foi comprovada; ela não foi usada como evidência.
 
-## Estado de integração
+## Estado de integração (snapshot histórico; não usar como estado corrente)
 
 - Linha de trabalho esperada: `main`. Uma missão ativa deve usar uma branch curta no padrão `p<numero>-<tema>`, criada a partir desta base.
 - Destino de integração: `main`, no commit `5126504` (`2026-09-15`).
@@ -79,10 +81,10 @@ Atualizado em: `2026-10-27`
 - `/`: há cases, citações e imagens que precisam ser confrontados com a regra de prova registrada em 02/09. Não presumir que estarem no código equivale a autorização de publicação.
 - Serviços históricos indexáveis: Assessoria, Process Intelligence, Process Activation e Hospedagem continuam no registry. A existência técnica da rota não confirma prioridade comercial atual.
 
-## Fontes de decisão e continuidade
+## Fontes de decisão e continuidade (mapas de consolidação são evidência histórica)
 
 - Baseline e estado atual observado: `docs/architecture-consolidation/01_CURRENT_STATE_MAP.md` e `11_P0_BASELINE.md`.
-- Arquitetura canônica, paralela e alvo aprovado: `docs/architecture-consolidation/02_CANONICAL_VS_PARALLEL.md` e `10_CONSOLIDATION_WAVES.md`.
+- Reconciliação histórica entre arquiteturas: `docs/architecture-consolidation/02_CANONICAL_VS_PARALLEL.md` e `10_CONSOLIDATION_WAVES.md`; consultar como evidência datada, não como descrição automática da arquitetura atual.
 - Próximas fases de saneamento: `docs/architecture-consolidation/10_CONSOLIDATION_WAVES.md`.
 - Rotas e indexação: `docs/architecture-consolidation/03_ROUTE_AND_PAGE_INVENTORY.md` e `src/config/routeRegistry.ts`.
 - Evidências públicas: `docs/architecture-consolidation/13_PUBLIC_EVIDENCE_APPROVAL_MATRIX.md`, `14_PUBLIC_EVIDENCE_DECISIONS.md` e `15_P0_4_INVESTIGATE_IMPLEMENTATION.md`.

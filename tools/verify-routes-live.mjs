@@ -46,7 +46,13 @@ try {
     ]);
   }
 
-  await run(process.execPath, ["node_modules/tsx/dist/cli.mjs", "tools/verify-routes.ts"], { ...process.env, BASE_URL: baseUrl });
+  // The checker validates the production standalone server, so its availability
+  // policy must use the same fail-closed production default as that runtime.
+  await run(process.execPath, ["node_modules/tsx/dist/cli.mjs", "tools/verify-routes.ts"], {
+    ...process.env,
+    NODE_ENV: "production",
+    BASE_URL: baseUrl
+  });
 } finally {
   if (server && !server.killed) server.kill("SIGTERM");
 }
