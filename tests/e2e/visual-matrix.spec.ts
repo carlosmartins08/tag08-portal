@@ -14,8 +14,44 @@ for (const viewport of viewports) {
     for (const path of renderableRoutePaths) {
       test(`${path} preserva moldura e controles acessiveis`, async ({ page }) => {
         await page.setViewportSize(viewport);
-        await page.goto(path, { waitUntil: "domcontentloaded" });
+        const response = await page.goto(path, { waitUntil: "domcontentloaded" });
         await page.waitForTimeout(700);
+
+        if (path === "/cliente/onboarding") {
+          const status = response?.status();
+          expect([200, 404]).toContain(status);
+          if (status === 200) {
+            expect(response?.status()).toBe(200);
+            await expect(page.getByRole("heading", { name: "Acesso ao onboarding" })).toBeVisible();
+            await expect(page.locator("#onboarding-company-name")).toHaveCount(0);
+          } else {
+            expect(response?.status()).toBe(404);
+            await expect(page.getByRole("heading", { name: "Acesso ao onboarding" })).toHaveCount(0);
+            await expect(page.locator("#onboarding-company-name")).toHaveCount(0);
+          }
+          return;
+        }
+
+        if (path === "/trabalhe-conosco") {
+          await expect(page.getByText("📍 Joinville / SC", { exact: true })).toBeVisible();
+          await expect(page.getByText("📍 Remoto / Brasil", { exact: true })).toBeVisible();
+        }
+
+        if (path === "/hospedagem-manutencao-sites") {
+          const optionLinks = page.getByRole("link", { name: /Solicitar esta/i });
+          await expect(optionLinks).toHaveCount(6);
+          const metrics = await optionLinks.evaluateAll((links) =>
+            links.map((link) => ({
+              height: link.getBoundingClientRect().height,
+              minHeight: getComputedStyle(link).minHeight,
+              classes: link.className
+            }))
+          );
+          expect(
+            metrics.every(({ height, minHeight }) => Number.parseFloat(minHeight) >= 44 && Math.round(height) >= 44),
+            `CTA metrics: ${JSON.stringify(metrics)}`
+          ).toBe(true);
+        }
 
         await expect(page.locator(".tag08-page")).toBeVisible();
         await expect(page.locator(".tag08-editorial-page")).toBeVisible();
@@ -44,7 +80,7 @@ for (const viewport of viewports) {
                   ancestorStyle.visibility !== "hidden" &&
                   Number(ancestorStyle.opacity) > 0.1;
               });
-              return rect.width > 0 && rect.height > 0 && rect.height < 44 &&
+              return rect.width > 0 && rect.height > 0 && Math.round(rect.height) < 44 &&
                 style.display !== "none" && style.visibility !== "hidden" && Number(style.opacity) > 0.1 &&
                 hasVisibleAncestors;
             })

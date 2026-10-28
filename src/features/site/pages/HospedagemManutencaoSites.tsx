@@ -791,7 +791,7 @@ export default function HospedagemManutencaoSites({ onNavigate }: PageProps) {
                             href={buildBrazilWhatsAppUrl(`Ola%20TAG08!%20Gostaria%20de%20conversar%20sobre%20a%20soluaao%20de%20"${encodeURIComponent(host.title)}"%20para%20minha%20empresa.`)}
                             target="_blank"
                             rel="noreferrer"
-                            className="relative z-20 mt-6 w-full py-3 rounded-xl tag08-action text-xs font-black uppercase text-center block tracking-widest transition-all duration-300 border bg-white/5 border-white/10 text-white hover:bg-brand hover:border-brand hover:text-black hover:shadow-lg"
+                            className="relative z-20 mt-6 w-full min-h-11 py-3 rounded-xl tag08-action text-xs font-black uppercase text-center block tracking-widest transition-all duration-300 border bg-white/5 border-white/10 text-white hover:bg-brand hover:border-brand hover:text-black hover:shadow-lg"
                           >
                             Solicitar esta opaao
                           </TrackedOutboundLink>

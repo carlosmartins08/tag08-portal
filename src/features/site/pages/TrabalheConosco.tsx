@@ -500,7 +500,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     </div>
                   </div>
                   <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-400 uppercase">
-                    <span className="flex items-center gap-1">ðŸ“ Joinville / SC</span>
+                    <span className="flex items-center gap-1">📍 Joinville / SC</span>
                     <a 
                       href="https://www.linkedin.com/in/marina-fontes-tag08"
                       target="_blank"
@@ -572,7 +572,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     </div>
                   </div>
                   <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-400 uppercase">
-                    <span className="flex items-center gap-1">ðŸ“ Remoto / Brasil</span>
+                    <span className="flex items-center gap-1">📍 Remoto / Brasil</span>
                     <a 
                       href="https://www.linkedin.com/in/amanda-reis-tag08"
                       target="_blank"
