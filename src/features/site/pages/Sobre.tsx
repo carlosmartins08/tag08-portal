@@ -100,7 +100,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
       <div aria-hidden="true" className="pointer-events-none absolute left-[-15%] top-[8%] h-[600px] w-[600px] rounded-full bg-brand/[0.015] blur-[150px]" />
       <div aria-hidden="true" className="pointer-events-none absolute bottom-[20%] right-[-15%] h-[600px] w-[600px] rounded-full bg-brand/[0.02] blur-[150px]" />
 
-      <section className="relative border-b border-white/[0.06] px-4 py-12 sm:px-6 sm:py-20 md:px-8">
+      <section className="relative border-b border-white/[0.06] px-4 pt-2 pb-12 sm:px-6 sm:py-20 md:px-8">
         <div className="mx-auto max-w-7xl space-y-10 sm:space-y-14">
           <div className="grid grid-cols-1 items-end gap-6 lg:grid-cols-12 lg:gap-12">
             <div className="space-y-5 lg:col-span-7">
@@ -114,7 +114,7 @@ export default function Sobre({ onNavigate }: SobreProps) {
           <div className="group relative aspect-[16/10] overflow-hidden rounded-[24px] border border-white/[0.08] bg-charcoal-900 shadow-2xl sm:aspect-[2.39/1] sm:rounded-[32px]">
             <ResilientImage preload fallbackLabel="Imagem editorial" sizes="(max-width: 768px) 100vw, (max-width: 1280px) calc(100vw - 4rem), 1280px" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1600" alt="" className="object-cover grayscale brightness-50 transition-transform duration-300 ease-out motion-reduce:transform-none group-hover:scale-[1.01]" referrerPolicy="no-referrer" />
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-            <div className="absolute inset-0 flex items-center justify-center px-5 pb-20 sm:pb-0">
+            <div className="absolute inset-0 flex items-center justify-center px-5">
               <button data-testid="about-hero-cta" onClick={() => handleLinkClick("/contato")} className={`hidden min-h-11 rounded-full border border-brand bg-brand px-6 py-3 text-xs font-black uppercase tracking-widest text-black shadow-[0_12px_36px_rgba(var(--color-brand-rgb),0.25)] hover:bg-brand-dark sm:inline-flex sm:items-center sm:gap-2 sm:px-8 ${actionTransition}`}>Falar com a TAG08 <ArrowUpRight className="h-4 w-4 stroke-[2.5]" /></button>
             </div>
             <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4 sm:bottom-6 sm:left-6 sm:right-6"><p className="text-sm font-bold text-white">Presença com direção</p><p className="hidden rounded-full border border-white/10 bg-black/60 px-3 py-1.5 text-xs font-medium text-zinc-300 backdrop-blur-md sm:block">Direção TAG08</p></div>
