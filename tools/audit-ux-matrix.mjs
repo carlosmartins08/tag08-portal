@@ -1,16 +1,28 @@
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { pathToFileURL } from "node:url";
 
-const collectPageFiles = (directory) =>
-  readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-    const path = join(directory, entry.name);
-    return entry.isDirectory() ? collectPageFiles(path) : entry.name.endsWith(".tsx") ? [path] : [];
+const routePageImport = /dynamic\(\(\)\s*=>\s*import\(["']\.\/pages\/([^"']+?)(?:\.tsx?)?["']\)\)/g;
+
+export const collectRoutePageFiles = (routeContentSource, pagesDirectory = "src/features/site/pages") =>
+  [...routeContentSource.matchAll(routePageImport)].map(([, file]) => join(pagesDirectory, `${file}.tsx`));
+
+export const getPageRisks = (source) => {
+  const risks = [];
+  if (!/<h1\b/.test(source)) risks.push({ severity: "P1", rule: "missing_h1" });
+  if (/<form\b/.test(source) && !/<label\b/.test(source)) risks.push({ severity: "P1", rule: "form_without_label" });
+  const sections = (source.match(/<section\b/g) || []).length;
+  const monoLabels = (source.match(/font-mono/g) || []).length;
+  if (sections > 18) risks.push({ severity: "P2", rule: "high_section_density", count: sections });
+  if (monoLabels > 180) risks.push({ severity: "P2", rule: "high_mono_label_density", count: monoLabels });
+  return risks;
+};
+
+export const auditRoutePageSources = (routeContentSource, readSource) =>
+  collectRoutePageFiles(routeContentSource).map((file) => {
+    const source = readSource(file);
+    return { file, source, risks: getPageRisks(source) };
   });
-
-const sourceFiles = collectPageFiles("src/features/site/pages").filter((file) => {
-  const source = readFileSync(file, "utf8");
-  return /<h1|<section|ServiceInsightsBridge|MiniCases|<form/.test(source);
-});
 
 const countMatches = (source, pattern) => [...source.matchAll(pattern)].length;
 
@@ -45,19 +57,15 @@ const getDominantSupportAccentSurfaces = (source) =>
     return ["div", "section", "article", "aside", "main", "motion.div"].includes(tag) && hasLargeDimensions;
   });
 
-const pages = sourceFiles.map((file) => {
-  const source = readFileSync(file, "utf8");
+const runAudit = () => {
+const routeContentSource = readFileSync("src/features/site/RouteContent.tsx", "utf8");
+const auditedRoutePages = auditRoutePageSources(routeContentSource, (file) => readFileSync(file, "utf8"));
+const pages = auditedRoutePages.map(({ file, source, risks }) => {
   const sections = (source.match(/<section\b/g) || []).length;
   const monoLabels = (source.match(/font-mono/g) || []).length;
   const accentSupportReferences = (source.match(/brand-secondary/g) || []).length;
   const opaqueSupportAccentUses = getOpaqueSupportAccentUses(source);
   const dominantSupportAccentSurfaces = getDominantSupportAccentSurfaces(source);
-  const risks = [];
-
-  if (!/<h1\b/.test(source)) risks.push({ severity: "P1", rule: "missing_h1" });
-  if (/<form\b/.test(source) && !/<label\b/.test(source)) risks.push({ severity: "P1", rule: "form_without_label" });
-  if (sections > 18) risks.push({ severity: "P2", rule: "high_section_density", count: sections });
-  if (monoLabels > 180) risks.push({ severity: "P2", rule: "high_mono_label_density", count: monoLabels });
   if (dominantSupportAccentSurfaces.length > 1) {
     risks.push({
       severity: "P2",
@@ -114,3 +122,6 @@ console.log(
 );
 
 if (findings.some((finding) => finding.severity === "P1")) process.exitCode = 1;
+};
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) runAudit();

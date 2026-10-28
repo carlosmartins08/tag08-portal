@@ -56,7 +56,7 @@
     "audit:visual-contract": "node tools/audit-visual-contract.mjs",
     "audit:encoding": "node tools/audit-encoding.mjs",
     "audit:images": "node tools/audit-images.mjs",
-    "audit:ux-matrix": "node tools/audit-ux-matrix.mjs",
+    "audit:ux-matrix": "node tests/auditUxMatrix.test.mjs && node tools/audit-ux-matrix.mjs",
     "audit:interactions": "node tools/audit-interactions.mjs",
     "audit:performance:mobile": "lhci autorun --config=lighthouserc.mobile.cjs",
     "audit:performance:desktop": "lhci autorun --config=lighthouserc.desktop.cjs",
