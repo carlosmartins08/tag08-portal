@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CONTACT_STAGING_SPREADSHEET_ID } from "./contactStagingGate.mjs";
@@ -142,6 +141,7 @@ export const evaluateDeployPreflight = (env, args = []) => {
 };
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  await import("dotenv/config");
   const result = evaluateDeployPreflight(process.env, process.argv.slice(2));
   if (result.missing.length || result.invalid.length) {
     console.error(JSON.stringify({ event: "deploy_preflight_failed", target: result.target, missing: result.missing, invalid: result.invalid }));
