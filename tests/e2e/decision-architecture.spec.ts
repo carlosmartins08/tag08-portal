@@ -24,6 +24,9 @@ test("Home apresenta seis caminhos de família em todos os breakpoints", async (
     const map = page.locator("#servicos-principais");
     await expect(map).toBeVisible();
     await expect(map.getByTestId("solution-map-card")).toHaveCount(6);
+    const orientationLink = page.getByRole("link", { name: /Conte o momento do seu neg/i });
+    await expect(orientationLink).toBeVisible();
+    expect((await orientationLink.boundingBox())?.height).toBeGreaterThanOrEqual(44);
     for (const family of families) {
       await expect(map.getByRole("heading", { name: family, exact: true })).toBeVisible();
     }
@@ -32,9 +35,13 @@ test("Home apresenta seis caminhos de família em todos os breakpoints", async (
 
   await page.setViewportSize(viewports[2]);
   await page.goto("/", { waitUntil: "domcontentloaded" });
-  await page.getByRole("button", { name: "Conhecer soluções de Tecnologia" }).click();
+  const technologyLink = page.getByRole("link", { name: "Conhecer soluções de Tecnologia" });
+  await technologyLink.scrollIntoViewIfNeeded();
+  expect((await technologyLink.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+  await technologyLink.click();
   await expect(page).toHaveURL(/\/servicos\/desenvolvimento-web$/);
   await page.goto("/", { waitUntil: "domcontentloaded" });
+  await expect(page.getByRole("link", { name: /Conte o momento do seu neg/i })).toHaveAttribute("href", /\/contato\?intent=orientacao&origin=home/);
   const accessibility = await new AxeBuilder({ page }).include("#servicos-principais").analyze();
   expect(accessibility.violations.filter(({ impact }) => impact === "serious" || impact === "critical")).toEqual([]);
 });

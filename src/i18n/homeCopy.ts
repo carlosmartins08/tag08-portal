@@ -156,13 +156,13 @@ const HOME_EN_COPY = {
         aria: "Explore Process Intelligence",
         label: "M-05 // OPERATIONAL INTELLIGENCE",
         title: "Operations under pressure from growth",
-        description: "The business has grown in volume, but processes, responsibilities or knowledge still depend too heavily on improvisation. A possible path: Process Intelligence."
+        description: "The business has grown in volume, but processes, responsibilities or knowledge still depend too heavily on improvisation. Process Intelligence maps these routines into clear workflows and reference materials."
       },
       m06: {
         aria: "Explore Process Activation",
         category: "Process activation",
         title: "Processes exist, but execution is inconsistent",
-        description: "When the structure is already in place, Process Activation helps turn definitions into supported day-to-day practice."
+        description: "When processes are already structured, Process Activation helps put them into practice and support their adoption in day-to-day work."
       },
       nextStep: {
         aria: "Open the diagnosis",
@@ -267,6 +267,8 @@ const HOME_EN_COPY = {
       moment: "Stage {number}",
       related: "Related:",
       ctaAll: "EXPLORE SOLUTIONS",
+      orientationPrompt: "Not sure which path fits yet?",
+      orientationCta: "Tell us where your business is now",
       cards: {
         "estrategia-posicionamento": { title: "Strategy and positioning", subtitle: "Clarity before execution", desc: "For businesses and professionals whose communication no longer reflects their value, audience or current stage of business.", related: "Strategic Advisory, Strategic Repositioning and Brand Identity.", cta: "Explore strategy and positioning" },
         "conteudo-redes-sociais": { title: "Content and social media", subtitle: "Presence with an editorial plan", desc: "For businesses that need to move beyond sporadic content and build a communication routine with defined topics, formats, frequency and intent.", related: "Start, Base, Performance, Social Media Management and Reels Editing.", cta: "Explore content and social media" },
@@ -468,13 +470,13 @@ export const HOME_PILOT_COPY: Record<Exclude<RouteLocale, "pt">, WidenCopy<typeo
         aria: "Ver el servicio Process Intelligence",
         label: "M-05 // INTELIGENCIA OPERACIONAL",
         title: "Operación bajo presión por el crecimiento",
-        description: "La empresa aumentó su volumen, pero los procesos, las responsabilidades o el conocimiento todavía dependen demasiado de la improvisación. Un camino posible: Process Intelligence."
+        description: "La empresa aumentó su volumen, pero los procesos, las responsabilidades o el conocimiento todavía dependen demasiado de la improvisación. Process Intelligence organiza estas rutinas en flujos claros y materiales de consulta."
       },
       m06: {
         aria: "Ver el servicio Process Activation",
         category: "Activación de procesos",
         title: "Hay procesos, pero la ejecución es irregular",
-        description: "Cuando la estructura ya existe, Process Activation ayuda a convertir las definiciones en práctica acompañada."
+        description: "Cuando los procesos ya están estructurados, Process Activation ayuda a ponerlos en práctica y acompañar su adopción en el trabajo diario."
       },
       nextStep: {
         aria: "Ir a la evaluación inicial",
@@ -579,6 +581,8 @@ export const HOME_PILOT_COPY: Record<Exclude<RouteLocale, "pt">, WidenCopy<typeo
       moment: "Momento {number}",
       related: "Relacionados:",
       ctaAll: "CONOCER SOLUCIONES",
+      orientationPrompt: "¿Aún no sabes qué camino elegir?",
+      orientationCta: "Cuéntanos el momento de tu negocio",
       cards: {
         "estrategia-posicionamento": { title: "Estrategia y posicionamiento", subtitle: "Claridad antes de ejecutar", desc: "Para empresas y profesionales cuya comunicación ya no representa correctamente su valor, público o etapa actual del negocio.", related: "Asesoría Estratégica, Reposicionamiento Estratégico e Identidad de Marca.", cta: "Conocer estrategia y posicionamiento" },
         "conteudo-redes-sociais": { title: "Contenido y redes sociales", subtitle: "Presencia con línea editorial", desc: "Para negocios que necesitan dejar atrás la producción aislada y construir una rutina de comunicación con temas, formatos, frecuencia e intención definidos.", related: "Start, Base, Performance, Gestión de Redes Sociales y Edición de Reels.", cta: "Conocer contenido y redes sociales" },

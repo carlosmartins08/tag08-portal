@@ -1,6 +1,6 @@
 # Estado do projeto — TAG08
 
-> **Autoridade atual (2026-10-28):** este arquivo reúne registros de épocas diferentes. As seções antigas que descrevem `main`, o commit-base `5126504` ou arquitetura de integração anterior são snapshots históricos, não instruções de branch nem arquitetura vigente. O checkout observado nesta data está em `p2-home-cases-consolidation` (`d086c17e06bfc96bc426ff15d781299a71c8fbad`); isso não prova que um processo esteja ativo em `localhost:3101` (a porta estava sem listener na verificação). Contato/Talentos usam o caminho direto Sheets/ClickUp descrito nos registros operacionais mais recentes; Onboarding permanece desativado e conserva seu plano de controle PostgreSQL atual. Consulte o código, preflight e testes atuais antes de qualquer operação.
+> **Autoridade atual (2026-10-28):** este arquivo reúne registros de épocas diferentes. As seções antigas que descrevem `main`, commit-base ou integrações substituídas são snapshots históricos, não instruções de branch nem arquitetura vigente. A decisão mais recente para esta release é: Contato e Talentos persistem exclusivamente no Google Sheets e não encaminham submissões ao ClickUp nem usam a outbox SQL. ClickUp/PostgreSQL permanecem isolados para consumidores independentes; Onboarding fica desativado e preservado. Consulte código, preflight e testes atuais antes de qualquer operação.
 
 Atualizado em: `2026-10-27`
 
@@ -31,7 +31,7 @@ Atualizado em: `2026-10-27`
 
 ## Missão em andamento
 
-- Talentos: o formulário passou a aceitar múltiplas áreas e respostas adaptativas em contrato v2; o contrato v1 e o identificador legado de persistência foram preservados. TypeScript passou; testes de persistência e E2E foram adicionados/atualizados, mas não executaram neste ambiente devido a `spawn EPERM` no esbuild. Integrações externas continuam desativadas.
+- Talentos: o formulário aceita múltiplas áreas e respostas adaptativas em contrato v2; v1 e o identificador legado foram preservados. O operador aprovou os testes de contrato (9/9) e persistência/idempotência (6/6), total 15/15. TypeScript passou. Build isolado e E2E v2 permanecem pendentes: o Prisma não obteve o `schema-engine` por falha de conexão ao proxy local configurado; o runtime de testes do agente também tem o bloqueio conhecido `spawn EPERM`. Integrações externas continuam desativadas.
 
 - Home: removida a vitrine redundante de portfólio em validação, refinado o mapa de soluções e mantida a navegação dos cases. O conteúdo EN/ES existe apenas como rascunho gated; a prontidão permanece pendente de revisão linguística. Build e 94 testes E2E críticos passaram.
 - Onboarding: jornada autenticada por magic link para clientes de projetos/contratos confirmados; a interface pública não oferece modo de envio `tag08_team`, e a submissão permanece vinculada à sessão e à jornada autorizada. Contato e Banco de Talentos são canais públicos separados. EN/ES permanecem indisponíveis até revisão linguística. A validação posterior P1.2F.1 passou em 7/7 E2Es, com PostgreSQL sintético isolado.

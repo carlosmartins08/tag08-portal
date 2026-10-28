@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 
 test.describe("experiencia de contato", () => {
   test.beforeEach(async ({ page }) => {
@@ -411,6 +412,34 @@ test.describe("experiencia de contato", () => {
       expect(layout.lineCount).toBeGreaterThan(0);
       expect(layout.lineCount).toBeLessThanOrEqual(4);
       expect(layout.scrollWidth).toBeLessThanOrEqual(layout.viewportWidth);
+    }
+  });
+  test("explains and announces required contact intent before continuing", async ({ page }) => {
+    for (const [width, height] of [[390, 844], [768, 1000], [1440, 1100]]) {
+      await page.setViewportSize({ width, height });
+      await page.goto("/contato", { waitUntil: "domcontentloaded" });
+      const requestTypeGroup = page.locator("form fieldset").first();
+      const firstOption = page.getByRole("radio", { name: /Quero iniciar um projeto/ });
+      const firstOptionTarget = firstOption.locator("xpath=ancestor::label");
+      const continueButton = page.getByRole("button", { name: "Continuar" });
+
+      await expect(page.getByText("(escolha uma opção)")).toBeVisible();
+      expect((await firstOptionTarget.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+      expect((await continueButton.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+      await continueButton.click();
+
+      await expect(page.locator("#contact-request-type-error")).toHaveText("Escolha o motivo do contato para continuar.");
+      await expect(firstOption).toHaveAttribute("required", "");
+      await expect(requestTypeGroup).toHaveAttribute("aria-invalid", "true");
+      await expect(requestTypeGroup).toHaveAttribute("aria-describedby", "contact-request-type-error");
+      await expect(firstOption).toBeFocused();
+      const accessibility = await new AxeBuilder({ page }).include("form").analyze();
+      expect(accessibility.violations.filter(({ impact }) => impact === "serious" || impact === "critical")).toEqual([]);
+
+      await firstOption.check();
+      await expect(requestTypeGroup).toHaveAttribute("aria-invalid", "false");
+      await continueButton.click();
+      await expect(page.getByRole("checkbox", { name: "Organizar marca ou posicionamento" })).toBeVisible();
     }
   });
 });

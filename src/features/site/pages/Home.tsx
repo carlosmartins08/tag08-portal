@@ -9,7 +9,7 @@ import { getVideoDescriptionPreview, type OfficialContentApiResponse, type Offic
 import { trackOutboundClick, trackVideoEvent } from "../../../lib/analytics";
 import { activateOnKeyboard } from "../../../lib/keyboard";
 import { COOKIE_CONSENT_EVENT, grantMarketingConsent, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
-import type { RouteLocale } from "../../../config/routeRegistry";
+import { getLocalizedPath, type RouteLocale } from "../../../config/routeRegistry";
 import { externalContentCopy } from "../../../i18n/externalContent";
 import { HOME_PILOT_COPY, type HomeDiagnosticDiagramCopy } from "../../../i18n/homeCopy";
 import HeroEditorialStage from "../../../components/HeroEditorialStage";
@@ -522,7 +522,7 @@ const GMB_REVIEWS = [
 
 const DIAGNOSTIQUER_PHASES = {
   discovery: {
-    title: "Discovery",
+    title: "Entendimento",
     badge: "FASE 01",
     desc: "Entendimento do momento atual da marca, seus canais, sua comunicação, sua operação e os principais sinais de desalinhamento. Aqui a TAG08 identifica o que está travando clareza, consistência e tomada de decisão.",
     rating: "Clareza",
@@ -1412,7 +1412,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                     <div className="space-y-2 relative z-10">
                       <h3 className="font-display font-extrabold text-white text-sm tracking-tight group-hover:text-brand transition-colors">{pilotCopy?.mosaic.m05.title ?? "Operação pressionada pelo crescimento"}</h3>
                       <p className="text-zinc-400 text-xs font-sans leading-relaxed">
-                        {pilotCopy?.mosaic.m05.description ?? "A empresa aumentou o volume, mas processos, responsabilidades ou conhecimento ainda dependem demais de improviso. Caminho possível: Process Intelligence."}
+                        {pilotCopy?.mosaic.m05.description ?? "A empresa aumentou o volume, mas processos, responsabilidades ou conhecimento ainda dependem demais de improviso. Process Intelligence mapeia essas rotinas em fluxos claros e materiais de consulta."}
                       </p>
                     </div>
                   </div>
@@ -1443,7 +1443,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                       <div>
                         <h3 className="font-display font-bold text-sm tracking-tight leading-none text-white group-hover:text-brand transition-colors">{pilotCopy?.mosaic.m06.title ?? "Processos existentes, execução irregular"}</h3>
                         <p className="text-zinc-400 text-xs font-sans leading-normal mt-1.5">
-                          {pilotCopy?.mosaic.m06.description ?? "Quando a estrutura já existe, Process Activation ajuda a transformar definições em prática acompanhada."}
+                          {pilotCopy?.mosaic.m06.description ?? "Quando os processos já estão estruturados, Process Activation ajuda a colocá-los em prática e acompanhar sua adoção no trabalho diário."}
                         </p>
                       </div>
                     </div>
@@ -1977,6 +1977,19 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
               </p>
             </div>
 
+            <div className="relative z-10 -mt-3 mb-8 flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+              <p className="text-sm font-medium text-zinc-700">
+                {solutionMapCopy?.orientationPrompt ?? "Ainda não sabe qual caminho escolher?"}
+              </p>
+              <Link
+                href={contactHref}
+                className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 font-sans text-sm font-bold text-accent-readable underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-readable focus-visible:ring-offset-2"
+              >
+                {solutionMapCopy?.orientationCta ?? "Conte o momento do seu negócio"}
+                <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              </Link>
+            </div>
+
             <div className="relative z-10 my-6 space-y-8 sm:space-y-10">
               {localizedSolutionPairs.map((pair, pairIndex) => (
                 <div key={`solution-pair-${pairIndex}`} className="relative">
@@ -2032,14 +2045,13 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                             </div>
 
                             <div className="mt-6 flex w-full items-center justify-between gap-4 border-t border-current/10 pt-5">
-                              <button
-                                type="button"
-                                onClick={() => handleLinkClick(service.slug)}
+                              <Link
+                                href={getLocalizedPath(service.slug, locale)}
                                 className="min-h-11 flex items-center gap-1.5 font-sans text-xs font-black uppercase tracking-widest cursor-pointer hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-readable"
                               >
                                 {service.cta}
-                                <ArrowRight className="w-3.5 h-3.5" />
-                              </button>
+                                <ArrowRight aria-hidden="true" className="w-3.5 h-3.5" />
+                              </Link>
                               <div className={`text-xs tag08-meta uppercase tracking-widest ${labelColor}`}>
                                 {String(index + 1).padStart(2, "0")}
                               </div>

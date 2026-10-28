@@ -79,6 +79,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   const [marketingConsent, setMarketingConsent] = useState(false);
   const hasTrackedFormStartRef = useRef(false);
   const honeypotRef = useRef<HTMLInputElement>(null);
+  const requestTypeFirstOptionRef = useRef<HTMLInputElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
@@ -226,6 +227,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
   const continueFromStep = () => {
     if (activeStep === 1 && !formData.requestType) {
       setSubmitError("Escolha o motivo do contato para continuar.");
+      window.requestAnimationFrame(() => requestTypeFirstOptionRef.current?.focus());
       return;
     }
     if (activeStep === 1 && formData.requestType === "partnership" && !partnershipModality) {
@@ -710,11 +712,11 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                     <label htmlFor="contact-website">Não preencha este campo</label>
                     <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" ref={honeypotRef} />
                   </div>
-                  {activeStep === 1 && <fieldset className="space-y-3">
-                    <legend className="text-sm font-semibold text-white">{isDiagnostic ? "O que você deseja resolver?" : "Qual é o motivo do seu contato?"}</legend>
+                  {activeStep === 1 && <fieldset className="space-y-3" aria-invalid={Boolean(!formData.requestType && submitError)} aria-describedby={!formData.requestType && submitError ? "contact-request-type-error" : undefined}>
+                    <legend className="text-sm font-semibold text-white">{isDiagnostic ? "O que você deseja resolver?" : "Qual é o motivo do seu contato?"} <span className="text-zinc-400">(escolha uma opção)</span></legend>
                     {[["new_project", "Quero iniciar um projeto"], ["diagnostic", "Quero orientação para entender o que resolver"], ["existing_client", "Já sou cliente"], ["partnership", "Quero propor uma parceria"]].map(([value, label]) => (
                       <label key={value} className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-colors ${formData.requestType === value ? "border-brand bg-brand/10 text-white" : "border-white/[0.08] text-zinc-300 hover:border-white/20"}`}>
-                        <input type="radio" name="requestType" value={value} checked={formData.requestType === value} onChange={() => handleRequestTypeChange(value as ContactFormData["requestType"])} className="accent-[var(--color-brand)]" />{label}
+                        <input ref={value === "new_project" ? requestTypeFirstOptionRef : undefined} type="radio" name="requestType" value={value} required={value === "new_project"} checked={formData.requestType === value} onChange={() => handleRequestTypeChange(value as ContactFormData["requestType"])} className="accent-[var(--color-brand)]" />{label}
                       </label>
                     ))}
                   </fieldset>}
@@ -886,7 +888,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                       <button type="button" onClick={() => { setPartnershipSendConfirmed(false); goToStep(3); }} className="min-h-10 rounded-lg border border-white/10 px-4 text-xs text-white hover:bg-white/5">Alterar contato</button>
                     </div>
                   </div>}
-                  {submitError ? <p role="alert" className="text-xs text-state-danger">{submitError}</p> : null}
+                  {submitError ? <p id={activeStep === 1 && !formData.requestType ? "contact-request-type-error" : undefined} role="alert" className="text-xs text-state-danger">{submitError}</p> : null}
                   <div className="flex gap-3 pt-2">
                     {activeStep > 1 && <button type="button" onClick={() => { setSubmitError(""); setPartnershipSendConfirmed(false); goToStep(activeStep - 1); }} className="min-h-11 rounded-lg border border-white/10 px-5 text-sm text-white hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand transition-transform duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100">Voltar</button>}
                     {activeStep < finalStep && <button type="button" onClick={continueFromStep} className="min-h-11 flex-1 rounded-lg bg-brand px-5 text-sm font-bold text-black hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand transition-transform duration-150 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100">{isPartnership && activeStep === 3 ? "Revisar inscrição" : "Continuar"} <ArrowRight className="ml-2 inline h-4 w-4" /></button>}
