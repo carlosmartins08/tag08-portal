@@ -2,6 +2,8 @@
 
 ## 2026-10-28
 
+- Reconciled current operating guidance across agent instructions, README, project state, environment templates and the five official Drive documents: Sheets is canonical, ClickUp is not a site-submission integration, the CRM is separate/future, and Onboarding remains disabled and preserved. Older ClickUp routing decisions are explicitly historical; no application code or credential values changed.
+
 - Changed Contact and Talent submissions to Google Sheets-only: no ClickUp task, credentials, lists, SQL outbox, or artificial pending state. Retired their unused PostgreSQL persistence functions and ClickUp task adapters; preserved Onboarding's independent disabled ClickUp/PostgreSQL path. Added fail-closed preflight and staging runner checks; synthetic API tests returned 202 for Contact and Talent, replayed each to the same row, and confirmed cleanup. ClickUp and database were not used.
 
 - Consolidated the repository's agent instructions in root `AGENTS.md`, removed the unreferenced and stale `.ai-agents` runbook, clarified the release steps while Onboarding is disabled, and aligned the live-route checker with the production fail-closed policy. Build and route checks passed; the aggregate test suite remains blocked by `spawn EPERM` and the lint prehook by the Prisma schema-engine proxy connection.

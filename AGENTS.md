@@ -12,13 +12,14 @@ Este arquivo é a entrada única de instruções de trabalho para agentes neste 
 
 Quando fontes aprovadas divergirem, não escolha silenciosamente: registre a divergência e use a evidência mais recente apenas para descrever implementação, não para substituir aprovação de produto.
 
-## Estado técnico conhecido em 2026-10-28
+## Decisões estáveis da release
 
-- Checkout observado: branch `p2-home-cases-consolidation`, HEAD `d086c17e06bfc96bc426ff15d781299a71c8fbad`. Confirme branch, HEAD e alterações locais antes de trabalhar; não presuma que o processo histórico em `localhost:3101` ainda esteja ativo.
-- Na verificação desta data, a porta 3101 não tinha listener. O checkout é a fonte de trabalho escolhida, mas isso não comprova a identidade de um runtime ativo.
-- Nesta release, Contato e Talentos persistem diretamente no Google Sheets; não usam ClickUp, tarefas ClickUp, token/lista ClickUp nem outbox SQL. As colunas ClickUp legadas permanecem compatíveis, sem estado pendente artificial. ClickUp/worker e PostgreSQL permanecem somente para consumidores independentes, incluindo o Onboarding desativado. Flags públicas continuam fechadas por padrão.
-- Onboarding permanece desativado para publicação (`ONBOARDING_ENABLED=false`). Seu código e controle de acesso devem ser preservados. A jornada ainda depende do plano de controle PostgreSQL atual; não habilitar nem remover essa dependência por inferência.
-- O README e scripts são orientação operacional somente quando compatíveis com o preflight e os contratos atuais. Banco, migrations e workers não são passos genéricos para publicar o site público com Onboarding desativado.
+- O novo site TAG08 não usa ClickUp para receber, rotear ou operar submissões. Google Sheets é a base canônica estruturada das submissões desta release; o CRM próprio é um projeto separado, com integração futura.
+- Onboarding permanece desativado nesta release (`ONBOARDING_ENABLED=false`). Preserve sua implementação e controles de acesso; não o exponha nem trate seus consumidores legados como parte dos fluxos públicos habilitados.
+- WordPress é o CMS editorial. GA4 mede uso e não substitui obrigações, bases legais ou controles de privacidade/LGPD.
+- Preserve a versão visual aprovada pelo operador. Não faça redesign por iniciativa própria.
+- `docs/PROJECT_STATE.md` registra o estado temporal. Confirme branch, HEAD, alterações locais e a identidade do runtime quando forem relevantes; nunca fixe um HEAD neste arquivo de instruções nem presuma que `localhost:3101` esteja ativo ou corresponda ao checkout.
+- Scripts, workers e integrações legados só fazem parte de um fluxo ativo quando o código, a configuração e os testes atuais comprovarem isso. Não remova código do Onboarding por ele estar desativado.
 
 ## Escopo de leitura e preservação
 

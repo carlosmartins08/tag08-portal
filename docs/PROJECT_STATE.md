@@ -1,8 +1,16 @@
 # Estado do projeto — TAG08
 
-> **Autoridade atual (2026-10-28):** este arquivo reúne registros de épocas diferentes. As seções antigas que descrevem `main`, commit-base ou integrações substituídas são snapshots históricos, não instruções de branch nem arquitetura vigente. A decisão mais recente para esta release é: Contato e Talentos persistem exclusivamente no Google Sheets e não encaminham submissões ao ClickUp nem usam a outbox SQL. ClickUp/PostgreSQL permanecem isolados para consumidores independentes; Onboarding fica desativado e preservado. Consulte código, preflight e testes atuais antes de qualquer operação.
+> **Autoridade atual (2026-10-28):** este arquivo reúne registros de épocas diferentes. Seções marcadas como históricas não são requisitos vigentes. Para esta release, o novo site TAG08 não usa ClickUp para receber ou operar submissões; Google Sheets é a base canônica estruturada. O CRM próprio é um projeto separado, com integração futura. WordPress permanece o CMS editorial. GA4 é responsável por mensuração e não substitui obrigações de LGPD. Onboarding está desativado e seu código/controles devem ser preservados. Consulte código, preflight e testes atuais para confirmar o comportamento implementado.
 
-Atualizado em: `2026-10-27`
+Atualizado em: `2026-10-28`
+
+## Decisão operacional vigente — Google Sheets sem ClickUp no site — 2026-10-28
+
+- O Google Sheets é a base canônica dos registros operacionais estruturados do novo site. Contato e Talentos persistem diretamente nas abas correspondentes, sem token, lista, tarefa ou confirmação ClickUp.
+- ClickUp não é destino operacional de nenhuma submissão do site nesta release. O CRM próprio será desenvolvido como projeto separado; qualquer integração futura exigirá decisão e contrato próprios.
+- WordPress permanece restrito ao CMS editorial. GA4 permanece na camada de mensuração e não substitui controles ou obrigações de privacidade/LGPD.
+- Onboarding permanece desativado e preservado; não o habilite nem remova seus consumidores legados por inferência. A identidade visual aprovada permanece a referência; não realizar redesign.
+- Os registros abaixo que descrevem roteamento do site, Task IDs, retries ou integração de submissões com ClickUp são histórico de decisões superadas, não instruções ou critérios de aceite ativos.
 
 ## Encerramento de bloqueios Sheets/Build — 2026-10-28
 
@@ -105,7 +113,7 @@ Atualizado em: `2026-10-27`
 4. Não reabrir conteúdo pendente sem evidência ou decisão registrada.
 5. Antes de aprovar ou revisar conteúdo, rodar `npm run content:status`; para interface, usar `npm run dev` (ou o alias `npm run dev:content-review`).
 
-## Operational submission architecture (2026-10-27)
+## Registro histórico superado — Operational submission architecture (2026-10-27)
 
 - Contact and Talent API routes now persist directly to Google Sheets when SUBMISSIONS_ENABLED=true and GOOGLE_SHEETS_ENABLED=true; they do not fall back to PostgreSQL. Both flags are false in .env.example, and ClickUp remains disabled by the existing flags. No external write was performed in this mission.
 - The A:D envelope remains intact. Contact keeps its existing E:P projection and uses Q:W for the Sheets row reference, ClickUp status/task reference, attempts, safe error code, Sheets status, and update time. Talent adds a v1 projection in E:Q (including the complete v2 interestAreas[]) and uses R:X for the same delivery state. The adapters reject missing or mismatched E+ headers before appending; operators must prepare/approve those headers before any activation.
@@ -114,7 +122,7 @@ Atualizado em: `2026-10-27`
 - Onboarding remains on the existing PostgreSQL control-plane and submission transaction because link redemption, session ownership, revocation, draft/resume, and authorized completion rely on database constraints/transactions. Sheets cannot safely replace those controls. A direction decision is still needed for how to retain that security boundary while removing PostgreSQL from submission persistence; no Onboarding code was changed.
 - PostgreSQL models, migrations and the SQL integration worker remain for Onboarding and legacy consumers; removal is deferred until each consumer has a verified replacement. No P4 files, external services, or next-env.d.ts were changed.
 
-## Integracoes operacionais Sheets/ClickUp - 2026-10-27
+## Registro histórico superado — integracao operacional Sheets/ClickUp (2026-10-27)
 
 - Contato e Talentos gravam submissoes operacionais no Google Sheets, preservando A:D e usando em D o envelope v2 com SHA-256 do payload canonico. As projecoes estruturadas E+ mantem os campos implementados. Replay le JSON legado e o digest v2 anterior sem regravar o historico.
 - Record ID e Delivery ID permanecem estaveis pela chave de idempotencia. IDs duplicados na planilha bloqueiam para reconciliacao; append sem referencia de linha confirmada nao e tratado como concluido. Atualizacao de estado exige confirmacao da linha e intervalo exatos.
@@ -138,7 +146,7 @@ Atualizado em: `2026-10-27`
 - Deployment preflight now requires the flag explicitly and rejects enabling Onboarding for production. The staging template keeps it disabled. Contact and Talent routes are outside this gate; integrations remain independently disabled by their existing flags.
 - Validation: availability policy and guarded-route checks passed by direct Node execution; TypeScript passed. `tsx` test execution was blocked by `spawn EPERM`. Isolated build and HTTP route checks remain unverified; no database, integration, or deployment operation was performed.
 
-## Decisão operacional atual: Contato e Talentos somente Sheets — 2026-10-28
+## Evidência de implementação — Contato e Talentos somente Sheets — 2026-10-28
 
 - Para esta release, as rotas `/api/contact` e `/api/talent-applications` validam e persistem diretamente nas abas `Leads` e `Talentos`. O Google Sheets é o único destino operacional desses fluxos; ClickUp não é consultado nem recebe tarefas, e os fluxos não usam PostgreSQL/outbox SQL.
 - A identidade continua determinística por tipo de submissão e `Idempotency-Key`; o adapter procura o Delivery ID antes de append, verifica o payload, retorna a referência de linha e sinaliza conflito de chave/payload. Isso não promete exclusão de corrida entre múltiplos processos gravando simultaneamente no Sheets.

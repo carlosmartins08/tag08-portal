@@ -40,7 +40,7 @@ O hook instalado por `npm run setup:hooks` bloqueia commits de código, testes, 
 
 ## Variaveis locais
 
-Copie `.env.example` para `.env`. Use `NEXT_PUBLIC_GTM_ID` e `NEXT_PUBLIC_GSC_VERIFICATION` para mensuração e Search Console. GA4, Meta Pixel, Pinterest Tag e LinkedIn Insight Tag são configurados somente no GTM; nunca duplique snippets no aplicativo. As demais variáveis preservam os contratos atuais de onboarding e conteúdo oficial. Nunca versione `.env`.
+Copie `.env.example` para `.env`. Use `NEXT_PUBLIC_GTM_ID` e `NEXT_PUBLIC_GSC_VERIFICATION` para mensuração e Search Console. GA4, Meta Pixel, Pinterest Tag e LinkedIn Insight Tag são configurados somente no GTM; nunca duplique snippets no aplicativo. GA4 é mensuração: não substitui aviso de privacidade, base legal, consentimento aplicável ou outros controles de LGPD. As demais variáveis preservam os contratos atuais de Onboarding e conteúdo oficial. Nunca versione `.env`.
 
 ## Sequencia de deploy
 
@@ -56,7 +56,7 @@ npm run verify:security-headers
 npm run start
 ```
 
-O preflight de producao deve ser chamado com `npm run preflight:deploy -- --production`. Contato e Talentos usam somente Google Sheets quando explicitamente habilitados; nao dependem de ClickUp nem da outbox SQL. ClickUp continua isolado para consumidores independentes, incluindo o Onboarding desativado. Mantenha as integracoes desligadas ate aprovar os destinos, campos, permissoes e retencao.
+O preflight de produção deve ser chamado com `npm run preflight:deploy -- --production`. Contato e Talentos usam Google Sheets como único destino operacional quando explicitamente habilitados; não dependem de ClickUp, tarefas ClickUp ou outbox SQL. ClickUp não integra os fluxos operacionais do novo site. O CRM próprio é um projeto separado, com integração futura. Mantenha os envios externos desligados por padrão e só os habilite após aprovação de campos, finalidade, permissões e retenção.
 
 `npm run db:migrate`, `npm run worker:integrations` e `npm run worker:retention` pertencem aos consumidores PostgreSQL existentes, incluindo o controle de acesso do Onboarding. Nao sao passos genericos do deploy publico e nao devem ser executados enquanto Onboarding permanecer desativado. Preservar esses componentes; qualquer ativacao exige homologacao e autorizacao especificas.
 
@@ -70,14 +70,14 @@ Mantenha `INTEGRATIONS_ENABLED=false`, `GOOGLE_SHEETS_ENABLED=false` e `CLICKUP_
 
 A Content Security Policy e aplicada por padrao. Antes de incluir uma nova origem externa, valide-a em staging com `CSP_REPORT_ONLY=true`, ajuste a allowlist em `next.config.ts` e volte a `false` antes da liberacao.
 
-Os jobs sao unitarios e devem ser acionados pelo agendador da hospedagem, nunca pelo processo web:
+Os jobs abaixo são consumidores legados de banco/outbox. Não os agende como parte da operação pública desta release: Onboarding está desativado e o site não encaminha submissões ao ClickUp. Preserve os scripts enquanto houver consumidores, mas só execute ou agende esses jobs em um escopo operacional autorizado e compatível:
 
 ```bash
 npm run worker:integrations
 npm run worker:retention
 ```
 
-Agende integracoes em intervalo curto e retencao uma vez ao dia. O primeiro usa lease, retries e idempotencia; o segundo remove apenas registros vencidos que nao estejam em processamento.
+O agendamento e a ativação desses jobs dependem de uma decisão operacional futura específica; não são pré-requisitos para publicar as jornadas públicas habilitadas.
 
 ## Pacote de staging
 
