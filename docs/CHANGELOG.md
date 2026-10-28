@@ -2,6 +2,8 @@
 
 ## 2026-10-28
 
+- Changed Contact and Talent submissions to Google Sheets-only: no ClickUp task, credentials, lists, SQL outbox, or artificial pending state. Retired their unused PostgreSQL persistence functions and ClickUp task adapters; preserved Onboarding's independent disabled ClickUp/PostgreSQL path. Added fail-closed preflight and staging runner checks; synthetic API tests returned 202 for Contact and Talent, replayed each to the same row, and confirmed cleanup. ClickUp and database were not used.
+
 - Consolidated the repository's agent instructions in root `AGENTS.md`, removed the unreferenced and stale `.ai-agents` runbook, clarified the release steps while Onboarding is disabled, and aligned the live-route checker with the production fail-closed policy. Build and route checks passed; the aggregate test suite remains blocked by `spawn EPERM` and the lint prehook by the Prisma schema-engine proxy connection.
 
 - Hardened uncertain Sheets append recovery: an unrecognized/missing `updates.updatedRange` is marked outcome-unknown, and the staging runner permits one same-key retry that rechecks the Delivery ID before appending. Direct adapter/staging tests passed 18/18 and the current conventional build passed. The prior attempt's response and submission ID were not available, so no external replay or staging write was made.

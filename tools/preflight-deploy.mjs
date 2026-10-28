@@ -1,13 +1,8 @@
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CONTACT_STAGING_SPREADSHEET_ID } from "./contactStagingGate.mjs";
-import { CONTACT_STAGING_CLICKUP_LIST_ID } from "../server/integrationDelivery.mjs";
 
-const CLICKUP_LIST_VARIABLES = [
-  "CLICKUP_PRE_SALES_LIST_ID",
-  "CLICKUP_TALENT_LIST_ID",
-  "CLICKUP_ONBOARDING_LIST_ID"
-];
+const CLICKUP_ONBOARDING_LIST_VARIABLE = "CLICKUP_ONBOARDING_LIST_ID";
 const CLICKUP_ONBOARDING_STAGING_LIST_ID = "901327894265";
 
 export const evaluateDeployPreflight = (env, args = []) => {
@@ -31,14 +26,6 @@ export const evaluateDeployPreflight = (env, args = []) => {
 
   if (target === "production" && env.GOOGLE_SHEETS_SPREADSHEET_ID?.trim() === CONTACT_STAGING_SPREADSHEET_ID) {
     invalid.push("GOOGLE_SHEETS_SPREADSHEET_ID points to the approved staging spreadsheet in production");
-  }
-
-  if (target === "production") {
-    for (const name of CLICKUP_LIST_VARIABLES) {
-      if ([CONTACT_STAGING_CLICKUP_LIST_ID, CLICKUP_ONBOARDING_STAGING_LIST_ID].includes(env[name]?.trim())) {
-        invalid.push(`${name} points to an approved staging ClickUp list in production`);
-      }
-    }
   }
 
   if (onboardingEnabled === "true") requireValue("DATABASE_URL");
@@ -71,6 +58,13 @@ export const evaluateDeployPreflight = (env, args = []) => {
   const integrationsEnabled = env.INTEGRATIONS_ENABLED === "true";
   const sheetsEnabled = env.GOOGLE_SHEETS_ENABLED === "true";
   const clickUpEnabled = env.CLICKUP_ENABLED === "true";
+  if (clickUpEnabled && onboardingEnabled !== "true") {
+    invalid.push("CLICKUP_ENABLED is only supported for Onboarding, which must remain explicitly enabled");
+  }
+
+  if (target === "production" && clickUpEnabled && env[CLICKUP_ONBOARDING_LIST_VARIABLE]?.trim() === CLICKUP_ONBOARDING_STAGING_LIST_ID) {
+    invalid.push(`${CLICKUP_ONBOARDING_LIST_VARIABLE} points to an approved staging ClickUp list in production`);
+  }
   const processingLeaseSeconds = Number.parseInt(env.INTEGRATION_PROCESSING_LEASE_SECONDS || "900", 10);
   const deliveryIdFilter = env.INTEGRATION_DELIVERY_ID?.trim();
   const retentionAggregateIdFilter = env.RETENTION_AGGREGATE_ID?.trim();
@@ -127,12 +121,9 @@ export const evaluateDeployPreflight = (env, args = []) => {
   }
 
   if (clickUpEnabled) {
-    const clickUpDestinations = onboardingEnabled === "true"
-      ? CLICKUP_LIST_VARIABLES
-      : CLICKUP_LIST_VARIABLES.filter((name) => name !== "CLICKUP_ONBOARDING_LIST_ID");
-    for (const name of ["CLICKUP_API_TOKEN", ...clickUpDestinations]) requireValue(name);
-    for (const name of CLICKUP_LIST_VARIABLES) {
-      if (present(name) && !/^\d+$/.test(env[name].trim())) invalid.push(`${name} must be numeric`);
+    for (const name of ["CLICKUP_API_TOKEN", CLICKUP_ONBOARDING_LIST_VARIABLE]) requireValue(name);
+    if (present(CLICKUP_ONBOARDING_LIST_VARIABLE) && !/^\d+$/.test(env[CLICKUP_ONBOARDING_LIST_VARIABLE].trim())) {
+      invalid.push(`${CLICKUP_ONBOARDING_LIST_VARIABLE} must be numeric`);
     }
   }
 

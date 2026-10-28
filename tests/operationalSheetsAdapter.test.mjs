@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { createHash } from "node:crypto";
-import { appendToGoogleSheets, updateGoogleSheetsDeliveryState } from "../server/integrationAdapters.mjs";
+import { appendToGoogleSheets } from "../server/integrationAdapters.mjs";
 import {
   CONTACT_DELIVERY_HEADERS,
   CONTACT_SHEETS_V1_HEADERS,
@@ -10,7 +10,6 @@ import {
   buildTalentSheetsV1Projection,
   buildMinimalSheetsPayloadEnvelope
 } from "../server/contactSheetsProjection.mjs";
-import { buildTalentClickUpTask } from "../server/integrationAdapters.mjs";
 
 const talentPayload = {
   contractVersion: 2,
@@ -48,17 +47,6 @@ test("Talent v1 projection keeps all v2 areas and excludes consent, links and at
   assert.notEqual(envelope.payloadSha256, JSON.parse(buildMinimalSheetsPayloadEnvelope({ ...talentPayload, motivation: "Alterada" })).payloadSha256);
 });
 
-test("Talent ClickUp projection contains operational fields without links, consent or attribution", () => {
-  const task = buildTalentClickUpTask({ aggregate_id: "record-synthetic" }, talentPayload);
-  assert.match(task.description, /design, technology_development/);
-  assert.match(task.description, /avaliacao humana/);
-  assert.doesNotMatch(task.description, /linkedin|portfolio|files\.example|private-campaign|consent/i);
-
-  const legacyTask = buildTalentClickUpTask({ aggregate_id: "record-v1" }, { ...talentPayload, contractVersion: undefined, interestAreas: [], vacancyTitle: "Copywriter" });
-  assert.match(legacyTask.description, /Vaga historica: Copywriter/);
-  assert.doesNotMatch(legacyTask.description, /Areas de interesse: Copywriter/);
-});
-
 test("operational Sheets writes preserve A:D and require the approved E+ headers", async () => {
   const headers = ["delivery_id", "record_id", "received_at", "payload_json", ...CONTACT_SHEETS_V1_HEADERS, ...CONTACT_DELIVERY_HEADERS];
   const rows = [headers];
@@ -84,7 +72,6 @@ test("operational Sheets writes preserve A:D and require the approved E+ headers
 
   const first = await appendToGoogleSheets(delivery, { spreadsheetId: "synthetic-sheet", accessToken: "synthetic-token", fetchImpl });
   assert.equal(first.rowNumber, 2);
-  assert.equal(first.clickupStatus, "PENDING");
   assert.equal(rows[1].length, 23);
   assert.equal(rows[1][0], delivery.id);
   assert.equal(rows[1][1], delivery.aggregate_id);
@@ -93,7 +80,9 @@ test("operational Sheets writes preserve A:D and require the approved E+ headers
   assert.equal(minimalEnvelope.payloadSha256, JSON.parse(buildMinimalSheetsPayloadEnvelope(delivery.payload.data)).payloadSha256);
   assert.doesNotMatch(rows[1][3], /Synthetic|example\.test|branding/);
   assert.equal(rows[1][16], "");
-  assert.equal(rows[1][17], "PENDING");
+  assert.equal(rows[1][17], "NOT_ROUTED");
+  assert.equal(rows[1][18], "");
+  assert.equal(rows[1][19], 0);
   assert.equal(first.rowReference, "Leads!A2:W2");
 
   const replay = await appendToGoogleSheets(delivery, { spreadsheetId: "synthetic-sheet", accessToken: "synthetic-token", fetchImpl });
@@ -106,18 +95,7 @@ test("operational Sheets writes preserve A:D and require the approved E+ headers
     payload: { version: 1, data: { name: "Changed", requestType: "new_project", serviceInterests: ["branding"], utm: {} } }
   }, { spreadsheetId: "synthetic-sheet", accessToken: "synthetic-token", fetchImpl }), /google_sheets_idempotency_conflict/);
 
-  await updateGoogleSheetsDeliveryState(delivery, {
-    rowNumber: 2,
-    sheetsRowReference: first.rowReference,
-    clickupStatus: "DELIVERED",
-    clickupTaskId: "task-synthetic",
-    clickupAttempts: 1,
-    clickupLastErrorCode: "",
-    updatedAt: "2026-10-27T12:01:00.000Z"
-  }, { spreadsheetId: "synthetic-sheet", accessToken: "synthetic-token", fetchImpl });
-  const update = requests.find(({ init }) => init.method === "PUT");
-  assert.match(update.url, /Leads!Q2%3AW2/);
-  assert.deepEqual(JSON.parse(update.init.body).values[0], ["Leads!A2:W2", "DELIVERED", "task-synthetic", 1, "", "DELIVERED", "2026-10-27T12:01:00.000Z"]);
+  assert.equal(requests.some(({ init }) => init.method === "PUT"), false);
 });
 
 test("operational replay remains compatible with an existing legacy raw-JSON D cell", async () => {
@@ -221,28 +199,6 @@ test("operational Sheets refuses an unapproved or incomplete E+ schema before ap
     payload: { version: 1, data: { requestType: "diagnostic" } }
   }, { spreadsheetId: "synthetic-sheet", accessToken: "synthetic-token", fetchImpl }), /google_sheets_operational_schema_mismatch/);
   assert.equal(writes, 0);
-});
-
-test("Sheets state update rejects 2xx responses that do not confirm the exact row and range", async () => {
-  const delivery = { aggregate_type: "contact_lead" };
-  const state = {
-    rowNumber: 2,
-    sheetsRowReference: "Leads!A2:W2",
-    clickupStatus: "DELIVERED",
-    clickupTaskId: "synthetic-task",
-    clickupAttempts: 1,
-    clickupLastErrorCode: "",
-    updatedAt: "2026-10-27T12:01:00.000Z"
-  };
-  const badBodies = [null, { updatedRange: "Leads!Q3:W3", updatedRows: 1 }, { updatedRange: "Leads!Q2:W2", updatedRows: 0 }];
-  for (const badBody of badBodies) {
-    const fetchImpl = async () => new Response(badBody === null ? "invalid-json" : JSON.stringify(badBody), { status: 200 });
-    await assert.rejects(updateGoogleSheetsDeliveryState(delivery, state, {
-      spreadsheetId: "synthetic-sheet",
-      accessToken: "synthetic-token",
-      fetchImpl
-    }), /google_sheets_delivery_state_update_unconfirmed/);
-  }
 });
 
 test("Talent operational schema is versioned and its delivery columns follow the typed projection", () => {

@@ -16,7 +16,7 @@ Quando fontes aprovadas divergirem, não escolha silenciosamente: registre a div
 
 - Checkout observado: branch `p2-home-cases-consolidation`, HEAD `d086c17e06bfc96bc426ff15d781299a71c8fbad`. Confirme branch, HEAD e alterações locais antes de trabalhar; não presuma que o processo histórico em `localhost:3101` ainda esteja ativo.
 - Na verificação desta data, a porta 3101 não tinha listener. O checkout é a fonte de trabalho escolhida, mas isso não comprova a identidade de um runtime ativo.
-- Contato e Talentos usam submissão direta ao Google Sheets e entrega operacional ao ClickUp conforme flags e preflight atuais. Transmissões continuam fechadas por padrão; não acione destinos externos sem autorização específica.
+- Nesta release, Contato e Talentos persistem diretamente no Google Sheets; não usam ClickUp, tarefas ClickUp, token/lista ClickUp nem outbox SQL. As colunas ClickUp legadas permanecem compatíveis, sem estado pendente artificial. ClickUp/worker e PostgreSQL permanecem somente para consumidores independentes, incluindo o Onboarding desativado. Flags públicas continuam fechadas por padrão.
 - Onboarding permanece desativado para publicação (`ONBOARDING_ENABLED=false`). Seu código e controle de acesso devem ser preservados. A jornada ainda depende do plano de controle PostgreSQL atual; não habilitar nem remover essa dependência por inferência.
 - O README e scripts são orientação operacional somente quando compatíveis com o preflight e os contratos atuais. Banco, migrations e workers não são passos genéricos para publicar o site público com Onboarding desativado.
 

@@ -20,26 +20,12 @@ const evaluateDirectStagingPreflight = (env, scope, mode) => {
   const invalid = [];
   const present = (name) => Boolean(env[name]?.trim());
   const requireValue = (name) => { if (!present(name)) missing.push(name); };
-  const contact = scope === "contact" || scope === "contact-talent";
-  const talent = scope === "talent" || scope === "contact-talent";
 
   if (!["inspect", "deliver"].includes(mode)) invalid.push("staging mode must be inspect or deliver");
   if (env.GOOGLE_SHEETS_SPREADSHEET_ID !== CONTACT_STAGING_TARGETS.spreadsheetId) {
     invalid.push("GOOGLE_SHEETS_SPREADSHEET_ID does not match the approved staging sheet");
   }
-  if (contact && env.CLICKUP_PRE_SALES_LIST_ID !== CONTACT_STAGING_TARGETS.clickUpContactListId) {
-    invalid.push("CLICKUP_PRE_SALES_LIST_ID does not match the approved staging list");
-  }
-  if (talent && env.CLICKUP_TALENT_LIST_ID !== CONTACT_STAGING_TARGETS.clickUpTalentListId) {
-    invalid.push("CLICKUP_TALENT_LIST_ID does not match the approved staging list");
-  }
-  if (scope === "contact" && present("CLICKUP_TALENT_LIST_ID")) {
-    invalid.push("Contact-only staging must not configure the Talent destination");
-  }
-  if (scope === "talent" && present("CLICKUP_PRE_SALES_LIST_ID")) {
-    invalid.push("Talent-only staging must not configure the Contact destination");
-  }
-  if (present("CLICKUP_ONBOARDING_LIST_ID")) invalid.push("Onboarding ClickUp destination must remain unconfigured");
+  if (present("CLICKUP_ONBOARDING_LIST_ID")) invalid.push("Onboarding ClickUp destination must remain unconfigured in Contact/Talent staging");
   for (const name of PERSISTENT_STAGING_FLAGS) {
     if (!Object.hasOwn(env, name)) missing.push(name);
     else if (env[name] !== "false") invalid.push(`${name} must be exactly false in persistent staging configuration`);
@@ -52,25 +38,23 @@ const evaluateDirectStagingPreflight = (env, scope, mode) => {
 
   if (mode === "deliver") {
     requireValue("GOOGLE_SERVICE_ACCOUNT_JSON");
-    requireValue("CLICKUP_API_TOKEN");
   }
   const hasSheetsCredential = present("GOOGLE_SERVICE_ACCOUNT_JSON");
   if (hasSheetsCredential) {
     try {
       const account = JSON.parse(env.GOOGLE_SERVICE_ACCOUNT_JSON);
       if (!account.client_email || !account.private_key) invalid.push("GOOGLE_SERVICE_ACCOUNT_JSON is incomplete");
+      if (/\.invalid$|example\.com$/i.test(account.client_email || "") || /placeholder|synthetic/i.test(account.private_key || "")) {
+        invalid.push("GOOGLE_SERVICE_ACCOUNT_JSON contains placeholder fields");
+      }
     } catch { invalid.push("GOOGLE_SERVICE_ACCOUNT_JSON is not valid JSON"); }
   }
-  if (present("CLICKUP_API_TOKEN") && /replace_me|placeholder/i.test(env.CLICKUP_API_TOKEN)) {
-    invalid.push("CLICKUP_API_TOKEN still contains a placeholder");
-  }
-
   return {
     event: missing.length || invalid.length ? "direct_staging_preflight_failed" : "direct_staging_preflight_passed",
     enabled: false,
     scope,
     mode,
-    secretsConfigured: hasSheetsCredential && present("CLICKUP_API_TOKEN"),
+    secretsConfigured: hasSheetsCredential,
     missing,
     invalid
   };
@@ -89,6 +73,7 @@ export const evaluateIntegrationPreflight = (env, scope = "all", contactMode = "
   if (scope !== "all") return { event: "integration_preflight_failed", enabled, missing, invalid: [`unsupported scope: ${scope}`] };
   if (!enabled) return { event: "integration_preflight_disabled", enabled: false, missing, invalid };
   if (!sheetsEnabled && !clickUpEnabled) invalid.push("INTEGRATIONS_ENABLED=true requires at least one integration target");
+  if (clickUpEnabled && env.ONBOARDING_ENABLED !== "true") invalid.push("CLICKUP_ENABLED is reserved for Onboarding, which must remain disabled until separately approved");
   if (sheetsEnabled) {
     requireValue("GOOGLE_SHEETS_SPREADSHEET_ID");
     requireValue("GOOGLE_SERVICE_ACCOUNT_JSON");
@@ -100,9 +85,9 @@ export const evaluateIntegrationPreflight = (env, scope = "all", contactMode = "
     }
   }
   if (clickUpEnabled) {
-    for (const name of ["CLICKUP_API_TOKEN", "CLICKUP_PRE_SALES_LIST_ID", "CLICKUP_TALENT_LIST_ID", "CLICKUP_ONBOARDING_LIST_ID"]) requireValue(name);
-    for (const name of ["CLICKUP_PRE_SALES_LIST_ID", "CLICKUP_TALENT_LIST_ID", "CLICKUP_ONBOARDING_LIST_ID"]) {
-      if (present(name) && !/^\d+$/.test(env[name].trim())) invalid.push(`${name} must be numeric`);
+    for (const name of ["CLICKUP_API_TOKEN", "CLICKUP_ONBOARDING_LIST_ID"]) requireValue(name);
+    if (present("CLICKUP_ONBOARDING_LIST_ID") && !/^\d+$/.test(env.CLICKUP_ONBOARDING_LIST_ID.trim())) {
+      invalid.push("CLICKUP_ONBOARDING_LIST_ID must be numeric");
     }
   }
   return { event: missing.length || invalid.length ? "integration_preflight_failed" : "integration_preflight_passed", enabled, sheetsEnabled, clickUpEnabled, missing, invalid };

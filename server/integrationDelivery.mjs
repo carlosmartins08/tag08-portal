@@ -1,7 +1,5 @@
 export const MAX_AUTOMATIC_DELIVERY_ATTEMPTS = 8;
 export const TERMINAL_RETRY_AT = new Date("9999-12-31T23:59:59.999Z");
-export const CONTACT_STAGING_CLICKUP_LIST_ID = "901327894264";
-export const CONTACT_STAGING_CLICKUP_INITIAL_STATUS = "em aberto \u{1F9E0}";
 
 export class IntegrationDeliveryError extends Error {
   constructor(code, retryable = false, outcomeUnknown = false) {
@@ -46,19 +44,11 @@ export const unwrapDeliveryPayload = (value) => {
 };
 
 export const resolveClickUpListId = (aggregateType, env) => {
-  const variableByAggregate = {
-    contact_lead: "CLICKUP_PRE_SALES_LIST_ID",
-    talent_application: "CLICKUP_TALENT_LIST_ID",
-    onboarding_submission: "CLICKUP_ONBOARDING_LIST_ID"
-  };
-  const variable = variableByAggregate[aggregateType];
-  if (!variable) throw new IntegrationDeliveryError("clickup_aggregate_not_supported");
-  const listId = env[variable]?.trim();
+  if (aggregateType !== "onboarding_submission") throw new IntegrationDeliveryError("clickup_aggregate_not_supported");
+  const listId = env.CLICKUP_ONBOARDING_LIST_ID?.trim();
   if (!listId || !/^\d+$/.test(listId)) throw new IntegrationDeliveryError("clickup_list_not_configured");
   return listId;
 };
-
-export const isCommercialContactRequest = (requestType) => requestType === "new_project";
 
 export const buildContactDeliveryPayload = (payload) => ({
   name: payload.name,
@@ -77,34 +67,6 @@ export const buildContactDeliveryPayload = (payload) => ({
   source: payload.source,
   utm: payload.utm
 });
-
-const plain = (value) => typeof value === "string" && value.trim() ? value.trim() : "—";
-
-export const buildContactClickUpTask = (delivery, payload) => {
-  const serviceInterests = Array.isArray(payload.serviceInterests) ? payload.serviceInterests : [];
-  const utm = payload.utm && typeof payload.utm === "object" ? payload.utm : {};
-  const createdAt = delivery.created_at instanceof Date ? delivery.created_at.toISOString() : plain(delivery.created_at);
-  const lines = [
-    `Nome: ${plain(payload.name)}`,
-    `Empresa: ${plain(payload.company)}`,
-    `Telefone: ${plain(payload.whatsapp)}`,
-    `E-mail: ${plain(payload.email)}`,
-    `Intenção: ${plain(payload.requestType)}`,
-    `Frentes: ${serviceInterests.length ? serviceInterests.join(", ") : plain(payload.service)}`,
-    `Precisa de orientação: ${payload.needsServiceGuidance ? "Sim" : "Não"}`,
-    `Mensagem: ${plain(payload.message)}`,
-    `Origem: ${plain(payload.source)}`,
-    `UTM: ${[utm.source, utm.medium, utm.campaign, utm.content, utm.term].filter(Boolean).join(" / ") || "—"}`,
-    `Data: ${createdAt}`,
-    `Record ID: ${plain(delivery.aggregate_id)}`,
-    `Delivery ID: ${plain(delivery.id)}`
-  ];
-  return {
-    name: `TAG08 Contact ${delivery.aggregate_id}`,
-    description: lines.join("\n"),
-    tags: ["tag08", "contact_lead"]
-  };
-};
 
 export const findSheetRowReference = (range, values, deliveryId) => {
   const index = Array.isArray(values) ? values.findIndex((row) => row?.[0] === deliveryId) : -1;

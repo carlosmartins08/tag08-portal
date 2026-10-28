@@ -42,13 +42,11 @@ const productionBase = {
     TRANSLATION_ENGINE_VERSION: "synthetic",
     INTEGRATIONS_ENABLED: "true",
     GOOGLE_SHEETS_ENABLED: "true",
-    CLICKUP_ENABLED: "true",
+    CLICKUP_ENABLED: "false",
     GOOGLE_SHEETS_SPREADSHEET_ID: "production-sheet-id",
     GOOGLE_SERVICE_ACCOUNT_JSON: JSON.stringify({ client_email: "qa@example.invalid", private_key: "synthetic" }),
-    CLICKUP_API_TOKEN: "synthetic-clickup-token",
-    CLICKUP_PRE_SALES_LIST_ID: "900700475931",
-    CLICKUP_TALENT_LIST_ID: "900700474161",
-    CLICKUP_ONBOARDING_LIST_ID: "999000000003"
+    CLICKUP_API_TOKEN: "",
+    CLICKUP_ONBOARDING_LIST_ID: ""
   })
 };
 const productionArgs = ["--production", "--allow-integrations"];
@@ -59,34 +57,30 @@ const stageSheet = evaluateDeployPreflight({
 }, productionArgs);
 assert.ok(stageSheet.invalid.some((message) => message.includes("staging spreadsheet")));
 
-for (const name of ["CLICKUP_PRE_SALES_LIST_ID", "CLICKUP_TALENT_LIST_ID", "CLICKUP_ONBOARDING_LIST_ID"]) {
-  const stageList = evaluateDeployPreflight({
-    ...productionBase,
-    [name]: name === "CLICKUP_ONBOARDING_LIST_ID" ? "901327894265" : "901327894264"
-  }, productionArgs);
-  assert.ok(stageList.invalid.some((message) => message.includes(`${name} points to an approved staging ClickUp list`)));
-}
-
-const productionWithoutOnboardingList = { ...productionBase };
-delete productionWithoutOnboardingList.CLICKUP_ONBOARDING_LIST_ID;
-const disabledOnboardingWithoutList = evaluateDeployPreflight(productionWithoutOnboardingList, productionArgs);
-assert.deepEqual(disabledOnboardingWithoutList.missing, []);
-assert.deepEqual(disabledOnboardingWithoutList.invalid, []);
+const onboardingStagingListIsIrrelevantWhenClickUpDisabled = evaluateDeployPreflight({
+  ...productionBase,
+  CLICKUP_ONBOARDING_LIST_ID: "901327894265"
+}, productionArgs);
+assert.deepEqual(onboardingStagingListIsIrrelevantWhenClickUpDisabled.missing, []);
+assert.deepEqual(onboardingStagingListIsIrrelevantWhenClickUpDisabled.invalid, []);
 
 const disabledIntegrationsWithStagingIds = evaluateDeployPreflight(baseEnv({
   TRANSLATIONS_AUTOPUBLISH: "true",
   TRANSLATION_SERVICE_URL: "https://translation.example",
   TRANSLATION_ENGINE_VERSION: "synthetic",
   GOOGLE_SHEETS_SPREADSHEET_ID: "1XXXCv0Zn9grrv1BxPR76H2iIfYQAyfiA6rEUSfNVCQE",
-  CLICKUP_PRE_SALES_LIST_ID: "900700475931",
-  CLICKUP_TALENT_LIST_ID: "900700474161",
   CLICKUP_ONBOARDING_LIST_ID: "901327894265"
 }), ["--production"]);
 assert.ok(disabledIntegrationsWithStagingIds.invalid.some((message) => message.includes("staging spreadsheet")));
-assert.ok(disabledIntegrationsWithStagingIds.invalid.some((message) => message.includes("CLICKUP_ONBOARDING_LIST_ID")));
 
 const productionTargets = evaluateDeployPreflight(productionBase, productionArgs);
 assert.deepEqual(productionTargets.missing, []);
 assert.deepEqual(productionTargets.invalid, []);
 
-console.log("deployPreflight: PASS (database and Onboarding destination conditional; production blocks known staging targets even while integrations are disabled)");
+const clickUpCannotBeEnabledOutsideOnboarding = evaluateDeployPreflight(baseEnv({
+  CLICKUP_ENABLED: "true",
+  ONBOARDING_ENABLED: "false"
+}), ["--production"]);
+assert.ok(clickUpCannotBeEnabledOutsideOnboarding.invalid.some((message) => message.includes("only supported for Onboarding")));
+
+console.log("deployPreflight: PASS (Sheets-only Contact/Talent; Onboarding controls ClickUp and database requirements)");

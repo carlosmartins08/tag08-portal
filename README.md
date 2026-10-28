@@ -56,7 +56,7 @@ npm run verify:security-headers
 npm run start
 ```
 
-O preflight de producao deve ser chamado com `npm run preflight:deploy -- --production`. Contato e Talentos usam os adaptadores diretos Sheets/ClickUp quando explicitamente habilitados; mantenha as integracoes desligadas ate aprovar destinos, campos, permissoes e retencao. O preflight rejeita IDs de staging em producao.
+O preflight de producao deve ser chamado com `npm run preflight:deploy -- --production`. Contato e Talentos usam somente Google Sheets quando explicitamente habilitados; nao dependem de ClickUp nem da outbox SQL. ClickUp continua isolado para consumidores independentes, incluindo o Onboarding desativado. Mantenha as integracoes desligadas ate aprovar os destinos, campos, permissoes e retencao.
 
 `npm run db:migrate`, `npm run worker:integrations` e `npm run worker:retention` pertencem aos consumidores PostgreSQL existentes, incluindo o controle de acesso do Onboarding. Nao sao passos genericos do deploy publico e nao devem ser executados enquanto Onboarding permanecer desativado. Preservar esses componentes; qualquer ativacao exige homologacao e autorizacao especificas.
 

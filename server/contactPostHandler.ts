@@ -39,7 +39,7 @@ export const createContactPostHandler = (persist: ContactPersist = persistContac
       leadId: result.id,
       status: "accepted",
       replayed: !result.created,
-      ...(result.clickUpStatus ? { deliveryStatus: { sheets: "delivered", sheetsRowReference: result.sheetsRowReference, clickUp: result.clickUpStatus } } : {}),
+      deliveryStatus: { sheets: "delivered", sheetsRowReference: result.sheetsRowReference },
       requestId
     }, 202, request);
   } catch (error) {

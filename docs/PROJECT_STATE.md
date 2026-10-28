@@ -137,3 +137,11 @@ Atualizado em: `2026-10-27`
 - Added the reversible `ONBOARDING_ENABLED` release gate. Production defaults closed; the page returns not-found and Onboarding APIs/administrative link operations return unavailable before database access unless explicitly enabled. Development retains the prior behavior when unset. This does not replace the PostgreSQL control plane or mark Onboarding complete.
 - Deployment preflight now requires the flag explicitly and rejects enabling Onboarding for production. The staging template keeps it disabled. Contact and Talent routes are outside this gate; integrations remain independently disabled by their existing flags.
 - Validation: availability policy and guarded-route checks passed by direct Node execution; TypeScript passed. `tsx` test execution was blocked by `spawn EPERM`. Isolated build and HTTP route checks remain unverified; no database, integration, or deployment operation was performed.
+
+## Decisão operacional atual: Contato e Talentos somente Sheets — 2026-10-28
+
+- Para esta release, as rotas `/api/contact` e `/api/talent-applications` validam e persistem diretamente nas abas `Leads` e `Talentos`. O Google Sheets é o único destino operacional desses fluxos; ClickUp não é consultado nem recebe tarefas, e os fluxos não usam PostgreSQL/outbox SQL.
+- A identidade continua determinística por tipo de submissão e `Idempotency-Key`; o adapter procura o Delivery ID antes de append, verifica o payload, retorna a referência de linha e sinaliza conflito de chave/payload. Isso não promete exclusão de corrida entre múltiplos processos gravando simultaneamente no Sheets.
+- Colunas ClickUp legadas permanecem no contrato para compatibilidade; novas linhas recebem `NOT_ROUTED`, sem Task ID, tentativas ou erros artificiais. O worker rejeita entregas SQL históricas de Contato/Talentos antes de chamar a API ClickUp.
+- O preflight e o runner de staging não exigem credencial/lista ClickUp para Contato/Talentos. A configuração pública permanece desligada por padrão. Onboarding e seus consumidores independentes permanecem desativados/preservados.
+- Validação externa desta missão: PASS em cópia isolada. `/api/contact` e `/api/talent-applications` retornaram 202; replay preservou Record ID e linha; linhas sintéticas foram limpas e confirmadas ausentes. ClickUp e banco não foram usados.

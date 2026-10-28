@@ -25,8 +25,6 @@ const env = () => ({
   CLICKUP_ENABLED: "false",
   INTEGRATION_MOCK_MODE: "false",
   GOOGLE_SHEETS_SPREADSHEET_ID: "1XXXCv0Zn9grrv1BxPR76H2iIfYQAyfiA6rEUSfNVCQE",
-  CLICKUP_PRE_SALES_LIST_ID: "901327894264",
-  CLICKUP_TALENT_LIST_ID: "901327894264",
   CLICKUP_ONBOARDING_LIST_ID: ""
 });
 
@@ -41,8 +39,6 @@ test("Contact and Talent direct staging preflight accepts exact staging destinat
 test("direct staging rejects wrong destinations, enabled persistent flags, PostgreSQL settings, and enabled Onboarding", () => {
   for (const altered of [
     { ...env(), GOOGLE_SHEETS_SPREADSHEET_ID: "production-sheet" },
-    { ...env(), CLICKUP_TALENT_LIST_ID: "900700474161" },
-    { ...env(), CLICKUP_PRE_SALES_LIST_ID: "900700474161" },
     { ...env(), CLICKUP_ONBOARDING_LIST_ID: "123456789" },
     { ...env(), SUBMISSIONS_ENABLED: "true" },
     { ...env(), INTEGRATIONS_ENABLED: "true" },
@@ -63,11 +59,11 @@ test("deliver mode requires valid staging credentials while inspect does not req
   assert.deepEqual(evaluateIntegrationPreflight(noSecrets, "contact-talent", "inspect").missing, []);
   const deliver = evaluateIntegrationPreflight(noSecrets, "contact-talent", "deliver");
   assert.ok(deliver.missing.includes("GOOGLE_SERVICE_ACCOUNT_JSON"));
-  assert.ok(deliver.missing.includes("CLICKUP_API_TOKEN"));
+  assert.equal(deliver.missing.includes("CLICKUP_API_TOKEN"), false);
 
-  const invalidJson = evaluateIntegrationPreflight({ ...noSecrets, GOOGLE_SERVICE_ACCOUNT_JSON: "not-json", CLICKUP_API_TOKEN: "synthetic" }, "contact-talent", "deliver");
+  const invalidJson = evaluateIntegrationPreflight({ ...noSecrets, GOOGLE_SERVICE_ACCOUNT_JSON: "not-json" }, "contact-talent", "deliver");
   assert.ok(invalidJson.invalid.some((item) => item.includes("not valid JSON")));
-  const placeholder = evaluateIntegrationPreflight({ ...noSecrets, GOOGLE_SERVICE_ACCOUNT_JSON: JSON.stringify({ client_email: "staging@tag08.invalid", private_key: "synthetic" }), CLICKUP_API_TOKEN: "placeholder-token" }, "contact-talent", "deliver");
+  const placeholder = evaluateIntegrationPreflight({ ...noSecrets, GOOGLE_SERVICE_ACCOUNT_JSON: JSON.stringify({ client_email: "staging@tag08.invalid", private_key: "synthetic" }) }, "contact-talent", "deliver");
   assert.ok(placeholder.invalid.some((item) => item.includes("placeholder")));
 });
 
@@ -92,8 +88,7 @@ test("staging template has no database fallback, keeps integrations disabled, an
   assert.match(template, /^CLICKUP_ENABLED="false"$/m);
   assert.match(template, /^INTEGRATION_MOCK_MODE="false"$/m);
   assert.match(template, /^ONBOARDING_ENABLED="false"$/m);
-  assert.match(template, /^CLICKUP_PRE_SALES_LIST_ID="901327894264"$/m);
-  assert.match(template, /^CLICKUP_TALENT_LIST_ID="901327894264"$/m);
+  assert.doesNotMatch(template, /^CLICKUP_(PRE_SALES|TALENT)_LIST_ID=/m);
   assert.doesNotMatch(template, /^DATABASE_URL=/m);
   assert.doesNotMatch(template, /^CLICKUP_API_TOKEN=".+"$/m);
   assert.equal(CONTACT_TALENT_STAGING_CONFIRMATION, "TAG08_CONTACT_TALENT_STAGING");
@@ -103,7 +98,8 @@ test("staging template has no database fallback, keeps integrations disabled, an
 test("direct staging runner uses the Sheets store and contains no PostgreSQL/outbox worker path", async () => {
   const runner = await readFile(new URL("../tools/run-contact-staging-outbox.mjs", import.meta.url), "utf8");
   assert.match(runner, /createOperationalSubmissionStore/);
-  assert.match(runner, /appendToGoogleSheets|createClickUpTask/);
+  assert.match(runner, /GOOGLE_SHEETS_ENABLED/);
+  assert.doesNotMatch(runner, /createClickUpTask|findExistingClickUpTask|api\.clickup\.com/i);
   assert.doesNotMatch(runner, /from ["']pg["']|DATABASE_URL|integration_deliveries|integrationWorker\.mjs|spawnSync/);
 });
 
@@ -140,8 +136,9 @@ test("full integration preflight retains the existing non-staging scope", () => 
     GOOGLE_SHEETS_ENABLED: "false",
     CLICKUP_ENABLED: "true",
     CLICKUP_API_TOKEN: "synthetic-token",
-    CLICKUP_PRE_SALES_LIST_ID: "901327894264"
+    CLICKUP_ONBOARDING_LIST_ID: "901327894265",
+    ONBOARDING_ENABLED: "true"
   }, "all");
-  assert.ok(fullScope.missing.includes("CLICKUP_TALENT_LIST_ID"));
-  assert.ok(fullScope.missing.includes("CLICKUP_ONBOARDING_LIST_ID"));
+  assert.deepEqual(fullScope.missing, []);
+  assert.deepEqual(fullScope.invalid, []);
 });

@@ -1,12 +1,8 @@
 import { createHash } from "node:crypto";
 import {
-  buildContactClickUpTask,
-  CONTACT_STAGING_CLICKUP_INITIAL_STATUS,
-  CONTACT_STAGING_CLICKUP_LIST_ID,
-  findSheetRowReference,
   IntegrationDeliveryError,
+  findSheetRowReference,
   integrationHttpError,
-  isCommercialContactRequest,
   resolveClickUpListId,
   unwrapDeliveryPayload
 } from "./integrationDelivery.mjs";
@@ -113,11 +109,7 @@ export const appendToGoogleSheets = async (delivery, {
       rowReference: `${tab}!A${rowNumber}:${operationalMode ? lastColumn : "D"}${rowNumber}`,
       rowNumber,
       existing: true,
-      createdAt: existingRow[2],
-      clickupStatus: operationalMode ? existingRow[4 + expectedHeaders.length - 6] : undefined,
-      clickupTaskId: operationalMode ? existingRow[5 + expectedHeaders.length - 6] : undefined,
-      clickupAttempts: operationalMode ? Number(existingRow[6 + expectedHeaders.length - 6] || 0) : undefined,
-      clickupLastErrorCode: operationalMode ? existingRow[7 + expectedHeaders.length - 6] || "" : undefined
+      createdAt: existingRow[2]
     };
   }
 
@@ -130,10 +122,8 @@ export const appendToGoogleSheets = async (delivery, {
   const range = encodeURIComponent(`${tab}!A:${operationalMode ? lastColumn : isContact ? "P" : "D"}`);
   // Legacy workers retain their raw D payload; direct operational rows use a
   // versioned digest envelope to avoid duplicating personal data.
-  const needsClickUp = delivery.aggregate_type === "talent_application" ||
-    (isContact && payload.requestType === "new_project");
   const metadata = operationalMode
-    ? ["", needsClickUp ? "PENDING" : "NOT_ROUTED", "", 0, "", "DELIVERED", delivery.created_at]
+    ? ["", "NOT_ROUTED", "", 0, "", "DELIVERED", delivery.created_at]
     : [];
   const row = isContact
     ? [...buildContactSheetsV1Row(delivery, payload, { minimalEnvelope: operationalMode }), ...metadata]
@@ -157,7 +147,7 @@ export const appendToGoogleSheets = async (delivery, {
   if (!rowMatch) throw new IntegrationDeliveryError("google_sheets_append_unconfirmed", true, true);
   const rowNumber = Number(rowMatch[1]);
   if (rowNumber < 2) throw new IntegrationDeliveryError("google_sheets_append_unconfirmed", true, true);
-  return { rowReference: updatedRange, rowNumber, existing: false, createdAt: delivery.created_at, clickupStatus: needsClickUp ? "PENDING" : "NOT_ROUTED", clickupTaskId: "", clickupAttempts: 0 };
+  return { rowReference: updatedRange, rowNumber, existing: false, createdAt: delivery.created_at };
 };
 
 const columnName = (zeroBasedIndex) => {
@@ -169,42 +159,6 @@ const columnName = (zeroBasedIndex) => {
     value = Math.floor((value - 1) / 26);
   }
   return result;
-};
-
-export const updateGoogleSheetsDeliveryState = async (delivery, state, {
-  spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
-  accessToken,
-  fetchImpl = globalThis.fetch
-} = {}) => {
-  if (!spreadsheetId || !accessToken) throw new IntegrationDeliveryError("google_sheets_not_configured");
-  const tab = delivery.aggregate_type === "contact_lead" ? "Leads" :
-    delivery.aggregate_type === "talent_application" ? "Talentos" : null;
-  const validStates = new Set(["PENDING", "DELIVERED", "FAILED", "UNKNOWN", "NOT_ROUTED"]);
-  if (!tab || !Number.isSafeInteger(state.rowNumber) || state.rowNumber < 2 ||
-      typeof state.sheetsRowReference !== "string" || !state.sheetsRowReference ||
-      !validStates.has(state.clickupStatus) || !Number.isSafeInteger(state.clickupAttempts) || state.clickupAttempts < 0) {
-    throw new IntegrationDeliveryError("google_sheets_delivery_reference_invalid");
-  }
-  const projectionHeaders = delivery.aggregate_type === "contact_lead" ? CONTACT_SHEETS_V1_HEADERS : TALENT_SHEETS_V1_HEADERS;
-  const start = columnName(4 + projectionHeaders.length);
-  const end = columnName(4 + projectionHeaders.length + 6);
-  const range = encodeURIComponent(`${tab}!${start}${state.rowNumber}:${end}${state.rowNumber}`);
-  const response = await fetchImpl(
-    `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?valueInputOption=RAW`,
-    {
-      method: "PUT",
-      headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ values: [[state.sheetsRowReference, state.clickupStatus, state.clickupTaskId || "", state.clickupAttempts, state.clickupLastErrorCode || "", "DELIVERED", state.updatedAt]] }),
-      signal: AbortSignal.timeout(15000)
-    }
-  );
-  if (!response.ok) throw integrationHttpError("google_sheets_delivery_state_update_failed", response.status);
-  const body = await response.json().catch(() => null);
-  const expectedRange = `${tab}!${start}${state.rowNumber}:${end}${state.rowNumber}`;
-  if (!body || body.updatedRows !== 1 || body.updatedRange !== expectedRange) {
-    throw new IntegrationDeliveryError("google_sheets_delivery_state_update_unconfirmed", true);
-  }
-  return true;
 };
 
 const findClickUpTaskByName = async (listId, taskName, apiToken, fetchImpl) => {
@@ -225,26 +179,6 @@ const findClickUpTaskByName = async (listId, taskName, apiToken, fetchImpl) => {
   throw new Error("clickup_task_lookup_page_limit_reached");
 };
 
-export const findExistingClickUpTask = async (delivery, {
-  env = process.env,
-  apiToken = env.CLICKUP_API_TOKEN,
-  fetchImpl = globalThis.fetch
-} = {}) => {
-  const payload = unwrapDeliveryPayload(delivery.payload);
-  if (delivery.aggregate_type === "contact_lead" && !isCommercialContactRequest(payload.requestType)) {
-    throw new IntegrationDeliveryError("clickup_contact_not_pre_sales");
-  }
-  if (!["contact_lead", "talent_application"].includes(delivery.aggregate_type)) {
-    throw new IntegrationDeliveryError("clickup_aggregate_not_supported");
-  }
-  const listId = resolveClickUpListId(delivery.aggregate_type, env);
-  if (!apiToken) throw new IntegrationDeliveryError("clickup_not_configured");
-  const task = delivery.aggregate_type === "contact_lead"
-    ? buildContactClickUpTask(delivery, payload)
-    : buildTalentClickUpTask(delivery, payload);
-  return findClickUpTaskByName(listId, task.name, apiToken, fetchImpl);
-};
-
 /**
  * @param {object} delivery
  * @param {{ env?: Record<string, string | undefined>, apiToken?: string, fetchImpl?: typeof fetch }} options
@@ -254,31 +188,24 @@ export const createClickUpTask = async (delivery, {
   apiToken = env.CLICKUP_API_TOKEN,
   fetchImpl = globalThis.fetch
 } = {}) => {
-  const unwrappedPayload = unwrapDeliveryPayload(delivery.payload);
-  const payload = delivery.aggregate_type === "onboarding_submission"
-    ? buildOnboardingClickUpDeliveryProjection(unwrappedPayload)
-    : unwrappedPayload;
-  if (delivery.aggregate_type === "contact_lead" && !isCommercialContactRequest(payload.requestType)) {
-    throw new IntegrationDeliveryError("clickup_contact_not_pre_sales");
+  if (delivery.aggregate_type !== "onboarding_submission") {
+    throw new IntegrationDeliveryError("clickup_aggregate_not_supported");
   }
+  const unwrappedPayload = unwrapDeliveryPayload(delivery.payload);
+  const payload = buildOnboardingClickUpDeliveryProjection(unwrappedPayload);
 
   const listId = resolveClickUpListId(delivery.aggregate_type, env);
   if (!apiToken) throw new IntegrationDeliveryError("clickup_not_configured");
 
-  const contactTask = delivery.aggregate_type === "contact_lead" ? buildContactClickUpTask(delivery, payload) : null;
-  const talentTask = delivery.aggregate_type === "talent_application" ? buildTalentClickUpTask(delivery, payload) : null;
-  const taskName = contactTask?.name || talentTask?.name || `${delivery.aggregate_type}:${delivery.id}`;
+  const taskName = `${delivery.aggregate_type}:${delivery.id}`;
   const existingTaskId = await findClickUpTaskByName(listId, taskName, apiToken, fetchImpl);
   if (existingTaskId) return existingTaskId;
 
   const taskBody = {
     name: taskName,
-    description: contactTask?.description || talentTask?.description || JSON.stringify(payload),
-    tags: contactTask?.tags || talentTask?.tags || ["tag08", delivery.aggregate_type]
+    description: JSON.stringify(payload),
+    tags: ["tag08", delivery.aggregate_type]
   };
-  if (delivery.aggregate_type === "contact_lead" && listId === CONTACT_STAGING_CLICKUP_LIST_ID) {
-    taskBody.status = CONTACT_STAGING_CLICKUP_INITIAL_STATUS;
-  }
 
   let response;
   try {
@@ -302,25 +229,4 @@ export const createClickUpTask = async (delivery, {
     throw new IntegrationDeliveryError("clickup_task_create_outcome_unknown", true, true);
   }
   return createdTask.id;
-};
-
-export const buildTalentClickUpTask = (delivery, payload) => {
-  const areas = Array.isArray(payload.interestAreas) ? payload.interestAreas : [];
-  const lines = [
-    `Record ID: ${delivery.aggregate_id}`,
-    `Nome: ${typeof payload.name === "string" ? payload.name : ""}`,
-    `E-mail: ${typeof payload.email === "string" ? payload.email : ""}`,
-    `Telefone: ${typeof payload.phone === "string" ? payload.phone : ""}`,
-    areas.length
-      ? `Areas de interesse: ${areas.join(", ")}`
-      : `Vaga historica: ${typeof payload.vacancyTitle === "string" ? payload.vacancyTitle : "nao informada"}`,
-    "Recebimento: candidatura registrada para avaliacao humana",
-    `Experiencia relevante: ${typeof payload.experienceSummary === "string" ? payload.experienceSummary : typeof payload.relevantExperience === "string" ? payload.relevantExperience : ""}`,
-    `Projetos relevantes: ${typeof payload.relevantProjects === "string" ? payload.relevantProjects : ""}`
-  ];
-  return {
-    name: `TAG08 Talent ${delivery.aggregate_id}`,
-    description: lines.join("\n"),
-    tags: ["tag08", "talent_application"]
-  };
 };
