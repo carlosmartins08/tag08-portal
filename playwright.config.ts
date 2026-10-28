@@ -6,6 +6,29 @@ const workers = Number.isInteger(configuredWorkers) && configuredWorkers > 0 ? c
 const localPort = process.env.E2E_PORT ?? "3211";
 const baseURL = process.env.E2E_BASE_URL ?? `http://127.0.0.1:${localPort}`;
 const usesExternalBaseUrl = Boolean(process.env.E2E_BASE_URL);
+const onboardingTestDatabaseUrl = process.env.ONBOARDING_TEST_DATABASE_URL?.trim();
+
+const getOnboardingTestServerEnvironment = () => {
+  if (!onboardingTestDatabaseUrl) return { ONBOARDING_ENABLED: "false", DATABASE_URL: "" };
+
+  let databaseUrl: URL;
+  try {
+    databaseUrl = new URL(onboardingTestDatabaseUrl);
+  } catch {
+    throw new Error("ONBOARDING_TEST_DATABASE_URL must target the approved disposable local QA database.");
+  }
+
+  const isApprovedQaDatabase =
+    ["127.0.0.1", "localhost"].includes(databaseUrl.hostname) &&
+    databaseUrl.pathname === "/tag08_p1_2e2_qa" &&
+    decodeURIComponent(databaseUrl.username) === "tag08_qa";
+
+  if (!isApprovedQaDatabase) {
+    throw new Error("ONBOARDING_TEST_DATABASE_URL must target the approved disposable local QA database.");
+  }
+
+  return { ONBOARDING_ENABLED: "true", DATABASE_URL: onboardingTestDatabaseUrl };
+};
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -35,6 +58,6 @@ export default defineConfig({
         url: baseURL,
         timeout: 120_000,
         reuseExistingServer: false,
-        env: { ...process.env, PORT: localPort }
+        env: { ...process.env, ...getOnboardingTestServerEnvironment(), PORT: localPort }
       }
 });

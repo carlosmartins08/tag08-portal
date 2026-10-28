@@ -29,7 +29,9 @@ test("GTM so e carregado depois do consentimento de desempenho", async ({ page }
     const mapFrame = page.locator('iframe[title="Mapa da TAG08"]');
     await expect(mapFrame).toHaveCount(0);
 
-    await page.getByRole("button", { name: "Carregar mapa" }).click();
+    await page.getByRole("button", { name: "Abrir personalização de cookies" }).click();
+    await page.getByRole("button", { name: "Ativar cookies de marketing" }).click();
+    await page.getByRole("button", { name: "Salvar ajustes de cookies" }).click();
     await expect(mapFrame).toBeVisible();
   });
 });

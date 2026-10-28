@@ -8,7 +8,9 @@ test.describe("leitura editorial de insights", () => {
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Ideias que ajudam");
     await page.getByRole("button", { name: /Ler insight em destaque:/ }).click();
 
-    await expect(page.getByText("Nesta leitura", { exact: true })).toBeVisible();
+    const outline = page.getByRole("complementary", { name: "Navegação desta leitura" });
+    await expect(outline).toBeVisible();
+    await expect(outline.getByText("Nesta leitura", { exact: true })).toBeVisible();
     await expect(page.locator("article.prose h2").first()).toBeVisible();
     await expect(page.locator("article.prose ul, article.prose ol").first()).toBeVisible();
     await expect(page.getByText("Direção Estratégica", { exact: true })).toBeVisible();

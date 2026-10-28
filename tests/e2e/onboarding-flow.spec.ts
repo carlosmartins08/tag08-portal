@@ -8,102 +8,84 @@ test.beforeEach(async ({ page, baseURL }) => {
   });
 });
 
-test("acesso direto sem sessão mostra estado neutro e não renderiza o formulário privado", async ({ page }) => {
-  const response = await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
-  expect(response?.status()).toBe(200);
-  await expect(page.getByRole("heading", { name: "Acesso ao onboarding" })).toBeVisible();
-  await expect(page.getByText(/Este acesso é destinado a clientes com projeto confirmado/)).toBeVisible();
-  await expect(page.locator("#onboarding-company-name")).toHaveCount(0);
-  await expect(page.locator("meta[name=robots]")).toHaveAttribute("content", /noindex/);
-  expect(response?.headers()["referrer-policy"]).toBe("no-referrer");
-  expect(response?.headers()["cache-control"]).toContain("no-store");
-});
-
-test("API privada rejeita leitura e submissão sem sessão", async ({ page }) => {
-  await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
-  const progress = await page.evaluate(async () => {
-    const response = await fetch("/api/onboarding/progress", { cache: "no-store" });
-    return { status: response.status, body: await response.json() };
-  });
-  expect(progress.status).toBe(401);
-  expect(progress.body).toMatchObject({ ok: false, error: "access_unavailable" });
-
-  const submission = await page.evaluate(async () => {
-    const response = await fetch("/api/onboarding", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ clientData: { companyName: "SYNTHETIC TEST" } })
-    });
-    return { status: response.status, body: await response.json() };
-  });
-  expect(submission.status).toBe(401);
-  expect(submission.body).toMatchObject({ ok: false, error: "access_unavailable" });
-});
-
-test("abrir e recarregar o link não resgata até ação explícita", async ({ page }) => {
-  let redeemRequests = 0;
-  await page.route("**/api/onboarding/access/redeem", async (route) => {
-    redeemRequests += 1;
-    await route.fulfill({ status: 400, contentType: "application/json", body: JSON.stringify({ ok: false, error: "access_unavailable" }) });
-  });
-  const token = "C".repeat(43);
-  await page.goto(`/cliente/onboarding#access_token=${token}`, { waitUntil: "domcontentloaded" });
-  await expect(page.getByRole("button", { name: "Continuar para o onboarding" })).toBeVisible();
-  await expect.poll(() => page.evaluate(() => window.location.hash)).toBe("");
-  expect(redeemRequests).toBe(0);
-  await page.reload({ waitUntil: "domcontentloaded" });
-  expect(redeemRequests).toBe(0);
-});
-
-test("token inválido só é resgatado após confirmação e recebe resposta pública neutra", async ({ page }) => {
-  const token = "A".repeat(43);
-  let redeemRequests = 0;
-  await page.route("**/api/onboarding/access/redeem", async (route) => {
-    redeemRequests += 1;
-    expect(route.request().postDataJSON()).toEqual({ token });
-    await route.fulfill({ status: 400, contentType: "application/json", body: JSON.stringify({ ok: false, error: "access_unavailable" }) });
-  });
-
-  await page.goto(`/cliente/onboarding#access_token=${token}`, { waitUntil: "domcontentloaded" });
-  await expect(page.getByRole("heading", { name: "Acesso ao onboarding" })).toBeVisible();
-  const continueButton = page.getByRole("button", { name: "Continuar para o onboarding" });
-  await expect(continueButton).toBeVisible();
-  await continueButton.focus();
-  await expect(continueButton).toBeFocused();
-  await page.keyboard.press("Enter");
-  await expect(page.locator('p[role="alert"]')).toContainText("Não foi possível validar este link");
-  expect(redeemRequests).toBe(1);
-  await expect.poll(() => page.evaluate(() => window.location.hash)).toBe("");
-  expect(page.url()).not.toContain(token);
-  await expect(page.locator("#onboarding-company-name")).toHaveCount(0);
-});
-
-test("canonical e indexação permanecem neutros e sem token", async ({ page }) => {
-  const token = "B".repeat(43);
-  await page.goto(`/cliente/onboarding#access_token=${token}`, { waitUntil: "domcontentloaded" });
-  const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
-  expect(canonical).not.toContain(token);
-  await expect(page.locator("meta[name=robots]")).toHaveAttribute("content", /noindex/);
-  const sitemapHasOnboarding = await page.evaluate(async () => {
-    const response = await fetch("/sitemap.xml", { cache: "no-store" });
-    return (await response.text()).includes("/cliente/onboarding");
-  });
-  expect(sitemapHasOnboarding).toBe(false);
-});
-
-test("estado sem autorização permanece legível sem overflow nos breakpoints principais", async ({ page }) => {
-  await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
+test("disabled Onboarding route returns 404 without exposing its form", async ({ page }) => {
   for (const width of [390, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
-    await expect(page.getByRole("heading", { name: "Acesso ao onboarding" })).toBeVisible();
-    const overflows = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
-    expect(overflows, `horizontal overflow at ${width}px`).toBe(false);
+    const response = await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
+    expect(response?.status()).toBe(404);
+    await expect(page.locator("#onboarding-company-name")).toHaveCount(0);
+    await expect(page.locator("#onboarding-operator-name")).toHaveCount(0);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
   }
 });
 
+test("disabled Onboarding APIs fail closed before session or database access", async ({ page }) => {
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  const responses = await page.evaluate(async () => {
+    const requests = [
+      { path: "/api/onboarding/progress", method: "GET" },
+      { path: "/api/onboarding/session", method: "GET" },
+      { path: "/api/onboarding/health", method: "GET" },
+      { path: "/api/onboarding/metrics", method: "GET" },
+      { path: "/api/onboarding", method: "POST", body: JSON.stringify({ clientData: { companyName: "SYNTHETIC" } }) },
+      { path: "/api/onboarding/access/redeem", method: "POST", body: JSON.stringify({ token: "A".repeat(43) }) }
+    ];
+    const results = [];
+    for (const request of requests) {
+      const response = await fetch(request.path, {
+        method: request.method,
+        headers: request.body ? { "Content-Type": "application/json" } : undefined,
+        body: request.body,
+        cache: "no-store"
+      });
+      const payload = await response.json();
+      results.push({ status: response.status, error: payload.error });
+    }
+    return results;
+  });
+
+  expect(responses.map(({ status }) => status)).toEqual([404, 404, 404, 404, 404, 404]);
+  expect(responses.map(({ error }) => error)).toEqual([
+    "access_unavailable",
+    "access_unavailable",
+    "unavailable",
+    "unavailable",
+    "unavailable",
+    "access_unavailable"
+  ]);
+});
+
+test("disabled Onboarding route never redeems a link token automatically", async ({ page }) => {
+  let redeemRequests = 0;
+  await page.route("**/api/onboarding/access/redeem", async (route) => {
+    redeemRequests += 1;
+    await route.fulfill({ status: 404, contentType: "application/json", body: JSON.stringify({ ok: false, error: "access_unavailable" }) });
+  });
+
+  const token = "C".repeat(43);
+  const response = await page.goto(`/cliente/onboarding#access_token=${token}`, { waitUntil: "domcontentloaded" });
+  expect(response?.status()).toBe(404);
+  expect(redeemRequests).toBe(0);
+  await page.reload({ waitUntil: "domcontentloaded" });
+  expect(redeemRequests).toBe(0);
+  await expect(page.locator("#onboarding-company-name")).toHaveCount(0);
+});
+
+test("disabled Onboarding route is not listed in the sitemap", async ({ page }) => {
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  const sitemap = await page.evaluate(async () => {
+    const response = await fetch("/sitemap.xml", { cache: "no-store" });
+    return { status: response.status, body: await response.text() };
+  });
+  expect(sitemap.status).toBe(200);
+  expect(sitemap.body).not.toContain("/cliente/onboarding");
+
+  const routeResponse = await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
+  expect(routeResponse?.status()).toBe(404);
+});
 test("PostgreSQL isolado: resgate explícito, progresso retomável, submissão idempotente e revogação", async ({ page }) => {
   const databaseUrl = process.env.ONBOARDING_TEST_DATABASE_URL;
-  test.skip(!databaseUrl, "requires the explicitly provisioned disposable PostgreSQL 16 database");
+  test.skip(!databaseUrl || Boolean(process.env.E2E_BASE_URL), "requires the explicitly provisioned disposable PostgreSQL 16 database and the isolated local web server");
   const parsedUrl = new URL(databaseUrl!);
   expect(["127.0.0.1", "localhost"]).toContain(parsedUrl.hostname);
   expect(parsedUrl.pathname).toBe("/tag08_p1_2e2_qa");

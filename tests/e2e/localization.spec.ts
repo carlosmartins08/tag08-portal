@@ -19,12 +19,7 @@ test("language selector exposes only locales approved for the current page", asy
   await expect(page.getByRole("button", { name: "Navegar em English" })).toHaveCount(0);
   await expect(page.getByRole("button", { name: /Navegar em Espa/ })).toHaveCount(0);
 
-  await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
-  await expect(page.getByRole("button", { name: "Navegar em English" })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: /Navegar em Espa/ })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: /Navegar em Espa/ })).toBeEnabled();
-
-  await page.getByRole("button", { name: "Navegar em English" }).click();
-  await expect(page).toHaveURL(/\/en\/cliente\/onboarding$/);
-  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  const response = await page.goto("/cliente/onboarding", { waitUntil: "domcontentloaded" });
+  expect(response?.status()).toBe(404);
+  await expect(page.getByRole("button", { name: /Navegar em/ })).toHaveCount(0);
 });

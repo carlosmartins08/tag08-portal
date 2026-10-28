@@ -313,6 +313,8 @@ test.describe("experiencia de contato", () => {
     await page.getByRole("button", { name: "Voltar", exact: true }).click();
     await page.getByRole("radio", { name: "Quero propor uma parceria" }).check();
     await page.getByRole("button", { name: "Continuar" }).click();
+    await page.getByRole("radio", { name: "Parceiro de Indicação" }).check();
+    await page.getByRole("button", { name: "Continuar" }).click();
     await expect(page.getByLabel(/Qual parceria você propõe/)).toBeVisible();
     await expect(page.getByRole("heading", { name: "Vamos entender o contexto" })).toBeVisible();
   });

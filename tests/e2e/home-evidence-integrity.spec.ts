@@ -7,9 +7,9 @@ test.describe("integridade de evidências na Home", () => {
       await page.goto("/", { waitUntil: "domcontentloaded" });
 
       const diagram = page.getByTestId("diagnostic-diagram");
-      await diagram.scrollIntoViewIfNeeded();
       const pillars = diagram.getByRole("button");
       await expect(pillars).toHaveCount(3);
+      await diagram.evaluate((element) => element.scrollIntoView({ block: "center" }));
       await expect(diagram.getByText(/34\s*%|48\s*%|21\s*%|\u00cdndice m\u00e9dio/i)).toHaveCount(0);
       await expect(diagram.getByTestId("diagnostic-focus")).toContainText(/Posicionamento/);
       await expect(diagram.getByText(/Leitura qualitativa/)).toBeVisible();

@@ -6,7 +6,6 @@ const criticalRoutes = [
   { path: "/", label: "home" },
   { path: "/contato", label: "contato" },
   { path: "/trabalhe-conosco", label: "talentos" },
-  { path: "/cliente/onboarding", label: "onboarding" },
   { path: "/servicos/gestao-de-redes-sociais", label: "gestao-redes-sociais" }
 ] as const;
 
