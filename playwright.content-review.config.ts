@@ -9,7 +9,7 @@ export default defineConfig({
   workers: 1,
   use: { baseURL: contentReviewBaseUrl, browserName: "chromium", headless: true },
   webServer: {
-    command: "node tools/content-review-dev.mjs",
+    command: "node tools/content-review-dev.mjs --review",
     url: contentReviewBaseUrl,
     timeout: 120_000,
     reuseExistingServer: false,

@@ -20,6 +20,7 @@ Portal institucional TAG08 em Next.js App Router. As paginas publicas sao gerada
 ```bash
 npm ci
 npm run dev
+npm run dev:content-review
 npm run dev:public-preview
 npm run continuity:status
 npm run setup:hooks
@@ -60,9 +61,11 @@ O preflight de produção deve ser chamado com `npm run preflight:deploy -- --pr
 
 `npm run db:migrate`, `npm run worker:integrations` e `npm run worker:retention` pertencem aos consumidores PostgreSQL existentes, incluindo o controle de acesso do Onboarding. Nao sao passos genericos do deploy publico e nao devem ser executados enquanto Onboarding permanecer desativado. Preservar esses componentes; qualquer ativacao exige homologacao e autorizacao especificas.
 
-`npm run dev` abre a referência editorial completa em `http://localhost:3101`, identificada por “REVISÃO LOCAL — NÃO PUBLICADO”, com o cache `.next-review`. É o comando padrão para evoluir o projeto.
+`npm run dev` abre a experiência pública local em `http://localhost:3101`, sem o aviso editorial. O gate de evidências continua exibindo somente registros aprovados. O comando informa diretório, branch, commit, estado limpo/modificado do worktree, modo e URL; se alguma porta exigida estiver ocupada, falha sem reutilizar ou encerrar o processo existente. O cache público é `.next-dev`.
 
-`npm run dev:public-preview` abre em `http://localhost:3212` apenas o recorte que pode ser publicado hoje e usa `.next-dev`. O comando confere a continuidade e se recusa a limpar um cache ainda em uso.
+`npm run dev:content-review` inicia explicitamente a revisão editorial em `http://localhost:3101`, identificada por “REVISÃO LOCAL — NÃO PUBLICADO”, com o cache `.next-review`. Essa visualização pode mostrar itens `investigate` com seus avisos; ela não os aprova nem os publica.
+
+`npm run dev:public-preview` abre em `http://localhost:3212` a prévia pública de escopo de publicação. Ela compartilha `.next-dev` com `npm run dev`; os dois modos públicos não podem executar ao mesmo tempo. O lançador verifica as portas e não reutiliza servidores sem identidade confirmada.
 
 `http://127.0.0.1:3000` pertence somente ao container Docker local. Ele é uma imagem compilada e não deve ser usado para revisar alterações do diretório de trabalho; atualize-o apenas por um rebuild explícito.
 

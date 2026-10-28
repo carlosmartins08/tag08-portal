@@ -19,6 +19,7 @@ Quando fontes aprovadas divergirem, não escolha silenciosamente: registre a div
 - WordPress é o CMS editorial. GA4 mede uso e não substitui obrigações, bases legais ou controles de privacidade/LGPD.
 - Preserve a versão visual aprovada pelo operador. Não faça redesign por iniciativa própria.
 - `docs/PROJECT_STATE.md` registra o estado temporal. Confirme branch, HEAD, alterações locais e a identidade do runtime quando forem relevantes; nunca fixe um HEAD neste arquivo de instruções nem presuma que `localhost:3101` esteja ativo ou corresponda ao checkout.
+- `main` é a linha oficial. `npm run dev` apresenta a experiência pública em `localhost:3101`; use `npm run dev:content-review` somente para revisão editorial explícita. O lançador informa checkout/branch/commit/estado do worktree/modo e falha se a porta estiver ocupada; não reutilize nem encerre processos sem verificar sua identidade.
 - Scripts, workers e integrações legados só fazem parte de um fluxo ativo quando o código, a configuração e os testes atuais comprovarem isso. Não remova código do Onboarding por ele estar desativado.
 
 ## Escopo de leitura e preservação

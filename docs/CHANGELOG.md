@@ -2,6 +2,10 @@
 
 ## 2026-10-28
 
+- A raiz do projeto voltou a `main` (`c1aab5f`); o commit P2 não aprovado ficou isolado em `recovery/p2-its-hover-unapproved-0f78d21` e `origin/p2-home-cases-consolidation`, sem upstream de publicação. O stash redundante foi removido após confirmação de que seu conteúdo está na P2.
+- `npm run dev` passa a iniciar a experiência pública em `localhost:3101`; revisão editorial exige `npm run dev:content-review`. O lançador registra diretório, branch, commit, estado do worktree, modo e URL, e falha em conflito de porta sem reutilizar ou encerrar processos.
+- Os gates de evidências públicas permanecem inalterados: somente conteúdo aprovado é público; pendências e itens em investigação continuam protegidos.
+
 - Reconciled current operating guidance across agent instructions, README, project state, environment templates and the five official Drive documents: Sheets is canonical, ClickUp is not a site-submission integration, the CRM is separate/future, and Onboarding remains disabled and preserved. Older ClickUp routing decisions are explicitly historical; no application code or credential values changed.
 
 - Changed Contact and Talent submissions to Google Sheets-only: no ClickUp task, credentials, lists, SQL outbox, or artificial pending state. Retired their unused PostgreSQL persistence functions and ClickUp task adapters; preserved Onboarding's independent disabled ClickUp/PostgreSQL path. Added fail-closed preflight and staging runner checks; synthetic API tests returned 202 for Contact and Talent, replayed each to the same row, and confirmed cleanup. ClickUp and database were not used.

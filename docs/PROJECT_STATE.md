@@ -48,15 +48,15 @@ Atualizado em: `2026-10-28`
 ## Estado de integração (snapshot histórico; não usar como estado corrente)
 
 - Linha de trabalho esperada: `main`. Uma missão ativa deve usar uma branch curta no padrão `p<numero>-<tema>`, criada a partir desta base.
-- Destino de integração: `main`, no commit `5126504` (`2026-09-15`).
-- Commit-base de integração: `5126504`.
-- Relação: a reconciliação da `p0-routing-secret-containment` foi integrada por PR #1. A `p0` permanece preservada como trilha de auditoria; a `p1-publication-ops` parte do novo `main` apenas para fechar a continuidade pós-merge.
+- Destino de integração: `main`, no baseline aprovado `c1aab5f` (`2026-10-28`).
+- Commit-base de integração: `c1aab5f`.
+- Relação: o histórico de P0 e P1 está contido em `main`; as branches locais foram removidas após comprovar que eram ancestrais, e suas referências remotas permanecem históricas. O único commit divergente de P2 permanece isolado na branch de recuperação indicada abaixo.
 - Regra ativa: não desenvolver diretamente em `main`. Cada missão começa em uma branch curta, passa pelos gates e volta por PR; o checkpoint aceita apenas `main` ou o padrão de missão registrado.
 
 ## Checkpoint executável
 
-- Última missão concluída: PR #1 integrada em `main` no commit `5126504`, após CI verde para build, rotas HTTP, relatório de conteúdo, 142 cenários públicos e 3 cenários da prévia local. Home, portfólio e cases indexáveis permanecem pendentes.
-- Próxima missão autorizada: configurar e validar um destino de staging/produção para o `main` integrado. A prévia local preserva a exigência de branch e aceita `detached HEAD` apenas no CI.
+- Última missão concluída: Quality Gate aprovado para `main` em `c1aab5f`; a `main` é a única linha oficial de desenvolvimento e publicação. O commit visual não aprovado está isolado na branch de recuperação local `recovery/p2-its-hover-unapproved-0f78d21` e em `origin/p2-home-cases-consolidation`; não foi incorporado.
+- Próxima missão autorizada: continuar o desenvolvimento local a partir de `main`; usar `npm run dev` para a experiência pública em `localhost:3101` ou `npm run dev:content-review` somente quando a revisão editorial for explicitamente necessária.
 - Antes de desenvolver: `npm run continuity:status`. O comando confere branch, commit-base, missão e itens locais isolados; `npm run dev`, `npm run dev:content-review` e `npm run dev:public-preview` executam essa conferência automaticamente.
 - Antes de commitar: o hook local exige `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` no mesmo commit de qualquer alteração de comportamento. Para ativá-lo em uma instalação existente: `npm run setup:hooks`.
 - CI: o workflow busca o histórico completo para validar o commit-base, pois um checkout raso não permite provar a ancestralidade da branch.
@@ -65,7 +65,7 @@ Atualizado em: `2026-10-28`
 - Rotas HTTP: `npm run verify:routes` sobe o build de produção em uma porta isolada quando `BASE_URL` não é informado; em staging, a mesma variável aponta para o ambiente real. A checagem não depende mais de um servidor local esquecido em `:3000`.
 - Testes visuais: contratos de localização verificam URL canônica, idioma e título principal; não usam contagem de elementos de layout, que muda legitimamente quando a página evolui.
 - Navegador local: `npm run test:browser` usa a porta `3211` e inicia o build atual, sem reutilizar um `next dev` em `:3000`. Para validar staging, usar explicitamente `E2E_BASE_URL`.
-- Dono de cada runtime local: `npm run dev` e `npm run dev:content-review` abrem a referência editorial em `:3101` com `.next-review`; se ela já estiver ativa, o comando informa o endereço para reutilizar sem tentar iniciar uma segunda cópia. `npm run dev:public-preview` simula somente o conteúdo publicável em `:3212` com `.next-dev`; `npm run test:browser` usa `:3211`; Docker ocupa `127.0.0.1:3000` apenas para a imagem compilada. Não comparar mudanças locais em `:3000` nem iniciar duas prévias sobre o mesmo cache.
+- Dono de cada runtime local: `npm run dev` serve a experiência pública em `:3101` usando `.next-dev`; `npm run dev:content-review` inicia, por escolha explícita, a revisão editorial em `:3101` usando `.next-review`; `npm run dev:public-preview` usa `:3212` e compartilha `.next-dev` com a prévia pública normal, então o lançador exige que ambas as portas estejam livres. O lançador imprime diretório, branch, commit, estado do worktree, modo e URL; em conflito, retorna erro e nunca reutiliza nem encerra o processo existente. `npm run test:browser` usa `:3211`; Docker ocupa `127.0.0.1:3000` apenas para a imagem compilada. Não comparar mudanças locais em `:3000` nem iniciar duas prévias sobre o mesmo cache.
 - Tailwind: `src/index.css` limita a descoberta de classes ao diretório `src`. Caches gerados (`.next`, `.next-dev` e `.next-review`) nunca podem entrar na varredura, pois isso realimenta CSS compilado e corrompe classes arbitrárias. `.next-review/` também é ignorado pelo Git.
 - Higiene do repositório: `.lighthouseci/` contém relatórios gerados de auditoria e permanece fora do Git; os resultados devem ser tratados como artefatos de CI, não como fonte do produto.
 - Assets públicos: `src/proxy.ts` deixa URLs com extensão de arquivo passarem sem reescrita de idioma. Isso preserva imagens da equipe e demais arquivos em `public/`.
@@ -75,7 +75,7 @@ Atualizado em: `2026-10-28`
 - Discoverability: `/llms.txt` é servido por uma rota estática do Next. O checkpoint focado inclui a remoção do arquivo de raiz, a exclusão no `proxy` e a verificação de rota.
 - Ativos de clientes: os SVGs em `public/clients/` estão versionados. As 12 marcas autorizadas para `/sobre` são controladas por `src/content/publicEvidence.ts`; qualquer novo logo exige a mesma aprovação por item e rota.
 - Evidências públicas: o gate em `src/content/publicEvidence.ts` libera somente mini-cases e depoimentos internos em Assessoria. Os perfis da equipe em `/sobre` permanecem preservados, mas pendentes e fora da renderização pública. Home, portfólio e cases indexáveis continuam bloqueados; os cases pendentes também não geram rota ou sitemap. `npm run content:status` torna cada supressão visível e `npm run dev:content-review` permite revisão local identificada, sem publicação.
-- Referência editorial interna: a prévia em `http://localhost:3101`, identificada por “REVISÃO LOCAL — NÃO PUBLICADO”, é a versão completa aprovada para evolução e revisão. A prévia pública em `:3212` continua sendo a simulação estrita do que pode ser publicado hoje; suas supressões não equivalem à perda do trabalho editorial.
+- Referência visual local: `http://localhost:3101` é servido pelo checkout canônico `main`. O modo público normal oculta qualquer evidência sem aprovação. A revisão editorial, explicitamente identificada por “REVISÃO LOCAL — NÃO PUBLICADO”, só é iniciada por `npm run dev:content-review`; seus itens pendentes ou em investigação não se tornam publicáveis. A prévia de escopo público em `:3212` mantém a mesma proteção editorial.
 
 ## Onde o conteúdo realmente vive
 
