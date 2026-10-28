@@ -328,7 +328,7 @@ const run = async () => {
   ];
   const cleanup = flows.map(({ flow, marker }) => ({
     flow,
-    marker,
+    sourceMarker: marker,
     key: `${IDENTITY_PREFIX}:${runId}:${flow}`
   }));
   let resultError = null;
