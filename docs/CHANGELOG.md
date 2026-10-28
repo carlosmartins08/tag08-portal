@@ -4,6 +4,8 @@
 
 - Consolidated the repository's agent instructions in root `AGENTS.md`, removed the unreferenced and stale `.ai-agents` runbook, clarified the release steps while Onboarding is disabled, and aligned the live-route checker with the production fail-closed policy. Build and route checks passed; the aggregate test suite remains blocked by `spawn EPERM` and the lint prehook by the Prisma schema-engine proxy connection.
 
+- Hardened uncertain Sheets append recovery: an unrecognized/missing `updates.updatedRange` is marked outcome-unknown, and the staging runner permits one same-key retry that rechecks the Delivery ID before appending. Direct adapter/staging tests passed 18/18 and the current conventional build passed. The prior attempt's response and submission ID were not available, so no external replay or staging write was made.
+
 ## 2026-10-27
 
 - Added a fail-closed production release gate for the database-backed Onboarding journey and required explicit availability configuration in deploy preflight. No application data, external integration, or database was accessed.

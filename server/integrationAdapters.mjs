@@ -154,9 +154,9 @@ export const appendToGoogleSheets = async (delivery, {
   const updatedRange = appended?.updates?.updatedRange;
   if (!operationalMode) return updatedRange || delivery.id;
   const rowMatch = typeof updatedRange === "string" ? updatedRange.match(new RegExp(`^${tab}!A([1-9]\\d*):${lastColumn}\\1$`)) : null;
-  if (!rowMatch) throw new IntegrationDeliveryError("google_sheets_append_unconfirmed", true);
+  if (!rowMatch) throw new IntegrationDeliveryError("google_sheets_append_unconfirmed", true, true);
   const rowNumber = Number(rowMatch[1]);
-  if (rowNumber < 2) throw new IntegrationDeliveryError("google_sheets_append_unconfirmed", true);
+  if (rowNumber < 2) throw new IntegrationDeliveryError("google_sheets_append_unconfirmed", true, true);
   return { rowReference: updatedRange, rowNumber, existing: false, createdAt: delivery.created_at, clickupStatus: needsClickUp ? "PENDING" : "NOT_ROUTED", clickupTaskId: "", clickupAttempts: 0 };
 };
 

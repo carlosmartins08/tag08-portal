@@ -29,6 +29,15 @@ const assert = (ok, code) => { if (!ok) throw new Error(code); };
 const safeLog = (event, data = {}) => console.log(JSON.stringify({ event, ...data }));
 const stableId = (value) => createHash("sha256").update(value).digest("hex");
 
+export const submitWithUnconfirmedSheetsAppendRecovery = async (submit, payload, key) => {
+  try {
+    return await submit(payload, key);
+  } catch (error) {
+    if (error?.code !== "google_sheets_append_unconfirmed" || error?.outcomeUnknown !== true) throw error;
+    return submit(payload, key);
+  }
+};
+
 const parseArgs = (args) => {
   const values = Object.fromEntries(args.filter((arg) => arg.startsWith("--") && arg.includes("="))
     .map((arg) => { const [key, ...rest] = arg.slice(2).split("="); return [key, rest.join("=")]; }));
@@ -259,7 +268,7 @@ const deliverFlow = async ({ store, accessToken, flow, marker, runId, env }) => 
   const payload = flow === "contact" ? contactPayload(marker) : talentPayload(marker);
   const submit = flow === "contact" ? store.persistContactLead : store.persistTalentApplication;
 
-  const failed = await submit(payload, key);
+  const failed = await submitWithUnconfirmedSheetsAppendRecovery(submit, payload, key);
   assert(failed.clickUpStatus === "FAILED", `staging_${flow}_failure_path_not_observed`);
   const { deliveryId } = deriveIdentity(aggregateType, key);
   const rowNumber = await findRowNumber(accessToken, flow, deliveryId);
@@ -365,10 +374,12 @@ const run = async () => {
   if (resultError) throw resultError;
 };
 
-try {
-  await run();
-} catch (error) {
-  const code = error instanceof Error && /^[a-z0-9_-]+$/i.test(error.message) ? error.message : "direct_staging_runner_failed";
-  safeLog("direct_staging_blocked", { code });
-  process.exitCode = 1;
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  try {
+    await run();
+  } catch (error) {
+    const code = error instanceof Error && /^[a-z0-9_-]+$/i.test(error.message) ? error.message : "direct_staging_runner_failed";
+    safeLog("direct_staging_blocked", { code });
+    process.exitCode = 1;
+  }
 }

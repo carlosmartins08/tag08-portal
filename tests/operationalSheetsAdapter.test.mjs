@@ -196,7 +196,10 @@ test("operational Sheets replay recovers an append whose 2xx response lost its r
     rows.push(JSON.parse(init.body).values[0]);
     return new Response(JSON.stringify({ updates: {} }), { status: 200 });
   };
-  await assert.rejects(appendToGoogleSheets(delivery, { spreadsheetId: "synthetic-sheet", accessToken: "synthetic-token", fetchImpl }), /google_sheets_append_unconfirmed/);
+  await assert.rejects(
+    appendToGoogleSheets(delivery, { spreadsheetId: "synthetic-sheet", accessToken: "synthetic-token", fetchImpl }),
+    (error) => error.code === "google_sheets_append_unconfirmed" && error.retryable === true && error.outcomeUnknown === true
+  );
   const replay = await appendToGoogleSheets(delivery, { spreadsheetId: "synthetic-sheet", accessToken: "synthetic-token", fetchImpl });
   assert.equal(replay.existing, true);
   assert.equal(replay.rowNumber, 2);

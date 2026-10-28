@@ -14,6 +14,7 @@ import {
   CONTACT_TALENT_STAGING_SYNTHETIC_MARKER,
   TALENT_STAGING_HEADERS
 } from "../tools/contactStagingGate.mjs";
+import { submitWithUnconfirmedSheetsAppendRecovery } from "../tools/run-contact-staging-outbox.mjs";
 
 const env = () => ({
   NODE_ENV: "production",
@@ -104,6 +105,33 @@ test("direct staging runner uses the Sheets store and contains no PostgreSQL/out
   assert.match(runner, /createOperationalSubmissionStore/);
   assert.match(runner, /appendToGoogleSheets|createClickUpTask/);
   assert.doesNotMatch(runner, /from ["']pg["']|DATABASE_URL|integration_deliveries|integrationWorker\.mjs|spawnSync/);
+});
+
+test("direct staging runner retries once only after an uncertain Sheets append, preserving the same idempotency key", async () => {
+  const payload = { name: "synthetic" };
+  const key = "synthetic-idempotency-key";
+  let calls = 0;
+  const result = await submitWithUnconfirmedSheetsAppendRecovery(async (receivedPayload, receivedKey) => {
+    calls += 1;
+    assert.equal(receivedPayload, payload);
+    assert.equal(receivedKey, key);
+    if (calls === 1) {
+      const error = new Error("google_sheets_append_unconfirmed");
+      error.code = "google_sheets_append_unconfirmed";
+      error.outcomeUnknown = true;
+      throw error;
+    }
+    return { created: false, rowNumber: 2 };
+  }, payload, key);
+  assert.deepEqual(result, { created: false, rowNumber: 2 });
+  assert.equal(calls, 2);
+
+  calls = 0;
+  await assert.rejects(submitWithUnconfirmedSheetsAppendRecovery(async () => {
+    calls += 1;
+    throw Object.assign(new Error("other_failure"), { code: "other_failure", outcomeUnknown: true });
+  }, payload, key), /other_failure/);
+  assert.equal(calls, 1);
 });
 
 test("full integration preflight retains the existing non-staging scope", () => {

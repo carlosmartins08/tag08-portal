@@ -4,6 +4,12 @@
 
 Atualizado em: `2026-10-27`
 
+## Encerramento de bloqueios Sheets/Build — 2026-10-28
+
+- A escrita operacional em Sheets consulta a coluna de Delivery ID antes do append. Um HTTP 2xx sem `updates.updatedRange` no formato de linha aprovado continua como resultado incerto (`outcomeUnknown`); o runner de staging pode fazer uma única repetição com a mesma chave, que volta a consultar o Delivery ID antes de tentar novo append. Isso evita replay cego; não oferece garantia distribuída contra concorrência.
+- Não foi localizado relatório/log acessível com a resposta real do append anterior nem com seu run ID/Delivery ID. Nenhum replay ou novo append externo foi feito nesta missão. Antes de repetir aquela submissão, o operador precisa fornecer o run ID/Delivery ID original para uma consulta somente de leitura na aba de staging.
+- Testes diretos com mocks: adaptador Sheets 10/10 e preflight/runner de staging 8/8. `npm run build` atual passou, incluindo `prisma generate` 7.8.0, TypeScript, Next build e standalone. O erro histórico em `127.0.0.1:9` ocorreu ao buscar checksum/binário do Prisma através do proxy local e não foi reproduzido no build atual; não é falha de conexão com banco. O launcher multi-arquivo `node --test` segue limitado por `spawn EPERM` no ambiente do agente.
+
 ## Validacao da missao atual
 
 - Os assets aprovados da Darker Grotesque e sua licença OFL estão versionados; a integração tipográfica permanece pausada. A foundation cromática aprovada (`#DDF81D` institucional e `#3F5A00` funcional) foi reconciliada; o acento padrão dos avatares externos também usa o lime aprovado.
