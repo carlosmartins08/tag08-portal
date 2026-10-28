@@ -8,6 +8,7 @@ const CLICKUP_LIST_VARIABLES = [
   "CLICKUP_TALENT_LIST_ID",
   "CLICKUP_ONBOARDING_LIST_ID"
 ];
+const CLICKUP_ONBOARDING_STAGING_LIST_ID = "901327894265";
 
 export const evaluateDeployPreflight = (env, args = []) => {
   const target = args.includes("--production") ? "production" : "staging";
@@ -26,6 +27,18 @@ export const evaluateDeployPreflight = (env, args = []) => {
     invalid.push("ONBOARDING_ENABLED must be explicitly set to true or false");
   } else if (target === "production" && onboardingEnabled !== "false") {
     invalid.push("ONBOARDING_ENABLED must be false for production until Onboarding is homologated");
+  }
+
+  if (target === "production" && env.GOOGLE_SHEETS_SPREADSHEET_ID?.trim() === CONTACT_STAGING_SPREADSHEET_ID) {
+    invalid.push("GOOGLE_SHEETS_SPREADSHEET_ID points to the approved staging spreadsheet in production");
+  }
+
+  if (target === "production") {
+    for (const name of CLICKUP_LIST_VARIABLES) {
+      if ([CONTACT_STAGING_CLICKUP_LIST_ID, CLICKUP_ONBOARDING_STAGING_LIST_ID].includes(env[name]?.trim())) {
+        invalid.push(`${name} points to an approved staging ClickUp list in production`);
+      }
+    }
   }
 
   if (onboardingEnabled === "true") requireValue("DATABASE_URL");
@@ -111,18 +124,15 @@ export const evaluateDeployPreflight = (env, args = []) => {
         invalid.push("GOOGLE_SERVICE_ACCOUNT_JSON is not valid JSON");
       }
     }
-    if (target === "production" && env.GOOGLE_SHEETS_SPREADSHEET_ID?.trim() === CONTACT_STAGING_SPREADSHEET_ID) {
-      invalid.push("GOOGLE_SHEETS_SPREADSHEET_ID points to the approved staging spreadsheet in production");
-    }
   }
 
   if (clickUpEnabled) {
-    for (const name of ["CLICKUP_API_TOKEN", ...CLICKUP_LIST_VARIABLES]) requireValue(name);
+    const clickUpDestinations = onboardingEnabled === "true"
+      ? CLICKUP_LIST_VARIABLES
+      : CLICKUP_LIST_VARIABLES.filter((name) => name !== "CLICKUP_ONBOARDING_LIST_ID");
+    for (const name of ["CLICKUP_API_TOKEN", ...clickUpDestinations]) requireValue(name);
     for (const name of CLICKUP_LIST_VARIABLES) {
       if (present(name) && !/^\d+$/.test(env[name].trim())) invalid.push(`${name} must be numeric`);
-      if (target === "production" && env[name]?.trim() === CONTACT_STAGING_CLICKUP_LIST_ID) {
-        invalid.push(`${name} points to the approved staging ClickUp list in production`);
-      }
     }
   }
 
