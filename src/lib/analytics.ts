@@ -109,6 +109,7 @@ export const trackPageView = (params: {
   page_location: string; page_path: string; page_title: string; page_referrer?: string; language?: string;
   route_type?: string; route_key?: string; page_group?: string; is_service_page?: boolean;
 }) => {
+  if (!hasTrackingConsent()) return;
   const cacheKey = [params.page_location, params.page_title, params.page_path, params.language ?? "", params.route_type ?? ""].join("|");
   const now = Date.now();
   if (cacheKey === lastTrackedPageViewKey && now - lastTrackedPageViewAt < PAGE_VIEW_DEBOUNCE_MS) return;
@@ -155,9 +156,23 @@ export const trackLeadEvent = (params: { action: string; surface: string; label?
 
 export const trackFormStart = (params: { form_name: string; form_surface: string; language?: string; page_path?: string }) => trackAnalyticsEvent("form_start", params);
 
-export const trackFormSubmit = (params: { form_name: string; form_surface: string; status: "success" | "queued" | "validation_error" | "error"; language?: string; page_path?: string }) => {
+type ContactRequestType = "new_project" | "diagnostic" | "existing_client" | "partnership" | "";
+
+type FormSubmitParams = {
+  form_name: string;
+  form_surface: string;
+  status: "success" | "queued" | "validation_error" | "error";
+  language?: string;
+  page_path?: string;
+  request_type?: ContactRequestType;
+};
+
+export const shouldEmitGenerateLead = (params: FormSubmitParams) =>
+  params.status === "success" && params.form_name === "contact" && params.request_type === "new_project";
+
+export const trackFormSubmit = (params: FormSubmitParams) => {
   trackAnalyticsEvent("form_submit", params);
-  if (params.status === "success" || params.status === "queued") {
+  if (shouldEmitGenerateLead(params)) {
     trackAnalyticsEvent("generate_lead", { form_name: params.form_name, form_surface: params.form_surface, delivery_status: params.status, language: params.language, page_path: params.page_path });
   }
 };

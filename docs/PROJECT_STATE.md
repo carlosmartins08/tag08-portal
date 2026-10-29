@@ -4,6 +4,12 @@
 
 Atualizado em: `2026-10-28`
 
+## Mensuração TAG08 — estado local em 2026-10-29
+
+- O site carrega um único contêiner GTM somente após consentimento analítico ou de marketing. O primeiro `page_view` só é deduplicado após consentimento. `generate_lead` é restrito a um pedido de novo projeto cuja persistência em Sheets foi confirmada; fila local, Talentos, Diagnóstico, cliente atual e Parceria não contam como lead comercial.
+- `form_submit` com estado `success` representa submissão persistida; `queued` representa apenas tentativa local aguardando retry. Dados pessoais não devem ser enviados a tags. O contrato e o estado das contas externas estão em `docs/ANALYTICS-INSTRUMENTATION.md`.
+- GTM, fluxo/Measurement ID GA4, propriedade e sitemap do Search Console, Pinterest Tag e LinkedIn Insight Tag ainda não foram verificados nas contas administrativas. Não publicar workspace GTM, não habilitar tags publicitárias e não fazer deploy sem aprovação.
+
 ## Decisão operacional vigente — Google Sheets sem ClickUp no site — 2026-10-28
 
 - O Google Sheets é a base canônica dos registros operacionais estruturados do novo site. Contato e Talentos persistem diretamente nas abas correspondentes, sem token, lista, tarefa ou confirmação ClickUp.

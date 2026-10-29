@@ -1,5 +1,10 @@
 # CHANGELOG - TAG08
 
+## 2026-10-29
+
+- Analytics: `generate_lead` now counts only a successful, Sheets-confirmed Contact submission whose intent is `new_project`; queued submissions, Talent applications, diagnostics, existing-client requests and partnerships are not commercial lead conversions. Page-view deduplication now starts only after consent, preserving the first view when consent is granted immediately. Added targeted regression cases; test execution is blocked in this environment by `spawn EPERM` in esbuild.
+- Added the current measurement contract and external validation status in `docs/ANALYTICS-INSTRUMENTATION.md`. No GTM publication, external property changes, or production deploy occurred.
+
 ## 2026-10-28
 
 - A raiz do projeto voltou a `main` (`c1aab5f`); o commit P2 não aprovado ficou isolado em `recovery/p2-its-hover-unapproved-0f78d21` e `origin/p2-home-cases-consolidation`, sem upstream de publicação. O stash redundante foi removido após confirmação de que seu conteúdo está na P2.
