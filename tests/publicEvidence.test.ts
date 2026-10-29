@@ -18,7 +18,7 @@ const teamKeys = Object.keys(PUBLIC_EVIDENCE).filter((key) => key.startsWith("te
 const clientLogoKeys = Object.keys(PUBLIC_EVIDENCE).filter((key) => key.startsWith("client-logo/"));
 const miniCaseKeys = Object.keys(PUBLIC_EVIDENCE).filter((key) => key.startsWith("mini-case/"));
 assert.equal(teamKeys.length, 7, "The seven decided team profiles remain covered");
-assert.equal(getVisibleEvidence(teamKeys, (key) => key, "/sobre", "public").length, 0, "Perfis em investigação não podem aparecer publicamente na página Sobre");
+assert.equal(getVisibleEvidence(teamKeys, (key) => key, "/sobre", "public").length, 5, "Somente os cinco perfis autorizados aparecem publicamente na página Sobre");
 assert.equal(getVisibleEvidence(teamKeys, (key) => key, "/sobre", "review").length, 7, "A prévia local pode preservar os perfis em investigação para revisão");
 assert.equal(getVisibleEvidence(miniCaseKeys, (key) => key, "/servicos/assessoria-marketing-digital-estrategico", "public").length, 6, "Mini-cases aprovados precisam aparecer em Assessoria");
 assert.equal(getVisibleEvidence(miniCaseKeys, (key) => key, "/servicos/branding-identidade", "public").length, 0, "Mini-cases não podem vazar para serviços fora do escopo aprovado");
@@ -29,9 +29,11 @@ assert.equal(getVisibleEvidence(clientLogoKeys, (key) => key, "/sobre", "public"
 assert.equal(getVisibleEvidence(clientLogoKeys, (key) => key, "/", "public").length, 0, "Logos de clientes nÃ£o podem vazar para fora da rota autorizada");
 
 const investigateKeys = Object.keys(PUBLIC_EVIDENCE).filter((key) =>
-  key.startsWith("team/") || key.startsWith("home-case/") || key.startsWith("portfolio-candidate/") || key.startsWith("case-study/")
+  PUBLIC_EVIDENCE[key as keyof typeof PUBLIC_EVIDENCE].status === "investigate" &&
+    (key.startsWith("team/") || key.startsWith("home-case/") || key.startsWith("portfolio-candidate/") || key.startsWith("case-study/"))
 );
-assert.equal(investigateKeys.length, 22, "All human-investigation decisions remain explicitly enumerated");
+assert.equal(investigateKeys.length, 17, "Remaining human-investigation decisions remain explicitly enumerated");
+assert.equal(investigateKeys.filter((key) => key.startsWith("team/")).length, 2, "Unapproved team profiles remain under investigation");
 assert.equal(investigateKeys.filter((key) => key.startsWith("home-case/")).length, 6, "All six decided Home cases remain covered");
 assert.equal(investigateKeys.filter((key) => key.startsWith("portfolio-candidate/")).length, 6, "All six decided portfolio candidates remain covered");
 assert.equal(investigateKeys.filter((key) => key.startsWith("case-study/")).length, 3, "All three decided detailed cases remain covered");
@@ -52,7 +54,7 @@ const mutableEnvironment = process.env as unknown as Record<string, string | und
 try {
   mutableEnvironment.NODE_ENV = "development";
   mutableEnvironment.NEXT_PUBLIC_TAG08_CONTENT_REVIEW = "1";
-  const investigateBadge = renderToStaticMarkup(createElement(EvidenceReviewBadge, { evidenceKey: "team/carlos-henrique-martins" }));
+  const investigateBadge = renderToStaticMarkup(createElement(EvidenceReviewBadge, { evidenceKey: "team/guilherme-gomes" }));
   const homeInvestigateBadge = renderToStaticMarkup(createElement(EvidenceReviewBadge, { evidenceKey: "home-case/alan-rocha" }));
   assert.match(homeInvestigateBadge, /Em investiga/, "Home cases under investigation use the review-only status instead of an approval claim");
   assert.match(investigateBadge, /Em investigação — não publicado/, "Review mode labels investigate distinctly from approved");

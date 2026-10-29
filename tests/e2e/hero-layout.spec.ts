@@ -20,3 +20,12 @@ test("hero preserves a safe reading area before the portrait", async ({ page }) 
   expect(layout).not.toBeNull();
   expect(layout!.headingRight).toBeLessThan(layout!.stageMidpoint);
 });
+
+test("Home hero preloads its LCP image with high priority and the local brand font", async ({ page }) => {
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+
+  const heroImage = page.locator('[data-testid="hero-editorial-stage"] img');
+  await expect(heroImage).toHaveAttribute("fetchpriority", "high");
+  await expect(page.locator('link[rel="preload"][as="image"][fetchpriority="high"]')).not.toHaveCount(0);
+  await expect(page.locator('link[rel="preload"][as="font"][type="font/woff2"]')).not.toHaveCount(0);
+});

@@ -21,8 +21,10 @@ import { ContactFormData, PARTNERSHIP_MODALITY_VALUES, type PartnershipModality 
 import { TAG08_OFFICIAL_CHANNELS, TAG08_OFFICIAL_CONTACT, TAG08_WHATSAPP_CONTACTS, buildGoogleMapsEmbedUrl } from "../../../config/siteNetwork";
 import { trackFormError, trackFormStart, trackFormSubmit, trackLeadEvent, trackOutboundClick } from "../../../lib/analytics";
 import { queueFormSubmission, removeQueuedSubmission } from "../../../lib/formQueue";
+import { confirmsSheetsSubmission } from "../../../lib/sheetsDeliveryConfirmation";
 import { COOKIE_CONSENT_EVENT, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
 import CountryFlag from "../../../components/CountryFlag";
+import ItsHoverActionIcon from "../../../components/ItsHoverActionIcon";
 import type { RouteLocale } from "../../../config/routeRegistry";
 import { getContactJourneyOriginSource, parseContactJourneyContext, type ContactJourneyOrigin } from "../../../lib/contactJourney";
 
@@ -344,8 +346,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
     };
     // Preserve the same key and payload while the request is in flight so a page reload
     // can replay this exact submission instead of creating a second record.
-    queueFormSubmission({ endpoint: "/api/contact", idempotencyKey, payload });
-    let queuedForRetry = true;
+    let queuedForRetry = queueFormSubmission({ endpoint: "/api/contact", idempotencyKey, payload });
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -355,6 +356,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
         },
         body: JSON.stringify(payload)
       });
+      const result = await response.json().catch(() => null);
 
       if (!response.ok) {
         if (response.status >= 500) {
@@ -362,9 +364,12 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
         }
         setSubmitError("Revise os campos obrigatórios e tente novamente.");
         removeQueuedSubmission(idempotencyKey);
-        queuedForRetry = false;
         setLoading(false);
         return;
+      }
+
+      if (!confirmsSheetsSubmission(response.status, result, "contact")) {
+        throw new Error("submission_persistence_unconfirmed");
       }
 
       setLoading(false);
@@ -383,11 +388,12 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
       });
     } catch {
       if (!queuedForRetry) {
-        queueFormSubmission({ endpoint: "/api/contact", idempotencyKey, payload });
-        queuedForRetry = true;
+        queuedForRetry = queueFormSubmission({ endpoint: "/api/contact", idempotencyKey, payload });
       }
       setLoading(false);
-      setSubmitError("Não foi possível concluir o envio agora. Sua solicitação foi salva neste navegador para nova tentativa automática.");
+      setSubmitError(queuedForRetry
+        ? "Não foi possível concluir o envio agora. Sua solicitação foi salva neste navegador para nova tentativa automática."
+        : "O envio não foi concluído e não foi possível salvar uma tentativa neste navegador. Seus dados continuam no formulário; tente novamente.");
       trackFormError({
         form_name: "contact",
         form_surface: "contact-page",
@@ -943,7 +949,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
                         </span>
                       ) : (
                         <span className="flex items-center gap-1.5">
-                          {isPartnership ? "Confirmar e enviar inscrição" : isDiagnostic ? "Enviar pedido de orientação" : "Enviar solicitação à TAG08"} <ArrowRight className="w-4 h-4" />
+                          {isPartnership ? "Confirmar e enviar inscrição" : isDiagnostic ? "Enviar pedido de orientação" : "Enviar solicitação à TAG08"} <ItsHoverActionIcon name="send" size={16} />
                         </span>
                       )}
                     </button>

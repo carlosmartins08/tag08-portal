@@ -22,7 +22,7 @@ test("queued contact retry retains its idempotency key and payload across a relo
 
   try {
     const payload = { email: "synthetic@example.test", source: "contact-page:offer" };
-    queueFormSubmission({ endpoint: "/api/contact", idempotencyKey: "contact-request-001", payload });
+    assert.equal(queueFormSubmission({ endpoint: "/api/contact", idempotencyKey: "contact-request-001", payload }), true);
     const saved = JSON.parse(values.get("tag08_form_delivery_queue_v1") || "[]");
     assert.equal(saved[0].idempotencyKey, "contact-request-001");
     assert.deepEqual(saved[0].payload, payload);
@@ -32,6 +32,28 @@ test("queued contact retry retains its idempotency key and payload across a relo
     assert.deepEqual(JSON.parse(values.get("tag08_form_delivery_queue_v1") || "[]"), []);
   } finally {
     globalThis.fetch = originalFetch;
+    if (originalStorage) Object.defineProperty(globalThis, "localStorage", originalStorage);
+    else Reflect.deleteProperty(globalThis, "localStorage");
+  }
+});
+
+test("queue reports when browser storage refuses to persist a retry", () => {
+  const originalStorage = Object.getOwnPropertyDescriptor(globalThis, "localStorage");
+  Object.defineProperty(globalThis, "localStorage", {
+    configurable: true,
+    value: {
+      getItem: () => null,
+      setItem: () => { throw new Error("storage_denied"); }
+    }
+  });
+
+  try {
+    assert.equal(queueFormSubmission({
+      endpoint: "/api/contact",
+      idempotencyKey: "contact-request-storage-denied",
+      payload: { email: "synthetic@example.test" }
+    }), false);
+  } finally {
     if (originalStorage) Object.defineProperty(globalThis, "localStorage", originalStorage);
     else Reflect.deleteProperty(globalThis, "localStorage");
   }

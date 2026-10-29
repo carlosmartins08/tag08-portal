@@ -346,7 +346,7 @@ Próximo passo: conversar com a TAG08 para entender contexto, escopo e direção
       eyebrow: "Escolha do plano",
       question: "Qual é a diferença entre Start, Base e Performance?",
       answer:
-        "A principal diferença está na profundidade da operação e na divisão de responsabilidades. No Start, o cliente participa mais e normalmente assume parte da rotina. O Base organiza planejamento e produção recorrente. O Performance atende operações que precisam de maior integração entre conteúdo, vídeo, publicação e acompanhamento."
+        "Todos partem de uma necessidade diferente, não apenas de quantidade de peças. O Start organiza a presença inicial com 12 posts mensais para Instagram e Facebook, planejamento e reunião mensal; captação não está incluída. O Base acrescenta uma captação mensal, relatórios e análises, distribuição transmídia no YouTube quando aplicável e uma campanha de Google Ads quando houver site e pertinência; a gestão é incluída quando aplicável, mas a verba de mídia é do cliente. O Performance parte de pelo menos 12 posts, sem teto fixo, e adapta canais, formatos e campanhas aos dados e objetivos. A composição final é confirmada no diagnóstico e na proposta."
     },
     {
       id: 2,
@@ -592,7 +592,7 @@ Próximo passo: conversar com a TAG08 para entender contexto, escopo e direção
               Estruturas recorrentes
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white leading-tight">
-              Escolha a estrutura que sua rotina consegue sustentar.
+              Conheça as estruturas para diferentes momentos do negócio.
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
               Start, Base e Performance respondem a necessidades e níveis de participação diferentes. O diagnóstico confirma a aderência antes da proposta.
@@ -606,37 +606,39 @@ Próximo passo: conversar com a TAG08 para entender contexto, escopo e direção
                 eyebrow: "ENTRADA ESTRATÉGICA",
                 stage: "INÍCIO ORIENTADO",
                 subtitle: "Para começar com direção e maior participação do cliente.",
-                desc: "Estrutura indicada para profissionais e pequenos negócios que precisam organizar uma presença inicial, conseguem participar mais da rotina e normalmente assumem a publicação.",
+                desc: "Estrutura mínima coerente para organizar uma presença digital inicial, com direção e participação do cliente. A indicação considera a necessidade e o momento do negócio, não apenas o porte ou o orçamento.",
                 includes: [
-                  "Direção inicial e linha editorial",
-                  "Produção prevista para o ciclo",
-                  "Participação do cliente nas aprovações e, normalmente, na publicação"
+                  "12 posts mensais para Instagram e Facebook, com planejamento mensal",
+                  "Uma reunião mensal com a equipe de planejamento e organização básica da presença digital",
+                  "Captação audiovisual não incluída; quando necessária, é contratada separadamente. O cliente normalmente participa das aprovações e da publicação."
                 ],
-                support: "Evolua quando a rotina pedir produção e acompanhamento mais constantes."
+                support: "Outra estrutura pode fazer sentido quando a necessidade, a rotina ou a capacidade de participação mudarem."
               },
               {
                 name: "Plano Base",
                 eyebrow: "CONSISTÊNCIA MENSAL",
                 stage: "ROTINA CONSOLIDADA",
                 subtitle: "Para negócios ativos que precisam transformar comunicação improvisada em rotina.",
-                desc: "A TAG08 organiza planejamento e produção recorrente para marcas com oferta ativa que precisam manter linha editorial, consistência e continuidade.",
+                desc: "Para operações em crescimento que precisam de mais recursos, análise e distribuição, além de planejamento e produção recorrentes.",
                 includes: [
-                  "Planejamento e produção mensal",
-                  "Linha editorial e rotina de revisão",
-                  "Acompanhamento conforme o escopo contratado"
+                  "12 posts mensais para Instagram e Facebook e uma captação de conteúdo por mês",
+                  "Relatórios e análises estratégicas",
+                  "Distribuição no YouTube por lógica transmídia quando aplicável",
+                  "Uma campanha de Google Ads quando houver site e pertinência estratégica; a gestão é incluída quando aplicável, e a verba de mídia é paga pelo cliente."
                 ],
-                support: "Faz sentido evoluir quando mais canais, formatos e responsabilidades passam a exigir maior coordenação."
+                support: "Mais canais e responsabilidades podem pedir outra composição, conforme a necessidade e a capacidade de operação."
               },
               {
                 name: "Plano Performance",
                 eyebrow: "OPERAÇÃO INTEGRADA",
                 stage: "COORDENAÇÃO AMPLIADA",
                 subtitle: "Para marcas que precisam de maior integração entre planejamento, produção e acompanhamento.",
-                desc: "Estrutura recorrente mais completa, indicada quando existe necessidade real de coordenar conteúdo, vídeo, publicação, acompanhamento e análise com maior profundidade.",
+                desc: "Estrutura modular para operações que precisam de personalização, escala, mensuração e adaptação orientada por dados.",
                 includes: [
-                  "Planejamento com maior integração entre frentes",
-                  "Produção e publicação conforme o escopo vigente",
-                  "Acompanhamento e revisão com maior profundidade operacional"
+                  "Mínimo de 12 posts mensais, sem teto fixo; volume e formatos evoluem conforme a necessidade e o escopo",
+                  "Ativos e formatos adaptados por canal; blog posts quando houver site e pertinência",
+                  "Múltiplas campanhas em Google Ads e Meta Ads conforme estratégia; a verba de mídia é paga pelo cliente",
+                  "Mensuração e otimização orientadas por dados, objetivos e momento do negócio; ampliação de escopo pode ajustar o valor."
                 ],
                 support: "Indicado quando a operação exige mais coordenação, não apenas mais volume."
               }

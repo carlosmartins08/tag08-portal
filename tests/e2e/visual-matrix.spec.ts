@@ -40,6 +40,15 @@ for (const viewport of viewports) {
         if (path === "/hospedagem-manutencao-sites") {
           const optionLinks = page.getByRole("link", { name: /Solicitar esta/i });
           await expect(optionLinks).toHaveCount(6);
+          await expect.poll(async () => {
+            const metrics = await optionLinks.evaluateAll((links) =>
+              links.map((link) => ({
+                height: link.getBoundingClientRect().height,
+                minHeight: getComputedStyle(link).minHeight
+              }))
+            );
+            return metrics.every(({ height, minHeight }) => Number.parseFloat(minHeight) >= 44 && Math.round(height) >= 44);
+          }, { message: "Os seis CTAs devem atingir 44px após a animação de entrada dos cartões." }).toBe(true);
           const metrics = await optionLinks.evaluateAll((links) =>
             links.map((link) => ({
               height: link.getBoundingClientRect().height,

@@ -2,11 +2,11 @@
 
 **Finalidade:** apoiar decisão humana por registro. Este documento inventaria efeitos técnicos observáveis; não aprova nem rejeita conteúdo.
 
-## Contrato técnico comum aos 22 registros
+## Snapshot técnico original dos 22 registros — 2026-10-19
 
-Todos os registros abaixo são criados por `pending()` em `src/content/publicEvidence.ts` e, no código atual, recebem `status: approved`, `decidedAt: 2026-09-24`, `evidenceReference: approval:conversation-2026-09-24-publication-scope`, `validUntil: null` e owner `Carlos Henrique Martins`. Esses valores são evidência técnica declarada pelo repositório, não confirmação independente de autorização humana. A coluna de decisão permanece vazia em cada linha.
+Este snapshot registra o estado anterior à decisão de 2026-10-29 sobre cinco perfis de equipe. Na criação da matriz, os registros eram tratados como `investigate`; as decisões abaixo foram atualizadas para refletir a autorização posterior dos cinco perfis e preservar como pendentes os demais conteúdos.
 
-`isEvidenceVisible` permite a chave se existir, a rota estiver em `allowedRoutes` e o status não for `remove`; no modo público exige `approved`. Por isso todos os 22 passariam pelo gate público na rota indicada caso um consumidor os consultasse. A existência de uma chave ou a aprovação codificada não prova, por si só, consentimento, titularidade, veracidade ou autorização documental.
+`isEvidenceVisible` permite a chave se existir, a rota estiver em `allowedRoutes` e o status não for `remove`; no modo público exige `approved`. As aprovações abaixo são limitadas ao escopo declarado e não se estendem a cases, portfólio ou outras pessoas.
 
 | Decisão humana — preencher pelo responsável | Opções |
 | --- | --- |
@@ -18,15 +18,15 @@ Origem relacionada: estruturas `PRIMARY_PROFILES` e `COMPLEMENTARY_PROFILES` em 
 
 | Chave | Nome/título exibido | `isEvidenceVisible` / consumidor / rota própria / sitemap | Risco se aprovação não for confirmada | Decisão |
 | --- | --- | --- | --- | --- |
-| `team/carlos-henrique-martins` | Carlos Henrique Martins — Estrategista de negócios digitais; Estratégia e direção de negócio | Sim; consumer público em `Sobre.tsx`; `/sobre`; sem rota própria; não entra individualmente no sitemap. | Atribuição pública de identidade, função e associação à TAG08. | **INVESTIGAR** |
-| `team/ignacio-quiroz` | Ignacio Quiroz — Analista de marketing e comunicações; Marketing e comunicação | Sim; `Sobre.tsx`; `/sobre`; sem rota própria; sem entrada individual no sitemap. | Atribuição pública de identidade, função e associação à TAG08. | **INVESTIGAR** |
-| `team/pedro-felix` | Pedro Félix — Analista de dados e desenvolvedor front-end; Dados e experiência digital | Sim; `Sobre.tsx`; `/sobre`; sem rota própria; sem entrada individual no sitemap. | Atribuição pública de identidade, função e associação à TAG08. | **INVESTIGAR** |
-| `team/daniel-lopes` | Daniel Lopes — Gerente de infraestrutura de TI; Infraestrutura e continuidade | Sim; `Sobre.tsx`; `/sobre`; sem rota própria; sem entrada individual no sitemap. | Atribuição pública de identidade, função e associação à TAG08. | **INVESTIGAR** |
+| `team/carlos-henrique-martins` | Carlos Henrique Martins — Estratégia de conteúdo e marketing; Estratégia e direção | Sim; consumer público em `Sobre.tsx`; `/sobre`; sem rota própria; não entra individualmente no sitemap. | Retrato, resumo profissional e link externo aprovados em 2026-10-29. | **APROVADO — 2026-10-29** |
+| `team/ignacio-quiroz` | Ignacio Quiroz — Marketing e comunicação; Marca e jornada do cliente | Sim; `Sobre.tsx`; `/sobre`; sem rota própria; sem entrada individual no sitemap. | Retrato, resumo profissional e link externo aprovados em 2026-10-29. | **APROVADO — 2026-10-29** |
+| `team/pedro-felix` | Pedro Félix — Dados e desenvolvimento web; Dados e experiência digital | Sim; `Sobre.tsx`; `/sobre`; sem rota própria; sem entrada individual no sitemap. | Retrato, resumo profissional e link externo aprovados em 2026-10-29. | **APROVADO — 2026-10-29** |
+| `team/daniel-lopes` | Daniel Lopes — Especialista em servidores, hospedagem e tecnologia | Sim; `Sobre.tsx`; `/sobre`; sem rota própria; sem entrada individual no sitemap. | Retrato, resumo profissional e link externo aprovados em 2026-10-29. | **APROVADO — 2026-10-29** |
 | `team/guilherme-gomes` | Guilherme Gomes — Diretor de arte | Sim; `Sobre.tsx`; `/sobre`; sem rota própria; sem entrada individual no sitemap. | Atribuição pública de identidade, função e associação à TAG08. | **INVESTIGAR** |
 | `team/amazing-design` | Amazing Design — Designer gráfico e motion designer | Sim; `Sobre.tsx`; `/sobre`; sem rota própria; sem entrada individual no sitemap. | Atribuição pública de identidade/marca e vínculo profissional. | **INVESTIGAR** |
-| `team/andreia-braga` | Andréia Braga — Colaboração de projeto | Sim; `Sobre.tsx`; `/sobre`; sem rota própria; sem entrada individual no sitemap. | Atribuição pública de identidade e colaboração com a empresa. | **INVESTIGAR** |
+| `team/andreia-braga` | Andréia Braga — Colaboradora de projetos | Sim; `Sobre.tsx`; `/sobre`; sem rota própria; sem entrada individual no sitemap. | Retrato, descrição geral de colaboração e link externo aprovados em 2026-10-29; não se atribui especialidade não comprovada. | **APROVADO — 2026-10-29** |
 
-**Motivo informado para as sete decisões:** “Os sete registros possuem impacto público atual na página /sobre, mas esta auditoria não contém comprovação independente da autorização de exposição, nem validação atual do vínculo profissional, função/título ou, no caso de Amazing Design, da associação comercial da marca com a TAG08. O status técnico atual não deve ser tratado como autorização humana válida.”
+**Decisão residual:** Guilherme Gomes e Amazing Design permanecem em investigação e não são publicados. A autorização de 2026-10-29 cobre somente Carlos, Ignacio, Pedro, Andréia e Daniel, com os retratos locais e links externos aprovados pelo responsável da TAG08.
 
 ## 2. Cases da Home — 6
 

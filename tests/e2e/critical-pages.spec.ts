@@ -1,6 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
-import { publicRoutePaths } from "../../src/config/routeRegistry";
+import { publicRoutePaths, routeRegistry } from "../../src/config/routeRegistry";
 
 const criticalRoutes = [
   { path: "/", label: "home" },
@@ -14,6 +14,10 @@ const viewports = [
   { label: "tablet", width: 768, height: 1024 },
   { label: "mobile", width: 390, height: 844 }
 ] as const;
+
+const servicePaths = routeRegistry
+  .filter((route) => route.routeCategory === "service")
+  .map((route) => route.canonicalPath);
 
 function assertHomeContactTarget(url: URL) {
   expect(url.pathname).toBe("/contato");
@@ -153,6 +157,21 @@ test.describe("CTA principal da Hero", () => {
     expect((await response).status()).toBe(200);
     assertHomeContactTarget(new URL(page.url()));
   });
+});
+
+test("hub de serviços oferece links nativos para cada cluster aprovado", async ({ page }) => {
+  await page.goto("/servicos", { waitUntil: "domcontentloaded" });
+
+  for (const path of servicePaths) {
+    await expect(page.locator(`a[href="${path}"]`).first(), `missing crawlable service link: ${path}`).toBeAttached();
+  }
+});
+
+test("página de serviço retorna ao hub por breadcrumb nativo, inclusive Hospedagem", async ({ page }) => {
+  await page.goto("/hospedagem-manutencao-sites", { waitUntil: "domcontentloaded" });
+
+  const serviceHubCrumb = page.getByRole("navigation", { name: "Breadcrumb" }).locator('a[href="/servicos"]');
+  await expect(serviceHubCrumb).toBeAttached();
 });
 
 async function assertPageFrame(page: Page) {
@@ -636,7 +655,7 @@ test.describe("regressões de responsividade e movimento", () => {
     let submittedPayload: Record<string, unknown> | undefined;
     await page.route("**/api/talent-applications", async (route) => {
       submittedPayload = route.request().postDataJSON() as Record<string, unknown>;
-      await route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ ok: true, applicationId: "synthetic-application", status: "accepted" }) });
+      await route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ ok: true, applicationId: "synthetic-application", status: "accepted", deliveryStatus: { sheets: "delivered", sheetsRowReference: "Talentos!A2:X2" } }) });
     });
 
     await page.setViewportSize({ width: 390, height: 844 });

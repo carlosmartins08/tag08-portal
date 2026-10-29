@@ -84,3 +84,11 @@ Os três cases detalhados deixaram de compor as rotas públicas, paths estático
 
 Referência técnica da aplicação: `docs/architecture-consolidation/15_P0_4_INVESTIGATE_IMPLEMENTATION.md`.
 
+## Atualização de decisão — perfis da equipe na página Sobre (2026-10-29)
+
+O responsável da TAG08 autorizou a publicação em `/sobre` dos retratos locais e links externos para LinkedIn de Carlos Henrique Martins, Ignacio Quiroz, Pedro Félix, Andréia Braga e Daniel Lopes, além de solicitar apresentações profissionais alinhadas às competências informadas. Esta decisão supersede a classificação `INVESTIGAR` de 2026-10-19 somente para esses cinco registros. A autorização não alcança Guilherme Gomes, Amazing Design, cases ou candidatos de portfólio.
+
+Os cinco registros estão `approved` no runtime com referência `approval:conversation-2026-10-29-team-profiles-publication`. Carlos e Ignacio têm descrições apoiadas pelos perfis públicos encontrados; Pedro pela correspondência pública do identificador profissional e perfil de desenvolvimento/dados; Daniel mantém a especialidade ampla de servidores, hospedagem e tecnologia previamente aprovada pelo responsável; Andréia recebe apenas descrição geral de colaboração por projeto, sem especialidade inferida.
+
+A página mantém a seção de capacidades e apresenta separadamente os cinco perfis aprovados. Cada cartão usa o retrato local correspondente e um link LinkedIn em nova guia com `noopener noreferrer`. Não foram criadas rotas individuais; conteúdos de Guilherme e Amazing Design seguem ocultos em modo público.
+

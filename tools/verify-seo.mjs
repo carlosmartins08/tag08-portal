@@ -39,7 +39,7 @@ for (const canonicalUrl of urls) {
   };
 
   const expectedLang = "pt-BR";
-  assert.match(html, new RegExp(`<html lang="${expectedLang}">`, "i"), `${canonical.pathname} is missing ${expectedLang} lang`);
+  assert.match(html, new RegExp(`<html\\b(?=[^>]*\\blang="${expectedLang}")[^>]*>`, "i"), `${canonical.pathname} is missing ${expectedLang} lang`);
   assert.match(html, /<title>[^<]+<\/title>/i, `${canonical.pathname} is missing title`);
   assert.match(html, /<meta name="description" content="[^"]+"/i, `${canonical.pathname} is missing description`);
   assert.match(html, /<meta property="og:title" content="[^"]+"/i, `${canonical.pathname} is missing Open Graph title`);

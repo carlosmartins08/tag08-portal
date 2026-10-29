@@ -264,7 +264,7 @@ export const routeRegistry: RouteDefinition[] = [
     priority: "0.6",
     title: "Programa de Parceria | TAG08",
     description:
-      "Ganhe até 10% de repasses em comissões únicas ou recorrentes indicando clientes para websites, de luxo, branding e gestão de redes sociais na TAG08."
+      "Conheça as modalidades Parceiro de Indicação e Parceiro Comercial Ativo da TAG08, suas responsabilidades e regras de comissão condicionadas ao recebimento."
   },
   {
     key: "hospedagem-manutencao-sites",

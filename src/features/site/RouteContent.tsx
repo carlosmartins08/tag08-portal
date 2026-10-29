@@ -41,7 +41,7 @@ export default function RouteContent({ path, locale }: { path: string; locale: R
   if (route?.routeCategory === "case-study") page = <CaseStudyDetail caseId={path.replace("/casos/", "")} onNavigate={navigate} />;
   else if (path === "/") page = <Home onNavigate={navigate} contactHref={getNavigationHref("/contato")} locale={locale} />;
   else if (path === "/sobre") page = <Sobre onNavigate={navigate} />;
-  else if (path === "/servicos") page = <Servicos onNavigate={navigate} />;
+  else if (path === "/servicos") page = <Servicos onNavigate={navigate} locale={locale} />;
   else if (path === "/servicos/process-intelligence") page = <ProcessIntelligence onNavigate={navigate} />;
   else if (path === "/servicos/process-activation") page = <ProcessActivation onNavigate={navigate} />;
   else if (path === "/servicos/desenvolvimento-web") page = <DesenvolvimentoWeb onNavigate={navigate} />;

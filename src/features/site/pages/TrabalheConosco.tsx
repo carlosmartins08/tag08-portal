@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import ResilientImage from "../../../components/ResilientImage";
+import ItsHoverActionIcon from "../../../components/ItsHoverActionIcon";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import {
   User, 
@@ -7,7 +8,6 @@ import {
   Phone, 
   Linkedin, 
   Globe, 
-  Send, 
   CheckCircle2, 
   ArrowRight, 
   ArrowUpRight,
@@ -16,6 +16,7 @@ import {
   Lock,
 } from "lucide-react";
 import { trackFormError, trackFormStart, trackFormStep, trackFormSubmit, trackOutboundClick } from "../../../lib/analytics";
+import { confirmsSheetsSubmission } from "../../../lib/sheetsDeliveryConfirmation";
 import { queueFormSubmission } from "../../../lib/formQueue";
 import type { RouteLocale } from "../../../config/routeRegistry";
 import {
@@ -196,6 +197,8 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
     }
 
     setSubmitting(true);
+    let queuedForRetry = false;
+    let saveForRetry = () => false;
     try {
       const idempotencyKey = globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
       const payload = {
@@ -219,19 +222,25 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
         locale,
         source: "talent-page"
       };
+      saveForRetry = () => queueFormSubmission({ endpoint: "/api/talent-applications", idempotencyKey, payload });
       const response = await fetch("/api/talent-applications", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Idempotency-Key": idempotencyKey },
         body: JSON.stringify(payload)
       });
       const result = await response.json().catch(() => null);
-      if (!response.ok || !result?.applicationId) {
+      if (!response.ok) {
         if (response.status >= 500) {
-          queueFormSubmission({ endpoint: "/api/talent-applications", idempotencyKey, payload });
+          queuedForRetry = saveForRetry();
           throw new Error("submission_queued");
         }
         setSubmitError("Revise os campos obrigatórios e tente novamente.");
         return;
+      }
+
+      if (!confirmsSheetsSubmission(response.status, result, "talent")) {
+        queuedForRetry = saveForRetry();
+        throw new Error("submission_persistence_unconfirmed");
       }
 
       setSubmitSuccess(true);
@@ -257,7 +266,10 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
         page_path: "/trabalhe-conosco"
       });
     } catch {
-      setSubmitError("Sua candidatura foi salva neste navegador e será reenviada quando a conexão voltar.");
+      if (!queuedForRetry) queuedForRetry = saveForRetry();
+      setSubmitError(queuedForRetry
+        ? "Sua candidatura foi salva neste navegador e será reenviada quando a conexão voltar."
+        : "O envio não foi concluído e não foi possível salvar uma tentativa neste navegador. Seus dados continuam no formulário; tente enviar novamente.");
       trackFormSubmit({
         form_name: "talent_application",
         form_surface: "talent-page",
@@ -1166,7 +1178,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       disabled={submitting}
                       className="inline-flex min-h-11 w-full sm:w-auto items-center justify-center gap-1.5 px-6 py-3 bg-brand hover:bg-brand-dark disabled:hover:bg-brand text-black font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-[background-color,box-shadow] duration-200 shadow-[0_4px_12px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      {submitting ? "Enviando..." : "Enviar candidatura"} <Send className="w-3.5 h-3.5 shrink-0" />
+                      {submitting ? "Enviando..." : "Enviar candidatura"} <ItsHoverActionIcon name="send" size={14} className="shrink-0" />
                     </button>
                   )}
                 </div>

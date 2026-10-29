@@ -66,15 +66,20 @@ const clientLogoApproval = {
   evidenceReference: "approval:conversation-2026-09-18-client-logo-publication"
 } as const;
 
+const teamProfilesApproval = {
+  decidedAt: "2026-10-29",
+  evidenceReference: "approval:conversation-2026-10-29-team-profiles-publication"
+} as const;
+
 /** Fonte executável de publicação; referências nunca guardam documentos sensíveis no repositório. */
 export const PUBLIC_EVIDENCE = {
-  "team/carlos-henrique-martins": investigate("team", "Carlos Henrique Martins", ["/sobre"]),
-  "team/ignacio-quiroz": investigate("team", "Ignacio Quiroz", ["/sobre"]),
-  "team/pedro-felix": investigate("team", "Pedro Félix", ["/sobre"]),
-  "team/daniel-lopes": investigate("team", "Daniel Lopes", ["/sobre"]),
+  "team/carlos-henrique-martins": approved("team", "Carlos Henrique Martins", ["/sobre"], "Retrato, apresentação profissional e link público aprovados para a página Sobre.", teamProfilesApproval),
+  "team/ignacio-quiroz": approved("team", "Ignacio Quiroz", ["/sobre"], "Retrato, apresentação profissional e link público aprovados para a página Sobre.", teamProfilesApproval),
+  "team/pedro-felix": approved("team", "Pedro Félix", ["/sobre"], "Retrato, apresentação profissional e link público aprovados para a página Sobre.", teamProfilesApproval),
+  "team/daniel-lopes": approved("team", "Daniel Lopes", ["/sobre"], "Retrato, apresentação profissional e link público aprovados para a página Sobre.", teamProfilesApproval),
   "team/guilherme-gomes": investigate("team", "Guilherme Gomes", ["/sobre"]),
   "team/amazing-design": investigate("team", "Amazing Design", ["/sobre"]),
-  "team/andreia-braga": investigate("team", "Andréia Braga", ["/sobre"]),
+  "team/andreia-braga": approved("team", "Andréia Braga", ["/sobre"], "Retrato, apresentação de colaboração em projetos e link público aprovados para a página Sobre.", teamProfilesApproval),
   "client-logo/cayuca": approved("client-logo", "CaYuCa", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
   "client-logo/wscom": approved("client-logo", "WSCOM", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),
   "client-logo/vr-imobiliaria": approved("client-logo", "VR Imobiliária", ["/sobre"], "Autorizado para apresentação institucional da TAG08.", clientLogoApproval),

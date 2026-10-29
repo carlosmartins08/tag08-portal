@@ -25,15 +25,16 @@ const readQueue = (): QueuedSubmission[] => {
 const writeQueue = (queue: QueuedSubmission[]) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(queue));
+    return true;
   } catch {
-    // The browser may deny storage; the visible error remains the fallback.
+    return false;
   }
 };
 
 export const queueFormSubmission = (submission: Omit<QueuedSubmission, "attempts" | "createdAt">) => {
   const queue = readQueue().filter((entry) => entry.idempotencyKey !== submission.idempotencyKey);
   queue.push({ ...submission, attempts: 0, createdAt: new Date().toISOString() });
-  writeQueue(queue);
+  return writeQueue(queue);
 };
 
 export const removeQueuedSubmission = (idempotencyKey: string) => {

@@ -145,7 +145,7 @@ test.describe("experiencia de contato", () => {
     let submittedPayload: Record<string, unknown> | undefined;
     await page.route("**/api/contact", async (route) => {
       submittedPayload = route.request().postDataJSON() as Record<string, unknown>;
-      await route.fulfill({ status: 200, contentType: "application/json", body: "{}" });
+      await route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ ok: true, leadId: "synthetic-lead", status: "accepted", deliveryStatus: { sheets: "delivered", sheetsRowReference: "Leads!A2:W2" } }) });
     });
 
     await page.goto("/contato?intent=desenvolvimento-web&origin=offer", { waitUntil: "domcontentloaded" });
@@ -175,11 +175,38 @@ test.describe("experiencia de contato", () => {
     });
   });
 
+  test("nao afirma que guardou o contato quando a fila local nao consegue persistir", async ({ page }) => {
+    await page.addInitScript(() => {
+      const nativeSetItem = Storage.prototype.setItem;
+      Storage.prototype.setItem = function (key, value) {
+        if (key === "tag08_form_delivery_queue_v1") throw new Error("storage_denied");
+        return nativeSetItem.call(this, key, value);
+      };
+    });
+    await page.route("**/api/contact", (route) => route.fulfill({ status: 503, contentType: "application/json", body: "{}" }));
+
+    await page.goto("/contato", { waitUntil: "domcontentloaded" });
+    await page.getByRole("radio", { name: /Quero iniciar um projeto/ }).check();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await page.getByRole("checkbox", { name: /Desenvolver site, e-commerce ou/ }).check();
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await page.getByLabel("Qual o seu nome?").fill("Pessoa Sintetica QA");
+    await page.getByLabel("Nome da Empresa").fill("Empresa Teste");
+    await page.locator("#form-whatsapp").fill("83999999999");
+    await page.getByLabel("E-mail Corporativo").fill("qa@example.test");
+    await page.getByLabel(/Autorizo o uso destes dados/).check();
+    await page.getByRole("button", { name: /Enviar solicita/i }).click();
+
+    await expect(page.getByText(/não foi possível salvar uma tentativa neste navegador/i)).toBeVisible();
+    await expect(page.getByText(/solicitação foi salva neste navegador/i)).toHaveCount(0);
+    await expect(page.getByRole("heading", { name: "Mensagem Enviada!" })).toHaveCount(0);
+  });
+
   test("Home preserva a orientação como diagnóstico separado de contato comercial", async ({ page }) => {
     let submittedPayload: Record<string, unknown> | undefined;
     await page.route("**/api/contact", async (route) => {
       submittedPayload = route.request().postDataJSON() as Record<string, unknown>;
-      await route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ status: "accepted" }) });
+      await route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ ok: true, leadId: "synthetic-lead", status: "accepted", deliveryStatus: { sheets: "delivered", sheetsRowReference: "Leads!A2:W2" } }) });
     });
 
     await page.goto("/", { waitUntil: "domcontentloaded" });
@@ -215,7 +242,7 @@ test.describe("experiencia de contato", () => {
     let submittedPayload: Record<string, unknown> | undefined;
     await page.route("**/api/contact", async (route) => {
       submittedPayload = route.request().postDataJSON() as Record<string, unknown>;
-      await route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ status: "accepted" }) });
+      await route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ ok: true, leadId: "synthetic-lead", status: "accepted", deliveryStatus: { sheets: "delivered", sheetsRowReference: "Leads!A2:W2" } }) });
     });
 
     await page.goto("/contato?origin=partnership-program&requestType=partnership", { waitUntil: "domcontentloaded" });
@@ -325,7 +352,7 @@ test.describe("experiencia de contato", () => {
     let submittedPayload: Record<string, unknown> | undefined;
     await page.route("**/api/contact", async (route) => {
       submittedPayload = route.request().postDataJSON() as Record<string, unknown>;
-      await route.fulfill({ status: 200, contentType: "application/json", body: "{}" });
+      await route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ ok: true, leadId: "synthetic-lead", status: "accepted", deliveryStatus: { sheets: "delivered", sheetsRowReference: "Leads!A2:W2" } }) });
     });
 
     await page.goto("/contato", { waitUntil: "domcontentloaded" });

@@ -10,6 +10,24 @@ const routeContentSource = readFileSync("src/features/site/RouteContent.tsx", "u
 const catchAllPageSource = readFileSync("src/app/[locale]/[[...segments]]/page.tsx", "utf8");
 const notFoundPageSource = readFileSync("src/app/[locale]/not-found.tsx", "utf8");
 const onboardingPageSource = readFileSync("src/app/[locale]/cliente/onboarding/page.tsx", "utf8");
+const socialPlansSource = readFileSync("src/features/site/pages/GestaoRedesSociais.tsx", "utf8");
+const sebraetecSource = readFileSync("src/features/site/pages/Sebraetec.tsx", "utf8");
+
+assert.match(socialPlansSource, /12 posts mensais para Instagram e Facebook, com planejamento mensal/);
+assert.match(socialPlansSource, /uma captação de conteúdo por mês/);
+assert.match(socialPlansSource, /Mínimo de 12 posts mensais, sem teto fixo/);
+assert.match(socialPlansSource, /a verba de mídia é paga pelo cliente/);
+assert.match(socialPlansSource, /Conheça as estruturas para diferentes momentos do negócio/);
+assert.match(socialPlansSource, /Outra estrutura pode fazer sentido quando a necessidade/);
+assert.doesNotMatch(socialPlansSource, /Evolua quando a rotina pedir/);
+assert.doesNotMatch(sebraetecSource, /Sua empresa precisa estar classificada como MEI/);
+assert.doesNotMatch(sebraetecSource, /cartão CNPJ, cópia do contrato social/);
+assert.doesNotMatch(sebraetecSource, /Cada CNPJ pode ter um limite financeiro anual/);
+assert.doesNotMatch(sebraetecSource, /SERVIÇOS CREDENCIADOS/);
+assert.match(sebraetecSource, /dependem das regras vigentes do Sebrae regional/);
+assert.match(sebraetecSource, /Frentes que podem ser avaliadas conforme as regras regionais/);
+assert.match(sebraetecSource, /Se a participação da TAG08 e o serviço forem confirmados como aplicáveis/);
+assert.match(sebraetecSource, /Quando essa participação for confirmada/);
 
 const dispatchedPaths = Array.from(routeContentSource.matchAll(/(?:if|else if) \(path === "([^"]+)"\)/g), (match) => match[1]);
 for (const path of dispatchedPaths) {

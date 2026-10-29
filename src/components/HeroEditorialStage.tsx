@@ -16,11 +16,18 @@ const initialLightPosition = {
 
 export default function HeroEditorialStage({ image }: HeroEditorialStageProps) {
   const stageRef = useRef<HTMLDivElement>(null);
+  const boundsRef = useRef<DOMRect | null>(null);
+  const pointerRef = useRef<{ clientX: number; clientY: number } | null>(null);
 
   useEffect(() => {
     const hoverCapable = window.matchMedia("(hover: hover) and (pointer: fine)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let animationFrame = 0;
+
+    const refreshBounds = () => {
+      const stage = stageRef.current;
+      if (stage) boundsRef.current = stage.getBoundingClientRect();
+    };
 
     const resetLight = () => {
       const stage = stageRef.current;
@@ -41,16 +48,23 @@ export default function HeroEditorialStage({ image }: HeroEditorialStageProps) {
       const stage = stageRef.current;
       if (!stage) return;
 
-      const bounds = stage.getBoundingClientRect();
-      const x = (event.clientX - bounds.left) / bounds.width;
-      const y = (event.clientY - bounds.top) / bounds.height;
-      if (x < 0 || x > 1 || y < 0 || y > 1) {
-        resetLight();
-        return;
-      }
+      pointerRef.current = { clientX: event.clientX, clientY: event.clientY };
+      if (animationFrame) return;
 
-      window.cancelAnimationFrame(animationFrame);
       animationFrame = window.requestAnimationFrame(() => {
+        animationFrame = 0;
+        const pointer = pointerRef.current;
+        const bounds = boundsRef.current ?? stage.getBoundingClientRect();
+        boundsRef.current = bounds;
+        if (!pointer || !bounds || bounds.width === 0 || bounds.height === 0) return;
+
+        const x = (pointer.clientX - bounds.left) / bounds.width;
+        const y = (pointer.clientY - bounds.top) / bounds.height;
+        if (x < 0 || x > 1 || y < 0 || y > 1) {
+          resetLight();
+          return;
+        }
+
         stage.style.setProperty("--hero-stage-light-x", `${Math.round(x * 100)}%`);
         stage.style.setProperty("--hero-stage-light-y", `${Math.round(y * 100)}%`);
         stage.style.setProperty("--hero-stage-rotate-x", `${((0.5 - y) * 1).toFixed(2)}deg`);
@@ -62,12 +76,21 @@ export default function HeroEditorialStage({ image }: HeroEditorialStageProps) {
     const eventSurface = stage?.parentElement;
     if (!stage || !eventSurface) return;
 
+    const resizeObserver = new ResizeObserver(refreshBounds);
+    resizeObserver.observe(eventSurface);
+    refreshBounds();
+    eventSurface.addEventListener("pointerenter", refreshBounds, { passive: true });
     eventSurface.addEventListener("pointermove", moveLight, { passive: true });
     eventSurface.addEventListener("pointerleave", resetLight);
+    const invalidateBounds = () => { boundsRef.current = null; };
+    window.addEventListener("scroll", invalidateBounds, { passive: true });
     return () => {
       window.cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+      eventSurface.removeEventListener("pointerenter", refreshBounds);
       eventSurface.removeEventListener("pointermove", moveLight);
       eventSurface.removeEventListener("pointerleave", resetLight);
+      window.removeEventListener("scroll", invalidateBounds);
     };
   }, []);
 
@@ -85,6 +108,7 @@ export default function HeroEditorialStage({ image }: HeroEditorialStageProps) {
             src={image}
             alt=""
             preload
+            fetchPriority="high"
             fill
             sizes="(max-width: 1279px) 100vw, 1280px"
             className="object-cover object-[72%_center]"

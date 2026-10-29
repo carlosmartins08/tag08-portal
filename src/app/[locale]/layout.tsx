@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import "../../index.css";
 import { getHreflang } from "../../lib/seo";
 import { ROUTE_LOCALES, type RouteLocale } from "../../config/routeRegistry";
+
+const manrope = localFont({
+  src: "../../assets/fonts/manrope-latin-ext.woff2",
+  display: "swap",
+  weight: "300 800",
+  variable: "--font-manrope"
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tag08.com.br"),
@@ -21,7 +29,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
   const resolvedLocale = ROUTE_LOCALES.includes(locale as RouteLocale) ? (locale as RouteLocale) : "pt";
 
   return (
-    <html lang={getHreflang(resolvedLocale)} suppressHydrationWarning>
+    <html lang={getHreflang(resolvedLocale)} className={manrope.variable} suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );

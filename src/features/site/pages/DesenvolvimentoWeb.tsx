@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
-import { Code2, Smartphone, LineChart, ArrowUpRight, ArrowRight, Layers } from "lucide-react";
+import ItsHoverActionIcon from "../../../components/ItsHoverActionIcon";
+import { Smartphone, LineChart, ArrowUpRight, ArrowRight, Layers } from "lucide-react";
 import { useReducedMotion } from "motion/react";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
@@ -180,9 +181,9 @@ export default function DesenvolvimentoWeb({ onNavigate }: WebProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
-            <div className="tag08-card bg-[color:var(--color-surface-default)] border border-[color:var(--color-border-default)] hover:border-[color:var(--color-border-strong)] duration-300 rounded-xl p-6 space-y-4 group">
+            <div data-its-hover-icon-interaction className="tag08-card bg-[color:var(--color-surface-default)] border border-[color:var(--color-border-default)] hover:border-[color:var(--color-border-strong)] duration-300 rounded-xl p-6 space-y-4 group">
               <div className="w-10 h-10 rounded-lg bg-[color:var(--color-surface-subtle)] border border-[color:var(--color-border-default)] flex items-center justify-center">
-                <Code2 className="w-5 h-5 text-[color:var(--color-content-primary)]" />
+                <ItsHoverActionIcon name="code" size={20} className="text-[color:var(--color-content-primary)]" />
               </div>
               <div className="space-y-1">
                 <h3 className="text-[color:var(--color-content-primary)] font-display font-black text-sm">Arquitetura da informa&ccedil;&atilde;o</h3>

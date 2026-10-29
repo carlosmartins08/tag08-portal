@@ -1,17 +1,20 @@
 import { Check, ArrowRight, ArrowUpRight, Award } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useReducedMotion } from "motion/react";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
+import { getLocalizedPath, type RouteLocale } from "../../../config/routeRegistry";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
 import TrackedOutboundLink from "../../../components/TrackedOutboundLink";
 
 interface ServicosProps {
   onNavigate: (page: string) => void;
+  locale: RouteLocale;
 }
 
-export default function Servicos({ onNavigate }: ServicosProps) {
+export default function Servicos({ onNavigate, locale }: ServicosProps) {
   const [activeFaq, setActiveFaq] = useState(0);
   const prefersReducedMotion = useReducedMotion() ?? false;
 
@@ -422,21 +425,20 @@ export default function Servicos({ onNavigate }: ServicosProps) {
 
                       {/* Primary Navigation CTA and Scope Share */}
                       <div className="pt-6 flex flex-wrap gap-3 items-center">
-                        <button
-                          onClick={() => handleLinkClick(domain.ctaPage)}
+                        <Link
+                          href={getLocalizedPath(domain.ctaPage, locale)}
                           className="inline-flex min-h-11 items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-xs text-white tag08-meta font-semibold uppercase tracking-widest py-3 px-6 rounded-xl transition-colors duration-200 group/btn shrink-0"
                         >
                           <span>{domain.ctaLabel}</span>
                           <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform" />
-                        </button>
+                        </Link>
                         {domain.secondaryCta && (
-                          <button
-                            type="button"
-                            onClick={() => handleLinkClick(domain.secondaryCta!.page)}
+                          <Link
+                            href={getLocalizedPath(domain.secondaryCta.page, locale)}
                             className="inline-flex min-h-11 items-center gap-2 border border-white/10 hover:border-brand/50 text-xs text-zinc-300 hover:text-white tag08-meta font-semibold uppercase tracking-widest py-3 px-4 rounded-xl transition-colors duration-200"
                           >
                             {domain.secondaryCta.label}
-                          </button>
+                          </Link>
                         )}
                       </div>
 

@@ -10,12 +10,12 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test("prévia local identifica a equipe em investigação sem publicá-la", async ({ page }) => {
+test("prévia local distingue os perfis autorizados dos que seguem em investigação", async ({ page }) => {
   await page.goto("/sobre", { waitUntil: "domcontentloaded" });
   await expect(page.getByTestId("content-review-banner")).toBeVisible();
   await expect(page.getByTestId("team-profiles")).toBeVisible();
   await expect(page.getByTestId("team-profiles").locator("[data-evidence-key^='team/']")).toHaveCount(7);
-  await expect(page.getByTestId("team-profiles").getByText("Em investigação — não publicado")).toHaveCount(7);
+  await expect(page.getByTestId("team-profiles").getByText("Em investigação — não publicado")).toHaveCount(2);
 });
 
 test("prévia local abre case em investigação sem adicioná-lo à produção", async ({ page }) => {

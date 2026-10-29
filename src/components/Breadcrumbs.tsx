@@ -1,7 +1,8 @@
 import { ChevronRight, Home, ArrowLeft, ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
+import Link from "next/link";
 import { CASE_STUDIES } from "../data";
-import { getRouteByPath } from "../config/routeRegistry";
+import { getLocalizedPath, getRouteByPath } from "../config/routeRegistry";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
 import { ContextNav } from "./VisualPrimitives";
 
@@ -45,7 +46,7 @@ export default function Breadcrumbs({ currentPage, onNavigate, language }: Bread
       return list;
     }
 
-    if (currentPage.startsWith("/servicos/")) {
+    if (getRouteByPath(currentPage)?.routeCategory === "service") {
       list.push({ label: copy.serviceHomeLabel, path: "/servicos" });
       const serviceTitle = pathMap[currentPage] || copy.pageFallback;
       list.push({ label: serviceTitle, path: currentPage });
@@ -95,6 +96,13 @@ export default function Breadcrumbs({ currentPage, onNavigate, language }: Bread
                   <span className="text-brand font-semibold select-none max-w-[200px] sm:max-w-none truncate">
                     {crumb.label}
                   </span>
+                ) : crumb.path === "/servicos" && getRouteByPath(currentPage)?.routeCategory === "service" ? (
+                  <Link
+                    href={getLocalizedPath(crumb.path, language)}
+                    className="text-zinc-400 hover:text-zinc-200 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+                  >
+                    {crumb.label}
+                  </Link>
                 ) : (
                   <button
                     onClick={() => onNavigate(crumb.path)}

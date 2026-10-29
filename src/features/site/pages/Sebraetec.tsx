@@ -181,37 +181,37 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
           {/* WHO CAN BENEFIT SEBRAETEC */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start pt-12 border-t border-white/[0.04]">
             <div className="lg:col-span-4 space-y-4">
-              <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest block font-bold">REQUISITOS OPERACIONAIS</span>
+              <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest block font-bold">VALIDAÇÃO REGIONAL</span>
               <h2 className="font-display font-black text-2xl sm:text-3xl text-white leading-none tracking-tight">
-                SUA MARCA ESTÁ APTA <span className="text-brand">AO SUBSÍDIO SEBRAETEC?</span>
+                AS CONDIÇÕES DO <span className="text-brand">SEBRAETEC VARIAM POR REGIÃO.</span>
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-                Verifique os critérios básicos estabelecidos para faturamento e documentação exigidos para protocolar seu projeto.
+                Elegibilidade, documentação, serviços contemplados, disponibilidade e limites dependem das regras vigentes do Sebrae regional. Confirme esses requisitos com a unidade responsável antes de iniciar uma proposta.
               </p>
             </div>
 
             <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 rounded-3xl space-y-2 transition-[border-color] duration-200">
-                <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">01 // PORTE DA EMPRESA</span>
-                <h3 className="text-white font-display font-bold text-sm">Faturamento regularizado</h3>
+                <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">01 // ELEGIBILIDADE</span>
+                <h3 className="text-white font-display font-bold text-sm">Confirme o perfil atendido</h3>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                  Sua empresa precisa estar classificada como MEI, ME (Microempresa) ou EPP (Empresa de Pequeno Porte). Produtores rurais formalizados com inscrição de produtor ativo também podem solicitar.
+                  O enquadramento da empresa e do projeto deve ser confirmado diretamente com o Sebrae da sua região.
                 </p>
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 rounded-3xl space-y-2 transition-[border-color] duration-200">
-                <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">02 // DOCUMENTAÇÃO BÁSICA</span>
-                <h3 className="text-white font-display font-bold text-sm">Prontidão cadastral</h3>
+                <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">02 // DOCUMENTAÇÃO</span>
+                <h3 className="text-white font-display font-bold text-sm">Consulte a lista vigente</h3>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                  É preciso apresentar cartão CNPJ, cópia do contrato social ou CCMEI (no caso de MEI), e certidão negativa de débitos (CND) federais atualizada de forma regular junto aos órgãos de união.
+                  Os documentos e comprovantes exigidos dependem das regras atuais da unidade responsável. Não inicie o protocolo com base em uma lista genérica.
                 </p>
               </div>
 
               <div className="p-6 bg-charcoal-900 border border-white/[0.08] hover:border-brand/40 rounded-3xl space-y-2 transition-[border-color] duration-200">
-                <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">03 // LIMITE DO SUBSÍDIO</span>
-                <h3 className="text-white font-display font-bold text-sm">Cotações por CNPJ</h3>
+                <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">03 // SERVIÇOS E DISPONIBILIDADE</span>
+                <h3 className="text-white font-display font-bold text-sm">Verifique o escopo regional</h3>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                  Cada CNPJ pode ter um limite financeiro anual que varia por região. A possibilidade de sequenciar projetos deve ser confirmada com o Sebrae responsável.
+                  Serviços contemplados, limites e disponibilidade precisam ser confirmados com o Sebrae regional para cada projeto.
                 </p>
               </div>
 
@@ -219,7 +219,7 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
                 <span className="tag08-meta text-xs text-brand uppercase font-black tracking-wider block">04 // APOIO COOPERATIVO</span>
                 <h3 className="text-white font-display font-bold text-sm">Suporte da equipe técnica</h3>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-medium">
-                  A TAG08 acompanha a organização da proposta e dos documentos necessários para avaliação pelos gestores responsáveis do SEBRAE.
+                  A TAG08 pode apoiar a estruturação técnica após confirmar a aderência do serviço e as condições aplicáveis com o Sebrae regional.
                 </p>
               </div>
             </div>
@@ -231,8 +231,8 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
       <section className="px-4 sm:px-6 md:px-8 py-24 border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto space-y-16">
           <div className="text-left space-y-2 max-w-2xl">
-            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">DIVERSIDADE EM SERVIçOS CREDENCIADOS</span>
-            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">Projetos que podem ser avaliados no Sebraetec</h2>
+            <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-bold">CAPACIDADES DA TAG08</span>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">Frentes que podem ser avaliadas conforme as regras regionais</h2>
             <p className="text-zinc-400 text-xs sm:text-sm font-medium">
               O Sebrae define quais serviços podem ser considerados, conforme as regras vigentes, disponibilidade e análise regional do projeto. Os exemplos abaixo descrevem capacidades da TAG08 e não confirmam cobertura ou elegibilidade no programa.
             </p>
@@ -305,11 +305,11 @@ export default function Sebraetec({ onNavigate }: SebraetecProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {[
-              { num: "01", term: "DIAGNÓSTICO INICIAL", desc: "Reunião de alinhamento com a TAG08 para definir o escopo tecnológico ideal para o momento da sua empresa." },
-              { num: "02", term: "PROPOSTA TÉCNICA", desc: "Elaboramos o material de projeto, escopo e justificativas para avaliação conforme as diretrizes aplicáveis do Sebraetec." },
-              { num: "03", term: "ENVIO & ANÁLISE", desc: "Submetemos o projeto ao Sebrae regional para análise e retorno conforme o fluxo aplicável." },
+              { num: "01", term: "DIAGNÓSTICO INICIAL", desc: "Conversa para compreender a necessidade e avaliar se há um caminho compatível com o programa e as regras da sua região." },
+              { num: "02", term: "PROPOSTA TÉCNICA", desc: "Quando a participação da TAG08 e o serviço forem confirmados como aplicáveis, estruturamos o escopo e os materiais técnicos para avaliação conforme as diretrizes vigentes." },
+              { num: "03", term: "ENVIO & ANÁLISE", desc: "Se a participação da TAG08 e o serviço forem confirmados como aplicáveis, a proposta poderá ser encaminhada ao Sebrae regional para avaliação." },
               { num: "04", term: "EXECUÇÃO DO PROJETO", desc: "Com a aprovação e as condições confirmadas, iniciamos o projeto conforme o escopo acordado." },
-              { num: "05", term: "ENTREGA E PRESTAÇÃO DE CONTAS", desc: "Entregamos o projeto e seguimos as etapas de validação e documentação previstas no programa." }
+              { num: "05", term: "ENTREGA E PRESTAÇÃO DE CONTAS", desc: "Quando essa participação for confirmada, a execução e a documentação seguem as etapas aplicáveis definidas para o projeto." }
             ].map((step, sIdx) => (
               <div key={sIdx} className="bg-charcoal-900 border border-white/[0.04] p-6 rounded-2xl space-y-4 flex flex-col justify-between relative hover:border-brand/20 transition-[border-color] duration-200">
                 <span className="font-display font-black text-3xl text-brand-secondary">{step.num}</span>
