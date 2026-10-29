@@ -6,7 +6,8 @@ import {
   formatPortConflict,
   formatPreviewIdentity,
   isPortInUse,
-  resolvePreviewPlan
+  resolvePreviewPlan,
+  runPreview
 } from "../tools/content-review-dev.mjs";
 
 test("a prévia normal em 3101 é pública e separa a porta do cache compartilhado", () => {
@@ -57,6 +58,31 @@ test("o verificador distingue porta livre de porta ocupada sem tocar no processo
   assert.deepEqual(await findOccupiedPorts([occupiedPort, 0], async (port) => port === occupiedPort), [occupiedPort]);
   assert.match(formatPortConflict([occupiedPort]), /Nenhum processo foi reutilizado ou encerrado automaticamente/);
   assert.match(formatPortConflict([occupiedPort]), /Get-NetTCPConnection/);
+});
+
+test("um conflito encerra antes de anunciar a identidade da prévia", async () => {
+  const output = [];
+  const errors = [];
+  const exitCode = await runPreview({
+    args: [],
+    env: { PORT: "3101" },
+    dependencies: {
+      readGitIdentity: () => ({
+        directory: "C:\\TAG08",
+        branch: "main",
+        commit: "c1aab5f",
+        workingTree: "clean"
+      }),
+      findOccupiedPorts: async () => [3101],
+      log: (message) => output.push(message),
+      error: (message) => errors.push(message)
+    }
+  });
+
+  assert.equal(exitCode, 1);
+  assert.equal(output.length, 0);
+  assert.match(errors[0], /porta/i);
+  assert.doesNotMatch(errors.join("\n"), /TAG08 local preview/);
 });
 
 test("o lançador imprime a identidade completa da prévia", () => {

@@ -87,7 +87,7 @@ export function formatPortConflict(ports) {
 
 export function formatPreviewIdentity({ directory, branch, commit, workingTree, url, mode }) {
   return [
-    "TAG08 local preview",
+    "TAG08 local preview — iniciando",
     `diretório: ${directory}`,
     `branch: ${branch || "detached HEAD"}`,
     `commit: ${commit}`,
@@ -112,31 +112,34 @@ function readGitIdentity() {
   };
 }
 
-export async function runPreview({ args = process.argv.slice(2), env = process.env } = {}) {
+export async function runPreview({ args = process.argv.slice(2), env = process.env, dependencies = {} } = {}) {
+  const getIdentity = dependencies.readGitIdentity ?? readGitIdentity;
+  const checkPorts = dependencies.findOccupiedPorts ?? findOccupiedPorts;
+  const log = dependencies.log ?? console.log;
+  const reportError = dependencies.error ?? console.error;
   let plan;
   let identity;
 
   try {
     plan = resolvePreviewPlan(args, env);
-    identity = readGitIdentity();
+    identity = getIdentity();
   } catch (error) {
-    console.error(`TAG08 não iniciou: ${error instanceof Error ? error.message : String(error)}`);
+    reportError(`TAG08 não iniciou: ${error instanceof Error ? error.message : String(error)}`);
     return 1;
   }
 
   const url = `http://localhost:${plan.port}`;
-  console.log(formatPreviewIdentity({ ...identity, url, mode: plan.mode }));
 
   let occupiedPorts;
   try {
-    occupiedPorts = await findOccupiedPorts(plan.portsToCheck);
+    occupiedPorts = await checkPorts(plan.portsToCheck);
   } catch (error) {
-    console.error(`TAG08 não iniciou ao verificar as portas: ${error instanceof Error ? error.message : String(error)}`);
+    reportError(`TAG08 não iniciou ao verificar as portas: ${error instanceof Error ? error.message : String(error)}`);
     return 1;
   }
 
   if (occupiedPorts.length) {
-    console.error(formatPortConflict(occupiedPorts));
+    reportError(formatPortConflict(occupiedPorts));
     return 1;
   }
 
@@ -165,6 +168,8 @@ export async function runPreview({ args = process.argv.slice(2), env = process.e
   }
   if (cacheReset.status !== 0) return cacheReset.status ?? 1;
 
+  log(formatPreviewIdentity({ ...identity, url, mode: plan.mode }));
+
   const child = spawn(process.execPath, [nextCli, "dev", "--port", String(plan.port)], {
     cwd: projectRoot,
     stdio: "inherit",
@@ -177,7 +182,7 @@ export async function runPreview({ args = process.argv.slice(2), env = process.e
 
   return new Promise((resolvePromise) => {
     child.once("error", (error) => {
-      console.error(`TAG08 não conseguiu iniciar o servidor Next.js: ${error.message}`);
+      reportError(`TAG08 não conseguiu iniciar o servidor Next.js: ${error.message}`);
       resolvePromise(1);
     });
     child.once("exit", (code) => resolvePromise(code ?? 1));
