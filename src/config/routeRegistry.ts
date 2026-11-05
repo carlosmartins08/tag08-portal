@@ -74,6 +74,7 @@ export const routeRegistry: RouteDefinition[] = [
   {
     key: "sobre",
     canonicalPath: "/sobre",
+    aliases: ["/sobre-a-tag08"],
     routeCategory: "page",
     indexable: true,
     includeInSitemap: true,
