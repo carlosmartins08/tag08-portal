@@ -1,5 +1,3 @@
-import { TAG08_OFFICIAL_YOUTUBE_URL } from "../config/siteNetwork";
-
 export type OfficialContentSourceStatus = "live" | "fallback" | "partial" | "disabled" | "error";
 
 export type OfficialYouTubeVideo = {
@@ -51,8 +49,6 @@ export type OfficialContentApiResponse = {
   fetchedAt?: string;
   error?: string;
 };
-
-const DEFAULT_YOUTUBE_VIDEO_URL = TAG08_OFFICIAL_YOUTUBE_URL;
 
 const fallbackAvatarGradient = (name: string) => {
   const palette = ["#0A0A0A", "#111111", "#171717", "#1F2937", "#2D2D2D"];
@@ -165,64 +161,11 @@ export const getVideoDescriptionPreview = (description: string, maxCharacters = 
   return `${truncated}…`;
 };
 
-export const FALLBACK_YOUTUBE_VIDEOS: OfficialYouTubeVideo[] = [
-  {
-    id: "posicionamento-alto-nivel",
-    title: "Conteúdo institucional",
-    description: "Vídeos que apresentam a marca, sua história, seus diferenciais e sua forma de gerar valor.",
-    duration: "12:45",
-    date: "28 Mai, 2026",
-    category: "INSTITUCIONAL",
-    thumbnail: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200",
-    embedCode: "612U4R57M70",
-    videoUrl: DEFAULT_YOUTUBE_VIDEO_URL,
-    views: "PORTFÓLIO 01",
-    tagline: "NARRATIVA CLARA",
-    source: "fallback"
-  },
-  {
-    id: "branding-blueprint",
-    title: "Cobertura de eventos",
-    description: "Registro estratégico de momentos, bastidores, falas e experiências para ampliar o valor do evento depois que ele acontece.",
-    duration: "18:20",
-    date: "14 Mai, 2026",
-    category: "EVENTOS",
-    thumbnail: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200",
-    embedCode: "612U4R57M70",
-    videoUrl: DEFAULT_YOUTUBE_VIDEO_URL,
-    views: "PORTFÓLIO 02",
-    tagline: "BASTIDORES COM FUNÇÃO",
-    source: "fallback"
-  },
-  {
-    id: "trafego-pago-saboroso",
-    title: "Conteúdo para especialistas",
-    description: "Captação e edição de falas, aulas, entrevistas e conteúdos de autoridade com linguagem clara e presença profissional.",
-    duration: "15:10",
-    date: "03 Mai, 2026",
-    category: "ESPECIALISTAS",
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
-    embedCode: "612U4R57M70",
-    videoUrl: DEFAULT_YOUTUBE_VIDEO_URL,
-    views: "PORTFÓLIO 03",
-    tagline: "AUTORIDADE EM CENA",
-    source: "fallback"
-  },
-  {
-    id: "sistemas-operacionais-digitais",
-    title: "Materiais para redes sociais",
-    description: "Cortes, reels, vídeos curtos e formatos recorrentes alinhados à linha editorial e ao posicionamento da marca.",
-    duration: "09:55",
-    date: "21 Abr, 2026",
-    category: "REDES SOCIAIS",
-    thumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200",
-    embedCode: "612U4R57M70",
-    videoUrl: DEFAULT_YOUTUBE_VIDEO_URL,
-    views: "PORTFÓLIO 04",
-    tagline: "LINHA EDITORIAL",
-    source: "fallback"
-  }
-];
+// Keep the exported name for compatibility, but never present synthetic videos as channel content.
+export const FALLBACK_YOUTUBE_VIDEOS: OfficialYouTubeVideo[] = [];
+
+export const selectLiveYouTubeVideos = (response: Partial<OfficialContentApiResponse> | null | undefined) =>
+  response?.sources?.youtube === "live" && Array.isArray(response.youtubeVideos) ? response.youtubeVideos : [];
 
 export const FALLBACK_GMB_REVIEWS: OfficialGoogleReview[] = [
   {

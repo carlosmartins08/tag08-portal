@@ -1,7 +1,29 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync } from "node:fs";
-import { getVideoDescriptionPreview } from "../src/lib/officialContent";
+import { FALLBACK_YOUTUBE_VIDEOS, getVideoDescriptionPreview, selectLiveYouTubeVideos, type OfficialYouTubeVideo } from "../src/lib/officialContent";
+
+test("only videos explicitly returned by the live channel source are selectable", () => {
+  const video: OfficialYouTubeVideo = {
+    id: "official-video-1",
+    title: "Vídeo oficial",
+    description: "Descrição oficial",
+    duration: "01:20",
+    date: "06 nov. 2026",
+    category: "YOUTUBE OFICIAL",
+    thumbnail: "https://i.ytimg.com/vi/official-video-1/hqdefault.jpg",
+    embedCode: "official-video-1",
+    videoUrl: "https://www.youtube.com/watch?v=official-video-1",
+    views: "1 visualização",
+    tagline: "VÍDEO OFICIAL",
+    source: "live"
+  };
+
+  assert.deepEqual(FALLBACK_YOUTUBE_VIDEOS, []);
+  assert.deepEqual(selectLiveYouTubeVideos({ sources: { youtube: "fallback", googleBusiness: "fallback" }, youtubeVideos: [video] }), []);
+  assert.deepEqual(selectLiveYouTubeVideos({ sources: { youtube: "live", googleBusiness: "fallback" }, youtubeVideos: [video] }), [video]);
+  assert.deepEqual(selectLiveYouTubeVideos({ sources: { youtube: "error", googleBusiness: "fallback" }, youtubeVideos: [video] }), []);
+});
 
 test("video previews remove raw links and preserve a bounded word-safe summary", () => {
   const preview = getVideoDescriptionPreview(
