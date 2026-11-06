@@ -379,6 +379,7 @@ export default function Contato({ locale = "pt" }: { locale?: RouteLocale }) {
         form_name: "contact",
         form_surface: "contact-page",
         status: "success",
+        request_type: formData.requestType,
         page_path: "/contato"
       });
       trackLeadEvent({

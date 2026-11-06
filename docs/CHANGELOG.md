@@ -1,5 +1,17 @@
 # CHANGELOG - TAG08
 
+## 2026-11-04
+
+- Home: the hero service categories now open a keyboard-accessible, reduced-motion-aware detail and direct destination; the new anchors target the matching solution cards. The approved visual direction and service destinations remain unchanged.
+- Localization: EN/ES are exposed only when every indexable public route has approved copy matching its current source fingerprint. Portuguese remains the only published locale until that complete review exists.
+- Sobre: the featured professional's name is now visible with the approved role and profile link. E2E navigation assertions now use the links actually rendered by the service cards.
+- Validation: readiness gate passed; browser suite passed 194/194 with the isolated PostgreSQL Onboarding scenario skipped; editorial review suite passed 5/5. No external integrations or deployment were run.
+
+## 2026-10-29
+
+- Analytics: `generate_lead` now counts only a successful, Sheets-confirmed Contact submission whose intent is `new_project`; queued submissions, Talent applications, diagnostics, existing-client requests and partnerships are not commercial lead conversions. Page-view deduplication now starts only after consent, preserving the first view when consent is granted immediately. Added targeted regression cases; test execution is blocked in this environment by `spawn EPERM` in esbuild.
+- Added the current measurement contract and external validation status in `docs/ANALYTICS-INSTRUMENTATION.md`. No GTM publication, external property changes, or production deploy occurred.
+
 ## 2026-10-28
 
 - A raiz do projeto voltou a `main` (`c1aab5f`); o commit P2 não aprovado ficou isolado em `recovery/p2-its-hover-unapproved-0f78d21` e `origin/p2-home-cases-consolidation`, sem upstream de publicação. O stash redundante foi removido após confirmação de que seu conteúdo está na P2.

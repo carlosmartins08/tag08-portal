@@ -5,7 +5,7 @@ import { isLocaleTranslationReady } from "../i18n/localizationReadiness";
 export const ROUTE_LOCALES = ["pt", "en", "es"] as const;
 export type RouteLocale = (typeof ROUTE_LOCALES)[number];
 
-// Supported URL locales. Publication is decided per route below.
+// Supported URL locales. A non-PT locale is released only as a complete public-site bundle.
 /**
  * A locale is publishable only after the complete page and its conversion flows
  * have been reviewed in that language. This prevents a translated shell or a
@@ -409,8 +409,15 @@ export const getContentReviewRouteByPath = (path: string): RouteDefinition | und
   return routeRegistry.find((route) => route.dynamic && route.pathPattern === "/casos/:id");
 };
 
+const isLocaleBundleReady = (locale: RouteLocale): boolean =>
+  locale === "pt" || routeRegistry
+    .filter((entry) => entry.indexable)
+    .every((entry) => isLocaleTranslationReady(entry.key, locale));
+
 export const getPublishedLocales = (route: RouteDefinition): readonly RouteLocale[] =>
-  (route.publishedLocales ?? INDEXABLE_LOCALES).filter((locale) => isLocaleTranslationReady(route.key, locale));
+  (route.publishedLocales ?? INDEXABLE_LOCALES).filter(
+    (locale) => isLocaleTranslationReady(route.key, locale) && isLocaleBundleReady(locale)
+  );
 
 export const isRouteLocalePublished = (route: RouteDefinition, locale: RouteLocale): boolean =>
   getPublishedLocales(route).includes(locale);

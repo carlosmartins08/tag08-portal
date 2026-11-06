@@ -64,10 +64,10 @@ test("Serviços explicita as seis famílias e mantém capacidades subordinadas",
   const accessibility = await new AxeBuilder({ page }).include("#servicos-principais").analyze();
   expect(accessibility.violations.filter(({ impact }) => impact === "serious" || impact === "critical")).toEqual([]);
 
-  await page.getByRole("button", { name: "CONHECER TECNOLOGIA" }).click();
+  await page.getByRole("link", { name: "CONHECER TECNOLOGIA" }).click();
   await expect(page).toHaveURL(/\/servicos\/desenvolvimento-web$/);
   await page.goto("/servicos", { waitUntil: "domcontentloaded" });
-  await page.getByRole("button", { name: "CONHECER PROCESS ACTIVATION" }).click();
+  await page.getByRole("link", { name: "CONHECER PROCESS ACTIVATION" }).click();
   await expect(page).toHaveURL(/\/servicos\/process-activation$/);
 });
 

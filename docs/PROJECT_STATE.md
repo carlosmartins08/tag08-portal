@@ -1,8 +1,21 @@
 # Estado do projeto — TAG08
 
+## Atualização da branch de trabalho — 2026-11-04
+
+- A Home apresenta categorias do hero como exploradores de serviços acessíveis por teclado; cada opção revela contexto e um destino correspondente. O movimento respeita `prefers-reduced-motion`.
+- EN/ES permanecem indisponíveis até todas as rotas públicas indexáveis possuírem tradução aprovada com fingerprint atual. Nenhuma tradução foi promovida nesta alteração.
+- `/sobre` exibe o nome no cartão profissional em destaque. Os links de Serviços preservam sua semântica real de navegação.
+- Verificações locais nesta revisão: `npm run verify:readiness` PASS; `npm run test:browser` 194 PASS / 1 cenário QA de Onboarding ignorado por exigir PostgreSQL descartável; `npm run test:browser:content-review` 5 PASS. As integrações externas permaneceram desativadas.
+
 > **Autoridade atual (2026-10-28):** este arquivo reúne registros de épocas diferentes. Seções marcadas como históricas não são requisitos vigentes. Para esta release, o novo site TAG08 não usa ClickUp para receber ou operar submissões; Google Sheets é a base canônica estruturada. O CRM próprio é um projeto separado, com integração futura. WordPress permanece o CMS editorial. GA4 é responsável por mensuração e não substitui obrigações de LGPD. Onboarding está desativado e seu código/controles devem ser preservados. Consulte código, preflight e testes atuais para confirmar o comportamento implementado.
 
 Atualizado em: `2026-10-28`
+
+## Mensuração TAG08 — estado local em 2026-10-29
+
+- O site carrega um único contêiner GTM somente após consentimento analítico ou de marketing. O primeiro `page_view` só é deduplicado após consentimento. `generate_lead` é restrito a um pedido de novo projeto cuja persistência em Sheets foi confirmada; fila local, Talentos, Diagnóstico, cliente atual e Parceria não contam como lead comercial.
+- `form_submit` com estado `success` representa submissão persistida; `queued` representa apenas tentativa local aguardando retry. Dados pessoais não devem ser enviados a tags. O contrato e o estado das contas externas estão em `docs/ANALYTICS-INSTRUMENTATION.md`.
+- GTM, fluxo/Measurement ID GA4, propriedade e sitemap do Search Console, Pinterest Tag e LinkedIn Insight Tag ainda não foram verificados nas contas administrativas. Não publicar workspace GTM, não habilitar tags publicitárias e não fazer deploy sem aprovação.
 
 ## Decisão operacional vigente — Google Sheets sem ClickUp no site — 2026-10-28
 

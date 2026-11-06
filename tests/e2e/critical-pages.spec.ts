@@ -522,16 +522,25 @@ test.describe("canais de contato da Home", () => {
 });
 
 test.describe("palco editorial da Hero", () => {
-  test("apresenta as categorias como atalhos secundarios para Solucoes", async ({ page }) => {
+  test("explora servicos especificos a partir das categorias do hero", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/", { waitUntil: "domcontentloaded" });
 
-    const shortcuts = page.getByRole("navigation", { name: "Atalhos para as soluções da TAG08" });
-    const links = shortcuts.getByRole("link");
-    await expect(links).toHaveCount(6);
-    await expect(links.first()).toHaveAttribute("href", "#servicos-principais");
-    await links.first().click();
-    await expect(page.locator("#servicos-principais")).toBeInViewport();
+    const options = page.getByTestId("hero-service-option");
+    await expect(options).toHaveCount(6);
+    await options.nth(0).focus();
+    await page.keyboard.press("Enter");
+    await expect(options.nth(0)).toHaveAttribute("aria-pressed", "true");
+
+    const detail = page.getByTestId("hero-service-detail");
+    await expect(detail).toBeVisible();
+    const destination = detail.getByRole("link");
+    await expect(destination).toHaveAttribute("href", "#home-solution-assessoria-estrategica");
+    await destination.click();
+    await expect(page.locator("#home-solution-assessoria-estrategica")).toBeInViewport();
+
+    await options.nth(4).click();
+    await expect(page.getByTestId("hero-service-detail").getByRole("link")).toHaveAttribute("href", /servicos\/process-intelligence/);
   });
 
   test("reage a luz no desktop sem deslocar a composicao", async ({ page }) => {
