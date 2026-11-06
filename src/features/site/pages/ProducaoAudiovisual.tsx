@@ -13,7 +13,7 @@ import MiniCases from "../../../components/MiniCases";
 import ResilientImage from "../../../components/ResilientImage";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import TrackedOutboundLink from "../../../components/TrackedOutboundLink";
-import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";
+import { buildBrazilWhatsAppUrl, TAG08_OFFICIAL_YOUTUBE_URL } from "../../../config/siteNetwork";
 import { trackVideoEvent } from "../../../lib/analytics";
 import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
 import { useOfficialYouTubeVideos } from "../../../lib/useOfficialYouTubeVideos";
@@ -117,7 +117,7 @@ interface ProducaoProps {
 export default function ProducaoAudiovisual({ onNavigate }: ProducaoProps) {
   const [activeFaq, setActiveFaq] = useState<number>(0);
   const prefersReducedMotion = useReducedMotion();
-  const { videos: youtubeVideos } = useOfficialYouTubeVideos(4);
+  const { videos: youtubeVideos, source: youtubeSource, isLoading: isYouTubeLoading } = useOfficialYouTubeVideos(4);
   
   // Custom calculator states
   const [selectedFormat, setSelectedFormat] = useState<string>("institucional");
@@ -511,7 +511,11 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {youtubeVideos.map((video) => (
+            {isYouTubeLoading ? (
+              <p role="status" aria-live="polite" className="sm:col-span-2 lg:col-span-3 rounded-[28px] border border-white/[0.06] bg-white/[0.02] p-6 text-xs sm:text-sm leading-relaxed text-zinc-400">
+                Carregando vídeos oficiais…
+              </p>
+            ) : youtubeSource === "live" && youtubeVideos.length > 0 ? youtubeVideos.map((video) => (
               <a
                 key={video.id}
                 href={video.videoUrl}
@@ -571,7 +575,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   </div>
                 </div>
               </a>
-            ))}
+            )) : (
+              <div role="status" aria-live="polite" className="sm:col-span-2 lg:col-span-3 rounded-[28px] border border-white/[0.06] bg-white/[0.02] p-6 text-xs sm:text-sm leading-relaxed text-zinc-400">
+                Os vídeos oficiais estão temporariamente indisponíveis. Acesse o canal da TAG08 no YouTube.
+                <a href={TAG08_OFFICIAL_YOUTUBE_URL} target="_blank" rel="noopener noreferrer" className="ml-1 font-semibold text-brand-secondary underline underline-offset-4">
+                  Abrir canal oficial
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </section>

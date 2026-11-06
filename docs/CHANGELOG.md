@@ -176,3 +176,7 @@
 - Ainda existem trechos de texto com encoding ruim em paginas longas do frontend.
 - Falta automacao de smoke test alem do build.
 - Landing pages externas seguem fora deste repositorio.
+
+## 2026-11-06
+
+- Corrigida a exibição de vídeos oficiais: Home e páginas de serviço deixam de usar cartões sintéticos quando a fonte não está `live`; Audiovisual apresenta estado indisponível e link para o canal. A credencial local confirmou leitura atual da API do YouTube (HTTP 200); a API pública ainda serve fallback, pendente da configuração/revisão ativa na hospedagem. TypeScript aprovado; execução do teste direcionado bloqueada por `spawn EPERM`. Nenhum deploy ou ajuste externo foi realizado.

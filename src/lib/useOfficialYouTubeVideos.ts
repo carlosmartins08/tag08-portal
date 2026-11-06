@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import {
-  FALLBACK_YOUTUBE_VIDEOS,
+  selectLiveYouTubeVideos,
   type OfficialContentApiResponse,
   type OfficialContentSourceStatus,
   type OfficialYouTubeVideo
@@ -13,21 +13,30 @@ type YouTubeSnapshot = {
   videos: OfficialYouTubeVideo[];
 };
 
-let cachedSnapshot: YouTubeSnapshot | null = null;
+type CachedYouTubeSnapshot = YouTubeSnapshot & { expiresAt: number };
+
+const CLIENT_CACHE_TTL_MS = 10 * 60 * 1000;
+let cachedSnapshot: CachedYouTubeSnapshot | null = null;
 let pendingRequest: Promise<YouTubeSnapshot> | null = null;
 
 const fallbackSnapshot: YouTubeSnapshot = {
   source: "fallback",
-  videos: FALLBACK_YOUTUBE_VIDEOS
+  videos: []
+};
+
+const getCachedSnapshot = () => {
+  if (!cachedSnapshot) return null;
+  if (cachedSnapshot.expiresAt > Date.now()) return cachedSnapshot;
+  cachedSnapshot = null;
+  return null;
 };
 
 const getOfficialYouTubeVideos = async (): Promise<YouTubeSnapshot> => {
-  if (cachedSnapshot) {
-    return cachedSnapshot;
-  }
+  const cached = getCachedSnapshot();
+  if (cached) return cached;
 
   if (!pendingRequest) {
-    const request = fetch("/api/official-content", { headers: { Accept: "application/json" } })
+    const request = fetch("/api/official-content", { cache: "no-store", headers: { Accept: "application/json" } })
       .then(async (response) => {
         if (!response.ok) {
           return fallbackSnapshot;
@@ -35,14 +44,14 @@ const getOfficialYouTubeVideos = async (): Promise<YouTubeSnapshot> => {
 
         const payload = (await response.json()) as OfficialContentApiResponse;
         return {
-          source: payload.sources.youtube,
-          videos: payload.youtubeVideos.length ? payload.youtubeVideos : FALLBACK_YOUTUBE_VIDEOS
+          source: payload.sources?.youtube ?? "error",
+          videos: selectLiveYouTubeVideos(payload)
         };
       })
       .catch(() => fallbackSnapshot)
       .then((snapshot) => {
-        if (snapshot.source === "live") {
-          cachedSnapshot = snapshot;
+        if (snapshot.source === "live" && snapshot.videos.length > 0) {
+          cachedSnapshot = { ...snapshot, expiresAt: Date.now() + CLIENT_CACHE_TTL_MS };
         }
         return snapshot;
       });
@@ -59,8 +68,8 @@ const getOfficialYouTubeVideos = async (): Promise<YouTubeSnapshot> => {
 };
 
 export const useOfficialYouTubeVideos = (limit: number) => {
-  const [snapshot, setSnapshot] = useState<YouTubeSnapshot>(cachedSnapshot ?? fallbackSnapshot);
-  const [isLoading, setIsLoading] = useState(() => !cachedSnapshot);
+  const [snapshot, setSnapshot] = useState<YouTubeSnapshot>(() => getCachedSnapshot() ?? fallbackSnapshot);
+  const [isLoading, setIsLoading] = useState(() => !getCachedSnapshot());
 
   useEffect(() => {
     let active = true;

@@ -153,3 +153,10 @@ Atualizado em: `2026-10-28`
 - Colunas ClickUp legadas permanecem no contrato para compatibilidade; novas linhas recebem `NOT_ROUTED`, sem Task ID, tentativas ou erros artificiais. O worker rejeita entregas SQL históricas de Contato/Talentos antes de chamar a API ClickUp.
 - O preflight e o runner de staging não exigem credencial/lista ClickUp para Contato/Talentos. A configuração pública permanece desligada por padrão. Onboarding e seus consumidores independentes permanecem desativados/preservados.
 - Validação externa desta missão: PASS em cópia isolada. `/api/contact` e `/api/talent-applications` retornaram 202; replay preservou Record ID e linha; linhas sintéticas foram limpas e confirmadas ausentes. ClickUp e banco não foram usados.
+
+## YouTube oficial — estado em 2026-11-06
+
+- A integração existente usa `YOUTUBE_API_KEY`, `YOUTUBE_CHANNEL_ID` e `YOUTUBE_CHANNEL_HANDLE` somente no servidor. A credencial local foi validada em leitura: canal, playlist de uploads e metadados de vídeos responderam HTTP 200.
+- Home, Audiovisual e Gestão de Redes só devem apresentar itens quando `sources.youtube` é `live`; os vídeos sintéticos antigos foram removidos das respostas de fallback.
+- A API pública observada em produção ainda retorna `fallback` com os antigos IDs sintéticos. A configuração/revisão ativa da hospedagem permanece por confirmar; nenhuma alteração produtiva foi feita.
+- Para ativar sincronização publicada, configurar as variáveis server-side na hospedagem, reiniciar o processo e confirmar `sources.youtube: live` no endpoint público.

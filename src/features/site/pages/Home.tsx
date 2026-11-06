@@ -4,8 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { SERVICES, PLANS } from "../../../data";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_YOUTUBE_URL, buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
-import { getVideoDescriptionPreview, type OfficialContentApiResponse, type OfficialGoogleReview, type OfficialYouTubeVideo } from "../../../lib/officialContent";
+import { TAG08_OFFICIAL_CONTACT, buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
+import { getVideoDescriptionPreview, selectLiveYouTubeVideos, type OfficialContentApiResponse, type OfficialGoogleReview, type OfficialYouTubeVideo } from "../../../lib/officialContent";
 import { trackOutboundClick, trackVideoEvent } from "../../../lib/analytics";
 import { activateOnKeyboard } from "../../../lib/keyboard";
 import { COOKIE_CONSENT_EVENT, grantMarketingConsent, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
@@ -98,71 +98,6 @@ const CLIENT_CASES = [
     caseName: "ACADEMIA CORPORATIVA — 2024"
   }
 ];
-
-const YOUTUBE_VIDEOS = [
-  {
-    id: "posicionamento-alto-nivel",
-    title: "Conteúdo institucional",
-    description: "Vídeos que apresentam a marca, sua história, seus diferenciais e sua forma de gerar valor.",
-    duration: "12:45",
-    date: "28 Mai, 2026",
-    category: "INSTITUCIONAL",
-    thumbnail: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200",
-    embedCode: "612U4R57M70", // A generic video presentation code, we also support direct channel handle redirect
-    videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
-    views: "PORTFÓLIO 01",
-    tagline: "NARRATIVA CLARA"
-  },
-  {
-    id: "branding-blueprint",
-    title: "Cobertura de eventos",
-    description: "Registro estratégico de momentos, bastidores, falas e experiências para ampliar o valor do evento depois que ele acontece.",
-    duration: "18:20",
-    date: "14 Mai, 2026",
-    category: "EVENTOS",
-    thumbnail: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200",
-    embedCode: "612U4R57M70",
-    videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
-    views: "PORTFÓLIO 02",
-    tagline: "BASTIDORES COM FUNÇÃO"
-  },
-  {
-    id: "trafego-pago-saboroso",
-    title: "Conteúdo para especialistas",
-    description: "Captação e edição de falas, aulas, entrevistas e conteúdos de autoridade com linguagem clara e presença profissional.",
-    duration: "15:10",
-    date: "03 Mai, 2026",
-    category: "ESPECIALISTAS",
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
-    embedCode: "612U4R57M70",
-    videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
-    views: "PORTFÓLIO 03",
-    tagline: "AUTORIDADE EM CENA"
-  },
-  {
-    id: "sistemas-operacionais-digitais",
-    title: "Materiais para redes sociais",
-    description: "Cortes, reels, vídeos curtos e formatos recorrentes alinhados à linha editorial e ao posicionamento da marca.",
-    duration: "09:55",
-    date: "21 Abr, 2026",
-    category: "REDES SOCIAIS",
-    thumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200",
-    embedCode: "612U4R57M70",
-    videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
-    views: "PORTFÓLIO 04",
-    tagline: "LINHA EDITORIAL"
-  }
-];
-
-const getYoutubeFallbackForLocale = (locale: RouteLocale): OfficialYouTubeVideo[] => {
-  if (locale === "pt") return YOUTUBE_VIDEOS;
-
-  const localizedCopy = HOME_PILOT_COPY[locale].videos.fallback;
-  return YOUTUBE_VIDEOS.map((video, index) => ({
-    ...video,
-    ...localizedCopy[index]
-  }));
-};
 
 const SERVICOS_TILES = [
   {
@@ -715,7 +650,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [activeDiagPhase, setActiveDiagPhase] = useState<"discovery" | "analysis" | "design">("discovery");
   const [hoveredPill, setHoveredPill] = useState<string | null>(null);
-  const [youtubeVideos, setYoutubeVideos] = useState<OfficialYouTubeVideo[]>(() => getYoutubeFallbackForLocale(locale));
+  const [youtubeVideos, setYoutubeVideos] = useState<OfficialYouTubeVideo[]>([]);
   const [youtubeVideosLocale, setYoutubeVideosLocale] = useState<RouteLocale>(locale);
   const [gmbReviews, setGmbReviews] = useState<OfficialGoogleReview[]>([]);
   const [gmbReviewsLocale, setGmbReviewsLocale] = useState<RouteLocale | null>(null);
@@ -724,9 +659,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
     googleBusiness: "fallback"
   });
 
-  const visibleYoutubeVideos = youtubeVideosLocale === locale
-    ? youtubeVideos
-    : getYoutubeFallbackForLocale(locale);
+  const visibleYoutubeVideos = youtubeVideosLocale === locale ? youtubeVideos : [];
   const safeActiveVideoIndex = Math.min(activeVideoIndex, Math.max(0, visibleYoutubeVideos.length - 1));
   const visibleGmbReviews = gmbReviews;
   const safeActiveReview = Math.min(activeReview, Math.max(0, visibleGmbReviews.length - 1));
@@ -863,6 +796,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
 
   const startYoutubePlayer = () => {
     const video = visibleYoutubeVideos[safeActiveVideoIndex];
+    if (!video) return;
     setIsPlayingVideo(true);
     trackVideoEvent({
       action: "started",
@@ -874,6 +808,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
   };
 
   const openYoutubePlayer = () => {
+    if (!visibleYoutubeVideos[safeActiveVideoIndex]) return;
     if (!youtubeConsentGranted) {
       setShowYoutubeConsentPrompt(true);
       return;
@@ -890,7 +825,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
 
   useEffect(() => {
     const controller = new AbortController();
-    setYoutubeVideos(getYoutubeFallbackForLocale(locale));
+    setYoutubeVideos([]);
     setYoutubeVideosLocale(locale);
     setActiveVideoIndex(0);
     setIsPlayingVideo(false);
@@ -917,8 +852,9 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
           return;
         }
 
-        if (locale === "pt" && data.sources?.youtube === "live" && Array.isArray(data.youtubeVideos) && data.youtubeVideos.length > 0) {
-          setYoutubeVideos(data.youtubeVideos);
+        const liveYoutubeVideos = locale === "pt" ? selectLiveYouTubeVideos(data) : [];
+        if (liveYoutubeVideos.length > 0) {
+          setYoutubeVideos(liveYoutubeVideos);
           setYoutubeVideosLocale(locale);
         }
 
@@ -934,7 +870,8 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
           });
         }
       } catch {
-        // Keep the local fallback content if the sync endpoint is unavailable.
+        setYoutubeVideos([]);
+        setContentSources((sources) => ({ ...sources, youtube: "error" }));
       }
     };
 
@@ -2157,7 +2094,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
       </section>
 
       {/* SECTION 6.5 - PRODUÇÃO AUDIOVISUAL */}
-      <section id="videos-recentes" className="py-24 px-4 sm:px-6 md:px-8 bg-black border-b border-white/[0.04] relative overflow-hidden">
+      {visibleYoutubeVideos.length > 0 && <section id="videos-recentes" className="py-24 px-4 sm:px-6 md:px-8 bg-black border-b border-white/[0.04] relative overflow-hidden">
         {/* Subtle decorative grid overlay and luminous auras */}
         <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.01)_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-brand/[0.025] rounded-full blur-[140px] pointer-events-none" />
@@ -2457,7 +2394,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
 
           </div>
         </div>
-      </section>
+      </section>}
 
 
       {/* SECTION 8 - INSTITUCIONAL CTA */}
