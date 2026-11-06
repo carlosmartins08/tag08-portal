@@ -24,6 +24,80 @@ import { EvidenceReviewBadge } from "../../../components/ContentReview";
 
 const DiagnosticDiagram = lazy(() => import("../../../components/DiagnosticDiagram"));
 
+interface HeroServiceOption {
+  id: string;
+  label: string;
+  title: string;
+  description: string;
+  href: string;
+}
+
+function HomeHeroServiceExplorer({
+  options,
+  ariaLabel,
+  actionLabel,
+  exploreLabel,
+  hideLabel,
+  prefersReducedMotion
+}: {
+  options: HeroServiceOption[];
+  ariaLabel: string;
+  actionLabel: string;
+  exploreLabel: string;
+  hideLabel: string;
+  prefersReducedMotion: boolean;
+}) {
+  const [activeServiceId, setActiveServiceId] = useState<string | null>(null);
+  const activeService = options.find((option) => option.id === activeServiceId);
+
+  return (
+    <>
+      <nav aria-label={ariaLabel}>
+        <div className="flex max-w-sm flex-wrap gap-1.5 lg:ml-auto lg:justify-end">
+          {options.map((option) => {
+            const isActive = option.id === activeServiceId;
+            return (
+              <button
+                key={option.id}
+                type="button"
+                aria-pressed={isActive}
+                aria-label={`${isActive ? hideLabel : exploreLabel}: ${option.label}`}
+                data-testid="hero-service-option"
+                onClick={() => setActiveServiceId(isActive ? null : option.id)}
+                className={`inline-flex min-h-11 items-center justify-center rounded-full border px-3 py-1.5 font-sans text-xs font-semibold tracking-wider transition-[background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 ${isActive ? "border-brand/70 bg-brand/10 text-brand" : "border-white/20 bg-white/[0.03] text-white/80 hover:border-white/40 hover:bg-white/[0.07] hover:text-white"}`}
+              >
+                {option.label}
+              </button>
+            );
+          })}
+        </div>
+      </nav>
+      {activeService && (
+        <motion.div
+          key={activeService.id}
+          data-testid="hero-service-detail"
+          role="region"
+          aria-label={activeService.title}
+          aria-live="polite"
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.18, ease: "easeOut" }}
+          className="mr-auto mt-4 max-w-sm border-l border-brand/45 pl-3 text-left lg:ml-auto lg:mr-0 lg:border-l-0 lg:border-r lg:pl-0 lg:pr-3 lg:text-right"
+        >
+          <h3 className="font-display text-sm font-bold leading-snug text-white">{activeService.title}</h3>
+          <p className="mt-1 text-xs leading-relaxed text-white/65">{activeService.description}</p>
+          <Link
+            href={activeService.href}
+            className="mt-2 inline-flex min-h-11 items-center gap-1.5 text-xs font-bold text-brand underline-offset-4 hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+          >
+            {actionLabel} <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
+          </Link>
+        </motion.div>
+      )}
+    </>
+  );
+}
+
 const CLIENT_CASES = [
   {
     id: "alan-rocha",
@@ -973,13 +1047,6 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
     window.scrollTo({ top: 0, behavior: scrollBehavior });
   };
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: scrollBehavior, block: "start" });
-    }
-  };
-
   const tagCategories = [
     { name: "ESTRATÉGIA" },
     { name: "POSICIONAMENTO" },
@@ -989,6 +1056,40 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
     { name: "OPERAÇÃO" },
   ];
   const localizedTagCategories = pilotCopy?.hero.categories ?? tagCategories.map((tag) => tag.name);
+  const heroCategoryServiceIds = [
+    "assessoria-estrategica",
+    "branding-posicionamento",
+    "conteudo-redes-sociais",
+    "desenvolvimento-web",
+    "process-intelligence",
+    "process-activation"
+  ];
+  const solutionMapEntries = localizedSolutionPairs.flat();
+  const heroServiceOptions: HeroServiceOption[] = localizedTagCategories.flatMap((label, index) => {
+    const serviceId = heroCategoryServiceIds[index];
+    if (!serviceId) return [];
+
+    if (index === 4 || index === 5) {
+      const processCopy = index === 4 ? pilotCopy?.mosaic.m05 : pilotCopy?.mosaic.m06;
+      return [{
+        id: serviceId,
+        label,
+        title: processCopy?.title ?? (index === 4 ? "Opera\u00e7\u00e3o pressionada pelo crescimento" : "Processos existentes, execu\u00e7\u00e3o irregular"),
+        description: processCopy?.description ?? (index === 4
+          ? "Process Intelligence organiza gargalos e rotinas em fluxos claros e materiais de consulta."
+          : "Process Activation ajuda a colocar processos em pr\u00e1tica e acompanhar sua ado\u00e7\u00e3o no trabalho di\u00e1rio."),
+        href: getLocalizedPath(index === 4 ? "/servicos/process-intelligence" : "/servicos/process-activation", locale)
+      }];
+    }
+
+    const service = solutionMapEntries.find((entry) => entry.id === serviceId);
+    if (!service) return [];
+    return [{ id: serviceId, label, title: service.title, description: service.desc, href: `#home-solution-${serviceId}` }];
+  });
+  const heroServiceActionLabel = locale === "en" ? "Explore solution" : locale === "es" ? "Ver soluci\u00f3n" : "Ver solu\u00e7\u00e3o";
+  const heroShortcutAriaLabel = pilotCopy?.hero.shortcuts ?? `Explore as ${String.fromCodePoint(0x00e1)}reas e solu${String.fromCodePoint(0x00e7, 0x00f5)}es da TAG08`;
+  const heroExploreLabel = locale === "en" ? "Explore" : "Explorar";
+  const heroHideLabel = locale === "en" ? "Hide" : "Ocultar";
 
   return (
     <div className="tag08-home-flow bg-charcoal-950 text-white overflow-hidden">
@@ -1082,30 +1183,14 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                 <div className="tag08-meta text-xs text-brand uppercase tracking-widest font-extrabold block lg:text-right">
                   {pilotCopy?.hero.organize ?? "O QUE ORGANIZAMOS:"}
                 </div>
-                <nav aria-label={pilotCopy?.hero.shortcuts ?? "Atalhos para as soluções da TAG08"}>
-                  <div className="flex flex-wrap lg:justify-end gap-1.5 max-w-sm lg:ml-auto">
-                    {localizedTagCategories.map((tag) => (
-                      <a
-                        key={tag}
-                        href="#servicos-principais"
-                        onClick={(event) => {
-                          if (
-                            event.button !== 0 ||
-                            event.metaKey ||
-                            event.ctrlKey ||
-                            event.shiftKey ||
-                            event.altKey
-                          ) return;
-                          event.preventDefault();
-                          scrollToSection("servicos-principais");
-                        }}
-                        className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/20 bg-white/[0.03] px-3 py-1.5 font-sans text-xs font-semibold tracking-wider text-white/80 transition-[background-color,border-color,color] duration-200 hover:border-white/40 hover:bg-white/[0.07] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
-                      >
-                        {tag}
-                      </a>
-                    ))}
-                  </div>
-                </nav>
+                <HomeHeroServiceExplorer
+                  options={heroServiceOptions}
+                  ariaLabel={heroShortcutAriaLabel}
+                  actionLabel={heroServiceActionLabel}
+                  exploreLabel={heroExploreLabel}
+                  hideLabel={heroHideLabel}
+                  prefersReducedMotion={prefersReducedMotion}
+                />
               </div>
             </div>
 
@@ -2012,9 +2097,10 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                         <motion.div
                           key={service.id}
                           data-testid="solution-map-card"
+                          id={`home-solution-${service.id}`}
                           whileHover={{ y: -4 }}
                           transition={{ duration: 0.3 }}
-                          className={`${cardBg} ${textColor} rounded-[24px] p-6 sm:p-8 lg:p-9 text-left relative overflow-hidden group h-full flex flex-col transition-[border-color,background-color] duration-300 hover:border-black/25`}
+                          className={`scroll-mt-24 ${cardBg} ${textColor} rounded-[24px] p-6 sm:p-8 lg:p-9 text-left relative overflow-hidden group h-full flex flex-col transition-[border-color,background-color] duration-300 hover:border-black/25`}
                         >
                           <div className="absolute inset-0 grid grid-cols-3 h-full opacity-[0.015] pointer-events-none">
                             <div className="border-r border-black h-full" />

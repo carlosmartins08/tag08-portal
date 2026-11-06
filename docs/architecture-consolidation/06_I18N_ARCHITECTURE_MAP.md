@@ -14,6 +14,7 @@ This document distinguishes **ATUAL** runtime behavior, **ALVO APROVADO** public
 - Locale union is `pt`, `en`, `es` (`src/config/routeRegistry.ts:5-6`). Paths without an explicit locale resolve to Portuguese; localized paths use `/{locale}/...` (`:351-374`).
 - **ATUAL:** `INDEXABLE_LOCALES` is `['pt']` (`routeRegistry.ts:14`). Onboarding also declares `publishedLocales: ['pt']` (`:233-243`). This matches the approved PT-first policy.
 - `localizationReadiness.ts` provides per-route EN/ES state and source fingerprints. Its `pending()` helper initializes both languages as pending and each route uses it (`src/i18n/localizationReadiness.ts:19-53`). Publication requires approved state and matching source fingerprints (`:53-60`).
+- **Release gate:** EN or ES is exposed as a published locale only when every public, indexable route has an approved translation whose fingerprint matches its current Portuguese source. This keeps navigation and conversion journeys in one language; non-indexable routes remain governed by their route-specific policy.
 - Catch-all metadata excludes unpublished locales from indexing and page rendering redirects an unpublished locale to the Portuguese canonical URL (`src/app/[locale]/[[...segments]]/page.tsx:68,97-102`). Sitemap enumerates published locales (`src/app/sitemap.ts:5-`).
 
 ## Current translation/content mechanisms

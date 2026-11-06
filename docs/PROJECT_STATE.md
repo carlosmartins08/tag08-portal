@@ -1,5 +1,12 @@
 # Estado do projeto — TAG08
 
+## Atualização da branch de trabalho — 2026-11-04
+
+- A Home apresenta categorias do hero como exploradores de serviços acessíveis por teclado; cada opção revela contexto e um destino correspondente. O movimento respeita `prefers-reduced-motion`.
+- EN/ES permanecem indisponíveis até todas as rotas públicas indexáveis possuírem tradução aprovada com fingerprint atual. Nenhuma tradução foi promovida nesta alteração.
+- `/sobre` exibe o nome no cartão profissional em destaque. Os links de Serviços preservam sua semântica real de navegação.
+- Verificações locais nesta revisão: `npm run verify:readiness` PASS; `npm run test:browser` 194 PASS / 1 cenário QA de Onboarding ignorado por exigir PostgreSQL descartável; `npm run test:browser:content-review` 5 PASS. As integrações externas permaneceram desativadas.
+
 > **Autoridade atual (2026-10-28):** este arquivo reúne registros de épocas diferentes. Seções marcadas como históricas não são requisitos vigentes. Para esta release, o novo site TAG08 não usa ClickUp para receber ou operar submissões; Google Sheets é a base canônica estruturada. O CRM próprio é um projeto separado, com integração futura. WordPress permanece o CMS editorial. GA4 é responsável por mensuração e não substitui obrigações de LGPD. Onboarding está desativado e seu código/controles devem ser preservados. Consulte código, preflight e testes atuais para confirmar o comportamento implementado.
 
 Atualizado em: `2026-10-28`
