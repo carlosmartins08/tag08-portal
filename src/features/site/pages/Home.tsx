@@ -5,7 +5,7 @@ import Image from "next/image";
 import { SERVICES, PLANS } from "../../../data";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_YOUTUBE_URL, buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
-import { getVideoDescriptionPreview, type OfficialContentApiResponse, type OfficialGoogleReview, type OfficialYouTubeVideo } from "../../../lib/officialContent";
+import { getVideoDescriptionPreview, selectLiveOfficialYouTubeVideos, type OfficialContentApiResponse, type OfficialGoogleReview, type OfficialYouTubeVideo } from "../../../lib/officialContent";
 import { trackOutboundClick, trackVideoEvent } from "../../../lib/analytics";
 import { activateOnKeyboard } from "../../../lib/keyboard";
 import { COOKIE_CONSENT_EVENT, grantMarketingConsent, readCookiePreferences, type CookiePreferences } from "../../../lib/cookieConsent";
@@ -98,71 +98,6 @@ const CLIENT_CASES = [
     caseName: "ACADEMIA CORPORATIVA — 2024"
   }
 ];
-
-const YOUTUBE_VIDEOS = [
-  {
-    id: "posicionamento-alto-nivel",
-    title: "Conteúdo institucional",
-    description: "Vídeos que apresentam a marca, sua história, seus diferenciais e sua forma de gerar valor.",
-    duration: "12:45",
-    date: "28 Mai, 2026",
-    category: "INSTITUCIONAL",
-    thumbnail: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200",
-    embedCode: "612U4R57M70", // A generic video presentation code, we also support direct channel handle redirect
-    videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
-    views: "PORTFÓLIO 01",
-    tagline: "NARRATIVA CLARA"
-  },
-  {
-    id: "branding-blueprint",
-    title: "Cobertura de eventos",
-    description: "Registro estratégico de momentos, bastidores, falas e experiências para ampliar o valor do evento depois que ele acontece.",
-    duration: "18:20",
-    date: "14 Mai, 2026",
-    category: "EVENTOS",
-    thumbnail: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200",
-    embedCode: "612U4R57M70",
-    videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
-    views: "PORTFÓLIO 02",
-    tagline: "BASTIDORES COM FUNÇÃO"
-  },
-  {
-    id: "trafego-pago-saboroso",
-    title: "Conteúdo para especialistas",
-    description: "Captação e edição de falas, aulas, entrevistas e conteúdos de autoridade com linguagem clara e presença profissional.",
-    duration: "15:10",
-    date: "03 Mai, 2026",
-    category: "ESPECIALISTAS",
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
-    embedCode: "612U4R57M70",
-    videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
-    views: "PORTFÓLIO 03",
-    tagline: "AUTORIDADE EM CENA"
-  },
-  {
-    id: "sistemas-operacionais-digitais",
-    title: "Materiais para redes sociais",
-    description: "Cortes, reels, vídeos curtos e formatos recorrentes alinhados à linha editorial e ao posicionamento da marca.",
-    duration: "09:55",
-    date: "21 Abr, 2026",
-    category: "REDES SOCIAIS",
-    thumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200",
-    embedCode: "612U4R57M70",
-    videoUrl: TAG08_OFFICIAL_YOUTUBE_URL,
-    views: "PORTFÓLIO 04",
-    tagline: "LINHA EDITORIAL"
-  }
-];
-
-const getYoutubeFallbackForLocale = (locale: RouteLocale): OfficialYouTubeVideo[] => {
-  if (locale === "pt") return YOUTUBE_VIDEOS;
-
-  const localizedCopy = HOME_PILOT_COPY[locale].videos.fallback;
-  return YOUTUBE_VIDEOS.map((video, index) => ({
-    ...video,
-    ...localizedCopy[index]
-  }));
-};
 
 const SERVICOS_TILES = [
   {
@@ -715,7 +650,8 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [activeDiagPhase, setActiveDiagPhase] = useState<"discovery" | "analysis" | "design">("discovery");
   const [hoveredPill, setHoveredPill] = useState<string | null>(null);
-  const [youtubeVideos, setYoutubeVideos] = useState<OfficialYouTubeVideo[]>(() => getYoutubeFallbackForLocale(locale));
+  const [youtubeVideos, setYoutubeVideos] = useState<OfficialYouTubeVideo[]>([]);
+  const [youtubeLoading, setYoutubeLoading] = useState(true);
   const [youtubeVideosLocale, setYoutubeVideosLocale] = useState<RouteLocale>(locale);
   const [gmbReviews, setGmbReviews] = useState<OfficialGoogleReview[]>([]);
   const [gmbReviewsLocale, setGmbReviewsLocale] = useState<RouteLocale | null>(null);
@@ -724,9 +660,10 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
     googleBusiness: "fallback"
   });
 
-  const visibleYoutubeVideos = youtubeVideosLocale === locale
+  const visibleYoutubeVideos = youtubeVideosLocale === locale && contentSources.youtube === "live"
     ? youtubeVideos
-    : getYoutubeFallbackForLocale(locale);
+    : [];
+  const hasLiveYoutubeContent = visibleYoutubeVideos.length > 0;
   const safeActiveVideoIndex = Math.min(activeVideoIndex, Math.max(0, visibleYoutubeVideos.length - 1));
   const visibleGmbReviews = gmbReviews;
   const safeActiveReview = Math.min(activeReview, Math.max(0, visibleGmbReviews.length - 1));
@@ -734,6 +671,23 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
   const pilotCopy = locale === "pt" ? null : HOME_PILOT_COPY[locale];
   const problemCopy = pilotCopy?.problem;
   const videoCopy = pilotCopy?.videos;
+  const youtubeUnavailableCopy = locale === "en"
+    ? {
+        loading: "Loading videos from TAG08's official channel.",
+        unavailable: "Official videos are temporarily unavailable. You can visit TAG08's YouTube channel.",
+        link: "OPEN OFFICIAL CHANNEL"
+      }
+    : locale === "es"
+      ? {
+          loading: "Cargando videos del canal oficial de TAG08.",
+          unavailable: "Los videos oficiales no están disponibles temporalmente. Puedes visitar el canal de YouTube de TAG08.",
+          link: "ABRIR CANAL OFICIAL"
+        }
+      : {
+          loading: "Carregando vídeos do canal oficial da TAG08.",
+          unavailable: "Os vídeos oficiais estão temporariamente indisponíveis. Você pode visitar o canal da TAG08 no YouTube.",
+          link: "ABRIR CANAL OFICIAL"
+        };
   const institutionalCopy = pilotCopy?.institutional;
   const proofCopy = pilotCopy?.proof;
   const reviewsCopy = pilotCopy?.reviews;
@@ -862,6 +816,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
   }, []);
 
   const startYoutubePlayer = () => {
+    if (!hasLiveYoutubeContent) return;
     const video = visibleYoutubeVideos[safeActiveVideoIndex];
     setIsPlayingVideo(true);
     trackVideoEvent({
@@ -890,7 +845,8 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
 
   useEffect(() => {
     const controller = new AbortController();
-    setYoutubeVideos(getYoutubeFallbackForLocale(locale));
+    setYoutubeVideos([]);
+    setYoutubeLoading(true);
     setYoutubeVideosLocale(locale);
     setActiveVideoIndex(0);
     setIsPlayingVideo(false);
@@ -908,7 +864,13 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
           }
         });
 
+        if (controller.signal.aborted) {
+          return;
+        }
+
         if (!response.ok) {
+          setContentSources((current) => ({ ...current, youtube: "error" }));
+          setYoutubeLoading(false);
           return;
         }
 
@@ -917,8 +879,9 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
           return;
         }
 
-        if (locale === "pt" && data.sources?.youtube === "live" && Array.isArray(data.youtubeVideos) && data.youtubeVideos.length > 0) {
-          setYoutubeVideos(data.youtubeVideos);
+        const liveVideos = selectLiveOfficialYouTubeVideos(data.sources?.youtube ?? "error", data.youtubeVideos);
+        if (locale === "pt" && liveVideos.length > 0) {
+          setYoutubeVideos(liveVideos);
           setYoutubeVideosLocale(locale);
         }
 
@@ -933,8 +896,12 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
             googleBusiness: data.sources.googleBusiness
           });
         }
+        setYoutubeLoading(false);
       } catch {
-        // Keep the local fallback content if the sync endpoint is unavailable.
+        if (!controller.signal.aborted) {
+          setContentSources((current) => ({ ...current, youtube: "error" }));
+          setYoutubeLoading(false);
+        }
       }
     };
 
@@ -2181,6 +2148,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
           </div>
 
           {/* Asymmetric Split Layout merging Ref 1 (Theater Card) + Ref 2 (Vertical list container) */}
+          {hasLiveYoutubeContent ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             
             {/* Left Box (lg:col-span-8): Interactive Theater Player mimicking Ref 1 Premium style */}
@@ -2456,6 +2424,26 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
             </div>
 
           </div>
+          ) : (
+            <div
+              data-testid="home-youtube-unavailable"
+              role="status"
+              aria-live="polite"
+              className="mx-auto flex min-h-[220px] max-w-4xl flex-col items-center justify-center gap-5 rounded-[28px] border border-white/[0.08] bg-charcoal-950 p-8 text-center"
+            >
+              <p className="max-w-2xl text-sm leading-relaxed text-zinc-300">
+                {youtubeLoading ? youtubeUnavailableCopy.loading : youtubeUnavailableCopy.unavailable}
+              </p>
+              <a
+                href={TAG08_OFFICIAL_YOUTUBE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center justify-center rounded-xl bg-brand px-5 py-3 text-xs font-black uppercase tracking-wider text-black transition-colors hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              >
+                {youtubeUnavailableCopy.link}
+              </a>
+            </div>
+          )}
         </div>
       </section>
 

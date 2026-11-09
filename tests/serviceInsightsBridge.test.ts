@@ -1,34 +1,40 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  getServiceInsightsBridgeConfig,
   SERVICE_INSIGHTS_BRIDGE_CONTENT,
-  resolveServiceInsightsBridgeItems,
 } from "../src/content/serviceInsightsBridge";
+import { EDITORIAL_SECTION_ROUTES } from "../src/content/editorialContentV1";
 import { routeRegistry } from "../src/config/routeRegistry";
 
-const SERVICE_PATHS = [
-  "/servicos/assessoria-marketing-digital-estrategico",
-  "/servicos/branding-identidade",
-  "/servicos/desenvolvimento-web",
-  "/servicos/gestao-de-redes-sociais",
-  "/hospedagem-manutencao-sites",
-  "/servicos/process-activation",
-  "/servicos/process-intelligence",
-  "/servicos/producao-audiovisual",
-];
+const EXPECTED_SECTIONS: Record<string, keyof typeof EDITORIAL_SECTION_ROUTES> = {
+  "/servicos/assessoria-marketing-digital-estrategico": "service:strategic-marketing",
+  "/servicos/branding-identidade": "service:branding",
+  "/servicos/desenvolvimento-web": "service:web-development",
+  "/servicos/gestao-de-redes-sociais": "service:social-media",
+  "/hospedagem-manutencao-sites": "service:hosting-maintenance",
+  "/servicos/process-activation": "service:process-activation",
+  "/servicos/process-intelligence": "service:process-intelligence",
+  "/servicos/producao-audiovisual": "service:audiovisual",
+  "/programa-afiliados": "program:partnership",
+};
 
-const BRIDGE_PATHS = [...SERVICE_PATHS, "/programa-afiliados"];
+test("service editorial placements use explicit sections in the shared contract", () => {
+  assert.deepEqual(
+    Object.keys(SERVICE_INSIGHTS_BRIDGE_CONTENT).sort(),
+    Object.keys(EXPECTED_SECTIONS).sort(),
+  );
 
-test("every required service and conversion page has a specific, resolvable insights bridge", () => {
-  assert.deepEqual(Object.keys(SERVICE_INSIGHTS_BRIDGE_CONTENT).sort(), [...BRIDGE_PATHS].sort());
-
-  for (const servicePath of BRIDGE_PATHS) {
-    const bridge = SERVICE_INSIGHTS_BRIDGE_CONTENT[servicePath];
-    assert.ok(bridge, `missing bridge for ${servicePath}`);
-    assert.ok(
-      routeRegistry.some((route) => route.canonicalPath === servicePath),
-      `bridge path is not canonical: ${servicePath}`,
-    );
-    assert.ok(resolveServiceInsightsBridgeItems(bridge).length >= 3, `invalid bridge for ${servicePath}`);
+  for (const [servicePath, sectionId] of Object.entries(EXPECTED_SECTIONS)) {
+    const bridge = getServiceInsightsBridgeConfig(servicePath);
+    assert.ok(bridge, `missing editorial placement for ${servicePath}`);
+    assert.equal(bridge.sectionId, sectionId);
+    assert.equal(bridge.servicePath, servicePath);
+    assert.ok(EDITORIAL_SECTION_ROUTES[bridge.sectionId]);
+    assert.ok(routeRegistry.some((route) => route.canonicalPath === servicePath));
   }
+});
+
+test("unknown pages do not receive an editorial placement or local fallback", () => {
+  assert.equal(getServiceInsightsBridgeConfig("/servicos/not-approved"), null);
 });

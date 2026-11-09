@@ -1,16 +1,24 @@
 # Estado do projeto — TAG08
 
-> **Autoridade atual (2026-10-28):** este arquivo reúne registros de épocas diferentes. Seções marcadas como históricas não são requisitos vigentes. Para esta release, o novo site TAG08 não usa ClickUp para receber ou operar submissões; Google Sheets é a base canônica estruturada. O CRM próprio é um projeto separado, com integração futura. WordPress permanece o CMS editorial. GA4 é responsável por mensuração e não substitui obrigações de LGPD. Onboarding está desativado e seu código/controles devem ser preservados. Consulte código, preflight e testes atuais para confirmar o comportamento implementado.
+> **Autoridade atual (2026-11-09):** este arquivo reúne registros de épocas diferentes. Seções marcadas como históricas não são requisitos vigentes. Para esta release, o novo site TAG08 não usa ClickUp para receber ou operar submissões; Google Sheets é a base canônica estruturada. O CRM próprio é um projeto separado, com integração futura. O backend/CMS do blog ainda não foi escolhido; não usar WordPress como premissa. `blog-tag08` é o projeto editorial separado e o portal está preparado para consultar sua projeção pública versionada pela rota server-side `/api/editorial-content/v1`. O componente contextual renderiza no navegador após a consulta e permanece oculto até receber conteúdo real e relações editoriais explícitas; não usar fixtures como publicação. O legado `/insights` permanece preservado temporariamente até migração e validação do blog, sem redirecionamento antecipado. GA4 é responsável por mensuração e não substitui obrigações de LGPD. Onboarding está desativado e seu código/controles devem ser preservados. Consulte código, preflight e testes atuais para confirmar o comportamento implementado.
 
-Atualizado em: `2026-10-28`
+Atualizado em: `2026-11-09`
 
 ## Decisão operacional vigente — Google Sheets sem ClickUp no site — 2026-10-28
 
 - O Google Sheets é a base canônica dos registros operacionais estruturados do novo site. Contato e Talentos persistem diretamente nas abas correspondentes, sem token, lista, tarefa ou confirmação ClickUp.
 - ClickUp não é destino operacional de nenhuma submissão do site nesta release. O CRM próprio será desenvolvido como projeto separado; qualquer integração futura exigirá decisão e contrato próprios.
-- WordPress permanece restrito ao CMS editorial. GA4 permanece na camada de mensuração e não substitui controles ou obrigações de privacidade/LGPD.
+- O backend/CMS editorial ainda é uma decisão pendente. O projeto do blog é separado; o portal não deve assumir um fornecedor, renderizar conteúdo de fixture ou redirecionar `/insights` antes da migração/publicação real. GA4 permanece na camada de mensuração e não substitui controles ou obrigações de privacidade/LGPD.
 - Onboarding permanece desativado e preservado; não o habilite nem remova seus consumidores legados por inferência. A identidade visual aprovada permanece a referência; não realizar redesign.
 - Os registros abaixo que descrevem roteamento do site, Task IDs, retries ou integração de submissões com ClickUp são histórico de decisões superadas, não instruções ou critérios de aceite ativos.
+
+## Integração editorial com o blog — 2026-11-09
+
+- O consumidor do portal usa o contrato `tag08.editorial.v1` e a API interna `/api/editorial-content/v1`; a aplicação não conhece nem exige o CMS de origem. A API faz validação server-side, mas os cards contextuais são renderizados após a consulta no navegador.
+- A origem configurável permanece limitada à API HTTPS pública de `blog.tag08.com.br`; falhas, contrato inválido, resposta vazia ou falta de curadoria não geram conteúdo substituto.
+- Relações entre artigos e páginas de serviço são curadoria explícita por ID estável em `EDITORIAL_RELATIONSHIPS_V1`; a lista segue vazia até a decisão editorial. Não inferir relações por palavras-chave.
+- O acervo e a rota local `/insights` permanecem preservados por enquanto. Migrar artigos e mapear slugs antes de aposentar a rota ou configurar redirecionamentos.
+- Estado consultado nesta data: o endpoint do projeto blog ainda não tem fonte editorial conectada, então a sincronização real permanece pendente da escolha e integração do backend e da curadoria de relações.
 
 ## Encerramento de bloqueios Sheets/Build — 2026-10-28
 

@@ -453,6 +453,104 @@ test.describe("apresentacao do metodo da Home", () => {
   });
 });
 
+test.describe("conteúdo oficial do YouTube na Home", () => {
+  const videoFixture = (title: string) => ({
+    id: "home-youtube-fixture",
+    title,
+    description: "Fixture sintética para validar a origem do conteúdo.",
+    duration: "01:00",
+    date: "2026-11-09",
+    category: "TESTE",
+    thumbnail: "https://i.ytimg.com/vi/fixture123/mqdefault.jpg",
+    embedCode: "fixture123",
+    videoUrl: "https://www.youtube.com/watch?v=fixture123",
+    views: "0 visualizações",
+    tagline: "FIXTURE"
+  });
+
+  test("não apresenta vídeos de fallback como publicações oficiais", async ({ page }) => {
+    await page.route("**/api/official-content*", (route) => route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        ok: true,
+        status: "fallback",
+        sources: { youtube: "fallback", googleBusiness: "fallback" },
+        youtubeVideos: [videoFixture("FIXTURE QUE NÃO DEVE SER PUBLICADA")],
+        gmbReviews: []
+      })
+    }));
+
+    const officialContentResponse = page.waitForResponse((response) =>
+      new URL(response.url()).pathname === "/api/official-content"
+    );
+    await page.goto("/#videos-recentes", { waitUntil: "domcontentloaded" });
+    await officialContentResponse;
+
+    const section = page.locator("#videos-recentes");
+    await expect(section.getByTestId("home-youtube-unavailable")).toBeVisible();
+    await expect(section.getByText("FIXTURE QUE NÃO DEVE SER PUBLICADA", { exact: true })).toHaveCount(0);
+    await expect(section.locator("iframe")).toHaveCount(0);
+    await expect(section.getByRole("link", { name: "ABRIR CANAL OFICIAL" }))
+      .toHaveAttribute("href", /^https:\/\/www\.youtube\.com\//);
+  });
+
+  test("preserva vídeos retornados pela origem oficial ao vivo", async ({ page }) => {
+    await page.route("**/_next/image?*", (route) => route.fulfill({
+      status: 200,
+      contentType: "image/png",
+      body: Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/0wAAAABJRU5ErkJggg==", "base64")
+    }));
+    await page.route("**/api/official-content*", (route) => route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        ok: true,
+        status: "live",
+        sources: { youtube: "live", googleBusiness: "fallback" },
+        youtubeVideos: [videoFixture("VÍDEO AO VIVO DA FIXTURE")],
+        gmbReviews: []
+      })
+    }));
+
+    const officialContentResponse = page.waitForResponse((response) =>
+      new URL(response.url()).pathname === "/api/official-content"
+    );
+    await page.goto("/#videos-recentes", { waitUntil: "domcontentloaded" });
+    await officialContentResponse;
+
+    const section = page.locator("#videos-recentes");
+    await expect(section.getByRole("heading", { level: 3, name: "VÍDEO AO VIVO DA FIXTURE" })).toBeVisible();
+    await expect(section.getByTestId("home-youtube-unavailable")).toHaveCount(0);
+  });
+
+  test("não mostra fallback sintético na página de Produção Audiovisual", async ({ page }) => {
+    await page.route("**/api/official-content*", (route) => route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        ok: true,
+        status: "fallback",
+        sources: { youtube: "fallback", googleBusiness: "fallback" },
+        youtubeVideos: [videoFixture("FIXTURE QUE NÃO DEVE SER PUBLICADA")],
+        gmbReviews: []
+      })
+    }));
+
+    const officialContentResponse = page.waitForResponse((response) =>
+      new URL(response.url()).pathname === "/api/official-content"
+    );
+    await page.goto("/servicos/producao-audiovisual", { waitUntil: "domcontentloaded" });
+    await officialContentResponse;
+
+    await expect(page.getByText("FIXTURE QUE NÃO DEVE SER PUBLICADA", { exact: true })).toHaveCount(0);
+    await expect(page.getByRole("link", { name: "Abrir canal oficial" })).toHaveAttribute(
+      "href",
+      /^https:\/\/www\.youtube\.com\//
+    );
+  });
+});
+
 test.describe("avaliacoes da Home", () => {
   test("mantem a avaliacao selecionada ate uma acao da pessoa", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });

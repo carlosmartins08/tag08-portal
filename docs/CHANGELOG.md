@@ -1,5 +1,9 @@
 # CHANGELOG - TAG08
 
+## 2026-11-09
+
+- Preparado o consumidor editorial entre portal e `blog.tag08.com.br` sem pressupor CMS: os blocos contextuais consultam a API interna `/api/editorial-content/v1`; a rota server-side valida o contrato `tag08.editorial.v1`, e o navegador só renderiza artigos publicados com URL canônica válida e curadoria explícita por ID. Sem origem, resposta válida ou relação curada, o bloco fica oculto e não recorre a `BLOG_POSTS`. O acervo e a rota legados `/insights` foram preservados até migração e validação do blog. O backend editorial segue sem escolha e a sincronização real permanece inativa enquanto a origem não estiver conectada.
+
 ## 2026-11-06
 
 - O rodapé passou a renderizar os campos de marca, selos, identificação institucional, direitos autorais e rótulos legais a partir das traduções existentes; os nomes acessíveis de links sociais e WhatsApp acompanham o idioma ativo. Corrigida a grafia “Agência Estratégica” e o conflito CSS que impedia a caixa alta desse descritor. O link de X agora usa rótulo e símbolo compatíveis com seu destino. Política de Privacidade e Termos de Uso permanecem em um único local no rodapé. A coluna do ecossistema alinha os rótulos às demais colunas e mantém setas para indicar destinos externos. A família de marcas sociais ainda requer decisão visual própria; o componente ItsHoverActionIcon existente é de ações (envio/código), não de logotipos. Os textos extensos dos modais legais não foram traduzidos sem revisão aprovada.
