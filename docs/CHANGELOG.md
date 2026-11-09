@@ -1,5 +1,9 @@
 # CHANGELOG - TAG08
 
+## 2026-11-06
+
+- O rodapé passou a renderizar os campos de marca, selos, identificação institucional, direitos autorais e rótulos legais a partir das traduções existentes; os nomes acessíveis de links sociais e WhatsApp acompanham o idioma ativo. Corrigida a grafia “Agência Estratégica” e o conflito CSS que impedia a caixa alta desse descritor. O link de X agora usa rótulo e símbolo compatíveis com seu destino. Política de Privacidade e Termos de Uso permanecem em um único local no rodapé. A coluna do ecossistema alinha os rótulos às demais colunas e mantém setas para indicar destinos externos. A família de marcas sociais ainda requer decisão visual própria; o componente ItsHoverActionIcon existente é de ações (envio/código), não de logotipos. Os textos extensos dos modais legais não foram traduzidos sem revisão aprovada.
+
 ## 2026-10-28
 
 - A raiz do projeto voltou a `main` (`c1aab5f`); o commit P2 não aprovado ficou isolado em `recovery/p2-its-hover-unapproved-0f78d21` e `origin/p2-home-cases-consolidation`, sem upstream de publicação. O stash redundante foi removido após confirmação de que seu conteúdo está na P2.

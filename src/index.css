@@ -400,6 +400,11 @@ main section[id] {
   text-transform: none;
 }
 
+/* The brand descriptor is intentionally uppercase; keep the override local. */
+.footer-brand-statement {
+  text-transform: uppercase;
+}
+
 .tag08-system {
   font-family: var(--font-mono) !important;
   font-size: var(--type-meta-size) !important;

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useState, useEffect, useRef, type MouseEvent, type ReactNode } from "react";
-import { ArrowUpRight, ChevronDown, MessageSquare, Phone, Mail, MapPin, ShieldAlert, CheckCircle, Eye, Type, RefreshCw, Instagram, Linkedin, Youtube, Facebook, Twitter, Cookie, Lock, Scale, FileText } from "lucide-react";
+import { ArrowUpRight, ChevronDown, MessageSquare, Phone, Mail, MapPin, ShieldAlert, CheckCircle, Eye, Type, RefreshCw, Instagram, Linkedin, Youtube, Facebook, Cookie, Lock, Scale, FileText } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
 import { getLocalizedNetworkLinks, TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_PINTEREST_URL, TAG08_OFFICIAL_YOUTUBE_URL, TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
@@ -26,7 +26,7 @@ type FooterCopy = {
   ecosystemTitle: string;
   serviceLinks: Array<{ label: string; path: string }>;
   programLinks: Array<{ label: string; path: string }>;
-  institutionLinks: Array<{ label: string; path?: string; action?: "privacy" | "terms" }>;
+  institutionLinks: Array<{ label: string; path: string }>;
   contactEmailTitle: string;
   contactPhoneTitle: string;
   locationTitle: string;
@@ -36,6 +36,9 @@ type FooterCopy = {
   rightsLine: string;
   legalLabelPrivacy: string;
   legalLabelTerms: string;
+  socialFollowLabel: string;
+  youtubeSubscribeLabel: string;
+  openWhatsAppLabel: string;
   modalClose: string;
   modalAgree: string;
   cookieTitle: string;
@@ -92,8 +95,6 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
       { label: "Insights Estratégicos", path: "/insights" },
       { label: "Trabalhe Conosco", path: "/trabalhe-conosco" },
       { label: "Contato", path: "/contato" },
-      { label: "Política de Privacidade", action: "privacy" },
-      { label: "Termos de Uso", action: "terms" },
     ],
     contactEmailTitle: "Envie um e-mail",
     contactPhoneTitle: "WhatsApp",
@@ -104,6 +105,9 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
     rightsLine: "TAG08. Todos os direitos reservados.",
     legalLabelPrivacy: "Política de Privacidade",
     legalLabelTerms: "Termos de Uso",
+    socialFollowLabel: "Siga-nos no",
+    youtubeSubscribeLabel: "Inscreva-se no YouTube",
+    openWhatsAppLabel: "Abrir WhatsApp",
     modalClose: "Fechar",
     modalAgree: "Entendi e concordo",
     cookieTitle: "Privacidade & Cookies (LGPD)",
@@ -145,8 +149,6 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
       { label: "Insights Estratégicos", path: "/insights" },
       { label: "Careers", path: "/trabalhe-conosco" },
       { label: "Contact", path: "/contato" },
-      { label: "Privacy Policy", action: "privacy" },
-      { label: "Termos de Uso", action: "terms" },
     ],
     contactEmailTitle: "Send an email",
     contactPhoneTitle: "WhatsApp",
@@ -157,6 +159,9 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
     rightsLine: "TAG08. All rights reserved.",
     legalLabelPrivacy: "Privacy Policy",
     legalLabelTerms: "Termos de Uso",
+    socialFollowLabel: "Follow us on",
+    youtubeSubscribeLabel: "Subscribe to TAG08 on YouTube",
+    openWhatsAppLabel: "Open WhatsApp",
     modalClose: "Close",
     modalAgree: "I understand and agree",
     cookieTitle: "Privacy & Cookies (LGPD)",
@@ -198,8 +203,6 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
       { label: "Insights Estratégicos", path: "/insights" },
       { label: "Trabaja con nosotros", path: "/trabalhe-conosco" },
       { label: "Contacto", path: "/contato" },
-      { label: "Política de Privacidad", action: "privacy" },
-      { label: "Términos de Uso", action: "terms" },
     ],
     contactEmailTitle: "Enviar un correo",
     contactPhoneTitle: "WhatsApp",
@@ -210,6 +213,9 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
     rightsLine: "TAG08. Todos los derechos reservados.",
     legalLabelPrivacy: "Política de Privacidad",
     legalLabelTerms: "Términos de Uso",
+    socialFollowLabel: "Síguenos en",
+    youtubeSubscribeLabel: "Suscríbete a TAG08 en YouTube",
+    openWhatsAppLabel: "Abrir WhatsApp",
     modalClose: "Cerrar",
     modalAgree: "Entendido y acepto",
     cookieTitle: "Privacidad & Cookies (LGPD)",
@@ -425,24 +431,14 @@ export default function Footer({ onNavigate, language }: FooterProps) {
     </li>
   ));
   const renderInstitutionLinks = () => copy.institutionLinks.map((link) => (
-    <li key={link.label + (link.path ?? link.action)}>
-      {link.action === "privacy" || link.action === "terms" ? (
-        <button
-          type="button"
-          onClick={() => setActiveModal(link.action)}
-          className="inline-flex min-h-11 items-center text-left text-zinc-300 transition-colors hover:text-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
-        >
-          {link.label}
-        </button>
-      ) : link.path ? (
-        <a
-          href={link.path}
-          onClick={(event) => handleInternalFooterLink(event, link.path!)}
-          className={internalLinkClassName}
-        >
-          {link.label}
-        </a>
-      ) : null}
+    <li key={link.path}>
+      <a
+        href={link.path}
+        onClick={(event) => handleInternalFooterLink(event, link.path)}
+        className={internalLinkClassName}
+      >
+        {link.label}
+      </a>
     </li>
   ));
   const renderEcosystemLinks = () => ecosystemLinks.map((property) => (
@@ -451,10 +447,10 @@ export default function Footer({ onNavigate, language }: FooterProps) {
         href={property.url}
         target="_blank"
         rel="noreferrer"
-        className="inline-flex min-h-11 items-center gap-1.5 text-left text-zinc-400 transition-colors hover:text-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+        className="inline-flex min-h-11 items-center gap-1.5 text-left text-zinc-300 transition-colors hover:text-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
       >
+        <span>{property.label}</span>
         <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-        {property.label}
       </a>
     </li>
   ));
@@ -476,12 +472,12 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                 height={36}
                 className="h-9 w-auto max-w-[190px]"
               />
-              <p className="text-zinc-400 text-xs tag08-meta tracking-widest mt-2 uppercase">
-                Agência Estratégica
+              <p className="footer-brand-statement text-zinc-400 text-xs tag08-meta tracking-widest mt-2">
+                {copy.brandStatement}
               </p>
             </div>
             <p className="text-zinc-300 text-sm leading-relaxed">
-              &ldquo;Posicionamento com Propósito. Estratégia com Performance.&rdquo;
+              &ldquo;{copy.brandQuote}&rdquo;
             </p>
             <div className="flex flex-col gap-4">
               <div className="flex flex-wrap gap-2.5">
@@ -491,7 +487,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("Instagram", "https://www.instagram.com/tag08.com.br/", "footer-social")}
               className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
-                  aria-label="Siga-nos no Instagram"
+                  aria-label={`${copy.socialFollowLabel} Instagram`}
                 >
                   <Instagram className="w-4 h-4" />
                 </a>
@@ -501,7 +497,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/company/tag08-com-br/", "footer-social")}
               className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
-                  aria-label="Siga-nos no LinkedIn"
+                  aria-label={`${copy.socialFollowLabel} LinkedIn`}
                 >
                   <Linkedin className="w-4 h-4" />
                 </a>
@@ -511,7 +507,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("YouTube", TAG08_OFFICIAL_YOUTUBE_URL, "footer-social")}
               className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
-                  aria-label="Inscreva-se no YouTube"
+                  aria-label={copy.youtubeSubscribeLabel}
                 >
                   <Youtube className="w-4 h-4" />
                 </a>
@@ -521,7 +517,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("Facebook", "https://www.facebook.com/tag08.com.br", "footer-social")}
               className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
-                  aria-label="Siga-nos no Facebook"
+                  aria-label={`${copy.socialFollowLabel} Facebook`}
                 >
                   <Facebook className="w-4 h-4" />
                 </a>
@@ -531,9 +527,11 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("X", "https://x.com/TAG08_com_br", "footer-social")}
               className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
-                  aria-label="Siga-nos no Twitter"
+                  aria-label={`${copy.socialFollowLabel} X`}
                 >
-                  <Twitter className="w-4 h-4" />
+                  <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <path d="M5 4 19 20M19 4 5 20" />
+                  </svg>
                 </a>
                 <a
                   href={TAG08_OFFICIAL_PINTEREST_URL}
@@ -541,7 +539,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("Pinterest", TAG08_OFFICIAL_PINTEREST_URL, "footer-social")}
               className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 pointer-events-auto"
-                  aria-label="Siga-nos no Pinterest"
+                  aria-label={`${copy.socialFollowLabel} Pinterest`}
                 >
                   <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
                     <path d="M12 0C5.37 0 0 5.37 0 12c0 5.08 3.16 9.4 7.63 11.13-.1-.95-.2-2.4.04-3.43.22-.93 1.4-5.93 1.4-5.93s-.36-.72-.36-1.77c0-1.66.96-2.9 2.17-2.9 1.02 0 1.51.77 1.51 1.68 0 1.03-.65 2.56-.99 3.98-.28 1.18.6 2.15 1.76 2.15 2.11 0 3.73-2.22 3.73-5.43 0-2.84-2.04-4.83-4.96-4.83-3.38 0-5.37 2.54-5.37 5.16 0 1.02.4 2.12.89 2.72.1.12.11.23.08.35-.1.38-.3.1.25-.4l-.08-.34c-.11-.47-.79-3.23-.79-3.49 0-.28-.1-.52-.33-.65-1.57-.92-2.53-3.04-2.53-4.9 0-3.98 2.9-7.64 8.35-7.64 4.38 0 7.8 3.13 7.8 7.3 0 4.36-2.75 7.87-6.57 7.87-1.28 0-2.49-.67-2.9-1.45 0 0-.64 2.43-.79 3.03-.29 1.1-.85 2.22-1.32 2.99 1.12.35 2.3.54 3.52.54 6.63 0 12-5.37 12-12S18.63 0 12 0z"/>
@@ -595,7 +593,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
 
           {/* Secondary ecosystem navigation */}
           <div className="order-3 lg:order-none">
-            <h4 className="mb-4 hidden font-display text-sm font-semibold tracking-wide text-zinc-300 lg:block">
+            <h4 className="mb-4 hidden font-display text-sm font-semibold tracking-wide text-white lg:block">
               {copy.ecosystemTitle}
             </h4>
             <ul className="hidden space-y-1 font-sans text-sm lg:block">
@@ -640,7 +638,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                               className={`min-h-11 transition-colors inline-flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 ${
                                 contact.key === "brazil" ? "text-white hover:text-brand" : "text-white hover:text-brand-secondary"
                               }`}
-                              aria-label={`Abrir WhatsApp ${contact.label}`}
+                              aria-label={`${copy.openWhatsAppLabel} ${contact.label}`}
                             >
                               <span className="text-sm leading-none" title={contact.country.name}>
                                 <CountryFlag country={contact.country} />
@@ -674,33 +672,34 @@ export default function Footer({ onNavigate, language }: FooterProps) {
         <div className="grid grid-cols-1 items-center gap-4 border-y border-white/[0.08] py-6 font-sans text-sm text-zinc-300 md:grid-cols-2 md:gap-6">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="text-xs font-medium uppercase tracking-wide text-zinc-300">TAG08 ACADEMY &amp; PROCESS:</span>
-            <span className="flex items-center gap-1.5 text-sm text-zinc-300"><CheckCircle className="h-3.5 w-3.5 text-brand" /> Atendimento Consultivo</span>
-            <span className="flex items-center gap-1.5 text-sm text-zinc-300"><CheckCircle className="h-3.5 w-3.5 text-brand" /> Entrega sistêmica</span>
+            {copy.brandRows.map((row) => (
+              <span key={row} className="flex items-center gap-1.5 text-sm text-zinc-300"><CheckCircle className="h-3.5 w-3.5 text-brand" /> {row}</span>
+            ))}
           </div>
           <div className="max-w-xl text-sm leading-relaxed text-zinc-300 md:ml-auto md:text-right">
-            TAG08 CONSULTORIA E MARKETING LTDA &bull; CNPJ: 26.828.685/0001-52 &bull; Registrado e Desenvolvido de Forma Estratégica
+            {copy.companyLine}
           </div>
         </div>
 
         {/* Legal / Copyright row */}
         <div className="flex flex-col items-center justify-between gap-4 pt-6 font-sans text-sm text-zinc-300 md:flex-row">
-          <p>&copy; {new Date().getFullYear()} TAG08. Todos os direitos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} {copy.rightsLine}</p>
           <div className="flex gap-6">
             <button
               type="button"
-              aria-label="Abrir política de privacidade"
+              aria-label={copy.legalLabelPrivacy}
               onClick={() => setActiveModal("privacy")}
               className="hover:text-brand transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
             >
-              Política de Privacidade
+              {copy.legalLabelPrivacy}
             </button>
             <button
               type="button"
-              aria-label="Abrir termos de uso"
+              aria-label={copy.legalLabelTerms}
               onClick={() => setActiveModal("terms")}
               className="hover:text-brand transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
             >
-              Termos de Uso
+              {copy.legalLabelTerms}
             </button>
           </div>
         </div>
