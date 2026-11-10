@@ -27,6 +27,7 @@ export type RouteKey =
   | "servicos-producao-audiovisual"
   | "servicos-assessoria-marketing-digital-estrategico"
   | "contato"
+  | "privacidade"
   | "trabalhe-conosco"
   | "insights"
   | "case-study-detail"
@@ -190,6 +191,19 @@ export const routeRegistry: RouteDefinition[] = [
     title: "Contato | Fale com a TAG08",
     description:
       "Entenda o melhor caminho estratégico para o crescimento de sua marca com clareza, responsabilidade e evolução constante."
+  },
+  {
+    key: "privacidade",
+    canonicalPath: "/privacidade",
+    routeCategory: "aux",
+    // Publicly accessible while factual/legal details are reviewed; do not index a draft policy.
+    indexable: false,
+    includeInSitemap: false,
+    changefreq: "monthly",
+    priority: "0.3",
+    title: "Aviso de Privacidade | TAG08",
+    description: "Saiba quais informações são tratadas nos formulários da TAG08 e como acessar as preferências de privacidade do site.",
+    publishedLocales: ["pt"]
   },
   {
     key: "trabalhe-conosco",

@@ -744,6 +744,16 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                     <p className="text-xs text-zinc-400 font-semibold uppercase tracking-wider bg-white/[0.03] px-3 py-1.5 rounded-md border border-white/[0.05]">
                       Última atualização: Junho de 2026 &bull; TAG08 Consultoria e Marketing LTDA
                     </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveModal(null);
+                        handleLinkClick("/privacidade");
+                      }}
+                      className="text-sm text-brand-secondary underline underline-offset-4 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60"
+                    >
+                      Consultar aviso de privacidade do site
+                    </button>
                     <p>
                       Na <strong>TAG08</strong>, a privacidade e a segurança dos seus dados pessoais são prioridades absolutas. Tratamos todas as informações coletadas com confidencialidade extrema, ética e rigor técnico.
                     </p>

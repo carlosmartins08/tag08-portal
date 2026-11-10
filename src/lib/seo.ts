@@ -70,6 +70,7 @@ export const buildOrganizationSchema = () => ({
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "TAG08",
+  description: "A TAG08 conecta estratégia, conteúdo, tecnologia e processos para organizar a presença digital de empresas com clareza, método e execução responsável.",
   url: PRIMARY_SITE_DOMAIN,
   logo: `${PRIMARY_SITE_DOMAIN}/brand/logos/logo-horizontal-no-tagline-primary.svg`,
   contactPoint: TAG08_WHATSAPP_CONTACTS.map((contact) => ({

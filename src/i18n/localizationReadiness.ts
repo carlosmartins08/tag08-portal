@@ -40,6 +40,7 @@ export const localizationReadiness: Record<RouteKey, RouteLocalizationReadiness>
   "servicos-producao-audiovisual": pending("src/features/site/pages/ProducaoAudiovisual.tsx"),
   "servicos-assessoria-marketing-digital-estrategico": pending("src/features/site/pages/AssessoriaMarketingDigitalEstrategico.tsx"),
   contato: pending("src/features/site/pages/Contato.tsx"),
+  privacidade: pending("src/features/site/pages/Privacidade.tsx"),
   "trabalhe-conosco": pending("src/features/site/pages/TrabalheConosco.tsx"),
   insights: pending("src/features/site/pages/Insights.tsx"),
   "case-study-detail": pending("src/features/site/pages/CaseStudyDetail.tsx"),

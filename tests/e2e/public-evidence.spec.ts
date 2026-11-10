@@ -64,6 +64,31 @@ test("Unknown URLs and technical /404 use the real HTTP not-found", async ({ pag
   }
 });
 
+test("Unknown URLs negotiate Markdown for agent clients without changing HTTP 404", async ({ page }) => {
+  const markdown = await page.request.get("/pt/p21-markdown-not-found", {
+    headers: { Accept: "text/markdown" }
+  });
+
+  expect(markdown.status()).toBe(404);
+  expect(new URL(markdown.url()).pathname).toBe("/p21-markdown-not-found");
+  expect(markdown.headers()["content-type"]).toMatch(/^text\/markdown;\s*charset=utf-8/i);
+  expect(markdown.headers()["vary"]).toMatch(/(?:^|,\s*)Accept(?:,|$)/i);
+  expect(markdown.headers()["cache-control"]).toBe("no-store");
+  expect(markdown.headers()["x-robots-tag"]).toMatch(/noindex/i);
+  const markdownBody = await markdown.text();
+  expect(markdownBody.length).toBeGreaterThanOrEqual(20);
+  expect(markdownBody).toMatch(/não corresponde a uma página disponível/i);
+  expect(markdownBody).toContain("(/llms.txt)");
+
+  const html = await page.request.get("/p21-markdown-not-found", {
+    headers: { Accept: "text/html" }
+  });
+  expect(html.status()).toBe(404);
+  expect(html.headers()["content-type"]).toMatch(/^text\/html/i);
+  expect(html.headers()["cache-control"]).toBe("no-store");
+  expect(await html.text()).toContain("<html");
+});
+
 test("Approved alias keeps its permanent redirect to the canonical route", async ({ page }) => {
   const response = await page.request.get("/process-intelligence", { maxRedirects: 0 });
   expect(response.status()).toBe(308);
