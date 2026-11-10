@@ -520,7 +520,9 @@ test.describe("conteúdo oficial do YouTube na Home", () => {
     await officialContentResponse;
 
     const section = page.locator("#videos-recentes");
-    await expect(section.getByRole("heading", { level: 3, name: "VÍDEO AO VIVO DA FIXTURE" })).toBeVisible();
+    const liveVideoTitles = section.getByRole("heading", { level: 3, name: "VÍDEO AO VIVO DA FIXTURE" });
+    await expect(liveVideoTitles).toHaveCount(2);
+    await expect(liveVideoTitles.first()).toBeVisible();
     await expect(section.getByTestId("home-youtube-unavailable")).toHaveCount(0);
   });
 
