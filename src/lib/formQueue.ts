@@ -1,5 +1,7 @@
 "use client";
 
+import { confirmsSheetsSubmission } from "./sheetsDeliveryConfirmation";
+
 const STORAGE_KEY = "tag08_form_delivery_queue_v1";
 const MAX_ATTEMPTS = 5;
 const MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
@@ -53,7 +55,9 @@ export const flushFormQueue = async () => {
         headers: { "Content-Type": "application/json", "Idempotency-Key": entry.idempotencyKey },
         body: JSON.stringify(entry.payload)
       });
-      if (!response.ok) throw new Error("delivery_failed");
+      const body = await response.json().catch(() => null);
+      const kind = entry.endpoint === "/api/contact" ? "contact" : "talent";
+      if (!confirmsSheetsSubmission(response.status, body, kind)) throw new Error("delivery_unconfirmed");
     } catch {
       remaining.push({ ...entry, attempts: entry.attempts + 1 });
     }

@@ -157,7 +157,7 @@ export const trackFormStart = (params: { form_name: string; form_surface: string
 
 export const trackFormSubmit = (params: { form_name: string; form_surface: string; status: "success" | "queued" | "validation_error" | "error"; language?: string; page_path?: string }) => {
   trackAnalyticsEvent("form_submit", params);
-  if (params.status === "success" || params.status === "queued") {
+  if (params.status === "success") {
     trackAnalyticsEvent("generate_lead", { form_name: params.form_name, form_surface: params.form_surface, delivery_status: params.status, language: params.language, page_path: params.page_path });
   }
 };
