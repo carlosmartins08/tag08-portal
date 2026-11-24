@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { CASE_STUDIES } from "../src/data";
 import { getVisibleEvidence, PUBLIC_EVIDENCE } from "../src/content/publicEvidence";
 import { canonicalizeRoute, getContentReviewRouteByPath, getLocalizedPath, getRouteByPath, indexedRoutePaths, publicRoutePaths, renderableRoutePaths, routeRegistry, routeSitemapMeta, staticRouteSegments } from "../src/config/routeRegistry";
-import { getRouteSeo } from "../src/lib/seo";
+import { buildOrganizationSchema, getRouteSeo } from "../src/lib/seo";
 import { i18n } from "../src/i18n/siteI18n";
 import { readFileSync } from "node:fs";
 
@@ -12,6 +12,14 @@ const notFoundPageSource = readFileSync("src/app/[locale]/not-found.tsx", "utf8"
 const onboardingPageSource = readFileSync("src/app/[locale]/cliente/onboarding/page.tsx", "utf8");
 const socialPlansSource = readFileSync("src/features/site/pages/GestaoRedesSociais.tsx", "utf8");
 const sebraetecSource = readFileSync("src/features/site/pages/Sebraetec.tsx", "utf8");
+
+const organizationSchema = buildOrganizationSchema();
+assert.equal(organizationSchema["@type"], "Organization");
+assert.equal(
+  organizationSchema.description,
+  "A TAG08 conecta estratégia, conteúdo, tecnologia e processos para organizar a presença digital de empresas com clareza, método e execução responsável."
+);
+assert.ok(JSON.parse(JSON.stringify(organizationSchema)).description, "Organization JSON-LD must serialize with a description");
 
 assert.match(socialPlansSource, /12 posts mensais para Instagram e Facebook, com planejamento mensal/);
 assert.match(socialPlansSource, /uma captação de conteúdo por mês/);

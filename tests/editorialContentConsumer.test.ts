@@ -12,7 +12,7 @@ const envelope: EditorialContentEnvelopeV1 = {
   contractVersion: EDITORIAL_CONTRACT_VERSION,
   generatedAt: "2026-10-28T12:00:00.000Z",
   items: [{
-    id: "wp:6214",
+    id: "article:branding-v1",
     slug: "article-v1",
     title: "Artigo de demonstração de contrato",
     summary: "Resumo sintético para teste.",
@@ -36,7 +36,7 @@ test("v1 accepts normalized published content and its canonical blog URL", () =>
 test("portal cards are distributed only by an explicit stable-ID relationship", () => {
   const parsed = parseEditorialContentEnvelopeV1(envelope);
   assert.ok(parsed);
-  assert.equal(selectEditorialCardsForSection(parsed, "service:branding", { "wp:6214": ["service:branding"] }).length, 1);
+  assert.equal(selectEditorialCardsForSection(parsed, "service:branding", { "article:branding-v1": ["service:branding"] }).length, 1);
   assert.equal(selectEditorialCardsForSection(parsed, "home").length, 0);
 });
 
@@ -83,7 +83,7 @@ test("portal reader is inert without configuration and handles empty content, tr
   let title = envelope.items[0].title;
   const read = () => readEditorialProjection("service:branding", {
     apiUrl: "https://blog.tag08.com.br/api/v1/editorial-content",
-    relationships: { "wp:6214": ["service:branding"] },
+    relationships: { "article:branding-v1": ["service:branding"] },
     fetcher: async () => Response.json({ ...envelope, items: [{ ...envelope.items[0], title }] }),
   });
   const first = await read();

@@ -15,6 +15,7 @@ const DesenvolvimentoWeb = dynamic(() => import("./pages/DesenvolvimentoWeb"));
 const Branding = dynamic(() => import("./pages/Branding"));
 const GestaoRedesSociais = dynamic(() => import("./pages/GestaoRedesSociais"));
 const Contato = dynamic(() => import("./pages/Contato"));
+const Privacidade = dynamic(() => import("./pages/Privacidade"));
 const TrabalheConosco = dynamic(() => import("./pages/TrabalheConosco"));
 const Insights = dynamic(() => import("./pages/Insights"));
 const CaseStudyDetail = dynamic(() => import("./pages/CaseStudyDetail"));
@@ -49,6 +50,7 @@ export default function RouteContent({ path, locale }: { path: string; locale: R
   else if (path === "/servicos/gestao-de-redes-sociais") page = <GestaoRedesSociais onNavigate={navigate} />;
   else if (path === "/servicos/producao-audiovisual") page = <ProducaoAudiovisual onNavigate={navigate} />;
   else if (path === "/contato") page = <Contato locale={locale} />;
+  else if (path === "/privacidade") page = <Privacidade onNavigate={navigate} />;
   else if (path === "/trabalhe-conosco") page = <TrabalheConosco onNavigate={navigate} locale={locale} />;
   else if (path === "/insights") page = <Insights onNavigate={navigate} />;
   else if (path === "/sebraetec-impulsionando-empreendedores") page = <Sebraetec onNavigate={navigate} />;

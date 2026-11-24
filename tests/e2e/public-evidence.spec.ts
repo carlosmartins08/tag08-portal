@@ -15,6 +15,7 @@ test("produção apresenta os cinco perfis autorizados sem expor os demais em in
   await page.goto("/sobre", { waitUntil: "domcontentloaded" });
   await expect(page.getByTestId("content-review-banner")).toHaveCount(0);
   await expect(page.getByTestId("team-profiles").locator("[data-evidence-key^='team/']")).toHaveCount(5);
+  await expect(page.getByTestId("team-profiles").locator("img[src*='images.unsplash.com']")).toHaveCount(0);
   await expect(page.getByTestId("team-profiles").getByRole("link", { name: /LinkedIn em nova guia/ })).toHaveCount(5);
   await expect(page.getByRole("heading", { name: "Profissionais que podem integrar os projetos." })).toBeVisible();
   await expect(page.getByText("Como a TAG08 atua.", { exact: true })).toHaveCount(0);
@@ -40,6 +41,7 @@ test("produção mostra provas aprovadas somente em Assessoria", async ({ page }
   await expect(page.getByTestId("mini-cases")).toBeVisible();
   await expect(page.getByTestId("mini-cases").locator("[data-evidence-key^='mini-case/']")).toHaveCount(6);
   await expect(page.getByTestId("internal-testimonials")).toBeVisible();
+  await expect(page.getByTestId("internal-testimonials").locator("img[src*='images.unsplash.com']")).toHaveCount(0);
 });
 
 test("produção não publica case em investigação na URL direta", async ({ page }) => {
@@ -60,6 +62,31 @@ test("Unknown URLs and technical /404 use the real HTTP not-found", async ({ pag
     expect(robots.every((content) => content?.includes("noindex"))).toBe(true);
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
   }
+});
+
+test("Unknown URLs negotiate Markdown for agent clients without changing HTTP 404", async ({ page }) => {
+  const markdown = await page.request.get("/pt/p21-markdown-not-found", {
+    headers: { Accept: "text/markdown" }
+  });
+
+  expect(markdown.status()).toBe(404);
+  expect(new URL(markdown.url()).pathname).toBe("/p21-markdown-not-found");
+  expect(markdown.headers()["content-type"]).toMatch(/^text\/markdown;\s*charset=utf-8/i);
+  expect(markdown.headers()["vary"]).toMatch(/(?:^|,\s*)Accept(?:,|$)/i);
+  expect(markdown.headers()["cache-control"]).toBe("no-store");
+  expect(markdown.headers()["x-robots-tag"]).toMatch(/noindex/i);
+  const markdownBody = await markdown.text();
+  expect(markdownBody.length).toBeGreaterThanOrEqual(20);
+  expect(markdownBody).toMatch(/não corresponde a uma página disponível/i);
+  expect(markdownBody).toContain("(/llms.txt)");
+
+  const html = await page.request.get("/p21-markdown-not-found", {
+    headers: { Accept: "text/html" }
+  });
+  expect(html.status()).toBe(404);
+  expect(html.headers()["content-type"]).toMatch(/^text\/html/i);
+  expect(html.headers()["cache-control"]).toBe("no-store");
+  expect(await html.text()).toContain("<html");
 });
 
 test("Approved alias keeps its permanent redirect to the canonical route", async ({ page }) => {

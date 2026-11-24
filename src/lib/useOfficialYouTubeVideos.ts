@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import {
-  FALLBACK_YOUTUBE_VIDEOS,
+  selectLiveOfficialYouTubeVideos,
   type OfficialContentApiResponse,
   type OfficialContentSourceStatus,
   type OfficialYouTubeVideo
@@ -18,7 +18,12 @@ let pendingRequest: Promise<YouTubeSnapshot> | null = null;
 
 const fallbackSnapshot: YouTubeSnapshot = {
   source: "fallback",
-  videos: FALLBACK_YOUTUBE_VIDEOS
+  videos: []
+};
+
+const errorSnapshot: YouTubeSnapshot = {
+  source: "error",
+  videos: []
 };
 
 const getOfficialYouTubeVideos = async (): Promise<YouTubeSnapshot> => {
@@ -30,16 +35,16 @@ const getOfficialYouTubeVideos = async (): Promise<YouTubeSnapshot> => {
     const request = fetch("/api/official-content", { headers: { Accept: "application/json" } })
       .then(async (response) => {
         if (!response.ok) {
-          return fallbackSnapshot;
+          return errorSnapshot;
         }
 
         const payload = (await response.json()) as OfficialContentApiResponse;
         return {
-          source: payload.sources.youtube,
-          videos: payload.youtubeVideos.length ? payload.youtubeVideos : FALLBACK_YOUTUBE_VIDEOS
+          source: payload.sources?.youtube ?? "error",
+          videos: selectLiveOfficialYouTubeVideos(payload.sources?.youtube ?? "error", payload.youtubeVideos)
         };
       })
-      .catch(() => fallbackSnapshot)
+      .catch(() => errorSnapshot)
       .then((snapshot) => {
         if (snapshot.source === "live") {
           cachedSnapshot = snapshot;

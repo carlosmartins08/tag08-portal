@@ -1,7 +1,29 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync } from "node:fs";
-import { getVideoDescriptionPreview } from "../src/lib/officialContent";
+import { getVideoDescriptionPreview, selectLiveOfficialYouTubeVideos } from "../src/lib/officialContent";
+
+test("a Home só seleciona vídeos recebidos de uma origem oficial ao vivo", () => {
+  const videos = [{
+    id: "official-video",
+    title: "Vídeo oficial",
+    description: "Descrição",
+    duration: "01:00",
+    date: "2026-11-09",
+    category: "Institucional",
+    thumbnail: "/video.jpg",
+    embedCode: "official123",
+    videoUrl: "https://www.youtube.com/watch?v=official123",
+    views: "10 visualizações",
+    tagline: "Oficial"
+  }];
+
+  assert.deepEqual(selectLiveOfficialYouTubeVideos("fallback", videos), []);
+  assert.deepEqual(selectLiveOfficialYouTubeVideos("error", videos), []);
+  assert.deepEqual(selectLiveOfficialYouTubeVideos("disabled", videos), []);
+  assert.equal(selectLiveOfficialYouTubeVideos("live", videos), videos);
+  assert.deepEqual(selectLiveOfficialYouTubeVideos("live", []), []);
+});
 
 test("video previews remove raw links and preserve a bounded word-safe summary", () => {
   const preview = getVideoDescriptionPreview(
@@ -25,6 +47,9 @@ test("audiovisual and social pages consume the shared live YouTube source", () =
   assert.match(audiovisualPage, /useOfficialYouTubeVideos\(4\)/);
   assert.match(socialPage, /useOfficialYouTubeVideos\(3\)/);
   assert.match(hook, /fetch\("\/api\/official-content"/);
+  assert.match(hook, /selectLiveOfficialYouTubeVideos/);
+  assert.doesNotMatch(hook, /FALLBACK_YOUTUBE_VIDEOS/);
+  assert.match(audiovisualPage, /youtubeSource === "live" && youtubeVideos\.length > 0/);
   assert.doesNotMatch(audiovisualPage, /youtubeShorts/);
   assert.doesNotMatch(socialPage, /youtubeShorts/);
 });

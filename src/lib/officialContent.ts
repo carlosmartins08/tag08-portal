@@ -52,6 +52,11 @@ export type OfficialContentApiResponse = {
   error?: string;
 };
 
+export const selectLiveOfficialYouTubeVideos = (
+  source: OfficialContentSourceStatus,
+  videos: OfficialYouTubeVideo[] | undefined
+): OfficialYouTubeVideo[] => source === "live" && Array.isArray(videos) ? videos : [];
+
 const DEFAULT_YOUTUBE_VIDEO_URL = TAG08_OFFICIAL_YOUTUBE_URL;
 
 const fallbackAvatarGradient = (name: string) => {
