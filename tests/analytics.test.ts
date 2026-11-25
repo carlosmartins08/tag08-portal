@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   getMonitoringConfig,
+  resolveTagManagerId,
   sanitizeAnalyticsParams,
   shouldEmitGenerateLead,
   trackFormSubmit,
@@ -13,10 +14,21 @@ import {
 
 const withBrowser = async (
   preferences: string | null,
-  run: (browser: { dataLayer: unknown[]; scripts: { id: string; src: string }[]; storage: Map<string, string>; window: Record<string, unknown> }) => void | Promise<void>
+  run: (browser: { dataLayer: unknown[]; scripts: { id: string; src: string }[]; storage: Map<string, string>; window: Record<string, unknown> }) => void | Promise<void>,
+  environment: { deployment?: string; gtmId?: string; hostname?: string } = {}
 ) => {
   const previousWindow = Object.getOwnPropertyDescriptor(globalThis, "window");
   const previousDocument = Object.getOwnPropertyDescriptor(globalThis, "document");
+  const previousDeploymentEnvironment = process.env.NEXT_PUBLIC_TAG08_DEPLOYMENT_ENV;
+  const previousConfiguredGtmId = process.env.NEXT_PUBLIC_GTM_ID;
+  if ("deployment" in environment) {
+    if (environment.deployment === undefined) delete process.env.NEXT_PUBLIC_TAG08_DEPLOYMENT_ENV;
+    else process.env.NEXT_PUBLIC_TAG08_DEPLOYMENT_ENV = environment.deployment;
+  } else {
+    process.env.NEXT_PUBLIC_TAG08_DEPLOYMENT_ENV = "production";
+  }
+  if (environment.gtmId === undefined) delete process.env.NEXT_PUBLIC_GTM_ID;
+  else process.env.NEXT_PUBLIC_GTM_ID = environment.gtmId;
   const storage = new Map<string, string>();
   if (preferences !== null) storage.set("tag08_lgpd_consent", preferences);
   const dataLayer: unknown[] = [];
@@ -24,7 +36,10 @@ const withBrowser = async (
   const fakeWindow = {
     dataLayer,
     localStorage: { getItem: (key: string) => storage.get(key) ?? null },
-    location: { origin: "https://tag08.com.br" },
+    location: {
+      origin: environment.hostname ? `https://${environment.hostname}` : "https://tag08.com.br",
+      hostname: environment.hostname ?? "tag08.com.br"
+    },
     innerWidth: 1280
   };
   const fakeDocument = {
@@ -41,6 +56,10 @@ const withBrowser = async (
     else Reflect.deleteProperty(globalThis, "window");
     if (previousDocument) Object.defineProperty(globalThis, "document", previousDocument);
     else Reflect.deleteProperty(globalThis, "document");
+    if (previousDeploymentEnvironment === undefined) delete process.env.NEXT_PUBLIC_TAG08_DEPLOYMENT_ENV;
+    else process.env.NEXT_PUBLIC_TAG08_DEPLOYMENT_ENV = previousDeploymentEnvironment;
+    if (previousConfiguredGtmId === undefined) delete process.env.NEXT_PUBLIC_GTM_ID;
+    else process.env.NEXT_PUBLIC_GTM_ID = previousConfiguredGtmId;
   }
 };
 
@@ -62,10 +81,36 @@ test("analytics accepts only approved non-identifying parameters and rejects PII
   }), { simulator_id: "hosting_price", metric_value: 1200 });
 });
 
-test("analytics exposes one GTM container and no direct GA measurement ID", () => {
-  const config = getMonitoringConfig();
-  assert.equal(config.gtmId, "GTM-NNL7DMP");
-  assert.equal("ga4Id" in config, false);
+test("GTM destination is explicit and production-only outside staging", () => {
+  assert.equal(resolveTagManagerId("production", undefined, "tag08.com.br"), "GTM-NNL7DMP");
+  assert.equal(resolveTagManagerId("production", undefined, "www.tag08.com.br"), "GTM-NNL7DMP");
+  assert.equal(resolveTagManagerId("production", "GTM-UNAPPROVED", "tag08.com.br"), null);
+  assert.equal(resolveTagManagerId("production", "not-an-id", "tag08.com.br"), null);
+  assert.equal(resolveTagManagerId("production", "", "tag08.com.br"), "GTM-NNL7DMP");
+  assert.equal(resolveTagManagerId("production", undefined, "localhost"), null);
+  assert.equal(resolveTagManagerId("staging", "GTM-STAGING01", "staging.tag08.com.br"), "GTM-STAGING01");
+  assert.equal(resolveTagManagerId("staging", "invalid", "staging.tag08.com.br"), null);
+  assert.equal(resolveTagManagerId("staging", "GTM-NNL7DMP", "staging.tag08.com.br"), null);
+  assert.equal(resolveTagManagerId("staging", undefined, "staging.tag08.com.br"), null);
+  assert.equal(resolveTagManagerId("test", "GTM-NNL7DMP", "tag08.com.br"), null);
+  assert.equal(resolveTagManagerId(undefined, "GTM-NNL7DMP", "localhost"), null);
+});
+
+test("analytics exposes the approved production GTM only on the official production host", async () => {
+  await withBrowser(consent(true, false), () => {
+    const config = getMonitoringConfig();
+    assert.equal(config.gtmId, "GTM-NNL7DMP");
+    assert.equal("ga4Id" in config, false);
+  }, { deployment: "production" });
+});
+
+test("missing deployment identity and production GTM on a local host fail closed", async () => {
+  await withBrowser(consent(true, true), ({ scripts, dataLayer }) => {
+    assert.equal(initializeTagManager(), false);
+    assert.equal(scripts.length, 0);
+    trackPageView({ page_location: "https://localhost/local", page_path: "/local", page_title: "Local" });
+    assert.equal(eventNames(dataLayer).includes("page_view"), false);
+  }, { deployment: undefined, gtmId: "GTM-NNL7DMP", hostname: "localhost" });
 });
 
 test("consent defaults to denied before GTM, updates by category, and loads once after opt-in", async () => {

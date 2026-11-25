@@ -9,6 +9,15 @@ Estado: implementação local alinhada ao contrato em 2026-11-24. O contêiner G
 - A preferência `performance` controla `analytics_storage`. A preferência `marketing` controla `ad_storage`, `ad_user_data` e `ad_personalization`. Cada mudança e revogação atualiza as categorias; a biblioteca só carrega após consentimento de desempenho ou marketing.
 - Sem consentimento, eventos da aplicação não são enfileirados nem enviados. Uma concessão posterior não recria retroativamente o `page_view` da página já aberta.
 
+## Isolamento por ambiente
+
+- A identidade de ambiente é `TAG08_DEPLOYMENT_ENV` e é incorporada pelo Next.js no build como `NEXT_PUBLIC_TAG08_DEPLOYMENT_ENV`. Defina-a no ambiente de build: `production` para produção e `staging` para staging. Se estiver ausente, o build usa `test`, que não carrega GTM.
+- Em produção, o código só permite `GTM-NNL7DMP` nos hosts `tag08.com.br` e `www.tag08.com.br`. Um ID produtivo configurado explicitamente precisa coincidir com esse ID aprovado; um ID diferente falha fechado.
+- Em staging, GTM exige um ID explícito, sintaticamente válido e diferente do contêiner de produção; ele é recusado nos hosts oficiais de produção. Não há contêiner de staging homologado por esta implementação.
+- Em desenvolvimento local, testes, CI ou identidade ausente/desconhecida, GTM fica desativado, mesmo que `NEXT_PUBLIC_GTM_ID` contenha o identificador produtivo. A identificação do build sozinha não autoriza GTM em host local.
+- Testes de navegador devem bloquear requisições HTTP(S) externas e falhar se tentarem carregar GTM. Essa barreira protege testes mesmo se configuração ou artefato de build estiver incorreto; ela não substitui o bloqueio por identidade no runtime.
+- Como o Next.js incorpora `env` durante o build, mudar `TAG08_DEPLOYMENT_ENV` apenas no processo Node iniciado depois do build não altera o valor embutido no cliente. Configure e valide a variável no estágio que executa `next build`; não coloque segredos nessa variável.
+
 ## Contrato dos eventos da aplicação
 
 | Etapa | Evento | Regra |

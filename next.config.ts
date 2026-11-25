@@ -23,6 +23,11 @@ const contentSecurityPolicyHeader = process.env.CSP_REPORT_ONLY === "true"
   ? "Content-Security-Policy-Report-Only"
   : "Content-Security-Policy";
 const nextConfig: NextConfig = {
+  // Expose only the non-secret deployment identity so client-side analytics
+  // can fail closed outside the explicitly configured production host.
+  env: {
+    NEXT_PUBLIC_TAG08_DEPLOYMENT_ENV: process.env.TAG08_DEPLOYMENT_ENV ?? "test"
+  },
   // Keep the local development cache isolated from production builds.
   distDir: isDevelopment ? ".next-dev" : ".next",
   allowedDevOrigins: ["127.0.0.1"],

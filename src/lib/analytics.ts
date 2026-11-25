@@ -11,14 +11,44 @@ type WindowWithAnalytics = Window & typeof globalThis & {
   __tag08ConsentSnapshot?: string;
 };
 
-const GTM_ID = (process.env.NEXT_PUBLIC_GTM_ID ?? "GTM-NNL7DMP").trim();
+const PRODUCTION_GTM_ID = "GTM-NNL7DMP";
+const PRODUCTION_HOSTNAMES = new Set(["tag08.com.br", "www.tag08.com.br"]);
+const GTM_ID_PATTERN = /^GTM-[A-Z0-9]+$/;
 export const GSC_VERIFICATION_TOKEN = (process.env.NEXT_PUBLIC_GSC_VERIFICATION ?? "").trim();
 const GTM_SCRIPT_ID = "tag08-google-tag-manager";
 let lastTrackedPageViewKey = "";
 const emittedSubmissionKeys = new Set<string>();
 
 const getWindow = () => window as WindowWithAnalytics;
-const hasTagManager = () => Boolean(GTM_ID) && typeof window !== "undefined";
+export const resolveTagManagerId = (
+  deploymentEnvironment: string | undefined,
+  configuredId: string | undefined,
+  hostname: string | undefined
+) => {
+  const environment = deploymentEnvironment?.trim().toLowerCase();
+  const id = configuredId?.trim();
+  const host = hostname?.trim().toLowerCase();
+
+  if (environment === "production") {
+    if (!host || !PRODUCTION_HOSTNAMES.has(host)) return null;
+    if (!id) return PRODUCTION_GTM_ID;
+    return id === PRODUCTION_GTM_ID ? id : null;
+  }
+
+  if (environment === "staging") {
+    if (!host || PRODUCTION_HOSTNAMES.has(host) || !id || !GTM_ID_PATTERN.test(id) || id === PRODUCTION_GTM_ID) return null;
+    return id;
+  }
+
+  return null;
+};
+
+const getTagManagerId = () => resolveTagManagerId(
+  process.env.NEXT_PUBLIC_TAG08_DEPLOYMENT_ENV,
+  process.env.NEXT_PUBLIC_GTM_ID,
+  typeof window === "undefined" ? undefined : window.location.hostname
+);
+const hasTagManager = () => Boolean(getTagManagerId()) && typeof window !== "undefined";
 const hasTrackingConsent = () => {
   if (typeof window === "undefined") return false;
   const preferences = readCookiePreferences();
@@ -120,13 +150,14 @@ export const sanitizeAnalyticsParams = (params: AnalyticsParams = {}) =>
   }, {});
 
 export const getMonitoringConfig = () => ({
-  gtmId: GTM_ID || null,
+  gtmId: getTagManagerId(),
   searchConsoleVerificationToken: GSC_VERIFICATION_TOKEN || null
 });
 
 /** Loads the single GTM container only after opt-in to analytics or marketing. */
 export const initializeTagManager = () => {
-  if (!hasTagManager()) return false;
+  const gtmId = getTagManagerId();
+  if (!gtmId || typeof window === "undefined") return false;
   ensureDefaultConsent();
   updateGoogleAnalyticsConsent();
   if (!hasTrackingConsent()) return false;
@@ -138,7 +169,7 @@ export const initializeTagManager = () => {
   const script = document.createElement("script");
   script.id = GTM_SCRIPT_ID;
   script.async = true;
-  script.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(GTM_ID)}`;
+  script.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmId)}`;
   document.head.appendChild(script);
   win.__tag08TagManagerConfigured = true;
   return true;
