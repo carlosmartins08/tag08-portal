@@ -1,15 +1,18 @@
-import { CASE_STUDIES } from "../data";
-import { isContentReviewMode, isEvidenceVisible } from "../content/publicEvidence";
+
+import { BLOG_POSTS, CASE_STUDIES } from "../data";
+import { isEvidenceVisible } from "../content/publicEvidence";
 import { isLocaleTranslationReady } from "../i18n/localizationReadiness";
 
 export const ROUTE_LOCALES = ["pt", "en", "es"] as const;
 export type RouteLocale = (typeof ROUTE_LOCALES)[number];
 
-// Supported URL locales. A non-PT locale is released only as a complete public-site bundle.
+/** Visitor-facing locales released across the existing public site. */
+export const PUBLIC_VISITOR_LOCALES: readonly RouteLocale[] = ["pt", "en", "es"];
+
+// Public availability and search indexing are independent release decisions.
 /**
- * A locale is publishable only after the complete page and its conversion flows
- * have been reviewed in that language. This prevents a translated shell or a
- * shortened landing page from being indexed as if it were an equivalent page.
+ * Only reviewed locales are indexable. A translated route can be available to
+ * visitors first, while staying out of the sitemap and search index.
  */
 export const INDEXABLE_LOCALES: readonly RouteLocale[] = ["pt"];
 
@@ -55,7 +58,7 @@ export interface RouteDefinition {
   description: string;
   isServicePage?: boolean;
   dynamic?: boolean;
-  /** Locales with complete, reviewed page content. Defaults to Portuguese. */
+  /** Locales available to visitors after route-level translation review. */
   publishedLocales?: readonly RouteLocale[];
 }
 
@@ -70,7 +73,8 @@ export const routeRegistry: RouteDefinition[] = [
     priority: "1.0",
     title: "TAG08 | Estratégia Digital, Conteúdo, Web e Processos",
     description:
-      "A TAG08 ajuda empresas a organizar posicionamento, conteúdo, redes sociais, sites e processos para crescer no digital com clareza, método e execução responsável."
+      "A TAG08 ajuda empresas a organizar posicionamento, conteúdo, redes sociais, sites e processos para crescer no digital com clareza, método e execução responsável.",
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "sobre",
@@ -82,7 +86,8 @@ export const routeRegistry: RouteDefinition[] = [
     priority: "0.8",
     title: "Sobre a TAG08 | Estratégia, método e execução responsável",
     description:
-      "Conheça a TAG08, empresa que conecta estratégia, conteúdo, tecnologia e processos para organizar presença digital com clareza, método e execução responsável."
+      "Conheça a TAG08, empresa que conecta estratégia, conteúdo, tecnologia e processos para organizar presença digital com clareza, método e execução responsável.",
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "servicos",
@@ -95,7 +100,8 @@ export const routeRegistry: RouteDefinition[] = [
     title: "Serviços TAG08 | Redes Sociais, Marca, Vídeo e Web",
     description:
       "Conheça as soluções da TAG08 para presença digital recorrente, identidade e reposicionamento, audiovisual, sites e unidade digital.",
-    isServicePage: true
+    isServicePage: true,
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "servicos-process-intelligence",
@@ -109,7 +115,8 @@ export const routeRegistry: RouteDefinition[] = [
     title: "Process Intelligence | Organização e Clareza para Crescer - TAG08",
     description:
       "Transforme o caos operacional em clareza por meio de diagnóstico ativo, playbooks estruturados e inteligência de processos para dar escala à sua marca.",
-    isServicePage: true
+    isServicePage: true,
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "servicos-process-activation",
@@ -123,7 +130,8 @@ export const routeRegistry: RouteDefinition[] = [
     title: "Process Activation | Governança Operacional e Execução Real - TAG08",
     description:
       "Ative, ensine e sustente seus processos operacionais com acompanhamento estratégico focado em execução real e performance consistente.",
-    isServicePage: true
+    isServicePage: true,
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "servicos-desenvolvimento-web",
@@ -137,7 +145,8 @@ export const routeRegistry: RouteDefinition[] = [
     title: "Desenvolvimento Web | Sites que Posicionam, Explicam e Convertem - TAG08",
     description:
       "Websites corporativos, portais institucionais leves e landing pages de conversão de alta performance moldados com design estratégico.",
-    isServicePage: true
+    isServicePage: true,
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "servicos-branding-identidade",
@@ -151,7 +160,8 @@ export const routeRegistry: RouteDefinition[] = [
     title: "Branding e Identidade Visual | Comunique Valor de Marca - TAG08",
     description:
       "Construção de marcas com clareza, posicionamento e identidade visual estratégica de valor para comunicar o real propósito com consistência.",
-    isServicePage: true
+    isServicePage: true,
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "servicos-gestao-redes-sociais",
@@ -165,7 +175,8 @@ export const routeRegistry: RouteDefinition[] = [
     title: "Gestão de Redes Sociais Estratégica | TAG08",
     description:
       "Planejamento editorial, conteúdo, Reels e acompanhamento para marcas que precisam de presença digital consistente, organizada e com menos improviso.",
-    isServicePage: true
+    isServicePage: true,
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "servicos-producao-audiovisual",
@@ -178,7 +189,8 @@ export const routeRegistry: RouteDefinition[] = [
     title: "Produção Audiovisual & Cobertura de Eventos Corporativos | TAG08",
     description:
       "Não fazemos apenas registro bonito. Posicionamos sua marca com tomadas cinematográficas táticas, roteiros integrados e pós-produção ágil.",
-    isServicePage: true
+    isServicePage: true,
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "contato",
@@ -190,7 +202,8 @@ export const routeRegistry: RouteDefinition[] = [
     priority: "0.7",
     title: "Contato | Fale com a TAG08",
     description:
-      "Entenda o melhor caminho estratégico para o crescimento de sua marca com clareza, responsabilidade e evolução constante."
+      "Entenda o melhor caminho estratégico para o crescimento de sua marca com clareza, responsabilidade e evolução constante.",
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "privacidade",
@@ -203,7 +216,7 @@ export const routeRegistry: RouteDefinition[] = [
     priority: "0.3",
     title: "Aviso de Privacidade | TAG08",
     description: "Saiba quais informações são tratadas nos formulários da TAG08 e como acessar as preferências de privacidade do site.",
-    publishedLocales: ["pt"]
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "trabalhe-conosco",
@@ -215,7 +228,8 @@ export const routeRegistry: RouteDefinition[] = [
     priority: "0.6",
     title: "Banco de Talentos TAG08 | Candidatura Espontânea",
     description:
-      "Compartilhe seu perfil profissional com o Banco de Talentos da TAG08 para consideração em oportunidades futuras, sem garantia de vaga, contato ou contratação."
+      "Compartilhe seu perfil profissional com o Banco de Talentos da TAG08 para consideração em oportunidades futuras, sem garantia de vaga, contato ou contratação.",
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "insights",
@@ -228,8 +242,21 @@ export const routeRegistry: RouteDefinition[] = [
     priority: "0.9",
     title: "Insights Estratégicos | TAG08",
     description:
-      "Insights originais de marketing estratégico, identidade de marca, desenvolvimento web de alta performance e otimização de processos operacionais."
+      "Insights originais de marketing estratégico, identidade de marca, desenvolvimento web de alta performance e otimização de processos operacionais.",
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
+  ...BLOG_POSTS.map((post) => ({
+    key: "insights" as const,
+    canonicalPath: `/insights/${post.slug}`,
+    routeCategory: "page" as const,
+    indexable: true,
+    includeInSitemap: true,
+    changefreq: "monthly" as const,
+    priority: "0.7",
+    title: `${post.title} | TAG08`,
+    description: post.excerpt,
+    publishedLocales: PUBLIC_VISITOR_LOCALES
+  })),
   {
     key: "case-study-detail",
     canonicalPath: "/casos/:id",
@@ -266,7 +293,8 @@ export const routeRegistry: RouteDefinition[] = [
     priority: "0.7",
     title: "Sebraetec | Consulte as condições regionais — TAG08",
     description:
-      "O Sebrae pode subsidiar parte do projeto, conforme regras, disponibilidade e aprovação aplicáveis na sua região. Consulte as condições vigentes do Sebraetec junto ao Sebrae da sua região."
+      "O Sebrae pode subsidiar parte do projeto, conforme regras, disponibilidade e aprovação aplicáveis na sua região. Consulte as condições vigentes do Sebraetec junto ao Sebrae da sua região.",
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "programa-afiliados",
@@ -278,7 +306,8 @@ export const routeRegistry: RouteDefinition[] = [
     priority: "0.6",
     title: "Programa de Parceria | TAG08",
     description:
-      "Conheça as modalidades Parceiro de Indicação e Parceiro Comercial Ativo da TAG08, suas responsabilidades e regras de comissão condicionadas ao recebimento."
+      "Conheça as modalidades Parceiro de Indicação e Parceiro Comercial Ativo da TAG08, suas responsabilidades e regras de comissão condicionadas ao recebimento.",
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "hospedagem-manutencao-sites",
@@ -290,7 +319,8 @@ export const routeRegistry: RouteDefinition[] = [
     priority: "0.7",
     title: "Hospedagem e Manutenção de Sites: Soluções Completas para o Sucesso Online - Agência TAG08",
     description:
-      "Descubra soluções inovadoras em hospedagem e manutenção de sites com a Agência TAG08. Expertise, segurança e suporte personalizado para elevar seu negócio no mundo digital."
+      "Descubra soluções inovadoras em hospedagem e manutenção de sites com a Agência TAG08. Expertise, segurança e suporte personalizado para elevar seu negócio no mundo digital.",
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "servicos-assessoria-marketing-digital-estrategico",
@@ -304,7 +334,8 @@ export const routeRegistry: RouteDefinition[] = [
     description:
       "Assessoria Estratégica de Negócios para organizar posicionamento, prioridades, comunicação, canais e planejamento antes de ampliar a execução.",
     isServicePage: true,
-    aliases: ["/assessoria-marketing-digital-estrategico"]
+    aliases: ["/assessoria-marketing-digital-estrategico"],
+    publishedLocales: PUBLIC_VISITOR_LOCALES
   },
   {
     key: "not-found",
@@ -324,11 +355,6 @@ const publishedCaseStudies = CASE_STUDIES.filter((caseStudy) =>
   isEvidenceVisible(`case-study/${caseStudy.id}`, `/casos/${caseStudy.id}`)
 );
 const caseStudyPaths = new Set(publishedCaseStudies.map((caseStudy) => `/casos/${caseStudy.id}`));
-const reviewCaseStudyPaths = new Set(
-  CASE_STUDIES
-    .filter((caseStudy) => isEvidenceVisible(`case-study/${caseStudy.id}`, `/casos/${caseStudy.id}`, "review"))
-    .map((caseStudy) => `/casos/${caseStudy.id}`)
-);
 
 routeRegistry.forEach((route) => {
   route.aliases?.forEach((alias) => {
@@ -416,22 +442,12 @@ export const getRouteByPath = (path: string): RouteDefinition | undefined => {
   return routeRegistry.find((route) => matchesDynamicRoute(normalizedPath, route));
 };
 
-/** Development-only route resolver for local review. It never contributes to public paths or the sitemap. */
-export const getContentReviewRouteByPath = (path: string): RouteDefinition | undefined => {
-  const normalizedPath = normalizePath(path);
-  if (!isContentReviewMode() || !reviewCaseStudyPaths.has(normalizedPath)) return undefined;
-  return routeRegistry.find((route) => route.dynamic && route.pathPattern === "/casos/:id");
-};
-
-const isLocaleBundleReady = (locale: RouteLocale): boolean =>
-  locale === "pt" || routeRegistry
-    .filter((entry) => entry.indexable)
-    .every((entry) => isLocaleTranslationReady(entry.key, locale));
-
 export const getPublishedLocales = (route: RouteDefinition): readonly RouteLocale[] =>
-  (route.publishedLocales ?? INDEXABLE_LOCALES).filter(
-    (locale) => isLocaleTranslationReady(route.key, locale) && isLocaleBundleReady(locale)
-  );
+  (route.publishedLocales ?? ["pt"]).filter((locale) => isLocaleTranslationReady(route.key, locale));
+
+/** Public translations can be browsable before their SEO release is approved. */
+export const getIndexableLocales = (route: RouteDefinition): readonly RouteLocale[] =>
+  getPublishedLocales(route).filter(isLocaleIndexable);
 
 export const isRouteLocalePublished = (route: RouteDefinition, locale: RouteLocale): boolean =>
   getPublishedLocales(route).includes(locale);

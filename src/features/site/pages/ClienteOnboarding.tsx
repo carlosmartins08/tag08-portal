@@ -28,7 +28,7 @@ import {
   Send,
   MessageCircle,
   FolderDot
-} from "lucide-react";
+} from "../../../components/DooIcons";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { activateOnKeyboard } from "../../../lib/keyboard";
 import {

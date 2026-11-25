@@ -230,6 +230,15 @@ async function assertNoSeriousAxeViolations(page: Page) {
   expect(blockers, JSON.stringify(blockers, null, 2)).toEqual([]);
 }
 
+async function assertNoAxeColorContrastViolations(page: Page, selector: string) {
+  const results = await new AxeBuilder({ page })
+    .include(selector)
+    .withRules(["color-contrast"])
+    .analyze();
+
+  expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
+}
+
 test.describe("rotas indexaveis", () => {
   test.setTimeout(180_000);
 
@@ -307,6 +316,84 @@ test.describe("acessibilidade das jornadas criticas", () => {
           .filter((color) => color !== "rgb(221, 248, 29)")
       );
       expect(invalidBrandColors, "O token visual de destaque deve manter contraste sobre o tema escuro.").toEqual([]);
+    });
+  }
+});
+
+test.describe("contraste AA nos pares locais medidos", () => {
+  for (const viewport of viewports) {
+    test.describe(`em ${viewport.label}`, () => {
+      test("cartão de critério de Serviços mantém contraste de texto", async ({ page }) => {
+        await page.setViewportSize(viewport);
+        await page.goto("/servicos", { waitUntil: "domcontentloaded" });
+        await assertNoAxeColorContrastViolations(page, "#service-criterion-card");
+      });
+
+      test("CTA diagnóstica da Home mantém contraste na superfície clara", async ({ page }) => {
+        await page.setViewportSize(viewport);
+        await page.goto("/", { waitUntil: "domcontentloaded" });
+        const cta = page.getByTestId("home-diagnostic-cta");
+        await expect(cta).toBeVisible();
+        await assertNoAxeColorContrastViolations(page, '[data-testid="home-diagnostic-cta"]');
+
+        const contrast = await cta.locator(".tag08-kicker").evaluate((kicker) => {
+          const card = kicker.closest<HTMLElement>("[data-testid='home-diagnostic-cta']");
+          if (!card) return null;
+          const colorChannels = (color: string) => color.match(/[\d.]+/g)?.slice(0, 3).map(Number) ?? [];
+          const luminance = (color: string) => {
+            const channels = colorChannels(color).map((channel) => {
+              const value = channel / 255;
+              return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+            });
+            if (channels.length !== 3) return null;
+            return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+          };
+          const textColor = getComputedStyle(kicker).color;
+          const surfaceColor = getComputedStyle(card).backgroundColor;
+          const textLuminance = luminance(textColor);
+          const surfaceLuminance = luminance(surfaceColor);
+          if (textLuminance === null || surfaceLuminance === null) return null;
+          const [lighter, darker] = [textLuminance, surfaceLuminance].sort((a, b) => b - a);
+          return { ratio: (lighter + 0.05) / (darker + 0.05), textColor, surfaceColor };
+        });
+
+        expect(contrast, "O contraste renderizado do kicker deve ser mensurável.").not.toBeNull();
+        expect(contrast!.ratio, JSON.stringify(contrast)).toBeGreaterThanOrEqual(4.5);
+      });
+
+      test("superfície clara de Talentos mantém contraste de texto", async ({ page }) => {
+        await page.setViewportSize(viewport);
+        await page.goto("/trabalhe-conosco", { waitUntil: "domcontentloaded" });
+        await assertNoAxeColorContrastViolations(page, "#talents-light-content");
+      });
+
+      test("foco do seletor de área mantém 3:1 sobre a superfície branca", async ({ page }) => {
+        await page.setViewportSize(viewport);
+        await page.goto("/trabalhe-conosco", { waitUntil: "domcontentloaded" });
+
+        const contrast = await page.locator('label[for="talent-area-design"]').evaluate((label) => {
+          const input = label.querySelector("input");
+          input?.focus();
+          const shadow = getComputedStyle(label).boxShadow;
+          const ringColor = shadow.match(/rgb\(([^)]+)\)/)?.[1];
+          const backgroundColor = getComputedStyle(label).backgroundColor.match(/rgba?\(([^)]+)\)/)?.[1];
+          if (!ringColor || !backgroundColor) return null;
+
+          const luminance = (color: string) => {
+            const channels = color.split(",").slice(0, 3).map((channel) => {
+              const value = Number(channel.trim()) / 255;
+              return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+            });
+            return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+          };
+
+          const [lighter, darker] = [luminance(ringColor), luminance(backgroundColor)].sort((a, b) => b - a);
+          return (lighter + 0.05) / (darker + 0.05);
+        });
+
+        expect(contrast, "O seletor deve manter um indicador de foco mensurável.").not.toBeNull();
+        expect(contrast).toBeGreaterThanOrEqual(3);
+      });
     });
   }
 });
@@ -709,11 +796,12 @@ test.describe("navegação, sobreposições e controles acessíveis", () => {
     await page.goto("/", { waitUntil: "domcontentloaded" });
     await page.waitForTimeout(750);
 
-    const trigger = page.getByRole("button", { name: "Abrir política de privacidade" });
+    const trigger = page.getByRole("button", { name: "Política de Privacidade", exact: true });
     await trigger.click();
     const dialog = page.getByRole("dialog", { name: /Política de Privacidade/ });
     await expect(dialog).toHaveAttribute("aria-modal", "true");
-    await expect(dialog.getByRole("button", { name: "Fechar modal", exact: true })).toBeFocused();
+    await expect(dialog.getByRole("button", { name: "Fechar", exact: true })).toBeFocused();
+    await expect(dialog.getByRole("button", { name: "Entendi e concordo", exact: true })).toBeVisible();
 
     const focusable = dialog.locator("button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])");
     await page.keyboard.press("Shift+Tab");
@@ -731,13 +819,13 @@ test.describe("navegação, sobreposições e controles acessíveis", () => {
   test("preferências de cookies expõem estado pressionado", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/", { waitUntil: "domcontentloaded" });
-    await expect(page.getByRole("region", { name: "Privacidade & Cookies (LGPD)" })).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByRole("region", { name: /Política de Privacidade & Proteção de Dados \(LGPD\)/ })).toBeVisible({ timeout: 10_000 });
 
     await page.getByRole("button", { name: /Abrir personalização de cookies/ }).click();
-    const performance = page.getByRole("button", { name: "Ativar cookies de desempenho" });
+    const performance = page.getByRole("button", { name: "Ativar Métricas & Desempenho" });
     await expect(performance).toHaveAttribute("aria-pressed", "false");
     await performance.click();
-    await expect(page.getByRole("button", { name: "Desativar cookies de desempenho" })).toHaveAttribute("aria-pressed", "true");
+    await expect(page.getByRole("button", { name: "Desativar Métricas & Desempenho" })).toHaveAttribute("aria-pressed", "true");
   });
 });
 
@@ -772,6 +860,16 @@ test.describe("regressões de responsividade e movimento", () => {
     await page.locator("#talent-name").waitFor();
     await page.getByRole("link", { name: "Enviar meu perfil", exact: true }).first().click();
 
+    const expectMinimumControlHeight = async (selectors: string[]) => {
+      for (const width of [375, 390]) {
+        await page.setViewportSize({ width, height: 844 });
+        for (const selector of selectors) {
+          const box = await page.locator(selector).boundingBox();
+          expect(box?.height ?? 0, `${selector} should have a 44px touch target at ${width}px`).toBeGreaterThanOrEqual(44);
+        }
+      }
+    };
+
     await page.getByRole("button", { name: /Continuar/ }).click();
     await expect(page.getByRole("alert").filter({ hasText: /Selecione pelo menos uma/ })).toBeVisible();
     await page.locator("#talent-area-design").check();
@@ -779,15 +877,18 @@ test.describe("regressões de responsividade e movimento", () => {
     await page.locator("#talent-area-sales_sdr").check();
     await page.locator("#talent-area-other_specialties").check();
     await page.getByLabel("Qual especialidade?").fill("Pesquisa de usuarios");
+    await expectMinimumControlHeight(["#talent-other-specialty", "#talent-name", "#talent-email", "#talent-phone"]);
     await page.getByLabel("Nome Completo *").fill("Pessoa Sintetica QA");
     await page.getByLabel("E-mail de Contato *").fill("qa@example.test");
     await page.getByLabel("WhatsApp de Contato *").fill("+5500000000000");
     await page.getByRole("button", { name: /Continuar/ }).click();
 
     await expect(page.getByLabel(/Perfil do LinkedIn/)).toBeVisible();
+    await expectMinimumControlHeight(["#talent-linkedin", "#talent-resume-url", "#talent-portfolio"]);
     await page.getByRole("button", { name: /Continuar/ }).click();
     await page.getByLabel(/Experi.ncia profissional/).fill("Experiencia sintetica em projetos.");
     await page.getByLabel("Disponibilidade (opcional)").fill("A combinar");
+    await expectMinimumControlHeight(["#talent-availability"]);
     await page.getByLabel(/O que motiva seu interesse/).fill("Interesse em colaborar em oportunidades futuras.");
     await page.getByLabel(/Trabalhos ou projetos relevantes/).fill("Projeto sintetico de design.");
     await page.getByLabel(/Conte brevemente uma experi.ncia relacionada/).fill("Experiencia sintetica em vendas.");
@@ -802,7 +903,7 @@ test.describe("regressões de responsividade e movimento", () => {
     await expect(review).toContainText("Projeto sintetico de design.");
     await expect(review).toContainText("Experiencia sintetica em vendas.");
     expect(submittedPayload).toBeUndefined();
-    for (const width of [390, 768, 1440]) {
+    for (const width of [375, 390, 768, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBeTruthy();
     }

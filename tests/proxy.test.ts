@@ -34,6 +34,22 @@ test("proxy redirects aliases and preserves language query semantics", () => {
   assert.equal(language.headers.get("location"), "https://tag08.test/en/sobre?utm_source=test");
 });
 
+test("proxy keeps published foreign locales and redirects known unpublished routes", () => {
+  const affiliate = proxy(new NextRequest("https://tag08.test/en/programa-afiliados"));
+  assert.equal(affiliate.headers.get("x-middleware-next"), "1");
+
+  const about = proxy(new NextRequest("https://tag08.test/es/sobre"));
+  assert.equal(about.headers.get("x-middleware-next"), "1");
+
+  const onboarding = proxy(new NextRequest("https://tag08.test/en/cliente/onboarding"));
+  assert.equal(onboarding.status, 308);
+  assert.equal(onboarding.headers.get("location"), "https://tag08.test/cliente/onboarding");
+
+  const unknown = proxy(new NextRequest("https://tag08.test/en/not-a-real-page"));
+  assert.equal(unknown.headers.get("location"), null);
+  assert.equal(unknown.headers.get("x-middleware-next"), "1");
+});
+
 test("proxy negotiates Markdown only for missing routes explicitly requesting it", async () => {
   const response = proxy(new NextRequest("https://tag08.test/not-a-real-page", {
     headers: { accept: "text/markdown" }

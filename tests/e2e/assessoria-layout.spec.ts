@@ -43,7 +43,7 @@ for (const viewport of viewports) {
 test("Assessoria mantém CTA inicial acima do banner LGPD no mobile", async ({ page }) => {
   await openPage(page, 390, 844);
   const cta = page.getByTestId("assessoria-hero-contact");
-  const banner = page.getByRole("region", { name: "Privacidade & Cookies (LGPD)" });
+  const banner = page.getByRole("region", { name: /Política de Privacidade & Proteção de Dados \(LGPD\)/ });
   await expect(banner).toBeVisible({ timeout: 3_000 });
 
   const [ctaBox, bannerBox] = await Promise.all([cta.boundingBox(), banner.boundingBox()]);

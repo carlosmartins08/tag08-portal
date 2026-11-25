@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
-import { CASE_STUDIES } from "../src/data";
-import { getVisibleEvidence, PUBLIC_EVIDENCE } from "../src/content/publicEvidence";
-import { canonicalizeRoute, getContentReviewRouteByPath, getLocalizedPath, getRouteByPath, indexedRoutePaths, publicRoutePaths, renderableRoutePaths, routeRegistry, routeSitemapMeta, staticRouteSegments } from "../src/config/routeRegistry";
-import { buildOrganizationSchema, getRouteSeo } from "../src/lib/seo";
+import { BLOG_POSTS, CASE_STUDIES } from "../src/data";
+import { getVisibleEvidence, isEvidenceVisible, PUBLIC_EVIDENCE } from "../src/content/publicEvidence";
+import { canonicalizeRoute, getIndexableLocales, getLocalizedPath, getPublishedLocales, getRouteByPath, indexedRoutePaths, isRouteLocalePublished, publicRoutePaths, renderableRoutePaths, routeRegistry, routeSitemapMeta, staticRouteSegments, INDEXABLE_LOCALES } from "../src/config/routeRegistry";
+import { buildArticleSchema, buildOrganizationSchema, getRouteSeo } from "../src/lib/seo";
 import { i18n } from "../src/i18n/siteI18n";
 import { readFileSync } from "node:fs";
 
@@ -13,6 +13,27 @@ const onboardingPageSource = readFileSync("src/app/[locale]/cliente/onboarding/p
 const socialPlansSource = readFileSync("src/features/site/pages/GestaoRedesSociais.tsx", "utf8");
 const sebraetecSource = readFileSync("src/features/site/pages/Sebraetec.tsx", "utf8");
 
+assert.deepEqual(INDEXABLE_LOCALES, ["pt"], "Only reviewed Portuguese content may be indexed until EN/ES approval");
+const visitorLocaleRouteKeys = new Set([
+  "home", "sobre", "servicos", "servicos-process-intelligence", "servicos-process-activation",
+  "servicos-desenvolvimento-web", "servicos-branding-identidade", "servicos-gestao-redes-sociais",
+  "servicos-producao-audiovisual", "contato", "privacidade", "trabalhe-conosco", "insights",
+  "sebraetec-impulsionando-empreendedores", "programa-afiliados", "hospedagem-manutencao-sites",
+  "servicos-assessoria-marketing-digital-estrategico"
+]);
+for (const route of routeRegistry) {
+  const isVisitorLocalized = visitorLocaleRouteKeys.has(route.key);
+  assert.deepEqual(getPublishedLocales(route), isVisitorLocalized ? ["pt", "en", "es"] : ["pt"], `${route.canonicalPath} locale availability must match route review`);
+  assert.deepEqual(getIndexableLocales(route), ["pt"], `${route.canonicalPath} EN/ES must remain outside search indexing`);
+  assert.equal(isRouteLocalePublished(route, "en"), isVisitorLocalized, `${route.canonicalPath} English availability must match route review`);
+  assert.equal(isRouteLocalePublished(route, "es"), isVisitorLocalized, `${route.canonicalPath} Spanish availability must match route review`);
+}
+assert.ok(staticRouteSegments().some((segments) => segments.join("/") === "en"), "Reviewed English Home must be generated");
+assert.ok(staticRouteSegments().some((segments) => segments.join("/") === "es"), "Reviewed Spanish Home must be generated");
+assert.ok(staticRouteSegments().some((segments) => segments.join("/") === "en/sobre"), "English public pages must be generated");
+assert.ok(staticRouteSegments().some((segments) => segments.join("/") === "es/sobre"), "Spanish public pages must be generated");
+assert.ok(staticRouteSegments().some((segments) => segments.join("/") === "en/insights/conteudo-estrategico-apoia-decisoes"), "Translated legacy Insight routes must be generated");
+
 const organizationSchema = buildOrganizationSchema();
 assert.equal(organizationSchema["@type"], "Organization");
 assert.equal(
@@ -20,6 +41,11 @@ assert.equal(
   "A TAG08 conecta estratégia, conteúdo, tecnologia e processos para organizar a presença digital de empresas com clareza, método e execução responsável."
 );
 assert.ok(JSON.parse(JSON.stringify(organizationSchema)).description, "Organization JSON-LD must serialize with a description");
+assert.match(buildOrganizationSchema("en").description, /TAG08 brings strategy, content, technology, and processes together/);
+assert.match(buildOrganizationSchema("es").description, /TAG08 conecta estrategia, contenido, tecnología y procesos/);
+assert.equal(buildArticleSchema(`/insights/${BLOG_POSTS[0].slug}`, "pt")?.inLanguage, "pt-BR");
+assert.equal(buildArticleSchema(`/insights/${BLOG_POSTS[0].slug}`, "en")?.inLanguage, "en", "translated Insights must carry English schema metadata");
+assert.equal(buildArticleSchema(`/insights/${BLOG_POSTS[0].slug}`, "es")?.inLanguage, "es-ES", "translated Insights must carry Spanish schema metadata");
 
 assert.match(socialPlansSource, /12 posts mensais para Instagram e Facebook, com planejamento mensal/);
 assert.match(socialPlansSource, /uma captação de conteúdo por mês/);
@@ -80,6 +106,12 @@ for (const path of renderableRoutePaths) {
     continue;
   }
 
+  if (route.key === "insights") {
+    assert.match(routeContentSource, /route\?\.key === "insights"\) page = <Insights onNavigate=\{navigate\} locale=\{locale\} articleSlug=/,
+      "The Hub and its individual articles share the registered Insights renderer");
+    continue;
+  }
+
   const escapedPath = path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const renderer = routeContentSource.match(new RegExp(`(?:if|else if) \\(path === "${escapedPath}"\\) page = <([A-Za-z0-9_]+)`))?.[1];
   assert.ok(renderer, `Renderable route has no explicit RouteContent renderer: ${path}`);
@@ -105,8 +137,10 @@ assert.equal(notFoundRegistryEntry?.key, "not-found", "Direct /404 currently res
 assert.equal(notFoundRegistryEntry?.indexable, false, "The /404 registry entry remains non-indexable");
 assert.equal(notFoundRegistryEntry?.includeInSitemap, false, "The /404 registry entry remains excluded from the sitemap");
 assert.doesNotMatch(routeContentSource, /path === "\/404"/, "RouteContent currently has no dedicated /404 renderer");
-assert.match(catchAllPageSource, /const route = getRouteByPath\(canonicalPath\) \?\? getContentReviewRouteByPath\(canonicalPath\)/,
-  "The catch-all currently resolves direct /404 through the route registry");
+assert.match(catchAllPageSource, /const route = getRouteByPath\(canonicalPath\)/,
+  "The catch-all uses one route registry for every runtime");
+assert.doesNotMatch(catchAllPageSource, /ContentReview|review/i,
+  "The App Router has no alternate editorial-rendering path");
 assert.match(catchAllPageSource, /if \(!validLocale \|\| !route \|\| route\.key === "not-found"\) \{\s*notFound\(\);\s*\}/,
   "The catch-all sends unknown paths and the technical /404 entry to Next not-found");
 assert.match(catchAllPageSource, /if \(!validLocale \|\| !route \|\| route\.key === "not-found"\) \{\s*return \{ robots: \{ index: false, follow: true \} \};\s*\}/,
@@ -189,21 +223,37 @@ for (const caseStudy of CASE_STUDIES) {
   assert.ok(!routeSitemapMeta.some((entry) => entry.path === casePath), `${casePath} is absent from sitemap metadata`);
 }
 
-const originalNodeEnv = process.env.NODE_ENV;
-const originalReviewFlag = process.env.NEXT_PUBLIC_TAG08_CONTENT_REVIEW;
-const mutableEnvironment = process.env as unknown as Record<string, string | undefined>;
-try {
-  mutableEnvironment.NODE_ENV = "development";
-  mutableEnvironment.NEXT_PUBLIC_TAG08_CONTENT_REVIEW = "1";
-  for (const caseStudy of CASE_STUDIES) {
-    const casePath = `/casos/${caseStudy.id}`;
-    assert.ok(getContentReviewRouteByPath(casePath), `${casePath} remains reachable only through local review`);
-    assert.equal(getRouteByPath(casePath), undefined, `${casePath} does not become a public route in review mode`);
-    assert.ok(!routeSitemapMeta.some((entry) => entry.path === casePath), `${casePath} never enters the sitemap through review mode`);
-  }
-} finally {
-  if (originalNodeEnv === undefined) delete mutableEnvironment.NODE_ENV;
-  else mutableEnvironment.NODE_ENV = originalNodeEnv;
-  if (originalReviewFlag === undefined) delete mutableEnvironment.NEXT_PUBLIC_TAG08_CONTENT_REVIEW;
-  else mutableEnvironment.NEXT_PUBLIC_TAG08_CONTENT_REVIEW = originalReviewFlag;
+const driveCaseIds = [
+  "lavarroupa-sa-branding-lavanderia-self-service",
+  "centro-de-olhos-rebranding-clinica-oftalmologica",
+  "levisage-branding-clinica-premium",
+  "alugue-por-temporada-branding-produto-digital",
+  "luciana-gadelha-marca-pessoal",
+  "espaco-glau-campos-identidade-visual",
+  "unida-construtora-presenca-digital",
+  "econotrip-modelagem-prototipo-mvp",
+  "personapp-evolucao-produto-digital",
+  "liga-do-laser-preparacao-infoproduto",
+  "sm-advocacia-marca-conteudo",
+  "jl-corretora-rebranding",
+  "chama-o-dermato-lancamentos",
+  "doctorplay-modelagem-marca-produto"
+];
+for (const id of driveCaseIds) {
+  const caseStudy = CASE_STUDIES.find((item) => item.id === id);
+  assert.ok(caseStudy?.summary, `${id} has a Drive-grounded summary`);
+  assert.ok(caseStudy?.deliverables?.length, `${id} uses listed deliverables rather than assumed results`);
+  assert.ok(caseStudy?.relatedServicePath && getRouteByPath(caseStudy.relatedServicePath), `${id} links to a registered service`);
+  assert.equal(caseStudy?.metric, undefined, `${id} does not invent a performance metric`);
+  assert.equal(PUBLIC_EVIDENCE[`case-study/${id}` as keyof typeof PUBLIC_EVIDENCE].status, "investigate", `${id} detail page remains unpublished`);
+  assert.equal(isEvidenceVisible(`case-study/${id}`, `/casos/${id}`), false, `${id} detail page remains behind its separate gate`);
+  assert.equal(PUBLIC_EVIDENCE[`home-case/${id}` as keyof typeof PUBLIC_EVIDENCE].status, "approved", `${id} summary is approved for the Home`);
+  assert.equal(isEvidenceVisible(`home-case/${id}`, "/"), true, `${id} summary is visible on the Home`);
+}
+
+for (const caseStudy of CASE_STUDIES) {
+  const casePath = `/casos/${caseStudy.id}`;
+  const approvedForRoute = isEvidenceVisible(`case-study/${caseStudy.id}`, casePath);
+  assert.equal(Boolean(getRouteByPath(casePath)), approvedForRoute, `${casePath} is routable only when evidence is approved`);
+  if (!approvedForRoute) assert.ok(!routeSitemapMeta.some((entry) => entry.path === casePath), `${casePath} is absent from the sitemap`);
 }

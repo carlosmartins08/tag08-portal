@@ -105,10 +105,9 @@
 }
 
 /*
- * Contexts are opt-in. No current page applies these classes, so introducing
- * the target light-first semantics cannot change the legacy dark rendering.
- * Components migrated later should consume the semantic roles above rather
- * than selecting a raw color by page.
+ * Contexts are opt-in and currently applied to selected sections, not the
+ * root canvas. Components should consume these semantic roles rather than
+ * selecting raw colors by page.
  */
 .context-default {
   --color-surface-canvas: var(--color-text-primary);
@@ -904,8 +903,8 @@ html.high-contrast [class*="bg-brand"] {
   color: #000000 !important;
 }
 
-/* Better visible borders for UI divisions in High Contrast */
-html.high-contrast border,
+/* Custom card classes do not include "border" in their class name. */
+html.high-contrast :is(.tag08-card, .tag08-surface-card),
 html.high-contrast [class*="border"] {
   border-color: #ffffff !important;
   border-style: solid !important;

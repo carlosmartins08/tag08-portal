@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { useState, useEffect, useRef, type MouseEvent, type ReactNode } from "react";
-import { ArrowUpRight, ChevronDown, MessageSquare, Phone, Mail, MapPin, ShieldAlert, CheckCircle, Eye, Type, RefreshCw, Instagram, Linkedin, Youtube, Facebook, Cookie, Lock, Scale, FileText } from "lucide-react";
+import { ArrowUpRight, ChevronDown, MessageSquare, Phone, Mail, MapPin, ShieldAlert, CheckCircle, Eye, Type, RefreshCw, Instagram, Linkedin, Youtube, Facebook, Cookie, Lock, Scale, FileText } from "./DooIcons";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { i18n, type UiLanguage } from "../i18n/siteI18n";
+import { getLocalizedPath, getRouteByPath, isRouteLocalePublished } from "../config/routeRegistry";
 import { getLocalizedNetworkLinks, TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_PINTEREST_URL, TAG08_OFFICIAL_YOUTUBE_URL, TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
 import { safeStorage } from "../utils/storage";
 import { trackOutboundClick } from "../lib/analytics";
@@ -55,7 +56,7 @@ function FooterMobileSection({ title, children }: { title: string; children: Rea
     <details className="group rounded-xl border border-white/[0.08] bg-white/[0.02] lg:hidden">
       <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-white marker:content-none focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand/60 [&::-webkit-details-marker]:hidden">
         {title}
-        <ChevronDown className="h-4 w-4 shrink-0 text-brand transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+        <ChevronDown className="h-4 w-4 shrink-0 text-brand transition-transform duration-200 motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" />
       </summary>
       <ul className="space-y-3 border-t border-white/[0.06] px-4 py-4 font-sans text-sm text-zinc-300">
         {children}
@@ -146,7 +147,7 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
       { label: "Home", path: "/" },
       { label: "About Us", path: "/sobre" },
       { label: "Integrated Services", path: "/servicos" },
-      { label: "Insights Estratégicos", path: "/insights" },
+      { label: "Strategic Insights", path: "/insights" },
       { label: "Careers", path: "/trabalhe-conosco" },
       { label: "Contact", path: "/contato" },
     ],
@@ -158,7 +159,7 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
     companyLine: "TAG08 CONSULTING & MARKETING LTDA | CNPJ: 26.828.685/0001-52 | Built as a strategic operation",
     rightsLine: "TAG08. All rights reserved.",
     legalLabelPrivacy: "Privacy Policy",
-    legalLabelTerms: "Termos de Uso",
+    legalLabelTerms: "Terms of Use",
     socialFollowLabel: "Follow us on",
     youtubeSubscribeLabel: "Subscribe to TAG08 on YouTube",
     openWhatsAppLabel: "Open WhatsApp",
@@ -200,7 +201,7 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
       { label: "Inicio", path: "/" },
       { label: "Sobre Nosotros", path: "/sobre" },
       { label: "Servicios Integrados", path: "/servicos" },
-      { label: "Insights Estratégicos", path: "/insights" },
+      { label: "Insights estratégicos", path: "/insights" },
       { label: "Trabaja con nosotros", path: "/trabalhe-conosco" },
       { label: "Contacto", path: "/contato" },
     ],
@@ -220,7 +221,7 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
     modalAgree: "Entendido y acepto",
     cookieTitle: "Privacidad & Cookies (LGPD)",
     cookieDescription:
-      "Respetamos tu privacidad. Junto con nuestros socios usamos cookies para analizar el trafico y mejorar la experiencia con estandares LGPD.",
+      "Respetamos tu privacidad. Junto con nuestros socios usamos cookies para analizar el tráfico y mejorar la experiencia con estándares LGPD.",
     cookieCustomizeLabel: "[ Personalizar... ]",
     cookieCloseCustomizeLabel: "[ Cerrar ajustes ]",
     cookieRejectLabel: "Rechazar",
@@ -229,9 +230,78 @@ const FOOTER_COPY: Record<UiLanguage, FooterCopy> = {
   },
 };
 
+const COOKIE_UI_COPY = {
+  pt: {
+    customizePrompt: "Configure suas preferências de cookies abaixo:",
+    analyticsHelp: "Google Analytics anônimo.",
+    required: "OBRIGATÓRIO",
+    marketingHelp: "YouTube, Facebook e links externos.",
+    enable: "Ativar",
+    disable: "Desativar",
+    enabled: "ATIVADO",
+    disabled: "DESATIVADO",
+    openCustomize: "Abrir personalização de cookies",
+    closeCustomize: "Fechar personalização de cookies",
+    rejectAll: "Rejeitar todos os cookies",
+    acceptAll: "Aceitar todos os cookies",
+    save: "Salvar ajustes de cookies",
+  },
+  en: {
+    customizePrompt: "Set your cookie preferences below:",
+    analyticsHelp: "Usage measurement through analytics tools.",
+    required: "REQUIRED",
+    marketingHelp: "YouTube, Facebook, and external links.",
+    enable: "Enable",
+    disable: "Disable",
+    enabled: "ON",
+    disabled: "OFF",
+    openCustomize: "Open cookie settings",
+    closeCustomize: "Close cookie settings",
+    rejectAll: "Reject all cookies",
+    acceptAll: "Accept all cookies",
+    save: "Save cookie settings",
+  },
+  es: {
+    customizePrompt: "Configura tus preferencias de cookies:",
+    analyticsHelp: "Medición del uso mediante herramientas de análisis.",
+    required: "OBLIGATORIAS",
+    marketingHelp: "YouTube, Facebook y enlaces externos.",
+    enable: "Activar",
+    disable: "Desactivar",
+    enabled: "ACTIVADAS",
+    disabled: "DESACTIVADAS",
+    openCustomize: "Abrir ajustes de cookies",
+    closeCustomize: "Cerrar ajustes de cookies",
+    rejectAll: "Rechazar todas las cookies",
+    acceptAll: "Aceptar todas las cookies",
+    save: "Guardar ajustes de cookies",
+  },
+} satisfies Record<UiLanguage, Record<string, string>>;
+
+const LEGAL_PREVIEW_COPY = {
+  en: {
+    privacyTitle: "Privacy policy in Portuguese",
+    termsTitle: "Terms of use in Portuguese",
+    description: "This legal content is currently available only in Portuguese and has not been translated or reviewed in English. Use the Portuguese source below.",
+    privacyLink: "Read the Privacy Policy in Portuguese",
+    termsLink: "Read the Terms of Use in Portuguese",
+  },
+  es: {
+    privacyTitle: "Política de privacidad en portugués",
+    termsTitle: "Términos de uso en portugués",
+    description: "Este contenido legal solo está disponible en portugués y no ha sido traducido ni revisado en español. Consulta la fuente en portugués a continuación.",
+    privacyLink: "Leer la Política de Privacidad en portugués",
+    termsLink: "Leer los Términos de Uso en portugués",
+  },
+} satisfies Record<Exclude<UiLanguage, "pt">, Record<string, string>>;
+
 export default function Footer({ onNavigate, language }: FooterProps) {
   const prefersReducedMotion = useReducedMotion();
   const source = i18n[language].footer;
+  const isPathPublishedForLanguage = (path: string) => {
+    const route = getRouteByPath(path);
+    return route ? isRouteLocalePublished(route, language) : false;
+  };
   const copy = {
     ...FOOTER_COPY[language],
     brandStatement: source.brandStatement,
@@ -241,9 +311,9 @@ export default function Footer({ onNavigate, language }: FooterProps) {
     institutionTitle: source.institutionLabel.toUpperCase(),
     connectTitle: source.connectLabel.toUpperCase(),
     ecosystemTitle: source.ecosystemTitle ?? source.connectLabel,
-    serviceLinks: source.serviceLinks,
-    programLinks: source.programLinks,
-    institutionLinks: source.institutionLinks,
+    serviceLinks: source.serviceLinks.filter((link) => isPathPublishedForLanguage(link.path)),
+    programLinks: source.programLinks.filter((link) => isPathPublishedForLanguage(link.path)),
+    institutionLinks: source.institutionLinks.filter((link) => isPathPublishedForLanguage(link.path)),
     contactEmailTitle: source.contactTitleEmail,
     contactPhoneTitle: source.contactTitleWhatsapp,
     locationTitle: source.locationLabel,
@@ -263,9 +333,25 @@ export default function Footer({ onNavigate, language }: FooterProps) {
     cookieAcceptLabel: source.cookieAcceptLabel,
     cookieSaveLabel: source.cookieSaveLabel,
   };
+  const footerChannelLabel = (contact: (typeof TAG08_WHATSAPP_CONTACTS)[number]) => {
+    if (contact.key === "brazil") return i18n[language].whatsapp.channelPt;
+    return language === "es" ? i18n[language].whatsapp.channelEs : i18n[language].whatsapp.channelEn;
+  };
   const ecosystemLinks = getLocalizedNetworkLinks(language);
   const officialContact = TAG08_OFFICIAL_CONTACT;
   const [activeModal, setActiveModal] = useState<"privacy" | "terms" | null>(null);
+  const cookieUi = COOKIE_UI_COPY[language];
+
+  useEffect(() => {
+    if (language !== "pt") return;
+
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("legal") !== "terms") return;
+
+    setActiveModal("terms");
+    url.searchParams.delete("legal");
+    window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+  }, [language]);
 
   // Accessibility parameters state
   const [highContrast, setHighContrast] = useState<boolean>(() => {
@@ -422,7 +508,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
   const renderInternalLinks = (links: ReadonlyArray<{ label: string; path: string }>) => links.map((link) => (
     <li key={link.path}>
       <a
-        href={link.path}
+        href={getLocalizedPath(link.path, language)}
         onClick={(event) => handleInternalFooterLink(event, link.path)}
         className={internalLinkClassName}
       >
@@ -433,7 +519,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
   const renderInstitutionLinks = () => copy.institutionLinks.map((link) => (
     <li key={link.path}>
       <a
-        href={link.path}
+        href={getLocalizedPath(link.path, language)}
         onClick={(event) => handleInternalFooterLink(event, link.path)}
         className={internalLinkClassName}
       >
@@ -486,7 +572,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("Instagram", "https://www.instagram.com/tag08.com.br/", "footer-social")}
-              className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="h-11 w-11 rounded-xl bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label={`${copy.socialFollowLabel} Instagram`}
                 >
                   <Instagram className="w-4 h-4" />
@@ -496,7 +582,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("LinkedIn", "https://www.linkedin.com/company/tag08-com-br/", "footer-social")}
-              className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="h-11 w-11 rounded-xl bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label={`${copy.socialFollowLabel} LinkedIn`}
                 >
                   <Linkedin className="w-4 h-4" />
@@ -506,7 +592,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("YouTube", TAG08_OFFICIAL_YOUTUBE_URL, "footer-social")}
-              className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="h-11 w-11 rounded-xl bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label={copy.youtubeSubscribeLabel}
                 >
                   <Youtube className="w-4 h-4" />
@@ -516,7 +602,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("Facebook", "https://www.facebook.com/tag08.com.br", "footer-social")}
-              className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="h-11 w-11 rounded-xl bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label={`${copy.socialFollowLabel} Facebook`}
                 >
                   <Facebook className="w-4 h-4" />
@@ -526,7 +612,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("X", "https://x.com/TAG08_com_br", "footer-social")}
-              className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="h-11 w-11 rounded-xl bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
                   aria-label={`${copy.socialFollowLabel} X`}
                 >
                   <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -538,7 +624,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleOutboundClick("Pinterest", TAG08_OFFICIAL_PINTEREST_URL, "footer-social")}
-              className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 pointer-events-auto"
+              className="h-11 w-11 rounded-xl bg-white/[0.03] border border-white/10 hover:border-brand-secondary hover:text-brand-secondary flex items-center justify-center transition-[border-color,color,background-color] duration-200 text-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 pointer-events-auto"
                   aria-label={`${copy.socialFollowLabel} Pinterest`}
                 >
                   <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
@@ -555,7 +641,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
           </div>
 
           {/* Primary navigation: compact on mobile, exposed on larger screens. */}
-          <div className="order-3 lg:order-none">
+          {copy.serviceLinks.length > 0 && <div className="order-3 lg:order-none">
             <h4 className="mb-4 hidden font-display text-sm font-semibold tracking-wide text-white lg:block">
               {copy.servicesTitle}
             </h4>
@@ -565,9 +651,9 @@ export default function Footer({ onNavigate, language }: FooterProps) {
             <FooterMobileSection title={copy.servicesTitle}>
               {renderInternalLinks(copy.serviceLinks)}
             </FooterMobileSection>
-          </div>
+          </div>}
 
-          <div className="order-3 lg:order-none">
+          {copy.programLinks.length > 0 && <div className="order-3 lg:order-none">
             <h4 className="mb-4 hidden font-display text-sm font-semibold tracking-wide text-white lg:block">
               {copy.programsTitle}
             </h4>
@@ -577,9 +663,9 @@ export default function Footer({ onNavigate, language }: FooterProps) {
             <FooterMobileSection title={copy.programsTitle}>
               {renderInternalLinks(copy.programLinks)}
             </FooterMobileSection>
-          </div>
+          </div>}
 
-          <div className="order-3 lg:order-none">
+          {copy.institutionLinks.length > 0 && <div className="order-3 lg:order-none">
             <h4 className="mb-4 hidden font-display text-sm font-semibold tracking-wide text-white lg:block">
               {copy.institutionTitle}
             </h4>
@@ -589,7 +675,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
             <FooterMobileSection title={copy.institutionTitle}>
               {renderInstitutionLinks()}
             </FooterMobileSection>
-          </div>
+          </div>}
 
           {/* Secondary ecosystem navigation */}
           <div className="order-3 lg:order-none">
@@ -638,12 +724,12 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                               className={`min-h-11 transition-colors inline-flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 ${
                                 contact.key === "brazil" ? "text-white hover:text-brand" : "text-white hover:text-brand-secondary"
                               }`}
-                              aria-label={`${copy.openWhatsAppLabel} ${contact.label}`}
+                              aria-label={`${copy.openWhatsAppLabel} ${footerChannelLabel(contact)}`}
                             >
-                              <span className="text-sm leading-none" title={contact.country.name}>
+                              <span className="text-sm leading-none" title={footerChannelLabel(contact)}>
                                 <CountryFlag country={contact.country} />
                               </span>
-                              <span>{contact.display}</span>
+                              <span>{footerChannelLabel(contact)} · {contact.display}</span>
                             </a>
                           </div>
                         ))}
@@ -689,7 +775,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
               type="button"
               aria-label={copy.legalLabelPrivacy}
               onClick={() => setActiveModal("privacy")}
-              className="hover:text-brand transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="inline-flex min-h-11 items-center hover:text-brand transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
             >
               {copy.legalLabelPrivacy}
             </button>
@@ -697,7 +783,7 @@ export default function Footer({ onNavigate, language }: FooterProps) {
               type="button"
               aria-label={copy.legalLabelTerms}
               onClick={() => setActiveModal("terms")}
-              className="hover:text-brand transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+              className="inline-flex min-h-11 items-center hover:text-brand transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
             >
               {copy.legalLabelTerms}
             </button>
@@ -721,14 +807,37 @@ export default function Footer({ onNavigate, language }: FooterProps) {
             >
               <button
                 type="button"
-                aria-label="Fechar modal"
+                aria-label={copy.modalClose}
                 onClick={() => setActiveModal(null)}
                 className="absolute top-4 right-4 text-zinc-400 hover:text-white p-2 font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
               >
-                &times; Fechar
+                &times; {copy.modalClose}
               </button>
 
-              {activeModal === "privacy" ? (
+              {language !== "pt" ? (
+                <div className="space-y-4 pr-16">
+                  <div className="flex items-center gap-3 border-b border-white/[0.08] pb-4">
+                    {activeModal === "privacy" ? (
+                      <ShieldAlert className="w-6 h-6 text-brand-secondary" aria-hidden="true" />
+                    ) : (
+                      <FileText className="w-6 h-6 text-brand-secondary" aria-hidden="true" />
+                    )}
+                    <h3 id="legal-dialog-title" className="text-xl font-display font-semibold text-white">
+                      {activeModal === "privacy" ? LEGAL_PREVIEW_COPY[language].privacyTitle : LEGAL_PREVIEW_COPY[language].termsTitle}
+                    </h3>
+                  </div>
+                  <p className="text-sm leading-relaxed text-zinc-300">
+                    {LEGAL_PREVIEW_COPY[language].description}
+                  </p>
+                  <a
+                    lang="pt-BR"
+                    href={activeModal === "privacy" ? "/privacidade" : "/?legal=terms"}
+                    className="inline-flex min-h-11 items-center text-brand-secondary underline underline-offset-4 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60"
+                  >
+                    {activeModal === "privacy" ? LEGAL_PREVIEW_COPY[language].privacyLink : LEGAL_PREVIEW_COPY[language].termsLink}
+                  </a>
+                </div>
+              ) : activeModal === "privacy" ? (
                 <div className="space-y-6">
                   <div className="flex items-center gap-3 border-b border-white/[0.08] pb-4">
                     <ShieldAlert className="w-6 h-6 text-brand-secondary" />
@@ -1009,11 +1118,11 @@ export default function Footer({ onNavigate, language }: FooterProps) {
               <div className="mt-8 pt-4 border-t border-zinc-800 text-right">
                 <button
                   type="button"
-                  aria-label="Fechar modal de termos e diretrizes"
+                  aria-label={language === "pt" ? copy.modalAgree : copy.modalClose}
                   onClick={() => setActiveModal(null)}
                   className="min-h-11 bg-brand text-black font-semibold px-5 py-2 rounded text-xs hover:bg-brand-dark transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60"
                 >
-                  Entendi e concordo
+                  {language === "pt" ? copy.modalAgree : copy.modalClose}
                 </button>
               </div>
             </motion.div>
@@ -1041,10 +1150,10 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                 </div>
                 <div className="space-y-1">
                   <h4 id="cookie-banner-title" className="text-sm font-display font-semibold text-white flex items-center gap-2">
-                    Privacidade &amp; Cookies (LGPD)
+                    {copy.cookieTitle}
                   </h4>
                   <p className="text-xs text-zinc-300 leading-relaxed font-sans">
-                    Valorizamos sua privacidade. Com a TAG08 e nossos parceiros (Facebook, YouTube, Google) operamos cookies para analisar o tráfego do portal e otimizar recursos de acordo com seus interesses, em conformidade com a LGPD brasileira (Lei n 13.709/18).
+                    {copy.cookieDescription}
                   </p>
                 </div>
               </div>
@@ -1055,33 +1164,33 @@ export default function Footer({ onNavigate, language }: FooterProps) {
                   animate={{ opacity: 1, height: "auto" }}
                   className="bg-black/30 rounded-lg p-3 space-y-2 border border-white/[0.04] text-xs font-sans text-left"
                 >
-                  <p className="text-xs text-zinc-400 mb-2 font-sans">Configure suas preferências de cookies abaixo:</p>
+                  <p className="text-xs text-zinc-400 mb-2 font-sans">{cookieUi.customizePrompt}</p>
                   
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="font-semibold text-white block">Essenciais</span>
-                      <span className="text-xs text-zinc-400">Tema do portal e formulários seguros.</span>
+                      <span className="font-semibold text-white block">{source.consentPerformanceLabel}</span>
+                      <span className="text-xs text-zinc-400">{source.consentPerformanceHelp}</span>
                     </div>
-                    <span className="text-xs text-brand-secondary/80 font-sans">OBRIGATÓRIO</span>
+                    <span className="text-xs text-brand-secondary/80 font-sans">{cookieUi.required}</span>
                   </div>
 
                   <hr className="border-white/[0.04] my-1" />
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="font-semibold text-white block">Desempenho &amp; Estatísticas</span>
-                      <span className="text-xs text-zinc-400">Google Analytics anônimo.</span>
+                      <span className="font-semibold text-white block">{source.consentAnalyticsLabel}</span>
+                      <span className="text-xs text-zinc-400">{cookieUi.analyticsHelp}</span>
                     </div>
                     <button
                       type="button"
-                      aria-label={cookiePreferences.performance ? "Desativar cookies de desempenho" : "Ativar cookies de desempenho"}
+                      aria-label={`${cookiePreferences.performance ? cookieUi.disable : cookieUi.enable} ${source.consentAnalyticsLabel}`}
                       aria-pressed={cookiePreferences.performance}
                       onClick={() => setCookiePreferences(prev => ({ ...prev, performance: !prev.performance }))}
                       className={`min-h-11 px-2 py-0.5 rounded font-black focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 ${
                         cookiePreferences.performance ? "bg-brand-secondary text-black" : "bg-white/5 text-zinc-400"
                       }`}
                     >
-                      {cookiePreferences.performance ? "ATIVADO" : "DESATIVADO"}
+                      {cookiePreferences.performance ? cookieUi.enabled : cookieUi.disabled}
                     </button>
                   </div>
 
@@ -1089,19 +1198,19 @@ export default function Footer({ onNavigate, language }: FooterProps) {
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="font-semibold text-white block">Marketing &amp; Redes Sociais</span>
-                      <span className="text-xs text-zinc-400">Youtube, Facebook e links externos.</span>
+                      <span className="font-semibold text-white block">{source.consentMarketingLabel}</span>
+                      <span className="text-xs text-zinc-400">{cookieUi.marketingHelp}</span>
                     </div>
                     <button
                       type="button"
-                      aria-label={cookiePreferences.marketing ? "Desativar cookies de marketing" : "Ativar cookies de marketing"}
+                      aria-label={`${cookiePreferences.marketing ? cookieUi.disable : cookieUi.enable} ${source.consentMarketingLabel}`}
                       aria-pressed={cookiePreferences.marketing}
                       onClick={() => setCookiePreferences(prev => ({ ...prev, marketing: !prev.marketing }))}
                       className={`min-h-11 px-2 py-0.5 rounded font-black focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 ${
                         cookiePreferences.marketing ? "bg-brand-secondary text-black" : "bg-white/5 text-zinc-400"
                       }`}
                     >
-                      {cookiePreferences.marketing ? "ATIVADO" : "DESATIVADO"}
+                      {cookiePreferences.marketing ? cookieUi.enabled : cookieUi.disabled}
                     </button>
                   </div>
                 </motion.div>
@@ -1110,28 +1219,28 @@ export default function Footer({ onNavigate, language }: FooterProps) {
 
               <div className="grid shrink-0 grid-cols-3 gap-2 border-t border-white/[0.06] bg-charcoal-950/95 pt-3 text-xs font-sans sm:flex sm:justify-end">
                     <button
-                      aria-label={customizeCookies ? "Fechar personalização de cookies" : "Abrir personalização de cookies"}
+                  aria-label={customizeCookies ? cookieUi.closeCustomize : cookieUi.openCustomize}
                       type="button"
                       onClick={() => setCustomizeCookies(!customizeCookies)}
                       className="min-h-11 px-3 py-2 text-center text-zinc-300 transition-colors duration-150 hover:text-white cursor-pointer"
                 >
-                  {customizeCookies ? "[ Fechar Ajustes ]" : "[ Personalizar... ]"}
+                  {customizeCookies ? copy.cookieCloseCustomizeLabel : copy.cookieCustomizeLabel}
                 </button>
                     <button
-                      aria-label="Rejeitar todos os cookies"
+                      aria-label={cookieUi.rejectAll}
                       type="button"
                       onClick={handleRejectCookies}
-                      className="min-h-11 rounded-lg border border-white/10 px-3.5 py-2 text-center font-bold text-zinc-200 transition-colors duration-150 hover:bg-white/5 cursor-pointer"
+                      className="min-h-11 rounded-xl border border-white/10 px-3.5 py-2 text-center font-bold text-zinc-200 transition-colors duration-150 hover:bg-white/5 cursor-pointer"
                 >
-                  Rejeitar
+                  {copy.cookieRejectLabel}
                 </button>
                 <button
-                  aria-label={customizeCookies ? "Salvar ajustes de cookies" : "Aceitar todos os cookies"}
+                  aria-label={customizeCookies ? cookieUi.save : cookieUi.acceptAll}
                   type="button"
                   onClick={customizeCookies ? handleSaveCookiePreferences : handleAcceptAllCookies}
-                  className="min-h-11 rounded-lg bg-brand-secondary px-4 py-2 text-center font-black text-black shadow-[0_2px_10px_rgba(var(--color-brand-secondary-rgb),0.2)] transition-colors duration-150 hover:bg-white cursor-pointer"
+                  className="min-h-11 rounded-xl bg-brand-secondary px-4 py-2 text-center font-black text-black shadow-[0_2px_10px_rgba(var(--color-brand-secondary-rgb),0.2)] transition-colors duration-150 hover:bg-white cursor-pointer"
                 >
-                  {customizeCookies ? "Salvar Ajustes" : "Aceitar Todos"}
+                  {customizeCookies ? copy.cookieSaveLabel : copy.cookieAcceptLabel}
                 </button>
               </div>
           </motion.div>

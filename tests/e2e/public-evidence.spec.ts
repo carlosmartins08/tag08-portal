@@ -38,8 +38,7 @@ test("produção apresenta os cinco perfis autorizados sem expor os demais em in
 
 test("produção mostra provas aprovadas somente em Assessoria", async ({ page }) => {
   await page.goto("/servicos/assessoria-marketing-digital-estrategico", { waitUntil: "domcontentloaded" });
-  await expect(page.getByTestId("mini-cases")).toBeVisible();
-  await expect(page.getByTestId("mini-cases").locator("[data-evidence-key^='mini-case/']")).toHaveCount(6);
+  await expect(page.getByTestId("mini-cases")).toHaveCount(0);
   await expect(page.getByTestId("internal-testimonials")).toBeVisible();
   await expect(page.getByTestId("internal-testimonials").locator("img[src*='images.unsplash.com']")).toHaveCount(0);
 });
@@ -48,6 +47,26 @@ test("produção não publica case em investigação na URL direta", async ({ pa
   const response = await page.goto("/casos/case-clinica-alphaville", { waitUntil: "domcontentloaded" });
   expect(response?.status()).toBe(404);
   await expect(page.locator("[data-evidence-key='case-study/case-clinica-alphaville']")).toHaveCount(0);
+});
+
+test("a Home apresenta as sínteses estáticas autorizadas sem publicar páginas de detalhe", async ({ page }) => {
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  await expect(page.getByTestId("home-client-cases")).toBeVisible();
+  await expect(page.getByTestId("home-client-cases").getByRole("heading", { name: "Projetos que ajudam a reconhecer desafios parecidos" })).toBeVisible();
+  await expect(page.getByTestId("home-case-card")).toHaveCount(14);
+  await expect(page.locator('[data-testid="home-case-card"][data-evidence-key^="home-case/"]')).toHaveCount(14);
+  await expect(page.getByTestId("home-client-cases").getByText("LavarRoupa S.A.", { exact: true })).toBeVisible();
+  await expect(page.getByTestId("home-client-cases").getByRole("img", { name: "Luciana Gadelha" })).toBeVisible();
+  await expect(page.getByTestId(/evidence-(pending|investigate)/)).toHaveCount(0);
+  await expect(page.getByTestId("content-review-banner")).toHaveCount(0);
+});
+
+test("idiomas não publicados redirecionam para a única versão portuguesa", async ({ request }) => {
+  for (const [path, location] of [["/en/programa-afiliados", "/programa-afiliados"], ["/es/sobre", "/sobre"]]) {
+    const response = await request.get(path, { maxRedirects: 0 });
+    expect(response.status(), path).toBe(308);
+    expect(response.headers()["location"], path).toBe(location);
+  }
 });
 
 test("Unknown URLs and technical /404 use the real HTTP not-found", async ({ page }) => {

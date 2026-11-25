@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { ArrowUpRight, Check, CheckCircle2, TrendingUp, Cpu, Sparkles, Award, Shield, UserCheck, Play, HelpCircle, ArrowRight, MessageSquare, X, Star, Layers } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { ArrowUpRight, ArrowLeft, Check, CheckCircle2, Award, UserCheck, Play, HelpCircle, ArrowRight, MessageSquare, X, Star, Layers } from "../../../components/DooIcons";
 import Link from "next/link";
 import Image from "next/image";
-import { SERVICES, PLANS } from "../../../data";
+import { SERVICES, PLANS, CASE_STUDIES } from "../../../data";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { TAG08_OFFICIAL_CONTACT, TAG08_OFFICIAL_YOUTUBE_URL, buildBrazilWhatsAppUrl, buildInternationalWhatsAppUrl } from "../../../config/siteNetwork";
 import { getVideoDescriptionPreview, selectLiveOfficialYouTubeVideos, type OfficialContentApiResponse, type OfficialGoogleReview, type OfficialYouTubeVideo } from "../../../lib/officialContent";
@@ -17,161 +17,11 @@ import HomeMethodSection from "./HomeMethodSection";
 import { Suspense, lazy } from "react";
 import heroTag08StrategyStage from "../../../assets/images/hero_tag08_strategy-stage.webp";
 import creativeLeaderPortrait from "../../../assets/images/creative_leader_portrait_1780449653164.jpg";
-import moodyClientPortrait from "../../../assets/images/moody_client_portrait_1780449811793.jpg";
-import clientAlanRocha from "../../../assets/images/client_alan_rocha_1780449828496.jpg";
-import { getEvidenceVisibilityMode, getVisibleEvidence } from "../../../content/publicEvidence";
-import { EvidenceReviewBadge } from "../../../components/ContentReview";
+import { getVisibleEvidence, isEvidenceVisible } from "../../../content/publicEvidence";
 
 const DiagnosticDiagram = lazy(() => import("../../../components/DiagnosticDiagram"));
 
-interface HeroServiceOption {
-  id: string;
-  label: string;
-  title: string;
-  description: string;
-  href: string;
-}
 
-function HomeHeroServiceExplorer({
-  options,
-  ariaLabel,
-  actionLabel,
-  exploreLabel,
-  hideLabel,
-  prefersReducedMotion
-}: {
-  options: HeroServiceOption[];
-  ariaLabel: string;
-  actionLabel: string;
-  exploreLabel: string;
-  hideLabel: string;
-  prefersReducedMotion: boolean;
-}) {
-  const [activeServiceId, setActiveServiceId] = useState<string | null>(null);
-  const activeService = options.find((option) => option.id === activeServiceId);
-
-  return (
-    <>
-      <nav aria-label={ariaLabel}>
-        <div className="flex max-w-sm flex-wrap gap-1.5 lg:ml-auto lg:justify-end">
-          {options.map((option) => {
-            const isActive = option.id === activeServiceId;
-            return (
-              <button
-                key={option.id}
-                type="button"
-                aria-pressed={isActive}
-                aria-label={`${isActive ? hideLabel : exploreLabel}: ${option.label}`}
-                data-testid="hero-service-option"
-                onClick={() => setActiveServiceId(isActive ? null : option.id)}
-                className={`inline-flex min-h-11 items-center justify-center rounded-full border px-3 py-1.5 font-sans text-xs font-semibold tracking-wider transition-[background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 ${isActive ? "border-brand/70 bg-brand/10 text-brand" : "border-white/20 bg-white/[0.03] text-white/80 hover:border-white/40 hover:bg-white/[0.07] hover:text-white"}`}
-              >
-                {option.label}
-              </button>
-            );
-          })}
-        </div>
-      </nav>
-      {activeService && (
-        <motion.div
-          key={activeService.id}
-          data-testid="hero-service-detail"
-          role="region"
-          aria-label={activeService.title}
-          aria-live="polite"
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.18, ease: "easeOut" }}
-          className="mr-auto mt-4 max-w-sm border-l border-brand/45 pl-3 text-left lg:ml-auto lg:mr-0 lg:border-l-0 lg:border-r lg:pl-0 lg:pr-3 lg:text-right"
-        >
-          <h3 className="font-display text-sm font-bold leading-snug text-white">{activeService.title}</h3>
-          <p className="mt-1 text-xs leading-relaxed text-white/65">{activeService.description}</p>
-          <Link
-            href={activeService.href}
-            className="mt-2 inline-flex min-h-11 items-center gap-1.5 text-xs font-bold text-brand underline-offset-4 hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-          >
-            {actionLabel} <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
-          </Link>
-        </motion.div>
-      )}
-    </>
-  );
-}
-
-const CLIENT_CASES = [
-  {
-    id: "alan-rocha",
-    name: "Alan Rocha",
-    handle: "@alanrochap",
-    categoryTags: ["DESIGN", "SOCIAL MEDIA", "BRANDING"],
-    tagline: "A ÚNICA REAÇÃO FOI PENSAR:",
-    quote: "Parece que fui dirigida por alguém que me conhece de verdade. Que entende meu estilo, minha energia e o que quero mostrar.",
-    avatar: clientAlanRocha.src,
-    backgroundImg: moodyClientPortrait.src,
-    colors: ["var(--color-brand)", "#111111"],
-    caseName: "CASE DE POSICIONAMENTO — 2025"
-  },
-  {
-    id: "le-visage",
-    name: "Clínica Le Visage",
-    handle: "@clinicalevisage",
-    categoryTags: ["ESTÉTICA", "LUXURY SPA", "IDENTIDADE"],
-    tagline: "SOPRO DE SOFISTICAÇÃO E ARTE:",
-    quote: "A TAG08 capturou o refinamento dermoestético com absoluto primor. Nosso novo visual personifica o acolhimento elegante e o requinte que nossos pacientes exigem.",
-    avatar: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=200",
-    backgroundImg: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=1200",
-    colors: ["var(--color-brand)", "#111111"],
-    caseName: "ESTÉTICA DE LUXO — 2024"
-  },
-  {
-    id: "luciana-gadelha",
-    name: "Luciana Gadelha",
-    handle: "@dra.lucianagadelha",
-    categoryTags: ["MEDICINE", "ORAL ART", "BRANDING"],
-    tagline: "TRANSMITINDO A ARTE DO SORRISO:",
-    quote: "O branding desenvolvido trouxe a sofisticação exata do nosso trabalho clínico. Elevou nossa comunicação ao patamar de grife, gerando desejo imediato na nossa região.",
-    avatar: "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=200",
-    backgroundImg: "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=1200",
-    colors: ["var(--color-brand)", "#111111"],
-    caseName: "ODONTOLOGIA HIGH-END — 2024"
-  },
-  {
-    id: "doctor-play",
-    name: "Doctor Play",
-    handle: "@doctorplay.br",
-    categoryTags: ["MEDTECH", "STREAMING", "SISTEMA"],
-    tagline: "CONTEÚDO MÉDICO REVOLUCIONADO:",
-    quote: "Unimos entretenimento do streaming de alta qualidade com educação técnica em saúde. O design e posicionamento que a equipe estruturou nos destaca hoje como uma plataforma inovadora de extrema confiança.",
-    avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200",
-    backgroundImg: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1200",
-    colors: ["var(--color-brand)", "#111111"],
-    caseName: "PLATAFORMA STREAM — 2025"
-  },
-  {
-    id: "legal-lab",
-    name: "Legal Lab",
-    handle: "@legallab.law",
-    categoryTags: ["LAW TECH", "CORPORATIVO", "MINIMALISMO"],
-    tagline: "DIREITO & INOVAÇÃO PRECISA:",
-    quote: "Unindo a seriedade jurídica ao design de precisão digital hexagonal. Uma transição visual impecável que reposicionou nossa marca perante grandes corporações.",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
-    backgroundImg: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&q=80&w=1200",
-    colors: ["var(--color-brand)", "#111111"],
-    caseName: "LAW TECH CONCEITO — 2025"
-  },
-  {
-    id: "squalis",
-    name: "Squalis Educação",
-    handle: "@squaliseducacao",
-    categoryTags: ["ACADEMIA", "PROCESSOS", "TECNOLOGIA"],
-    tagline: "PERFORMANCE DE SINALIZAÇÃO:",
-    quote: "O redesenho integral do ecossistema Squalis facilitou não apenas as vendas nos canais de captação de alunos, mas elevou incrivelmente o valor de mercado percebido pelos tomadores de decisão.",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200",
-    backgroundImg: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1200",
-    colors: ["var(--color-brand)", "#111111"],
-    caseName: "ACADEMIA CORPORATIVA — 2024"
-  }
-];
 
 const SERVICOS_TILES = [
   {
@@ -583,126 +433,6 @@ const DIAGNOSTIQUER_PHASES = {
   }
 };
 
-interface CaseStudyCardProps {
-  key?: string;
-  item: {
-    id: string;
-    title: string;
-    image: string;
-    category?: string;
-    client?: string;
-    metric?: string;
-    metricLabel?: string;
-    challenge?: string;
-    proofTitle?: string;
-    proofDescription?: string;
-    proofMode?: boolean;
-  };
-  onClick: () => void;
-}
-
-function CaseStudyCard({ item, onClick }: CaseStudyCardProps) {
-  const [imgError, setImgError] = useState(false);
-  const proofMode = Boolean(item.proofMode);
-
-  let CardIcon = Sparkles;
-  if (item.id.includes("saas")) {
-    CardIcon = Cpu;
-  } else if (item.id.includes("advocacia")) {
-    CardIcon = Shield;
-  }
-
-  return (
-    <div
-      onClick={onClick}
-      onKeyDown={(event) => activateOnKeyboard(event, onClick)}
-      role="button"
-      tabIndex={0}
-      aria-label={`Abrir case: ${item.client}`}
-      className="bg-charcoal-900 border border-white/[0.04] p-5 pb-7 rounded-[28px] overflow-hidden cursor-pointer group flex flex-col justify-between transition-all duration-350 hover:border-brand/25 hover:-translate-y-1 relative shadow-lg h-full"
-    >
-      {/* Top Image area mimicking mockup precisely with premium grayscale/vibrant transition */}
-      <div className="relative aspect-[4/3] w-full rounded-[20px] overflow-hidden mb-2 bg-zinc-950">
-        <div className="absolute inset-0 bg-black/40 z-10 hover:opacity-10 transition-opacity" />
-        
-        {imgError ? (
-          /* Robust elegant architectural design fallback placeholder */
-          <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-[#121214] flex items-center justify-center overflow-hidden">
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--color-brand-secondary-rgb),0.012)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--color-brand-secondary-rgb),0.012)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none opacity-60" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-brand/[0.02] rounded-full blur-[60px] pointer-events-none" />
-            
-            <div className="flex flex-col items-center gap-2 text-center select-none p-4 w-full">
-              <div className="w-10 h-10 rounded-full bg-white/[0.02] border border-white/5 flex items-center justify-center mb-1">
-                <CardIcon className="w-5 h-5 text-zinc-500 stroke-[1.2]" />
-              </div>
-              <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-semibold">
-                {proofMode ? "Método em prática" : item.client}
-              </span>
-              <p className="font-sans text-xs text-zinc-600 max-w-[190px] leading-tight line-clamp-2">
-                {proofMode ? (item.proofDescription ?? item.challenge ?? "") : `${item.category} // DIAGNÓSTICO ATIVO`}
-              </p>
-            </div>
-          </div>
-        ) : (
-            <Image
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-            src={item.image}
-            alt=""
-            onError={() => setImgError(true)}
-            className="object-cover group-hover:scale-103 transition-transform duration-700 grayscale group-hover:grayscale-0"
-            referrerPolicy="no-referrer"
-          />
-        )}
-        
-        {proofMode ? (
-          <span className="absolute top-4 left-4 z-20 bg-black/75 backdrop-blur-sm border border-white/[0.08] px-3 py-1 text-xs tag08-meta text-zinc-300 uppercase tracking-wider rounded-full">
-            Método em prática
-          </span>
-        ) : (
-          <>
-            {/* Floating category tag top-left */}
-            <span className="absolute top-4 left-4 z-20 bg-black/75 backdrop-blur-sm border border-white/[0.08] px-3 py-1 text-xs tag08-meta text-zinc-300 uppercase tracking-wider rounded-full">
-              {item.category}
-            </span>
-
-            {/* Highly polished metric banner top-right */}
-            <div className="absolute top-4 right-4 z-20 bg-brand text-black font-display font-black px-3 py-1 text-xs rounded-full shadow-lg flex items-center gap-1">
-              <TrendingUp className="w-3 h-3" />
-              {item.metric}
-            </div>
-          </>
-        )}
-
-        {/* Overlapping circular icon bottom-left */}
-        <div className="absolute -bottom-3 left-5 w-11 h-11 rounded-full bg-brand text-black shadow-lg flex items-center justify-center z-20 transform transition-transform group-hover:scale-110 duration-300">
-          <CardIcon className="w-4.5 h-4.5" />
-        </div>
-      </div>
-
-      {/* Content under the image container */}
-      <div className="pt-6 px-1 flex-1 flex flex-col justify-between text-left">
-        <div className="space-y-2">
-          <span className="tag08-meta text-xs text-brand tracking-widest uppercase font-black block">
-            {proofMode ? "MÉTODO APLICADO" : item.client}
-          </span>
-          <h3 className="font-display font-semibold text-base sm:text-lg text-white leading-snug group-hover:text-brand transition-colors">
-            {proofMode ? item.proofTitle ?? item.title : item.title}
-          </h3>
-          <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans line-clamp-3">
-            {proofMode ? item.proofDescription ?? item.challenge : item.challenge}
-          </p>
-        </div>
-
-        <div className="pt-6 mt-4 border-t border-white/[0.03] flex items-center gap-1.5 text-xs text-brand tag08-meta uppercase tracking-widest font-extrabold group-hover:underline">
-          <span>{proofMode ? "Solicitar Estudo de Caso" : "Ver Detalhes do Case"}</span>
-          <ArrowUpRight className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 interface HomeProps {
   onNavigate: (page: string) => void;
   contactHref: string;
@@ -712,7 +442,6 @@ interface HomeProps {
 export default function Home({ onNavigate, contactHref, locale = "pt" }: HomeProps) {
   const prefersReducedMotion = useReducedMotion();
   const scrollBehavior = prefersReducedMotion ? "auto" : "smooth";
-  const [activeSlide, setActiveSlide] = useState(0);
   const [activeServiceTab, setActiveServiceTab] = useState(0);
   const [activeFaq, setActiveFaq] = useState(0);
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
@@ -720,6 +449,9 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
   const [youtubeConsentGranted, setYoutubeConsentGranted] = useState(false);
   const [showYoutubeConsentPrompt, setShowYoutubeConsentPrompt] = useState(false);
   const [activeReview, setActiveReview] = useState(0);
+  const caseCarouselRef = useRef<HTMLDivElement>(null);
+  const [caseCarouselCanPrevious, setCaseCarouselCanPrevious] = useState(false);
+  const [caseCarouselCanNext, setCaseCarouselCanNext] = useState(true);
   const [showOriginalReview, setShowOriginalReview] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [activeDiagPhase, setActiveDiagPhase] = useState<"discovery" | "analysis" | "design">("discovery");
@@ -745,7 +477,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
   const pilotCopy = locale === "pt" ? null : HOME_PILOT_COPY[locale];
   const problemCopy = pilotCopy?.problem;
   const videoCopy = pilotCopy?.videos;
-  const youtubeUnavailableCopy = locale === "en"
+  const youtubeUnavailableCopy = pilotCopy?.youtubeUnavailable ?? (locale === "en"
     ? {
         loading: "Loading videos from TAG08's official channel.",
         unavailable: "Official videos are temporarily unavailable. You can visit TAG08's YouTube channel.",
@@ -761,7 +493,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
           loading: "Carregando vídeos do canal oficial da TAG08.",
           unavailable: "Os vídeos oficiais estão temporariamente indisponíveis. Você pode visitar o canal da TAG08 no YouTube.",
           link: "ABRIR CANAL OFICIAL"
-        };
+        });
   const institutionalCopy = pilotCopy?.institutional;
   const proofCopy = pilotCopy?.proof;
   const reviewsCopy = pilotCopy?.reviews;
@@ -771,30 +503,6 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
   const methodCopy = pilotCopy?.methodCenter;
   const solutionMapCopy = pilotCopy?.solutionMap;
   const methodologyCopy = pilotCopy?.methodology;
-
-  const PROOF_CASES_DATA = [
-    {
-      id: "case-clinica-alphaville",
-      title: "Reposicionamento com mais clareza comercial",
-      proofDescription: "Organização de mensagem, percepção de valor e presença digital para uma marca que precisava comunicar melhor o que já entregava.",
-      image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=600",
-      proofMode: true
-    },
-    {
-      id: "case-saas-process",
-      title: "Presença digital com estrutura de canais",
-      proofDescription: "Construção de uma base mais coerente entre comunicação, conteúdo, site e pontos de contato para apoiar o processo comercial.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
-      proofMode: true
-    },
-    {
-      id: "case-branding-advocacia",
-      title: "Identidade e comunicação para serviço especializado",
-      proofDescription: "Alinhamento visual, linguagem e narrativa para uma marca que precisava transmitir mais clareza, confiança e profissionalismo.",
-      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=600",
-      proofMode: true
-    }
-  ];
 
   const MAPA_SOLUCOES_DATA = [
     {
@@ -861,10 +569,36 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
     return translated ? { ...service, ...translated } : service;
   }));
 
-  const evidenceMode = getEvidenceVisibilityMode();
-  const visibleClientCases = getVisibleEvidence(CLIENT_CASES, (caseStudy) => `home-case/${caseStudy.id}`, "/", evidenceMode);
-  // Client quotes are attributed evidence. Keep them out of EN/ES until a locale-safe source is approved.
-  const clientCasesLocaleReady = locale === "pt";
+  const visibleClientCases = getVisibleEvidence(CASE_STUDIES, (caseStudy) => `home-case/${caseStudy.id}`, "/");
+  const localizedClientCases = visibleClientCases.map((caseStudy) => {
+    const translated = pilotCopy?.cases.items[caseStudy.id as keyof typeof pilotCopy.cases.items];
+    return translated ? { ...caseStudy, ...translated } : caseStudy;
+  });
+  useEffect(() => {
+    const track = caseCarouselRef.current;
+    if (!track) return;
+
+    const updateControls = () => {
+      setCaseCarouselCanPrevious(track.scrollLeft > 2);
+      setCaseCarouselCanNext(track.scrollLeft + track.clientWidth < track.scrollWidth - 2);
+    };
+
+    updateControls();
+    track.addEventListener("scroll", updateControls, { passive: true });
+    window.addEventListener("resize", updateControls);
+    return () => {
+      track.removeEventListener("scroll", updateControls);
+      window.removeEventListener("resize", updateControls);
+    };
+  }, [visibleClientCases.length]);
+
+  const moveCaseCarousel = (direction: -1 | 1) => {
+    const track = caseCarouselRef.current;
+    const firstCard = track?.querySelector<HTMLElement>("[data-testid='home-case-card']");
+    if (!track || !firstCard) return;
+    const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 0;
+    track.scrollBy({ left: direction * (firstCard.offsetWidth + gap), behavior: scrollBehavior });
+  };
   const reviewsLocaleReady = gmbReviewsLocale === locale && (locale === "pt" || (
     visibleGmbReviews.length > 0 && visibleGmbReviews.every((review) =>
       review.machineTranslated === true &&
@@ -1014,6 +748,13 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
     window.scrollTo({ top: 0, behavior: scrollBehavior });
   };
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: scrollBehavior, block: "start" });
+    }
+  };
+
   const tagCategories = [
     { name: "ESTRATÉGIA" },
     { name: "POSICIONAMENTO" },
@@ -1023,40 +764,6 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
     { name: "OPERAÇÃO" },
   ];
   const localizedTagCategories = pilotCopy?.hero.categories ?? tagCategories.map((tag) => tag.name);
-  const heroCategoryServiceIds = [
-    "assessoria-estrategica",
-    "branding-posicionamento",
-    "conteudo-redes-sociais",
-    "desenvolvimento-web",
-    "process-intelligence",
-    "process-activation"
-  ];
-  const solutionMapEntries = localizedSolutionPairs.flat();
-  const heroServiceOptions: HeroServiceOption[] = localizedTagCategories.flatMap((label, index) => {
-    const serviceId = heroCategoryServiceIds[index];
-    if (!serviceId) return [];
-
-    if (index === 4 || index === 5) {
-      const processCopy = index === 4 ? pilotCopy?.mosaic.m05 : pilotCopy?.mosaic.m06;
-      return [{
-        id: serviceId,
-        label,
-        title: processCopy?.title ?? (index === 4 ? "Opera\u00e7\u00e3o pressionada pelo crescimento" : "Processos existentes, execu\u00e7\u00e3o irregular"),
-        description: processCopy?.description ?? (index === 4
-          ? "Process Intelligence organiza gargalos e rotinas em fluxos claros e materiais de consulta."
-          : "Process Activation ajuda a colocar processos em pr\u00e1tica e acompanhar sua ado\u00e7\u00e3o no trabalho di\u00e1rio."),
-        href: getLocalizedPath(index === 4 ? "/servicos/process-intelligence" : "/servicos/process-activation", locale)
-      }];
-    }
-
-    const service = solutionMapEntries.find((entry) => entry.id === serviceId);
-    if (!service) return [];
-    return [{ id: serviceId, label, title: service.title, description: service.desc, href: `#home-solution-${serviceId}` }];
-  });
-  const heroServiceActionLabel = locale === "en" ? "Explore solution" : locale === "es" ? "Ver soluci\u00f3n" : "Ver solu\u00e7\u00e3o";
-  const heroShortcutAriaLabel = pilotCopy?.hero.shortcuts ?? `Explore as ${String.fromCodePoint(0x00e1)}reas e solu${String.fromCodePoint(0x00e7, 0x00f5)}es da TAG08`;
-  const heroExploreLabel = locale === "en" ? "Explore" : "Explorar";
-  const heroHideLabel = locale === "en" ? "Hide" : "Ocultar";
 
   return (
     <div className="tag08-home-flow bg-charcoal-950 text-white overflow-hidden">
@@ -1150,14 +857,30 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                 <div className="tag08-meta text-xs text-brand uppercase tracking-widest font-extrabold block lg:text-right">
                   {pilotCopy?.hero.organize ?? "O QUE ORGANIZAMOS:"}
                 </div>
-                <HomeHeroServiceExplorer
-                  options={heroServiceOptions}
-                  ariaLabel={heroShortcutAriaLabel}
-                  actionLabel={heroServiceActionLabel}
-                  exploreLabel={heroExploreLabel}
-                  hideLabel={heroHideLabel}
-                  prefersReducedMotion={prefersReducedMotion}
-                />
+                <nav aria-label={pilotCopy?.hero.shortcuts ?? "Atalhos para as soluções da TAG08"}>
+                  <div className="flex flex-wrap lg:justify-end gap-1.5 max-w-sm lg:ml-auto">
+                    {localizedTagCategories.map((tag) => (
+                      <a
+                        key={tag}
+                        href="#servicos-principais"
+                        onClick={(event) => {
+                          if (
+                            event.button !== 0 ||
+                            event.metaKey ||
+                            event.ctrlKey ||
+                            event.shiftKey ||
+                            event.altKey
+                          ) return;
+                          event.preventDefault();
+                          scrollToSection("servicos-principais");
+                        }}
+                        className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/20 bg-white/[0.03] px-3 py-1.5 font-sans text-xs font-semibold tracking-wider text-white/80 transition-[background-color,border-color,color] duration-200 hover:border-white/40 hover:bg-white/[0.07] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
+                      >
+                        {tag}
+                      </a>
+                    ))}
+                  </div>
+                </nav>
               </div>
             </div>
 
@@ -1217,6 +940,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
+            data-testid="home-diagnostic-cta"
             className="tag08-card mt-12 relative overflow-hidden border !border-[color:var(--color-charcoal-700)] !bg-[color:var(--color-text-primary)] p-8 text-left text-[color:var(--color-main)] shadow-[var(--shadow-base)] transition-[border-color,box-shadow,transform] duration-200 motion-safe:hover:-translate-y-0.5 motion-safe:hover:!border-[color:var(--color-main)] motion-safe:hover:shadow-[var(--shadow-emphasis)] motion-reduce:transform-none"
           >
             {/* Design accents */}
@@ -1225,7 +949,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
             
             <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
               <div className="space-y-3 max-w-2xl">
-                <div className="tag08-kicker text-[color:var(--color-accent-readable)]">
+                <div className="tag08-kicker !text-[color:var(--color-accent-readable)]">
                   <span className="sr-only">{problemCopy?.ctaSr ?? "Destaque:"}</span>
                   <span>
                     {problemCopy?.ctaBadge ?? "SESSÃO DIAGNÓSTICA EXCLUSIVA"}
@@ -2064,10 +1788,9 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                         <motion.div
                           key={service.id}
                           data-testid="solution-map-card"
-                          id={`home-solution-${service.id}`}
                           whileHover={{ y: -4 }}
                           transition={{ duration: 0.3 }}
-                          className={`scroll-mt-24 ${cardBg} ${textColor} rounded-[24px] p-6 sm:p-8 lg:p-9 text-left relative overflow-hidden group h-full flex flex-col transition-[border-color,background-color] duration-300 hover:border-black/25`}
+                          className={`${cardBg} ${textColor} rounded-[24px] p-6 sm:p-8 lg:p-9 text-left relative overflow-hidden group h-full flex flex-col transition-[border-color,background-color] duration-300 hover:border-black/25`}
                         >
                           <div className="absolute inset-0 grid grid-cols-3 h-full opacity-[0.015] pointer-events-none">
                             <div className="border-r border-black h-full" />
@@ -2556,282 +2279,101 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
         </div>
       </section>
 
-      {/* PORTFÓLIO DE TESTEMUNHOS & CASOS DE CLIENTES (UNIFICADO - O CLIENTE DICTA A REVOLUÇÃO) */}
-      {((locale !== "pt") || visibleClientCases.length > 0) && <section id="portfolio-marcas" data-testid="home-client-cases" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
-        
-        {/* Editorial magazine background grid lines */}
-        <div className="absolute inset-0 grid grid-cols-4 sm:grid-cols-8 h-full opacity-5 pointer-events-none">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="border-r border-white h-full" />
-          ))}
-        </div>
-        <div className="absolute inset-0 grid grid-rows-4 sm:grid-rows-8 w-full opacity-5 pointer-events-none">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="border-b border-white w-full" />
-          ))}
-        </div>
-
-        {/* Ambient backlighting to replicate high-fashion look */}
-        <div className="absolute top-1/4 -left-32 w-[450px] h-[450px] bg-cyan-500/10 rounded-full blur-[160px] pointer-events-none" />
-        <div className="absolute bottom-1/4 -right-32 w-[450px] h-[450px] bg-red-500/10 rounded-full blur-[160px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto space-y-12 relative z-10">
-          
-          {/* Main Section Title */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2 border-b border-white/[0.08]">
-            <div className="text-left space-y-3">
-              <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-extrabold block">
-                {casesCopy?.eyebrow ?? "CASES & POSICIONAMENTO DIGITAL"}
-              </span>
-              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter">
-                {casesCopy?.titleFirstLine ?? "O CLIENTE DICTA"} <br />
-                {casesCopy?.titleSecondLine ?? "A REVOLUÇÃO_"}
-              </h2>
+      {/* CASES & POSICIONAMENTO DIGITAL: derivados do catálogo canônico e protegidos pelo gate editorial. */}
+      <section id="portfolio-marcas" data-testid="home-client-cases" className="py-24 px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-black relative overflow-hidden">
+          <div className="absolute inset-0 grid grid-cols-4 sm:grid-cols-8 opacity-5 pointer-events-none" aria-hidden="true">
+            {[...Array(8)].map((_, i) => <div key={i} className="border-r border-white" />)}
+          </div>
+          <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2 border-b border-white/[0.08]">
+              <div className="text-left space-y-3">
+                <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-extrabold block">
+                  {casesCopy?.eyebrow ?? "CASES & POSICIONAMENTO DIGITAL"}
+                </span>
+                <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.9] tracking-tighter">
+                  {casesCopy?.titleFirstLine ?? "DESAFIOS REAIS."} <br />
+                  {casesCopy?.titleSecondLine ?? "RESPOSTAS COM DIREÇÃO."}
+                </h2>
+              </div>
+              <a href={getLocalizedPath("/contato", locale)} onClick={(event) => { event.preventDefault(); handleLinkClick("/contato"); }} className="inline-flex items-center gap-4 bg-charcoal-900 hover:bg-white/[0.04] border border-white/10 px-5 py-3 rounded-2xl transition-all duration-300 self-start md:self-end group shrink-0 shadow-lg hover:border-brand/35">
+                <span className="font-sans text-xs font-semibold text-white">{casesCopy?.contactCta ?? "FALAR COM A TAG08"}</span>
+                <ArrowRight className="w-4 h-4 text-brand transition-transform group-hover:translate-x-1" />
+              </a>
             </div>
 
-            {/* Direct contact CTA */}
-            <a 
-              href="/contato"
-              onClick={(e) => {
-                e.preventDefault();
-                handleLinkClick("/contato");
-              }}
-              className="inline-flex items-center gap-4 bg-charcoal-900 hover:bg-white/[0.04] border border-white/10 px-5 py-3 rounded-2xl transition-all duration-300 self-start md:self-end group shrink-0 shadow-lg hover:border-brand/35"
-            >
-              <div className="w-10 h-10 rounded-full bg-brand/10 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-black transition-all shadow-md">
-                <ArrowRight className="w-5 h-5 fill-current" />
-              </div>
-              <div className="flex flex-col text-left font-sans">
-                <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest font-bold">{casesCopy?.directContact ?? "Contato direto"}</span>
-                <span className="text-white text-xs font-semibold group-hover:text-brand transition-colors flex items-center gap-1.5 font-sans">
-                  {casesCopy?.contactCta ?? "FALAR COM A TAG08"} <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                </span>
-              </div>
-            </a>
-          </div>
-
-          {clientCasesLocaleReady && visibleClientCases.length > 0 ? <>
-          {/* Asymmetric Split-Screen Bento-Grid Layout for Cases & Testimonials */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pt-4">
-            
-            {/* Left Hand: Sleek list of Cases with detailed info and indicators */}
-            <div className="lg:col-span-4 flex flex-col justify-start space-y-4">
-              <div className="border-b border-white/[0.05] pb-4 mb-2">
-                <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black block">
-                  {casesCopy?.selector ?? "CRAFTSMANSHIP FILE // SELECTOR"}
-                </span>
-                <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest font-bold block mt-1">
-                  {casesCopy?.selectorHint ?? "Selecione pauta editorial e marque a diferença executiva:"}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-                {visibleClientCases.map((cc, index) => {
-                  const isActive = index === activeSlide;
-                  return (
-                    <button
-                      key={cc.id}
-                      data-evidence-key={`home-case/${cc.id}`}
-                      aria-pressed={isActive}
-                      onClick={() => setActiveSlide(index)}
-                      className={`w-full text-left p-4 rounded-2xl border transition-all duration-300 relative overflow-hidden group cursor-pointer ${
-                        isActive
-                          ? "bg-brand text-black border-brand shadow-[0_12px_30px_rgba(var(--color-brand-rgb),0.14)]"
-                          : "bg-charcoal-900/40 border-white/[0.04] text-zinc-400 hover:text-white hover:border-white/10 hover:bg-charcoal-900/60"
-                      }`}
-                    >
-                      {/* Active sidebar highlight accent */}
-                      {isActive && (
-                        <div className="absolute top-0 bottom-0 left-0 w-1 bg-black" />
-                      )}
-
-                      <div className="flex items-center gap-3">
-                        <span className={`font-sans text-xs font-black uppercase ${isActive ? "text-black/60" : "text-brand"}`}>
-                          {String(index + 1).padStart(2, '0')}.
-                        </span>
-                        
-                        <div className="flex-1 min-w-0">
-                          <h3 className={`font-display font-black text-sm uppercase tracking-tight truncate ${isActive ? "text-black" : "text-white"}`}>
-                            {cc.name}
-                          </h3>
-                          <EvidenceReviewBadge evidenceKey={`home-case/${cc.id}`} />
-                          <p className={`font-sans text-xs truncate ${isActive ? "text-black/80" : "text-zinc-400"}`}>
-                            {cc.handle}
-                          </p>
-                        </div>
-
-                        <ArrowRight className={`w-3.5 h-3.5 transition-transform shrink-0 ${
-                          isActive ? "text-black rotate-[-45deg] stroke-[2.5]" : "text-zinc-500 group-hover:translate-x-1"
-                        }`} />
-                      </div>
-
-                      {/* Small inline tags shown if not active, or in brand styling if active */}
-                      <div className="flex flex-wrap gap-1 mt-2.5">
-                        {cc.categoryTags.slice(0, 2).map((tag) => (
-                          <span
-                            key={tag}
-                            className={`tag08-meta text-xs px-1.5 py-0.5 rounded uppercase tracking-wider font-bold ${
-                              isActive 
-                              ? "bg-black/10 border border-black/10 text-black/90" 
-                                : "bg-white/[0.02] border border-white/[0.05] text-zinc-400"
-                            }`}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
+            {visibleClientCases.length > 0 ? (
+              <div className="space-y-4 pt-4">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <p className="text-sm text-zinc-400">{(casesCopy?.countLabel ?? "Explore {count} projects and the challenges they addressed.").replace("{count}", String(localizedClientCases.length))}</p>
+                  <div className="flex items-center gap-2" aria-label={casesCopy?.controlsLabel ?? "Controles dos cases"}>
+                    <button type="button" aria-label={casesCopy?.previousCase ?? "Case anterior"} aria-controls="home-case-carousel" disabled={!caseCarouselCanPrevious} onClick={() => moveCaseCarousel(-1)} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.12] bg-charcoal-900 text-white transition-colors hover:border-brand/50 hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-not-allowed disabled:opacity-40">
+                      <ArrowLeft className="h-4 w-4" aria-hidden="true" />
                     </button>
-                  );
-                })}
-              </div>
-
-              {/* Direct active statistics mini badge */}
-              <div className="hidden lg:flex items-center justify-between bg-charcoal-900/35 border border-white/[0.05] p-3 rounded-2xl">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-                  <span className="tag08-meta text-xs text-zinc-500 uppercase tracking-widest font-extrabold">
-                    MÁXIMA RETENÇÃO VISUAL
-                  </span>
+                    <button type="button" aria-label={casesCopy?.nextCase ?? "Próximo case"} aria-controls="home-case-carousel" disabled={!caseCarouselCanNext} onClick={() => moveCaseCarousel(1)} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.12] bg-charcoal-900 text-white transition-colors hover:border-brand/50 hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-not-allowed disabled:opacity-40">
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                  </div>
                 </div>
-                <span className="font-sans text-xs text-brand font-bold bg-brand/5 border border-brand/10 px-1.5 rounded">
-                  DIREÇÃO DE FLUXO TOTAL
-                </span>
+                <div id="home-case-carousel" ref={caseCarouselRef} role="region" aria-label={casesCopy?.carouselLabel ?? "Cases da TAG08"} aria-roledescription={casesCopy?.carouselRoleDescription ?? "carrossel"} tabIndex={0} className="grid auto-cols-[88%] grid-flow-col gap-4 overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-px-1 px-1 pb-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-black sm:auto-cols-[54%] xl:auto-cols-[38%]">
+                  {localizedClientCases.map((caseStudy, caseIndex) => {
+                    const clientPrefix = `${caseStudy.client}:`;
+                    const caseTitle = caseStudy.title.startsWith(clientPrefix)
+                      ? caseStudy.title.slice(clientPrefix.length).trim()
+                      : caseStudy.title;
+                    const showClientLogo = Boolean(caseStudy.clientLogo && caseStudy.clientLogoEvidenceKey && isEvidenceVisible(caseStudy.clientLogoEvidenceKey, "/"));
+
+                    return (
+                      <article key={caseStudy.id} data-testid="home-case-card" data-evidence-key={`home-case/${caseStudy.id}`} className="group flex min-w-0 snap-start flex-col overflow-hidden rounded-3xl border border-white/[0.08] bg-charcoal-900/40 transition-colors duration-200 hover:border-white/[0.16]">
+                        <div className="relative flex min-h-36 flex-col justify-between gap-5 overflow-hidden border-b border-white/[0.06] bg-white/[0.025] px-5 py-5 sm:min-h-40 sm:px-6">
+                          <div className="pointer-events-none absolute inset-0 opacity-40" aria-hidden="true">
+                            <div className="absolute inset-y-0 left-1/3 border-l border-white/[0.06]" />
+                            <div className="absolute inset-y-0 left-2/3 border-l border-white/[0.06]" />
+                            <div className="absolute inset-x-0 top-1/2 border-t border-white/[0.06]" />
+                          </div>
+                          <div className="relative z-10 flex items-start justify-between gap-3">
+                            <span className="tag08-meta text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500">CASE / {String(caseIndex + 1).padStart(2, "0")}</span>
+                            <span className="tag08-meta max-w-[65%] text-right text-[10px] font-bold uppercase tracking-[0.12em] text-brand">{caseStudy.category}</span>
+                          </div>
+                          {showClientLogo && caseStudy.clientLogo ? (
+                            <div className="relative z-10 flex h-12 w-28 items-center justify-start sm:h-14 sm:w-36">
+                              <Image src={caseStudy.clientLogo} alt={caseStudy.client} width={144} height={72} className="h-full w-full object-contain object-left" />
+                            </div>
+                          ) : (
+                            <p className="relative z-10 max-w-full break-words font-display text-2xl font-semibold leading-none tracking-tight text-white sm:text-3xl">{caseStudy.client}</p>
+                          )}
+                        </div>
+                        <div className="flex flex-1 flex-col p-5 sm:p-6">
+                          <h3 className="font-display text-xl font-bold leading-tight text-white sm:text-2xl">{caseTitle}</h3>
+                          <div className="mt-5 space-y-4 text-sm leading-relaxed text-zinc-300">
+                            <p><span className="font-semibold text-white">{casesCopy?.challengeLabel ?? "O desafio:"} </span>{caseStudy.summary ?? caseStudy.challenge}</p>
+                            <p><span className="font-semibold text-white">{casesCopy?.responseLabel ?? "A resposta:"} </span>{caseStudy.solution}</p>
+                          </div>
+                          <a href={getLocalizedPath("/contato", locale)} onClick={(event) => { event.preventDefault(); handleLinkClick("/contato"); }} className="mt-auto inline-flex min-h-11 items-center gap-2 pt-6 text-sm font-semibold text-white transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-black">
+                            {casesCopy?.relatedCta ?? "Conversar sobre um desafio parecido"} <ArrowRight className="h-4 w-4 text-brand" aria-hidden="true" />
+                          </a>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-
-            {/* Right Hand: Immersive, beautifully styled Showcase Display */}
-            <div className="lg:col-span-8 flex flex-col justify-between">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeSlide}
-                  initial={{ opacity: 0, scale: 0.98, y: 15 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.98, y: -15 }}
-                  transition={{ duration: 0.45, ease: "easeOut" }}
-                  className="relative w-full rounded-[32px] sm:rounded-[40px] overflow-hidden aspect-[4/5] sm:aspect-[16/10] md:aspect-[1.65] bg-black border border-white/[0.08] shadow-[0_35px_80px_rgba(0,0,0,0.85)] flex flex-col justify-between p-6 sm:p-10 text-left group h-full"
-                >
-                  
-                  {/* Dynamic moody background image with custom style lighting */}
-                  <div className="absolute inset-0 z-0 select-none pointer-events-none">
-                    <Image
-                      src={visibleClientCases[activeSlide].backgroundImg}
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 100vw, 1200px"
-                      className="w-full h-full object-cover opacity-80 group-hover:scale-[1.03] transition-transform duration-1000 ease-out brightness-[0.75] contrast-[1.1] grayscale-[10%]"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent opacity-95" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-transparent to-black/35" />
-                    
-                    {/* Horizontal and Vertical guidelines representing technical branding blueprint craftsmanship */}
-                    <div className="absolute inset-0 grid grid-cols-4 sm:grid-cols-6 h-full opacity-10">
-                      {[...Array(6)].map((_, i) => (
-                        <div key={i} className="border-r border-white/30 h-full" />
-                      ))}
-                    </div>
-                    <div className="absolute inset-0 grid grid-rows-4 sm:grid-rows-6 w-full opacity-10">
-                      {[...Array(6)].map((_, i) => (
-                        <div key={i} className="border-b border-white/30 w-full" />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* TOP HEADER LAYER: Editorial category tags & Rotating Neon Sunburst */}
-                  <div className="relative z-10 flex items-center justify-between">
-                    <div className="flex flex-wrap gap-2">
-                      {visibleClientCases[activeSlide].categoryTags.map((tag) => (
-                        <span 
-                          key={tag} 
-                          className="tag08-meta text-xs tracking-widest text-brand border border-brand/30 px-3 py-1 rounded-full uppercase font-bold bg-black/60 backdrop-blur-sm shadow-sm"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Star Logo under ambient glow spinning continuous */}
-                    <div className="relative w-8 h-8 sm:w-10 sm:h-10 opacity-50 mix-blend-screen shrink-0" aria-hidden="true">
-                      <svg
-                        viewBox="0 0 100 100"
-                        className="w-full h-full text-brand fill-current"
-                      >
-                        <g transform="translate(50, 50)">
-                          {[...Array(8)].map((_, index) => (
-                            <rect
-                              key={index}
-                              x="-6"
-                              y="-45"
-                              width="12"
-                              height="90"
-                              rx="6"
-                              className="fill-brand"
-                              transform={`rotate(${index * 45})`}
-                            />
-                          ))}
-                        </g>
-                      </svg>
-                      <div className="absolute inset-0 bg-brand/20 rounded-full blur-xl scale-75" />
-                    </div>
-                  </div>
-
-                  {/* MIDDLE QUOTE & POSITIONING HEADER (Using layered curved details cards) */}
-                  <div className="relative z-10 space-y-4 max-w-2xl mt-auto pt-4">
-                    <span className="tag08-meta text-xs text-brand tracking-widest uppercase font-extrabold block">
-                      {visibleClientCases[activeSlide].caseName}
-                    </span>
-                    
-                    <h3 className="font-display font-black text-2.5xl sm:text-4xl md:text-[40px] text-brand leading-[0.95] tracking-tighter mb-2">
-                      {visibleClientCases[activeSlide].tagline}
-                    </h3>
-
-                    <div className="relative">
-                      <p className="text-white text-sm sm:text-base font-sans font-medium tracking-tight leading-relaxed italic block">
-                        “{visibleClientCases[activeSlide].quote}”
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* BOTTOM PROFILE WRAPPER MATCHING USER MOCKUP */}
-                  <div className="relative z-10 flex items-center justify-between border-t border-white/[0.08] pt-4 mt-5">
-                    <div className="hidden sm:block">
-                      <EvidenceReviewBadge evidenceKey={`home-case/${visibleClientCases[activeSlide].id}`} />
-                    </div>
-
-                    {/* Profile card absolute design accuracy */}
-                    <div className="flex items-center gap-3 bg-black/50 backdrop-blur-sm rounded-full py-1.5 pl-2 pr-4 border border-white/10 shadow-lg ml-auto">
-                      <Image
-                        src={visibleClientCases[activeSlide].avatar}
-                        alt=""
-                        width={32}
-                        height={32}
-                        className="w-8 h-8 rounded-full object-cover border-2 border-brand"
-                        referrerPolicy="no-referrer"
-                      />
-                      <div className="flex flex-col text-left">
-                        <span className="text-white text-xs font-bold leading-tight uppercase font-sans">
-                          {visibleClientCases[activeSlide].name}
-                        </span>
-                        <span className="text-brand font-sans text-xs tracking-wider font-semibold">
-                          {visibleClientCases[activeSlide].handle}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
+            ) : (
+              <div role="status" className="rounded-2xl border border-white/[0.08] bg-charcoal-900/40 px-6 py-8 text-left">
+                <h3 className="font-display text-lg font-semibold text-white">{casesCopy?.unavailableTitle ?? "Projetos que ajudam a reconhecer desafios parecidos"}</h3>
+                <p className="mt-2 max-w-3xl text-sm leading-relaxed text-zinc-400">{casesCopy?.unavailableDescription ?? "Estamos organizando os relatos para apresentar os desafios enfrentados e as respostas construídas. Cada projeto será mostrado após a confirmação dos fatos e da autorização de divulgação."}</p>
+              </div>
+            )}
           </div>
-          </> : <div role="status" className="rounded-2xl border border-white/[0.08] bg-charcoal-900/40 px-6 py-8 text-left">
-            <h3 className="font-display text-lg font-semibold text-white">{casesCopy?.unavailableTitle}</h3>
-            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-zinc-400">{casesCopy?.unavailableDescription}</p>
-          </div>}
-        </div>
-      </section>}
-
+      </section>
       {/* SECTION 8.5 - GOOGLE MY BUSINESS REVIEWS */}
+      {locale !== "pt" && contentSources.googleBusiness === "live" && gmbReviewsLocale === locale && !reviewsLocaleReady && visibleGmbReviews.length > 0 && (
+        <section id="avaliacoes-gmb" className="border-b border-white/[0.04] bg-charcoal-900/20 px-6 py-16">
+          <div role="status" className="mx-auto max-w-7xl rounded-2xl border border-white/[0.08] bg-charcoal-900/40 px-6 py-8">
+            <h2 className="font-display text-lg font-semibold text-white">{reviewsCopy?.unavailableTitle}</h2>
+            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-zinc-400">{reviewsCopy?.unavailableDescription}</p>
+          </div>
+        </section>
+      )}
       {contentSources.googleBusiness === "live" && gmbReviewsLocale === locale && reviewsLocaleReady && visibleGmbReviews.length > 0 && <section id="avaliacoes-gmb" className="py-24 px-6 border-b border-white/[0.04] bg-charcoal-900/20 relative overflow-hidden">
         {/* Subtle background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[120px] pointer-events-none" />

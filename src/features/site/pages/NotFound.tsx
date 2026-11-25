@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowUpRight, Compass, Globe, MessageSquare, ShieldAlert } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Compass, Globe, MessageSquare, ShieldAlert } from "../../../components/DooIcons";
 import { motion } from "motion/react";
 import type { RouteLocale } from "../../../config/routeRegistry";
 import { buildBrazilWhatsAppUrl } from "../../../config/siteNetwork";

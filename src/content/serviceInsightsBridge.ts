@@ -1,3 +1,4 @@
+import type { RouteLocale } from "../config/routeRegistry";
 import type { EditorialSectionId } from "./editorialContentV1";
 
 export interface ServiceInsightsBridgeConfig {
@@ -7,6 +8,9 @@ export interface ServiceInsightsBridgeConfig {
   title: string;
   intro: string;
 }
+
+export const editorialLocaleMatches = (contentLocale: string, routeLocale: RouteLocale): boolean =>
+  contentLocale.trim().toLowerCase().split(/[-_]/, 1)[0] === routeLocale;
 
 /**
  * Contextual placement is curated in the portal, while article metadata and
@@ -90,4 +94,49 @@ export const SERVICE_INSIGHTS_BRIDGE_CONTENT: Record<string, ServiceInsightsBrid
 
 export const getServiceInsightsBridgeConfig = (
   servicePath: string,
-): ServiceInsightsBridgeConfig | null => SERVICE_INSIGHTS_BRIDGE_CONTENT[servicePath] ?? null;
+  locale: RouteLocale = "pt",
+): ServiceInsightsBridgeConfig | null => {
+  const source = SERVICE_INSIGHTS_BRIDGE_CONTENT[servicePath];
+  if (!source || locale === "pt") return source ?? null;
+
+  const translations: Partial<Record<string, Record<Exclude<RouteLocale, "pt">, Pick<ServiceInsightsBridgeConfig, "serviceTitle" | "title" | "intro">>>> = {
+    "/servicos/desenvolvimento-web": {
+      en: { serviceTitle: "Web Development", title: "Readings that help structure a website", intro: "This editorial bridge helps reduce uncertainty before a conversation. These topics cover structure, clarity, content, and support for business development." },
+      es: { serviceTitle: "Desarrollo Web", title: "Lecturas para estructurar un sitio web", intro: "Este espacio editorial ayuda a reducir dudas antes de conversar. Los temas tratan sobre estructura, claridad, contenido y apoyo al desarrollo del negocio." }
+    },
+    "/servicos/assessoria-marketing-digital-estrategico": {
+      en: { serviceTitle: "Strategic Marketing Advisory", title: "Readings to support better decisions before execution", intro: "This editorial bridge helps reduce uncertainty before a conversation. These topics cover diagnosis, goals, context, and next steps in marketing." },
+      es: { serviceTitle: "Asesoría de Marketing Estratégico", title: "Lecturas para decidir mejor antes de ejecutar", intro: "Este espacio editorial ayuda a reducir dudas antes de conversar. Los temas tratan sobre diagnóstico, objetivos, contexto y próximos pasos de marketing." }
+    },
+    "/servicos/process-intelligence": {
+      en: { serviceTitle: "Process Intelligence", title: "Readings to organize operations before accelerating", intro: "This editorial bridge helps reduce noise before a conversation. These topics cover diagnosis, tools, and operational clarity to support growth." },
+      es: { serviceTitle: "Process Intelligence", title: "Lecturas para organizar la operación antes de acelerar", intro: "Este espacio editorial ayuda a reducir el ruido antes de conversar. Los temas tratan sobre diagnóstico, herramientas y claridad operativa para sostener el crecimiento." }
+    },
+    "/servicos/gestao-de-redes-sociais": {
+      en: { serviceTitle: "Social Media Management", title: "Readings to sustain a purposeful presence", intro: "This editorial bridge helps reduce noise before a conversation. These topics cover customer journeys, video, and intent so social media has a clear role." },
+      es: { serviceTitle: "Gestión de Redes Sociales", title: "Lecturas para sostener una presencia con dirección", intro: "Este espacio editorial ayuda a reducir el ruido antes de conversar. Los temas tratan sobre recorrido del cliente, vídeo e intención para dar una función clara a las redes." }
+    },
+    "/servicos/branding-identidade": {
+      en: { serviceTitle: "Branding and Visual Identity", title: "Readings to make brand identity useful in practice", intro: "Identity creates value when it guides communication, materials, and decisions instead of remaining only visual. These topics help organize that transition." },
+      es: { serviceTitle: "Branding e Identidad Visual", title: "Lecturas para convertir la identidad en una marca útil", intro: "La identidad aporta valor cuando orienta la comunicación, los materiales y las decisiones, y deja de ser solo estética. Estos temas ayudan a organizar esa transición." }
+    },
+    "/servicos/producao-audiovisual": {
+      en: { serviceTitle: "Audiovisual Production", title: "Readings to give video content a clear purpose", intro: "Audiovisual production does not start with the camera. These topics help define goals, context, and how content will be used before recording." },
+      es: { serviceTitle: "Producción Audiovisual", title: "Lecturas para dar propósito al contenido en vídeo", intro: "La producción audiovisual no empieza con la cámara. Estos temas ayudan a definir objetivos, contexto y uso del contenido antes de grabar." }
+    },
+    "/servicos/process-activation": {
+      en: { serviceTitle: "Process Activation", title: "Readings to bring processes into everyday work", intro: "Activating a process takes more than documenting steps. These topics help explain adoption, clarity, and continuity in operations." },
+      es: { serviceTitle: "Activación de Procesos", title: "Lecturas para integrar los procesos en la rutina", intro: "Activar un proceso exige más que documentar etapas. Estos temas ayudan a comprender la adopción, la claridad y la continuidad operativa." }
+    },
+    "/hospedagem-manutencao-sites": {
+      en: { serviceTitle: "Website Hosting and Maintenance", title: "Readings to keep a website reliable after launch", intro: "Publication is the start of operation. These topics help organize maintenance, performance, and technical decisions without relying on urgency." },
+      es: { serviceTitle: "Alojamiento y Mantenimiento Web", title: "Lecturas para mantener un sitio fiable después del lanzamiento", intro: "La publicación es el inicio de la operación. Estos temas ayudan a organizar el mantenimiento, el rendimiento y las decisiones técnicas sin depender de urgencias." }
+    },
+    "/programa-afiliados": {
+      en: { serviceTitle: "Partnership Program", title: "Readings to refer opportunities with greater clarity", intro: "A useful referral starts by understanding the problem, timing, and next step for the business. These topics help qualify the conversation before contact." },
+      es: { serviceTitle: "Programa de Alianzas", title: "Lecturas para recomendar oportunidades con más claridad", intro: "Una recomendación útil empieza por entender el problema, el momento y el siguiente paso de la empresa. Estos temas ayudan a preparar la conversación antes del contacto." }
+    }
+  };
+
+  return { ...source, ...translations[servicePath]?.[locale] };
+};

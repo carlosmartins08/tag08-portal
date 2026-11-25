@@ -20,8 +20,6 @@ Portal institucional TAG08 em Next.js App Router. As paginas publicas sao gerada
 ```bash
 npm ci
 npm run dev
-npm run dev:content-review
-npm run dev:public-preview
 npm run continuity:status
 npm run setup:hooks
 npm run lint
@@ -35,13 +33,31 @@ npm run verify:persistence
 
 ## Continuidade de trabalho
 
-Use `npm run continuity:status` antes de retomar uma missão. Ele mostra a branch esperada, o commit-base, a última entrega e alterações locais que precisam de classificação. `npm run dev` e `npm run dev:content-review` param se a branch não for a registrada em `docs/PROJECT_STATE.md`.
+Use `npm run continuity:status` antes de retomar uma missão. Ele mostra a branch esperada, o commit-base, a última entrega e alterações locais que precisam de classificação. `npm run dev` para se a branch não for a registrada em `docs/PROJECT_STATE.md`.
 
 O hook instalado por `npm run setup:hooks` bloqueia commits de código, testes, automação ou configuração quando `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` não acompanham a mesma mudança. A qualidade completa continua obrigatória no pull request.
 
 ## Variaveis locais
 
 Copie `.env.example` para `.env`. Use `NEXT_PUBLIC_GTM_ID` e `NEXT_PUBLIC_GSC_VERIFICATION` para mensuração e Search Console. GA4, Meta Pixel, Pinterest Tag e LinkedIn Insight Tag são configurados somente no GTM; nunca duplique snippets no aplicativo. GA4 é mensuração: não substitui aviso de privacidade, base legal, consentimento aplicável ou outros controles de LGPD. As demais variáveis preservam os contratos atuais de Onboarding e conteúdo oficial. Nunca versione `.env`.
+
+## Configuracao por ambiente
+
+Os arquivos `.env*` têm funções diferentes e não são intercambiáveis:
+
+| Arquivo | Uso |
+| --- | --- |
+| `.env.example` | Modelo sem segredos para preparar o ambiente local; copie para `.env` somente na máquina de desenvolvimento. |
+| `.env` | Valores-base locais carregados pelas ferramentas que usam dotenv e pelo Next.js. Não versionar nem enviar no pacote de produção. |
+| `.env.local` | Sobrescritas privadas da máquina local, carregadas pelo Next.js; não é configuração de staging ou produção. |
+| `.env.staging.example` | Modelo de variáveis de staging, sem credenciais reais. Não é carregado automaticamente. |
+| `.env.staging.local` | Configuração privada de staging lida explicitamente pelo preflight e pelo runner de homologação. Nunca usar no processo de produção. |
+
+O processo `npm run start` executa o servidor Next.js standalone. `tools/prepare-standalone.mjs` remove arquivos `.env*` do artefato de distribuição intencionalmente; por isso, a ausência de `.env` no pacote hospedado é esperada e não significa que o código não aceite configuração. O gestor da hospedagem deve fornecer as variáveis no ambiente do processo Node.js. Não criar, versionar ou copiar um `.env` com segredos para o repositório ou para o artefato.
+
+No ambiente de produção, o preflight exige `TAG08_DEPLOYMENT_ENV=production`, `ALLOWED_ORIGINS`, `INTERNAL_API_TOKEN`, `ONBOARDING_ENABLED=false` e as três flags operacionais explicitamente coerentes (`SUBMISSIONS_ENABLED`, `INTEGRATIONS_ENABLED`, `GOOGLE_SHEETS_ENABLED`). O preflight de produção também exige `TRANSLATIONS_AUTOPUBLISH=true`, `TRANSLATION_SERVICE_URL` e `TRANSLATION_ENGINE_VERSION`. Manter as flags operacionais falsas até haver autorização para habilitar formulários. Se forem habilitadas, configurar também o ID aprovado da planilha produtiva e `GOOGLE_SERVICE_ACCOUNT_JSON` como variável secreta do processo. Não configurar ClickUp para Contato/Talentos nem ativar Onboarding.
+
+Variáveis `NEXT_PUBLIC_*`, como `NEXT_PUBLIC_GTM_ID` e `NEXT_PUBLIC_GSC_VERIFICATION`, precisam estar definidas no ambiente de build, pois são incorporadas ao bundle do navegador durante `next build`. Segredos e configurações server-side, como `INTERNAL_API_TOKEN` e `YOUTUBE_API_KEY`, devem ser fornecidos ao processo Node.js em runtime; não os prefixar com `NEXT_PUBLIC_`. O `YOUTUBE_API_KEY` precisa existir no ambiente de runtime para a origem oficial de vídeos funcionar, em vez de recorrer ao fallback.
 
 ## Sequencia de deploy
 
@@ -63,9 +79,7 @@ O preflight de produção deve ser chamado com `npm run preflight:deploy -- --pr
 
 `npm run dev` abre a experiência pública local em `http://localhost:3101`, sem o aviso editorial. O gate de evidências continua exibindo somente registros aprovados. O comando informa diretório, branch, commit, estado limpo/modificado do worktree, modo e URL; se alguma porta exigida estiver ocupada, falha sem reutilizar ou encerrar o processo existente. O cache público é `.next-dev`.
 
-`npm run dev:content-review` inicia explicitamente a revisão editorial em `http://localhost:3101`, identificada por “REVISÃO LOCAL — NÃO PUBLICADO”, com o cache `.next-review`. Essa visualização pode mostrar itens `investigate` com seus avisos; ela não os aprova nem os publica.
-
-`npm run dev:public-preview` abre em `http://localhost:3212` a prévia pública de escopo de publicação. Ela compartilha `.next-dev` com `npm run dev`; os dois modos públicos não podem executar ao mesmo tempo. O lançador verifica as portas e não reutiliza servidores sem identidade confirmada.
+`npm run dev` inicia a única experiência de desenvolvimento em `http://localhost:3101`, usando o mesmo renderizador e os mesmos gates de publicação da aplicação. Evidências `pending`/`investigate` continuam registradas, mas não são renderizadas; idiomas só aparecem quando publicados para a rota. Use `npm run content:status` e `npm run i18n:status` para ver pendências sem alternar a interface para uma versão de revisão. O lançador informa diretório, branch, commit e estado do worktree e falha se a porta solicitada estiver ocupada.
 
 `http://127.0.0.1:3000` pertence somente ao container Docker local. Ele é uma imagem compilada e não deve ser usado para revisar alterações do diretório de trabalho; atualize-o apenas por um rebuild explícito.
 

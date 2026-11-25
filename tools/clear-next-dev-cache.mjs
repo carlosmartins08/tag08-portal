@@ -2,9 +2,9 @@ import { existsSync, rmSync } from "node:fs";
 import net from "node:net";
 import { resolve } from "node:path";
 
-const port = Number(process.argv[2] ?? "3212");
+const port = Number(process.argv[2] ?? "3101");
 const cacheName = process.argv[3] ?? ".next-dev";
-const allowedCaches = new Set([".next-dev", ".next-review"]);
+const allowedCaches = new Set([".next-dev"]);
 
 if (!allowedCaches.has(cacheName)) {
   throw new Error(`Cache de desenvolvimento não permitido: ${cacheName}.`);

@@ -14,7 +14,7 @@ import {
   Sparkles, 
   Terminal, 
   Lock,
-} from "lucide-react";
+} from "../../../components/DooIcons";
 import { trackFormError, trackFormStart, trackFormStep, trackFormSubmit, trackOutboundClick } from "../../../lib/analytics";
 import { confirmsSheetsSubmission } from "../../../lib/sheetsDeliveryConfirmation";
 import { queueFormSubmission } from "../../../lib/formQueue";
@@ -31,7 +31,75 @@ interface TalentApplicationContext {
   title: string;
 }
 
+const talentPageCopy = {
+  en: {
+    expertiseItems: ["Strategy and positioning", "Content creation", "SEO and high-integrity web", "Graphic design", "Paid media"],
+    manifestoLabel: "WORKING EXPECTATIONS // DELIVERY PRACTICES",
+    manifestoTitle: "How we work together",
+    manifestoDescription: "TAG08 works through clear processes and technical care. These practices help collaborators coordinate work and maintain consistent delivery.",
+    manifestoItems: [
+      { title: "Clear timelines", desc: "We agree on delivery dates and communicate changes promptly." },
+      { title: "Documented work", desc: "Record decisions, processes and design work so the team can follow them." },
+      { title: "Active communication", desc: "Keep communication timely and raise blockers early." },
+      { title: "Consistent quality", desc: "Review each delivery against the agreed scope and quality criteria." }
+    ],
+    talentPoolTitle: "TAG08 Talent Pool",
+    heroEyebrow: "Work culture // TAG08", heroTitle: "TAG08 Talent Pool", heroHighlight: "Share your professional profile.", heroDescription: "You can share your professional profile with the TAG08 Talent Pool even when there is no open role. It may be considered for future opportunities, with no guarantee of contact or hiring.",
+    talentAnchor: "Explore the Talent Pool", submitProfile: "Submit my profile", imageFallback: "TAG08 team", imageAlt: "TAG08 professional", imageStatus: "SENIOR POSITIONING", workTagline: "Let's grow your brand!", workMethodHeading: "How we work at TAG08", guidelines: "GUIDELINES // EXPERTISE", values: "DISTINCTIVE VALUES", processesCollaboration: "Processes and collaboration", cultureDescription: "We do not create redundant feed posts. We build authorship, a consistent narrative and active channels that create relevance for clients.", howTalentWorks: "How the Talent Pool works", ecosystem: "TAG08 ECOSYSTEM", growWithDirection: "Grow with direction and partnership", ecosystemDescription: "Offering services with clear timelines and well-documented processes is part of our work. If this way of working resonates with you, share your profile for possible future opportunities.", socialAndTeam: "SOCIAL CONNECTION & COLLABORATION", teamLeaders: "Our team and leaders", generalDirection: "GENERAL DIRECTION", founderCreativeDirector: "Founder & Creative Director", profileDescriptions: ["Leads partner brands' positioning through consistent design methodologies and refined aesthetics.", "Creates aesthetic guidelines and graphic identity manuals for brands that require strong visual consistency.", "Responsible for technical integrity, lean build output, and website SEO.", "Specializes in scripts, storytelling, and voice guides for executives.", "Analyzes CPA and LTV and rigorously optimizes campaigns on Meta and Google Ads."], connectLinkedIn: "Connect on LinkedIn", networkConnections: "32k+ connections", unifiedAuthority: "Unified market authority", realInsights: "Real insights", weeklyArticles: "Articles and weekly playbooks", spontaneousApplication: "OPEN APPLICATION // TAG08", shareJourney: "Share your professional journey", journeyDescription: "Tell us about your experience, area of work and projects. This submission is not an application for an open role and does not guarantee contact or hiring.", permanentTalentPool: "ONGOING TALENT POOL", afterSubmission: "What happens after submission", afterConfirmed: "After submission is confirmed, your profile may be considered for compatible future opportunities. An unsolicited application is not tied to an open role and does not guarantee review within a specific timeframe, contact or hiring.",
+    stepNames: ["AREAS AND DETAILS", "OPTIONAL LINKS", "EXPERIENCE AND CONTEXT", "FINAL REVIEW"], stepTitles: ["Areas and details", "Optional links", "Experience and context", "Review your application"], stepDescriptions: ["Choose one or more areas and provide your details.", "LinkedIn, resume and portfolio links are optional.", "Share only the professional context you consider relevant.", "Review your details and edit any step before submitting."], ariaStep: (step: number, current: boolean) => `Go to step ${step}${current ? ", current step" : ""}`,
+    hiddenField: "Do not fill out this field", areaLegend: "Areas of interest *", chooseOneOrMore: "(select one or more)", areaLabels: { design: "Design", social_media: "Social media", content_copywriting: "Content and copywriting", audiovisual_production: "Audiovisual production", paid_traffic: "Paid media", technology_development: "Technology and development", planning_projects: "Planning and projects", account_management: "Account management", sales_sdr: "Sales and SDR", data_analytics: "Data and analytics", administrative_operations: "Administration and operations", other_specialties: "Other specialties" },
+    validation: { interestAreas: "Select at least one area of interest.", otherSpecialty: "Describe the specialty you want to add.", name: "Name is required.", email: "A valid email address is required.", phone: "Phone number is required.", linkedin: "Enter a valid LinkedIn URL using HTTPS.", resume: "Enter a secure (HTTPS) link to your resume.", portfolio: "Enter a secure (HTTPS) link to your portfolio." },
+    otherSpecialtyLabel: "Which specialty?", fullName: "Full name *", namePlaceholder: "e.g., Alex Smith", emailLabel: "Contact email *", emailPlaceholder: "e.g., alex@company.com", phoneLabel: "Contact WhatsApp *", phonePlaceholder: "e.g., +1 555 123 4567", linkedinLabel: "LinkedIn profile (optional)", resumeLabel: "Resume link (optional)", portfolioLabel: "Portfolio / GitHub link (optional)", portfolioPlaceholder: "e.g., behance.net/yourname or github.com/yourname", portfolioHelp: "If you wish, add your portfolio to provide context for your experience.",
+    contextCardTitle: "Experience and context", contextHelp: "Share only what you consider relevant. We do not receive files in this step.", experienceLabel: "Professional experience (optional)", availabilityLabel: "Availability (optional)", motivationLabel: "What interests you in this opportunity? (optional)", projectsLabel: "Relevant work or projects (optional)", relatedExperienceLabel: "Briefly describe experience related to these areas (optional)", consent: "I authorize the use of this information to consider my profile for future opportunities in the TAG08 Talent Pool.", consentReviewError: "Confirm your consent to review your application.", consentSubmitError: "Confirm your consent to submit your application.", formRetry: "Review the required fields and try again.", queued: "Your application has been saved in this browser and will be resent when the connection is restored.", failed: "Your submission was not completed, and an attempt could not be saved in this browser. Your details remain in the form; please try again.",
+    reviewPersonal: "Personal details", reviewProfessionalLinks: "Professional links", reviewPresentation: "Professional background", edit: "Edit", editPersonal: "Edit personal details", editLinks: "Edit professional links", editContext: "Edit professional context", name: "Name", email: "Email", phone: "Phone", areas: "Areas of interest", otherSpecialty: "Other specialty", resume: "Resume", portfolio: "Portfolio", experience: "Experience", availability: "Availability", motivation: "Motivation", relevantProjects: "Relevant work or projects", relatedExperience: "Related experience", consentConfirmed: "Consent for consideration in future opportunities: confirmed.", responsibleData: "Responsible handling of submitted information.", back: "Back", continue: "Continue", review: "Review application", sending: "Sending…", submit: "Submit application", successTitle: "Application submitted!", successMessage: "Thank you for your interest in working with TAG08. Your information was submitted successfully and may be considered for compatible future opportunities. If there is a suitable opportunity, we may contact you through the channels you provided.", submitAnother: "Submit another application", home: "Home", protectedSubmission: "PROTECTED SUBMISSION", howApplicationWorks: "How the application works", privacySummary: "Your information is submitted with consent to the Talent Pool. If a temporary failure occurs, the browser may keep the application in a local queue until resubmission is completed.", receiptStep: "1. Receipt and confirmation", receiptText: "The application is recorded before confirmation is displayed on screen.", futureStep: "2. Possible future opportunities", futureText: "If a suitable opportunity arises, your profile may be considered. Submission does not guarantee a response timeframe, contact or hiring. You may request review or deletion of your information through TAG08's contact channel.", reviewConsentError: "Confirm your consent to review your application."
+  },
+  es: {
+    expertiseItems: ["Estrategia y posicionamiento", "Creación de contenido", "SEO y desarrollo web íntegro", "Diseño gráfico", "Publicidad de pago"],
+    manifestoLabel: "EXPECTATIVAS DE TRABAJO // PRÁCTICAS DE ENTREGA",
+    manifestoTitle: "Cómo trabajamos en conjunto",
+    manifestoDescription: "TAG08 trabaja con procesos claros y cuidado técnico. Estas prácticas ayudan a coordinar el trabajo y mantener una entrega coherente.",
+    manifestoItems: [
+      { title: "Plazos claros", desc: "Acordamos las fechas de entrega y comunicamos los cambios con prontitud." },
+      { title: "Trabajo documentado", desc: "Registramos decisiones, procesos y trabajos de diseño para que el equipo pueda consultarlos." },
+      { title: "Comunicación activa", desc: "Mantenemos una comunicación oportuna y avisamos pronto cuando surge un bloqueo." },
+      { title: "Calidad coherente", desc: "Revisamos cada entrega según el alcance acordado y los criterios de calidad definidos." }
+    ],
+    talentPoolTitle: "Banco de Talentos TAG08",
+    heroEyebrow: "Cultura de trabajo // TAG08", heroTitle: "Banco de Talentos de TAG08", heroHighlight: "Comparte tu perfil profesional.", heroDescription: "Puedes compartir tu perfil profesional con el Banco de Talentos de TAG08 aunque no haya una vacante abierta. Podrá considerarse para futuras oportunidades, sin garantía de contacto ni contratación.",
+    talentAnchor: "Conocer el Banco de Talentos", submitProfile: "Enviar mi perfil", imageFallback: "Equipo TAG08", imageAlt: "Profesional de TAG08", imageStatus: "POSICIONAMIENTO SÉNIOR", workTagline: "Let's grow your brand!", workMethodHeading: "Cómo trabajamos en TAG08", guidelines: "DIRECTRICES // ESPECIALIDAD", values: "VALORES DISTINTIVOS", processesCollaboration: "Procesos y colaboración", cultureDescription: "No creamos publicaciones redundantes para el feed. Estructuramos autoría, una narrativa coherente y canales activos que generan relevancia para los clientes.", howTalentWorks: "Cómo funciona el Banco de Talentos", ecosystem: "ECOSISTEMA TAG08", growWithDirection: "Crecer con dirección y colaboración", ecosystemDescription: "Ofrecer servicios con plazos claros y procesos bien documentados forma parte de nuestro trabajo. Si te identificas con esta forma de trabajar, comparte tu perfil para posibles oportunidades futuras.", socialAndTeam: "CONEXIÓN SOCIAL Y COLABORACIÓN", teamLeaders: "Nuestro equipo y sus líderes", generalDirection: "DIRECCIÓN GENERAL", founderCreativeDirector: "Fundador y director creativo", profileDescriptions: ["Dirige el posicionamiento de las marcas asociadas mediante metodologías de diseño coherentes y una estética refinada.", "Crea directrices estéticas y manuales gráficos para marcas que requieren una alta coherencia visual.", "Responsable de la integridad técnica, la optimización del código y el SEO de los sitios web.", "Se especializa en guiones, storytelling y manuales de voz para ejecutivos.", "Analiza CPA y LTV y optimiza campañas en Meta y Google Ads con rigor."], connectLinkedIn: "Conectar en LinkedIn", networkConnections: "Más de 32 mil conexiones", unifiedAuthority: "Autoridad de mercado unificada", realInsights: "Ideas reales", weeklyArticles: "Artículos y guías semanales", spontaneousApplication: "CANDIDATURA ESPONTÁNEA // TAG08", shareJourney: "Comparte tu trayectoria profesional", journeyDescription: "Cuéntanos sobre tu experiencia, área de trabajo y proyectos. El envío no corresponde a una vacante abierta ni garantiza contacto o contratación.", permanentTalentPool: "BANCO PERMANENTE DE TALENTOS", afterSubmission: "Qué ocurre después del envío", afterConfirmed: "Después de confirmar el envío, tu perfil podrá considerarse para futuras oportunidades compatibles. Una candidatura espontánea no corresponde a una vacante abierta ni garantiza revisión en un plazo específico, contacto o contratación.",
+    stepNames: ["ÁREAS Y DATOS", "ENLACES OPCIONALES", "EXPERIENCIA Y CONTEXTO", "REVISIÓN FINAL"], stepTitles: ["Áreas y datos", "Enlaces opcionales", "Experiencia y contexto", "Revisa tu candidatura"], stepDescriptions: ["Elige una o más áreas e informa tus datos.", "Los enlaces de LinkedIn, currículum y portafolio son opcionales.", "Comparte solo el contexto profesional que consideres relevante.", "Revisa tus datos y edita cualquier etapa antes del envío."], ariaStep: (step: number, current: boolean) => `Ir a la etapa ${step}${current ? ", etapa actual" : ""}`,
+    hiddenField: "No completes este campo", areaLegend: "Áreas de interés *", chooseOneOrMore: "(selecciona una o más)", areaLabels: { design: "Diseño", social_media: "Redes sociales", content_copywriting: "Contenido y copywriting", audiovisual_production: "Producción audiovisual", paid_traffic: "Medios pagos", technology_development: "Tecnología y desarrollo", planning_projects: "Planificación y proyectos", account_management: "Atención y gestión de cuentas", sales_sdr: "Ventas y SDR", data_analytics: "Datos y analítica", administrative_operations: "Administración y operaciones", other_specialties: "Otras especialidades" },
+    validation: { interestAreas: "Selecciona al menos un área de interés.", otherSpecialty: "Describe la especialidad que quieres indicar.", name: "El nombre es obligatorio.", email: "Se requiere un correo electrónico válido.", phone: "El teléfono es obligatorio.", linkedin: "Usa un enlace válido de LinkedIn con HTTPS.", resume: "Usa un enlace seguro (HTTPS) para el currículum.", portfolio: "Usa un enlace seguro (HTTPS) para el portafolio." },
+    otherSpecialtyLabel: "¿Qué especialidad?", fullName: "Nombre completo *", namePlaceholder: "Ej.: Ana García", emailLabel: "Correo de contacto *", emailPlaceholder: "Ej.: ana@empresa.com", phoneLabel: "WhatsApp de contacto *", phonePlaceholder: "Ej.: +34 600 123 456", linkedinLabel: "Perfil de LinkedIn (opcional)", resumeLabel: "Enlace al currículum (opcional)", portfolioLabel: "Enlace al portafolio / GitHub (opcional)", portfolioPlaceholder: "Ej.: behance.net/tunombre o github.com/tunombre", portfolioHelp: "Si lo deseas, incluye tu portafolio para dar contexto a tu experiencia.",
+    contextCardTitle: "Experiencia y contexto", contextHelp: "Comparte solo lo que consideres relevante. No recibimos archivos en esta etapa.", experienceLabel: "Experiencia profesional (opcional)", availabilityLabel: "Disponibilidad (opcional)", motivationLabel: "¿Qué motiva tu interés? (opcional)", projectsLabel: "Trabajos o proyectos relevantes (opcional)", relatedExperienceLabel: "Describe brevemente una experiencia relacionada con las áreas (opcional)", consent: "Autorizo el uso de estos datos para considerar mi perfil en futuras oportunidades del Banco de Talentos de TAG08.", consentReviewError: "Confirma el consentimiento para revisar tu candidatura.", consentSubmitError: "Confirma el consentimiento para enviar tu candidatura.", formRetry: "Revisa los campos obligatorios e inténtalo de nuevo.", queued: "Tu candidatura se guardó en este navegador y se reenviará cuando vuelva la conexión.", failed: "El envío no se completó y no fue posible guardar un intento en este navegador. Tus datos siguen en el formulario; vuelve a intentarlo.",
+    reviewPersonal: "Datos personales", reviewProfessionalLinks: "Enlaces profesionales", reviewPresentation: "Presentación profesional", edit: "Editar", editPersonal: "Editar datos personales", editLinks: "Editar enlaces profesionales", editContext: "Editar contexto profesional", name: "Nombre", email: "Correo electrónico", phone: "Teléfono", areas: "Áreas de interés", otherSpecialty: "Otra especialidad", resume: "Currículum", portfolio: "Portafolio", experience: "Experiencia", availability: "Disponibilidad", motivation: "Motivación", relevantProjects: "Trabajos o proyectos relevantes", relatedExperience: "Experiencia relacionada", consentConfirmed: "Consentimiento para considerar el perfil en futuras oportunidades: confirmado.", responsibleData: "Tratamiento responsable de los datos enviados.", back: "Volver", continue: "Continuar", review: "Revisar candidatura", sending: "Enviando…", submit: "Enviar candidatura", successTitle: "¡Candidatura enviada!", successMessage: "Gracias por tu interés en formar parte de TAG08. Tu información se envió correctamente y podrá considerarse para futuras oportunidades compatibles. Si surge una oportunidad adecuada, podremos contactarte por los medios que informaste.", submitAnother: "Enviar otra candidatura", home: "Inicio", protectedSubmission: "ENVÍO PROTEGIDO", howApplicationWorks: "Cómo funciona la candidatura", privacySummary: "Tus datos se envían con tu consentimiento al Banco de Talentos. Si ocurre un fallo temporal, el navegador puede conservar la candidatura en una cola local hasta completar el reenvío.", receiptStep: "1. Recepción y confirmación", receiptText: "La candidatura se registra antes de mostrar la confirmación en pantalla.", futureStep: "2. Posibles oportunidades futuras", futureText: "Si surge una oportunidad compatible, tu perfil podrá considerarse. El envío no garantiza un plazo de respuesta, contacto ni contratación. Puedes solicitar la revisión o eliminación de tus datos por el canal de contacto de TAG08.", reviewConsentError: "Confirma el consentimiento para revisar tu candidatura."
+  }
+} as const;
+
+const TALENT_LOCALIZED_SUPPLEMENT = {
+  en: {
+    privacySourceNotice: "This page offers a translated summary. It is provisional and under review; consult the Portuguese source for the original text.",
+    privacySourceLink: "Portuguese source",
+    cultureLabel: "TAG08 CULTURE",
+    cultureTitle: "A shared commitment to value",
+    cultureDescription: "If TAG08's way of working resonates with you, share your profile for possible future opportunities.",
+    protectedSubmission: "TALENT POOL SUBMISSION",
+    responsibleData: "Include only information relevant to your professional profile."
+  },
+  es: {
+    privacySourceNotice: "Esta p\u00e1gina ofrece un resumen traducido. Es provisional y est\u00e1 en revisi\u00f3n; consulte el texto original en portugu\u00e9s.",
+    privacySourceLink: "Fuente en portugu\u00e9s",
+    cultureLabel: "CULTURA TAG08",
+    cultureTitle: "Compromiso compartido con el valor",
+    cultureDescription: "Si se identifica con la forma de trabajo de TAG08, comparta su perfil para posibles oportunidades futuras.",
+    protectedSubmission: "ENVÍO AL BANCO DE TALENTOS",
+    responsibleData: "Incluya solo información relevante para su perfil profesional."
+  }
+} as const;
+
 export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavigate: (page: string) => void; locale?: RouteLocale }) {
+  const copy = locale === "pt" ? null : talentPageCopy[locale];
+  const localizedSupplement = locale === "pt" ? null : { ...talentPageCopy[locale], ...TALENT_LOCALIZED_SUPPLEMENT[locale] };
   const [formName, setFormName] = useState("");
   const [formEmail, setFormEmail] = useState("");
   const [formPhone, setFormPhone] = useState("");
@@ -93,11 +161,11 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
   const validateStep = (step: number): boolean => {
     const newErrors: Record<string, string> = {};
     if (step === 1) {
-      if (interestAreas.length === 0) newErrors.interestAreas = "Selecione pelo menos uma \u00e1rea de interesse.";
-      if (interestAreas.includes("other_specialties") && !otherSpecialty.trim()) newErrors.otherSpecialty = "Descreva a especialidade que deseja indicar.";
-      if (!formName.trim()) newErrors.name = "Nome \u00e9 obrigat\u00f3rio";
-      if (!/^\S+@\S+\.\S+$/.test(formEmail.trim())) newErrors.email = "E-mail v\u00e1lido \u00e9 obrigat\u00f3rio";
-      if (!formPhone.trim()) newErrors.phone = "Telefone \u00e9 obrigat\u00f3rio";
+      if (interestAreas.length === 0) newErrors.interestAreas = copy?.validation.interestAreas ?? "Selecione pelo menos uma \u00e1rea de interesse.";
+      if (interestAreas.includes("other_specialties") && !otherSpecialty.trim()) newErrors.otherSpecialty = copy?.validation.otherSpecialty ?? "Descreva a especialidade que deseja indicar.";
+      if (!formName.trim()) newErrors.name = copy?.validation.name ?? "Nome \u00e9 obrigat\u00f3rio";
+      if (!/^\S+@\S+\.\S+$/.test(formEmail.trim())) newErrors.email = copy?.validation.email ?? "E-mail v\u00e1lido \u00e9 obrigat\u00f3rio";
+      if (!formPhone.trim()) newErrors.phone = copy?.validation.phone ?? "Telefone \u00e9 obrigat\u00f3rio";
     } else if (step === 2) {
       const validHttpsUrl = (value: string) => {
         if (!value.trim()) return true;
@@ -112,11 +180,11 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
           const linkedinUrl = new URL(formLinkedin.trim());
           if (linkedinUrl.protocol !== "https:" || !["linkedin.com", "www.linkedin.com"].includes(linkedinUrl.hostname)) throw new Error("invalid_linkedin");
         } catch {
-          newErrors.linkedin = "Use um link v\u00e1lido do LinkedIn com HTTPS.";
+          newErrors.linkedin = copy?.validation.linkedin ?? "Use um link v\u00e1lido do LinkedIn com HTTPS.";
         }
       }
-      if (!validHttpsUrl(formResumeUrl)) newErrors.resumeUrl = "Use um link seguro (HTTPS) para o curr\u00edculo.";
-      if (!validHttpsUrl(formPortfolio)) newErrors.portfolio = "Use um link seguro (HTTPS) para o portf\u00f3lio.";
+      if (!validHttpsUrl(formResumeUrl)) newErrors.resumeUrl = copy?.validation.resume ?? "Use um link seguro (HTTPS) para o curr\u00edculo.";
+      if (!validHttpsUrl(formPortfolio)) newErrors.portfolio = copy?.validation.portfolio ?? "Use um link seguro (HTTPS) para o portf\u00f3lio.";
     }
 
     setErrors(newErrors);
@@ -132,7 +200,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
   const handleNextStep = () => {
     if (validateStep(currentStep)) {
       if (currentStep === 3 && !consent) {
-        setSubmitError("Confirme o consentimento para revisar sua candidatura.");
+        setSubmitError(copy?.consentReviewError ?? "Confirme o consentimento para revisar sua candidatura.");
         requestAnimationFrame(() => document.getElementById("talent-consent")?.focus());
         return;
       }
@@ -185,7 +253,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
 
     if (!consent) {
       setCurrentStep(3);
-      setSubmitError("Confirme o consentimento para enviar sua candidatura.");
+      setSubmitError(copy?.consentSubmitError ?? "Confirme o consentimento para enviar sua candidatura.");
       requestAnimationFrame(() => document.getElementById("talent-consent")?.focus());
       trackFormSubmit({
         form_name: "talent_application",
@@ -234,7 +302,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
           queuedForRetry = saveForRetry();
           throw new Error("submission_queued");
         }
-        setSubmitError("Revise os campos obrigatórios e tente novamente.");
+        setSubmitError(copy?.formRetry ?? "Revise os campos obrigatórios e tente novamente.");
         return;
       }
 
@@ -267,9 +335,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
       });
     } catch {
       if (!queuedForRetry) queuedForRetry = saveForRetry();
-      setSubmitError(queuedForRetry
-        ? "Sua candidatura foi salva neste navegador e será reenviada quando a conexão voltar."
-        : "O envio não foi concluído e não foi possível salvar uma tentativa neste navegador. Seus dados continuam no formulário; tente enviar novamente.");
+      setSubmitError(queuedForRetry ? copy?.queued ?? "Sua candidatura foi salva neste navegador e será reenviada quando a conexão voltar." : copy?.failed ?? "O envio não foi concluído e não foi possível salvar uma tentativa neste navegador. Seus dados continuam no formulário; tente enviar novamente.");
       trackFormSubmit({
         form_name: "talent_application",
         form_surface: "talent-page",
@@ -292,17 +358,17 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand/10 border border-brand/20 text-brand font-bold text-xs rounded-lg tracking-widest uppercase tag08-meta">
               <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-              CULTURA DE TRABALHO // TAG08
+              {copy?.heroEyebrow ?? <>CULTURA DE TRABALHO // TAG08</>}
             </div>
             
             <h1 className="font-display font-black text-4xl sm:text-5xl text-white tracking-tighter leading-[1.0]">
-              Banco de Talentos da TAG08
+              {copy?.heroTitle ?? <>Banco de Talentos da TAG08</>}
               <br />
-              <span className="text-brand">Compartilhe seu perfil profissional.</span>
+              <span className="text-brand">{copy?.heroHighlight ?? <>Compartilhe seu perfil profissional.</>}</span>
             </h1>
             
             <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-lg">
-              Você pode compartilhar seu perfil profissional para o Banco de Talentos da TAG08, mesmo quando não há uma vaga aberta. Ele poderá ser considerado em oportunidades futuras, sem garantia de contato ou contratação.
+              {copy?.heroDescription ?? <>Você pode compartilhar seu perfil profissional para o Banco de Talentos da TAG08, mesmo quando não há uma vaga aberta. Ele poderá ser considerado em oportunidades futuras, sem garantia de contato ou contratação.</>}
             </p>
             
             <div className="flex flex-wrap gap-4 pt-2">
@@ -310,13 +376,13 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                 href="#banco-de-talentos-anchor"
                 className="inline-flex min-h-11 items-center gap-2 px-6 py-3 bg-brand text-black tag08-action font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 transition-[background-color,box-shadow] duration-200 shadow-[0_8px_25px_rgba(var(--color-brand-rgb),0.15)]"
               >
-                Conhecer o Banco de Talentos <ArrowRight className="w-3.5 h-3.5" />
+                {copy?.talentAnchor ?? <>Conhecer o Banco de Talentos </>} <ArrowRight className="w-3.5 h-3.5" />
               </a>
               <a 
                 href="#aplicacao-direta-anchor" 
                 className="inline-flex min-h-11 items-center px-6 py-3 bg-white/5 text-zinc-300 tag08-action text-xs uppercase tracking-widest rounded-xl border border-white/10 hover:border-white/25 hover:text-white focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 transition-[border-color,color,background-color] duration-200"
               >
-                Enviar meu perfil
+                {copy?.submitProfile ?? <>Enviar meu perfil</>}
               </a>
             </div>
           </div>
@@ -326,11 +392,11 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
             <div className="absolute inset-0 bg-gradient-to-tr from-brand/20 to-transparent rounded-[32px] transform translate-y-3 translate-x-3 -z-10 blur-md pointer-events-none" />
             <div className="relative aspect-[4/5] border border-white/10 rounded-[32px] overflow-hidden bg-charcoal-900 group">
               <ResilientImage
-                fallbackLabel="Pessoas TAG08"
+                fallbackLabel={copy?.imageFallback ?? "Pessoas TAG08"}
                 priority
                 sizes="(max-width: 1024px) calc(100vw - 3rem), 30rem"
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600" 
-                alt="Profissional TAG08" 
+                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600"
+                alt={copy?.imageAlt ?? "Profissional TAG08"}
                 className="object-cover transition-transform duration-200 motion-reduce:transition-none"
                 referrerPolicy="no-referrer"
               />
@@ -350,35 +416,35 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
 
       {/* SECTION 2: THE ELEGANT FLOATING CORE CAPSULE PILL CONTAINER (White Background) */}
       <div className="relative px-6 md:px-12 pb-32">
-        <div className="max-w-6xl mx-auto bg-white text-zinc-900 rounded-[32px] sm:rounded-[48px] shadow-[0_20px_60px_rgba(0,0,0,0.5)] p-8 sm:p-14 space-y-16 relative z-10 -mt-16 sm:-mt-24">
+          <div id="talents-light-content" className="max-w-6xl mx-auto bg-white text-zinc-900 rounded-[32px] sm:rounded-[48px] shadow-[0_20px_60px_rgba(0,0,0,0.5)] p-8 sm:p-14 space-y-16 relative z-10 -mt-16 sm:-mt-24">
           
           {/* Bento layout secondary header cards inspired by tablet display */}
-          <h2 className="sr-only">Como trabalhamos na TAG08</h2>
+          <h2 className="sr-only">{copy?.workMethodHeading ?? <>Como trabalhamos na TAG08</>}</h2>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch border-b border-zinc-100 pb-12">
             
             {/* List column on left */}
             <div className="lg:col-span-3 space-y-4">
-              <p className="text-xs text-zinc-400 uppercase tracking-widest tag08-meta font-bold">DIRETRIZES // EXPERTISE</p>
+              <p className="text-xs text-zinc-700 uppercase tracking-widest tag08-meta font-bold">{copy?.guidelines ?? "DIRETRIZES // EXPERTISE"}</p>
               <ul className="space-y-2.5 font-display text-sm font-bold text-zinc-800">
                 <li className="flex items-center gap-2 border-b border-zinc-50 pb-2">
                   <span className="w-1.5 h-1.5 bg-brand border border-black/10 rounded-full" />
-                  Strategy &amp; Positioning
+                  {localizedSupplement?.expertiseItems[0] ?? "Strategy & Positioning"}
                 </li>
                 <li className="flex items-center gap-2 border-b border-zinc-50 pb-2">
                   <span className="w-1.5 h-1.5 bg-brand border border-black/10 rounded-full" />
-                  Content Creation
+                  {localizedSupplement?.expertiseItems[1] ?? "Content Creation"}
                 </li>
                 <li className="flex items-center gap-2 border-b border-zinc-50 pb-2">
                   <span className="w-1.5 h-1.5 bg-brand border border-black/10 rounded-full" />
-                  SEO &amp; High Integrity Web
+                  {localizedSupplement?.expertiseItems[2] ?? "SEO & High Integrity Web"}
                 </li>
                 <li className="flex items-center gap-2 border-b border-zinc-50 pb-2">
                   <span className="w-1.5 h-1.5 bg-brand border border-black/10 rounded-full" />
-                  Premium Graphic Design
+                  {localizedSupplement?.expertiseItems[3] ?? "Premium Graphic Design"}
                 </li>
                 <li className="flex items-center gap-2 border-b border-zinc-50 pb-2">
                   <span className="w-1.5 h-1.5 bg-brand border border-black/10 rounded-full" />
-                  Performance Ads
+                  {localizedSupplement?.expertiseItems[4] ?? "Performance Ads"}
                 </li>
               </ul>
             </div>
@@ -386,19 +452,19 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
             {/* Core culture central column */}
             <div className="lg:col-span-4 flex flex-col justify-between space-y-4 lg:border-l lg:border-zinc-100 lg:pl-10">
               <div className="space-y-2">
-                <p className="text-xs text-zinc-400 uppercase tracking-widest tag08-meta font-bold">VALORES EXTRAORDINÁRIOS</p>
+                <p className="text-xs text-zinc-700 uppercase tracking-widest tag08-meta font-bold">{copy?.values ?? "VALORES EXTRAORDINÁRIOS"}</p>
                 <h3 className="font-display font-black text-xl text-zinc-900 tracking-tight">
-                  Processos e <br/>colaboração
+                  {copy?.processesCollaboration ?? <>Processos e <br/>colaboração</>}
                 </h3>
                 <p className="text-zinc-500 text-xs leading-relaxed font-sans">
-                  Não criamos apenas posts redundantes de feed. Estruturamos autoria, tom de narrativa impecável e canais ativos que geram relevância e conversão premium para clientes de alto ticket.
+                  {copy?.cultureDescription ?? "Não criamos apenas posts redundantes de feed. Estruturamos autoria, tom de narrativa impecável e canais ativos que geram relevância e conversão premium para clientes de alto ticket."}
                 </p>
               </div>
               <a 
                 href="#banco-de-talentos-anchor"
                 className="inline-flex min-h-11 items-center self-start px-4 py-2 bg-zinc-950 text-white tag08-action font-bold text-xs uppercase tracking-wider rounded-lg hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 transition-[background-color] duration-200"
               >
-                Como funciona o Banco de Talentos
+                {copy?.howTalentWorks ?? "Como funciona o Banco de Talentos"}
               </a>
             </div>
 
@@ -406,19 +472,19 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
             <div className="lg:col-span-5 bg-zinc-950 text-white p-7 rounded-3xl flex flex-col justify-between space-y-6 shadow-xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-24 h-24 bg-brand/5 rounded-bl-full pointer-events-none" />
               <div className="space-y-2">
-                <p className="text-xs text-brand uppercase tracking-widest tag08-meta font-bold">TAG08 ECOSSISTEMA</p>
+                <p className="text-xs text-brand uppercase tracking-widest tag08-meta font-bold">{copy?.ecosystem ?? "TAG08 ECOSSISTEMA"}</p>
                 <h3 className="font-display font-black text-2xl tracking-tighter leading-none">
-                  Crescer com <br />direção e parceria
+                  {copy?.growWithDirection ?? <>Crescer com <br />direção e parceria</>}
                 </h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans mt-2">
-                  Oferecer serviços com prazos claros e processos bem documentados faz parte do nosso trabalho. Se você se identifica com essa forma de atuação, compartilhe seu perfil para possíveis oportunidades futuras.
+                  {copy?.ecosystemDescription ?? "Oferecer serviços com prazos claros e processos bem documentados faz parte do nosso trabalho. Se você se identifica com essa forma de atuação, compartilhe seu perfil para possíveis oportunidades futuras."}
                 </p>
               </div>
               <a 
                 href="#aplicacao-direta-anchor"
                 className="inline-flex min-h-11 items-center self-start px-4 py-2.5 bg-white text-zinc-950 hover:bg-brand tag08-action font-bold text-xs uppercase tracking-widest rounded-xl transition-[background-color,color] duration-200 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
               >
-                Enviar meu perfil
+                {copy?.submitProfile ?? "Enviar meu perfil"}
               </a>
             </div>
 
@@ -428,9 +494,9 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
           <div className="space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 font-sans">
               <div className="space-y-1 text-left">
-                <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest font-bold">INTERAÇÃO SOCIAL &amp; COMPANHEIRISMO</span>
+                <span className="tag08-meta text-xs text-zinc-700 uppercase tracking-widest font-bold">{copy?.socialAndTeam ?? "INTERAÇÃO SOCIAL & COMPANHEIRISMO"}</span>
                 <h2 className="font-display font-black text-2xl sm:text-3xl text-zinc-900 tracking-tight">
-                  Nosso Time &amp; Líderes <span className="text-brand drop-shadow-sm font-light font-sans">●</span>
+                  {copy?.teamLeaders ?? "Nosso Time & Líderes"} <span className="text-brand drop-shadow-sm font-light font-sans" aria-hidden="true">●</span>
                 </h2>
               </div>
               <p className="text-zinc-500 text-xs sm:text-sm font-sans tracking-wider max-w-xs leading-tight">
@@ -469,7 +535,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                     <h3 className="font-display font-black text-xl text-white tracking-tight">Carlos Eduardo</h3>
                     <p className="text-brand text-xs font-sans uppercase leading-none">Fundador &amp; Diretor de Criação</p>
                     <p className="text-zinc-400 text-xs leading-relaxed pt-2 italic">
-                      "Conduz o posicionamento das marcas parceiras por meio de metodologias consistentes de design e estética refinada."
+                      {copy?.profileDescriptions[0] ?? "Conduz o posicionamento das marcas parceiras por meio de metodologias consistentes de design e estética refinada."}
                     </p>
                   </div>
 
@@ -504,14 +570,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       />
                     </div>
                     <div className="min-w-0 flex-1 space-y-1 text-left">
-                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">UI/UX &amp; Brand Director</span>
+                      <span className="font-sans text-xs text-zinc-700 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">UI/UX &amp; Brand Director</span>
                       <h3 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Marina Fontes</h3>
-                      <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
-                        Cria diretrizes estéticas e manuais gráficos para marcas com exigência alta de consistência visual.
+                      <p className="text-zinc-700 text-xs font-sans leading-snug pt-1">
+                        {copy?.profileDescriptions[1] ?? "Cria diretrizes estéticas e manuais gráficos para marcas com exigência alta de consistência visual."}
                       </p>
                     </div>
                   </div>
-                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-400 uppercase">
+                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-700 uppercase">
                     <span className="flex items-center gap-1">📍 Joinville / SC</span>
                     <a 
                       href="https://www.linkedin.com/in/marina-fontes-tag08"
@@ -540,14 +606,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       />
                     </div>
                     <div className="min-w-0 flex-1 space-y-1 text-left">
-                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">Tech Lead Architect</span>
+                      <span className="font-sans text-xs text-zinc-700 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">Tech Lead Architect</span>
                       <h3 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Renato Silveira</h3>
-                      <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
-                        Responsável pela integridade técnica, empacotamento leve e SEO dos sites.
+                      <p className="text-zinc-700 text-xs font-sans leading-snug pt-1">
+                        {copy?.profileDescriptions[2] ?? "Responsável pela integridade técnica, empacotamento leve e SEO dos sites."}
                       </p>
                     </div>
                   </div>
-                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-400 uppercase">
+                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-700 uppercase">
                     <span className="flex items-center gap-1">📍 São Paulo / SP</span>
                     <a 
                       href="https://www.linkedin.com/in/renato-silveira-tag08"
@@ -576,14 +642,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       />
                     </div>
                     <div className="min-w-0 flex-1 space-y-1 text-left">
-                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">Content Strategist</span>
+                      <span className="font-sans text-xs text-zinc-700 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">Content Strategist</span>
                       <h3 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Amanda Reis</h3>
-                      <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
-                        Domínio em roteiros, storytelling e manuais de voz para executivos.
+                      <p className="text-zinc-700 text-xs font-sans leading-snug pt-1">
+                        {copy?.profileDescriptions[3] ?? "Domínio em roteiros, storytelling e manuais de voz para executivos."}
                       </p>
                     </div>
                   </div>
-                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-400 uppercase">
+                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-700 uppercase">
                     <span className="flex items-center gap-1">📍 Remoto / Brasil</span>
                     <a 
                       href="https://www.linkedin.com/in/amanda-reis-tag08"
@@ -612,14 +678,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       />
                     </div>
                     <div className="min-w-0 flex-1 space-y-1 text-left">
-                      <span className="font-sans text-xs text-zinc-400 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">Performance Specialist</span>
+                      <span className="font-sans text-xs text-zinc-700 uppercase tracking-widest inline-block max-w-full break-words whitespace-normal bg-zinc-200/50 px-2 py-0.5 rounded">Performance Specialist</span>
                       <h3 className="font-display font-black text-base text-zinc-900 tracking-tight leading-none pt-0.5">Lucas Mendes</h3>
-                      <p className="text-zinc-500 text-xs font-sans leading-snug pt-1">
-                        Análise fria de CPA, LTV e otimização cirúrgica no Meta &amp; Google Ads.
+                      <p className="text-zinc-700 text-xs font-sans leading-snug pt-1">
+                        {copy?.profileDescriptions[4] ?? "Análise fria de CPA, LTV e otimização cirúrgica no Meta &amp; Google Ads."}
                       </p>
                     </div>
                   </div>
-                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-400 uppercase">
+                  <div className="border-t border-zinc-200/40 pt-3 flex items-center justify-between text-xs font-sans text-zinc-700 uppercase">
                     <span className="flex items-center gap-1">📍 São Paulo / SP</span>
                     <a 
                       href="https://www.linkedin.com/in/lucas-mendes-tag08"
@@ -658,12 +724,12 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                 
                 <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end w-full">
                   <div className="bg-white border border-zinc-200 rounded-2xl p-4 text-center sm:text-left lg:text-left flex-1 shadow-sm">
-                    <span className="block font-display font-black text-lg text-zinc-900">32k+ conexões</span>
-                    <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-wider mt-0.5">Autoridade de mercado unificada</span>
+                    <span className="block font-display font-black text-lg text-zinc-900">{copy?.networkConnections ?? "32k+ conexões"}</span>
+                    <span className="block text-zinc-700 tag08-meta text-xs uppercase tracking-wider mt-0.5">{copy?.unifiedAuthority ?? "Autoridade de mercado unificada"}</span>
                   </div>
                   <div className="bg-zinc-950 text-white rounded-2xl p-4 text-center sm:text-left lg:text-left flex-1 shadow-sm">
-                    <span className="block font-display font-black text-lg text-brand">Insights Reais</span>
-                    <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-wider mt-0.5">Artigos e playbooks semanais</span>
+                    <span className="block font-display font-black text-lg text-brand">{copy?.realInsights ?? "Insights Reais"}</span>
+                    <span className="block text-zinc-400 tag08-meta text-xs uppercase tracking-wider mt-0.5">{copy?.weeklyArticles ?? "Artigos e playbooks semanais"}</span>
                   </div>
                 </div>
               </div>
@@ -675,26 +741,26 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
           <div id="banco-de-talentos-anchor" className="space-y-10 pt-8 border-t border-zinc-100">
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-zinc-100 pb-5">
               <div className="text-left space-y-1">
-                <span className="tag08-meta text-xs text-brand bg-black px-2 py-0.5 rounded uppercase tracking-widest font-black">CANDIDATURA ESPONTÂNEA // TAG08</span>
+                <span className="tag08-meta text-xs text-brand bg-black px-2 py-0.5 rounded uppercase tracking-widest font-black">{copy?.spontaneousApplication ?? "CANDIDATURA ESPONTÂNEA // TAG08"}</span>
                 <h2 className="font-display font-black text-2xl sm:text-3xl text-zinc-900 tracking-tight">
-                  Banco de Talentos
+                  {localizedSupplement?.talentPoolTitle ?? "Banco de Talentos"}
                 </h2>
               </div>
               <p className="max-w-md text-zinc-500 text-xs leading-relaxed">
-                Compartilhe seu perfil mesmo quando não houver vaga aberta. Ele poderá ser considerado em oportunidades futuras, sem garantia de contato ou contratação.
+                {copy?.heroDescription ?? "Compartilhe seu perfil mesmo quando não houver vaga aberta. Ele poderá ser considerado em oportunidades futuras, sem garantia de contato ou contratação."}
               </p>
             </div>
 
             <div className="bg-zinc-50 border border-zinc-100 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
               <div className="space-y-2">
-                <h3 className="font-display font-black text-xl text-zinc-900">Compartilhe sua trajetória profissional</h3>
-                <p className="text-zinc-600 text-sm leading-relaxed max-w-2xl">Conte sobre sua experiência, área de atuação e projetos. O envio não representa candidatura a uma vaga aberta nem garante contato ou contratação.</p>
+                <h3 className="font-display font-black text-xl text-zinc-900">{copy?.shareJourney ?? "Compartilhe sua trajetória profissional"}</h3>
+                <p className="text-zinc-600 text-sm leading-relaxed max-w-2xl">{copy?.journeyDescription ?? "Conte sobre sua experiência, área de atuação e projetos. O envio não representa candidatura a uma vaga aberta nem garante contato ou contratação."}</p>
               </div>
               <button
                 onClick={handleApply}
                 className="inline-flex min-h-11 shrink-0 items-center justify-center gap-1.5 px-4 py-2.5 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 transition-[background-color] duration-200 cursor-pointer"
               >
-                Enviar meu perfil <ArrowRight className="w-3.5 h-3.5 text-brand" />
+                {copy?.submitProfile ?? "Enviar meu perfil"} <ArrowRight className="w-3.5 h-3.5 text-brand" />
               </button>
             </div>
           </div>
@@ -706,10 +772,10 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
               <div className="space-y-4">
                 <span className="tag08-meta text-xs text-brand bg-zinc-950 px-2.5 py-1 rounded font-black uppercase tracking-widest inline-block">
-                  NOSSO MANIFESTO INTERNO // RIGOR DE ENTREGA
+                  {localizedSupplement?.manifestoLabel ?? "NOSSO MANIFESTO INTERNO // RIGOR DE ENTREGA"}
                 </span>
                 <h3 className="font-display font-black text-2xl text-zinc-900 leading-tight">
-                  O que esperamos do seu trabalho todos os dias
+                  {localizedSupplement?.manifestoTitle ?? "O que esperamos do seu trabalho todos os dias"}
                 </h3>
                 <p className="text-zinc-500 text-xs sm:text-sm font-sans leading-relaxed">
                   A TAG08 executa uma parceria consultiva sólida baseada em processos e rigor técnico de ponta. Não somos um local de improvisações ou desculpas de cronogramas. Nosso pacto operacional baseia-se em quatro pilares estritos:
@@ -717,12 +783,12 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
+                {(localizedSupplement?.manifestoItems ?? [
                   { title: "Rigor Clônico de Prazos", desc: "Se uma tarefa está mapeada para entrega na terça-feira às 14h, ela será disponibilizada pontualmente sem atrasos." },
                   { title: "Documentação de Ativos", desc: "Todo o seu escopo intelectual de processos e designs precisa ser documentado de maneira limpa para a equipe." },
                   { title: "Comunicação Altamente Ativa", desc: "Esperamos respostas céleres sobre as demandas ativas, sem barreiras de silêncio ou pendências." },
                   { title: "Constância de Qualidade", desc: "Sua centésima entrega de arte, copy ou código deve conter o mesmo padrão de excelência clínica da primeira." }
-                ].map((item, idx) => (
+                ]).map((item, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-zinc-50 border border-zinc-100 space-y-1.5">
                     <h4 className="text-zinc-900 font-display font-bold text-xs tracking-tight">{item.title}</h4>
                     <p className="text-zinc-500 text-xs leading-relaxed font-sans">{item.desc}</p>
@@ -732,8 +798,8 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
             </div>
 
             <div className="space-y-4 pt-6 border-t border-zinc-100">
-              <span className="tag08-meta text-xs text-zinc-400 uppercase tracking-widest font-bold block">BANCO PERMANENTE DE TALENTOS</span>
-              <h3 className="font-display font-black text-xl text-zinc-900">O que acontece depois do envio</h3>
+              <span className="tag08-meta text-xs text-zinc-700 uppercase tracking-widest font-bold block">{copy?.permanentTalentPool ?? "BANCO PERMANENTE DE TALENTOS"}</span>
+              <h3 className="font-display font-black text-xl text-zinc-900">{copy?.afterSubmission ?? "O que acontece depois do envio"}</h3>
               <p className="text-zinc-500 text-xs sm:text-sm font-sans leading-relaxed max-w-2xl">
                 Após o envio confirmado, seu perfil poderá ser considerado em oportunidades futuras compatíveis. A candidatura espontânea não corresponde a uma vaga aberta e não garante avaliação em prazo específico, contato ou contratação.
               </p>
@@ -766,7 +832,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                             for (let stepToValidate = currentStep; stepToValidate < step; stepToValidate += 1) {
                               if (!validateStep(stepToValidate)) return;
                               if (stepToValidate === 3 && !consent) {
-                                setSubmitError("Confirme o consentimento para revisar sua candidatura.");
+                                setSubmitError(copy?.consentReviewError ?? "Confirme o consentimento para revisar sua candidatura.");
                                 requestAnimationFrame(() => document.getElementById("talent-consent")?.focus());
                                 return;
                               }
@@ -776,7 +842,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                             setCurrentStep(step);
                           }}
                           aria-current={currentStep === step ? "step" : undefined}
-                          aria-label={`Ir para a etapa ${step}${currentStep === step ? ", etapa atual" : ""}`}
+                          aria-label={copy?.ariaStep(step, currentStep === step) ?? `Ir para a etapa ${step}${currentStep === step ? ", etapa atual" : ""}`}
                           className={`flex min-h-11 min-w-11 items-center justify-center rounded-xl text-xs font-sans font-bold transition-[background-color,border-color,color,box-shadow] duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${
                             currentStep === step 
                               ? "bg-zinc-950 text-white shadow-md ring-2 ring-brand" 
@@ -804,19 +870,19 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                   {/* Header text containing dynamic personalization */}
                   <div className="space-y-1 text-left">
                     <span className="tag08-meta text-xs text-brand bg-black px-2 py-0.5 rounded font-black uppercase tracking-widest inline-block">
-                      ETAPA {currentStep} DE 4 ? {currentStep === 1 ? "AREAS E DADOS" : currentStep === 2 ? "LINKS OPCIONAIS" : currentStep === 3 ? "EXPERIENCIA E CONTEXTO" : "REVISAO FINAL"}
+                      {copy ? `${copy.stepNames[currentStep - 1]} · ${currentStep} / 4` : `ETAPA ${currentStep} DE 4 · ${currentStep === 1 ? "ÁREAS E DADOS" : currentStep === 2 ? "LINKS OPCIONAIS" : currentStep === 3 ? "EXPERIÊNCIA E CONTEXTO" : "REVISÃO FINAL"}`}
                     </span>
                     <h2 ref={stepHeadingRef} tabIndex={-1} className="font-display font-black text-2xl text-zinc-900 tracking-tight focus:outline-none">
-                      {currentStep === 1 ? "Areas e dados" : currentStep === 2 ? "Links opcionais" : currentStep === 3 ? "Experiencia e contexto" : "Revise sua candidatura"}
+                      {copy?.stepTitles[currentStep - 1] ?? (currentStep === 1 ? "Áreas e dados" : currentStep === 2 ? "Links opcionais" : currentStep === 3 ? "Experiência e contexto" : "Revise sua candidatura")}
                     </h2>
                     <p className="text-zinc-700 text-xs">
-                      {currentStep === 1
-                        ? "Escolha uma ou mais areas e informe seus dados."
+                      {copy?.stepDescriptions[currentStep - 1] ?? (currentStep === 1
+                        ? "Escolha uma ou mais áreas e informe seus dados."
                         : currentStep === 2
-                          ? "LinkedIn, curriculo e portfolio sao opcionais."
+                          ? "LinkedIn, currículo e portfólio são opcionais."
                           : currentStep === 3
                             ? "Compartilhe apenas o contexto profissional que considerar relevante."
-                            : "Confira os dados e edite qualquer etapa antes do envio."}
+                            : "Confira os dados e edite qualquer etapa antes do envio.")}
                     </p>
                   </div>
                 </div>
@@ -824,7 +890,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                 {/* Submitting the form block */}
                 <form id="talent-application-form" onSubmit={handleSubmit} className="space-y-4">
                   <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
-                    <label htmlFor="talent-website">Não preencha este campo</label>
+                    <label htmlFor="talent-website">{copy?.hiddenField ?? "Não preencha este campo"}</label>
                     <input id="talent-website" name="website" type="text" tabIndex={-1} autoComplete="off" ref={honeypotRef} />
                   </div>
                   <AnimatePresence mode="wait">
@@ -841,11 +907,11 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       >
                         <fieldset className="space-y-3 text-left" aria-describedby={errors.interestAreas ? "talent-interest-areas-error" : undefined}>
                           <legend className="text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
-                            Áreas de interesse * <span className="normal-case tracking-normal font-normal">(selecione uma ou mais)</span>
+                            {copy?.areaLegend ?? "Áreas de interesse *"} <span className="normal-case tracking-normal font-normal">{copy?.chooseOneOrMore ?? "(selecione uma ou mais)"}</span>
                           </legend>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             {TALENT_INTEREST_AREAS.map(({ value, label }) => (
-                              <label key={value} htmlFor={`talent-area-${value}`} className="flex min-h-11 items-center gap-3 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-800 cursor-pointer focus-within:ring-2 focus-within:ring-brand">
+                              <label key={value} htmlFor={`talent-area-${value}`} className="flex min-h-11 items-center gap-3 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-800 cursor-pointer focus-within:ring-2 focus-within:ring-charcoal-700">
                                 <input
                                   id={`talent-area-${value}`}
                                   type="checkbox"
@@ -857,7 +923,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                                   aria-describedby={errors.interestAreas ? "talent-interest-areas-error" : undefined}
                                   className="h-4 w-4 shrink-0 accent-[var(--color-brand)]"
                                 />
-                                <span>{label}</span>
+                                <span>{copy?.areaLabels[value] ?? label}</span>
                               </label>
                             ))}
                           </div>
@@ -866,7 +932,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
 
                         {interestAreas.includes("other_specialties") ? (
                           <div className="space-y-1.5 text-left">
-                            <label htmlFor="talent-other-specialty" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">Qual especialidade?</label>
+                            <label htmlFor="talent-other-specialty" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">{copy?.otherSpecialtyLabel ?? <>Qual especialidade?</>}</label>
                             <input
                               id="talent-other-specialty"
                               type="text"
@@ -875,16 +941,16 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                               onChange={(event) => setOtherSpecialty(event.target.value)}
                               aria-invalid={Boolean(errors.otherSpecialty)}
                               aria-describedby={errors.otherSpecialty ? "talent-other-specialty-error" : undefined}
-                              className="w-full bg-white border border-zinc-200 rounded-xl py-3 px-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                              className="w-full min-h-11 bg-white border border-zinc-200 rounded-xl py-3 px-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                             />
                             {errors.otherSpecialty ? <p id="talent-other-specialty-error" role="alert" className="text-xs text-red-600">{errors.otherSpecialty}</p> : null}
                           </div>
                         ) : null}
 
                         <div id="field-name" className="space-y-1.5 text-left">
-                          <label htmlFor="talent-name" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
+                          <label htmlFor="talent-name" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">{copy?.fullName ?? <>
                             Nome Completo *
-                          </label>
+                          </>}</label>
                           <div className="relative">
                             <User className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400" />
                             <input
@@ -892,12 +958,12 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                               type="text"
                               name="name"
                               autoComplete="name"
-                              placeholder="Ex: Carlos Silva"
+                              placeholder={copy?.namePlaceholder ?? "Ex: Carlos Silva"}
                               value={formName}
                               onChange={(e) => setFormName(e.target.value)}
                               aria-invalid={Boolean(errors.name)}
                               aria-describedby={errors.name ? "talent-name-error" : undefined}
-                              className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans ${
+                              className={`w-full min-h-11 bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans ${
                                 errors.name ? "border-red-500 ring-1 ring-red-500/20" : "border-zinc-200"
                               }`}
                             />
@@ -907,9 +973,9 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div id="field-email" className="space-y-1.5 text-left">
-                            <label htmlFor="talent-email" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
+                            <label htmlFor="talent-email" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">{copy?.emailLabel ?? <>
                               E-mail de Contato *
-                            </label>
+                            </>}</label>
                             <div className="relative">
                               <Mail className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400" />
                               <input
@@ -917,12 +983,12 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                                 type="email"
                                 name="email"
                                 autoComplete="email"
-                                placeholder="Ex: carlos@empresa.com"
+                                placeholder={copy?.emailPlaceholder ?? "Ex: carlos@empresa.com"}
                                 value={formEmail}
                                 onChange={(e) => setFormEmail(e.target.value)}
                                 aria-invalid={Boolean(errors.email)}
                                 aria-describedby={errors.email ? "talent-email-error" : undefined}
-                                className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans ${
+                                className={`w-full min-h-11 bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans ${
                                   errors.email ? "border-red-500 ring-1 ring-red-500/20" : "border-zinc-200"
                                 }`}
                               />
@@ -931,9 +997,9 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                           </div>
 
                           <div id="field-phone" className="space-y-1.5 text-left">
-                            <label htmlFor="talent-phone" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
+                            <label htmlFor="talent-phone" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">{copy?.phoneLabel ?? <>
                               WhatsApp de Contato *
-                            </label>
+                            </>}</label>
                             <div className="relative">
                               <Phone className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400" />
                               <input
@@ -941,12 +1007,12 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                                 type="tel"
                                 name="phone"
                                 autoComplete="tel"
-                                placeholder="Ex: (47) 99999-9999"
+                                placeholder={copy?.phonePlaceholder ?? "Ex: (47) 99999-9999"}
                                 value={formPhone}
                                 onChange={(e) => setFormPhone(e.target.value)}
                                 aria-invalid={Boolean(errors.phone)}
                                 aria-describedby={errors.phone ? "talent-phone-error" : undefined}
-                                className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans ${
+                                className={`w-full min-h-11 bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans ${
                                   errors.phone ? "border-red-500" : "border-zinc-200"
                                 }`}
                               />
@@ -968,9 +1034,9 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         className="space-y-4"
                       >
                         <div id="field-linkedin" className="space-y-1.5 text-left">
-                          <label htmlFor="talent-linkedin" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
+                          <label htmlFor="talent-linkedin" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">{copy?.linkedinLabel ?? <>
                             Perfil do LinkedIn (opcional)
-                          </label>
+                          </>}</label>
                           <div className="relative">
                             <Linkedin className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400" />
                             <input
@@ -983,7 +1049,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                               onChange={(e) => setFormLinkedin(e.target.value)}
                               aria-invalid={Boolean(errors.linkedin)}
                               aria-describedby={errors.linkedin ? "talent-linkedin-error" : undefined}
-                              className={`w-full bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans ${
+                              className={`w-full min-h-11 bg-white border rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans ${
                                 errors.linkedin ? "border-red-500" : "border-zinc-200"
                               }`}
                             />
@@ -992,7 +1058,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         </div>
 
                         <div className="space-y-1.5 text-left">
-                          <label htmlFor="talent-resume-url" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">Link do currículo (opcional)</label>
+                          <label htmlFor="talent-resume-url" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">{copy?.resumeLabel ?? <>Link do currículo (opcional)</>}</label>
                           <input
                             id="talent-resume-url"
                             type="url"
@@ -1003,15 +1069,15 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                             onChange={(event) => setFormResumeUrl(event.target.value)}
                             aria-invalid={Boolean(errors.resumeUrl)}
                             aria-describedby={errors.resumeUrl ? "talent-resume-url-error" : undefined}
-                            className="w-full bg-white border border-zinc-200 rounded-xl py-3 px-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                            className="w-full min-h-11 bg-white border border-zinc-200 rounded-xl py-3 px-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                           />
                           {errors.resumeUrl ? <p id="talent-resume-url-error" role="alert" className="text-xs text-red-600">{errors.resumeUrl}</p> : null}
                         </div>
 
                         <div className="space-y-1.5 text-left">
-                          <label htmlFor="talent-portfolio" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">
+                          <label htmlFor="talent-portfolio" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">{copy?.portfolioLabel ?? <>
                             Link do Portfólio / GitHub (Opcional)
-                          </label>
+                          </>}</label>
                           <div className="relative">
                             <Globe className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400" />
                             <input
@@ -1019,14 +1085,14 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                               type="url"
                               name="portfolio"
                               autoComplete="url"
-                              placeholder="Ex: behance.net/seunome ou github.com/seunome"
+                              placeholder={copy?.portfolioPlaceholder ?? "Ex: behance.net/seunome ou github.com/seunome"}
                               value={formPortfolio}
                               onChange={(e) => setFormPortfolio(e.target.value)}
-                              className="w-full bg-white border border-zinc-200 rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans"
+                              className="w-full min-h-11 bg-white border border-zinc-200 rounded-xl py-3 px-10 text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:border-zinc-900 font-sans"
                             />
                           </div>
                           <p className="text-xs text-zinc-600 leading-tight">
-                            Se desejar, inclua seu portfólio para contextualizar sua experiência.
+                            {copy?.portfolioHelp ?? "Se desejar, inclua seu portfólio para contextualizar sua experiência."}
                           </p>
                         </div>
                       </motion.div>
@@ -1043,30 +1109,30 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         className="space-y-4"
                       >
                         <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-left">
-                          <p className="text-xs tag08-meta font-bold uppercase tracking-widest text-zinc-700">Experi&ecirc;ncia e contexto</p>
-                          <p className="mt-1 text-xs leading-relaxed text-zinc-700">Compartilhe apenas o que considerar relevante. N&atilde;o recebemos arquivos nesta etapa.</p>
+                          <p className="text-xs tag08-meta font-bold uppercase tracking-widest text-zinc-700">{copy?.contextCardTitle ?? "Experiência e contexto"}</p>
+                          <p className="mt-1 text-xs leading-relaxed text-zinc-700">{copy?.contextHelp ?? "Compartilhe apenas o que considerar relevante. Não recebemos arquivos nesta etapa."}</p>
                         </div>
                         <div className="space-y-1.5 text-left">
-                          <label htmlFor="talent-experience-summary" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">Experi&ecirc;ncia profissional (opcional)</label>
+                          <label htmlFor="talent-experience-summary" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">{copy?.experienceLabel ?? <>Experi&ecirc;ncia profissional (opcional)</>}</label>
                           <textarea id="talent-experience-summary" rows={3} maxLength={1000} value={experienceSummary} onChange={(event) => setExperienceSummary(event.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl p-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand" />
                         </div>
                         <div className="space-y-1.5 text-left">
-                          <label htmlFor="talent-availability" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">Disponibilidade (opcional)</label>
-                          <input id="talent-availability" type="text" maxLength={240} value={availability} onChange={(event) => setAvailability(event.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl py-3 px-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand" />
+                          <label htmlFor="talent-availability" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">{copy?.availabilityLabel ?? <>Disponibilidade (opcional)</>}</label>
+                        <input id="talent-availability" type="text" maxLength={240} value={availability} onChange={(event) => setAvailability(event.target.value)} className="w-full min-h-11 bg-white border border-zinc-200 rounded-xl py-3 px-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand" />
                         </div>
                         <div className="space-y-1.5 text-left">
-                          <label htmlFor="talent-motivation" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">O que motiva seu interesse? (opcional)</label>
+                          <label htmlFor="talent-motivation" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">{copy?.motivationLabel ?? <>O que motiva seu interesse? (opcional)</>}</label>
                           <textarea id="talent-motivation" rows={2} maxLength={1000} value={motivation} onChange={(event) => setMotivation(event.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl p-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand" />
                         </div>
                         {hasCreativeTechnicalArea ? (
                           <div className="space-y-1.5 text-left">
-                            <label htmlFor="talent-relevant-projects" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">Trabalhos ou projetos relevantes (opcional)</label>
+                            <label htmlFor="talent-relevant-projects" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">{copy?.projectsLabel ?? <>Trabalhos ou projetos relevantes (opcional)</>}</label>
                             <textarea id="talent-relevant-projects" rows={3} maxLength={2000} value={relevantProjects} onChange={(event) => setRelevantProjects(event.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl p-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand" />
                           </div>
                         ) : null}
                         {hasCommercialOperationalArea ? (
                           <div className="space-y-1.5 text-left">
-                            <label htmlFor="talent-relevant-experience" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">Conte brevemente uma experi&ecirc;ncia relacionada &agrave;s &aacute;reas (opcional)</label>
+                            <label htmlFor="talent-relevant-experience" className="block text-xs uppercase tracking-widest font-bold text-zinc-700 tag08-meta">{copy?.relatedExperienceLabel ?? <>Conte brevemente uma experi&ecirc;ncia relacionada &agrave;s &aacute;reas (opcional)</>}</label>
                             <textarea id="talent-relevant-experience" rows={3} maxLength={1200} value={relevantExperience} onChange={(event) => setRelevantExperience(event.target.value)} className="w-full bg-white border border-zinc-200 rounded-xl p-3 text-xs text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand" />
                           </div>
                         ) : null}
@@ -1081,8 +1147,9 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                             aria-describedby={submitError && !consent ? "talent-consent-error" : undefined}
                             className="mt-0.5 h-4 w-4 accent-[var(--color-brand)]"
                           />
-                          <span>Autorizo o uso destes dados para considerar meu perfil no Banco de Talentos da TAG08 em oportunidades futuras.</span>
+                          <span>{copy?.consent ?? <>Autorizo o uso destes dados para considerar meu perfil no Banco de Talentos da TAG08 em oportunidades futuras.</>}</span>
                         </label>
+                        {localizedSupplement && <p className="pl-6 text-left text-xs leading-relaxed text-zinc-600">{localizedSupplement.privacySourceNotice} <a href="/pt/privacidade" lang="pt-BR" className="underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand">{localizedSupplement.privacySourceLink}</a></p>}
                         {submitError ? <p id={!consent ? "talent-consent-error" : undefined} role="alert" className="text-xs text-red-600">{submitError}</p> : null}
                       </motion.div>
                     )}
@@ -1100,43 +1167,43 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         {submitError ? <p role="alert" className="text-xs text-red-600">{submitError}</p> : null}
                         <div className="rounded-2xl border border-zinc-200 bg-white p-4 text-left">
                           <div className="flex items-center justify-between gap-3">
-                            <h3 className="font-display text-lg font-bold text-zinc-900">Dados pessoais</h3>
-                            <button type="button" onClick={() => setCurrentStep(1)} className="min-h-11 rounded-lg px-3 text-xs font-bold text-zinc-700 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand" aria-label="Editar dados pessoais">Editar</button>
+                            <h3 className="font-display text-lg font-bold text-zinc-900">{copy?.reviewPersonal ?? "Dados pessoais"}</h3>
+                            <button type="button" onClick={() => setCurrentStep(1)} className="min-h-11 rounded-lg px-3 text-xs font-bold text-zinc-700 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand" aria-label={copy?.editPersonal ?? "Editar dados pessoais"}>{copy?.edit ?? "Editar"}</button>
                           </div>
                           <dl className="mt-2 grid gap-2 text-xs text-zinc-700 sm:grid-cols-2">
-                            <div><dt className="font-bold">Nome</dt><dd>{formName}</dd></div>
-                            <div><dt className="font-bold">E-mail</dt><dd>{formEmail}</dd></div>
-                            <div><dt className="font-bold">Telefone</dt><dd>{formPhone}</dd></div>
-                            <div><dt className="font-bold">Áreas de interesse</dt><dd>{TALENT_INTEREST_AREAS.filter(({ value }) => interestAreas.includes(value)).map(({ label }) => label).join(", ")}</dd></div>
-                            {otherSpecialty.trim() ? <div><dt className="font-bold">Outra especialidade</dt><dd>{otherSpecialty}</dd></div> : null}
+                            <div><dt className="font-bold">{copy?.name ?? "Nome"}</dt><dd>{formName}</dd></div>
+                            <div><dt className="font-bold">{copy?.email ?? "E-mail"}</dt><dd>{formEmail}</dd></div>
+                            <div><dt className="font-bold">{copy?.phone ?? "Telefone"}</dt><dd>{formPhone}</dd></div>
+                            <div><dt className="font-bold">{copy?.areas ?? "Áreas de interesse"}</dt><dd>{TALENT_INTEREST_AREAS.filter(({ value }) => interestAreas.includes(value)).map(({ value, label }) => copy?.areaLabels[value] ?? label).join(", ")}</dd></div>
+                            {otherSpecialty.trim() ? <div><dt className="font-bold">{copy?.otherSpecialty ?? "Outra especialidade"}</dt><dd>{otherSpecialty}</dd></div> : null}
                           </dl>
                         </div>
 
                         <div className="rounded-2xl border border-zinc-200 bg-white p-4 text-left">
                           <div className="flex items-center justify-between gap-3">
-                            <h3 className="font-display text-lg font-bold text-zinc-900">Links profissionais</h3>
-                            <button type="button" onClick={() => setCurrentStep(2)} className="min-h-11 rounded-lg px-3 text-xs font-bold text-zinc-700 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand" aria-label="Editar links profissionais">Editar</button>
+                            <h3 className="font-display text-lg font-bold text-zinc-900">{copy?.reviewProfessionalLinks ?? "Links profissionais"}</h3>
+                            <button type="button" onClick={() => setCurrentStep(2)} className="min-h-11 rounded-lg px-3 text-xs font-bold text-zinc-700 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand" aria-label={copy?.editLinks ?? "Editar links profissionais"}>{copy?.edit ?? "Editar"}</button>
                           </div>
                           <dl className="mt-2 grid gap-2 text-xs text-zinc-700">
                             {formLinkedin.trim() ? <div><dt className="font-bold">LinkedIn</dt><dd className="break-all">{formLinkedin}</dd></div> : null}
-                            {formResumeUrl.trim() ? <div><dt className="font-bold">Currículo</dt><dd className="break-all">{formResumeUrl}</dd></div> : null}
-                            {formPortfolio.trim() ? <div><dt className="font-bold">Portfólio</dt><dd className="break-all">{formPortfolio}</dd></div> : null}
+                            {formResumeUrl.trim() ? <div><dt className="font-bold">{copy?.resume ?? "Currículo"}</dt><dd className="break-all">{formResumeUrl}</dd></div> : null}
+                            {formPortfolio.trim() ? <div><dt className="font-bold">{copy?.portfolio ?? "Portfólio"}</dt><dd className="break-all">{formPortfolio}</dd></div> : null}
                           </dl>
                         </div>
 
                         <div className="rounded-2xl border border-zinc-200 bg-white p-4 text-left">
                           <div className="flex items-center justify-between gap-3">
-                            <h3 className="font-display text-lg font-bold text-zinc-900">Apresentação</h3>
-                            <button type="button" onClick={() => setCurrentStep(3)} className="min-h-11 rounded-lg px-3 text-xs font-bold text-zinc-700 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand" aria-label="Editar contexto profissional">Editar</button>
+                            <h3 className="font-display text-lg font-bold text-zinc-900">{copy?.reviewPresentation ?? "Apresentação"}</h3>
+                            <button type="button" onClick={() => setCurrentStep(3)} className="min-h-11 rounded-lg px-3 text-xs font-bold text-zinc-700 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand" aria-label={copy?.editContext ?? "Editar contexto profissional"}>{copy?.edit ?? "Editar"}</button>
                           </div>
                           <dl className="mt-2 grid gap-2 text-xs text-zinc-700">
-                            {experienceSummary.trim() ? <div><dt className="font-bold">Experiência</dt><dd className="whitespace-pre-wrap">{experienceSummary}</dd></div> : null}
-                            {availability.trim() ? <div><dt className="font-bold">Disponibilidade</dt><dd>{availability}</dd></div> : null}
-                            {motivation.trim() ? <div><dt className="font-bold">Motivação</dt><dd className="whitespace-pre-wrap">{motivation}</dd></div> : null}
-                            {relevantProjects.trim() ? <div><dt className="font-bold">Trabalhos ou projetos relevantes</dt><dd className="whitespace-pre-wrap">{relevantProjects}</dd></div> : null}
-                            {relevantExperience.trim() ? <div><dt className="font-bold">Experiência relacionada</dt><dd className="whitespace-pre-wrap">{relevantExperience}</dd></div> : null}
+                            {experienceSummary.trim() ? <div><dt className="font-bold">{copy?.experience ?? "Experiência"}</dt><dd className="whitespace-pre-wrap">{experienceSummary}</dd></div> : null}
+                            {availability.trim() ? <div><dt className="font-bold">{copy?.availability ?? "Disponibilidade"}</dt><dd>{availability}</dd></div> : null}
+                            {motivation.trim() ? <div><dt className="font-bold">{copy?.motivation ?? "Motivação"}</dt><dd className="whitespace-pre-wrap">{motivation}</dd></div> : null}
+                            {relevantProjects.trim() ? <div><dt className="font-bold">{copy?.relevantProjects ?? "Trabalhos ou projetos relevantes"}</dt><dd className="whitespace-pre-wrap">{relevantProjects}</dd></div> : null}
+                            {relevantExperience.trim() ? <div><dt className="font-bold">{copy?.relatedExperience ?? "Experiência relacionada"}</dt><dd className="whitespace-pre-wrap">{relevantExperience}</dd></div> : null}
                           </dl>
-                          <p className="mt-3 text-xs text-zinc-600">Consentimento para consideração em oportunidades futuras: confirmado.</p>
+                          <p className="mt-3 text-xs text-zinc-600">{copy?.consentConfirmed ?? "Consentimento para consideração em oportunidades futuras: confirmado."}</p>
                         </div>
                       </motion.div>
                     )}
@@ -1148,8 +1215,8 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
 
               {/* Step Navigation Controls bottom footer */}
               <div className="pt-6 border-t border-zinc-200/50 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p className="text-xs text-zinc-400 leading-tight flex items-center gap-1.5 self-start sm:self-center">
-                  <Lock className="w-3.5 h-3.5 text-zinc-500 shrink-0" /> Tratamento responsável dos dados enviados.
+                <p className="text-xs text-zinc-700 leading-tight flex items-center gap-1.5 self-start sm:self-center">
+                  <Lock className="w-3.5 h-3.5 text-zinc-500 shrink-0" /> {localizedSupplement?.responsibleData ?? "Tratamento responsável dos dados enviados."}
                 </p>
                 
                 <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
@@ -1159,7 +1226,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       onClick={handlePrevStep}
                       className="inline-flex min-h-11 items-center gap-1.5 px-5 py-3 border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-700 font-sans font-bold text-xs uppercase tracking-wider rounded-xl transition-[background-color,border-color,color] duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
                     >
-                      Voltar
+                      {copy?.back ?? "Voltar"}
                     </button>
                   )}
                   
@@ -1169,7 +1236,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       onClick={(event) => { event.preventDefault(); handleNextStep(); }}
                       className="inline-flex min-h-11 w-full sm:w-auto items-center justify-center gap-1.5 px-6 py-3 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-[background-color] duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
                     >
-                      {currentStep === 3 ? "Revisar candidatura" : "Continuar"} <ArrowRight className="w-3.5 h-3.5 text-brand" />
+                      {currentStep === 3 ? (copy?.review ?? "Revisar candidatura") : (copy?.continue ?? "Continuar")} <ArrowRight className="w-3.5 h-3.5 text-brand" />
                     </button>
                   ) : (
                     <button
@@ -1178,7 +1245,7 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       disabled={submitting}
                       className="inline-flex min-h-11 w-full sm:w-auto items-center justify-center gap-1.5 px-6 py-3 bg-brand hover:bg-brand-dark disabled:hover:bg-brand text-black font-sans font-bold text-xs uppercase tracking-widest rounded-xl transition-[background-color,box-shadow] duration-200 shadow-[0_4px_12px_rgba(var(--color-brand-rgb),0.15)] cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      {submitting ? "Enviando..." : "Enviar candidatura"} <ItsHoverActionIcon name="send" size={14} className="shrink-0" />
+                      {submitting ? (copy?.sending ?? "Enviando...") : (copy?.submit ?? "Enviar candidatura")} <ItsHoverActionIcon name="send" size={14} className="shrink-0" />
                     </button>
                   )}
                 </div>
@@ -1198,10 +1265,10 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                       <CheckCircle2 className="w-8 h-8" />
                     </div>
                     <h3 className="font-display font-black text-xl text-zinc-900 tracking-tight">
-                      Candidatura enviada!
+                      {copy?.successTitle ?? "Candidatura enviada!"}
                     </h3>
                     <p className="text-zinc-700 text-xs sm:text-sm mt-2 max-w-sm leading-relaxed">
-                      Agradecemos seu interesse em fazer parte da TAG08. Suas informações foram enviadas com sucesso e poderão ser consideradas em oportunidades futuras compatíveis. Caso exista interesse em avançar, poderemos entrar em contato pelos canais informados.
+                      {copy?.successMessage ?? "Agradecemos seu interesse em fazer parte da TAG08. Suas informações foram enviadas com sucesso e poderão ser consideradas em oportunidades futuras compatíveis. Caso exista interesse em avançar, poderemos entrar em contato pelos canais informados."}
                     </p>
                     
                     <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -1209,13 +1276,13 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
                         onClick={() => setSubmitSuccess(false)}
                       className="inline-flex min-h-11 items-center px-4 py-2.5 bg-zinc-950 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-800 transition-[background-color] duration-200 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 cursor-pointer"
                       >
-                        Enviar Outra Ficha
+                        {copy?.submitAnother ?? "Enviar outra candidatura"}
                       </button>
                       <button
                         onClick={() => onNavigate("/")}
                         className="inline-flex min-h-11 items-center px-4 py-2.5 bg-zinc-100 text-zinc-800 border border-zinc-200 font-sans text-xs uppercase tracking-widest rounded-xl hover:bg-zinc-200 transition-[background-color,border-color] duration-200 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 cursor-pointer"
                       >
-                        Página Inicial
+                        {copy?.home ?? "Página inicial"}
                       </button>
                     </div>
                   </motion.div>
@@ -1228,21 +1295,21 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
               <div className="bg-zinc-50 border border-zinc-100 p-5 sm:p-6 rounded-3xl space-y-4">
                 <div className="flex items-center gap-2 tag08-meta text-xs text-brand bg-black px-2 py-0.5 rounded font-bold uppercase tracking-wider self-start inline-flex">
                   <Terminal className="w-3.5 h-3.5 animate-pulse" />
-                  Envio protegido
+                  {localizedSupplement?.protectedSubmission ?? "Envio protegido"}
                 </div>
                 
                 <h3 className="font-display font-black text-lg text-zinc-900 tracking-tight leading-none">
-                  Como funciona a candidatura
+                  {copy?.howApplicationWorks ?? "Como funciona a candidatura"}
                 </h3>
                 <p className="text-zinc-700 text-xs leading-relaxed">
-                  Seus dados são enviados com consentimento para o Banco de Talentos. Em caso de falha temporária, o navegador pode manter a candidatura em uma fila local até que o reenvio seja concluído.
+                  {copy?.privacySummary ?? "Seus dados são enviados com consentimento para o Banco de Talentos. Em caso de falha temporária, o navegador pode manter a candidatura em uma fila local até que o reenvio seja concluído."}
                 </p>
 
                 <div className="space-y-2.5 pt-1 border border-dashed border-zinc-200 rounded-2xl p-5 text-left">
-                  <p className="text-zinc-700 text-xs font-semibold">1. Recebimento e confirmação</p>
-                  <p className="text-zinc-700 text-xs leading-relaxed">A candidatura é registrada antes da confirmação exibida na tela.</p>
-                  <p className="text-zinc-700 text-xs font-semibold">2. Possíveis oportunidades futuras</p>
-                  <p className="text-zinc-700 text-xs leading-relaxed">Se surgir uma oportunidade compatível, seu perfil poderá ser considerado. O envio não garante prazo de retorno, contato ou contratação. Você pode solicitar a revisão ou exclusão dos dados pelo canal de contato da TAG08.</p>
+                  <p className="text-zinc-700 text-xs font-semibold">{copy?.receiptStep ?? "1. Recebimento e confirmação"}</p>
+                  <p className="text-zinc-700 text-xs leading-relaxed">{copy?.receiptText ?? "A candidatura é registrada antes da confirmação exibida na tela."}</p>
+                  <p className="text-zinc-700 text-xs font-semibold">{copy?.futureStep ?? "2. Possíveis oportunidades futuras"}</p>
+                  <p className="text-zinc-700 text-xs leading-relaxed">{copy?.futureText ?? "Se surgir uma oportunidade compatível, seu perfil poderá ser considerado. O envio não garante prazo de retorno, contato ou contratação. Você pode solicitar a revisão ou exclusão dos dados pelo canal de contato da TAG08."}</p>
                 </div>
               </div>
 
@@ -1250,13 +1317,13 @@ export default function TrabalheConosco({ onNavigate, locale = "pt" }: { onNavig
               <div className="bg-zinc-950 text-white p-6 rounded-3xl text-left space-y-3.5 shadow-md relative overflow-hidden">
                 <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-brand/5 rounded-full blur-2xl pointer-events-none" />
                 <div className="inline-flex px-2 py-0.5 bg-brand/10 text-brand font-sans text-xs font-black uppercase rounded-md">
-                  CULTURA TAG08
+                  {localizedSupplement?.cultureLabel ?? "CULTURA TAG08"}
                 </div>
                 <h3 className="font-display font-bold text-white text-xs sm:text-sm">
-                  Pacto de Alinhamento de Valor
+                  {localizedSupplement?.cultureTitle ?? "Pacto de Alinhamento de Valor"}
                 </h3>
                 <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                  Se você se identifica com a forma de trabalho da TAG08, compartilhe seu perfil para possíveis oportunidades futuras.
+                  {localizedSupplement?.cultureDescription ?? "Se você se identifica com a forma de trabalho da TAG08, compartilhe seu perfil para possíveis oportunidades futuras."}
                 </p>
               </div>
 

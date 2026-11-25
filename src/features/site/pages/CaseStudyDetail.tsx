@@ -1,19 +1,39 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, ArrowUpRight, CheckCircle2, TrendingUp, Award, Calendar, ChevronRight, Copy, Check, Zap, Target } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CheckCircle2, ChevronRight, Copy, Check, Zap, Target, TrendingUp } from "../../../components/DooIcons";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { CASE_STUDIES } from "../../../data";
-import { getEvidenceVisibilityMode, getVisibleEvidence } from "../../../content/publicEvidence";
-import { EvidenceReviewBadge } from "../../../components/ContentReview";
+import { getPublicEvidence, getVisibleEvidence } from "../../../content/publicEvidence";
+import type { RouteLocale } from "../../../config/routeRegistry";
+
+const CASE_STUDY_DETAIL_EMPTY_STATE_COPY = {
+  pt: {
+    title: "Caso de Sucesso não encontrado",
+    description: "O caso estratégico solicitado não pôde ser localizado em nossa base operacional.",
+    backHome: "Voltar ao Início"
+  },
+  en: {
+    title: "Case study not found",
+    description: "The requested case study could not be found.",
+    backHome: "Back to Home"
+  },
+  es: {
+    title: "Caso de éxito no encontrado",
+    description: "No se pudo encontrar el caso solicitado.",
+    backHome: "Volver al inicio"
+  }
+} satisfies Record<RouteLocale, { title: string; description: string; backHome: string }>;
 
 interface CaseStudyDetailProps {
   caseId: string;
   onNavigate: (page: string) => void;
+  locale?: RouteLocale;
 }
 
-export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailProps) {
+export default function CaseStudyDetail({ caseId, onNavigate, locale = "pt" }: CaseStudyDetailProps) {
   const [copied, setCopied] = useState(false);
-  const selectedCase = getVisibleEvidence(CASE_STUDIES, (caseStudy) => `case-study/${caseStudy.id}`, `/casos/${caseId}`, getEvidenceVisibilityMode())
+  const emptyStateCopy = CASE_STUDY_DETAIL_EMPTY_STATE_COPY[locale];
+  const selectedCase = getVisibleEvidence(CASE_STUDIES, (caseStudy) => `case-study/${caseStudy.id}`, `/casos/${caseId}`)
     .find((caseStudy) => caseStudy.id === caseId);
 
   useEffect(() => {
@@ -23,16 +43,16 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
   if (!selectedCase) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center text-center p-6 bg-charcoal-950 text-white font-sans">
-        <h2 className="font-display font-black text-3xl text-zinc-400 mb-4">Caso de Sucesso não encontrado</h2>
+        <h2 className="font-display font-black text-3xl text-zinc-400 mb-4">{emptyStateCopy.title}</h2>
         <p className="text-zinc-500 text-sm max-w-md mb-8">
-          O caso estratégico solicitado não pôde ser localizado em nossa base operacional.
+          {emptyStateCopy.description}
         </p>
         <button
           onClick={() => onNavigate("/")}
           className="inline-flex items-center gap-2 px-6 py-3 bg-brand-secondary text-black font-black tag08-meta text-xs uppercase tracking-widest rounded-xl hover:bg-white transition-all duration-300"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Voltar ao Início</span>
+          <span>{emptyStateCopy.backHome}</span>
         </button>
       </div>
     );
@@ -44,8 +64,13 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const evidenceKey = `case-study/${selectedCase.id}`;
+  const evidence = getPublicEvidence(evidenceKey);
+  const caseDeliverables = selectedCase.deliverables ?? [];
+  const hasApprovedMetric = evidence?.status === "approved" && Boolean(selectedCase.metric && selectedCase.metricLabel);
+
   return (
-    <div data-evidence-key={`case-study/${selectedCase.id}`} className="w-full bg-[#070709] text-white font-sans min-h-screen pb-24 relative overflow-hidden select-none">
+    <div data-evidence-key={`case-study/${selectedCase.id}`} className="w-full bg-[#070709] text-white font-sans min-h-screen pb-24 relative overflow-hidden">
       {/* Decorative architectural grids and background light overlays */}
       <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-brand/[0.03] via-transparent to-transparent pointer-events-none" />
       <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-brand/[0.012] rounded-full blur-[140px] pointer-events-none" />
@@ -114,9 +139,9 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                   {selectedCase.category}
                 </span>
                 <span className="text-zinc-500 tag08-meta text-xs tracking-wide uppercase">
-                  Consórcio de Crescimento Ativo TAG08
+                  Case de cliente
                 </span>
-                <EvidenceReviewBadge evidenceKey={`case-study/${selectedCase.id}`} />
+
               </div>
 
               <h1 className="font-display font-black text-2xl sm:text-4xl text-white tracking-tight leading-[1.1] text-left">
@@ -124,37 +149,16 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
               </h1>
 
               <p className="text-zinc-400 text-sm leading-relaxed font-sans text-left max-w-2xl">
-                Análise aprofundada de resultados e direção operacional da implementação em parceria com a marca parceira <strong className="text-white font-medium">{selectedCase.client}</strong>.
+                {selectedCase.summary ?? selectedCase.challenge}
               </p>
             </div>
 
-            {/* Immersive Main Banner Image */}
-            <div className="relative h-[280px] sm:h-[420px] rounded-[32px] overflow-hidden group shadow-2xl border border-white/[0.04]">
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/15 to-transparent z-10" />
-              <Image
-                fill
-                sizes="100vw"
-                src={selectedCase.image}
-                alt={selectedCase.title}
-                className="object-cover transition-transform duration-700 pointer-events-none brightness-[0.95]"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute bottom-6 left-6 right-6 z-20 flex flex-wrap items-center justify-between gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-black">
-                    <Award className="w-4 h-4" />
-                  </div>
-                  <span className="tag08-meta text-xs text-white uppercase tracking-wider font-extrabold bg-[#070709]/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/5">
-                    Estudo de Caso Oficial
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2 text-zinc-300 tag08-meta text-xs uppercase tracking-wider bg-[#070709]/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/5">
-                  <Calendar className="w-3.5 h-3.5" />
-                  <span>Publicado em Junho de 2026</span>
-                </div>
+            {selectedCase.image ? (
+              <div className="relative h-[280px] sm:h-[420px] rounded-[32px] overflow-hidden group shadow-2xl border border-white/[0.04]">
+                <Image fill sizes="(max-width: 1024px) 100vw, 66vw" src={selectedCase.image} alt={selectedCase.title} className="object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
               </div>
-            </div>
+            ) : null}
 
             {/* Editorial Content Breakdown: Challenge \& Solution */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
@@ -196,11 +200,11 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
             {/* In-depth details section mock blog post metrics progression */}
             <div className="space-y-6 pt-6 text-left">
               <h3 className="font-display font-medium text-xl text-white tracking-tight">
-                Entregas Operadas e Resultados Alcançados
+                Entregas do projeto
               </h3>
               
-              <ul className="grid gap-4">
-                {selectedCase.results.map((res, index) => (
+              {caseDeliverables.length > 0 ? <ul className="grid gap-4">
+                {caseDeliverables.map((res, index) => (
                   <motion.li
                     key={index}
                     initial={{ opacity: 0, x: -10 }}
@@ -213,12 +217,12 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                       <CheckCircle2 className="w-4.5 h-4.5 stroke-[2]" />
                     </div>
                     <div className="space-y-1">
-                      <span className="text-xs tag08-meta text-zinc-500 uppercase tracking-wider">Resultado {index + 1}</span>
+                      <span className="text-xs tag08-meta text-zinc-500 uppercase tracking-wider">Entrega {index + 1}</span>
                       <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">{res}</p>
                     </div>
                   </motion.li>
                 ))}
-              </ul>
+              </ul> : null}
             </div>
 
           </div>
@@ -234,23 +238,14 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
               <div className="space-y-6">
                 <div>
                 <span className="tag08-meta text-xs text-brand-secondary font-black uppercase tracking-widest block bg-brand-secondary/5 border border-brand-secondary/15 px-2 py-0.5 rounded w-max mb-1">
-                    Cliente Atendido
+                    Projeto
                   </span>
                   <p className="font-display font-black text-white text-xl uppercase tracking-tight">
                     {selectedCase.client}
                   </p>
                 </div>
 
-                <div className="border-t border-white/[0.04] pt-4">
-                  <span className="text-zinc-500 tag08-meta text-xs uppercase tracking-wider block">Estágio de Implementação</span>
-                  <div className="flex items-center gap-1.5 mt-1 text-xs text-zinc-300 font-semibold font-sans">
-                    <span className="w-2 h-2 rounded-full bg-brand-secondary animate-pulse" />
-                    <span>Conferido & Ativo</span>
-                  </div>
-                </div>
-
-                {/* Major High Impact Metric */}
-                <div className="border-t border-white/[0.04] pt-5 bg-gradient-to-br from-white/[0.01] to-transparent p-4 rounded-xl border border-white/5">
+                {hasApprovedMetric && <div className="border-t border-white/[0.04] pt-5 bg-gradient-to-br from-white/[0.01] to-transparent p-4 rounded-xl border border-white/5">
                   <span className="text-zinc-400 tag08-meta text-xs uppercase tracking-wider block">Resultado Medido</span>
                   <div className="flex items-baseline gap-2 mt-1">
                     <span className="font-display font-black text-4xl text-brand-secondary tracking-tight">
@@ -261,12 +256,15 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                   <p className="text-zinc-300 text-xs mt-1.5 leading-snug font-medium font-sans">
                     {selectedCase.metricLabel}
                   </p>
-                </div>
+                </div>}
 
-                <div className="border-t border-white/[0.04] pt-4 space-y-2 text-xs text-zinc-400 font-sans leading-relaxed">
-                  <p>✓ Alocação de metodologias de tom de voz corporativo sênior</p>
-                  <p>✓ Canais de tráfego de alta intenção e precisão técnica</p>
-                </div>
+                {selectedCase.relatedServicePath && selectedCase.relatedServiceTitle && <div className="border-t border-white/[0.04] pt-4 space-y-2 text-xs text-zinc-400 font-sans leading-relaxed">
+                  <span className="text-zinc-500 tag08-meta uppercase tracking-wider">Serviço relacionado</span>
+                  <button onClick={() => onNavigate(selectedCase.relatedServicePath!)} className="flex items-center gap-2 text-white hover:text-brand-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-secondary">
+                    <span>{selectedCase.relatedServiceTitle}</span>
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </button>
+                </div>}
               </div>
             </div>
 
@@ -276,13 +274,13 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
               
               <div className="space-y-2.5">
                 <span className="text-xs tag08-meta font-black uppercase tracking-widest bg-black/5 px-2 py-0.5 rounded w-max block">
-                  Crescimento Ativo
+                  Próximo passo
                 </span>
                 <h3 className="font-display font-black text-xl lg:text-2xl tracking-tight leading-none text-left">
-                  Sua marca no próximo nível de faturamento
+                  Entenda o caminho adequado ao seu projeto
                 </h3>
                 <p className="text-zinc-800 text-xs font-sans leading-relaxed text-left">
-                  Gostaria de ver sua operação corporativa aplicando esta mesma inteligência estética e performance de conversão?
+                  Cada projeto depende do contexto, das prioridades e das entregas necessárias. Converse com a TAG08 para avaliar o seu cenário.
                 </p>
               </div>
 
@@ -293,7 +291,7 @@ export default function CaseStudyDetail({ caseId, onNavigate }: CaseStudyDetailP
                 }}
                 className="w-full inline-flex items-center justify-between gap-2 px-5 py-3.5 bg-black hover:bg-neutral-900 text-white font-black font-sans text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-md group-hover:scale-[1.02] cursor-pointer"
               >
-                <span>Falar com um Diretor</span>
+                <span>Conversar com a TAG08</span>
                 <ArrowUpRight className="w-4 h-4 text-brand-secondary stroke-[2.5]" />
               </button>
             </div>

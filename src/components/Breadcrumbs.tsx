@@ -1,4 +1,4 @@
-import { ChevronRight, Home, ArrowLeft, ArrowRight } from "lucide-react";
+import { ChevronRight, Home, ArrowLeft, ArrowRight } from "./DooIcons";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { CASE_STUDIES } from "../data";

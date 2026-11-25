@@ -21,6 +21,91 @@ import {
 } from "./contactSheetsProjection.mjs";
 
 const MAX_CLICKUP_LOOKUP_PAGES = 100;
+const diagnosticType = (value) => value === null ? "null" : Array.isArray(value) ? "array" : typeof value;
+
+const inspectUpdatedRange = (updatedRange, expectedTab, expectedLastColumn) => {
+  if (typeof updatedRange !== "string") return { rowNumber: null, rejectionCode: "updated_range_syntax_invalid" };
+  const separator = updatedRange.indexOf("!");
+  if (separator < 1 || separator !== updatedRange.lastIndexOf("!")) {
+    return { rowNumber: null, rejectionCode: "updated_range_syntax_invalid" };
+  }
+
+  let actualTab = updatedRange.slice(0, separator);
+  if (actualTab.startsWith("'") || actualTab.endsWith("'")) {
+    if (!(actualTab.startsWith("'") && actualTab.endsWith("'"))) {
+      return { rowNumber: null, rejectionCode: "updated_range_syntax_invalid" };
+    }
+    actualTab = actualTab.slice(1, -1).replace(/''/g, "'");
+  } else if (actualTab.includes("'") || actualTab.includes("!")) {
+    return { rowNumber: null, rejectionCode: "updated_range_syntax_invalid" };
+  }
+  if (actualTab !== expectedTab) return { rowNumber: null, rejectionCode: "updated_range_sheet_mismatch" };
+
+  const coordinates = updatedRange.slice(separator + 1);
+  if (!coordinates || !coordinates.includes(":")) {
+    return { rowNumber: null, rejectionCode: "updated_range_coordinates_insufficient" };
+  }
+  const [start, end, ...extra] = coordinates.split(":");
+  if (extra.length || !start || !end) return { rowNumber: null, rejectionCode: "updated_range_syntax_invalid" };
+  const startHasRow = /^[A-Z]+\d+$/.test(start);
+  const endHasRow = /^[A-Z]+\d+$/.test(end);
+  if (!startHasRow || !endHasRow) {
+    if (/^[A-Z]+\d*$/.test(start) && /^[A-Z]+\d*$/.test(end)) {
+      return { rowNumber: null, rejectionCode: "updated_range_coordinates_insufficient" };
+    }
+    return { rowNumber: null, rejectionCode: "updated_range_syntax_invalid" };
+  }
+
+  const match = coordinates.match(/^([A-Z]+)(\d+):([A-Z]+)(\d+)$/);
+  if (!match) return { rowNumber: null, rejectionCode: "updated_range_syntax_invalid" };
+  const [, startColumn, startRowText, endColumn, endRowText] = match;
+  const startRow = Number(startRowText);
+  const endRow = Number(endRowText);
+  if (!Number.isSafeInteger(startRow) || !Number.isSafeInteger(endRow)) {
+    return { rowNumber: null, rejectionCode: "updated_range_syntax_invalid" };
+  }
+  if (startRow !== endRow || startRow < 2) return { rowNumber: null, rejectionCode: "updated_range_rows_incompatible" };
+  if (startColumn !== "A" || endColumn !== expectedLastColumn) {
+    return { rowNumber: null, rejectionCode: "updated_range_columns_incompatible" };
+  }
+  return { rowNumber: startRow, rejectionCode: null };
+};
+
+const logSheetsAppendDiagnostic = ({
+  status = null,
+  bodyType = "unavailable",
+  updatesPresent = false,
+  updatesType = "undefined",
+  updatedRangePresent = false,
+  updatedRangeType = "undefined",
+  rangeValid = false,
+  updatedRows = null,
+  updatedColumns = null,
+  rejectionCode
+}) => {
+  try {
+    console.warn(JSON.stringify({
+      event: "google_sheets_append_confirmation_rejected",
+      status: Number.isFinite(status) ? status : null,
+      bodyType,
+      updatesPresent,
+      updatesType,
+      updatedRangePresent,
+      updatedRangeType,
+      rangeValid,
+      updatedRows: Number.isSafeInteger(updatedRows) && updatedRows >= 0 ? updatedRows : null,
+      updatedColumns: Number.isSafeInteger(updatedColumns) && updatedColumns >= 0 ? updatedColumns : null,
+      rejectionCode
+    }));
+  } catch {
+    // Diagnostics must never change the persistence outcome.
+  }
+};
+
+const unconfirmedSheetsAppend = (diagnostic) => {
+  logSheetsAppendDiagnostic(diagnostic);
+  throw new IntegrationDeliveryError("google_sheets_append_unconfirmed", true, true);
+};
 
 const matchesOperationalPayload = (storedValue, payload) => {
   if (typeof storedValue !== "string") return false;
@@ -85,14 +170,20 @@ export const appendToGoogleSheets = async (delivery, {
     }
   }
 
-  const existingIndex = existingRows.findIndex((row) => row?.[0] === delivery.id);
-  const existingIndexes = existingRows.reduce((indexes, row, index) => {
-    if (row?.[0] === delivery.id) indexes.push(index);
-    return indexes;
-  }, []);
-  if (operationalMode && existingIndexes.length > 1) {
+  const deliveryIdMatches = operationalMode
+    ? existingRows.flatMap((row, rowIndex) => Array.isArray(row)
+      ? row.flatMap((value, columnIndex) => value === delivery.id ? [{ rowIndex, columnIndex }] : [])
+      : [])
+    : [];
+  if (operationalMode && deliveryIdMatches.length > 1) {
     throw new IntegrationDeliveryError("google_sheets_delivery_duplicate_requires_reconciliation");
   }
+  if (operationalMode && deliveryIdMatches.length === 1 && deliveryIdMatches[0].columnIndex !== 0) {
+    throw new IntegrationDeliveryError("google_sheets_delivery_identity_outside_contract_requires_reconciliation");
+  }
+  const existingIndex = operationalMode
+    ? deliveryIdMatches[0]?.rowIndex ?? -1
+    : existingRows.findIndex((row) => row?.[0] === delivery.id);
   const lastColumn = operationalMode
     ? columnName(3 + expectedHeaders.length)
     : delivery.aggregate_type === "contact_lead" ? "P" : "D";
@@ -119,7 +210,11 @@ export const appendToGoogleSheets = async (delivery, {
     : unwrappedPayload;
   const isContact = delivery.aggregate_type === "contact_lead";
   const isTalent = delivery.aggregate_type === "talent_application";
-  const range = encodeURIComponent(`${tab}!A:${operationalMode ? lastColumn : isContact ? "P" : "D"}`);
+  // Operational appends search only the canonical Delivery ID column. The
+  // Sheets API treats this range as a table search area, not a write boundary;
+  // including the whole row width can match unrelated displaced data (for
+  // example V:AR) and append the row from that table's first column.
+  const range = encodeURIComponent(`${tab}!A:${operationalMode ? "A" : isContact ? "P" : "D"}`);
   // Legacy workers retain their raw D payload; direct operational rows use a
   // versioned digest envelope to avoid duplicating personal data.
   const metadata = operationalMode
@@ -130,23 +225,85 @@ export const appendToGoogleSheets = async (delivery, {
     : operationalMode && isTalent
       ? [delivery.id, delivery.aggregate_id, delivery.created_at, buildMinimalSheetsPayloadEnvelope(payload), ...buildTalentSheetsV1Projection(payload), ...metadata]
       : [delivery.id, delivery.aggregate_id, delivery.created_at, JSON.stringify(payload)];
-  const response = await fetchImpl(
-    `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
-    {
-      method: "POST",
-      headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ values: [row] }),
-      signal: AbortSignal.timeout(15000)
-    }
-  );
-  if (!response.ok) throw integrationHttpError("google_sheets_append_failed", response.status);
-  const appended = await response.json().catch(() => null);
-  const updatedRange = appended?.updates?.updatedRange;
+  let response;
+  try {
+    response = await fetchImpl(
+      `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
+      {
+        method: "POST",
+        headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ values: [row] }),
+        signal: AbortSignal.timeout(15000)
+      }
+    );
+  } catch (error) {
+    if (operationalMode) logSheetsAppendDiagnostic({ rejectionCode: "transport_failure" });
+    throw error;
+  }
+  if (!response.ok) {
+    if (operationalMode) logSheetsAppendDiagnostic({ status: response.status, rejectionCode: "http_status_rejected" });
+    throw integrationHttpError("google_sheets_append_failed", response.status);
+  }
+
+  if (!operationalMode) {
+    const appended = await response.json().catch(() => null);
+    return appended?.updates?.updatedRange || delivery.id;
+  }
+
+  let responseText;
+  try {
+    responseText = await response.text();
+  } catch {
+    return unconfirmedSheetsAppend({ status: response.status, rejectionCode: "response_body_read_failed" });
+  }
+  if (!responseText.trim()) {
+    return unconfirmedSheetsAppend({ status: response.status, bodyType: "empty", rejectionCode: "body_empty" });
+  }
+
+  let appended;
+  try {
+    appended = JSON.parse(responseText);
+  } catch {
+    return unconfirmedSheetsAppend({ status: response.status, bodyType: "invalid_json", rejectionCode: "json_invalid" });
+  }
+  const bodyIsObject = Boolean(appended && typeof appended === "object" && !Array.isArray(appended));
+  if (!bodyIsObject) {
+    return unconfirmedSheetsAppend({ status: response.status, bodyType: Array.isArray(appended) ? "json_array" : `json_${appended === null ? "null" : typeof appended}`, rejectionCode: "structure_incompatible" });
+  }
+
+  const updatesPresent = Object.hasOwn(appended, "updates");
+  const updates = appended.updates;
+  const updatesIsObject = Boolean(updates && typeof updates === "object" && !Array.isArray(updates));
+  const baseDiagnostic = {
+    status: response.status,
+    bodyType: "json_object",
+    updatesPresent,
+    updatesType: diagnosticType(updates),
+    updatedRows: updatesIsObject && Number.isSafeInteger(updates.updatedRows) && updates.updatedRows >= 0 ? updates.updatedRows : null,
+    updatedColumns: updatesIsObject && Number.isSafeInteger(updates.updatedColumns) && updates.updatedColumns >= 0 ? updates.updatedColumns : null
+  };
+  if (!updatesPresent) {
+    const envelopeDetected = ["data", "response", "result"].some((key) => Object.hasOwn(appended, key));
+    return unconfirmedSheetsAppend({ ...baseDiagnostic, rejectionCode: envelopeDetected ? "structure_incompatible" : "updates_absent" });
+  }
+  if (!updatesIsObject) return unconfirmedSheetsAppend({ ...baseDiagnostic, rejectionCode: "updates_incompatible" });
+
+  const updatedRangePresent = Object.hasOwn(updates, "updatedRange");
+  const updatedRange = updates.updatedRange;
+  const updatedRangeType = diagnosticType(updatedRange);
+  const rangeInspection = inspectUpdatedRange(updatedRange, tab, lastColumn);
+  const rangeValid = rangeInspection.rejectionCode === null;
+  const confirmationDiagnostic = { ...baseDiagnostic, updatedRangePresent, updatedRangeType, rangeValid };
+  if (!updatedRangePresent) return unconfirmedSheetsAppend({ ...confirmationDiagnostic, rejectionCode: "updated_range_absent" });
+  if (!rangeValid) return unconfirmedSheetsAppend({ ...confirmationDiagnostic, rejectionCode: rangeInspection.rejectionCode });
+  if (!Number.isSafeInteger(updates.updatedRows) || updates.updatedRows !== 1) {
+    return unconfirmedSheetsAppend({ ...confirmationDiagnostic, rejectionCode: Number.isSafeInteger(updates.updatedRows) ? "updated_rows_mismatch" : "updated_rows_invalid" });
+  }
+  if (operationalMode && Object.hasOwn(updates, "updatedColumns") && (!Number.isSafeInteger(updates.updatedColumns) || updates.updatedColumns !== expectedHeaders.length + 4)) {
+    return unconfirmedSheetsAppend({ ...confirmationDiagnostic, rejectionCode: Number.isSafeInteger(updates.updatedColumns) ? "updated_columns_mismatch" : "updated_columns_invalid" });
+  }
   if (!operationalMode) return updatedRange || delivery.id;
-  const rowMatch = typeof updatedRange === "string" ? updatedRange.match(new RegExp(`^${tab}!A([1-9]\\d*):${lastColumn}\\1$`)) : null;
-  if (!rowMatch) throw new IntegrationDeliveryError("google_sheets_append_unconfirmed", true, true);
-  const rowNumber = Number(rowMatch[1]);
-  if (rowNumber < 2) throw new IntegrationDeliveryError("google_sheets_append_unconfirmed", true, true);
+  const rowNumber = rangeInspection.rowNumber;
   return { rowReference: updatedRange, rowNumber, existing: false, createdAt: delivery.created_at };
 };
 

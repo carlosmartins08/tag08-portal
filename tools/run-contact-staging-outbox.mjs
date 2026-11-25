@@ -18,7 +18,6 @@ const TAB_BY_FLOW = Object.freeze({ contact: "Leads", talent: "Talentos" });
 const LAST_COLUMN_BY_FLOW = Object.freeze({ contact: "W", talent: "X" });
 const SOURCE_COLUMN_BY_FLOW = Object.freeze({ contact: "O", talent: "P" });
 const IDENTITY_PREFIX = "tag08-contact-talent-staging";
-const MAX_ROWS_TO_SCAN = 1003;
 const assert = (ok, code) => { if (!ok) throw new Error(code); };
 const safeLog = (event, data = {}) => console.log(JSON.stringify({ event, ...data }));
 const stableId = (value) => createHash("sha256").update(value).digest("hex");
@@ -32,10 +31,12 @@ export const submitWithUnconfirmedSheetsAppendRecovery = async (submit, payload,
   }
 };
 
-const parseArgs = (args) => {
+export const parseStagingRunnerArgs = (args) => {
   const values = Object.fromEntries(args.filter((arg) => arg.startsWith("--") && arg.includes("="))
     .map((arg) => { const [key, ...rest] = arg.slice(2).split("="); return [key, rest.join("=")]; }));
-  return { mode: values.mode || "inspect", confirmation: values.confirm || "" };
+  const flow = values.flow || null;
+  assert(flow === null || Object.hasOwn(TAB_BY_FLOW, flow), "staging_flow_invalid");
+  return { mode: values.mode || "inspect", confirmation: values.confirm || "", flow };
 };
 
 const readEnv = async () => {
@@ -105,63 +106,109 @@ const talentPayload = (marker) => ({
   utm: { source: "synthetic", medium: "", campaign: "", content: "", term: "" }
 });
 
-const deriveIdentity = (aggregateType, idempotencyKey) => ({
+export const deriveStagingIdentity = (aggregateType, idempotencyKey) => ({
   recordId: `rec_${stableId(`${aggregateType}\0${idempotencyKey}`)}`,
   deliveryId: `del_${stableId(`${aggregateType}\0${idempotencyKey}\0GOOGLE_SHEETS`)}`
 });
 
-const findRowNumber = async (accessToken, flow, deliveryId) => {
-  const tab = TAB_BY_FLOW[flow];
-  const ids = await sheetValues(accessToken, `${tab}!A2:A${MAX_ROWS_TO_SCAN}`);
-  const matches = ids.flatMap((row, index) => row?.[0] === deliveryId ? [index + 2] : []);
-  if (matches.length === 0) throw new Error(`staging_${flow}_row_missing`);
-  assert(matches.length === 1, `staging_${flow}_row_duplicate`);
-  return matches[0];
+const assertStagingTarget = (spreadsheetId) => {
+  assert(spreadsheetId === CONTACT_STAGING_SPREADSHEET_ID, "staging_sheet_mismatch");
 };
 
-const readRow = async (accessToken, flow, rowNumber) => {
+const assertKnownFlow = (flow) => {
+  assert(Object.prototype.hasOwnProperty.call(TAB_BY_FLOW, flow), "staging_flow_invalid");
+};
+
+export const findStagingRowNumbers = async ({
+  accessToken, flow, deliveryId, spreadsheetId = CONTACT_STAGING_SPREADSHEET_ID, readValues = sheetValues
+}) => {
+  assertStagingTarget(spreadsheetId);
+  assertKnownFlow(flow);
   const tab = TAB_BY_FLOW[flow];
-  const rows = await sheetValues(accessToken, `${tab}!A${rowNumber}:${LAST_COLUMN_BY_FLOW[flow]}${rowNumber}`);
+  const ids = await readValues(accessToken, `${tab}!A2:A`);
+  return ids.flatMap((row, index) => row?.[0] === deliveryId ? [index + 2] : []);
+};
+
+const readStagingRow = async ({ accessToken, flow, rowNumber, readValues = sheetValues }) => {
+  assertKnownFlow(flow);
+  const tab = TAB_BY_FLOW[flow];
+  const rows = await readValues(accessToken, `${tab}!A${rowNumber}:${LAST_COLUMN_BY_FLOW[flow]}${rowNumber}`);
   return rows[0] || [];
 };
 
-const clearSyntheticRow = async (accessToken, flow, rowNumber) => {
+const clearSyntheticRow = async (accessToken, flow, rowNumber, spreadsheetId = CONTACT_STAGING_SPREADSHEET_ID) => {
+  assertStagingTarget(spreadsheetId);
+  assertKnownFlow(flow);
   const tab = TAB_BY_FLOW[flow];
   const range = encodeURIComponent(`${tab}!A${rowNumber}:${LAST_COLUMN_BY_FLOW[flow]}${rowNumber}`);
-  const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${CONTACT_STAGING_SPREADSHEET_ID}/values/${range}:clear`, {
+  const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:clear`, {
     method: "POST", headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
     body: "{}", signal: AbortSignal.timeout(15000)
   }).catch(() => null);
   assert(response?.ok, `staging_cleanup_${flow}_row_clear_failed`);
 };
 
-const cleanupFlow = async ({ accessToken, flow, key, sourceMarker }) => {
+export const cleanupSyntheticStagingRecord = async ({
+  accessToken, flow, key, sourceMarker, spreadsheetId = CONTACT_STAGING_SPREADSHEET_ID,
+  readValues = sheetValues, clearRow = clearSyntheticRow
+}) => {
+  assertStagingTarget(spreadsheetId);
+  assertKnownFlow(flow);
+  assert(typeof sourceMarker === "string" && sourceMarker.length > 0, "staging_cleanup_marker_missing");
   const aggregateType = flow === "contact" ? "contact_lead" : "talent_application";
-  const { recordId, deliveryId } = deriveIdentity(aggregateType, key);
-  const rowNumber = await findRowNumber(accessToken, flow, deliveryId).catch((error) => {
-    if (error?.message === `staging_${flow}_row_missing`) return null;
-    throw error;
-  });
-  if (!rowNumber) return;
-  const row = await readRow(accessToken, flow, rowNumber);
-  assert(row[0] === deliveryId && row[1] === recordId, `staging_cleanup_${flow}_identity_mismatch`);
-  assert(row[SOURCE_COLUMN_BY_FLOW[flow].charCodeAt(0) - 65] === `${CONTACT_TALENT_STAGING_SYNTHETIC_MARKER}:${sourceMarker}`, `staging_cleanup_${flow}_marker_mismatch`);
-  await clearSyntheticRow(accessToken, flow, rowNumber);
-  const after = await readRow(accessToken, flow, rowNumber);
-  assert(after.length === 0 || after.every((cell) => cell === ""), `staging_cleanup_${flow}_row_not_empty`);
+  const { recordId, deliveryId } = deriveStagingIdentity(aggregateType, key);
+  const expectedSource = `${CONTACT_TALENT_STAGING_SYNTHETIC_MARKER}:${sourceMarker}`;
+  const findRows = () => findStagingRowNumbers({ accessToken, flow, deliveryId, spreadsheetId, readValues });
+  let clearedRowNumber;
+
+  // Re-locate immediately before clearing; never trust the append response's row number.
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const matches = await findRows();
+    assert(matches.length > 0, `staging_cleanup_${flow}_row_missing`);
+    assert(matches.length === 1, `staging_cleanup_${flow}_row_ambiguous`);
+    const rowNumber = matches[0];
+    const row = await readStagingRow({ accessToken, flow, rowNumber, readValues });
+    if (row[0] !== deliveryId) continue;
+    assert(row[1] === recordId, `staging_cleanup_${flow}_identity_mismatch`);
+    assert(row[SOURCE_COLUMN_BY_FLOW[flow].charCodeAt(0) - 65] === expectedSource, `staging_cleanup_${flow}_marker_mismatch`);
+
+    const currentMatches = await findRows();
+    assert(currentMatches.length > 0, `staging_cleanup_${flow}_row_missing`);
+    assert(currentMatches.length === 1, `staging_cleanup_${flow}_row_ambiguous`);
+    if (currentMatches[0] !== rowNumber) continue;
+
+    const confirmedRow = await readStagingRow({ accessToken, flow, rowNumber: currentMatches[0], readValues });
+    if (confirmedRow[0] !== deliveryId) continue;
+    assert(confirmedRow[1] === recordId, `staging_cleanup_${flow}_identity_mismatch`);
+    assert(confirmedRow[SOURCE_COLUMN_BY_FLOW[flow].charCodeAt(0) - 65] === expectedSource, `staging_cleanup_${flow}_marker_mismatch`);
+
+    await clearRow(accessToken, flow, currentMatches[0], spreadsheetId);
+    const remaining = await findRows();
+    assert(remaining.length === 0, `staging_cleanup_${flow}_delivery_id_remains`);
+    const after = await readStagingRow({ accessToken, flow, rowNumber: currentMatches[0], readValues });
+    assert(after.length === 0 || after.every((cell) => cell === ""), `staging_cleanup_${flow}_row_not_empty`);
+    clearedRowNumber = currentMatches[0];
+    break;
+  }
+
+  assert(clearedRowNumber, `staging_cleanup_${flow}_row_moved_repeatedly`);
+  return { flow, deliveryId, recordId, rowNumber: clearedRowNumber, cleared: true };
 };
 
-const createStore = (env) => ({ store: createOperationalSubmissionStore({ env }) });
+const createStore = (env, fetchImpl = globalThis.fetch) => ({ store: createOperationalSubmissionStore({ env, fetchImpl }) });
 
-const deliverFlow = async ({ store, accessToken, flow, marker, runId }) => {
+const deliverFlow = async ({ store, accessToken, flow, marker, key }) => {
   const aggregateType = flow === "contact" ? "contact_lead" : "talent_application";
-  const key = `${IDENTITY_PREFIX}:${runId}:${flow}`;
   const payload = flow === "contact" ? contactPayload(marker) : talentPayload(marker);
   const submit = flow === "contact" ? store.persistContactLead : store.persistTalentApplication;
   const first = await submitWithUnconfirmedSheetsAppendRecovery(submit, payload, key);
-  const { deliveryId } = deriveIdentity(aggregateType, key);
-  const rowNumber = await findRowNumber(accessToken, flow, deliveryId);
-  const row = await readRow(accessToken, flow, rowNumber);
+  const { recordId, deliveryId } = deriveStagingIdentity(aggregateType, key);
+  assert(first.id === recordId, `staging_${flow}_record_identity_mismatch`);
+  const matches = await findStagingRowNumbers({ accessToken, flow, deliveryId });
+  assert(matches.length > 0, `staging_${flow}_row_missing`);
+  assert(matches.length === 1, `staging_${flow}_row_duplicate`);
+  const rowNumber = matches[0];
+  const row = await readStagingRow({ accessToken, flow, rowNumber });
   assert(row[0] === deliveryId && row[1] === first.id, `staging_${flow}_identity_mismatch`);
   assert(row[SOURCE_COLUMN_BY_FLOW[flow].charCodeAt(0) - 65] === `${CONTACT_TALENT_STAGING_SYNTHETIC_MARKER}:${marker}`, `staging_${flow}_marker_missing`);
   const metadataStart = 4 + (flow === "contact" ? CONTACT_STAGING_HEADERS.length - 4 - 7 : TALENT_STAGING_HEADERS.length - 4 - 7);
@@ -176,43 +223,68 @@ const deliverFlow = async ({ store, accessToken, flow, marker, runId }) => {
     flow, recordId: first.id, deliveryId, sheetsRowReference: first.sheetsRowReference,
     rowNumber, replayIdempotent: true, clickUp: "not_used"
   });
-  return { flow, key, marker };
 };
 
 const run = async () => {
-  const { mode, confirmation } = parseArgs(process.argv.slice(2));
+  const { mode, confirmation, flow } = parseStagingRunnerArgs(process.argv.slice(2));
   assert(["inspect", "deliver"].includes(mode), "staging_mode_must_be_inspect_or_deliver");
   if (mode === "deliver") assert(confirmation === CONTACT_TALENT_STAGING_CONFIRMATION, "staging_write_confirmation_required");
   const env = await readEnv();
   validateConfig(env, mode);
   assert(env.ONBOARDING_ENABLED === "false", "onboarding_must_remain_disabled");
   const accessToken = await verifyDestinations(env);
-  safeLog("direct_staging_sheets_destinations_verified", { spreadsheetId: CONTACT_STAGING_SPREADSHEET_ID, mode });
+  safeLog("direct_staging_sheets_destinations_verified", { spreadsheetId: CONTACT_STAGING_SPREADSHEET_ID, mode, flow: flow || "all" });
   if (mode === "inspect") return;
 
   const runId = randomUUID();
   const runEnv = { ...env, SUBMISSIONS_ENABLED: "true", INTEGRATIONS_ENABLED: "true", GOOGLE_SHEETS_ENABLED: "true", CLICKUP_ENABLED: "false" };
-  const { store } = createStore(runEnv);
-  const flows = [
+  const appendAttempts = { contact: 0, talent: 0 };
+  let activeFlow = null;
+  const { store } = createStore(runEnv, (url, init) => {
+    if (activeFlow && init?.method === "POST" && String(url).includes("sheets.googleapis.com/v4/spreadsheets/") && String(url).includes(":append?")) {
+      appendAttempts[activeFlow] += 1;
+    }
+    return globalThis.fetch(url, init);
+  });
+  const availableFlows = [
     { flow: "contact", marker: `${runId}:contact` }, { flow: "talent", marker: `${runId}:talent` }
   ];
-  const created = flows.map(({ flow, marker }) => ({ flow, marker, key: `${IDENTITY_PREFIX}:${runId}:${flow}` }));
+  const flows = flow ? availableFlows.filter((item) => item.flow === flow) : availableFlows;
+  const cleanupTargets = [];
   let resultError = null;
   try {
-    for (const { flow, marker } of flows) await deliverFlow({ store, accessToken, flow, marker, runId });
+    for (const { flow, marker } of flows) {
+      activeFlow = flow;
+      const key = `${IDENTITY_PREFIX}:${runId}:${flow}`;
+      cleanupTargets.push({ flow, sourceMarker: marker, key });
+      await deliverFlow({ store, accessToken, flow, marker, key });
+      safeLog("direct_staging_append_attempts_counted", { flow, appendAttempts: appendAttempts[flow] });
+      activeFlow = null;
+    }
     safeLog("direct_staging_sheets_only_homologation_passed", { runId, flows: flows.map(({ flow }) => flow) });
   } catch (error) {
     resultError = error;
+    if (activeFlow) {
+      safeLog("direct_staging_flow_blocked", {
+        flow: activeFlow,
+        appendAttempts: appendAttempts[activeFlow],
+        code: error instanceof Error && /^[a-z0-9_-]+$/i.test(error.message) ? error.message : "staging_flow_failed"
+      });
+    }
   } finally {
     let cleanupFailed = false;
-    for (const item of created) {
+    for (const item of cleanupTargets) {
       try {
-        await cleanupFlow({ accessToken, ...item });
-        safeLog("direct_staging_synthetic_cleanup_passed", { flow: item.flow });
+        const cleanup = await cleanupSyntheticStagingRecord({ accessToken, ...item });
+        safeLog("direct_staging_synthetic_cleanup_passed", cleanup);
       } catch (error) {
         cleanupFailed = true;
+        const aggregateType = item.flow === "contact" ? "contact_lead" : "talent_application";
+        const identity = deriveStagingIdentity(aggregateType, item.key);
         safeLog("direct_staging_synthetic_cleanup_blocked", {
           flow: item.flow,
+          ...identity,
+          sourceMarker: item.sourceMarker,
           code: error instanceof Error && /^[a-z0-9_-]+$/i.test(error.message) ? error.message : "cleanup_failed"
         });
       }

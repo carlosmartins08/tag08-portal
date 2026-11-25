@@ -5,7 +5,7 @@ const clearConsent = () => {
 };
 
 test.describe("consentimento para terceiros", () => {
-test("GTM so e carregado depois do consentimento de desempenho", async ({ page }) => {
+test("GTM so carrega com consentimento e page_view nao e retroativo", async ({ page }) => {
     const analyticsRequests: string[] = [];
 
     await page.addInitScript(clearConsent);
@@ -20,6 +20,16 @@ test("GTM so e carregado depois do consentimento de desempenho", async ({ page }
 
     await page.getByRole("button", { name: "Aceitar todos os cookies" }).click();
     await expect.poll(() => analyticsRequests.length).toBe(1);
+    const pageViewCount = () => page.evaluate(() =>
+      ((window as Window & { dataLayer?: unknown[] }).dataLayer ?? []).filter((entry) =>
+        typeof entry === "object" && entry !== null && "event" in entry && entry.event === "page_view"
+      ).length
+    );
+    expect(await pageViewCount()).toBe(0);
+
+    await page.getByRole("button", { name: "Sobre", exact: true }).click();
+    await expect(page).toHaveURL(/\/sobre$/);
+    await expect.poll(pageViewCount).toBe(1);
   });
 
   test("mapa externo so cria iframe apos consentimento de marketing", async ({ page }) => {
@@ -30,7 +40,7 @@ test("GTM so e carregado depois do consentimento de desempenho", async ({ page }
     await expect(mapFrame).toHaveCount(0);
 
     await page.getByRole("button", { name: "Abrir personalização de cookies" }).click();
-    await page.getByRole("button", { name: "Ativar cookies de marketing" }).click();
+    await page.getByRole("button", { name: "Ativar Marketing & Redes Sociais" }).click();
     await page.getByRole("button", { name: "Salvar ajustes de cookies" }).click();
     await expect(mapFrame).toBeVisible();
   });

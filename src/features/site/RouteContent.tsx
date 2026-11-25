@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import ErrorBoundary from "../../components/ErrorBoundary";
-import { canonicalizeRoute, getContentReviewRouteByPath, getLocalizedPath, getRouteByPath, type RouteLocale } from "../../config/routeRegistry";
+import { canonicalizeRoute, getLocalizedPath, getRouteByPath, type RouteLocale } from "../../config/routeRegistry";
 import { contextualizeContactTarget } from "../../lib/contactJourney";
 
 const Home = dynamic(() => import("./pages/Home"));
@@ -36,27 +36,27 @@ export default function RouteContent({ path, locale }: { path: string; locale: R
     return `${getLocalizedPath(canonicalizeRoute(targetRoute), locale)}${query}`;
   };
   const navigate = (targetPath: string) => router.push(getNavigationHref(targetPath));
-  const route = getRouteByPath(path) ?? getContentReviewRouteByPath(path);
+  const route = getRouteByPath(path);
 
   let page = null;
-  if (route?.routeCategory === "case-study") page = <CaseStudyDetail caseId={path.replace("/casos/", "")} onNavigate={navigate} />;
+  if (route?.routeCategory === "case-study") page = <CaseStudyDetail caseId={path.replace("/casos/", "")} onNavigate={navigate} locale={locale} />;
   else if (path === "/") page = <Home onNavigate={navigate} contactHref={getNavigationHref("/contato")} locale={locale} />;
-  else if (path === "/sobre") page = <Sobre onNavigate={navigate} />;
+  else if (path === "/sobre") page = <Sobre onNavigate={navigate} locale={locale} />;
   else if (path === "/servicos") page = <Servicos onNavigate={navigate} locale={locale} />;
-  else if (path === "/servicos/process-intelligence") page = <ProcessIntelligence onNavigate={navigate} />;
-  else if (path === "/servicos/process-activation") page = <ProcessActivation onNavigate={navigate} />;
-  else if (path === "/servicos/desenvolvimento-web") page = <DesenvolvimentoWeb onNavigate={navigate} />;
-  else if (path === "/servicos/branding-identidade") page = <Branding onNavigate={navigate} />;
-  else if (path === "/servicos/gestao-de-redes-sociais") page = <GestaoRedesSociais onNavigate={navigate} />;
-  else if (path === "/servicos/producao-audiovisual") page = <ProducaoAudiovisual onNavigate={navigate} />;
+  else if (path === "/servicos/process-intelligence") page = <ProcessIntelligence onNavigate={navigate} locale={locale} />;
+  else if (path === "/servicos/process-activation") page = <ProcessActivation onNavigate={navigate} locale={locale} />;
+  else if (path === "/servicos/desenvolvimento-web") page = <DesenvolvimentoWeb onNavigate={navigate} locale={locale} />;
+  else if (path === "/servicos/branding-identidade") page = <Branding onNavigate={navigate} locale={locale} />;
+  else if (path === "/servicos/gestao-de-redes-sociais") page = <GestaoRedesSociais onNavigate={navigate} locale={locale} />;
+  else if (path === "/servicos/producao-audiovisual") page = <ProducaoAudiovisual onNavigate={navigate} locale={locale} />;
   else if (path === "/contato") page = <Contato locale={locale} />;
-  else if (path === "/privacidade") page = <Privacidade onNavigate={navigate} />;
+  else if (path === "/privacidade") page = <Privacidade onNavigate={navigate} locale={locale} />;
   else if (path === "/trabalhe-conosco") page = <TrabalheConosco onNavigate={navigate} locale={locale} />;
-  else if (path === "/insights") page = <Insights onNavigate={navigate} />;
-  else if (path === "/sebraetec-impulsionando-empreendedores") page = <Sebraetec onNavigate={navigate} />;
-  else if (path === "/programa-afiliados") page = <ProgramaAfiliados onNavigate={navigate} contactHref={getNavigationHref("/contato")} />;
-  else if (path === "/hospedagem-manutencao-sites") page = <HospedagemManutencaoSites onNavigate={navigate} />;
-  else if (path === "/servicos/assessoria-marketing-digital-estrategico") page = <AssessoriaMarketingDigitalEstrategico onNavigate={navigate} />;
+  else if (route?.key === "insights") page = <Insights onNavigate={navigate} locale={locale} articleSlug={path === "/insights" ? undefined : path.slice("/insights/".length)} />;
+  else if (path === "/sebraetec-impulsionando-empreendedores") page = <Sebraetec onNavigate={navigate} locale={locale} />;
+  else if (path === "/programa-afiliados") page = <ProgramaAfiliados onNavigate={navigate} contactHref={getNavigationHref("/contato")} locale={locale} />;
+  else if (path === "/hospedagem-manutencao-sites") page = <HospedagemManutencaoSites onNavigate={navigate} locale={locale} />;
+  else if (path === "/servicos/assessoria-marketing-digital-estrategico") page = <AssessoriaMarketingDigitalEstrategico onNavigate={navigate} locale={locale} />;
 
   return <ErrorBoundary boundaryName={`route:${path}`}>{page}</ErrorBoundary>;
 }

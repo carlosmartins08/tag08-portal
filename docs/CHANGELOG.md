@@ -1,5 +1,16 @@
 # CHANGELOG - TAG08
 
+## 2026-11-24
+
+- Fortalecida a mensuração local: consentimento padrão negado, filtragem de URLs e parâmetros, page_view por navegação sem retroatividade após consentimento, reconhecimento seguro de WhatsApp e generate_lead somente para novo projeto persistido. Preview do GTM/DebugView segue pendente.
+- Reworked the Home case collection as a manually controlled, responsive editorial carousel with keyboard and touch navigation, a visible next-card cue, reduced-motion behavior, and non-repeated client names. Only the locally stored Alugue por Temporada and Luciana Gadelha logos are shown, each behind its own route approval; the other cases use typography, not invented or generic imagery. Added evidence and browser assertions for the two approved marks.
+
+- A Home passou a exibir 14 sínteses estáticas de cases com origem nos materiais consultados do Drive. A autorização registrada vale somente para a seção da Home; páginas de detalhe continuam bloqueadas, o Drive não participa do runtime e nenhum resultado quantitativo foi inventado. A seção usa seu gate `home-case` independente do gate `case-study`.
+
+## 2026-11-10
+
+- Consolidada em `DESIGN.md` a diretriz de contraste WCAG 2.2 AA sem impor tema claro ou alterar a identidade escura/lime. Corrigidos pares renderizados abaixo do mínimo em Serviços e Talentos; adicionadas verificações Axe focadas para os dois componentes e teste de contraste do foco no seletor de área em 390, 768 e 1440 px. Gradientes e outros fundos indetermináveis continuam exigindo revisão manual.
+
 ## 2026-11-09
 
 - Preparado o consumidor editorial entre portal e `blog.tag08.com.br` sem pressupor CMS: os blocos contextuais consultam a API interna `/api/editorial-content/v1`; a rota server-side valida o contrato `tag08.editorial.v1`, e o navegador só renderiza artigos publicados com URL canônica válida e curadoria explícita por ID. Sem origem, resposta válida ou relação curada, o bloco fica oculto e não recorre a `BLOG_POSTS`. O acervo e a rota legados `/insights` foram preservados até migração e validação do blog. O backend editorial segue sem escolha e a sincronização real permanece inativa enquanto a origem não estiver conectada.
@@ -196,3 +207,6 @@
 - Ainda existem trechos de texto com encoding ruim em paginas longas do frontend.
 - Falta automacao de smoke test alem do build.
 - Landing pages externas seguem fora deste repositorio.
+# 2026-11-24
+
+- Consolidada a prévia local em um único renderizador público seguro; removidos os modos e a interface de revisão local. Este estado substitui a orientação histórica de revisão local registrada abaixo. O Quality Gate não chama mais a suíte `test:browser:content-review`, removida junto com esse modo. Os registros pendentes continuam disponíveis nos relatórios de status, enquanto cases e traduções só aparecem após aprovação.

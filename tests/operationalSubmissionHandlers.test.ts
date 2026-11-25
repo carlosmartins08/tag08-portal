@@ -9,7 +9,7 @@ const createMockedStore = () => {
   let appends = 0;
   const store = createOperationalSubmissionStore({
     env: {
-      NODE_ENV: "test", SUBMISSIONS_ENABLED: "true", INTEGRATIONS_ENABLED: "true", GOOGLE_SHEETS_ENABLED: "true",
+      NODE_ENV: "test", TAG08_DEPLOYMENT_ENV: "test", SUBMISSIONS_ENABLED: "true", INTEGRATIONS_ENABLED: "true", GOOGLE_SHEETS_ENABLED: "true",
       GOOGLE_SHEETS_SPREADSHEET_ID: "synthetic-sheet"
       // No ClickUp token or list IDs are present.
     },
