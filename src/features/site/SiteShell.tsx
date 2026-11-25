@@ -10,13 +10,13 @@ import Footer from "../../components/Footer";
 import WhatsAppButton from "../../components/WhatsAppButton";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import { PageCanvas } from "../../components/VisualPrimitives";
-import { canonicalizeRoute, getLocalizedPath, getRouteByPath, type RouteLocale } from "../../config/routeRegistry";
+import { canonicalizeRoute, getLocalizedPath, getRouteByPath, isRouteLocalePublished, type RouteLocale } from "../../config/routeRegistry";
 import { i18n, type UiLanguage } from "../../i18n/siteI18n";
+import { resolveLocaleNavigationPath } from "../../i18n/languageAvailability.mjs";
 import { safeStorage } from "../../utils/storage";
 import { initializeTagManager, trackEngagement, trackPageView, trackScrollDepth, trackWebVital, updateGoogleAnalyticsConsent } from "../../lib/analytics";
 import { COOKIE_CONSENT_EVENT, readCookiePreferences, type CookiePreferences } from "../../lib/cookieConsent";
 import { flushFormQueue } from "../../lib/formQueue";
-import { ContentReviewBanner } from "../../components/ContentReview";
 
 const localeToUiLanguage: Record<RouteLocale, UiLanguage> = {
   pt: "pt",
@@ -226,14 +226,28 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
   const navigate = (targetPath: string) => {
     const canonicalPath = canonicalizeRoute(targetPath);
     if (canonicalPath !== path && !confirmUnsavedOnboardingExit()) return;
-    router.push(getLocalizedPath(canonicalPath, locale));
+    const targetRoute = getRouteByPath(canonicalPath);
+    const safePath = resolveLocaleNavigationPath(
+      locale,
+      canonicalPath,
+      "/",
+      targetRoute ? isRouteLocalePublished(targetRoute, locale) : true
+    );
+    router.push(getLocalizedPath(safePath, locale));
   };
 
   const changeLanguage = (nextLanguage: UiLanguage) => {
     const nextLocale = nextLanguage as RouteLocale;
     if (nextLocale !== locale && !confirmUnsavedOnboardingExit()) return;
     setLanguage(nextLanguage);
-    router.push(getLocalizedPath(path, nextLocale));
+    const localizedPath = getLocalizedPath(path, nextLocale);
+    const safePath = resolveLocaleNavigationPath(
+      nextLocale,
+      localizedPath,
+      getLocalizedPath("/", nextLocale),
+      currentRoute ? isRouteLocalePublished(currentRoute, nextLocale) : false
+    );
+    router.push(`${safePath}${window.location.search}${window.location.hash}`);
   };
 
   useEffect(() => {
@@ -322,7 +336,6 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
       </main>
       <Footer onNavigate={navigate} language={language} />
       <WhatsAppButton language={language} currentPage={path} />
-      <ContentReviewBanner />
     </PageCanvas>
   );
 }

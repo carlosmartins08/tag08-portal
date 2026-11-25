@@ -1,14 +1,35 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { ArrowUpRight, Star } from "lucide-react";
+import { ArrowUpRight, Star } from "./DooIcons";
 import { TRUST_REVIEWS, type GoogleReview } from "../content/googleReviews";
-import { getEvidenceVisibilityMode, getVisibleEvidence } from "../content/publicEvidence";
-import { EvidenceReviewBadge } from "./ContentReview";
+import { getVisibleEvidence } from "../content/publicEvidence";
 import { useOfficialGoogleBusinessReviews } from "../lib/useOfficialGoogleBusinessReviews";
 import type { OfficialGoogleReview } from "../lib/officialContent";
+import { getLocalizedPath, type RouteLocale } from "../config/routeRegistry";
 
 type DisplayReview = GoogleReview | (OfficialGoogleReview & { evidenceKey: string });
+
+const REVIEW_TRANSLATIONS = {
+  en: {
+    "internal-testimonial/roberta-chaves": { role: "Dental clinic", time: "2 weeks ago", tagline: "Clearer positioning", text: "We repositioned our clinic's visual identity and built the new website with TAG08. I was impressed by the precision of the design. Our number of high-end private patients grew because our communication finally reflects the care we provide.", category: "ACTIVE BRANDING" },
+    "internal-testimonial/marcus-azevedo": { role: "CEO, Azevedo Asset", time: "1 month ago", tagline: "Process follow-through", text: "Excellent Process Intelligence work. They audited our structure and designed an asynchronous hub that ended the chaos on WhatsApp. The team now knows what to do with dynamic playbooks. It saved management a great deal of time.", category: "PROCESS INTELLIGENCE" },
+    "internal-testimonial/juliana-reis": { role: "Co-founder, Le Visage Spa", time: "3 weeks ago", tagline: "Consistency between promise and delivery", text: "TAG08's social media and content advisory is excellent. They plan carousels and reel scripts with elegance and sophistication, moving beyond what typical agencies deliver. It strengthened our brand in the local luxury market.", category: "SOCIAL MEDIA" },
+    "internal-testimonial/beatriz-nogueira": { role: "Marketing Director, Grupo BN", time: "1 month ago", tagline: "A clearer diagnosis", text: "Their initial diagnosis was better than many paid consultations we have had. They showed us specific gaps in our branding structure and offered a clear plan. We implemented it, and the way forward became clearer.", category: "DIAGNOSIS" }
+  },
+  es: {
+    "internal-testimonial/roberta-chaves": { role: "Clínica odontológica", time: "hace 2 semanas", tagline: "Posicionamiento más claro", text: "Reposicionamos la identidad visual de nuestra clínica y creamos el nuevo sitio con TAG08. Me impresionó la precisión del diseño. Aumentó el número de pacientes particulares de alto nivel porque nuestra comunicación por fin refleja la atención que ofrecemos.", category: "BRANDING ACTIVO" },
+    "internal-testimonial/marcus-azevedo": { role: "CEO, Azevedo Asset", time: "hace 1 mes", tagline: "Seguimiento de procesos", text: "Excelente trabajo de Process Intelligence. Auditaron nuestra estructura y diseñaron un espacio asincrónico que acabó con el caos en WhatsApp. El equipo ahora sabe qué hacer con playbooks dinámicos. Ahorró mucho tiempo de gestión.", category: "PROCESS INTELLIGENCE" },
+    "internal-testimonial/juliana-reis": { role: "Socia fundadora, Le Visage Spa", time: "hace 3 semanas", tagline: "Coherencia entre promesa y entrega", text: "La asesoría de redes sociales y contenido de TAG08 es excelente. Planifican carruseles y guiones para reels con elegancia y sofisticación, más allá de lo que ofrecen las agencias habituales. Fortaleció nuestra marca en el mercado local de lujo.", category: "REDES SOCIALES" },
+    "internal-testimonial/beatriz-nogueira": { role: "Directora de Marketing, Grupo BN", time: "hace 1 mes", tagline: "Diagnóstico más claro", text: "Su diagnóstico inicial fue mejor que muchas consultorías pagadas que hemos contratado. Señalaron brechas concretas en nuestra estructura de marca y ofrecieron un plan claro. Lo implementamos y el camino quedó más claro.", category: "DIAGNÓSTICO" }
+  }
+} satisfies Record<Exclude<RouteLocale, "pt">, Record<string, Pick<GoogleReview, "role" | "time" | "tagline" | "text" | "category">>>;
+
+const TESTIMONIAL_COPY = {
+  pt: { kicker: "Confiança construída na prática", title: "Experiências acompanhadas com clareza", intro: "Quando o trabalho tem diagnóstico, clareza e acompanhamento, o cliente entende melhor o caminho, participa das decisões e percebe mais coerência entre estratégia e entrega.", testimonials: "Depoimentos", source: "Depoimento interno", confidence: "A confiança se sustenta no acompanhamento, na clareza e na coerência da entrega.", translation: "", footer: "Enquanto as avaliações oficiais não são fornecidas, estes depoimentos seguem identificados como internos.", cta: "FALAR COM A TAG08", select: "Selecionar depoimento de" },
+  en: { kicker: "Trust built through practice", title: "Experiences supported with clarity", intro: "With diagnosis, clarity and follow-through, clients can better understand the path, take part in decisions and see greater consistency between strategy and delivery.", testimonials: "Testimonials", source: "Internal testimonial", confidence: "Trust is built through follow-through, clarity and consistency in delivery.", translation: "Translated from the original Portuguese testimonial.", footer: "These approved internal testimonials are shown in English translation; official Google reviews are not available in this language.", cta: "CONTACT TAG08", select: "Select testimonial by" },
+  es: { kicker: "Confianza construida en la práctica", title: "Experiencias acompañadas con claridad", intro: "Con diagnóstico, claridad y seguimiento, los clientes pueden comprender mejor el camino, participar en las decisiones y percibir más coherencia entre estrategia y entrega.", testimonials: "Testimonios", source: "Testimonio interno", confidence: "La confianza se sostiene en el seguimiento, la claridad y la coherencia de la entrega.", translation: "Traducción del testimonio original en portugués.", footer: "Estos testimonios internos aprobados se muestran traducidos al español; no hay reseñas oficiales de Google disponibles en este idioma.", cta: "CONTACTAR CON TAG08", select: "Seleccionar testimonio de" }
+} satisfies Record<RouteLocale, { kicker: string; title: string; intro: string; testimonials: string; source: string; confidence: string; translation: string; footer: string; cta: string; select: string }>;
 
 function getReviewInitials(name: string) {
   return name
@@ -52,17 +73,24 @@ function ReviewAvatar({ review, unavailable, onUnavailable, width, height, class
   );
 }
 
-export default function TrustTestimonialsSection() {
+export default function TrustTestimonialsSection({ locale = "pt" }: { locale?: RouteLocale }) {
   const [activeReview, setActiveReview] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(0);
   const [unavailableAvatarKeys, setUnavailableAvatarKeys] = useState<Record<string, true>>({});
   const prefersReducedMotion = useReducedMotion();
   const { reviews: liveGoogleReviews, source: googleBusinessSource } = useOfficialGoogleBusinessReviews();
-  const approvedInternalReviews = getVisibleEvidence(TRUST_REVIEWS, (review) => review.evidenceKey, "/servicos/assessoria-marketing-digital-estrategico", getEvidenceVisibilityMode());
-  const visibleReviews: DisplayReview[] = googleBusinessSource === "live"
+  const approvedInternalReviews = getVisibleEvidence(TRUST_REVIEWS, (review) => review.evidenceKey, "/servicos/assessoria-marketing-digital-estrategico");
+  const sourceReviews: DisplayReview[] = locale === "pt" && googleBusinessSource === "live"
     ? liveGoogleReviews.map((review, index) => ({ ...review, evidenceKey: `google-business-review/${index}` }))
     : approvedInternalReviews;
-  const usesLiveGoogleReviews = googleBusinessSource === "live" && visibleReviews.length > 0;
+  const visibleReviews: DisplayReview[] = locale === "pt"
+    ? sourceReviews
+    : sourceReviews.flatMap((review) => {
+      const translation = REVIEW_TRANSLATIONS[locale][review.evidenceKey];
+      return translation ? [{ ...review, ...translation }] : [];
+    });
+  const usesLiveGoogleReviews = locale === "pt" && googleBusinessSource === "live" && visibleReviews.length > 0;
+  const copy = TESTIMONIAL_COPY[locale];
 
   useEffect(() => {
     const updateViewportWidth = () => setViewportWidth(window.innerWidth);
@@ -85,7 +113,7 @@ export default function TrustTestimonialsSection() {
     return null;
   }
 
-  const currentSourceLabel = usesLiveGoogleReviews ? "Google Business" : "Depoimento interno";
+  const currentSourceLabel = usesLiveGoogleReviews ? "Google Business" : copy.source;
 
   return (
     <section data-testid="internal-testimonials" className="tag08-section px-4 sm:px-6 md:px-8 border-b border-white/[0.04] bg-charcoal-900/20 relative overflow-hidden">
@@ -96,15 +124,15 @@ export default function TrustTestimonialsSection() {
           <div className="tag08-section__header text-left">
             <div className="tag08-kicker">
               <span className={`w-1.5 h-1.5 rounded-full bg-brand-secondary ${prefersReducedMotion ? "" : "animate-pulse"}`} />
-              Confianca construida na pratica
+              {copy.kicker}
             </div>
 
             <h2 className="tag08-section__heading font-display font-black text-3xl sm:text-4xl text-gradient">
-              Experiencias acompanhadas com clareza
+              {copy.title}
             </h2>
 
             <p className="tag08-section__copy text-zinc-400 text-xs sm:text-sm font-sans">
-              Quando o trabalho tem diagnostico, clareza e acompanhamento, o cliente entende melhor o caminho, participa das decisoes e percebe mais coerencia entre estrategia e entrega.
+              {copy.intro}
             </p>
           </div>
 
@@ -122,13 +150,13 @@ export default function TrustTestimonialsSection() {
             </div>
             <div>
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="font-display font-bold text-xl text-white tracking-tight leading-none">{usesLiveGoogleReviews ? "Avaliações" : "Depoimentos"}</span>
+                <span className="font-display font-bold text-xl text-white tracking-tight leading-none">{usesLiveGoogleReviews ? "Avaliações" : copy.testimonials}</span>
                 <span className="tag08-meta text-brand-secondary">
                   {currentSourceLabel}
                 </span>
               </div>
               <p className="tag08-meta text-zinc-400 mt-1">
-                A confianca se sustenta no acompanhamento, na clareza e na coerencia da entrega.
+              {copy.confidence}
               </p>
             </div>
           </div>
@@ -157,7 +185,7 @@ export default function TrustTestimonialsSection() {
                     type="button"
                     onClick={() => setActiveReview(index)}
                     aria-pressed={isActive}
-                    aria-label={`Selecionar depoimento de ${review.name}`}
+                    aria-label={`${copy.select} ${review.name}`}
                     className={`shrink-0 snap-start cursor-pointer transition-[border-color,opacity,filter,transform,box-shadow] duration-200 overflow-hidden relative rounded-2xl sm:rounded-[22px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950 ${
                       isActive
                         ? "w-[105px] h-[140px] sm:w-[120px] sm:h-[160px] lg:w-[135px] lg:h-[180px] border-2 border-brand-secondary shadow-[0_4px_30px_rgba(var(--color-brand-secondary-rgb),0.2)] scale-105 z-10 opacity-100 grayscale-0"
@@ -194,7 +222,7 @@ export default function TrustTestimonialsSection() {
               className="tag08-card tag08-surface-card p-6 sm:p-8 lg:p-10 relative overflow-hidden text-left flex flex-col justify-between min-h-[300px] sm:min-h-[340px] w-full group/card"
             >
                 <div className="space-y-5 relative z-10 flex-1 flex flex-col justify-center">
-                  <EvidenceReviewBadge evidenceKey={currentReview.evidenceKey} />
+                  {copy.translation && <p className="tag08-meta text-zinc-400">{copy.translation}</p>}
                   <h3 className="font-display font-medium text-lg sm:text-2xl lg:text-[28px] text-white leading-normal tracking-tight max-w-[95%]">
                     {currentReview.tagline}
                   </h3>
@@ -252,14 +280,14 @@ export default function TrustTestimonialsSection() {
               <p className="text-xs text-zinc-300 font-sans">
               {usesLiveGoogleReviews
                 ? "Avaliações exibidas a partir da fonte oficial do Google Business."
-                : "Enquanto as avaliações oficiais não são fornecidas, estes depoimentos seguem identificados como internos."}
+                : copy.footer}
             </p>
           </div>
           <a
-            href="/contato"
+            href={getLocalizedPath("/contato", locale)}
             className="inline-flex min-h-11 items-center gap-2 bg-white/5 hover:bg-brand hover:text-black border border-white/10 hover:border-brand text-white tag08-action py-2.5 px-5 rounded-xl transition-colors duration-200 shrink-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-950"
           >
-            <span>FALAR COM A TAG08</span>
+            <span>{copy.cta}</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
         </div>

@@ -2,6 +2,10 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { createOperationalSubmissionStore } from "../server/operationalSubmissionStore.mjs";
 import { IntegrationDeliveryError } from "../server/integrationDelivery.mjs";
+import {
+  GOOGLE_SHEETS_PRODUCTION_SPREADSHEET_ID,
+  GOOGLE_SHEETS_STAGING_SPREADSHEET_ID
+} from "../server/sheetsDestinations.mjs";
 
 const contact = (requestType = "new_project") => ({
   name: "Lead Sintetico", company: "Empresa Teste", whatsapp: "+5500000000000", email: "lead@example.test",
@@ -18,13 +22,15 @@ const talent = () => ({
   consentVersion: "talent-v2", locale: "pt", source: "test", utm: { source: "", medium: "", campaign: "", content: "", term: "" }
 });
 
-const setup = ({ appendFailure } = {}) => {
+const setup = ({ appendFailure, envOverrides = {} } = {}) => {
   const rows = new Map();
   const calls = { token: 0, appendAttempts: 0, appends: 0 };
   const store = createOperationalSubmissionStore({
     env: {
+      NODE_ENV: "test", TAG08_DEPLOYMENT_ENV: "test",
       SUBMISSIONS_ENABLED: "true", GOOGLE_SHEETS_ENABLED: "true", INTEGRATIONS_ENABLED: "true",
-      CLICKUP_ENABLED: "false", GOOGLE_SHEETS_SPREADSHEET_ID: "synthetic-sheet"
+      CLICKUP_ENABLED: "false", GOOGLE_SHEETS_SPREADSHEET_ID: "synthetic-sheet",
+      ...envOverrides
     },
     tokenProvider: async () => { calls.token += 1; return "synthetic-access-token"; },
     appendSheet: async (delivery) => {
@@ -103,13 +109,97 @@ test("Sheets failure propagates without reporting acceptance or invoking another
   assert.deepEqual(calls, { token: 1, appendAttempts: 1, appends: 0 });
 });
 
-test("disabled submissions fail closed before requesting credentials or writing", async () => {
-  const calls = { token: 0, appendAttempts: 0, appends: 0 };
-  const store = createOperationalSubmissionStore({
-    env: { SUBMISSIONS_ENABLED: "false", GOOGLE_SHEETS_ENABLED: "false" },
-    tokenProvider: async () => { calls.token += 1; return "unused"; },
-    appendSheet: async () => { calls.appendAttempts += 1; calls.appends += 1; }
-  });
-  await assert.rejects(store.persistContactLead(contact(), "synthetic-disabled-key"), /submission_store_disabled/);
-  assert.deepEqual(calls, { token: 0, appendAttempts: 0, appends: 0 });
+test("each operational flag fails closed before requesting credentials or writing", async () => {
+  for (const disabledFlag of ["SUBMISSIONS_ENABLED", "INTEGRATIONS_ENABLED", "GOOGLE_SHEETS_ENABLED"]) {
+    const calls = { token: 0, appendAttempts: 0, appends: 0 };
+    const store = createOperationalSubmissionStore({
+      env: {
+        NODE_ENV: "test", TAG08_DEPLOYMENT_ENV: "test",
+        SUBMISSIONS_ENABLED: "true", INTEGRATIONS_ENABLED: "true", GOOGLE_SHEETS_ENABLED: "true",
+        [disabledFlag]: "false", GOOGLE_SHEETS_SPREADSHEET_ID: "synthetic-sheet"
+      },
+      tokenProvider: async () => { calls.token += 1; return "unused"; },
+      appendSheet: async () => { calls.appendAttempts += 1; calls.appends += 1; }
+    });
+    await assert.rejects(store.persistContactLead(contact(), `synthetic-disabled-key-${disabledFlag}`), /submission_store_disabled/);
+    assert.deepEqual(calls, { token: 0, appendAttempts: 0, appends: 0 });
+  }
+});
+
+test("production accepts only the approved production Sheets destination", async () => {
+  const { store, calls } = setup({ envOverrides: {
+    NODE_ENV: "production",
+    TAG08_DEPLOYMENT_ENV: "production",
+    GOOGLE_SHEETS_SPREADSHEET_ID: GOOGLE_SHEETS_PRODUCTION_SPREADSHEET_ID
+  } });
+  const result = await store.persistContactLead(contact(), "synthetic-production-key");
+  assert.equal(result.created, true);
+  assert.deepEqual(calls, { token: 1, appendAttempts: 1, appends: 1 });
+});
+
+test("production rejects staging and unknown Sheets destinations before token or write", async () => {
+  for (const spreadsheetId of [
+    GOOGLE_SHEETS_STAGING_SPREADSHEET_ID,
+    "unapproved-sheet-id"
+  ]) {
+    const { store, calls } = setup({ envOverrides: {
+      NODE_ENV: "production",
+      TAG08_DEPLOYMENT_ENV: "production",
+      GOOGLE_SHEETS_SPREADSHEET_ID: spreadsheetId
+    } });
+    await assert.rejects(store.persistContactLead(contact(), `synthetic-production-key-${spreadsheetId}`), /google_sheets_destination_not_authorized/);
+    assert.deepEqual(calls, { token: 0, appendAttempts: 0, appends: 0 });
+  }
+});
+
+test("staging accepts only the approved staging Sheets destination", async () => {
+  const { store, calls } = setup({ envOverrides: {
+    NODE_ENV: "production",
+    TAG08_DEPLOYMENT_ENV: "staging",
+    GOOGLE_SHEETS_SPREADSHEET_ID: GOOGLE_SHEETS_STAGING_SPREADSHEET_ID
+  } });
+  const result = await store.persistTalentApplication(talent(), "synthetic-staging-key");
+  assert.equal(result.created, true);
+  assert.deepEqual(calls, { token: 1, appendAttempts: 1, appends: 1 });
+});
+
+test("staging rejects production and unknown destinations before token or write", async () => {
+  for (const spreadsheetId of [
+    GOOGLE_SHEETS_PRODUCTION_SPREADSHEET_ID,
+    "unapproved-sheet-id"
+  ]) {
+    const { store, calls } = setup({ envOverrides: {
+      NODE_ENV: "production",
+      TAG08_DEPLOYMENT_ENV: "staging",
+      GOOGLE_SHEETS_SPREADSHEET_ID: spreadsheetId
+    } });
+    await assert.rejects(store.persistTalentApplication(talent(), `synthetic-staging-key-${spreadsheetId}`), /google_sheets_destination_not_authorized/);
+    assert.deepEqual(calls, { token: 0, appendAttempts: 0, appends: 0 });
+  }
+});
+
+test("missing or malformed destination and missing runtime environment fail before token or write", async () => {
+  for (const envOverrides of [
+    { NODE_ENV: "production", TAG08_DEPLOYMENT_ENV: "production", GOOGLE_SHEETS_SPREADSHEET_ID: "" },
+    { NODE_ENV: "production", TAG08_DEPLOYMENT_ENV: "production", GOOGLE_SHEETS_SPREADSHEET_ID: "not-a-spreadsheet-id" },
+    { NODE_ENV: "production", TAG08_DEPLOYMENT_ENV: "", GOOGLE_SHEETS_SPREADSHEET_ID: "1xpl6y5jLIESG3x5AF-yOS5Dh1G-2owPxLsPa8_hh-ms" }
+  ]) {
+    const { store, calls } = setup({ envOverrides });
+    await assert.rejects(store.persistContactLead(contact(), "synthetic-invalid-destination-key"));
+    assert.deepEqual(calls, { token: 0, appendAttempts: 0, appends: 0 });
+  }
+});
+
+test("test mocks may use a synthetic destination, but development cannot", async () => {
+  const synthetic = setup();
+  const syntheticResult = await synthetic.store.persistContactLead(contact(), "synthetic-test-only-key");
+  assert.equal(syntheticResult.created, true);
+
+  const development = setup({ envOverrides: {
+    NODE_ENV: "development",
+    TAG08_DEPLOYMENT_ENV: "development",
+    GOOGLE_SHEETS_SPREADSHEET_ID: "synthetic-sheet"
+  } });
+  await assert.rejects(development.store.persistContactLead(contact(), "synthetic-development-key"), /google_sheets_destination_not_authorized/);
+  assert.deepEqual(development.calls, { token: 0, appendAttempts: 0, appends: 0 });
 });

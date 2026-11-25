@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getPublishedLocales, getRouteByPath, routeSitemapMeta } from "../config/routeRegistry";
+import { getIndexableLocales, getRouteByPath, routeSitemapMeta } from "../config/routeRegistry";
 import { getAbsoluteLocalizedUrl, getAlternates } from "../lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -7,7 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const route = getRouteByPath(entry.path);
     if (!route) return [];
 
-    return getPublishedLocales(route).map((locale) => ({
+    return getIndexableLocales(route).map((locale) => ({
       url: getAbsoluteLocalizedUrl(entry.path, locale),
       lastModified: new Date(),
       changeFrequency: entry.changefreq,

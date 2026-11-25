@@ -31,12 +31,22 @@ export interface CaseStudy {
   title: string;
   client: string;
   category: string;
-  image: string;
-  metric: string;
-  metricLabel: string;
+  image?: string;
+    clientLogo?: string;
+    clientLogoEvidenceKey?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  summary?: string;
+  projectStatus?: string;
+  searchIntent?: string;
+  relatedServicePath?: string;
+  relatedServiceTitle?: string;
+  metric?: string;
+  metricLabel?: string;
   challenge: string;
   solution: string;
-  results: string[];
+  deliverables?: string[];
+  results?: string[];
 }
 
 export interface BlogPost {
@@ -44,7 +54,7 @@ export interface BlogPost {
   title: string;
   excerpt: string;
   content: string;
-  category: "Estratégia" | "Branding" | "Performance" | "Processos" | "Web";
+  category: "Estratégia" | "Conteúdo e Redes" | "Processos" | "Web e Tecnologia" | "Aquisição e Mídia" | "Marca";
   serviceTitle: string;
   servicePath: string;
   serviceNote: string;

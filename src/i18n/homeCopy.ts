@@ -42,18 +42,42 @@ const HOME_EN_COPY = {
       ratingDescription: "Reviews record perspectives; trust is sustained through follow-through, clarity and consistent delivery.",
       ariaReview: "Review by {name}",
       googleVerified: "GOOGLE VERIFIED",
-      cta: "TALK TO TAG08"
+      cta: "TALK TO TAG08",
+      unavailableTitle: "Client feedback is not shown in this language yet.",
+      unavailableDescription: "Attributed feedback remains in its original language until an approved, locale-safe version is available."
     },
     cases: {
       eyebrow: "CASES & DIGITAL POSITIONING",
-      titleFirstLine: "CLIENTS SHAPE",
-      titleSecondLine: "THE CHANGE_",
-      directContact: "DIRECT CONTACT",
+      titleFirstLine: "REAL CHALLENGES.",
+      titleSecondLine: "CLEAR-DIRECTED RESPONSES.",
       contactCta: "TALK TO TAG08",
-      selector: "CASE STUDY SELECTOR",
-      selectorHint: "Choose a story to explore its positioning and outcomes:",
-      unavailableTitle: "Client stories are not available in this language yet.",
-      unavailableDescription: "These testimonials are attributed evidence and remain in their original Portuguese. They will appear here only after an approved, locale-safe version is available."
+      unavailableTitle: "Client projects are being prepared for this section.",
+      unavailableDescription: "Each story will present the challenge, the response and the work completed after its facts and publication permission are confirmed.",
+      countLabel: "Explore {count} projects and the challenges they addressed.",
+      controlsLabel: "Case carousel controls",
+      carouselLabel: "TAG08 case studies",
+      carouselRoleDescription: "carousel",
+      previousCase: "Previous case",
+      nextCase: "Next case",
+      challengeLabel: "The challenge:",
+      responseLabel: "The response:",
+      relatedCta: "Discuss a similar challenge",
+      items: {
+        "lavarroupa-sa-branding-lavanderia-self-service": { title: "Naming, brand identity and experience for a self-service laundry", category: "Branding and visual identity", summary: "TAG08 took part in creating the name and brand system for a self-service laundry in Campina Grande, connecting identity, the physical space and its digital presence.", solution: "The direction started with the self-service experience and time spent in the space. The concept carried through naming, visual system and physical and digital applications." },
+        "centro-de-olhos-rebranding-clinica-oftalmologica": { title: "Rebranding a traditional clinic without erasing its history", category: "Branding and visual identity", summary: "The project reorganized the identity of a well-known regional clinic, aiming to update its visual expression while retaining the recognition it had already built.", solution: "The work combined brand study, market research, digital strategy, positioning and the development of an updated visual identity." },
+        "levisage-branding-clinica-premium": { title: "Branding, website and experience for a specialist clinic", category: "Branding and visual identity", summary: "This historical project brought together brand, visual expression, physical experience and digital presence for a specialist clinic. The current website has not been confirmed as TAG08 work.", solution: "The direction connected the brand system, physical experience and digital presence during the project period, keeping medical credibility central to the expression." },
+        "alugue-por-temporada-branding-produto-digital": { title: "From brand creation to the evolution of a digital product", category: "Branding and positioning", summary: "The material describes the brand and its digital layers evolving alongside the operation. The app is described as a future stage, not as a launched product.", solution: "The work connected brand positioning, channels, content and digital layers. Operational growth is not attributed exclusively to communication or TAG08." },
+        "luciana-gadelha-marca-pessoal": { title: "Personal brand, content and a sustained digital presence", category: "Positioning and content", summary: "The dermatologist already had a professional reputation; the challenge was to bring that identity to digital channels with direction and consistency, rather than reduce the work to one-off posts.", solution: "TAG08 structured positioning and visual identity, developed the website, and connected editorial strategy, audiovisual content and digital channels throughout the partnership." },
+        "espaco-glau-campos-identidade-visual": { title: "Visual identity and brand modernization", category: "Branding and visual identity", summary: "The work focused on visual identity and brand modernization, organizing elements into a more current expression.", solution: "TAG08 developed a visual identity system and modernized the brand based on the points shared across the source records." },
+        "unida-construtora-presenca-digital": { title: "A historical reconstruction of the company website", category: "Web development", summary: "The material records a website reconstruction completed during the project period. The current website should not be attributed to TAG08.", solution: "TAG08 carried out a historical website reconstruction; there is no evidence to attribute the current version to the agency." },
+        "econotrip-modelagem-prototipo-mvp": { title: "From business modeling to a product prototype", category: "Strategy and digital product", summary: "The material follows an idea through business modeling, a prototype and an MVP, without documenting commercial traction results.", solution: "The work described covered business modeling, brand concept, prototype and MVP." },
+        "personapp-evolucao-produto-digital": { title: "Structuring and evolving a digital product", category: "Strategy and digital product", summary: "The material describes product evolution based on user problems, hypotheses and validation. Churn indicators were not validated for publication.", solution: "The work connected problem analysis, validation, brand and platform structure." },
+        "liga-do-laser-preparacao-infoproduto": { title: "Offer structuring and pre-launch preparation", category: "Strategy and content", summary: "The material records offer and content preparation for a pre-launch. According to the source, the product was not launched.", solution: "The work focused on structuring the offer and content and preparing for the pre-launch." },
+        "sm-advocacia-marca-conteudo": { title: "Historical brand and content work", category: "Branding and content", summary: "The material describes historical brand and content work. A mentioned management product remained a proposal and was not launched.", solution: "The described scope covered brand and content; there is no evidence that the proposed product was implemented." },
+        "jl-corretora-rebranding": { title: "Historical rebranding", category: "Branding and visual identity", summary: "The material records a completed rebrand. The current identity replaced the one developed during that period and should not be presented as current.", solution: "TAG08 developed a historical rebrand; the source does not support claims of commercial growth." },
+        "chama-o-dermato-lancamentos": { title: "Lessons from two launches", category: "Strategy and digital product", summary: "The source reports two launches with different qualitative outcomes. The product was later incorporated into DoctorPlay/S-Qualis.", solution: "The material records two cycles and their lessons, without supporting financial claims." },
+        "doctorplay-modelagem-marca-produto": { title: "Business modeling, brand and platform concept", category: "Strategy and digital product", summary: "The material documents business modeling, brand and an operational/media concept. It does not confirm that the full platform launched.", solution: "The work brought together business modeling, brand and operational structure for the platform concept." }
+      }
     },
     faq: {
       badge: "Important questions before we talk",
@@ -114,7 +138,7 @@ const HOME_EN_COPY = {
       heading: "Digital presence with clear direction for businesses ready to grow without guesswork.",
       description: "TAG08 brings positioning, communication, content, technology and processes together to turn scattered digital efforts into a clearer, more consistent presence that serves the business.",
       contactLabel: "Contact TAG08 to request an initial assessment",
-      diagnosticLabel: "Assessment before execution",
+      diagnosticLabel: "Free initial assessment before execution",
       contactCta: "TALK TO TAG08",
       trust: "Method, clarity and responsible execution",
       promise: "DIRECTION TO BUILD. STRUCTURE TO GROW.",
@@ -218,7 +242,7 @@ const HOME_EN_COPY = {
       signalPrefix: "SIGNAL //",
       possibleImpact: "POSSIBLE IMPACT",
       interactivePanel: "TAG08 INTERACTIVE PANEL",
-      requestDiagnosis: "REQUEST AN INITIAL DIAGNOSIS"
+      requestDiagnosis: "REQUEST A FREE INITIAL ASSESSMENT"
     },
     methodCenter: {
       sectionReason: "Why brands in transition choose TAG08",
@@ -270,7 +294,8 @@ const HOME_EN_COPY = {
       orientationPrompt: "Not sure which path fits yet?",
       orientationCta: "Tell us where your business is now",
       cards: {
-        "estrategia-posicionamento": { title: "Strategy and positioning", subtitle: "Clarity before execution", desc: "For businesses and professionals whose communication no longer reflects their value, audience or current stage of business.", related: "Strategic Advisory, Strategic Repositioning and Brand Identity.", cta: "Explore strategy and positioning" },
+        "assessoria-estrategica": { title: "Strategic advisory", subtitle: "Direction for business decisions", desc: "For companies that need to organize priorities, positioning, channels and planning before expanding execution.", related: "Strategic direction without replacing Branding, Processes or media execution.", cta: "Explore strategic advisory" },
+        "branding-posicionamento": { title: "Branding and positioning", subtitle: "Coherence between identity and business stage", desc: "For brands whose identity, perception or message no longer represents their value or current stage accurately.", related: "Identity, positioning and repositioning within the same discipline.", cta: "Explore branding and positioning" },
         "conteudo-redes-sociais": { title: "Content and social media", subtitle: "Presence with an editorial plan", desc: "For businesses that need to move beyond sporadic content and build a communication routine with defined topics, formats, frequency and intent.", related: "Start, Base, Performance, Social Media Management and Reels Editing.", cta: "Explore content and social media" },
         "producao-audiovisual": { title: "Audiovisual production", subtitle: "Purposeful images, voices and behind the scenes", desc: "For businesses, specialists and projects that need to turn knowledge, presence and events into useful communication and positioning assets.", related: "Audiovisual Production, Reels and tailored productions.", cta: "Explore audiovisual production" },
         "desenvolvimento-web": { title: "Web and digital infrastructure", subtitle: "An owned channel with a clear purpose", desc: "For brands that need to organize information, strengthen credibility and make the path from interest to contact easier.", related: "Strategic Websites, Landing Pages and web projects. E-commerce depends on an operational readiness assessment.", cta: "Explore web development" },
@@ -318,6 +343,11 @@ const HOME_EN_COPY = {
         { title: "Content for specialists", description: "Filming and editing talks, classes, interviews and expert content with clear language and a professional presence.", date: "03 May, 2026", category: "SPECIALISTS", views: "PORTFOLIO 03", tagline: "EXPERTISE ON CAMERA" },
         { title: "Social media assets", description: "Edits, reels, short videos and recurring formats aligned with the brand’s editorial direction and positioning.", date: "21 Apr, 2026", category: "SOCIAL MEDIA", views: "PORTFOLIO 04", tagline: "EDITORIAL DIRECTION" }
       ]
+    },
+    youtubeUnavailable: {
+      loading: "Loading videos from TAG08’s official channel.",
+      unavailable: "Official videos are temporarily unavailable. You can visit TAG08’s YouTube channel.",
+      link: "OPEN OFFICIAL CHANNEL"
     }
 } as const;
 
@@ -356,18 +386,42 @@ export const HOME_PILOT_COPY: Record<Exclude<RouteLocale, "pt">, WidenCopy<typeo
       ratingDescription: "Las reseñas registran percepciones; la confianza se sostiene con seguimiento, claridad y coherencia en la entrega.",
       ariaReview: "Reseña de {name}",
       googleVerified: "VERIFICADO EN GOOGLE",
-      cta: "HABLAR CON TAG08"
+      cta: "HABLAR CON TAG08",
+      unavailableTitle: "Los comentarios de clientes aún no están disponibles en este idioma.",
+      unavailableDescription: "Los comentarios atribuidos se mantienen en su idioma original hasta que exista una versión aprobada y adecuada para este idioma."
     },
     cases: {
       eyebrow: "CASOS Y POSICIONAMIENTO DIGITAL",
-      titleFirstLine: "LOS CLIENTES",
-      titleSecondLine: "MARCAN EL CAMBIO_",
-      directContact: "CONTACTO DIRECTO",
+      titleFirstLine: "DESAFÍOS REALES.",
+      titleSecondLine: "RESPUESTAS CON DIRECCIÓN.",
       contactCta: "HABLAR CON TAG08",
-      selector: "SELECCIÓN DE CASOS",
-      selectorHint: "Elige una historia para conocer su posicionamiento y resultados:",
-      unavailableTitle: "Las historias de clientes aún no están disponibles en este idioma.",
-      unavailableDescription: "Estos testimonios son evidencia atribuida y se mantienen en su portugués original. Solo se mostrarán aquí cuando exista una versión aprobada y segura para este idioma."
+      unavailableTitle: "Los proyectos de clientes se están preparando para esta sección.",
+      unavailableDescription: "Cada historia presentará el desafío, la respuesta y el trabajo realizado cuando se confirmen sus datos y la autorización de publicación.",
+      countLabel: "Explora {count} proyectos y los desafíos que abordaron.",
+      controlsLabel: "Controles del carrusel de casos",
+      carouselLabel: "Casos de TAG08",
+      carouselRoleDescription: "carrusel",
+      previousCase: "Caso anterior",
+      nextCase: "Caso siguiente",
+      challengeLabel: "El desafío:",
+      responseLabel: "La respuesta:",
+      relatedCta: "Conversemos sobre un desafío parecido",
+      items: {
+        "lavarroupa-sa-branding-lavanderia-self-service": { title: "Naming, identidad de marca y experiencia para una lavandería de autoservicio", category: "Branding e identidad visual", summary: "TAG08 participó en la creación del nombre y del sistema de marca de una lavandería de autoservicio en Campina Grande, conectando identidad, experiencia del espacio y presencia digital.", solution: "La dirección partió de la experiencia de autoservicio y del tiempo de permanencia en el espacio. El concepto se llevó del naming al sistema visual y a las aplicaciones físicas y digitales." },
+        "centro-de-olhos-rebranding-clinica-oftalmologica": { title: "Rebranding de una clínica tradicional sin borrar su historia", category: "Branding e identidad visual", summary: "El proyecto reorganizó la identidad de una clínica conocida en la región, buscando actualizar su expresión visual sin descartar el reconocimiento ya construido.", solution: "El trabajo combinó estudio de marca, investigación de mercado, estrategia digital, posicionamiento y desarrollo de una identidad visual actualizada." },
+        "levisage-branding-clinica-premium": { title: "Branding, sitio web y experiencia para una clínica especializada", category: "Branding e identidad visual", summary: "Este proyecto histórico reunió marca, expresión visual, experiencia física y presencia digital para una clínica especializada. El sitio actual no fue confirmado como trabajo de TAG08.", solution: "La dirección conectó el sistema de marca, la experiencia física y la presencia digital durante el período del proyecto, manteniendo la credibilidad médica como parte central de la expresión." },
+        "alugue-por-temporada-branding-produto-digital": { title: "De la creación de marca a la evolución de un producto digital", category: "Branding y posicionamiento", summary: "El material describe la evolución de la marca y de sus capas digitales junto con la operación. La aplicación aparece como una etapa futura, no como un producto ya lanzado.", solution: "El trabajo conectó posicionamiento de marca, canales, contenido y capas digitales. El crecimiento operativo no se atribuye exclusivamente a la comunicación ni a TAG08." },
+        "luciana-gadelha-marca-pessoal": { title: "Marca personal, contenido y presencia digital con continuidad", category: "Posicionamiento y contenido", summary: "La dermatóloga ya tenía reputación profesional; el desafío era llevar esa identidad a los canales digitales con dirección y consistencia, sin reducir el trabajo a publicaciones aisladas.", solution: "TAG08 estructuró el posicionamiento y la identidad visual, desarrolló el sitio y conectó estrategia editorial, contenido audiovisual y canales digitales a lo largo de la colaboración." },
+        "espaco-glau-campos-identidade-visual": { title: "Identidad visual y modernización de marca", category: "Branding e identidad visual", summary: "El trabajo se centró en la identidad visual y la modernización de la marca, organizando elementos para una expresión más actual.", solution: "TAG08 desarrolló un sistema de identidad visual y modernización de marca según los puntos coincidentes entre las fuentes consultadas." },
+        "unida-construtora-presenca-digital": { title: "Reconstrucción histórica del sitio web de la empresa", category: "Desarrollo web", summary: "El material registra una reconstrucción del sitio concluida durante el período del proyecto. El sitio actual no debe atribuirse a TAG08.", solution: "TAG08 realizó una reconstrucción histórica del sitio; no hay evidencia para atribuir la versión actual a la agencia." },
+        "econotrip-modelagem-prototipo-mvp": { title: "De la modelación del negocio al prototipo de producto", category: "Estrategia y producto digital", summary: "El material sigue una idea a través de la modelación del negocio, un prototipo y un MVP, sin documentar resultados de tracción comercial.", solution: "El trabajo descrito recorrió la modelación del negocio, el concepto de marca, el prototipo y el MVP." },
+        "personapp-evolucao-produto-digital": { title: "Estructuración y evolución de un producto digital", category: "Estrategia y producto digital", summary: "El material describe la evolución del producto a partir de problemas, hipótesis y validación. Los indicadores de abandono no fueron validados para su publicación.", solution: "El trabajo conectó la lectura del problema, la validación, la marca y la estructura de la plataforma." },
+        "liga-do-laser-preparacao-infoproduto": { title: "Estructuración de la oferta y preparación del prelanzamiento", category: "Estrategia y contenido", summary: "El material registra la preparación de una oferta y contenido para un prelanzamiento. Según la fuente, el producto no fue lanzado.", solution: "El trabajo se centró en estructurar la oferta y el contenido y preparar el prelanzamiento." },
+        "sm-advocacia-marca-conteudo": { title: "Trabajo histórico de marca y contenido", category: "Branding y contenido", summary: "El material describe trabajo histórico de marca y contenido. Un producto de gestión mencionado quedó como propuesta y no fue lanzado.", solution: "El alcance descrito abarcó marca y contenido; no hay evidencia de que se implementara el producto propuesto." },
+        "jl-corretora-rebranding": { title: "Rebranding histórico", category: "Branding e identidad visual", summary: "El material registra un rebranding concluido. La identidad actual sustituyó la desarrollada durante ese período y no debe presentarse como vigente.", solution: "TAG08 desarrolló un rebranding histórico; la fuente no respalda afirmaciones de crecimiento comercial." },
+        "chama-o-dermato-lancamentos": { title: "Aprendizajes de dos lanzamientos", category: "Estrategia y producto digital", summary: "La fuente relata dos lanzamientos con resultados cualitativos diferentes. El producto se incorporó después a DoctorPlay/S-Qualis.", solution: "El material registra dos ciclos y sus aprendizajes, sin respaldar afirmaciones financieras." },
+        "doctorplay-modelagem-marca-produto": { title: "Modelación del negocio, marca y concepto de plataforma", category: "Estrategia y producto digital", summary: "El material documenta la modelación del negocio, la marca y un concepto operativo y mediático. No confirma que la plataforma completa se haya lanzado.", solution: "El trabajo reunió modelación del negocio, marca y estructura operativa para el concepto de plataforma." }
+      }
     },
     faq: {
       badge: "Preguntas importantes antes de conversar",
@@ -428,7 +482,7 @@ export const HOME_PILOT_COPY: Record<Exclude<RouteLocale, "pt">, WidenCopy<typeo
       heading: "Presencia digital con dirección para negocios que quieren crecer sin improvisar.",
       description: "TAG08 organiza el posicionamiento, la comunicación, el contenido, la tecnología y los procesos para convertir acciones digitales dispersas en una presencia más clara, coherente y útil para el negocio.",
       contactLabel: "Contactar con TAG08 para solicitar una evaluación inicial",
-      diagnosticLabel: "Evaluación antes de la ejecución",
+      diagnosticLabel: "Evaluación inicial gratuita antes de la ejecución",
       contactCta: "HABLA CON TAG08",
       trust: "Método, claridad y ejecución responsable",
       promise: "DIRECCIÓN PARA CONSTRUIR. ESTRUCTURA PARA CRECER.",
@@ -532,7 +586,7 @@ export const HOME_PILOT_COPY: Record<Exclude<RouteLocale, "pt">, WidenCopy<typeo
       signalPrefix: "SEÑAL //",
       possibleImpact: "POSIBLE IMPACTO",
       interactivePanel: "PANEL INTERACTIVO TAG08",
-      requestDiagnosis: "SOLICITAR UN DIAGNÓSTICO INICIAL"
+      requestDiagnosis: "SOLICITAR UNA EVALUACIÓN INICIAL GRATUITA"
     },
     methodCenter: {
       sectionReason: "Por qué las marcas en evolución eligen TAG08",
@@ -584,7 +638,8 @@ export const HOME_PILOT_COPY: Record<Exclude<RouteLocale, "pt">, WidenCopy<typeo
       orientationPrompt: "¿Aún no sabes qué camino elegir?",
       orientationCta: "Cuéntanos el momento de tu negocio",
       cards: {
-        "estrategia-posicionamento": { title: "Estrategia y posicionamiento", subtitle: "Claridad antes de ejecutar", desc: "Para empresas y profesionales cuya comunicación ya no representa correctamente su valor, público o etapa actual del negocio.", related: "Asesoría Estratégica, Reposicionamiento Estratégico e Identidad de Marca.", cta: "Conocer estrategia y posicionamiento" },
+        "assessoria-estrategica": { title: "Asesoría estratégica", subtitle: "Dirección para las decisiones del negocio", desc: "Para empresas que necesitan organizar prioridades, posicionamiento, canales y planificación antes de ampliar la ejecución.", related: "Dirección estratégica sin sustituir Branding, Procesos ni la ejecución de medios.", cta: "Conocer la asesoría estratégica" },
+        "branding-posicionamento": { title: "Branding y posicionamiento", subtitle: "Coherencia entre identidad y etapa del negocio", desc: "Para marcas cuya identidad, percepción o mensaje ya no representan adecuadamente su valor o momento actual.", related: "Identidad, posicionamiento y reposicionamiento dentro de la misma área.", cta: "Conocer branding y posicionamiento" },
         "conteudo-redes-sociais": { title: "Contenido y redes sociales", subtitle: "Presencia con línea editorial", desc: "Para negocios que necesitan dejar atrás la producción aislada y construir una rutina de comunicación con temas, formatos, frecuencia e intención definidos.", related: "Start, Base, Performance, Gestión de Redes Sociales y Edición de Reels.", cta: "Conocer contenido y redes sociales" },
         "producao-audiovisual": { title: "Producción audiovisual", subtitle: "Imagen, voz y detrás de escena con propósito", desc: "Para empresas, especialistas y proyectos que necesitan transformar conocimiento, presencia y acontecimientos en materiales útiles para la comunicación y el posicionamiento.", related: "Producción Audiovisual, Reels y producciones específicas.", cta: "Conocer producción audiovisual" },
         "desenvolvimento-web": { title: "Web e infraestructura digital", subtitle: "Un canal propio con una función clara", desc: "Para marcas que necesitan organizar información, fortalecer su credibilidad y facilitar el camino entre el interés y el contacto.", related: "Sitios Estratégicos, Landing Pages y proyectos web. El e-commerce depende de un diagnóstico de preparación operativa.", cta: "Conocer desarrollo web" },
@@ -632,6 +687,11 @@ export const HOME_PILOT_COPY: Record<Exclude<RouteLocale, "pt">, WidenCopy<typeo
         { title: "Contenido para especialistas", description: "Grabación y edición de intervenciones, clases, entrevistas y contenido de autoridad con lenguaje claro y presencia profesional.", date: "03 may 2026", category: "ESPECIALISTAS", views: "PORTAFOLIO 03", tagline: "AUTORIDAD EN ESCENA" },
         { title: "Materiales para redes sociales", description: "Ediciones, reels, videos cortos y formatos recurrentes alineados con la línea editorial y el posicionamiento de la marca.", date: "21 abr 2026", category: "REDES SOCIALES", views: "PORTAFOLIO 04", tagline: "LÍNEA EDITORIAL" }
       ]
+    },
+    youtubeUnavailable: {
+      loading: "Cargando videos del canal oficial de TAG08.",
+      unavailable: "Los videos oficiales no están disponibles temporalmente. Puedes visitar el canal de YouTube de TAG08.",
+      link: "ABRIR CANAL OFICIAL"
     }
   }
 };

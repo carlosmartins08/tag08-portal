@@ -2,7 +2,14 @@
 
 > **Autoridade atual (2026-11-09):** este arquivo reúne registros de épocas diferentes. Seções marcadas como históricas não são requisitos vigentes. Para esta release, o novo site TAG08 não usa ClickUp para receber ou operar submissões; Google Sheets é a base canônica estruturada. O CRM próprio é um projeto separado, com integração futura. O backend/CMS do blog ainda não foi escolhido; não usar WordPress como premissa. `blog-tag08` é o projeto editorial separado e o portal está preparado para consultar sua projeção pública versionada pela rota server-side `/api/editorial-content/v1`. O componente contextual renderiza no navegador após a consulta e permanece oculto até receber conteúdo real e relações editoriais explícitas; não usar fixtures como publicação. O legado `/insights` permanece preservado temporariamente até migração e validação do blog, sem redirecionamento antecipado. GA4 é responsável por mensuração e não substitui obrigações de LGPD. Onboarding está desativado e seu código/controles devem ser preservados. Consulte código, preflight e testes atuais para confirmar o comportamento implementado.
 
-Atualizado em: `2026-11-09`
+> **Atualizacao operacional (2026-11-24):** ha um unico renderizador local, iniciado por `npm run dev` em `localhost:3101`. Ele aplica os mesmos gates publicos: apenas evidencias aprovadas e idiomas publicados sao exibidos. Use `npm run content:status` e `npm run i18n:status` para acompanhar pendencias, sem uma variante visual alternativa. Decisoes pendentes continuam preservadas e ocultas ate aprovacao.
+
+> **Cases — unificação e curadoria estática na Home (2026-11-24):** a Home é o único ponto de apresentação; as vitrines de mini-cases nas páginas de serviço foram retiradas. Quatorze sínteses factuais derivadas dos documentos de cases consultados no Drive estão autorizadas somente para a Home, com contexto/desafio, resposta da TAG08 e convite para conversar. O Drive não é integrado ao runtime e não foi alterado. A autorização da Home não libera páginas individuais: URLs de detalhe continuam sujeitas ao gate independente e fora do sitemap. Não foram incluídos cases sem documento-fonte consultado nem métricas não comprovadas.
+
+
+- Home cases use a responsive, manually controlled editorial carousel with keyboard/touch navigation, a visible next-card cue, and non-repeated client names. Alugue por Temporada and Luciana Gadelha use their matching local logos under route-specific evidence approvals; the remaining cases use typographic identification. Case detail publication remains independently gated.
+
+Atualizado em: `2026-11-24`
 
 ## Decisão operacional vigente — Google Sheets sem ClickUp no site — 2026-10-28
 
@@ -28,6 +35,7 @@ Atualizado em: `2026-11-09`
 
 ## Validacao da missao atual
 
+- A diretriz visual vigente segue WCAG 2.2 AA por combinação renderizada, preservando a identidade escura/lime; pares medidos abaixo do mínimo foram corrigidos localmente em Serviços e Talentos. Há testes Axe focados nesses componentes e teste de foco 3:1 no seletor de área em 390, 768 e 1440 px. A verificação global Axe mantém contraste desativado por limitação conhecida com alguns tokens CSS; gradientes/fundos indetermináveis não são declarados aprovados e requerem revisão manual. `DESIGN.md` registra o critério; não há gate de build para contraste global.
 - Rodapé: assinatura da marca, frase institucional, selos, identificação da empresa, direitos autorais, rótulos legais e nomes acessíveis de links sociais/WhatsApp acompanham o idioma ativo usando as traduções existentes ou cópias curtas locais. A grafia “Agência Estratégica” foi corrigida; o descritor agora realmente aparece em caixa alta por meio de um override CSS restrito, após `.tag08-meta` global anular a utilidade `uppercase`. O destino `x.com` agora tem nome acessível e símbolo X, no lugar da ave antiga do Twitter. Política de Privacidade e Termos de Uso aparecem uma única vez no rodapé, na faixa legal final. A coluna Ecossistema usa o mesmo alinhamento, cor de texto e tratamento do título das demais colunas; setas externas foram preservadas e movidas após os rótulos. `ItsHoverActionIcon` já é usado em CTAs de envio e código; não é um conjunto de marcas sociais. A família visual de ícones sociais ainda precisa de consolidação própria. O serviço de Hospedagem e Manutenção permanece com o enquadramento “Continuidade Web” aprovado para distingui-lo como continuidade adjacente à família Tecnologia; o destino de ecossistema de hospedagem é um subdomínio separado. A captura fornecida cobre desktop; tablet/mobile continuam sem validação visual nesta execução. As diferenças de altura entre itens de navegação observadas decorrem dos rótulos que quebram em duas linhas; não foi comprovada divergência de `line-height` entre listas. Textos legais extensos do modal seguem em português, sem tradução improvisada.
 - Os assets aprovados da Darker Grotesque e sua licença OFL estão versionados; a integração tipográfica permanece pausada. A foundation cromática aprovada (`#DDF81D` institucional e `#3F5A00` funcional) foi reconciliada; o acento padrão dos avatares externos também usa o lime aprovado.
 - A jornada de Contato foi estruturada para qualificar projetos, clientes atuais e parcerias; esta unidade não altera distribuição automática de leads. As demais alterações locais permanecem fora dela e ainda não foram consolidadas.
@@ -65,8 +73,8 @@ Atualizado em: `2026-11-09`
 ## Checkpoint executável
 
 - Última missão concluída: Quality Gate aprovado para `main` em `c1aab5f`; a `main` é a única linha oficial de desenvolvimento e publicação. O commit visual não aprovado está isolado na branch de recuperação local `recovery/p2-its-hover-unapproved-0f78d21` e em `origin/p2-home-cases-consolidation`; não foi incorporado.
-- Próxima missão autorizada: continuar o desenvolvimento local a partir de `main`; usar `npm run dev` para a experiência pública em `localhost:3101` ou `npm run dev:content-review` somente quando a revisão editorial for explicitamente necessária.
-- Antes de desenvolver: `npm run continuity:status`. O comando confere branch, commit-base, missão e itens locais isolados; `npm run dev`, `npm run dev:content-review` e `npm run dev:public-preview` executam essa conferência automaticamente.
+- Próxima missão autorizada: validar a experiencia unica com `npm run dev` em `localhost:3101`; os casos `pending`/`investigate` e idiomas sem publicacao continuam fora do renderizador.
+- Antes de desenvolver: `npm run continuity:status`. O lan?ador `npm run dev` confirma a identidade do checkout, falha se a porta solicitada estiver ocupada e inicia somente o renderizador com os gates p?blicos.
 - Antes de commitar: o hook local exige `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` no mesmo commit de qualquer alteração de comportamento. Para ativá-lo em uma instalação existente: `npm run setup:hooks`.
 - CI: o workflow busca o histórico completo para validar o commit-base, pois um checkout raso não permite provar a ancestralidade da branch.
 - Localização: as assinaturas de fonte são calculadas com quebras de linha normalizadas para evitar falso positivo entre Windows e Linux.
@@ -74,8 +82,8 @@ Atualizado em: `2026-11-09`
 - Rotas HTTP: `npm run verify:routes` sobe o build de produção em uma porta isolada quando `BASE_URL` não é informado; em staging, a mesma variável aponta para o ambiente real. A checagem não depende mais de um servidor local esquecido em `:3000`.
 - Testes visuais: contratos de localização verificam URL canônica, idioma e título principal; não usam contagem de elementos de layout, que muda legitimamente quando a página evolui.
 - Navegador local: `npm run test:browser` usa a porta `3211` e inicia o build atual, sem reutilizar um `next dev` em `:3000`. Para validar staging, usar explicitamente `E2E_BASE_URL`.
-- Dono de cada runtime local: `npm run dev` serve a experiência pública em `:3101` usando `.next-dev`; `npm run dev:content-review` inicia, por escolha explícita, a revisão editorial em `:3101` usando `.next-review`; `npm run dev:public-preview` usa `:3212` e compartilha `.next-dev` com a prévia pública normal, então o lançador exige que ambas as portas estejam livres. O lançador imprime diretório, branch, commit, estado do worktree, modo e URL; em conflito, retorna erro e nunca reutiliza nem encerra o processo existente. `npm run test:browser` usa `:3211`; Docker ocupa `127.0.0.1:3000` apenas para a imagem compilada. Não comparar mudanças locais em `:3000` nem iniciar duas prévias sobre o mesmo cache.
-- Tailwind: `src/index.css` limita a descoberta de classes ao diretório `src`. Caches gerados (`.next`, `.next-dev` e `.next-review`) nunca podem entrar na varredura, pois isso realimenta CSS compilado e corrompe classes arbitrárias. `.next-review/` também é ignorado pelo Git.
+- Runtime local: `npm run dev` usa `localhost:3101` e `.next-dev`; `npm run test:browser` pode iniciar um runtime de teste isolado em `:3211`. Cada processo informa sua identidade; nenhum processo ocupado ? reutilizado ou encerrado automaticamente.
+- Tailwind: `src/index.css` limita a descoberta de classes ao diret?rio `src`. Caches gerados (`.next`, `.next-dev`) nunca podem entrar na varredura, pois isso realimenta CSS compilado e corrompe classes arbitr?rias.
 - Higiene do repositório: `.lighthouseci/` contém relatórios gerados de auditoria e permanece fora do Git; os resultados devem ser tratados como artefatos de CI, não como fonte do produto.
 - Assets públicos: `src/proxy.ts` deixa URLs com extensão de arquivo passarem sem reescrita de idioma. Isso preserva imagens da equipe e demais arquivos em `public/`.
 
@@ -83,8 +91,8 @@ Atualizado em: `2026-11-09`
 
 - Discoverability: `/llms.txt` é servido por uma rota estática do Next. O checkpoint focado inclui a remoção do arquivo de raiz, a exclusão no `proxy` e a verificação de rota.
 - Ativos de clientes: os SVGs em `public/clients/` estão versionados. As 12 marcas autorizadas para `/sobre` são controladas por `src/content/publicEvidence.ts`; qualquer novo logo exige a mesma aprovação por item e rota.
-- Evidências públicas: o gate em `src/content/publicEvidence.ts` libera somente mini-cases e depoimentos internos em Assessoria. Os perfis da equipe em `/sobre` permanecem preservados, mas pendentes e fora da renderização pública. Home, portfólio e cases indexáveis continuam bloqueados; os cases pendentes também não geram rota ou sitemap. `npm run content:status` torna cada supressão visível e `npm run dev:content-review` permite revisão local identificada, sem publicação.
-- Referência visual local: `http://localhost:3101` é servido pelo checkout canônico `main`. O modo público normal oculta qualquer evidência sem aprovação. A revisão editorial, explicitamente identificada por “REVISÃO LOCAL — NÃO PUBLICADO”, só é iniciada por `npm run dev:content-review`; seus itens pendentes ou em investigação não se tornam publicáveis. A prévia de escopo público em `:3212` mantém a mesma proteção editorial.
+- Evid?ncias p?blicas: `src/content/publicEvidence.ts` libera somente registros `approved` nas rotas autorizadas. Estados `pending` e `investigate` permanecem registrados e vis?veis em `npm run content:status`, mas n?o s?o renderizados em qualquer ambiente.
+- Refer?ncia visual local: `http://localhost:3101` usa o mesmo renderizador p?blico seguro; n?o existe modo alternativo com tarjas ou conte?do n?o aprovado.
 
 ## Onde o conteúdo realmente vive
 
@@ -120,7 +128,7 @@ Atualizado em: `2026-11-09`
 2. Ler este arquivo e `docs/architecture-consolidation/10_CONSOLIDATION_WAVES.md`; consultar `docs/architecture-consolidation/14_PUBLIC_EVIDENCE_DECISIONS.md` quando a tarefa envolver publicação de evidências.
 3. Escolher uma única missão do roadmap.
 4. Não reabrir conteúdo pendente sem evidência ou decisão registrada.
-5. Antes de aprovar ou revisar conteúdo, rodar `npm run content:status`; para interface, usar `npm run dev` (ou o alias `npm run dev:content-review`).
+5. Antes de aprovar conte?do, rodar `npm run content:status`; para tradu??es, rodar `npm run i18n:status`; a interface ? sempre validada por `npm run dev`.
 
 ## Registro histórico superado — Operational submission architecture (2026-10-27)
 

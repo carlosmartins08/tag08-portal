@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const isDevelopment = process.env.NODE_ENV === "development";
-const isContentReview = process.env.NEXT_PUBLIC_TAG08_CONTENT_REVIEW === "1";
 
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -24,9 +23,8 @@ const contentSecurityPolicyHeader = process.env.CSP_REPORT_ONLY === "true"
   ? "Content-Security-Policy-Report-Only"
   : "Content-Security-Policy";
 const nextConfig: NextConfig = {
-  // Mutable Turbopack manifests must never be shared with a production build
-  // or with the editorial-review preview. Each local runtime has its own cache.
-  distDir: isDevelopment ? (isContentReview ? ".next-review" : ".next-dev") : ".next",
+  // Keep the local development cache isolated from production builds.
+  distDir: isDevelopment ? ".next-dev" : ".next",
   allowedDevOrigins: ["127.0.0.1"],
   output: "standalone",
   // Prisma uses a Node-only driver adapter at request time. Keep it external so

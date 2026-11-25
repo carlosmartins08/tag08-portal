@@ -30,7 +30,7 @@ test("GTM so e carregado depois do consentimento de desempenho", async ({ page }
     await expect(mapFrame).toHaveCount(0);
 
     await page.getByRole("button", { name: "Abrir personalização de cookies" }).click();
-    await page.getByRole("button", { name: "Ativar cookies de marketing" }).click();
+    await page.getByRole("button", { name: "Ativar Marketing & Redes Sociais" }).click();
     await page.getByRole("button", { name: "Salvar ajustes de cookies" }).click();
     await expect(mapFrame).toBeVisible();
   });

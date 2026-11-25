@@ -1,16 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ArrowUpRight, BookOpen } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ArrowUpRight, BookOpen } from "./DooIcons";
 import {
   isCanonicalBlogArticleUrl,
   type EditorialCardV1,
   type EditorialSectionId,
 } from "../content/editorialContentV1";
-import { getServiceInsightsBridgeConfig } from "../content/serviceInsightsBridge";
+import { editorialLocaleMatches, getServiceInsightsBridgeConfig } from "../content/serviceInsightsBridge";
+import type { RouteLocale } from "../config/routeRegistry";
 
 interface ServiceInsightsBridgeProps {
   servicePath: string;
+  locale?: RouteLocale;
   /** Kept for compatibility with existing page composition; article links are canonical blog URLs. */
   onNavigate?: (page: string) => void;
   variant?: "legacy" | "editorial-light";
@@ -38,10 +40,11 @@ function isEditorialProjection(value: unknown, sectionId: EditorialSectionId): v
 
 export default function ServiceInsightsBridge({
   servicePath,
+  locale = "pt",
   variant = "legacy",
   layout = "default",
 }: ServiceInsightsBridgeProps) {
-  const bridge = getServiceInsightsBridgeConfig(servicePath);
+  const bridge = useMemo(() => getServiceInsightsBridgeConfig(servicePath, locale), [servicePath, locale]);
   const [projection, setProjection] = useState<{
     sectionId: EditorialSectionId | null;
     items: EditorialCardV1[];
@@ -73,8 +76,15 @@ export default function ServiceInsightsBridge({
     return () => controller.abort();
   }, [bridge]);
 
-  const items = bridge && projection.sectionId === bridge.sectionId ? projection.items : [];
+  const items = bridge && projection.sectionId === bridge.sectionId
+    ? projection.items.filter((item) => editorialLocaleMatches(item.locale, locale))
+    : [];
   if (!bridge || !items.length) return null;
+  const copy = locale === "en"
+    ? { sectionLabel: "Articles from the blog", articleLabel: "Published on the blog", readLink: "Read on the blog" }
+    : locale === "es"
+      ? { sectionLabel: "Artículos del blog", articleLabel: "Publicado en el blog", readLink: "Leer en el blog" }
+      : { sectionLabel: "Conteúdos do blog", articleLabel: "Publicado no blog", readLink: "Ler no blog" };
 
   return (
     <section
@@ -96,7 +106,7 @@ export default function ServiceInsightsBridge({
         <div className="space-y-3 max-w-2xl">
           <div className={`tag08-kicker ${isEditorialLight ? "text-[color:var(--color-action-readable)]" : ""}`}>
             <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
-            Conteúdos do blog
+            {copy.sectionLabel}
           </div>
           <h2
             id={`editorial-${bridge.sectionId}-heading`}
@@ -128,7 +138,7 @@ export default function ServiceInsightsBridge({
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between gap-3">
                   <span className={`tag08-kicker ${isEditorialLight ? "text-[color:var(--color-action-readable)]" : "text-brand"}`}>
-                    Publicado no blog
+                    {copy.articleLabel}
                   </span>
                   <span className={`tag08-meta ${isEditorialLight ? "text-[color:var(--color-content-secondary)]" : "text-zinc-300"}`}>
                     {bridge.serviceTitle}
@@ -160,7 +170,7 @@ export default function ServiceInsightsBridge({
                     : "text-brand hover:text-brand-dark focus-visible:ring-brand/60 focus-visible:ring-offset-charcoal-950"
                 }`}
               >
-                Ler no blog
+                {copy.readLink}
                 <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
               </a>
             </article>

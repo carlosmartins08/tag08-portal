@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { canonicalizeRoute, getLocalizedPath, getRouteByPath, type RouteLocale } from "./config/routeRegistry";
+import { canonicalizeRoute, getLocalizedPath, getRouteByPath, isRouteLocalePublished, type RouteLocale } from "./config/routeRegistry";
 
 const supportedLocales = new Set(["pt", "en", "es"]);
 const internalLocaleRewriteHeader = "x-tag08-internal-locale-rewrite";
@@ -83,6 +83,13 @@ export function proxy(request: NextRequest) {
   if (currentLocale) {
     const pathWithoutLocale = url.pathname.replace(/^\/(pt|en|es)(?=\/|$)/, "") || "/";
     const canonicalPath = canonicalizeRoute(pathWithoutLocale);
+    const route = getRouteByPath(canonicalPath);
+
+    if (route && !isRouteLocalePublished(route, currentLocale as RouteLocale)) {
+      url.pathname = getLocalizedPath(canonicalPath, "pt");
+      return NextResponse.redirect(url, 308);
+    }
+
     const localizedCanonicalPath = getLocalizedPath(canonicalPath, currentLocale as RouteLocale);
 
     if (url.pathname !== localizedCanonicalPath) {

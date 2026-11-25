@@ -1,6 +1,9 @@
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { CONTACT_STAGING_SPREADSHEET_ID } from "./contactStagingGate.mjs";
+import {
+  GOOGLE_SHEETS_STAGING_SPREADSHEET_ID,
+  getOperationalSheetsDestination
+} from "../server/sheetsDestinations.mjs";
 
 const CLICKUP_ONBOARDING_LIST_VARIABLE = "CLICKUP_ONBOARDING_LIST_ID";
 const CLICKUP_ONBOARDING_STAGING_LIST_ID = "901327894265";
@@ -15,7 +18,11 @@ export const evaluateDeployPreflight = (env, args = []) => {
     if (!present(name)) missing.push(name);
   };
 
-  for (const name of ["ALLOWED_ORIGINS", "INTERNAL_API_TOKEN", "ONBOARDING_ENABLED"]) requireValue(name);
+  for (const name of ["ALLOWED_ORIGINS", "INTERNAL_API_TOKEN", "ONBOARDING_ENABLED", "TAG08_DEPLOYMENT_ENV", "SUBMISSIONS_ENABLED", "INTEGRATIONS_ENABLED", "GOOGLE_SHEETS_ENABLED"]) requireValue(name);
+
+  if (present("TAG08_DEPLOYMENT_ENV") && env.TAG08_DEPLOYMENT_ENV !== target) {
+    invalid.push(`TAG08_DEPLOYMENT_ENV must match the ${target} deploy preflight target`);
+  }
 
   const onboardingEnabled = env.ONBOARDING_ENABLED?.trim().toLowerCase();
   if (!['true', 'false'].includes(onboardingEnabled || '')) {
@@ -24,8 +31,12 @@ export const evaluateDeployPreflight = (env, args = []) => {
     invalid.push("ONBOARDING_ENABLED must be false for production until Onboarding is homologated");
   }
 
-  if (target === "production" && env.GOOGLE_SHEETS_SPREADSHEET_ID?.trim() === CONTACT_STAGING_SPREADSHEET_ID) {
-    invalid.push("GOOGLE_SHEETS_SPREADSHEET_ID points to the approved staging spreadsheet in production");
+  const sheetsSpreadsheetId = env.GOOGLE_SHEETS_SPREADSHEET_ID || "";
+  const approvedDestination = getOperationalSheetsDestination(target);
+  if (present("GOOGLE_SHEETS_SPREADSHEET_ID") && sheetsSpreadsheetId !== approvedDestination) {
+    invalid.push(sheetsSpreadsheetId === GOOGLE_SHEETS_STAGING_SPREADSHEET_ID && target === "production"
+      ? "GOOGLE_SHEETS_SPREADSHEET_ID points to the approved staging spreadsheet in production"
+      : `GOOGLE_SHEETS_SPREADSHEET_ID does not match the approved ${target} spreadsheet`);
   }
 
   if (onboardingEnabled === "true") requireValue("DATABASE_URL");
@@ -57,7 +68,26 @@ export const evaluateDeployPreflight = (env, args = []) => {
 
   const integrationsEnabled = env.INTEGRATIONS_ENABLED === "true";
   const sheetsEnabled = env.GOOGLE_SHEETS_ENABLED === "true";
+  const submissionsEnabled = env.SUBMISSIONS_ENABLED === "true";
   const clickUpEnabled = env.CLICKUP_ENABLED === "true";
+  const operationalFlagNames = ["SUBMISSIONS_ENABLED", "INTEGRATIONS_ENABLED", "GOOGLE_SHEETS_ENABLED"];
+
+  for (const name of operationalFlagNames) {
+    if (present(name) && !["true", "false"].includes(env[name])) {
+      invalid.push(`${name} must be explicitly set to true or false`);
+    }
+  }
+
+  if (operationalFlagNames.every(present)) {
+    const enabledFlags = operationalFlagNames.map((name) => env[name] === "true");
+    if (!enabledFlags.every(Boolean) && enabledFlags.some(Boolean)) {
+      invalid.push("SUBMISSIONS_ENABLED, INTEGRATIONS_ENABLED, and GOOGLE_SHEETS_ENABLED must all be true or all be false");
+    }
+  }
+
+  if (submissionsEnabled && target === "production" && !sheetsSpreadsheetId) {
+    requireValue("GOOGLE_SHEETS_SPREADSHEET_ID");
+  }
   if (clickUpEnabled && onboardingEnabled !== "true") {
     invalid.push("CLICKUP_ENABLED is only supported for Onboarding, which must remain explicitly enabled");
   }
@@ -133,6 +163,7 @@ export const evaluateDeployPreflight = (env, args = []) => {
     invalid,
     integrationsEnabled,
     sheetsEnabled,
+    submissionsEnabled,
     clickUpEnabled,
     onboardingEnabled: onboardingEnabled === "true",
     translationsAutopublish,

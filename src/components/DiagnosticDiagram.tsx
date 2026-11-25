@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { Compass, ShieldCheck, Workflow } from "lucide-react";
+import { Compass, ShieldCheck, Workflow } from "./DooIcons";
 import type { HomeDiagnosticDiagramCopy } from "../i18n/homeCopy";
 
 interface DiagnosticPillar {
@@ -91,7 +91,7 @@ export default function DiagnosticDiagram({ copy }: { copy?: HomeDiagnosticDiagr
               >
                 {activePillarCopy?.name ?? activePillar.name}
               </motion.div>
-              <p className="mt-2 tag08-meta text-[10px] font-bold uppercase tracking-wider text-zinc-400">{copy?.qualitativeLabel ?? "Leitura qualitativa"}</p>
+              <p className="mt-2 tag08-meta text-[11px] font-bold uppercase tracking-wider text-zinc-400">{copy?.qualitativeLabel ?? "Leitura qualitativa"}</p>
             </div>
           </div>
         </div>

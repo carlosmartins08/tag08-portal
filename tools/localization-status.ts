@@ -7,7 +7,7 @@ const routes = routeRegistry.map((route) => {
   return {
     key: route.key,
     path: route.canonicalPath,
-    source: readiness.sourceFile,
+    sourceFiles: readiness.sourceFiles,
     publishedLocales: getPublishedLocales(route),
     translations: readiness.locales
   };

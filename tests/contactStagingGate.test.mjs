@@ -7,6 +7,7 @@ import {
   TALENT_DELIVERY_HEADERS,
   TALENT_SHEETS_V1_HEADERS
 } from "../server/contactSheetsProjection.mjs";
+import { GOOGLE_SHEETS_STAGING_SPREADSHEET_ID } from "../server/sheetsDestinations.mjs";
 import { evaluateIntegrationPreflight } from "../tools/preflight-integrations.mjs";
 import {
   CONTACT_STAGING_HEADERS,
@@ -14,17 +15,18 @@ import {
   CONTACT_TALENT_STAGING_SYNTHETIC_MARKER,
   TALENT_STAGING_HEADERS
 } from "../tools/contactStagingGate.mjs";
-import { submitWithUnconfirmedSheetsAppendRecovery } from "../tools/run-contact-staging-outbox.mjs";
+import { parseStagingRunnerArgs, submitWithUnconfirmedSheetsAppendRecovery } from "../tools/run-contact-staging-outbox.mjs";
 
 const env = () => ({
   NODE_ENV: "production",
+  TAG08_DEPLOYMENT_ENV: "staging",
   ONBOARDING_ENABLED: "false",
   SUBMISSIONS_ENABLED: "false",
   INTEGRATIONS_ENABLED: "false",
   GOOGLE_SHEETS_ENABLED: "false",
   CLICKUP_ENABLED: "false",
   INTEGRATION_MOCK_MODE: "false",
-  GOOGLE_SHEETS_SPREADSHEET_ID: "1XXXCv0Zn9grrv1BxPR76H2iIfYQAyfiA6rEUSfNVCQE",
+  GOOGLE_SHEETS_SPREADSHEET_ID: GOOGLE_SHEETS_STAGING_SPREADSHEET_ID,
   CLICKUP_ONBOARDING_LIST_ID: ""
 });
 
@@ -39,6 +41,7 @@ test("Contact and Talent direct staging preflight accepts exact staging destinat
 test("direct staging rejects wrong destinations, enabled persistent flags, PostgreSQL settings, and enabled Onboarding", () => {
   for (const altered of [
     { ...env(), GOOGLE_SHEETS_SPREADSHEET_ID: "production-sheet" },
+    { ...env(), TAG08_DEPLOYMENT_ENV: "production" },
     { ...env(), CLICKUP_ONBOARDING_LIST_ID: "123456789" },
     { ...env(), SUBMISSIONS_ENABLED: "true" },
     { ...env(), INTEGRATIONS_ENABLED: "true" },
@@ -88,6 +91,7 @@ test("staging template has no database fallback, keeps integrations disabled, an
   assert.match(template, /^CLICKUP_ENABLED="false"$/m);
   assert.match(template, /^INTEGRATION_MOCK_MODE="false"$/m);
   assert.match(template, /^ONBOARDING_ENABLED="false"$/m);
+  assert.match(template, /^TAG08_DEPLOYMENT_ENV="staging"$/m);
   assert.doesNotMatch(template, /^CLICKUP_(PRE_SALES|TALENT)_LIST_ID=/m);
   assert.doesNotMatch(template, /^DATABASE_URL=/m);
   assert.doesNotMatch(template, /^CLICKUP_API_TOKEN=".+"$/m);
@@ -101,6 +105,14 @@ test("direct staging runner uses the Sheets store and contains no PostgreSQL/out
   assert.match(runner, /GOOGLE_SHEETS_ENABLED/);
   assert.doesNotMatch(runner, /createClickUpTask|findExistingClickUpTask|api\.clickup\.com/i);
   assert.doesNotMatch(runner, /from ["']pg["']|DATABASE_URL|integration_deliveries|integrationWorker\.mjs|spawnSync/);
+});
+
+test("direct staging runner can isolate one validated flow while preserving the default pair", () => {
+  assert.deepEqual(parseStagingRunnerArgs([]), { mode: "inspect", confirmation: "", flow: null });
+  assert.deepEqual(parseStagingRunnerArgs(["--mode=deliver", "--flow=contact"]), { mode: "deliver", confirmation: "", flow: "contact" });
+  assert.deepEqual(parseStagingRunnerArgs(["--mode=deliver", "--flow=talent"]), { mode: "deliver", confirmation: "", flow: "talent" });
+  assert.throws(() => parseStagingRunnerArgs(["--flow=all"]), /staging_flow_invalid/);
+  assert.throws(() => parseStagingRunnerArgs(["--flow=Contact"]), /staging_flow_invalid/);
 });
 
 test("direct staging runner retries once only after an uncertain Sheets append, preserving the same idempotency key", async () => {

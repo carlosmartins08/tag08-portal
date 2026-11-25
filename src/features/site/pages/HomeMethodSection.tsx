@@ -1,4 +1,4 @@
-import { Activity, Layers, Plus, Star, TrendingUp, Wifi, Zap } from "lucide-react";
+import { Activity, Layers, Plus, Star, TrendingUp, Wifi, Zap } from "../../../components/DooIcons";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { HOME_PILOT_COPY } from "../../../i18n/homeCopy";

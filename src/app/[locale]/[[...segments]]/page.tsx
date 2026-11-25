@@ -4,9 +4,9 @@ import SiteShell from "../../../features/site/SiteShell";
 import RouteContent from "../../../features/site/RouteContent";
 import {
   canonicalizeRoute,
-  getContentReviewRouteByPath,
   getLocalizedPath,
   getRouteByPath,
+  isLocaleIndexable,
   isRouteLocalePublished,
   resolveLocalizedPath,
   staticRouteSegments,
@@ -15,13 +15,13 @@ import {
 } from "../../../config/routeRegistry";
 import {
   buildBreadcrumbSchema,
+  buildArticleSchema,
   buildOrganizationSchema,
   getAbsoluteLocalizedUrl,
   getAlternates,
   getOpenGraphLocale,
   getRouteSeo
 } from "../../../lib/seo";
-import { isContentReviewMode } from "../../../content/publicEvidence";
 
 type RoutePageProps = {
   params: Promise<{ locale: string; segments?: string[] }>;
@@ -34,7 +34,7 @@ const resolveRoute = async (params: RoutePageProps["params"]) => {
   const validLocale = ROUTE_LOCALES.includes(locale as RouteLocale);
   const path = segments.length ? `/${segments.join("/")}` : "/";
   const canonicalPath = canonicalizeRoute(path);
-  const route = getRouteByPath(canonicalPath) ?? getContentReviewRouteByPath(canonicalPath);
+  const route = getRouteByPath(canonicalPath);
 
   return { locale: (validLocale ? locale : "pt") as RouteLocale, path, validLocale, canonicalPath, route };
 };
@@ -60,7 +60,8 @@ export async function generateMetadata({ params }: RoutePageProps): Promise<Meta
   }
 
   const seo = getRouteSeo(route, canonicalPath, locale);
-  const canonicalUrl = getAbsoluteLocalizedUrl(canonicalPath, locale);
+  const localePublished = isRouteLocalePublished(route, locale);
+  const canonicalUrl = getAbsoluteLocalizedUrl(canonicalPath, localePublished ? locale : "pt");
 
   return {
     title: seo.title,
@@ -69,12 +70,12 @@ export async function generateMetadata({ params }: RoutePageProps): Promise<Meta
       canonical: canonicalUrl,
       languages: getAlternates(canonicalPath)
     },
-    robots: !isContentReviewMode() && route.indexable && isRouteLocalePublished(route, locale) ? { index: true, follow: true } : { index: false, follow: true },
+    robots: route.indexable && localePublished && isLocaleIndexable(locale) ? { index: true, follow: true } : { index: false, follow: true },
     openGraph: {
       title: seo.title,
       description: seo.description,
       url: canonicalUrl,
-      type: "website",
+      type: route.key === "insights" && canonicalPath !== "/insights" ? "article" : "website",
       locale: getOpenGraphLocale(locale),
       images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: seo.title }]
     },
@@ -98,21 +99,27 @@ export default async function RoutePage({ params }: RoutePageProps) {
     permanentRedirect(getLocalizedPath(canonicalPath, locale as RouteLocale));
   }
 
-  // Do not serve a shortened substitute under a language URL. A non-published
-  // locale returns visitors to the canonical Portuguese page until the complete
-  // translation (including interactions and legal copy) is approved.
+  // The proxy owns the canonical redirect for unpublished locales. Keep this
+  // page-level guard as a not-found fallback so a missed proxy cannot serve
+  // Portuguese content under an English or Spanish URL.
   if (!isRouteLocalePublished(route, locale)) {
-    permanentRedirect(getLocalizedPath(canonicalPath, "pt"));
+    notFound();
   }
 
-  const organizationSchema = buildOrganizationSchema();
+  const organizationSchema = buildOrganizationSchema(locale);
   const breadcrumbSchema = buildBreadcrumbSchema(route, canonicalPath, locale);
+  const articleSchema = route.key === "insights" && canonicalPath !== "/insights"
+    ? buildArticleSchema(canonicalPath, locale)
+    : null;
 
   return (
     <>
       <script id="schema-org-organization" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
       {breadcrumbSchema ? (
         <script id="schema-breadcrumb" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      ) : null}
+      {articleSchema ? (
+        <script id="schema-article" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       ) : null}
       <SiteShell path={canonicalPath} locale={locale}>
         <RouteContent path={canonicalPath} locale={locale} />

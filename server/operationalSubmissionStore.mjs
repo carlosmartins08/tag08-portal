@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { appendToGoogleSheets } from "./integrationAdapters.mjs";
 import { getGoogleSheetsAccessToken } from "./googleSheetsAuth.mjs";
 import { buildContactDeliveryPayload, IntegrationDeliveryError } from "./integrationDelivery.mjs";
+import { getOperationalSheetsDestination } from "./sheetsDestinations.mjs";
 
 const locks = new Map();
 const tabByType = Object.freeze({ contact_lead: "Leads", talent_application: "Talentos" });
@@ -35,10 +36,21 @@ export const createOperationalSubmissionStore = ({
   tokenProvider = getGoogleSheetsAccessToken,
   appendSheet = appendToGoogleSheets
 } = {}) => {
+  const syntheticTestAdapters = env.NODE_ENV === "test" && env.TAG08_DEPLOYMENT_ENV === "test" &&
+    tokenProvider !== getGoogleSheetsAccessToken && appendSheet !== appendToGoogleSheets;
+
   const submit = async (aggregateType, input, idempotencyKey) => {
     if (!tabByType[aggregateType]) throw new IntegrationDeliveryError("submission_type_not_supported");
     if (env.SUBMISSIONS_ENABLED !== "true" || env.INTEGRATIONS_ENABLED !== "true" || env.GOOGLE_SHEETS_ENABLED !== "true") {
       throw new IntegrationDeliveryError("submission_store_disabled");
+    }
+    const spreadsheetId = env.GOOGLE_SHEETS_SPREADSHEET_ID;
+    if (typeof spreadsheetId !== "string" || spreadsheetId.trim().length === 0) {
+      throw new IntegrationDeliveryError("google_sheets_not_configured");
+    }
+    const authorizedDestination = getOperationalSheetsDestination(env.TAG08_DEPLOYMENT_ENV);
+    if ((authorizedDestination && spreadsheetId !== authorizedDestination) || (!authorizedDestination && !syntheticTestAdapters)) {
+      throw new IntegrationDeliveryError("google_sheets_destination_not_authorized");
     }
     if (typeof idempotencyKey !== "string" || idempotencyKey.length === 0) {
       throw new IntegrationDeliveryError("idempotency_key_required");
@@ -61,7 +73,7 @@ export const createOperationalSubmissionStore = ({
       let stored;
       try {
         stored = await appendSheet(delivery, {
-          spreadsheetId: env.GOOGLE_SHEETS_SPREADSHEET_ID,
+          spreadsheetId,
           accessToken,
           fetchImpl
         });

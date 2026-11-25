@@ -1,88 +1,67 @@
 import assert from "node:assert/strict";
-import { createElement } from "react";
-import { renderToStaticMarkup } from "react-dom/server";
-import { ContentReviewBanner, EvidenceReviewBadge } from "../src/components/ContentReview";
 import { PUBLICATION_CONTRACTS } from "../src/content/publicationContracts";
-import { PUBLIC_EVIDENCE, getVisibleEvidence, hasPendingPublicEvidence, hasUnpublishedPublicEvidence, isEvidenceVisible, type PublicEvidenceRecord, type PublicEvidenceStatus, validatePublicEvidence } from "../src/content/publicEvidence";
+import {
+  PUBLIC_EVIDENCE,
+  getVisibleEvidence,
+  hasPendingPublicEvidence,
+  hasUnpublishedPublicEvidence,
+  isEvidenceVisible,
+  type PublicEvidenceRecord,
+  type PublicEvidenceStatus,
+  validatePublicEvidence
+} from "../src/content/publicEvidence";
 
-assert.deepEqual(validatePublicEvidence(), [], "O registro público precisa estar estruturalmente válido");
+assert.deepEqual(validatePublicEvidence(), [], "Public evidence records remain structurally valid");
 
 for (const contract of PUBLICATION_CONTRACTS) {
-  assert.ok(contract.evidenceKeys.length > 0, `${contract.route}:${contract.section} precisa ter itens registrados`);
-  for (const key of contract.evidenceKeys) {
-    assert.ok(PUBLIC_EVIDENCE[key], `${contract.route}:${contract.section} referencia uma chave inexistente: ${key}`);
-  }
+  assert.ok(contract.evidenceKeys.length > 0, `${contract.route}:${contract.section} must track evidence`);
+  for (const key of contract.evidenceKeys) assert.ok(PUBLIC_EVIDENCE[key], `${contract.route} references unknown evidence ${key}`);
 }
 
-const teamKeys = Object.keys(PUBLIC_EVIDENCE).filter((key) => key.startsWith("team/"));
-const clientLogoKeys = Object.keys(PUBLIC_EVIDENCE).filter((key) => key.startsWith("client-logo/"));
-const miniCaseKeys = Object.keys(PUBLIC_EVIDENCE).filter((key) => key.startsWith("mini-case/"));
-assert.equal(teamKeys.length, 7, "The seven decided team profiles remain covered");
-assert.equal(getVisibleEvidence(teamKeys, (key) => key, "/sobre", "public").length, 5, "Somente os cinco perfis autorizados aparecem publicamente na página Sobre");
-assert.equal(getVisibleEvidence(teamKeys, (key) => key, "/sobre", "review").length, 7, "A prévia local pode preservar os perfis em investigação para revisão");
-assert.equal(getVisibleEvidence(miniCaseKeys, (key) => key, "/servicos/assessoria-marketing-digital-estrategico", "public").length, 6, "Mini-cases aprovados precisam aparecer em Assessoria");
-assert.equal(getVisibleEvidence(miniCaseKeys, (key) => key, "/servicos/branding-identidade", "public").length, 0, "Mini-cases não podem vazar para serviços fora do escopo aprovado");
-assert.equal(isEvidenceVisible("team/carlos-henrique-martins", "/", "review"), false, "A prévia respeita o escopo autorizado da rota");
-assert.equal(isEvidenceVisible("mini-case/clinica-alphaville", "/servicos/branding-identidade", "review"), false, "A prévia também respeita a autorização restrita da Assessoria");
+const keys = (prefix: string) => Object.keys(PUBLIC_EVIDENCE).filter((key) => key.startsWith(prefix));
+const teamKeys = keys("team/");
+const clientLogoKeys = keys("client-logo/");
+const assessoria = "/servicos/assessoria-marketing-digital-estrategico";
 
-assert.equal(getVisibleEvidence(clientLogoKeys, (key) => key, "/sobre", "public").length, 12, "Logos de clientes aprovados precisam aparecer publicamente em Sobre");
-assert.equal(getVisibleEvidence(clientLogoKeys, (key) => key, "/", "public").length, 0, "Logos de clientes nÃ£o podem vazar para fora da rota autorizada");
+assert.equal(teamKeys.length, 7);
+assert.equal(getVisibleEvidence(teamKeys, (key) => key, "/sobre").length, 5, "Only approved profiles render on Sobre");
+assert.equal(PUBLICATION_CONTRACTS.some((contract) => contract.section === "mini-cases"), false, "Mini-case sections are no longer part of public route contracts");
+assert.equal(getVisibleEvidence(clientLogoKeys, (key) => key, "/sobre").length, 12);
+assert.equal(getVisibleEvidence(clientLogoKeys, (key) => key, "/").length, 2);
 
-const investigateKeys = Object.keys(PUBLIC_EVIDENCE).filter((key) =>
-  PUBLIC_EVIDENCE[key as keyof typeof PUBLIC_EVIDENCE].status === "investigate" &&
-    (key.startsWith("team/") || key.startsWith("home-case/") || key.startsWith("portfolio-candidate/") || key.startsWith("case-study/"))
-);
-assert.equal(investigateKeys.length, 17, "Remaining human-investigation decisions remain explicitly enumerated");
-assert.equal(investigateKeys.filter((key) => key.startsWith("team/")).length, 2, "Unapproved team profiles remain under investigation");
-assert.equal(investigateKeys.filter((key) => key.startsWith("home-case/")).length, 6, "All six decided Home cases remain covered");
-assert.equal(investigateKeys.filter((key) => key.startsWith("portfolio-candidate/")).length, 6, "All six decided portfolio candidates remain covered");
-assert.equal(investigateKeys.filter((key) => key.startsWith("case-study/")).length, 3, "All three decided detailed cases remain covered");
+const investigateKeys = keys("").filter((key) => {
+  const record = PUBLIC_EVIDENCE[key as keyof typeof PUBLIC_EVIDENCE];
+  return record.status === "investigate" && ["team/", "home-case/", "portfolio-candidate/", "case-study/"].some((prefix) => key.startsWith(prefix));
+});
+assert.equal(investigateKeys.length, 25);
+assert.equal(investigateKeys.filter((key) => key.startsWith("team/")).length, 2);
+assert.equal(investigateKeys.filter((key) => key.startsWith("home-case/")).length, 0);
+assert.equal(investigateKeys.filter((key) => key.startsWith("portfolio-candidate/")).length, 6);
+assert.equal(investigateKeys.filter((key) => key.startsWith("case-study/")).length, 17);
+
 for (const key of investigateKeys) {
-  const evidence = PUBLIC_EVIDENCE[key as keyof typeof PUBLIC_EVIDENCE];
-  assert.equal(evidence.status, "investigate", `${key} retains the explicit investigation state`);
-  assert.equal(isEvidenceVisible(key, evidence.allowedRoutes[0], "public"), false, `${key} is hidden on its allowed route in public mode`);
-  assert.equal(isEvidenceVisible(key, evidence.allowedRoutes[0], "review"), true, `${key} is also visible on its allowed route in review mode`);
-}
-assert.equal(getVisibleEvidence(Object.keys(PUBLIC_EVIDENCE).filter((key) => key.startsWith("home-case/")), (key) => key, "/", "public").length, 0, "All six investigated Home cases are excluded by the public consumer gate");
-assert.equal(getVisibleEvidence(Object.keys(PUBLIC_EVIDENCE).filter((key) => key.startsWith("portfolio-candidate/")), (key) => key, "/", "public").length, 0, "All six investigated portfolio candidates fail the public gate");
-assert.equal(hasPendingPublicEvidence(), false, "Investigation is not conflated with pending");
-assert.equal(hasUnpublishedPublicEvidence(), true, "Investigation is still represented in the local review warning");
-
-const originalNodeEnv = process.env.NODE_ENV;
-const originalReviewFlag = process.env.NEXT_PUBLIC_TAG08_CONTENT_REVIEW;
-const mutableEnvironment = process.env as unknown as Record<string, string | undefined>;
-try {
-  mutableEnvironment.NODE_ENV = "development";
-  mutableEnvironment.NEXT_PUBLIC_TAG08_CONTENT_REVIEW = "1";
-  const investigateBadge = renderToStaticMarkup(createElement(EvidenceReviewBadge, { evidenceKey: "team/guilherme-gomes" }));
-  const homeInvestigateBadge = renderToStaticMarkup(createElement(EvidenceReviewBadge, { evidenceKey: "home-case/alan-rocha" }));
-  assert.match(homeInvestigateBadge, /Em investiga/, "Home cases under investigation use the review-only status instead of an approval claim");
-  assert.match(investigateBadge, /Em investigação — não publicado/, "Review mode labels investigate distinctly from approved");
-  assert.equal(renderToStaticMarkup(createElement(EvidenceReviewBadge, { evidenceKey: "client-logo/cayuca" })), "", "Approved records do not receive an investigation badge");
-  assert.match(renderToStaticMarkup(createElement(ContentReviewBanner)), /content-review-banner/, "Review mode signals unpublished investigations");
-} finally {
-  if (originalNodeEnv === undefined) delete mutableEnvironment.NODE_ENV;
-  else mutableEnvironment.NODE_ENV = originalNodeEnv;
-  if (originalReviewFlag === undefined) delete mutableEnvironment.NEXT_PUBLIC_TAG08_CONTENT_REVIEW;
-  else mutableEnvironment.NEXT_PUBLIC_TAG08_CONTENT_REVIEW = originalReviewFlag;
+  const record = PUBLIC_EVIDENCE[key as keyof typeof PUBLIC_EVIDENCE];
+  assert.equal(record.status, "investigate", `${key} keeps its editorial status`);
+  assert.equal(isEvidenceVisible(key, record.allowedRoutes[0]), false, `${key} must not render before approval`);
 }
 
-const approvedRecord = PUBLIC_EVIDENCE["client-logo/cayuca"];
-assert.equal(isEvidenceVisible("client-logo/cayuca", "/sobre", "public"), true, "Explicitly approved records remain public");
-const mutableApprovedRecord = approvedRecord as { status: PublicEvidenceStatus };
+const approvedHomeCases = Object.entries(PUBLIC_EVIDENCE).filter(([key, record]) => key.startsWith("home-case/") && record.status === "approved");
+assert.equal(approvedHomeCases.length, 14, "The 14 source-grounded case summaries are authorized for the Home only");
+assert.ok(approvedHomeCases.every(([key]) => isEvidenceVisible(key, "/")), "Approved Home summaries render on the Home");
+assert.ok(approvedHomeCases.every(([, record]) => !record.allowedRoutes.some((route) => route.startsWith("/casos/"))), "Home approval does not publish detail pages");
+assert.equal(hasPendingPublicEvidence(), false);
+assert.equal(hasUnpublishedPublicEvidence(), true, "Editorial status reporting still detects unpublished decisions");
+
+assert.equal(isEvidenceVisible("client-logo/cayuca", "/sobre"), true);
+assert.equal(isEvidenceVisible("client-logo/cayuca", "/"), false);
+assert.equal(isEvidenceVisible("client-logo/alugue-por-temporada", "/"), true, "The matching local logo is authorized only as part of its Home case");
+assert.equal(isEvidenceVisible("client-logo/luciana-gadelha", "/"), true, "The matching local logo is authorized only as part of its Home case");
+const approvedRecord = PUBLIC_EVIDENCE["client-logo/cayuca"] as { status: PublicEvidenceStatus };
 try {
-  mutableApprovedRecord.status = "remove";
-  assert.equal(isEvidenceVisible("client-logo/cayuca", "/sobre", "public"), false, "Removed records remain hidden in public mode");
-  assert.equal(isEvidenceVisible("client-logo/cayuca", "/sobre", "review"), false, "Removed records remain hidden in review mode");
+  approvedRecord.status = "remove";
+  assert.equal(isEvidenceVisible("client-logo/cayuca", "/sobre"), false);
 } finally {
-  mutableApprovedRecord.status = "approved";
-}
-assert.equal(isEvidenceVisible("client-logo/cayuca", "/sobre", "public"), true, "The synthetic remove-state characterization restores the original approved record");
-for (const [key, evidence] of Object.entries(PUBLIC_EVIDENCE)) {
-  if (evidence.status !== "approved") continue;
-  for (const route of evidence.allowedRoutes) {
-    assert.equal(isEvidenceVisible(key, route, "public"), true, `${key} remains visible on its explicitly allowed route`);
-  }
+  approvedRecord.status = "approved";
 }
 
 const incompleteApproval: Record<string, PublicEvidenceRecord> = {
@@ -98,4 +77,4 @@ const incompleteApproval: Record<string, PublicEvidenceRecord> = {
     reason: "Teste"
   }
 };
-assert.ok(validatePublicEvidence(incompleteApproval).some((error) => error.includes("aprovação exige")), "Aprovação sem registro verificável precisa falhar");
+assert.ok(validatePublicEvidence(incompleteApproval).some((error) => error.includes("aprovação exige")));

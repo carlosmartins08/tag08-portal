@@ -10,8 +10,7 @@ type ItsHoverActionIconProps = {
 };
 
 /**
- * Small, decorative adaptations of Its Hover's send-icon and code-icon.
- * The source library is Apache-2.0: https://github.com/itshover/itshover
+ * Small, decorative adaptations of DooIcons' send and code glyphs.
  * The surrounding control owns its accessible name; these SVGs are hidden from AT.
  */
 export default function ItsHoverActionIcon({
@@ -41,8 +40,7 @@ export default function ItsHoverActionIcon({
         if (name === "send") {
           void animate(".send-icon", { x: [0, 3, 0], y: [0, -3, 0] }, { duration: 0.36, ease: "easeInOut" });
         } else {
-          void animate(".left-bracket", { x: -2 }, { duration: 0.24, ease: "easeOut" });
-          void animate(".right-bracket", { x: 2 }, { duration: 0.24, ease: "easeOut" });
+          void animate(".code-icon", { scale: [1, 1.08, 1] }, { duration: 0.36, ease: "easeInOut" });
         }
         return;
       }
@@ -50,8 +48,7 @@ export default function ItsHoverActionIcon({
       if (name === "send") {
         void animate(".send-icon", { x: 0, y: 0 }, { duration: 0.2, ease: "easeOut" });
       } else {
-        void animate(".left-bracket", { x: 0 }, { duration: 0.2, ease: "easeInOut" });
-        void animate(".right-bracket", { x: 0 }, { duration: 0.2, ease: "easeInOut" });
+        void animate(".code-icon", { scale: 1 }, { duration: 0.2, ease: "easeInOut" });
       }
     };
 
@@ -104,14 +101,12 @@ export default function ItsHoverActionIcon({
     >
       {name === "send" ? (
         <motion.g className="send-icon" style={{ transformOrigin: "center" }}>
-          <path d="M10 14 21 3" />
-          <path d="m21 3-6.5 18a.55.55 0 0 1-1 0l-3.5-7-7-3.5a.55.55 0 0 1 0-1L21 3" />
+          <use href="/icons/dooicons-stroke.svg#send-plane-horizontal" />
         </motion.g>
       ) : (
-        <>
-          <motion.path className="right-bracket" d="m16 18 6-6-6-6" />
-          <motion.path className="left-bracket" d="m8 6-6 6 6 6" />
-        </>
+        <motion.g className="code-icon" style={{ transformOrigin: "center" }}>
+          <use href="/icons/dooicons-stroke.svg#curly-braces-code-default" />
+        </motion.g>
       )}
     </motion.svg>
   );

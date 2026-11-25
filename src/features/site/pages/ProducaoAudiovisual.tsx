@@ -6,10 +6,9 @@ import {
   Layers, Play, PlayCircle, Eye, Settings, Clock, ShieldCheck, 
   Smartphone, Monitor, ChevronDown, MessageSquare, Award, Tv,
   ListPlus, Plus, Info, HelpCircle
-} from "lucide-react";
+} from "../../../components/DooIcons";
 import ThreeDimensionalTilt from "../../../components/ThreeDimensionalTilt";
 import Subtle3DCanvas from "../../../components/Subtle3DCanvas";
-import MiniCases from "../../../components/MiniCases";
 import ResilientImage from "../../../components/ResilientImage";
 import ServiceInsightsBridge from "../../../components/ServiceInsightsBridge";
 import TrackedOutboundLink from "../../../components/TrackedOutboundLink";
@@ -17,6 +16,7 @@ import { buildBrazilWhatsAppUrl, TAG08_OFFICIAL_YOUTUBE_URL } from "../../../con
 import { trackVideoEvent } from "../../../lib/analytics";
 import { useSimulatorTracking } from "../../../lib/useSimulatorTracking";
 import { useOfficialYouTubeVideos } from "../../../lib/useOfficialYouTubeVideos";
+import type { RouteLocale } from "../../../config/routeRegistry";
 
 interface Deliverable {
   id: string;
@@ -112,9 +112,312 @@ const faqAnswers = [
 
 interface ProducaoProps {
   onNavigate: (page: string) => void;
+  locale?: RouteLocale;
 }
 
-export default function ProducaoAudiovisual({ onNavigate }: ProducaoProps) {
+export const AUDIOVISUAL_COPY = {
+  en: {
+    heroBadge: "Audiovisual Production",
+    heroTitle: "Audiovisual storytelling with",
+    heroTitleAccent: "presence and a strategic purpose.",
+    heroDescription: "TAG08 turns presence, speech, settings, behind-the-scenes moments and events into content with clarity, craft and a strategic purpose. Before filming, we understand the brand context, how the material will be used and which formats need to support communication, portfolio and relationships.",
+    heroImageAlt: "TAG08 audiovisual production",
+    talk: "TALK TO TAG08",
+    plan: "PLAN MY AUDIOVISUAL PROJECT",
+    heroCaption: "Storytelling, presence and directed content",
+    heroMeta: "Capture, editing and distribution for ongoing use",
+    benefits: ["Storytelling", "Clarity", "Application", "Continuity"],
+    benefitDescriptions: ["Captures speech, behind-the-scenes moments and settings with editorial intent", "Organizes material for presentations, social media and websites", "Assets designed for consistent, recurring use", "Useful content that continues working after filming and editing"],
+    section2Badge: "Signs of audiovisual misalignment",
+    section2Title: "When a video exists but does not build presence.",
+    section2Description: "Many brands film content, document events and publish videos, yet still struggle to turn that material into a clear, recurring and useful presence. The issue may be less about filming and more about the lack of storytelling, format, editing and a usage strategy.",
+    signal: "SIGN",
+    audienceBadge: "TAG08 USE CASES",
+    audienceTitle: "For brands that need to turn presence into content.",
+    audienceDescription: "TAG08 audiovisual production is suited to businesses, professionals and institutions with stories, experience, behind-the-scenes moments, events, people or knowledge to communicate, and a need to shape them into clear, well-edited formats for different channels.",
+    youtubeLoading: "Loading official TAG08 videos…",
+    youtubeUnavailable: "Official videos are temporarily unavailable. You can visit the official TAG08 channel.",
+    openChannel: "OPEN OFFICIAL CHANNEL",
+    plannerFormat: "1. CHOOSE THE FORMAT THAT FITS",
+    plannerMaterials: "2. SELECT WHAT COULD BE PRODUCED",
+    formatSummary: "AUDIOVISUAL FORMAT SUMMARY",
+    evaluatedFormat: "FORMAT REVIEWED:",
+    organizes: "WHAT THIS FORMAT HELPS ORGANIZE:",
+    relatedMaterials: "RELATED MATERIALS",
+    noMaterials: "No materials selected yet.",
+    emptyMaterialsDescription: "Select at least one item to preview possible adaptations for this audiovisual format.",
+    plannerCta: "DISCUSS MY AUDIOVISUAL FORMAT",
+    materialLabel: "material",
+    plannerCtaHint: "USE THIS SUMMARY AS A STARTING POINT FOR THE CONVERSATION",
+    faqEyebrow: "FAQ // FIND ANSWERS",
+    faqTitle: "QUESTIONS & ANSWERS",
+    faqCategories: ["PLANNING", "FORMAT", "EVENTS", "REUSE", "CHANNELS"],
+    faqQuestions: ["Does TAG08 only film, or can it also help with planning?", "Do I need to know exactly which video I want before contacting TAG08?", "Do you cover events?", "Can one shoot produce several pieces of content?", "Is audiovisual production only for social media?"],
+    faqAnswers: ["Production may include planning, topics, scripting, direction, filming, editing and usage guidance. Before filming, we understand the brand context and the role the material needs to serve.", "No. The first conversation helps us understand the brand's situation and recommend a suitable format: institutional, event, behind-the-scenes, testimonials, recurring content or support material.", "Yes. Coverage can document talks, launches, openings, training sessions, meetings, behind-the-scenes moments and other important events. The material can also be planned for later use on social media, websites, presentations and institutional communications.", "It can, when planned. The same footage may produce a main video, short cuts, announcements, behind-the-scenes content, testimonials, posts and support materials, depending on the agreed scope.", "No. Content may support social media, websites, commercial pages, presentations, campaigns, internal communication, branding, authority and customer relationships."],
+    servicesFormats: "SERVICES & FORMATS",
+    pageCta: "TALK ABOUT MY AUDIOVISUAL PROJECT",
+    deliverables: [
+      { name: "Institutional and introduction videos", desc: "To present a brand, team, story, method, service or positioning in a more human, visual and clear way." },
+      { name: "Event and in-person activity coverage", desc: "To document meetings, launches, openings, training, talks and activations with a narrative perspective and future use in mind." },
+      { name: "Social media content", desc: "To turn speech, behind-the-scenes moments, routines, products, services and brand moments into short videos, edits and posts connected to the editorial direction." },
+      { name: "Testimonials, interviews and expertise", desc: "To shape contributions from clients, specialists, leaders or teams into clear, useful content that supports trust." },
+      { name: "Behind the scenes, culture and employer brand", desc: "To show people, processes, environment, routines and culture authentically, without turning behind-the-scenes content into empty staging." },
+      { name: "Support material for websites, campaigns and presentations", desc: "To create videos, calls to action, edits and visual material that support pages, proposals, sales presentations and digital channels." }
+    ],
+    formats: [
+      { id: "institucional", name: "Institutional profile", tag: "INTRODUCTION & POSITIONING", desc: "To present a brand, team, story, method or service clearly.", features: ["Defined key message", "Focused script", "Foundation for website and proposal", "Material for creating short edits"] },
+      { id: "evento", name: "Event coverage", tag: "DOCUMENTATION & FUTURE USE", desc: "For meetings, launches, openings, training and talks that should produce useful material afterwards.", features: ["Narrative coverage", "Interviews and behind-the-scenes", "Edits for later communication", "Support material"] },
+      { id: "recorrente", name: "Recurring content", tag: "EDITORIAL DIRECTION", desc: "To turn routines, behind-the-scenes moments and speech into ongoing material for digital channels.", features: ["Reusable filming", "Short videos", "Editorial direction", "Consistent publishing"] }
+    ],
+    plannerCtaMessage: "Hello TAG08! I would like to understand which audiovisual format best fits my brand right now.",
+    problemCards: [
+      { title: "Videos without a clear purpose", desc: "The content gets filmed, but it is unclear whether it should introduce the brand, educate an audience, document a moment, support sales or build expertise." },
+      { title: "Underused behind-the-scenes material", desc: "Events, processes, customer service, teams and routines create valuable material, but it often is not shaped into useful brand content." },
+      { title: "Speech without a narrative", desc: "Specialists and leaders have knowledge to share, but direction helps make videos clear, focused and reusable." },
+      { title: "Content without continuity", desc: "The brand films from time to time without building a recurring audiovisual presence connected to its editorial direction." },
+      { title: "Material that is not reused", desc: "A long video, event coverage or shoot can produce edits, announcements, behind-the-scenes content, posts and support material when planned." }
+    ],
+    audienceCards: [
+      { title: "Businesses with relevant routines, teams and behind-the-scenes work", desc: "Businesses have processes, customer service, delivery, culture or operations happening every day, but have not yet turned that routine into clear content." },
+      { title: "Professionals and specialists who need to communicate expertise", desc: "People know a subject, serve clients or lead a team, and need direction to turn knowledge and experience into focused videos." },
+      { title: "Events that deserve strategic documentation", desc: "Meetings, launches, openings, training, talks and in-person activities should become useful material for later communication, not just a memory." },
+      { title: "Brands that need content for social media, websites and campaigns", desc: "Businesses need videos, edits, behind-the-scenes material, testimonials and calls to action connected to their editorial direction and channels." },
+      { title: "Projects that need an institutional story", desc: "Initiatives need to present their story, purpose, method, team, service or change in a more human, visual and clear way." }
+    ],
+    frontsTitle: "Audiovisual work with a clear purpose.",
+    frontsDescription: "Production can take different forms, but every deliverable should answer a real brand need: introduce, document, explain, connect, educate or consistently support channels.",
+    frontsBadge: "AUDIOVISUAL WORK // TAG08",
+    frontLabel: "WORKSTREAM",
+    possibleFormats: "POSSIBLE FORMATS:",
+    fronts: [
+      { title: "Institutional and introduction videos", desc: "Present the brand, team, story, structure, method, service or positioning in a more human, visual and clear way.", list: ["Brand introduction", "Team and structure", "Story and method", "Service and positioning", "Website and proposal material"] },
+      { title: "Event and in-person activity coverage", desc: "Document meetings, launches, openings, training, talks and activations with a narrative perspective and future use in mind.", list: ["Meeting coverage", "Launches and openings", "Training and talks", "Activations and in-person events", "Material for later communication"] },
+      { title: "Social media content", desc: "Turn speech, behind-the-scenes moments, routines, products, services and brand moments into short videos and posts connected to the editorial direction.", list: ["Short videos", "Edited speech clips", "Behind-the-scenes and routines", "Products and services", "Posts connected to editorial direction"] },
+      { title: "Testimonials, interviews and expertise", desc: "Shape contributions from clients, specialists, leaders and teams into clear, useful content that supports trust.", list: ["Guided testimonials", "Focused interviews", "Specialist perspectives", "Leaders and teams", "Content that supports trust"] },
+      { title: "Behind the scenes, culture and employer brand", desc: "Show people, processes, environment, routines and culture authentically, without staging empty behind-the-scenes content.", list: ["People and processes", "Environment and routines", "Everyday culture", "Employer brand", "Authentic behind-the-scenes"] },
+      { title: "Support material for websites, campaigns and presentations", desc: "Create videos, calls to action, edits and visual material that support pages, proposals, sales presentations and digital channels.", list: ["Videos for pages", "Calls to action and edits", "Supporting visual material", "Sales proposals and presentations", "Brand digital channels"] }
+    ],
+    materialCategory: { digital: "digital", event: "event", inst: "institutional", ads: "campaign" },
+    recentHeading: "Recent videos published on the channel.",
+    recentDescription: "These are the latest videos from TAG08's official channel. They show behind-the-scenes moments, production, positioning and published work that help illustrate what audiovisual content can do.",
+    recentBadge: "RECENT CONTENT // TAG08",
+    videoPublished: "Published on channel",
+    watch: "Watch",
+    plannerBadge: "AUDIOVISUAL FORMAT DIAGNOSIS",
+    plannerTitle: "Find the type of content that fits your situation.",
+    plannerDescription: "Use your brand's context to identify whether it makes more sense to document, introduce, explain, reuse or consistently support your channels.",
+    videoLinkLabel: "Watch {title} on TAG08's official YouTube channel",
+    ctaImageAlt: "TAG08 audiovisual production support team",
+    heroWhatsAppMessage: "Hello, I would like to discuss audiovisual production for my brand.",
+    finalWhatsAppMessage: "Hello, I would like to understand which audiovisual format best fits my brand right now.",
+    linkToServices: "VIEW SERVICES",
+    serviceCardTitle: "Planning and clarity",
+    serviceCardDescription: "The process begins by understanding the brand context, the role of the material and how it will be used after filming.",
+    consultationBadge: "CONSULTATIVE CONVERSATION",
+    consultationTitle: "Would you like to discuss your audiovisual project?",
+    consultationDescription: "No preset package. We first understand the context, objective and intended use of the material.",
+    methodologyBadge: "PRODUCTION METHOD // TAG08",
+    methodologyTitle: "A process considered before, during and after filming.",
+    methodologyDescription: "Audiovisual production does not begin on filming day. We first understand the brand context, define the content's purpose, organize suitable formats and plan how the material may be used afterwards.",
+    processActive: "ACTIVE PROCESS",
+    processSteps: [
+      { tag: "UNDERSTANDING THE CONTEXT", title: "Understanding the context", list: ["We start by understanding the brand, its current situation, channels, audience and the role the audiovisual content needs to serve.", "We map what needs to be communicated clearly and what should provide a foundation for the next steps.", "We organize what already exists, what is missing and what can be reused.", "We align expectations to reduce noise and guide production with care.", "We define the starting point before making filming decisions."] },
+      { tag: "STORY AND FORMAT", title: "Defining the story and formats", list: ["We organize priority messages and choose formats that suit the intended use.", "We determine whether the material should support an introduction, documentation, social media, a website, campaigns or institutional communication.", "We shape the story so the content has direction, not just images.", "We adapt each deliverable to the channel where it will be used.", "We create a clear foundation for filming."] },
+      { tag: "FILMING, EDITING AND USE", title: "Directed filming, editing and delivery", list: ["We define the script, topics, scenes, talking points, filming approach, recording priorities and required materials.", "During filming, we guide the process to capture speech, settings, behind-the-scenes moments, details and key moments with clarity and intent.", "We edit, structure and adapt the footage into pieces aligned with the story, channels and communication goals.", "Alongside the final files, we explain how the material can support social media, websites, presentations, campaigns or institutional communication.", "We close with guidance on use and reuse."] }
+    ],
+    scopeBadge: "INCLUSIONS & ADD-ONS // TAG08",
+    scopeTitle: "The scope should support how the material will be used.",
+    scopeDescription: "A production may include different deliverables depending on the brand's goals, channels and current needs. The key is to define what must be filmed, edited and organized so the content remains useful after filming.",
+    includedBadge: "SUPPORT MATERIAL // DEFINED SCOPE",
+    includedFootnote: "SCOPE DEFINED BY REAL USE",
+    included: [
+      { title: "Main filming", desc: "Recording the speech, settings, scenes, behind-the-scenes moments, details and key moments needed to build the story." },
+      { title: "Editing and finishing", desc: "Organizing the content into clear videos with pacing, cuts, visual adjustments, treated audio and a finish aligned with the brand identity." },
+      { title: "Edits and adaptations", desc: "Creating shorter versions, calls to action, cuts and derivative materials for social media, websites, presentations or institutional communication." },
+      { title: "Script, topics and direction", desc: "Support in deciding what should be said, recorded and prioritized so filming has more clarity and less improvisation." },
+      { title: "Behind-the-scenes coverage", desc: "Additional recording of the team, setting, preparation, routine and details that help bring the brand closer to its audience." }
+    ],
+    addOnsBadge: "POSSIBLE ADD-ONS // DEFINED BY SCOPE",
+    addOns: [
+      { title: "Delivery and usage guidance", desc: "Guidance on how to use the material across brand channels, in line with context, editorial direction and communication goals." },
+      { title: "Support material for websites and presentations", desc: "Videos, calls to action and edits that complement pages, proposals and sales presentations." },
+      { title: "Additional behind-the-scenes coverage", desc: "Extra recording of the team, preparation, routine and setting when it supports the final material." },
+      { title: "Additional filming planned in advance", desc: "Extra footage defined in the scope when there is a real need to expand the story or future use." },
+      { title: "Adaptations for brand channels", desc: "Versions and edits organized to support institutional, social or commercial communication." }
+    ],
+    scopeFootnote: "ITEMS DEFINED ACCORDING TO SCOPE",
+    synergyBadge: "INTEGRATION ACROSS SERVICES // TAG08",
+    synergyTitle: "Audiovisual content does not have to stand alone.",
+    synergyDescription: "A well-planned production can support different areas of communication: social media, websites, branding, sales presentations, campaigns, relationships and official brand channels such as YouTube, Vimeo, Pinterest, Google Business Profile and WhatsApp, when appropriate. Its value comes from planning how the material will be used after filming.",
+    synergies: [
+      { title: "Social media", desc: "Videos, edits, behind-the-scenes moments, calls to action and testimonials can support the editorial direction with greater presence, clarity and continuity.", cta: "Social Media Management" },
+      { title: "Websites and commercial pages", desc: "Audiovisual material can introduce the brand, explain services, make pages more human and support decisions with more context.", cta: "Web Development" },
+      { title: "Branding and positioning", desc: "Production can make identity, tone of voice, institutional story, culture and brand perception more tangible.", cta: "Branding & Identity" },
+      { title: "Sales processes and relationships", desc: "Testimonials, presentations, institutional records and explanatory videos can support sales conversations without replacing consultative diagnosis.", cta: "Process Activation" }
+    ],
+    synergyLabel: "SYNERGY",
+    finalConversation: "CONSULTATIVE CONVERSATION",
+    finalTitle: "Let's find the production that fits your current needs.",
+    finalDescription: "Tell us what you need to communicate, document or turn into content. We can then assess the most suitable format: institutional, event, behind-the-scenes, testimonials, recurring content or support material for digital channels.",
+    finalContactLabel: "DISCUSS MY AUDIOVISUAL PROJECT",
+    startConversation: "START A CONVERSATION",
+    nextStep: "NEXT STEP",
+    visualContentLabel: "content_with_purpose_"
+  },
+  es: {
+    heroBadge: "Producción audiovisual",
+    heroTitle: "Narrativa audiovisual con",
+    heroTitleAccent: "presencia y propósito estratégico.",
+    heroDescription: "TAG08 transforma presencia, discurso, espacios, momentos detrás de cámaras y eventos en contenido con claridad, cuidado y propósito estratégico. Antes de grabar, entendemos el contexto de la marca, los usos del material y los formatos que deben apoyar la comunicación, el portafolio y las relaciones.",
+    heroImageAlt: "Producción audiovisual de TAG08",
+    talk: "HABLAR CON TAG08",
+    plan: "PLANIFICAR MI PROYECTO AUDIOVISUAL",
+    heroCaption: "Narrativa, presencia y contenido con dirección",
+    heroMeta: "Grabación, edición y distribución para uso continuo",
+    benefits: ["Narrativa", "Claridad", "Aplicación", "Continuidad"],
+    benefitDescriptions: ["Capta discursos, momentos detrás de cámaras y espacios con intención editorial", "Organiza el material para apoyar presentaciones, redes y sitios web", "Piezas pensadas para un uso recurrente y coherente", "Contenido útil después de la grabación y la edición"],
+    section2Badge: "Señales de desalineación audiovisual",
+    section2Title: "Cuando existe el video, pero no construye presencia.",
+    section2Description: "Muchas marcas graban contenido, registran eventos y publican videos, pero todavía no logran convertir esos materiales en una presencia clara, recurrente y útil. El problema puede estar menos en la grabación y más en la falta de narrativa, formato, edición y estrategia de uso.",
+    signal: "SEÑAL",
+    audienceBadge: "CONTEXTOS DE APLICACIÓN // TAG08",
+    audienceTitle: "Para marcas que necesitan convertir presencia en contenido.",
+    audienceDescription: "La producción audiovisual de TAG08 tiene sentido para negocios, profesionales e instituciones que ya tienen historias, experiencias, momentos detrás de cámaras, eventos, personas o conocimientos para comunicar, pero necesitan organizarlos en formatos claros, bien editados y útiles para distintos canales.",
+    youtubeLoading: "Cargando videos oficiales de TAG08…",
+    youtubeUnavailable: "Los videos oficiales no están disponibles temporalmente. Puedes visitar el canal oficial de TAG08.",
+    openChannel: "ABRIR CANAL OFICIAL",
+    plannerFormat: "1. ELIGE EL FORMATO MÁS ADECUADO",
+    plannerMaterials: "2. SELECCIONA LO QUE SE PUEDE PRODUCIR",
+    formatSummary: "RESUMEN DEL FORMATO AUDIOVISUAL",
+    evaluatedFormat: "FORMATO EVALUADO:",
+    organizes: "QUÉ AYUDA A ORGANIZAR ESTE FORMATO:",
+    relatedMaterials: "MATERIALES RELACIONADOS",
+    noMaterials: "Todavía no seleccionaste materiales.",
+    emptyMaterialsDescription: "Selecciona al menos un elemento para ver posibles adaptaciones de este formato audiovisual.",
+    plannerCta: "CONVERSAR SOBRE MI FORMATO AUDIOVISUAL",
+    materialLabel: "material",
+    plannerCtaHint: "USA ESTE RESUMEN COMO PUNTO DE PARTIDA PARA LA CONVERSACIÓN",
+    faqEyebrow: "FAQ // ENCUENTRA RESPUESTAS",
+    faqTitle: "PREGUNTAS Y RESPUESTAS",
+    faqCategories: ["PLANIFICACIÓN", "FORMATO", "EVENTOS", "REUTILIZACIÓN", "CANALES"],
+    faqQuestions: ["¿TAG08 solo graba o también ayuda con la planificación?", "¿Necesito saber exactamente qué video quiero producir antes de hablar con TAG08?", "¿Realizan cobertura de eventos?", "¿Una grabación puede generar varios contenidos?", "¿La producción audiovisual sirve solo para redes sociales?"],
+    faqAnswers: ["La producción puede incluir planificación, temas, guion, dirección, grabación, edición y orientación de uso. Antes de grabar, entendemos el contexto de la marca y la función que debe cumplir el material.", "No. La conversación inicial sirve para entender el momento de la marca e indicar un formato coherente: institucional, evento, detrás de cámaras, testimonios, contenido recurrente o material de apoyo.", "Sí. La cobertura puede registrar charlas, lanzamientos, inauguraciones, capacitaciones, encuentros, momentos detrás de cámaras y otros eventos importantes. El material también puede planificarse para su uso posterior en redes, sitios web, presentaciones y comunicación institucional.", "Sí, si existe planificación. Un mismo material puede generar un video principal, cortes, anuncios, contenido detrás de cámaras, testimonios, publicaciones y materiales de apoyo, según el alcance definido.", "No. El material puede apoyar redes sociales, sitios web, páginas comerciales, presentaciones, campañas, comunicación interna, branding, autoridad y relaciones con clientes."],
+    servicesFormats: "SERVICIOS Y FORMATOS",
+    pageCta: "HABLAR SOBRE MI PROYECTO AUDIOVISUAL"
+    ,deliverables: [
+      { name: "Videos institucionales y de presentación", desc: "Para presentar la marca, el equipo, la historia, el método, el servicio o el posicionamiento de forma más humana, visual y clara." },
+      { name: "Cobertura de eventos y acciones presenciales", desc: "Para registrar encuentros, lanzamientos, inauguraciones, capacitaciones, charlas y activaciones con mirada narrativa y pensando también en el uso posterior." },
+      { name: "Contenido para redes sociales", desc: "Para convertir discursos, momentos detrás de cámaras, rutinas, productos, servicios y momentos de marca en videos cortos, cortes y publicaciones conectadas con la línea editorial." },
+      { name: "Testimonios, entrevistas y autoridad", desc: "Para organizar aportes de clientes, especialistas, líderes o equipos en contenidos claros y útiles que fortalezcan la confianza." },
+      { name: "Detrás de cámaras, cultura y marca empleadora", desc: "Para mostrar personas, procesos, entorno, rutinas y cultura de forma auténtica, sin convertir lo que ocurre detrás de cámaras en una puesta en escena vacía." },
+      { name: "Material de apoyo para sitios, campañas y presentaciones", desc: "Para crear videos, llamadas, cortes y materiales visuales que apoyen páginas, propuestas, presentaciones comerciales y canales digitales." }
+    ],
+    formats: [
+      { id: "institucional", name: "Registro institucional", tag: "PRESENTACIÓN Y POSICIONAMIENTO", desc: "Para presentar con claridad la marca, el equipo, la historia, el método o el servicio.", features: ["Mensaje principal definido", "Guion conciso", "Base para sitio y propuesta", "Material para crear cortes"] },
+      { id: "evento", name: "Cobertura de eventos", tag: "REGISTRO Y USO POSTERIOR", desc: "Para encuentros, lanzamientos, inauguraciones, capacitaciones y charlas que deben generar material útil después.", features: ["Registro narrativo", "Discursos y detrás de cámaras", "Cortes para comunicación posterior", "Material de apoyo"] },
+      { id: "recorrente", name: "Contenido recurrente", tag: "LÍNEA EDITORIAL", desc: "Para convertir rutinas, momentos detrás de cámaras y discursos en materiales continuos para canales digitales.", features: ["Grabación reutilizable", "Videos cortos", "Línea editorial", "Constancia de publicación"] }
+    ],
+    plannerCtaMessage: "Hola TAG08. Quiero entender qué formato audiovisual tiene más sentido para el momento actual de mi marca.",
+    problemCards: [
+      { title: "Videos sin una función clara", desc: "Se graba el contenido, pero no queda claro si debe presentar la marca, educar al público, registrar un momento, apoyar ventas o fortalecer autoridad." },
+      { title: "Momentos detrás de cámaras poco aprovechados", desc: "Eventos, procesos, atención, equipo y rutinas generan material valioso, pero a menudo no se convierten en contenido útil para la marca." },
+      { title: "Discursos sin narrativa", desc: "Especialistas y líderes tienen conocimientos para compartir, pero una dirección ayuda a que los videos sean claros, concretos y reutilizables." },
+      { title: "Contenido sin continuidad", desc: "La marca graba de vez en cuando, pero no construye una presencia audiovisual recurrente conectada con su línea editorial." },
+      { title: "Material que no se reutiliza", desc: "Un video largo, una cobertura o una grabación pueden generar cortes, anuncios, momentos detrás de cámaras, publicaciones y materiales de apoyo si se planifican." }
+    ],
+    audienceCards: [
+      { title: "Empresas con rutinas, equipos y momentos relevantes detrás de cámaras", desc: "Los negocios tienen procesos, atención, entregas, cultura u operaciones diarias, pero aún no convierten esa rutina en contenido claro." },
+      { title: "Profesionales y especialistas que necesitan comunicar su autoridad", desc: "Personas que dominan un tema, atienden clientes o lideran un área y necesitan dirección para convertir experiencia y conocimiento en videos concretos." },
+      { title: "Eventos que merecen un registro estratégico", desc: "Encuentros, lanzamientos, inauguraciones, capacitaciones, charlas y acciones presenciales deben convertirse en material útil para la comunicación posterior, no solo en un recuerdo." },
+      { title: "Marcas que necesitan contenido para redes, sitios y campañas", desc: "Los negocios necesitan videos, cortes, momentos detrás de cámaras, testimonios y llamadas conectados con la línea editorial y los canales de la marca." },
+      { title: "Proyectos que necesitan una narrativa institucional", desc: "Iniciativas que necesitan presentar su historia, propósito, método, equipo, servicio o cambio de forma más humana, visual y clara." }
+    ],
+    frontsTitle: "Frentes audiovisuales con una función clara.",
+    frontsDescription: "La producción puede adoptar distintos formatos, pero cada entrega debe responder a una necesidad concreta de la marca: presentar, registrar, explicar, acercar, educar o apoyar los canales con constancia.",
+    frontsBadge: "FORMATOS AUDIOVISUALES // TAG08",
+    frontLabel: "FRENTE",
+    possibleFormats: "FORMATOS POSIBLES:",
+    fronts: [
+      { title: "Videos institucionales y de presentación", desc: "Presentar la marca, el equipo, la historia, la estructura, el método, el servicio o el posicionamiento de forma más humana, visual y clara.", list: ["Presentación de la marca", "Equipo y estructura", "Historia y método", "Servicio y posicionamiento", "Material para sitios y propuestas"] },
+      { title: "Cobertura de eventos y acciones presenciales", desc: "Registrar encuentros, lanzamientos, inauguraciones, capacitaciones, charlas y activaciones con mirada narrativa y pensando también en el uso posterior.", list: ["Registro de encuentros", "Lanzamientos e inauguraciones", "Capacitaciones y charlas", "Activaciones y acciones presenciales", "Material para comunicación posterior"] },
+      { title: "Contenido para redes sociales", desc: "Convertir discursos, momentos detrás de cámaras, rutinas, productos, servicios y momentos de marca en videos cortos y publicaciones conectadas con la línea editorial.", list: ["Videos cortos", "Cortes de discursos", "Momentos detrás de cámaras y rutinas", "Productos y servicios", "Publicaciones conectadas con la línea editorial"] },
+      { title: "Testimonios, entrevistas y autoridad", desc: "Organizar discursos de clientes, especialistas, líderes o equipos en contenidos claros y útiles que fortalezcan la confianza.", list: ["Testimonios guiados", "Entrevistas concretas", "Discursos de especialistas", "Liderazgo y equipo", "Contenido para fortalecer la confianza"] },
+      { title: "Detrás de cámaras, cultura y marca empleadora", desc: "Mostrar personas, procesos, entorno, rutinas y cultura de forma auténtica, sin convertir el detrás de cámaras en una puesta en escena vacía.", list: ["Personas y procesos", "Entorno y rutinas", "Cultura cotidiana", "Marca empleadora", "Momentos auténticos detrás de cámaras"] },
+      { title: "Material de apoyo para sitios, campañas y presentaciones", desc: "Crear videos, llamadas, cortes y materiales visuales que apoyen páginas, propuestas, presentaciones comerciales y canales digitales.", list: ["Videos para páginas", "Llamadas y cortes", "Material visual de apoyo", "Propuestas y presentaciones comerciales", "Canales digitales de la marca"] }
+    ],
+    materialCategory: { digital: "digital", event: "evento", inst: "institucional", ads: "campaña" },
+    recentHeading: "Videos recientes publicados en el canal.",
+    recentDescription: "Estos son los videos más recientes del canal oficial de TAG08. Muestran momentos detrás de cámaras, producción, posicionamiento y trabajos publicados que ayudan a entender qué puede generar el contenido audiovisual.",
+    recentBadge: "CONTENIDO RECIENTE // TAG08",
+    videoPublished: "Publicado en el canal",
+    watch: "Ver",
+    plannerBadge: "DIAGNÓSTICO DE FORMATO AUDIOVISUAL",
+    plannerTitle: "Descubre qué tipo de contenido encaja con tu momento.",
+    plannerDescription: "Responde desde el contexto de tu marca para identificar si conviene más registrar, presentar, explicar, reutilizar o alimentar los canales con constancia.",
+    videoLinkLabel: "Ver {title} en el canal oficial de YouTube de TAG08",
+    ctaImageAlt: "Equipo de apoyo a la producción audiovisual de TAG08",
+    heroWhatsAppMessage: "Hola TAG08. Quiero conversar sobre una producción audiovisual para mi marca.",
+    finalWhatsAppMessage: "Hola TAG08. Quiero entender qué formato audiovisual tiene más sentido para el momento actual de mi marca.",
+    linkToServices: "VER SERVICIOS",
+    serviceCardTitle: "Planificación y claridad",
+    serviceCardDescription: "El proceso comienza por entender el contexto de la marca, la función del material y el uso previsto después de la grabación.",
+    consultationBadge: "CONVERSACIÓN CONSULTIVA",
+    consultationTitle: "¿Quieres hablar sobre tu proyecto audiovisual?",
+    consultationDescription: "Sin paquetes predefinidos. Primero entendemos el contexto, el objetivo y el uso previsto del material.",
+    methodologyBadge: "MÉTODO DE PRODUCCIÓN // TAG08",
+    methodologyTitle: "Un proceso pensado antes, durante y después de la grabación.",
+    methodologyDescription: "La producción audiovisual no comienza el día de la grabación. Primero entendemos el contexto de la marca, definimos la función del contenido, organizamos formatos adecuados y planificamos cómo se podrá usar el material después.",
+    processActive: "PROCESO ACTIVO",
+    processSteps: [
+      { tag: "COMPRENSIÓN DEL CONTEXTO", title: "Comprensión del contexto", list: ["Empezamos por entender la marca, el momento actual, los canales, el público y la función que debe cumplir el contenido audiovisual.", "Mapeamos qué debe comunicarse con claridad y qué servirá de base para las etapas siguientes.", "Organizamos lo que ya existe, lo que falta y lo que se puede reutilizar.", "Alineamos expectativas para reducir el ruido y orientar la producción con criterio.", "Definimos el punto de partida antes de decidir la grabación."] },
+      { tag: "NARRATIVA Y FORMATO", title: "Definición de narrativa y formatos", list: ["Organizamos los mensajes prioritarios y los formatos más adecuados para el uso previsto.", "Definimos si el material debe servir para presentar, registrar, redes sociales, el sitio web, campañas o comunicación institucional.", "Estructuramos la narrativa para que el contenido tenga dirección y no solo imágenes.", "Ajustamos cada entrega al canal donde se utilizará.", "Creamos una base clara para orientar la grabación."] },
+      { tag: "GRABACIÓN, EDICIÓN Y USO", title: "Grabación con dirección, edición y entrega", list: ["Definimos guion, temas, escenas, discursos, dinámica de grabación, prioridades de registro y materiales necesarios.", "Durante la grabación, guiamos el proceso para registrar discursos, espacios, momentos detrás de cámaras, detalles y momentos clave con claridad e intención.", "Editamos, estructuramos y adaptamos el material en piezas coherentes con la narrativa, los canales y los objetivos de comunicación.", "Además de los archivos finales, indicamos cómo utilizar el material en redes sociales, el sitio web, presentaciones, campañas o comunicación institucional.", "Cerramos el proceso con orientación de uso y reutilización."] }
+    ],
+    scopeBadge: "INCLUSIONES Y COMPLEMENTOS // TAG08",
+    scopeTitle: "El alcance debe acompañar el uso del material.",
+    scopeDescription: "Cada producción puede incluir distintas entregas según el objetivo, los canales y el momento de la marca. Lo importante es definir qué se grabará, editará y organizará para que el contenido tenga un uso real después de la grabación.",
+    includedBadge: "MATERIALES DE APOYO // ALCANCE DEFINIDO",
+    includedFootnote: "ALCANCE DEFINIDO SEGÚN EL USO REAL",
+    included: [
+      { title: "Grabación principal", desc: "Registro de discursos, espacios, escenas, momentos detrás de cámaras, detalles y momentos esenciales para construir la narrativa." },
+      { title: "Edición y finalización", desc: "Organización del contenido en videos claros, con ritmo, cortes, ajustes visuales, audio tratado y acabado coherente con la identidad de la marca." },
+      { title: "Cortes y adaptaciones", desc: "Creación de versiones más breves, llamadas, cortes y materiales derivados para redes sociales, sitios web, presentaciones o comunicación institucional." },
+      { title: "Guion, temas y dirección", desc: "Apoyo para definir qué decir, registrar y priorizar, de modo que la grabación tenga más claridad y menos improvisación." },
+      { title: "Registro detrás de cámaras", desc: "Grabación complementaria del equipo, el entorno, la preparación, la rutina y los detalles que acercan la marca al público." }
+    ],
+    addOnsBadge: "COMPLEMENTOS POSIBLES // SEGÚN EL ALCANCE",
+    addOns: [
+      { title: "Entrega y orientación de uso", desc: "Orientación sobre cómo aprovechar los materiales en los canales de la marca, respetando el contexto, la línea editorial y el objetivo de comunicación." },
+      { title: "Materiales de apoyo para sitios y presentaciones", desc: "Videos, llamadas y cortes que complementan páginas, propuestas y presentaciones comerciales." },
+      { title: "Cobertura complementaria detrás de cámaras", desc: "Registro adicional del equipo, la preparación, la rutina y el entorno cuando aporte al material final." },
+      { title: "Grabación adicional planificada", desc: "Registros extra definidos en el alcance cuando exista una necesidad real de ampliar la narrativa o el uso posterior." },
+      { title: "Adaptaciones para canales de la marca", desc: "Versiones y cortes organizados para apoyar la comunicación institucional, social o comercial." }
+    ],
+    scopeFootnote: "ELEMENTOS DEFINIDOS SEGÚN EL ALCANCE",
+    synergyBadge: "INTEGRACIÓN ENTRE SERVICIOS // TAG08",
+    synergyTitle: "El contenido audiovisual no tiene que quedar aislado.",
+    synergyDescription: "Una producción bien planificada puede apoyar distintas áreas de comunicación: redes sociales, sitios web, branding, presentaciones comerciales, campañas, relaciones y canales oficiales de la marca como YouTube, Vimeo, Pinterest, Google Business Profile y WhatsApp, cuando tenga sentido. Su valor está en planificar desde el inicio cómo se usará el material después de la grabación.",
+    synergies: [
+      { title: "Redes sociales", desc: "Videos, cortes, momentos detrás de cámaras, llamadas y testimonios pueden apoyar la línea editorial con más presencia, claridad y continuidad.", cta: "Gestión de Redes Sociales" },
+      { title: "Sitios web y páginas comerciales", desc: "El material audiovisual puede presentar la marca, explicar servicios, humanizar páginas y apoyar decisiones con más contexto.", cta: "Desarrollo Web" },
+      { title: "Branding y posicionamiento", desc: "La producción puede reforzar la identidad, el tono de voz, la narrativa institucional, la cultura y la percepción de marca de forma más concreta.", cta: "Branding e Identidad" },
+      { title: "Procesos comerciales y relaciones", desc: "Testimonios, presentaciones, registros institucionales y videos explicativos pueden apoyar conversaciones comerciales sin reemplazar el diagnóstico consultivo.", cta: "Activación de Procesos" }
+    ],
+    synergyLabel: "SINERGIA",
+    finalConversation: "CONVERSACIÓN CONSULTIVA",
+    finalTitle: "Veamos qué producción tiene sentido para tu momento.",
+    finalDescription: "Cuéntanos qué necesitas comunicar, registrar o convertir en contenido. A partir de ahí, evaluamos el formato más adecuado: institucional, eventos, detrás de cámaras, testimonios, contenido recurrente o material de apoyo para canales digitales.",
+    finalContactLabel: "HABLAR SOBRE MI PROYECTO AUDIOVISUAL",
+    startConversation: "INICIAR CONVERSACIÓN",
+    nextStep: "PRÓXIMO PASO",
+    visualContentLabel: "contenido_con_función_"
+  }
+};
+
+export default function ProducaoAudiovisual({ onNavigate, locale = "pt" }: ProducaoProps) {
+  const copy = locale === "pt" ? null : AUDIOVISUAL_COPY[locale];
+  const formats = copy?.formats ?? FORMATOS;
+  const deliverables = copy?.deliverables ?? DELIVERABLES;
   const [activeFaq, setActiveFaq] = useState<number>(0);
   const prefersReducedMotion = useReducedMotion();
   const { videos: youtubeVideos, source: youtubeSource, isLoading: isYouTubeLoading } = useOfficialYouTubeVideos(4);
@@ -133,9 +436,12 @@ export default function ProducaoAudiovisual({ onNavigate }: ProducaoProps) {
     );
   };
 
-  const currentFormatDetails = FORMATOS.find(f => f.id === selectedFormat) || FORMATOS[0];
+  const currentFormatDetails = formats.find((f) => f.id === selectedFormat) ?? formats[0];
   const currentSelectedTools = selectedTools
-    .map((id) => DELIVERABLES.find((d) => d.id === id)?.name)
+    .map((id) => {
+      const sourceIndex = DELIVERABLES.findIndex((item) => item.id === id);
+      return deliverables[sourceIndex]?.name;
+    })
     .filter((name): name is string => Boolean(name))
     .join(", ");
   const hasSelectedTools = selectedTools.length > 0;
@@ -143,7 +449,7 @@ export default function ProducaoAudiovisual({ onNavigate }: ProducaoProps) {
   const getWhatsAppLink = () => {
     const formatName = currentFormatDetails.name;
 
-    const message = `Olá TAG08! Quero entender qual formato audiovisual faz mais sentido para o momento da minha marca.
+    const message = `${copy?.plannerCtaMessage ?? "Olá TAG08! Quero entender qual formato audiovisual faz mais sentido para o momento da minha marca."}
 
 - FORMATO AVALIADO: ${formatName}
 - MATERIAIS RELACIONADOS: ${currentSelectedTools}
@@ -178,16 +484,16 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 lg:items-center text-left">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand text-black font-semibold text-xs rounded-lg uppercase tracking-widest tag08-meta">
-                Produção Audiovisual
+                {copy?.heroBadge ?? "Produção Audiovisual"}
               </div>
               <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.0] tracking-tighter font-display">
-                Narrativa audiovisual com <br />
-                <span className="text-brand">presença e função estratégica.</span>
+                {copy?.heroTitle ?? "Narrativa audiovisual com"} <br />
+                <span className="text-brand">{copy?.heroTitleAccent ?? "presença e função estratégica."}</span>
               </h1>
             </div>
             <div className="lg:col-span-5">
               <p className="text-zinc-400 text-xs sm:text-sm md:text-sm leading-relaxed font-sans font-medium">
-                A TAG08 transforma presença, fala, ambiente, bastidores e eventos em conteúdo com clareza, estética e função estratégica. Antes de gravar, entendemos o contexto da marca, os usos do material e os formatos que precisam sustentar comunicação, portfólio e relacionamento.
+                {copy?.heroDescription ?? "A TAG08 transforma presença, fala, ambiente, bastidores e eventos em conteúdo com clareza, estética e função estratégica. Antes de gravar, entendemos o contexto da marca, os usos do material e os formatos que precisam sustentar comunicação, portfólio e relacionamento."}
               </p>
             </div>
           </div>
@@ -196,11 +502,11 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           <ThreeDimensionalTilt className="rounded-[24px] sm:rounded-[36px]">
             <div className="relative rounded-[24px] sm:rounded-[36px] overflow-hidden aspect-[21/9] sm:aspect-[2.35/1] bg-charcoal-900 border border-white/[0.08] shadow-2xl group text-left h-full w-full">
               <ResilientImage
-                fallbackLabel="Produção Audiovisual TAG08"
+                fallbackLabel={copy?.heroImageAlt ?? "Produção Audiovisual TAG08"}
                 priority
                 sizes="(max-width: 768px) calc(100vw - 2rem), (max-width: 1280px) calc(100vw - 4rem), 1152px"
                 src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1600"
-                alt="Produção Audiovisual TAG08"
+                alt={copy?.heroImageAlt ?? "Produção Audiovisual TAG08"}
                 className="object-cover grayscale brightness-40 motion-safe:group-hover:scale-[1.02] transition-transform duration-200 ease-out"
                 referrerPolicy="no-referrer"
               />
@@ -213,16 +519,16 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   <TrackedOutboundLink
                     label="Falar com a TAG08 sobre produção audiovisual"
                     surface="audiovisual-hero"
-                    href={buildBrazilWhatsAppUrl("Olá, quero conversar sobre uma produção audiovisual para a minha marca.")}
+                    href={buildBrazilWhatsAppUrl(copy?.heroWhatsAppMessage ?? "Olá, quero conversar sobre uma produção audiovisual para a minha marca.")}
                     target="_blank"
                     rel="noreferrer"
                     className="min-h-11 bg-brand-secondary text-black font-sans font-black text-xs uppercase tracking-widest py-3.5 sm:py-4 px-6 sm:px-8 rounded-full shadow-[0_15px_45px_rgba(var(--color-brand-secondary-rgb),0.3)] motion-safe:hover:scale-105 active:scale-[0.98] transition-transform duration-200 border border-brand-secondary hover:bg-brand-dark flex items-center gap-2 cursor-pointer z-20"
                   >
-                    <span>FALAR COM A TAG08</span>
+                    <span>{copy?.talk ?? "FALAR COM A TAG08"}</span>
                     <ArrowUpRight aria-hidden="true" className="w-4 h-4 stroke-[2.5]" />
                   </TrackedOutboundLink>
                   <a href="#planner" className="min-h-11 inline-flex items-center rounded-full border border-white/30 bg-black/50 px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-white backdrop-blur-sm transition-colors duration-200 hover:border-white/60 active:scale-[0.98]">
-                    PLANEJAR MEU AUDIOVISUAL
+                    {copy?.plan ?? "PLANEJAR MEU AUDIOVISUAL"}
                   </a>
                 </div>
               </div>
@@ -231,12 +537,12 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10 pointer-events-none" style={{ transform: "translateZ(25px)" }}>
                 <div className="space-y-1">
                   <span className="tag08-meta text-xs text-brand-secondary tracking-widest block uppercase font-bold">TAG08 AUDIOVISUAL</span>
-                  <p className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">Narrativa, presença e conteúdo com direção</p>
+                  <p className="font-display font-black text-white text-xs sm:text-sm tracking-tight leading-none">{copy?.heroCaption ?? "Narrativa, presença e conteúdo com direção"}</p>
                 </div>
 
                 <div className="bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1.5 rounded-xl font-sans text-xs text-zinc-400 flex items-center gap-1.5 select-none hidden sm:flex">
                   <div className="w-1.5 h-1.5 rounded-full bg-brand animate-ping" />
-                  <span>Captação, edição e distribuição para uso recorrente</span>
+                  <span>{copy?.heroMeta ?? "Captação, edição e distribuição para uso recorrente"}</span>
                 </div>
               </div>
             </div>
@@ -245,20 +551,20 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           {/* Hero benefit cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 pt-6 pb-2 text-left border-t border-white/[0.04]">
             <div className="space-y-1.5">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-white">Narrativa</span>
-              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">Capta fala, bastidores e ambiente com intenção editorial</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-white">{copy?.benefits[0] ?? "Narrativa"}</span>
+              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">{copy?.benefitDescriptions[0] ?? "Capta fala, bastidores e ambiente com intenção editorial"}</span>
             </div>
             <div className="space-y-1.5">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">Clareza</span>
-              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">Organiza o material para apoiar apresentação, redes e site</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-brand-secondary">{copy?.benefits[1] ?? "Clareza"}</span>
+              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">{copy?.benefitDescriptions[1] ?? "Organiza o material para apoiar apresentação, redes e site"}</span>
             </div>
             <div className="space-y-1.5">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-white">Aplicação</span>
-              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">Peças pensadas para uso recorrente e consistente</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-white">{copy?.benefits[2] ?? "Aplicação"}</span>
+              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">{copy?.benefitDescriptions[2] ?? "Peças pensadas para uso recorrente e consistente"}</span>
             </div>
             <div className="space-y-1.5">
-              <span className="block font-display font-black text-3xl sm:text-4xl text-brand">Continuidade</span>
-              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">Conteúdo útil depois da gravação e da edição</span>
+              <span className="block font-display font-black text-3xl sm:text-4xl text-brand">{copy?.benefits[3] ?? "Continuidade"}</span>
+              <span className="block text-zinc-300 tag08-meta text-xs uppercase tracking-widest leading-normal">{copy?.benefitDescriptions[3] ?? "Conteúdo útil depois da gravação e da edição"}</span>
             </div>
           </div>
 
@@ -274,14 +580,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 max-w-5xl">
             <div className="space-y-3">
               <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-                Sinais de desalinhamento audiovisual
+                {copy?.section2Badge ?? "Sinais de desalinhamento audiovisual"}
               </span>
               <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white tracking-tighter">
-                Quando o vídeo existe, mas não constrói presença.
+                {copy?.section2Title ?? "Quando o vídeo existe, mas não constrói presença."}
               </h2>
             </div>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Muitas marcas gravam conteúdos, registram eventos e publicam vídeos, mas ainda não conseguem transformar esses materiais em presença clara, recorrente e útil para a comunicação. O problema pode estar menos na captação e mais na falta de narrativa, formato, edição e estratégia de uso.
+              {copy?.section2Description ?? "Muitas marcas gravam conteúdos, registram eventos e publicam vídeos, mas ainda não conseguem transformar esses materiais em presença clara, recorrente e útil para a comunicação. O problema pode estar menos na captação e mais na falta de narrativa, formato, edição e estratégia de uso."}
             </p>
           </div>
 
@@ -307,7 +613,9 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 title: "Material sem reaproveitamento",
                 desc: "Um vídeo longo, cobertura ou gravação pode gerar cortes, chamadas, bastidores, reels, publicações e materiais de apoio, desde que exista planejamento."
               }
-            ].map((item, idx) => (
+            ].map((item, idx) => {
+              const localizedItem = copy?.problemCards[idx] ?? item;
+              return (
               <div 
                 key={idx}
                 className="bg-charcoal-900 border border-white/[0.04] rounded-2xl p-6 sm:p-7 space-y-3 transition-colors duration-200 hover:border-red-500/20"
@@ -316,13 +624,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   SINAL {String(idx + 1).padStart(2, '0')}
                 </div>
                 <h3 className="text-white text-base sm:text-lg font-display font-semibold tracking-tight">
-                  {item.title}
+                  {localizedItem.title}
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
-                  {item.desc}
+                  {localizedItem.desc}
                 </p>
               </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>
@@ -336,13 +645,13 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           
           <div className="max-w-2xl mx-auto space-y-3 text-center">
             <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-              CONTEXTOS DE APLICAÇÃO // TAG08
+                {copy?.audienceBadge ?? "CONTEXTOS DE APLICAÇÃO // TAG08"}
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
-              Para marcas que precisam transformar presença em conteúdo.
+              {copy?.audienceTitle ?? "Para marcas que precisam transformar presença em conteúdo."}
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
-              A produção audiovisual da TAG08 faz sentido para negócios, profissionais e instituições que já têm histórias, experiências, bastidores, eventos, pessoas ou conhecimento para comunicar, mas precisam organizar isso em formatos claros, bem editados e úteis para diferentes canais.
+              {copy?.audienceDescription ?? "A produção audiovisual da TAG08 faz sentido para negócios, profissionais e instituições que já têm histórias, experiências, bastidores, eventos, pessoas ou conhecimento para comunicar, mas precisam organizar isso em formatos claros, bem editados e úteis para diferentes canais."}
             </p>
           </div>
 
@@ -375,6 +684,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               }
             ].map((audience, idx) => {
               const AudienceIcon = audience.icon;
+              const localizedAudience = copy?.audienceCards[idx] ?? audience;
               return (
                 <div 
                   key={idx}
@@ -385,10 +695,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                       <AudienceIcon className="w-5 h-5" />
                     </div>
                     <h3 className="text-white text-base sm:text-lg font-display font-semibold tracking-tight group-hover:text-brand transition-colors">
-                      {audience.title}
+                      {localizedAudience.title}
                     </h3>
                     <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
-                      {audience.desc}
+                      {localizedAudience.desc}
                     </p>
                   </div>
                   <div className="text-xs tag08-meta text-zinc-300 uppercase tracking-widest select-none">
@@ -410,13 +720,13 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           
           <div className="text-left space-y-3 max-w-2xl">
             <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-              FRENTES AUDIOVISUAIS // TAG08
+              {copy?.frontsBadge ?? "FRENTES AUDIOVISUAIS // TAG08"}
             </span>
             <h2 className="font-display font-medium text-3xl sm:text-4xl text-white tracking-tighter">
-              Frentes audiovisuais com função clara.
+              {copy?.frontsTitle ?? "Frentes audiovisuais com função clara."}
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              A produção pode assumir diferentes formatos, mas cada entrega precisa responder a uma necessidade concreta da marca: apresentar, registrar, explicar, aproximar, educar, documentar ou alimentar canais com consistência.
+              {copy?.frontsDescription ?? "A produção pode assumir diferentes formatos, mas cada entrega precisa responder a uma necessidade concreta da marca: apresentar, registrar, explicar, aproximar, educar, documentar ou alimentar canais com consistência."}
             </p>
           </div>
 
@@ -466,22 +776,22 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 <div className="absolute top-0 right-0 w-32 h-32 bg-brand/[0.015] rounded-full blur-2xl pointer-events-none" />
                 
                 <div className="space-y-2">
-                  <span className="tag08-meta text-xs text-brand-secondary font-black uppercase tracking-widest">{frente.num}</span>
+                  <span className="tag08-meta text-xs text-brand-secondary font-black uppercase tracking-widest">{copy?.frontLabel ?? "FRENTE"} {String(idx + 1).padStart(2, "0")}</span>
                   <h3 className="font-display font-medium text-lg sm:text-xl text-white leading-snug">
-                    {frente.title}
+                    {copy?.fronts[idx]?.title ?? frente.title}
                   </h3>
                   <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed">
-                    {frente.desc}
+                    {copy?.fronts[idx]?.desc ?? frente.desc}
                   </p>
                 </div>
 
                 <div className="space-y-3.5 pt-4 border-t border-white/[0.04]">
-                  <span className="tag08-meta text-xs text-zinc-300 uppercase tracking-widest block font-bold">FORMATOS POSSÍVEIS:</span>
+                  <span className="tag08-meta text-xs text-zinc-300 uppercase tracking-widest block font-bold">{copy?.possibleFormats ?? "FORMATOS POSSÍVEIS:"}</span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {frente.list.map((item, itemIdx) => (
                       <div key={itemIdx} className="flex gap-2.5 items-center">
                         <Check className="w-3.5 h-3.5 text-brand shrink-0 stroke-[2.5]" />
-                        <span className="text-zinc-300 text-xs font-medium font-sans">{item}</span>
+                        <span className="text-zinc-300 text-xs font-medium font-sans">{copy?.fronts[idx]?.list[itemIdx] ?? item}</span>
                       </div>
                     ))}
                   </div>
@@ -500,24 +810,25 @@ Quero conversar sobre o próximo passo com a TAG08.`;
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-left space-y-3 max-w-2xl">
             <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-              FORMATOS AUDIOVISUAIS // TAG08
+                {copy?.recentBadge ?? "FORMATOS AUDIOVISUAIS // TAG08"}
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
-              Conteúdos recentes publicados no canal.
+              {copy?.recentHeading ?? "Conteúdos recentes publicados no canal."}
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Estes são os conteúdos mais recentes do canal oficial da TAG08. Eles mostram bastidores, produção, posicionamento e trabalhos já publicados que ajudam a entender o tipo de material que o audiovisual pode gerar.
+              {copy?.recentDescription ?? "Estes são os conteúdos mais recentes do canal oficial da TAG08. Eles mostram bastidores, produção, posicionamento e trabalhos já publicados que ajudam a entender o tipo de material que o audiovisual pode gerar."}
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {isYouTubeLoading ? (
               <div role="status" aria-live="polite" aria-busy="true" className="sm:col-span-2 lg:col-span-3 rounded-[28px] border border-white/[0.06] bg-white/[0.02] p-6 text-sm leading-relaxed text-zinc-400">
-                Carregando vídeos oficiais…
+                {copy ? (locale === "en" ? "Loading official videos…" : "Cargando videos oficiales…") : "Carregando vídeos oficiais…"}
               </div>
             ) : youtubeSource === "live" && youtubeVideos.length > 0 ? youtubeVideos.map((video) => (
               <a
                 key={video.id}
+                aria-label={copy?.videoLinkLabel.replace("{title}", video.title)}
                 href={video.videoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -545,7 +856,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
                   <div className="absolute top-4 left-4 z-10">
                     <span className="inline-flex items-center rounded-full border border-white/10 bg-black/45 px-2.5 py-1 tag08-meta text-xs uppercase tracking-widest text-white/75 backdrop-blur-sm">
-                      CONTEÚDO RECENTE
+                      {copy?.recentBadge ?? "CONTEÚDO RECENTE"}
                     </span>
                   </div>
                   <div className="absolute top-4 right-4 z-10">
@@ -566,10 +877,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   </h3>
                   <div className="flex items-center justify-between border-t border-white/[0.05] pt-3">
                     <span className="tag08-meta text-xs uppercase tracking-widest text-zinc-300">
-                      Publicado no canal
+                      {copy?.videoPublished ?? "Publicado no canal"}
                     </span>
                     <span className="inline-flex items-center gap-1 tag08-meta text-xs font-bold uppercase tracking-widest text-brand-secondary">
-                      Assistir
+                      {copy?.watch ?? "Assistir"}
                       <ArrowUpRight className="h-3.5 w-3.5" />
                     </span>
                   </div>
@@ -577,9 +888,9 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               </a>
             )) : (
               <div role="status" aria-live="polite" className="sm:col-span-2 lg:col-span-3 flex flex-col items-start gap-4 rounded-[28px] border border-white/[0.06] bg-white/[0.02] p-6 text-sm leading-relaxed text-zinc-400">
-                <p>Os vídeos oficiais estão temporariamente indisponíveis. Você pode acessar o canal oficial da TAG08.</p>
+                <p>{copy?.youtubeUnavailable ?? "Os vídeos oficiais estão temporariamente indisponíveis. Você pode acessar o canal oficial da TAG08."}</p>
                 <a href={TAG08_OFFICIAL_YOUTUBE_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center rounded-xl bg-brand px-5 py-3 text-xs font-black uppercase tracking-wider text-black transition-colors hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-black">
-                  Abrir canal oficial
+                  {copy?.openChannel ?? "Abrir canal oficial"}
                 </a>
               </div>
             )}
@@ -596,14 +907,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 max-w-5xl">
             <div className="space-y-2.5 sm:space-y-3">
               <span className="tag08-meta text-xs sm:text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-                DIAGNÓSTICO DE FORMATO AUDIOVISUAL
+              {copy?.plannerBadge ?? "DIAGNÓSTICO DE FORMATO AUDIOVISUAL"}
               </span>
               <h2 className="font-display font-black text-[1.55rem] sm:text-3xl md:text-4xl text-white tracking-tighter leading-[0.95]">
-                Entenda qual tipo de conteúdo faz mais sentido para o seu momento.
+                {copy?.plannerTitle ?? "Entenda qual tipo de conteúdo faz mais sentido para o seu momento."}
               </h2>
             </div>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Responda a partir do contexto da sua marca para identificar se faz mais sentido registrar, apresentar, explicar, reaproveitar ou alimentar canais com mais consistência.
+              {copy?.plannerDescription ?? "Responda a partir do contexto da sua marca para identificar se faz mais sentido registrar, apresentar, explicar, reaproveitar ou alimentar canais com mais consistência."}
             </p>
           </div>
 
@@ -614,9 +925,9 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               
               {/* Formatos Buttons Selector */}
               <div className="space-y-3 sm:space-y-4">
-                <span className="tag08-meta text-xs sm:text-xs text-zinc-300 uppercase tracking-widest font-bold block">1. ESCOLHA O FORMATO QUE FAZ MAIS SENTIDO</span>
+                <span className="tag08-meta text-xs sm:text-xs text-zinc-300 uppercase tracking-widest font-bold block">{copy?.plannerFormat ?? "1. ESCOLHA O FORMATO QUE FAZ MAIS SENTIDO"}</span>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
-                  {FORMATOS.map((f) => (
+                  {formats.map((f) => (
                     <button
                       key={f.id}
                       type="button"
@@ -644,9 +955,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
               {/* Deliverables Grid selector */}
               <div className="space-y-3 sm:space-y-4">
-                <span className="tag08-meta text-xs sm:text-xs text-zinc-300 uppercase tracking-widest font-bold block">2. MARQUE O QUE PODE SER PRODUZIDO</span>
+                <span className="tag08-meta text-xs sm:text-xs text-zinc-300 uppercase tracking-widest font-bold block">{copy?.plannerMaterials ?? "2. MARQUE O QUE PODE SER PRODUZIDO"}</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3">
-                  {DELIVERABLES.map((del) => {
+                  {DELIVERABLES.map((sourceDeliverable, index) => {
+                    const del = { ...sourceDeliverable, ...deliverables[index] };
                     const isSelected = selectedTools.includes(del.id);
                     return (
                       <button
@@ -670,7 +982,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                         </div>
                         
                         <div className="flex justify-between items-center w-full pt-2 border-t border-black/5">
-                          <span className={`font-sans text-xs font-bold uppercase ${isSelected ? "text-black/80" : "text-zinc-400"}`}>{del.category} material</span>
+                          <span className={`font-sans text-xs font-bold uppercase ${isSelected ? "text-black/80" : "text-zinc-400"}`}>{copy ? copy.materialCategory[del.category] : del.category} {copy?.materialLabel ?? "material"}</span>
                           <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${isSelected ? "bg-black text-brand border-black" : "border-zinc-700 text-zinc-500"}`}>
                             {isSelected ? <Check className="w-2.5 h-2.5 stroke-[3]" /> : <Plus className="w-2.5 h-2.5" />}
                           </div>
@@ -691,7 +1003,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   <div className="flex justify-between items-center gap-3 border-b border-white/[0.04] pb-3 sm:pb-4">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-                    <span className="tag08-meta text-xs sm:text-xs text-brand uppercase tracking-wider font-extrabold">RESUMO DO FORMATO AUDIOVISUAL</span>
+                    <span className="tag08-meta text-xs sm:text-xs text-brand uppercase tracking-wider font-extrabold">{copy?.formatSummary ?? "RESUMO DO FORMATO AUDIOVISUAL"}</span>
                     </div>
                   <span className="font-sans text-xs sm:text-xs text-zinc-300">TAG08_AUDIOVISUAL</span>
                   </div>
@@ -699,7 +1011,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 {/* Setup selected details */}
                 <div className="space-y-3 sm:space-y-4">
                   <div className="space-y-1.5">
-                    <span className="font-sans text-xs sm:text-xs text-zinc-300 uppercase font-black block">FORMATO AVALIADO:</span>
+                    <span className="font-sans text-xs sm:text-xs text-zinc-300 uppercase font-black block">{copy?.evaluatedFormat ?? "FORMATO AVALIADO:"}</span>
                     <h3 className="font-display font-medium text-base sm:text-lg text-brand-secondary tracking-tight leading-none">
                       {currentFormatDetails.name}
                     </h3>
@@ -709,7 +1021,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   </div>
 
                   <div className="pt-3 sm:pt-4 border-t border-white/[0.04] space-y-2.5 text-left">
-                    <span className="font-sans text-xs sm:text-xs text-zinc-300 uppercase font-black block">O QUE ESSE FORMATO AJUDA A ORGANIZAR:</span>
+                    <span className="font-sans text-xs sm:text-xs text-zinc-300 uppercase font-black block">{copy?.organizes ?? "O QUE ESSE FORMATO AJUDA A ORGANIZAR:"}</span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {currentFormatDetails.features.map((feat, fidx) => (
                         <div key={fidx} className="flex gap-2 items-center">
@@ -722,11 +1034,12 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
                   {/* Chosen tools list output */}
                     <div className="pt-3 sm:pt-4 border-t border-white/[0.04] space-y-2.5">
-                      <span className="font-sans text-xs sm:text-xs text-zinc-300 uppercase font-black block">MATERIAIS RELACIONADOS ({selectedTools.length}):</span>
+                      <span className="font-sans text-xs sm:text-xs text-zinc-300 uppercase font-black block">{copy?.relatedMaterials ?? "MATERIAIS RELACIONADOS"} ({selectedTools.length}):</span>
                       {hasSelectedTools ? (
                         <div className="flex flex-wrap gap-2 text-left max-h-40 overflow-y-auto pr-1">
                           {selectedTools.map((tId) => {
-                            const dl = DELIVERABLES.find(d => d.id === tId);
+                            const sourceIndex = DELIVERABLES.findIndex((d) => d.id === tId);
+                            const dl = sourceIndex < 0 ? null : deliverables[sourceIndex];
                             if (!dl) return null;
                             return (
                               <span key={tId} className="px-2.5 py-1 bg-white/[0.03] border border-white/5 text-zinc-300 text-xs rounded-lg font-sans font-medium hover:border-brand/40 transition-colors">
@@ -737,9 +1050,9 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                         </div>
                       ) : (
                         <div className="rounded-2xl border border-dashed border-white/8 bg-white/[0.02] px-4 py-4 sm:py-5 space-y-2">
-                          <h3 className="text-sm sm:text-sm font-semibold text-white">Nenhum material selecionado ainda.</h3>
+                          <h3 className="text-sm sm:text-sm font-semibold text-white">{copy?.noMaterials ?? "Nenhum material selecionado ainda."}</h3>
                           <p className="text-xs leading-relaxed text-zinc-400 max-w-md">
-                            Marque ao menos um item para visualizar possibilidades de desdobramento para esse formato audiovisual.
+                            {copy?.emptyMaterialsDescription ?? "Marque ao menos um item para visualizar possibilidades de desdobramento para esse formato audiovisual."}
                           </p>
                         </div>
                       )}
@@ -758,10 +1071,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                     className="min-h-11 block w-full bg-brand-secondary hover:bg-brand hover:shadow-[0_15px_35px_rgba(var(--color-brand-secondary-rgb),0.22)] text-black text-xs sm:text-xs font-sans font-black uppercase tracking-widest py-3.5 sm:py-4 rounded-xl text-center transition-[background-color,box-shadow] duration-200 active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_30px_rgba(var(--color-brand-secondary-rgb),0.15)]"
                   >
                     <MessageSquare className="w-4 h-4 text-black" />
-                    <span>CONVERSAR SOBRE MEU FORMATO AUDIOVISUAL</span>
+                    <span>{copy?.plannerCta ?? "CONVERSAR SOBRE MEU FORMATO AUDIOVISUAL"}</span>
                   </TrackedOutboundLink>
                   <span className="block text-center font-sans text-xs sm:text-xs text-zinc-300 uppercase leading-none select-none">
-                    USE ESTE RESUMO COMO PONTO DE PARTIDA PARA A CONVERSA
+                     {copy?.plannerCtaHint ?? "USE ESTE RESUMO COMO PONTO DE PARTIDA PARA A CONVERSA"}
                   </span>
                 </div>
 
@@ -781,13 +1094,13 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-              METODOLOGIA DE PRODUÇÃO // TAG08
+              {copy?.methodologyBadge ?? "METODOLOGIA DE PRODUÇÃO // TAG08"}
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
-              Um processo pensado antes, durante e depois da gravação.
+              {copy?.methodologyTitle ?? "Um processo pensado antes, durante e depois da gravação."}
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm mx-auto">
-              A produção audiovisual não começa no dia da captação. Antes de gravar, entendemos o contexto da marca, definimos a função do conteúdo, organizamos formatos possíveis e planejamos como o material poderá ser usado depois.
+              {copy?.methodologyDescription ?? "A produção audiovisual não começa no dia da captação. Antes de gravar, entendemos o contexto da marca, definimos a função do conteúdo, organizamos formatos possíveis e planejamos como o material poderá ser usado depois."}
             </p>
           </div>
 
@@ -846,12 +1159,12 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                       {step.num}.
                     </span>
                     <span className="font-sans text-xs text-brand-secondary bg-brand-secondary/5 border border-brand-secondary/10 px-2 py-0.5 rounded uppercase font-black uppercase">
-                      {step.tag}
+                      {copy?.processSteps[idx]?.tag ?? step.tag}
                     </span>
                   </div>
 
                   <h3 className="font-display font-bold text-lg text-white tracking-tight group-hover:text-brand transition-colors leading-[1.25]">
-                    {step.title}
+                    {copy?.processSteps[idx]?.title ?? step.title}
                   </h3>
 
                   <ul className="space-y-3 pt-3 border-t border-white/[0.04]">
@@ -859,7 +1172,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                       <li key={idxx} className="flex gap-2.5 items-start">
                         <Check className="w-3.5 h-3.5 text-brand shrink-0 stroke-[2.5] mt-0.5" />
                         <span className="text-zinc-400 text-xs sm:text-xs leading-relaxed group-hover:text-zinc-300">
-                          {item}
+                          {copy?.processSteps[idx]?.list[idxx] ?? item}
                         </span>
                       </li>
                     ))}
@@ -867,7 +1180,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 </div>
 
                 <div className="pt-4 border-t border-white/[0.04] text-xs tag08-meta text-zinc-300 uppercase tracking-widest flex justify-between">
-                  <span>PROCESSO ATIVO</span>
+                  <span>{copy?.processActive ?? "PROCESSO ATIVO"}</span>
                   <span className="text-brand font-bold select-none">TAG08_PROCESS_0{idx + 1}</span>
                 </div>
               </div>
@@ -885,13 +1198,13 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           
           <div className="text-left space-y-3 max-w-2xl">
             <span className="tag08-meta text-xs text-brand-secondary uppercase tracking-widest font-black bg-brand-secondary/5 border border-brand-secondary/10 px-2.5 py-1 rounded-md inline-block">
-              INCLUSÕES E COMPLEMENTOS // TAG08
+              {copy?.scopeBadge ?? "INCLUSÕES E COMPLEMENTOS // TAG08"}
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
-              O escopo precisa acompanhar o uso do material.
+              {copy?.scopeTitle ?? "O escopo precisa acompanhar o uso do material."}
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Cada produção pode envolver diferentes entregas, dependendo do objetivo, dos canais e do momento da marca. O importante é definir o que precisa ser captado, editado e organizado para que o conteúdo tenha uso real depois da gravação.
+              {copy?.scopeDescription ?? "Cada produção pode envolver diferentes entregas, dependendo do objetivo, dos canais e do momento da marca. O importante é definir o que precisa ser captado, editado e organizado para que o conteúdo tenha uso real depois da gravação."}
             </p>
           </div>
 
@@ -901,7 +1214,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               <div>
                 <div className="flex items-center gap-2 text-brand tag08-meta text-xs uppercase tracking-widest font-black pb-4 border-b border-white/[0.04]">
                   <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                  <span>MATERIAIS DE APOIO // ESCOPOS DEFINIDOS</span>
+                  <span>{copy?.includedBadge ?? "MATERIAIS DE APOIO // ESCOPOS DEFINIDOS"}</span>
                 </div>
                 
                 <div className="grid gap-4.5 pt-6 text-left">
@@ -917,15 +1230,15 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                         {iIdx + 1}
                       </div>
                       <div className="space-y-0.5">
-                        <h3 className="text-white text-xs sm:text-sm font-semibold">{inc.title}</h3>
-                        <p className="text-zinc-400 text-xs leading-normal">{inc.desc}</p>
+                        <h3 className="text-white text-xs sm:text-sm font-semibold">{copy?.included[iIdx]?.title ?? inc.title}</h3>
+                        <p className="text-zinc-400 text-xs leading-normal">{copy?.included[iIdx]?.desc ?? inc.desc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
               <div className="pt-6 border-t border-white/[0.04] text-xs tag08-meta text-zinc-300 uppercase tracking-widest">
-                ESCOPOS DEFINIDOS CONFORME USO REAL
+                {copy?.includedFootnote ?? "ESCOPOS DEFINIDOS CONFORME USO REAL"}
               </div>
             </div>
 
@@ -934,7 +1247,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               <div>
                 <div className="flex items-center gap-2 text-zinc-300 tag08-meta text-xs uppercase tracking-widest font-bold pb-4 border-b border-white/[0.04]">
                   <span className="w-1.5 h-1.5 rounded-full bg-zinc-650" />
-                  <span>COMPLEMENTOS POSSÍVEIS // DEFINIDOS CONFORME ESCOPO</span>
+                  <span>{copy?.addOnsBadge ?? "COMPLEMENTOS POSSÍVEIS // DEFINIDOS CONFORME ESCOPO"}</span>
                 </div>
                 
                 <div className="grid gap-4.5 pt-6 text-left">
@@ -950,15 +1263,15 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                         +{oIdx + 1}
                       </div>
                       <div className="space-y-0.5">
-                        <h3 className="text-zinc-300 text-xs sm:text-sm font-semibold">{opt.title}</h3>
-                        <p className="text-zinc-300 text-xs leading-normal">{opt.desc}</p>
+                        <h3 className="text-zinc-300 text-xs sm:text-sm font-semibold">{copy?.addOns[oIdx]?.title ?? opt.title}</h3>
+                        <p className="text-zinc-300 text-xs leading-normal">{copy?.addOns[oIdx]?.desc ?? opt.desc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
               <div className="pt-6 border-t border-white/[0.04] text-xs tag08-meta text-zinc-300 uppercase tracking-widest">
-                ITENS DEFINIDOS CONFORME ESCOPO
+                {copy?.scopeFootnote ?? "ITENS DEFINIDOS CONFORME ESCOPO"}
               </div>
             </div>
           </div>
@@ -974,13 +1287,13 @@ Quero conversar sobre o próximo passo com a TAG08.`;
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="tag08-meta text-xs text-brand uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
-              INTEGRAÇÃO ENTRE FRENTES // TAG08
+              {copy?.synergyBadge ?? "INTEGRAÇÃO ENTRE FRENTES // TAG08"}
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tighter">
-              Audiovisual não precisa ficar isolado.
+              {copy?.synergyTitle ?? "Audiovisual não precisa ficar isolado."}
             </h2>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm mx-auto">
-              Uma produção bem planejada pode alimentar diferentes frentes da comunicação: redes sociais, site, branding, apresentações comerciais, campanhas, relacionamento e canais oficiais da marca, como YouTube, Vimeo, Pinterest, Google Meu Negócio e WhatsApp, quando fizer sentido. O valor está em pensar o material desde o início para que ele tenha função depois da gravação.
+              {copy?.synergyDescription ?? "Uma produção bem planejada pode alimentar diferentes frentes da comunicação: redes sociais, site, branding, apresentações comerciais, campanhas, relacionamento e canais oficiais da marca, como YouTube, Vimeo, Pinterest, Google Meu Negócio e WhatsApp, quando fizer sentido. O valor está em pensar o material desde o início para que ele tenha função depois da gravação."}
             </p>
           </div>
 
@@ -1016,12 +1329,12 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 className="bg-charcoal-900 border border-white/[0.05] rounded-2xl p-6.5 sm:p-7 hover:border-brand/40 transition-colors duration-200 flex flex-col justify-between min-h-[18rem] group"
               >
                 <div className="space-y-4">
-                  <span className="tag08-meta text-xs text-brand-secondary font-black uppercase tracking-widest block">SINERGIA {String(idx + 1).padStart(2, '0')}</span>
+                  <span className="tag08-meta text-xs text-brand-secondary font-black uppercase tracking-widest block">{copy?.synergyLabel ?? "SINERGIA"} {String(idx + 1).padStart(2, '0')}</span>
                   <h3 className="text-white text-base sm:text-lg font-display font-semibold tracking-tight group-hover:text-brand transition-colors leading-[1.2]">
-                    {syn.title}
+                    {copy?.synergies[idx]?.title ?? syn.title}
                   </h3>
                   <p className="text-zinc-400 text-xs leading-relaxed">
-                    {syn.desc}
+                    {copy?.synergies[idx]?.desc ?? syn.desc}
                   </p>
                 </div>
 
@@ -1029,7 +1342,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   onClick={() => handleLinkClick(syn.page)}
                   className="group min-h-11 flex items-center justify-between text-xs font-sans font-bold text-zinc-300 hover:text-brand cursor-pointer select-none pt-3 border-t border-white/5 w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary transition-colors duration-200"
                 >
-                  <span className="uppercase text-xs tracking-widest">{syn.cta}</span>
+                  <span className="uppercase text-xs tracking-widest">{copy?.synergies[idx]?.cta ?? syn.cta}</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
@@ -1039,10 +1352,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
         </div>
       </section>
 
-      {/* MiniCases Validation panel */}
-      <MiniCases route="/servicos/producao-audiovisual" onNavigate={onNavigate} />
-
-      <ServiceInsightsBridge servicePath="/servicos/producao-audiovisual" onNavigate={onNavigate} />
+      <ServiceInsightsBridge servicePath="/servicos/producao-audiovisual" onNavigate={onNavigate} locale={locale} />
 
       {/*=========================================
           SECTION 9: BOTTOM CTA CARD (WHATSAPP NEON)
@@ -1059,14 +1369,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
               unoptimized
               sizes="(max-width: 1024px) 100vw, 42vw"
               src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3CradialGradient id='g' cx='30%25' cy='30%25' r='80%25'%3E%3Cstop offset='0%25' stop-color='%23f5f5f5' stop-opacity='.18'/%3E%3Cstop offset='60%25' stop-color='%23000000' stop-opacity='.25'/%3E%3Cstop offset='100%25' stop-color='%23000000' stop-opacity='.85'/%3E%3C/radialGradient%3E%3ClinearGradient id='l' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23d4d4d8' stop-opacity='.12'/%3E%3Cstop offset='100%25' stop-color='%233f3f46' stop-opacity='.45'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='%230b0b0d'/%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Cg opacity='.65'%3E%3Ccircle cx='180' cy='120' r='96' fill='url(%23l)'/%3E%3Ccircle cx='610' cy='360' r='160' fill='%23facc15' fill-opacity='.08'/%3E%3Cpath d='M80 390C180 300 290 320 380 250s170-90 320-30' fill='none' stroke='%23ffffff' stroke-opacity='.15' stroke-width='2'/%3E%3Cpath d='M110 150h180M510 120h180M120 420h120' stroke='%23ffffff' stroke-opacity='.08' stroke-width='3'/%3E%3C/g%3E%3C/svg%3E" 
-              alt="TAG08 Equipe Técnica Apoio Audiovisual"
+              alt={copy?.ctaImageAlt ?? "TAG08 Equipe Técnica Apoio Audiovisual"}
               className="object-cover rounded-[24px] mix-blend-normal brightness-[0.95] contrast-[1.05] grayscale-[10%] motion-safe:hover:scale-[1.02] transition-transform duration-200"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-20">
               <div className="flex justify-between items-start">
                 <span className="tag08-meta text-xs text-white/60 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-black border border-white/5">
-                  AUDIOVISUAL
+                  {copy?.heroBadge ?? "AUDIOVISUAL"}
                 </span>
                 <span className="font-sans text-xs text-white/50 tracking-wider font-extrabold">
                   TAG08
@@ -1077,12 +1387,12 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   audiovisual
                 </div>
                 <div className="font-display font-extrabold text-[1.5rem] text-white/30 tracking-widest leading-none uppercase select-none pl-6">
-                  conteudo_com_funcao_
+                  {copy?.visualContentLabel ?? "conteudo_com_funcao_"}
                 </div>
               </div>
               <div className="flex justify-between items-end">
                 <span className="font-sans text-xs text-white/40 tracking-wider">
-                  PROCESSO ORGANIZADO
+                  {copy?.processActive ?? "PROCESSO ORGANIZADO"}
                 </span>
                 <span className="tag08-meta text-xs text-white/60 bg-black/35 backdrop-blur-sm px-2.5 py-1 rounded-full uppercase tracking-widest font-black border border-white/5">
                   CONTEXTO DEFINIDO
@@ -1099,15 +1409,14 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   <span className="w-2 h-2 rounded-full bg-brand animate-ping" />
                 </div>
                 <span className="tag08-meta text-xs tracking-widest uppercase font-bold text-black/90">
-                  CONVERSA CONSULTIVA
+                  {copy?.finalConversation ?? "CONVERSA CONSULTIVA"}
                 </span>
               </div>
               <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-black leading-[0.9] tracking-tighter font-display">
-                Vamos entender qual produção <br />
-                faz sentido para o seu momento?
+                {copy?.finalTitle ?? "Vamos entender qual produção faz sentido para o seu momento?"}
               </h2>
               <p className="text-black/85 text-xs sm:text-xs max-w-lg leading-relaxed font-sans font-bold uppercase">
-                Conte um pouco sobre o que você precisa comunicar, registrar ou transformar em conteúdo. A partir disso, avaliamos o formato mais coerente: institucional, evento, bastidores, depoimentos, conteúdo recorrente ou material de apoio para canais digitais.
+                {copy?.finalDescription ?? "Conte um pouco sobre o que você precisa comunicar, registrar ou transformar em conteúdo. A partir disso, avaliamos o formato mais coerente: institucional, evento, bastidores, depoimentos, conteúdo recorrente ou material de apoio para canais digitais."}
               </p>
             </div>
             <div className="bg-charcoal-900/98 backdrop-blur-3xl border border-white/[0.08] p-6 sm:p-7 rounded-[28px] shadow-[0_25px_60px_rgba(0,0,0,0.5)] space-y-6 max-w-md relative overflow-hidden text-left font-sans">
@@ -1118,10 +1427,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 </div>
                 <div className="space-y-0.5">
                   <span className="tag08-meta text-xs text-brand uppercase tracking-wider font-extrabold block">
-                    CONVERSA CONSULTIVA
+                    {copy?.finalConversation ?? "CONVERSA CONSULTIVA"}
                   </span>
                   <p className="text-white text-xs leading-snug font-sans font-semibold">
-                    Sem pacote pronto. Primeiro entendemos contexto, objetivo e uso do material.
+                    {copy?.consultationDescription ?? "Sem pacote pronto. Primeiro entendemos contexto, objetivo e uso do material."}
                   </p>
                 </div>
               </div>
@@ -1131,7 +1440,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                 <TrackedOutboundLink
                   label="Conversar sobre meu audiovisual"
                   surface="audiovisual-final-cta"
-                  href={buildBrazilWhatsAppUrl("Olá, quero entender qual formato audiovisual faz mais sentido para o momento da minha marca.")}
+                  href={buildBrazilWhatsAppUrl(copy?.finalWhatsAppMessage ?? "Olá, quero entender qual formato audiovisual faz mais sentido para o momento da minha marca.")}
                   target="_blank"
                   rel="noreferrer"
                   className="block w-full bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 rounded-2xl py-2.5 px-4 transition-colors duration-200 group shadow-inner cursor-pointer"
@@ -1143,7 +1452,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                       </div>
                       <div className="flex flex-col text-left">
                         <span className="tag08-meta text-xs text-zinc-300 uppercase font-black tracking-wider leading-none">
-                          CONVERSAR SOBRE MEU AUDIOVISUAL
+                          {copy?.finalContactLabel ?? "CONVERSAR SOBRE MEU AUDIOVISUAL"}
                         </span>
                         <span className="text-white text-xs font-sans font-bold tracking-wider group-hover:text-brand transition-colors mt-0.5">
                           +55 83 9.9886-8882
@@ -1151,7 +1460,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                       </div>
                     </div>
                     <span className="text-xs text-brand tag08-meta font-bold uppercase tracking-wider bg-brand/10 py-1 px-2.5 rounded-lg group-hover:bg-brand group-hover:text-black transition-colors duration-200">
-                      INICIAR CONVERSA
+                      {copy?.startConversation ?? "INICIAR CONVERSA"}
                     </span>
                   </div>
                 </TrackedOutboundLink>
@@ -1165,7 +1474,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   </span>
                 </div>
                 <span className="font-sans text-xs text-brand font-bold bg-brand/10 border border-brand/25 px-2 py-0.5 rounded uppercase leading-none">
-                  PRÓXIMO PASSO
+                  {copy?.nextStep ?? "PRÓXIMO PASSO"}
                 </span>
               </div>
             </div>
@@ -1188,13 +1497,13 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             <div className="lg:col-span-5 flex flex-col justify-between space-y-5 sm:space-y-8 text-left">
               <div className="space-y-3 sm:space-y-4">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand text-black font-semibold text-xs sm:text-xs rounded-lg uppercase tracking-widest tag08-meta">
-                  FAQ // ENCONTRE RESPOSTAS
+                  {copy?.faqEyebrow ?? "FAQ // ENCONTRE RESPOSTAS"}
                 </div>
                 <h2 className="font-display font-black text-[1.6rem] sm:text-4xl text-white leading-[0.95] tracking-tighter">
-                  Dúvidas comuns sobre produção audiovisual
+                  {copy ? (locale === "en" ? "Common questions about audiovisual production" : "Preguntas frecuentes sobre producción audiovisual") : "Dúvidas comuns sobre produção audiovisual"}
                 </h2>
                 <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-sm">
-                  Antes de gravar, é importante entender objetivo, contexto, formato e uso posterior do material. Essas respostas ajudam a esclarecer como a TAG08 conduz esse processo.
+                  {copy ? (locale === "en" ? "Before filming, it helps to understand the objective, context, format and future use of the material. These answers explain how TAG08 approaches the process." : "Antes de grabar, conviene entender el objetivo, el contexto, el formato y el uso posterior del material. Estas respuestas explican cómo TAG08 lleva adelante el proceso.") : "Antes de gravar, é importante entender objetivo, contexto, formato e uso posterior do material. Essas respostas ajudam a esclarecer como a TAG08 conduz esse processo."}
                 </p>
               </div>
 
@@ -1216,7 +1525,7 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                       <span className={activeFaq === item.id ? "text-black" : "text-brand"}>
                         {String(item.id + 1).padStart(2, '0')}.
                       </span>
-                      {item.title}
+                      {copy?.faqCategories[item.id] ?? item.title}
                     </span>
                     <ArrowRight aria-hidden="true" className={`w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1 ${
                       activeFaq === item.id ? "text-black rotate-[-45deg] stroke-[2.5]" : "text-zinc-500"
@@ -1247,15 +1556,15 @@ Quero conversar sobre o próximo passo com a TAG08.`;
 
               <div id={`web-audiovisual-faq-panel-${activeFaq}`} role="region" aria-labelledby={`web-audiovisual-faq-heading-${activeFaq}`} className="relative z-20 bg-charcoal-900/95 backdrop-blur-2xl border border-white/[0.08] p-4 sm:p-5 rounded-2xl space-y-2.5 sm:space-y-3 shadow-2xl text-left font-sans">
                 <span className="tag08-meta text-xs sm:text-xs text-brand uppercase tracking-widest font-black block">
-                  {faqCategories[activeFaq].title}
+                  {copy?.faqCategories[activeFaq] ?? faqCategories[activeFaq].title}
                 </span>
                 
                 <h3 id={`web-audiovisual-faq-heading-${activeFaq}`} className="text-white font-semibold text-xs sm:text-sm leading-tight border-b border-white/5 pb-2">
-                  {faqQuestions[activeFaq]}
+                  {copy?.faqQuestions[activeFaq] ?? faqQuestions[activeFaq]}
                 </h3>
                 
                 <p className="text-zinc-300 text-xs sm:text-xs leading-relaxed font-sans font-medium">
-                  {faqAnswers[activeFaq]}
+                  {copy?.faqAnswers[activeFaq] ?? faqAnswers[activeFaq]}
                 </p>
               </div>
             </div>
@@ -1264,10 +1573,10 @@ Quero conversar sobre o próximo passo com a TAG08.`;
             <div className="lg:col-span-3 flex flex-col justify-between gap-3 sm:gap-4">
               <div className="bg-charcoal-900 border border-white/5 rounded-2xl p-4 sm:p-5 hover:border-brand/20 transition-colors duration-200 text-left flex flex-col justify-between space-y-3 sm:space-y-4 flex-1">
                 <div className="space-y-1.5 sm:space-y-2">
-                  <span className="tag08-meta text-xs sm:text-xs text-zinc-300 uppercase tracking-widest block font-bold">SERVIÇOS &amp; FORMATOS</span>
-                  <h3 className="text-white font-semibold text-sm leading-snug">Planejamento e clareza</h3>
+                  <span className="tag08-meta text-xs sm:text-xs text-zinc-300 uppercase tracking-widest block font-bold">{copy?.servicesFormats ?? "SERVIÇOS & FORMATOS"}</span>
+                  <h3 className="text-white font-semibold text-sm leading-snug">{copy?.serviceCardTitle ?? "Planejamento e clareza"}</h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-sans">
-                    O processo começa entendendo o contexto da marca, a função do material e o uso esperado depois da gravação.
+                    {copy?.serviceCardDescription ?? "O processo começa entendendo o contexto da marca, a função do material e o uso esperado depois da gravação."}
                   </p>
                 </div>
                 <button
@@ -1275,28 +1584,28 @@ Quero conversar sobre o próximo passo com a TAG08.`;
                   type="button"
                   className="group min-h-11 flex items-center justify-between text-xs font-sans font-bold text-white hover:text-brand cursor-pointer select-none pt-2 border-t border-white/5 transition-colors duration-200"
                 >
-                  <span>VER SERVIÇOS</span>
+                  <span>{copy?.linkToServices ?? "VER SERVIÇOS"}</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
 
               <div className="bg-brand text-black rounded-2xl p-4 sm:p-5 motion-safe:hover:scale-[1.01] transition-transform duration-200 text-left flex flex-col justify-between space-y-3 sm:space-y-4 flex-1">
                 <div className="space-y-1.5 sm:space-y-2">
-                  <span className="tag08-meta text-xs sm:text-xs text-black/80 uppercase tracking-widest block font-extrabold">CONVERSA CONSULTIVA</span>
-                  <h3 className="text-black font-black text-sm leading-tight tracking-tight">Quer conversar sobre seu audiovisual?</h3>
+                  <span className="tag08-meta text-xs sm:text-xs text-black/80 uppercase tracking-widest block font-extrabold">{copy?.consultationBadge ?? "CONVERSA CONSULTIVA"}</span>
+                  <h3 className="text-black font-black text-sm leading-tight tracking-tight">{copy?.consultationTitle ?? "Quer conversar sobre seu audiovisual?"}</h3>
                   <p className="text-black/85 text-xs font-semibold leading-relaxed font-sans">
-                    Sem pacote pronto. Primeiro entendemos contexto, objetivo e uso do material.
+                    {copy?.consultationDescription ?? "Sem pacote pronto. Primeiro entendemos contexto, objetivo e uso do material."}
                   </p>
                 </div>
                 <TrackedOutboundLink
                   label="Conversar sobre meu audiovisual"
                   surface="audiovisual-mobile-cta"
-                  href={buildBrazilWhatsAppUrl("Olá, quero entender qual formato audiovisual faz mais sentido para o momento da minha marca.")}
+                  href={buildBrazilWhatsAppUrl(copy?.finalWhatsAppMessage ?? "Olá, quero entender qual formato audiovisual faz mais sentido para o momento da minha marca.")}
                   target="_blank"
                   rel="noreferrer"
                   className="group min-h-11 flex items-center justify-between text-xs font-sans font-bold text-black border-t border-black/10 pt-2 cursor-pointer select-none transition-colors duration-200"
                 >
-                  <span>CONVERSAR SOBRE MEU AUDIOVISUAL</span>
+                  <span>{copy?.pageCta ?? "CONVERSAR SOBRE MEU AUDIOVISUAL"}</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </TrackedOutboundLink>
               </div>

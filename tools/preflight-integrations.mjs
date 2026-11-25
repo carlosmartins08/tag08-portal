@@ -21,6 +21,8 @@ const evaluateDirectStagingPreflight = (env, scope, mode) => {
   const present = (name) => Boolean(env[name]?.trim());
   const requireValue = (name) => { if (!present(name)) missing.push(name); };
 
+  if (!Object.hasOwn(env, "TAG08_DEPLOYMENT_ENV")) missing.push("TAG08_DEPLOYMENT_ENV");
+  else if (env.TAG08_DEPLOYMENT_ENV !== "staging") invalid.push("TAG08_DEPLOYMENT_ENV must be exactly staging for direct Contact/Talent staging");
   if (!["inspect", "deliver"].includes(mode)) invalid.push("staging mode must be inspect or deliver");
   if (env.GOOGLE_SHEETS_SPREADSHEET_ID !== CONTACT_STAGING_TARGETS.spreadsheetId) {
     invalid.push("GOOGLE_SHEETS_SPREADSHEET_ID does not match the approved staging sheet");

@@ -23,14 +23,43 @@ test.describe("integridade de evidências na Home", () => {
     }
   });
 
-  test("cases em investigação não recebem selo de aprovação", async ({ page }) => {
+  test("cases autorizados na Home usam gate próprio e não expõem selo de revisão", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/", { waitUntil: "domcontentloaded" });
     await expect(page.getByText("VERIFICADO // CO-PILOTO TAG08", { exact: true })).toHaveCount(0);
 
-    const reviewCases = page.locator('[data-evidence-key^="home-case/"]');
-    if (await reviewCases.count()) {
-      await expect(reviewCases.first().getByText(/Em investigação.*não publicado/)).toBeVisible();
+    const homeCases = page.locator('[data-testid="home-case-card"][data-evidence-key^="home-case/"]');
+    await expect(homeCases).toHaveCount(14);
+    await expect(homeCases.locator("img")).toHaveCount(2);
+    await expect(homeCases.getByRole("img", { name: "Alugue por Temporada" })).toBeVisible();
+    await expect(homeCases.getByRole("img", { name: "Luciana Gadelha" })).toBeVisible();
+    await expect(page.locator('[data-testid="home-case-card"][data-evidence-key^="case-study/"]')).toHaveCount(0);
+    await expect(homeCases.getByText(/Em investigação.*não publicado/)).toHaveCount(0);
+  });
+
+  test("cases form a keyboard-operable responsive carousel", async ({ page }) => {
+    for (const width of [375, 390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/", { waitUntil: "domcontentloaded" });
+
+      const carousel = page.getByRole("region", { name: "Cases da TAG08" });
+      const previous = page.getByRole("button", { name: "Case anterior" });
+      const next = page.getByRole("button", { name: "Pr\u00f3ximo case" });
+      await expect(carousel).toHaveAttribute("aria-roledescription", "carrossel");
+      await expect(carousel.locator("[data-testid='home-case-card']")).toHaveCount(14);
+      await expect(previous).toBeDisabled();
+      await expect(next).toBeEnabled();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBeTruthy();
+
+      await next.focus();
+      await page.keyboard.press("Enter");
+      await expect.poll(() => carousel.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
+      await expect(previous).toBeEnabled();
+
+      await previous.focus();
+      await page.keyboard.press("Enter");
+      await expect.poll(() => carousel.evaluate((element) => element.scrollLeft)).toBe(0);
+      await expect(previous).toBeDisabled();
     }
   });
 });

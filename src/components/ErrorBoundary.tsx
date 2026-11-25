@@ -1,5 +1,5 @@
 import React, { type ErrorInfo, type ReactNode } from "react";
-import { AlertTriangle, Home, RotateCcw } from "lucide-react";
+import { AlertTriangle, Home, RotateCcw } from "./DooIcons";
 
 type ErrorBoundaryProps = {
   children: ReactNode;

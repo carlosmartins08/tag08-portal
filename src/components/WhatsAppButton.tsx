@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUp, MessageCircle, X } from "lucide-react";
+import { ArrowUp, MessageCircle, X } from "./DooIcons";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { type UiLanguage } from "../i18n/siteI18n";
+import { i18n, type UiLanguage } from "../i18n/siteI18n";
 import { TAG08_WHATSAPP_CONTACTS } from "../config/siteNetwork";
 import { safeStorage } from "../utils/storage";
 import { trackOutboundClick } from "../lib/analytics";
@@ -58,6 +58,11 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
   const prefersReducedMotion = useReducedMotion();
 
   const copy = COPY[selectedLanguage] ?? COPY.pt;
+  const whatsappCopy = i18n[selectedLanguage].whatsapp;
+  const channelLabel = (contact: (typeof TAG08_WHATSAPP_CONTACTS)[number]) => {
+    if (contact.key === "brazil") return whatsappCopy.channelPt;
+    return selectedLanguage === "es" ? whatsappCopy.channelEs : whatsappCopy.channelEn;
+  };
 
   useEffect(() => {
     setSelectedLanguage(language);
@@ -193,10 +198,10 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
                     }`}
                   >
                     <MessageCircle className="w-4 h-4" />
-                    <span className="text-sm leading-none" title={contact.country.name}>
+                    <span className="text-sm leading-none" title={channelLabel(contact)}>
                       <CountryFlag country={contact.country} />
                     </span>
-                    <span>{contact.label}</span>
+                    <span>{channelLabel(contact)}</span>
                   </button>
                 ))}
               </div>
@@ -256,10 +261,13 @@ export default function WhatsAppButton({ language, currentPage }: WhatsAppButton
                       }`}
                     >
                       <MessageCircle className="h-4 w-4" />
-                      <span className="text-sm leading-none" title={contact.country.name}>
+                      <span className="text-sm leading-none" title={channelLabel(contact)}>
                         <CountryFlag country={contact.country} />
                       </span>
-                      <span>{contact.display}</span>
+                      <span className="flex flex-col items-start leading-tight">
+                        <span>{channelLabel(contact)}</span>
+                        <span className="text-xs font-normal opacity-80">{contact.display}</span>
+                      </span>
                     </button>
                   ))}
                 </div>
