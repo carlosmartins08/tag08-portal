@@ -19,6 +19,28 @@ test("view counts use localized singular, plural, zero and safe invalid values",
   assert.equal(localizeViewCountLabel("PORTFÓLIO 01", "en"), "PORTFÓLIO 01");
 });
 
+test("localized view-count labels accept formatter output in Portuguese, English and Spanish", () => {
+  for (const sourceLocale of ["pt", "en", "es"] as const) {
+    for (const targetLocale of ["pt", "en", "es"] as const) {
+      for (const count of [0, 1, 2, 1234, 12345]) {
+        assert.equal(
+          localizeViewCountLabel(formatViewCount(count, sourceLocale), targetLocale),
+          formatViewCount(count, targetLocale),
+          `${sourceLocale} count ${count} should localize to ${targetLocale}`
+        );
+      }
+    }
+  }
+
+  assert.equal(localizeViewCountLabel("1 visualização", "en"), "1 view");
+  assert.equal(localizeViewCountLabel("2 visualizações", "es"), "2 visualizaciones");
+  assert.equal(localizeViewCountLabel("1.234 visualizações", "en"), "1,234 views");
+  assert.equal(localizeViewCountLabel("1,234 views", "pt"), "1.234 visualizações");
+  assert.equal(localizeViewCountLabel("1 234 visualizaciones", "pt"), "1.234 visualizações");
+  assert.equal(localizeViewCountLabel("PORTFÓLIO 01", "en"), "PORTFÓLIO 01");
+  assert.equal(localizeViewCountLabel("1.2 views", "pt"), "1.2 views");
+});
+
 test("a Home só seleciona vídeos recebidos de uma origem oficial ao vivo", () => {
   const videos = [{
     id: "official-video",

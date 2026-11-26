@@ -138,9 +138,15 @@ export const formatViewCount = (value: number | string, locale: RouteLocale = "p
 };
 
 export const localizeViewCountLabel = (value: string, locale: RouteLocale) => {
-  const match = value.match(/^([\d.,\s]+)\s+visualizações$/i);
+  const match = value.match(/^([\d.,\s\u00a0\u202f]+)\s+(?:visualiza(?:ção|ções)|views?|visualizaci(?:ón|ones))$/iu);
   if (!match) return value;
-  const digits = match[1].replace(/\D/g, "");
+
+  const numericLabel = match[1].trim();
+  const isUngroupedInteger = /^\d+$/u.test(numericLabel);
+  const isGroupedInteger = /^\d{1,3}(?:[.,\s\u00a0\u202f]\d{3})+$/u.test(numericLabel);
+  if (!isUngroupedInteger && !isGroupedInteger) return value;
+
+  const digits = numericLabel.replace(/\D/g, "");
   return formatViewCount(digits || "0", locale);
 };
 

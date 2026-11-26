@@ -9,6 +9,29 @@ permissions:
   contents: read
 
 jobs:
+  supply-chain:
+    name: Dependency integrity and advisories
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Install package contents without running lifecycle scripts before verification.
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Audit production dependencies
+        run: npm audit --omit=dev
+      - name: Audit all dependencies
+        run: npm audit
+      - name: Verify registry signatures and provenance
+        run: npm audit signatures
+
   verify:
     name: Test, build and browser regression
     runs-on: ubuntu-latest

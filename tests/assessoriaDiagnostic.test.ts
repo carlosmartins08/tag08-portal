@@ -5,10 +5,10 @@ import test from "node:test";
 test("assessoria diagnostic WhatsApp links carry the calculated context", () => {
   const source = readFileSync("src/features/site/pages/AssessoriaMarketingDigitalEstrategico.tsx", "utf8");
 
-  assert.match(source, /const brazilDiagnosticWhatsappUrl = buildBrazilWhatsAppUrl\(`[^`]*\$\{diagnostic\.level\}/);
-  assert.match(source, /brazilDiagnosticWhatsappUrl = buildBrazilWhatsAppUrl\(`[^`]*\$\{totalScore\}\/120/);
-  assert.match(source, /brazilDiagnosticWhatsappUrl = buildBrazilWhatsAppUrl\(`[^`]*\$\{diagnostic\.focus\}/);
-  assert.match(source, /internationalDiagnosticWhatsappUrl = buildInternationalWhatsAppUrl\(`[^`]*\$\{diagnostic\.recommendation\}/);
+  assert.match(source, /const portugueseDiagnosticMessage = `[^`]*\$\{diagnostic\.level\}[^`]*\$\{totalScore\}\/120[^`]*\$\{diagnostic\.focus\}[^`]*\$\{diagnostic\.recommendation\}[^`]*`;/);
+  assert.match(source, /const localizedDiagnosticMessage = copy\?\.diagnosticMessage\(diagnostic\.level,\s*totalScore,\s*diagnostic\.focus,\s*diagnostic\.recommendation\);/);
+  assert.match(source, /const brazilDiagnosticWhatsappUrl = buildBrazilWhatsAppUrl\(localizedDiagnosticMessage \?\? portugueseDiagnosticMessage\);/);
+  assert.match(source, /const internationalDiagnosticWhatsappUrl = buildInternationalWhatsAppUrl\(localizedDiagnosticMessage \?\? `[^`]*\$\{diagnostic\.level\}[^`]*\$\{totalScore\}\/120[^`]*\$\{diagnostic\.focus\}[^`]*\$\{diagnostic\.recommendation\}[^`]*`\);/);
 });
 
 test("other simulator routes preserve calculated context in outbound messages", () => {

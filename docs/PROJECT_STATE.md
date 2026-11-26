@@ -9,7 +9,29 @@
 
 - Home cases use a responsive, manually controlled editorial carousel with keyboard/touch navigation, a visible next-card cue, and non-repeated client names. Alugue por Temporada and Luciana Gadelha use their matching local logos under route-specific evidence approvals; the remaining cases use typographic identification. Case detail publication remains independently gated.
 
-Atualizado em: `2026-11-24`
+Atualizado em: `2026-11-26`
+
+## Continuidade — Segurança 01.2 — 2026-11-25
+
+- O trabalho de dependências permanece no worktree existente, agora na branch `p0-security-dependencies-01`, derivada da `main` observada em `0143a37`; a renomeação preservou HEAD e o diff. `npm run continuity:status` passou após a renomeação. Nenhum push, merge ou deploy foi realizado.
+- Dependências atualizadas anteriormente nesta missão: Next 16.4.6, Prisma 7.10.1, Zod 4.6.7 e LHCI 0.16.1, com ajustes pontuais no lockfile. `npm audit --omit=dev` e `npm audit` passaram sem vulnerabilidades reportadas. A verificação local de assinaturas não concluiu: a conexão ao repositório TUF do Sigstore foi recusada pelo proxy local (`127.0.0.1:9`); isso não demonstra assinatura inválida. A CI agora tem uma job independente para repetir as auditorias e verificar assinaturas/atestações antes de qualquer script de instalação nessa job.
+- `npm run verify:readiness` passou após a correção do verificador de rotas. O verificador agora confirma a cadeia precisa de `/en|es/cliente/onboarding` (308 apenas para a rota PT local e 404 terminal quando Onboarding está desativado), preservando a implementação e seus controles.
+- A CI histórica de 2026-11-10 no SHA `8758c153` registrou seis falhas E2E. No checkout atual, os seis cenários correspondentes passaram em execução local direcionada (6/6). A CI de `0143a37` não executou E2E porque parou antes, em `verify:readiness`; não há nova execução remota após as correções locais.
+- A auditoria `npm audit signatures` ainda depende de uma execução com acesso ao registry/TUF. O issue público Prisma ORM #30850 relata falta de proveniência npm para Prisma CLI 7.10.1; ausência de proveniência deve ser classificada separadamente de assinatura inválida e aguarda confirmação na CI. A decisão de publicação permanece pendente desse resultado.
+- `next-env.d.ts` contém somente a referência gerada pelo Next para `./.next/types/root-params.d.ts`; foi preservado fora dos commits preparados, sem restauração manual.
+
+## Continuidade — Segurança 01.6 — 2026-11-26
+
+- Corrigido `localizeViewCountLabel`: aceita rótulos de visualização em PT, EN e ES, inclusive o singular produzido por `formatViewCount`, separadores de milhares e espaços de agrupamento; preserva rótulos fora do contrato numérico. Testes sintéticos de ida e volta passam. Nenhuma chamada a APIs produtivas foi feita.
+- Revisadas as oito aprovações EN/ES de Home, Desenvolvimento Web, Gestão de Redes Sociais e Produção Audiovisual. Nenhum texto traduzido foi alterado: Home e Desenvolvimento Web tiveram somente apresentação/fallback PT; a correção compartilhada de contagens mantém rótulos localizados; os arquivos de conteúdo de Redes Sociais e Produção Audiovisual não mudaram. Fingerprints recalculados: Home `72b4738c3e23bdf489a360a2835ff96b677ab203632d77e6d609214d379de705`; Desenvolvimento Web `5c245c082bc93006cbc7c90d534d896a68ed7d62d2286d4befcfafe349e774c4`; Gestão de Redes Sociais `d7418e1f28352014ab42352af76a0d7429fb005aae4f286d182598c768d5a610`; Produção Audiovisual `070c02f9d764cceb6d0a626dd429592258558cc50668f02e7c08e88222c02104`. Os oito estados EN/ES permanecem aprovados e a indexação continua PT-only.
+- Validação local: localização 5/5, catálogo Home 8/8, YouTube/contagens 6/6, E2E Home 4/4, `npm run verify:readiness` e `npm run build` passaram. Isso não substitui a CI remota: PR #6 ainda aguarda push autorizado. A branch permanece baseada na main `0a27c51`; `next-env.d.ts` continua fora dos commits.
+
+## Continuidade — Segurança 01.4 — 2026-11-26
+
+- Os seis cenários E2E reprovados na CI do candidato `cfeae472` foram reconciliados com os contratos atuais, sem alteração funcional: quatro expectativas do Contato agora correspondem às confirmações renderizadas; a Home verifica o título editorial vigente, os 14 IDs de cases autorizados, os dois logos aprovados e mantém as páginas individuais em 404; os idiomas EN/ES liberados são verificados como HTTP 200, com canonical próprio e `noindex`, fora do sitemap; a rota EN do Onboarding não publicado continua redirecionando para PT e termina em 404.
+- Validação local no checkout da branch `p0-security-dependencies-01`: os seis cenários E2E direcionados passaram (6/6). A CI remota ainda não foi executada sobre essas alterações; o PR #6 permanece no SHA anterior até autorização de push.
+- Metadados do registry npm para `prisma@7.10.1`: versão e `dist.integrity` coincidem com `package-lock.json`; o registry publica duas assinaturas com o mesmo key ID. O registro da versão não contém `dist.attestations` nem `dist.provenance`. A CI anterior reportou assinaturas verificadas para 554 pacotes e atestações para 135, sem identificar individualmente os pacotes atestados; portanto, a ausência de proveniência específica do Prisma permanece confirmada, sem evidência de assinatura inválida.
+- `next-env.d.ts` permanece como alteração local preexistente, fora desta reconciliação e fora do commit.
 
 ## Decisão operacional vigente — Google Sheets sem ClickUp no site — 2026-10-28
 
@@ -72,8 +94,8 @@ Atualizado em: `2026-11-24`
 
 ## Checkpoint executável
 
-- Última missão concluída: Quality Gate aprovado para `main` em `c1aab5f`; a `main` é a única linha oficial de desenvolvimento e publicação. O commit visual não aprovado está isolado na branch de recuperação local `recovery/p2-its-hover-unapproved-0f78d21` e em `origin/p2-home-cases-consolidation`; não foi incorporado.
-- Próxima missão autorizada: validar a experiencia unica com `npm run dev` em `localhost:3101`; os casos `pending`/`investigate` e idiomas sem publicacao continuam fora do renderizador.
+- Última missão concluída: Segurança 01.6 foi concluída localmente: parser de contagens corrigido, oito aprovações EN/ES revisadas e fingerprints validados após incorporar a main `0a27c51` (merge `d219072`). Gate local passou; validação remota pendente.
+- Próxima missão autorizada: após autorização específica, fazer push normal da branch existente para atualizar o PR #6 e obter CI; não realizar merge ou deploy.
 - Antes de desenvolver: `npm run continuity:status`. O lan?ador `npm run dev` confirma a identidade do checkout, falha se a porta solicitada estiver ocupada e inicia somente o renderizador com os gates p?blicos.
 - Antes de commitar: o hook local exige `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` no mesmo commit de qualquer alteração de comportamento. Para ativá-lo em uma instalação existente: `npm run setup:hooks`.
 - CI: o workflow busca o histórico completo para validar o commit-base, pois um checkout raso não permite provar a ancestralidade da branch.

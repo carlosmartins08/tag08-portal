@@ -51,22 +51,67 @@ test("produção não publica case em investigação na URL direta", async ({ pa
 
 test("a Home apresenta as sínteses estáticas autorizadas sem publicar páginas de detalhe", async ({ page }) => {
   await page.goto("/", { waitUntil: "domcontentloaded" });
-  await expect(page.getByTestId("home-client-cases")).toBeVisible();
-  await expect(page.getByTestId("home-client-cases").getByRole("heading", { name: "Projetos que ajudam a reconhecer desafios parecidos" })).toBeVisible();
-  await expect(page.getByTestId("home-case-card")).toHaveCount(14);
-  await expect(page.locator('[data-testid="home-case-card"][data-evidence-key^="home-case/"]')).toHaveCount(14);
-  await expect(page.getByTestId("home-client-cases").getByText("LavarRoupa S.A.", { exact: true })).toBeVisible();
-  await expect(page.getByTestId("home-client-cases").getByRole("img", { name: "Luciana Gadelha" })).toBeVisible();
+  const casesSection = page.getByTestId("home-client-cases");
+  await expect(casesSection).toBeVisible();
+  await expect(casesSection.getByRole("heading", { level: 2, name: "DESAFIOS REAIS. RESPOSTAS COM DIREÇÃO." })).toBeVisible();
+  const caseCards = casesSection.getByTestId("home-case-card");
+  await expect(caseCards).toHaveCount(14);
+
+  const expectedApprovedEvidenceKeys = [
+    "home-case/lavarroupa-sa-branding-lavanderia-self-service",
+    "home-case/centro-de-olhos-rebranding-clinica-oftalmologica",
+    "home-case/levisage-branding-clinica-premium",
+    "home-case/alugue-por-temporada-branding-produto-digital",
+    "home-case/luciana-gadelha-marca-pessoal",
+    "home-case/espaco-glau-campos-identidade-visual",
+    "home-case/unida-construtora-presenca-digital",
+    "home-case/econotrip-modelagem-prototipo-mvp",
+    "home-case/personapp-evolucao-produto-digital",
+    "home-case/liga-do-laser-preparacao-infoproduto",
+    "home-case/sm-advocacia-marca-conteudo",
+    "home-case/jl-corretora-rebranding",
+    "home-case/chama-o-dermato-lancamentos",
+    "home-case/doctorplay-modelagem-marca-produto"
+  ];
+  await expect.poll(() => caseCards.evaluateAll((cards) => cards.map((card) => card.getAttribute("data-evidence-key")))).toEqual(expectedApprovedEvidenceKeys);
+  await expect(caseCards.getByText("LavarRoupa S.A.", { exact: true })).toBeVisible();
+  await expect(caseCards.getByRole("img", { name: "Alugue por Temporada" })).toBeVisible();
+  await expect(caseCards.getByRole("img", { name: "Luciana Gadelha" })).toBeVisible();
   await expect(page.getByTestId(/evidence-(pending|investigate)/)).toHaveCount(0);
   await expect(page.getByTestId("content-review-banner")).toHaveCount(0);
+
+  for (const evidenceKey of expectedApprovedEvidenceKeys) {
+    const caseId = evidenceKey.slice("home-case/".length);
+    const response = await page.request.get(`/casos/${caseId}`);
+    expect(response.status(), `case detail remains unpublished: ${caseId}`).toBe(404);
+  }
 });
 
-test("idiomas não publicados redirecionam para a única versão portuguesa", async ({ request }) => {
-  for (const [path, location] of [["/en/programa-afiliados", "/programa-afiliados"], ["/es/sobre", "/sobre"]]) {
-    const response = await request.get(path, { maxRedirects: 0 });
-    expect(response.status(), path).toBe(308);
-    expect(response.headers()["location"], path).toBe(location);
+test("idiomas publicados são navegáveis sem indexação e Onboarding segue desativado", async ({ page, request }) => {
+  for (const [path, htmlLang, canonical] of [
+    ["/en/programa-afiliados", "en", "https://tag08.com.br/en/programa-afiliados"],
+    ["/es/sobre", "es-ES", "https://tag08.com.br/es/sobre"]
+  ]) {
+    const response = await page.goto(path, { waitUntil: "domcontentloaded" });
+    expect(response?.status(), path).toBe(200);
+    expect(new URL(page.url()).pathname).toBe(path);
+    await expect(page.locator("html")).toHaveAttribute("lang", htmlLang);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", canonical);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
   }
+
+  const sitemap = await page.request.get("/sitemap.xml");
+  expect(sitemap.status()).toBe(200);
+  const sitemapXml = await sitemap.text();
+  expect(sitemapXml).not.toContain("https://tag08.com.br/en/");
+  expect(sitemapXml).not.toContain("https://tag08.com.br/es/");
+
+  const unpublishedLocale = await request.get("/en/cliente/onboarding", { maxRedirects: 0 });
+  expect(unpublishedLocale.status()).toBe(308);
+  expect(unpublishedLocale.headers()["location"]).toBe("/cliente/onboarding");
+
+  const disabledOnboarding = await request.get("/cliente/onboarding");
+  expect(disabledOnboarding.status()).toBe(404);
 });
 
 test("Unknown URLs and technical /404 use the real HTTP not-found", async ({ page }) => {

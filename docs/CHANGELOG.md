@@ -1,5 +1,16 @@
 # CHANGELOG - TAG08
 
+## 2026-11-26
+
+- Segurança 01.6 (correção funcional): `localizeViewCountLabel` agora reconhece rótulos PT singular/plural e contagens formatadas em PT/EN/ES, preservando textos sem formato numérico. Cobertura sintética adicionada para valores e conversão entre formatador e localizador.
+- Segurança 01.6 (revisão local EN/ES): revisadas as oito aprovações das rotas Home, Desenvolvimento Web, Gestão de Redes Sociais e Produção Audiovisual. Os textos traduzidos não mudaram; ajustes de apresentação, fallback em português e formatação de contagens foram considerados. Atualizados somente os quatro fingerprints autorizados. `verify:readiness` passou localmente; a CI do PR #6 aguarda push autorizado.
+- Segurança 01.4: reconciliadas seis expectativas E2E com os contratos vigentes de Contato, evidências da Home e publicação/indexação multilíngue. As verificações funcionais e de privacidade foram preservadas; os seis cenários direcionados passaram localmente no checkout candidato. Nenhuma implementação funcional foi alterada. A CI remota aguarda push autorizado.
+- Confirmados no registry npm os metadados de `prisma@7.10.1`: duas assinaturas publicadas e integridade compatível com o lockfile; sem atestação/proveniência no registro da versão. Essa lacuna é distinta de assinatura inválida.
+
+## 2026-11-25
+
+- Preparação da correção de segurança na branch `p0-security-dependencies-01`: a auditoria completa e a de produção passaram sem vulnerabilidades reportadas; `npm run verify:readiness` passou depois que o verificador foi alinhado à cadeia 308 → 404 da rota localizada de Onboarding desativado. A job `supply-chain` foi acrescentada ao workflow existente para auditar produção, auditar todas as dependências e verificar assinaturas/proveniência em etapa separada, com `npm ci --ignore-scripts` antes dessas verificações. A checagem local de assinaturas permanece inconclusiva por recusa de conexão ao TUF do Sigstore no proxy; nenhuma assinatura inválida foi observada.
+- Classificação das seis falhas E2E históricas (CI do SHA `8758c153`): nome acessível do botão legal desatualizado; expectativa de botão desatualizada para CTA que é link; dados de perfis aprovados ausentes no checkout histórico; e três falhas idênticas de landmark duplicado em Privacidade nos viewports desktop/tablet/mobile. Os seis cenários passaram no checkout atual (6/6). A CI da `main` em `0143a37` parou em readiness e pulou os E2E; a confirmação remota das correções depende de nova CI autorizada.
 ## 2026-11-25
 
 - Missão 05-B: alinhados os papéis semânticos dos contextos claros ao canvas institucional `#F2F2F2` e ao conteúdo primário `#0D0D0D`, sem substituir valores globais. O contexto escuro passou a reutilizar o token `border-subtle` para bordas estruturais; o card selecionado do diagnóstico agora consome o fundo e o foco do contexto em vez de duplicar cores locais. Adicionado teste de regressão para esses contratos. A prévia canônica foi identificada pela cadeia `tools/dev-preview.mjs` e uma captura desktop da Home foi inspecionada. Contraste efetivamente renderizado, estados interativos e viewports 390/768/1440 não foram verificados: o controle do navegador Windows encerrou a sessão ao perder a confiança no URL ativo.
