@@ -20,6 +20,10 @@ Atualizado em: `2026-11-26`
 - A auditoria `npm audit signatures` ainda depende de uma execução com acesso ao registry/TUF. O issue público Prisma ORM #30850 relata falta de proveniência npm para Prisma CLI 7.10.1; ausência de proveniência deve ser classificada separadamente de assinatura inválida e aguarda confirmação na CI. A decisão de publicação permanece pendente desse resultado.
 - `next-env.d.ts` contém somente a referência gerada pelo Next para `./.next/types/root-params.d.ts`; foi preservado fora dos commits preparados, sem restauração manual.
 
+## Continuidade — Segurança 01.6 — 2026-11-26
+
+- Corrigido `localizeViewCountLabel`: aceita rótulos de visualização em PT, EN e ES, inclusive o singular produzido por `formatViewCount`, separadores de milhares e espaços de agrupamento; preserva rótulos fora do contrato numérico. Testes sintéticos de ida e volta passam. Nenhuma chamada a APIs produtivas foi feita.
+
 ## Continuidade — Segurança 01.4 — 2026-11-26
 
 - Os seis cenários E2E reprovados na CI do candidato `cfeae472` foram reconciliados com os contratos atuais, sem alteração funcional: quatro expectativas do Contato agora correspondem às confirmações renderizadas; a Home verifica o título editorial vigente, os 14 IDs de cases autorizados, os dois logos aprovados e mantém as páginas individuais em 404; os idiomas EN/ES liberados são verificados como HTTP 200, com canonical próprio e `noindex`, fora do sitemap; a rota EN do Onboarding não publicado continua redirecionando para PT e termina em 404.
