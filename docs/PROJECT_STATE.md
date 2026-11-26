@@ -9,7 +9,16 @@
 
 - Home cases use a responsive, manually controlled editorial carousel with keyboard/touch navigation, a visible next-card cue, and non-repeated client names. Alugue por Temporada and Luciana Gadelha use their matching local logos under route-specific evidence approvals; the remaining cases use typographic identification. Case detail publication remains independently gated.
 
-Atualizado em: `2026-11-24`
+Atualizado em: `2026-11-25`
+
+## Continuidade — Segurança 01.2 — 2026-11-25
+
+- O trabalho de dependências permanece no worktree existente, agora na branch `p0-security-dependencies-01`, derivada da `main` observada em `0143a37`; a renomeação preservou HEAD e o diff. `npm run continuity:status` passou após a renomeação. Nenhum push, merge ou deploy foi realizado.
+- Dependências atualizadas anteriormente nesta missão: Next 16.4.6, Prisma 7.10.1, Zod 4.6.7 e LHCI 0.16.1, com ajustes pontuais no lockfile. `npm audit --omit=dev` e `npm audit` passaram sem vulnerabilidades reportadas. A verificação local de assinaturas não concluiu: a conexão ao repositório TUF do Sigstore foi recusada pelo proxy local (`127.0.0.1:9`); isso não demonstra assinatura inválida. A CI agora tem uma job independente para repetir as auditorias e verificar assinaturas/atestações antes de qualquer script de instalação nessa job.
+- `npm run verify:readiness` passou após a correção do verificador de rotas. O verificador agora confirma a cadeia precisa de `/en|es/cliente/onboarding` (308 apenas para a rota PT local e 404 terminal quando Onboarding está desativado), preservando a implementação e seus controles.
+- A CI histórica de 2026-11-10 no SHA `8758c153` registrou seis falhas E2E. No checkout atual, os seis cenários correspondentes passaram em execução local direcionada (6/6). A CI de `0143a37` não executou E2E porque parou antes, em `verify:readiness`; não há nova execução remota após as correções locais.
+- A auditoria `npm audit signatures` ainda depende de uma execução com acesso ao registry/TUF. O issue público Prisma ORM #30850 relata falta de proveniência npm para Prisma CLI 7.10.1; ausência de proveniência deve ser classificada separadamente de assinatura inválida e aguarda confirmação na CI. A decisão de publicação permanece pendente desse resultado.
+- `next-env.d.ts` contém somente a referência gerada pelo Next para `./.next/types/root-params.d.ts`; foi preservado fora dos commits preparados, sem restauração manual.
 
 ## Decisão operacional vigente — Google Sheets sem ClickUp no site — 2026-10-28
 

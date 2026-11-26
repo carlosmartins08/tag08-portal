@@ -1,5 +1,10 @@
 # CHANGELOG - TAG08
 
+## 2026-11-25
+
+- Preparação da correção de segurança na branch `p0-security-dependencies-01`: a auditoria completa e a de produção passaram sem vulnerabilidades reportadas; `npm run verify:readiness` passou depois que o verificador foi alinhado à cadeia 308 → 404 da rota localizada de Onboarding desativado. A job `supply-chain` foi acrescentada ao workflow existente para auditar produção, auditar todas as dependências e verificar assinaturas/proveniência em etapa separada, com `npm ci --ignore-scripts` antes dessas verificações. A checagem local de assinaturas permanece inconclusiva por recusa de conexão ao TUF do Sigstore no proxy; nenhuma assinatura inválida foi observada.
+- Classificação das seis falhas E2E históricas (CI do SHA `8758c153`): nome acessível do botão legal desatualizado; expectativa de botão desatualizada para CTA que é link; dados de perfis aprovados ausentes no checkout histórico; e três falhas idênticas de landmark duplicado em Privacidade nos viewports desktop/tablet/mobile. Os seis cenários passaram no checkout atual (6/6). A CI da `main` em `0143a37` parou em readiness e pulou os E2E; a confirmação remota das correções depende de nova CI autorizada.
+
 ## 2026-11-24
 
 - Reworked the Home case collection as a manually controlled, responsive editorial carousel with keyboard and touch navigation, a visible next-card cue, reduced-motion behavior, and non-repeated client names. Only the locally stored Alugue por Temporada and Luciana Gadelha logos are shown, each behind its own route approval; the other cases use typography, not invented or generic imagery. Added evidence and browser assertions for the two approved marks.
