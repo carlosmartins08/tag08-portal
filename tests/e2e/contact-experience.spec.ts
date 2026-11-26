@@ -163,8 +163,8 @@ test.describe("experiencia de contato", () => {
     await page.getByLabel(/Autorizo o uso destes dados/).check();
     await page.getByRole("button", { name: /Enviar solicita/i }).click();
 
-    await expect(page.getByRole("heading", { name: "Mensagem Enviada!" })).toBeVisible();
-    await expect(page.getByText(/Suas informações foram enviadas com sucesso/)).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Mensagem enviada" })).toBeVisible();
+    await expect(page.getByText(/Suas informações foram enviadas\. Se necessário, a equipe poderá entrar em contato pelos canais informados\./)).toBeVisible();
     await expect(page.getByText(/recebida pela TAG08|fará a triagem|triagem inicial|triagem manual|revisa sua solicitação|revisa o pedido|respostas chegam junto|6 horas úteis|Entraremos em contato pelo WhatsApp/i)).toHaveCount(0);
     await expect(page.getByText(/onboarding/i)).toHaveCount(0);
     expect(submittedPayload).toMatchObject({
@@ -228,7 +228,7 @@ test.describe("experiencia de contato", () => {
     await page.getByRole("button", { name: "Enviar pedido de orientação" }).click();
 
     await expect(page.getByRole("heading", { name: "Pedido de orientação enviado" })).toBeVisible();
-    await expect(page.getByText(/somente o envio; não representa diagnóstico concluído nem recomendação automática/)).toBeVisible();
+    await expect(page.getByText(/somente o envio; não representa um diagnóstico concluído nem recomendação automática/)).toBeVisible();
     expect(submittedPayload).toMatchObject({
       requestType: "diagnostic",
       serviceInterests: [],
@@ -273,7 +273,7 @@ test.describe("experiencia de contato", () => {
     await page.getByRole("checkbox", { name: /Confirmo o envio desta inscrição/ }).check();
     await page.getByRole("button", { name: "Confirmar e enviar inscrição" }).click();
     await expect(page.getByRole("heading", { name: "Inscrição enviada" })).toBeVisible();
-    await expect(page.getByText(/sem indicar aprovação ou contratação/)).toBeVisible();
+    await expect(page.getByText(/não representa aprovação ou contratação/)).toBeVisible();
     await expect(page.getByText("Fast Track Recomendado")).toHaveCount(0);
     expect(submittedPayload).toMatchObject({
       requestType: "partnership",
@@ -374,7 +374,7 @@ test.describe("experiencia de contato", () => {
     await page.getByLabel(/Autorizo o uso destes dados/).check();
     await page.getByRole("button", { name: /Enviar solicitação à TAG08/ }).click();
 
-    await expect(page.getByRole("heading", { name: "Mensagem Enviada!" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Mensagem enviada" })).toBeVisible();
     expect(submittedPayload).toMatchObject({
       requestType: "existing_client",
       serviceInterests: [],

@@ -9,7 +9,7 @@
 
 - Home cases use a responsive, manually controlled editorial carousel with keyboard/touch navigation, a visible next-card cue, and non-repeated client names. Alugue por Temporada and Luciana Gadelha use their matching local logos under route-specific evidence approvals; the remaining cases use typographic identification. Case detail publication remains independently gated.
 
-Atualizado em: `2026-11-25`
+Atualizado em: `2026-11-26`
 
 ## Continuidade — Segurança 01.2 — 2026-11-25
 
@@ -19,6 +19,13 @@ Atualizado em: `2026-11-25`
 - A CI histórica de 2026-11-10 no SHA `8758c153` registrou seis falhas E2E. No checkout atual, os seis cenários correspondentes passaram em execução local direcionada (6/6). A CI de `0143a37` não executou E2E porque parou antes, em `verify:readiness`; não há nova execução remota após as correções locais.
 - A auditoria `npm audit signatures` ainda depende de uma execução com acesso ao registry/TUF. O issue público Prisma ORM #30850 relata falta de proveniência npm para Prisma CLI 7.10.1; ausência de proveniência deve ser classificada separadamente de assinatura inválida e aguarda confirmação na CI. A decisão de publicação permanece pendente desse resultado.
 - `next-env.d.ts` contém somente a referência gerada pelo Next para `./.next/types/root-params.d.ts`; foi preservado fora dos commits preparados, sem restauração manual.
+
+## Continuidade — Segurança 01.4 — 2026-11-26
+
+- Os seis cenários E2E reprovados na CI do candidato `cfeae472` foram reconciliados com os contratos atuais, sem alteração funcional: quatro expectativas do Contato agora correspondem às confirmações renderizadas; a Home verifica o título editorial vigente, os 14 IDs de cases autorizados, os dois logos aprovados e mantém as páginas individuais em 404; os idiomas EN/ES liberados são verificados como HTTP 200, com canonical próprio e `noindex`, fora do sitemap; a rota EN do Onboarding não publicado continua redirecionando para PT e termina em 404.
+- Validação local no checkout da branch `p0-security-dependencies-01`: os seis cenários E2E direcionados passaram (6/6). A CI remota ainda não foi executada sobre essas alterações; o PR #6 permanece no SHA anterior até autorização de push.
+- Metadados do registry npm para `prisma@7.10.1`: versão e `dist.integrity` coincidem com `package-lock.json`; o registry publica duas assinaturas com o mesmo key ID. O registro da versão não contém `dist.attestations` nem `dist.provenance`. A CI anterior reportou assinaturas verificadas para 554 pacotes e atestações para 135, sem identificar individualmente os pacotes atestados; portanto, a ausência de proveniência específica do Prisma permanece confirmada, sem evidência de assinatura inválida.
+- `next-env.d.ts` permanece como alteração local preexistente, fora desta reconciliação e fora do commit.
 
 ## Decisão operacional vigente — Google Sheets sem ClickUp no site — 2026-10-28
 
@@ -81,8 +88,8 @@ Atualizado em: `2026-11-25`
 
 ## Checkpoint executável
 
-- Última missão concluída: Quality Gate aprovado para `main` em `c1aab5f`; a `main` é a única linha oficial de desenvolvimento e publicação. O commit visual não aprovado está isolado na branch de recuperação local `recovery/p2-its-hover-unapproved-0f78d21` e em `origin/p2-home-cases-consolidation`; não foi incorporado.
-- Próxima missão autorizada: validar a experiencia unica com `npm run dev` em `localhost:3101`; os casos `pending`/`investigate` e idiomas sem publicacao continuam fora do renderizador.
+- Última missão concluída: Segurança 01.4 reconciliou as seis expectativas E2E da CI do candidato `cfeae472`; os seis cenários direcionados passaram localmente. A branch de segurança aguarda autorização específica de push; a `main`, o PR #4, merge e deploy não foram alterados.
+- Próxima missão autorizada: após autorização, publicar por push normal `p0-security-dependencies-01` e obter CI completa no PR #6; não realizar merge ou deploy.
 - Antes de desenvolver: `npm run continuity:status`. O lan?ador `npm run dev` confirma a identidade do checkout, falha se a porta solicitada estiver ocupada e inicia somente o renderizador com os gates p?blicos.
 - Antes de commitar: o hook local exige `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` no mesmo commit de qualquer alteração de comportamento. Para ativá-lo em uma instalação existente: `npm run setup:hooks`.
 - CI: o workflow busca o histórico completo para validar o commit-base, pois um checkout raso não permite provar a ancestralidade da branch.

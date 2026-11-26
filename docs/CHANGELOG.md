@@ -1,5 +1,10 @@
 # CHANGELOG - TAG08
 
+## 2026-11-26
+
+- Segurança 01.4: reconciliadas seis expectativas E2E com os contratos vigentes de Contato, evidências da Home e publicação/indexação multilíngue. As verificações funcionais e de privacidade foram preservadas; os seis cenários direcionados passaram localmente no checkout candidato. Nenhuma implementação funcional foi alterada. A CI remota aguarda push autorizado.
+- Confirmados no registry npm os metadados de `prisma@7.10.1`: duas assinaturas publicadas e integridade compatível com o lockfile; sem atestação/proveniência no registro da versão. Essa lacuna é distinta de assinatura inválida.
+
 ## 2026-11-25
 
 - Preparação da correção de segurança na branch `p0-security-dependencies-01`: a auditoria completa e a de produção passaram sem vulnerabilidades reportadas; `npm run verify:readiness` passou depois que o verificador foi alinhado à cadeia 308 → 404 da rota localizada de Onboarding desativado. A job `supply-chain` foi acrescentada ao workflow existente para auditar produção, auditar todas as dependências e verificar assinaturas/proveniência em etapa separada, com `npm ci --ignore-scripts` antes dessas verificações. A checagem local de assinaturas permanece inconclusiva por recusa de conexão ao TUF do Sigstore no proxy; nenhuma assinatura inválida foi observada.
