@@ -323,7 +323,7 @@ export default function DesenvolvimentoWeb({ onNavigate, locale = "pt" }: WebPro
             <span className="tag08-meta text-xs text-[color:var(--color-action-readable)] uppercase tracking-widest font-black bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md inline-block">
               {copy?.mismatchLabel ?? "Sinais de desalinhamento digital"}
             </span>
-            <h2 className="font-display font-medium text-3xl sm:text-4xl text-[color:var(--color-content-primary)] tracking-tight">
+            <h2 className="tag08-editorial-heading font-semibold text-3xl sm:text-4xl text-[color:var(--color-content-primary)] tracking-tight">
               {copy?.mismatchTitle ?? "Quando o site deixa de ajudar a marca a ser entendida."}
             </h2>
             <p className="text-[color:var(--color-content-secondary)] text-sm font-sans leading-relaxed max-w-xl">

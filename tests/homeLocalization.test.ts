@@ -109,6 +109,17 @@ test("all 14 approved Home cases have complete EN/ES card translations", () => {
   assert.match(homeSource, /visibleClientCases\.length > 0 \?/);
 });
 
+test("Portuguese Home case count fallback is localized and keeps the dynamic count", () => {
+  assert.match(homeSource, /Veja \{count\} projetos e os desafios que orientaram cada trabalho\./);
+  assert.match(homeSource, /\(casesCopy\?\.countLabel \?\? [^)]*\)\.replace\("\{count\}", String\(localizedClientCases\.length\)\)/);
+  assert.doesNotMatch(homeSource, /Explore \{count\} projects and the challenges they addressed\./);
+});
+
+test("Home audiovisual heading joins both title fragments with a real space", () => {
+  assert.match(homeSource, /const videoHeading = `\$\{videoCopy\?\.title[^`]+\} \$\{videoCopy\?\.titleSecondLine[^`]+\}`/);
+  assert.match(homeSource, /<h2[^>]*>\s*\{videoHeading\}\s*<\/h2>/);
+});
+
 test("Home EN/ES catalogs are structurally complete and nonempty", () => {
   const collectPaths = (value: unknown, prefix = ""): string[] => {
     if (typeof value === "string") {

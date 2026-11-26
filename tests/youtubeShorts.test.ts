@@ -1,7 +1,23 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync } from "node:fs";
-import { getVideoDescriptionPreview, selectLiveOfficialYouTubeVideos } from "../src/lib/officialContent";
+import { formatViewCount, getVideoDescriptionPreview, localizeViewCountLabel, selectLiveOfficialYouTubeVideos } from "../src/lib/officialContent";
+
+test("view counts use localized singular, plural, zero and safe invalid values", () => {
+  assert.equal(formatViewCount(0, "pt"), "0 visualizações");
+  assert.equal(formatViewCount(1, "pt"), "1 visualização");
+  assert.equal(formatViewCount(2, "pt"), "2 visualizações");
+  assert.equal(formatViewCount(1, "en"), "1 view");
+  assert.equal(formatViewCount(2, "en"), "2 views");
+  assert.equal(formatViewCount(1, "es"), "1 visualización");
+  assert.equal(formatViewCount(2, "es"), "2 visualizaciones");
+  assert.equal(formatViewCount("invalid", "pt"), "0 visualizações");
+  assert.equal(formatViewCount(-1, "pt"), "0 visualizações");
+  assert.equal(localizeViewCountLabel("1 visualizações", "pt"), "1 visualização");
+  assert.equal(localizeViewCountLabel("1.234 visualizações", "en"), "1,234 views");
+  assert.equal(localizeViewCountLabel("2 visualizações", "es"), "2 visualizaciones");
+  assert.equal(localizeViewCountLabel("PORTFÓLIO 01", "en"), "PORTFÓLIO 01");
+});
 
 test("a Home só seleciona vídeos recebidos de uma origem oficial ao vivo", () => {
   const videos = [{

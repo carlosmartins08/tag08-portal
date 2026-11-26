@@ -1,5 +1,11 @@
 # CHANGELOG - TAG08
 
+## 2026-11-25
+
+- Missão 05-B: alinhados os papéis semânticos dos contextos claros ao canvas institucional `#F2F2F2` e ao conteúdo primário `#0D0D0D`, sem substituir valores globais. O contexto escuro passou a reutilizar o token `border-subtle` para bordas estruturais; o card selecionado do diagnóstico agora consome o fundo e o foco do contexto em vez de duplicar cores locais. Adicionado teste de regressão para esses contratos. A prévia canônica foi identificada pela cadeia `tools/dev-preview.mjs` e uma captura desktop da Home foi inspecionada. Contraste efetivamente renderizado, estados interativos e viewports 390/768/1440 não foram verificados: o controle do navegador Windows encerrou a sessão ao perder a confiança no URL ativo.
+- Integrada a Darker Grotesque variável local (300–900) via `next/font/local` ao papel opt-in `--font-editorial`; Manrope permanece em `--font-sans`, `--font-display`, corpo e navegação. Aplicada a dois títulos editoriais-piloto (Home/diagnóstico e Desenvolvimento Web), calibrados e verificados em 390, 768 e 1440 px. A navegação protegida permaneceu pixel-idêntica nas capturas; build e auditorias tipográfica/visual passaram.
+- Reconciliado o `DESIGN.md` com a direção institucional aprovada, distinguindo regras normativas de tokens e tipografia atualmente implementados. Formalizadas a proteção integral da navegação e suas dependências, as referências positivas da Home, princípios de coleta/experiência, acabamento e referências metodológicas NN/g; nenhuma interface ou token foi alterado.
+
 ## 2026-11-24
 
 - Reworked the Home case collection as a manually controlled, responsive editorial carousel with keyboard and touch navigation, a visible next-card cue, reduced-motion behavior, and non-repeated client names. Only the locally stored Alugue por Temporada and Luciana Gadelha logos are shown, each behind its own route approval; the other cases use typography, not invented or generic imagery. Added evidence and browser assertions for the two approved marks.
