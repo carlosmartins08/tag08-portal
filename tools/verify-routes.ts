@@ -17,6 +17,18 @@ const check = async (path: string, expectedStatus: number) => {
   return response;
 };
 
+const checkDisabledLocalizedOnboarding = async (path: string) => {
+  const redirect = await check(path, 308);
+  const location = redirect.headers.get("location");
+  assert.ok(location, `${path} must redirect unpublished onboarding locales to Portuguese`);
+
+  const target = new URL(location, baseUrl);
+  assert.equal(target.origin, new URL(baseUrl).origin, `${path} must not redirect outside the local origin`);
+  assert.equal(target.pathname, "/cliente/onboarding", `${path} must redirect to the canonical Portuguese onboarding route`);
+  assert.equal(target.search, "", `${path} must not carry locale-specific query data to onboarding`);
+  await check(target.pathname, 404);
+};
+
 for (const path of renderableRoutePaths) {
   await check(path, path === "/cliente/onboarding" && !onboardingEnabled ? 404 : 200);
   const route = getRouteByPath(path);
@@ -25,7 +37,8 @@ for (const path of renderableRoutePaths) {
   for (const locale of ["en", "es"] as const) {
     const localizedPath = getLocalizedPath(path, locale);
     const isPublished = isRouteLocalePublished(route, locale);
-    await check(localizedPath, path === "/cliente/onboarding" && !onboardingEnabled ? 404 : isPublished ? 200 : 308);
+    if (path === "/cliente/onboarding") continue;
+    await check(localizedPath, isPublished ? 200 : 308);
   }
 }
 
@@ -40,8 +53,16 @@ const onboardingRoute = getRouteByPath("/cliente/onboarding");
 assert.ok(onboardingRoute, "The protected onboarding route must remain registered");
 for (const locale of ["en", "es"] as const) {
   const localizedPath = getLocalizedPath(onboardingRoute.canonicalPath, locale);
-  const response = await check(localizedPath, onboardingEnabled ? 308 : 404);
-  if (onboardingEnabled) assert.equal(response.headers.get("location"), onboardingRoute.canonicalPath);
+  if (onboardingEnabled) {
+    const response = await check(localizedPath, 308);
+    const location = response.headers.get("location");
+    assert.ok(location, `${localizedPath} must redirect to the Portuguese onboarding route`);
+    const target = new URL(location, baseUrl);
+    assert.equal(target.origin, new URL(baseUrl).origin);
+    assert.equal(target.pathname, onboardingRoute.canonicalPath);
+  } else {
+    await checkDisabledLocalizedOnboarding(localizedPath);
+  }
 }
 
 const languageRedirect = await check("/sobre?lang=en&utm_source=route-check", 308);
