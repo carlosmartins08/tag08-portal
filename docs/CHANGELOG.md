@@ -3,6 +3,7 @@
 ## 2026-11-26
 
 - Segurança 01.6 (correção funcional): `localizeViewCountLabel` agora reconhece rótulos PT singular/plural e contagens formatadas em PT/EN/ES, preservando textos sem formato numérico. Cobertura sintética adicionada para valores e conversão entre formatador e localizador.
+- Segurança 01.6 (revisão local EN/ES): revisadas as oito aprovações das rotas Home, Desenvolvimento Web, Gestão de Redes Sociais e Produção Audiovisual. Os textos traduzidos não mudaram; ajustes de apresentação, fallback em português e formatação de contagens foram considerados. Atualizados somente os quatro fingerprints autorizados. `verify:readiness` passou localmente; a CI do PR #6 aguarda push autorizado.
 - Segurança 01.4: reconciliadas seis expectativas E2E com os contratos vigentes de Contato, evidências da Home e publicação/indexação multilíngue. As verificações funcionais e de privacidade foram preservadas; os seis cenários direcionados passaram localmente no checkout candidato. Nenhuma implementação funcional foi alterada. A CI remota aguarda push autorizado.
 - Confirmados no registry npm os metadados de `prisma@7.10.1`: duas assinaturas publicadas e integridade compatível com o lockfile; sem atestação/proveniência no registro da versão. Essa lacuna é distinta de assinatura inválida.
 

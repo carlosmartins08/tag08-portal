@@ -23,6 +23,8 @@ Atualizado em: `2026-11-26`
 ## Continuidade — Segurança 01.6 — 2026-11-26
 
 - Corrigido `localizeViewCountLabel`: aceita rótulos de visualização em PT, EN e ES, inclusive o singular produzido por `formatViewCount`, separadores de milhares e espaços de agrupamento; preserva rótulos fora do contrato numérico. Testes sintéticos de ida e volta passam. Nenhuma chamada a APIs produtivas foi feita.
+- Revisadas as oito aprovações EN/ES de Home, Desenvolvimento Web, Gestão de Redes Sociais e Produção Audiovisual. Nenhum texto traduzido foi alterado: Home e Desenvolvimento Web tiveram somente apresentação/fallback PT; a correção compartilhada de contagens mantém rótulos localizados; os arquivos de conteúdo de Redes Sociais e Produção Audiovisual não mudaram. Fingerprints recalculados: Home `72b4738c3e23bdf489a360a2835ff96b677ab203632d77e6d609214d379de705`; Desenvolvimento Web `5c245c082bc93006cbc7c90d534d896a68ed7d62d2286d4befcfafe349e774c4`; Gestão de Redes Sociais `d7418e1f28352014ab42352af76a0d7429fb005aae4f286d182598c768d5a610`; Produção Audiovisual `070c02f9d764cceb6d0a626dd429592258558cc50668f02e7c08e88222c02104`. Os oito estados EN/ES permanecem aprovados e a indexação continua PT-only.
+- Validação local: localização 5/5, catálogo Home 8/8, YouTube/contagens 6/6, E2E Home 4/4, `npm run verify:readiness` e `npm run build` passaram. Isso não substitui a CI remota: PR #6 ainda aguarda push autorizado. A branch permanece baseada na main `0a27c51`; `next-env.d.ts` continua fora dos commits.
 
 ## Continuidade — Segurança 01.4 — 2026-11-26
 
@@ -92,8 +94,8 @@ Atualizado em: `2026-11-26`
 
 ## Checkpoint executável
 
-- Última missão concluída: Segurança 01.4 reconciliou as seis expectativas E2E da CI do candidato `cfeae472`; os seis cenários direcionados passaram localmente. A branch de segurança aguarda autorização específica de push; a `main`, o PR #4, merge e deploy não foram alterados.
-- Próxima missão autorizada: após autorização, publicar por push normal `p0-security-dependencies-01` e obter CI completa no PR #6; não realizar merge ou deploy.
+- Última missão concluída: Segurança 01.6 foi concluída localmente: parser de contagens corrigido, oito aprovações EN/ES revisadas e fingerprints validados após incorporar a main `0a27c51` (merge `d219072`). Gate local passou; validação remota pendente.
+- Próxima missão autorizada: após autorização específica, fazer push normal da branch existente para atualizar o PR #6 e obter CI; não realizar merge ou deploy.
 - Antes de desenvolver: `npm run continuity:status`. O lan?ador `npm run dev` confirma a identidade do checkout, falha se a porta solicitada estiver ocupada e inicia somente o renderizador com os gates p?blicos.
 - Antes de commitar: o hook local exige `docs/PROJECT_STATE.md` e `docs/CHANGELOG.md` no mesmo commit de qualquer alteração de comportamento. Para ativá-lo em uma instalação existente: `npm run setup:hooks`.
 - CI: o workflow busca o histórico completo para validar o commit-base, pois um checkout raso não permite provar a ancestralidade da branch.
