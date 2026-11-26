@@ -251,12 +251,10 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
   };
 
   useEffect(() => {
-    const pageTitle = document.title;
-
     trackPageView({
       page_location: window.location.href,
       page_path: path,
-      page_title: pageTitle,
+      page_title: document.title,
       page_referrer: document.referrer || undefined,
       language,
       route_type: currentRoute?.routeCategory ?? "aux",
@@ -264,6 +262,10 @@ export default function SiteShell({ path, locale, children }: SiteShellProps) {
       page_group: currentRoute?.routeCategory ?? "aux",
       is_service_page: Boolean(currentRoute?.isServicePage)
     });
+  }, [currentRoute, language, path]);
+
+  useEffect(() => {
+    const pageTitle = document.title;
 
     scrollDepthMarksRef.current = new Set();
     engagementTrackedRef.current = false;
