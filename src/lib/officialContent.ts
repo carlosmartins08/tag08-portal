@@ -1,4 +1,5 @@
 import { TAG08_OFFICIAL_YOUTUBE_URL } from "../config/siteNetwork";
+import type { RouteLocale } from "../config/routeRegistry";
 
 export type OfficialContentSourceStatus = "live" | "fallback" | "partial" | "disabled" | "error";
 
@@ -124,10 +125,23 @@ export const formatRelativeTime = (date: Date) => {
   return `há ${months} mês${months > 1 ? "es" : ""}`;
 };
 
-export const formatViewCount = (value: number | string) => {
+export const formatViewCount = (value: number | string, locale: RouteLocale = "pt") => {
   const numeric = typeof value === "string" ? Number(value) : value;
-  const safeNumeric = Number.isFinite(numeric) ? numeric : 0;
-  return `${new Intl.NumberFormat("pt-BR").format(safeNumeric)} visualizações`;
+  const safeNumeric = Number.isFinite(numeric) && numeric >= 0 ? numeric : 0;
+  const localeSettings = {
+    pt: { numberLocale: "pt-BR", singular: "visualização", plural: "visualizações" },
+    en: { numberLocale: "en", singular: "view", plural: "views" },
+    es: { numberLocale: "es", singular: "visualización", plural: "visualizaciones" }
+  }[locale];
+  const label = safeNumeric === 1 ? localeSettings.singular : localeSettings.plural;
+  return `${new Intl.NumberFormat(localeSettings.numberLocale).format(safeNumeric)} ${label}`;
+};
+
+export const localizeViewCountLabel = (value: string, locale: RouteLocale) => {
+  const match = value.match(/^([\d.,\s]+)\s+visualizações$/i);
+  if (!match) return value;
+  const digits = match[1].replace(/\D/g, "");
+  return formatViewCount(digits || "0", locale);
 };
 
 export const formatIsoDuration = (duration: string) => {

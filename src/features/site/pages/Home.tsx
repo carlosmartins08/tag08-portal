@@ -498,6 +498,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
   const proofCopy = pilotCopy?.proof;
   const reviewsCopy = pilotCopy?.reviews;
   const casesCopy = pilotCopy?.cases;
+  const videoHeading = `${videoCopy?.title ?? "Vídeos, bastidores e narrativas"} ${videoCopy?.titleSecondLine ?? "com intenção de marca."}`;
   const faqCopy = pilotCopy?.faq;
   const diagnosisCopy = pilotCopy?.diagnostic;
   const methodCopy = pilotCopy?.methodCenter;
@@ -1331,7 +1332,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
             <span className="tag08-kicker">
               {diagnosisCopy?.intro.kicker ?? "Sinais de desalinhamento"}
             </span>
-            <h2 className="tag08-section__heading font-display font-medium text-3xl sm:text-4xl text-white tracking-tight">
+            <h2 className="tag08-section__heading tag08-editorial-heading font-semibold text-3xl sm:text-4xl text-white tracking-tight">
               {diagnosisCopy?.intro.title ?? "Sinais de desgaste quando o digital cresce sem estrutura."}
             </h2>
             <p className="tag08-section__copy text-zinc-400 text-xs sm:text-sm font-sans">
@@ -1559,9 +1560,9 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                                 role="button"
                                 tabIndex={0}
                                 aria-pressed={isThisSymptomActive}
-                                className={`p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-4 relative overflow-hidden ${
+                                className={`tag08-diagnostic-signal p-5 rounded-2xl border transition-[background-color,border-color,box-shadow] duration-200 motion-reduce:transition-none cursor-pointer flex flex-col justify-between space-y-4 relative overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                                   isThisSymptomActive
-                                    ? "bg-zinc-900/90 border-brand-secondary/40 shadow-[0_4px_24px_rgba(var(--color-brand-secondary-rgb),0.06)]"
+                                    ? "context-default bg-[color:var(--color-surface-canvas)] border-accent-readable shadow-[var(--shadow-base)]"
                                     : "bg-zinc-950/50 border-white/[0.02] hover:border-white/10"
                                 }`}
                               >
@@ -1572,23 +1573,27 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
                                 <div className="space-y-2">
                                   {/* Symptom title & Status header */}
                                   <div className="flex items-center justify-between gap-2">
-                                    <span className={`font-sans text-xs font-bold uppercase ${isThisSymptomActive ? "text-brand-secondary" : "text-zinc-300"}`}>
+                                    <span className={`font-sans text-xs font-bold uppercase ${isThisSymptomActive ? "text-accent-readable" : "text-zinc-300"}`}>
                                       {diagnosisCopy?.signalPrefix ?? "SINAL //"} {symptom.label}
                                     </span>
-                                    <div className={`w-2 h-2 rounded-full ${isThisSymptomActive ? "bg-brand-secondary shadow-[0_0_8px_var(--color-brand-secondary)] animate-pulse" : "bg-red-500/40"}`} />
+                                    {isThisSymptomActive ? (
+                                      <Check className="h-4 w-4 shrink-0 text-accent-readable" aria-hidden="true" />
+                                    ) : (
+                                      <div className="h-2 w-2 shrink-0 rounded-full bg-red-500/40" aria-hidden="true" />
+                                    )}
                                   </div>
 
-                                  <p className="text-zinc-200 text-xs font-semibold leading-relaxed font-sans">
+                                  <p className={`text-xs font-semibold leading-relaxed font-sans ${isThisSymptomActive ? "text-[color:var(--color-content-primary)]" : "text-zinc-200"}`}>
                                     {symptom.desc}
                                   </p>
                                 </div>
 
                                 {/* Consequences quote */}
                                 <div className="pt-3 border-t border-white/[0.02] space-y-1.5">
-                                  <span className="font-sans text-xs text-zinc-300 uppercase tracking-widest block">{diagnosisCopy?.possibleImpact ?? "IMPACTO POSSÍVEL"}</span>
+                                  <span className={`font-sans text-xs uppercase tracking-widest block ${isThisSymptomActive ? "text-[color:var(--color-content-secondary)]" : "text-zinc-300"}`}>{diagnosisCopy?.possibleImpact ?? "IMPACTO POSSÍVEL"}</span>
                                   <p className={`text-xs font-sans leading-relaxed italic border-l pl-2.5 py-0.5 rounded ${
                                     isThisSymptomActive 
-                                      ? "bg-red-950/10 border-red-500/35 text-red-300" 
+                                      ? "bg-[color:var(--color-surface-default)] border-[color:var(--color-border-default)] text-[color:var(--color-content-primary)]"
                                       : "bg-zinc-900/10 border-zinc-700/30 text-zinc-400"
                                   }`}>
                                     &ldquo;{symptom.symptom}&rdquo;
@@ -1948,7 +1953,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
             </div>
             
             <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white leading-[0.9] tracking-tighter">
-              {videoCopy?.title ?? "Vídeos, bastidores e narrativas"}{" "}{videoCopy?.titleSecondLine ?? "com intenção de marca."}
+              {videoHeading}
             </h2>
             
             <p className="text-zinc-400 text-xs sm:text-xs leading-relaxed font-sans max-w-2xl">
@@ -2304,7 +2309,7 @@ export default function Home({ onNavigate, contactHref, locale = "pt" }: HomePro
             {visibleClientCases.length > 0 ? (
               <div className="space-y-4 pt-4">
                 <div className="flex flex-wrap items-center justify-between gap-4">
-                  <p className="text-sm text-zinc-400">{(casesCopy?.countLabel ?? "Explore {count} projects and the challenges they addressed.").replace("{count}", String(localizedClientCases.length))}</p>
+                  <p className="text-sm text-zinc-400">{(casesCopy?.countLabel ?? "Veja {count} projetos e os desafios que orientaram cada trabalho.").replace("{count}", String(localizedClientCases.length))}</p>
                   <div className="flex items-center gap-2" aria-label={casesCopy?.controlsLabel ?? "Controles dos cases"}>
                     <button type="button" aria-label={casesCopy?.previousCase ?? "Case anterior"} aria-controls="home-case-carousel" disabled={!caseCarouselCanPrevious} onClick={() => moveCaseCarousel(-1)} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.12] bg-charcoal-900 text-white transition-colors hover:border-brand/50 hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-not-allowed disabled:opacity-40">
                       <ArrowLeft className="h-4 w-4" aria-hidden="true" />

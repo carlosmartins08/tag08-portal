@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import type { RouteLocale } from "../src/config/routeRegistry";
-import type { OfficialGoogleReview, OfficialYouTubeVideo } from "../src/lib/officialContent";
+import { localizeViewCountLabel, type OfficialGoogleReview, type OfficialYouTubeVideo } from "../src/lib/officialContent";
 import { isTranslationServiceConfigured, translateText } from "./translationService";
 
 type TranslationSource = "youtube" | "googleBusiness";
@@ -45,6 +45,7 @@ export const localizeOfficialVideos = async (videos: OfficialYouTubeVideo[], loc
     ]);
     return {
       ...video,
+      views: localizeViewCountLabel(video.views, locale),
       title: title.value,
       description: description.value,
       category: category.value,

@@ -14,6 +14,7 @@
 @theme {
   --font-sans: var(--font-manrope), "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-manrope), "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-editorial: var(--font-darker-grotesque), "Darker Grotesque", var(--font-manrope), "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   --color-brand: #DDF81D;
   --color-brand-dark: #B9DE00;
@@ -110,11 +111,11 @@
  * selecting raw colors by page.
  */
 .context-default {
-  --color-surface-canvas: var(--color-text-primary);
+  --color-surface-canvas: #F2F2F2;
   --color-surface-default: var(--color-text-secondary);
   --color-surface-subtle: var(--color-text-primary);
   --color-surface-inverse: var(--color-main);
-  --color-content-primary: var(--color-main);
+  --color-content-primary: #0D0D0D;
   --color-content-secondary: var(--color-charcoal-700);
   --color-content-muted: var(--color-charcoal-700);
   --color-content-inverse: var(--color-text-primary);
@@ -128,11 +129,11 @@
 }
 
 .context-subtle {
-  --color-surface-canvas: var(--color-text-primary);
+  --color-surface-canvas: #F2F2F2;
   --color-surface-default: var(--color-text-primary);
   --color-surface-subtle: var(--color-text-secondary);
   --color-surface-inverse: var(--color-main);
-  --color-content-primary: var(--color-main);
+  --color-content-primary: #0D0D0D;
   --color-content-secondary: var(--color-charcoal-700);
   --color-content-muted: var(--color-charcoal-700);
   --color-content-inverse: var(--color-text-primary);
@@ -155,7 +156,7 @@
   --color-content-secondary: var(--color-text-secondary);
   --color-content-muted: #9CA3AF;
   --color-content-inverse: var(--color-text-primary);
-  --color-border-default: var(--color-text-secondary);
+  --color-border-default: var(--color-border-subtle);
   --color-border-strong: var(--color-text-primary);
   --color-focus-ring: var(--color-brand);
   --color-action-primary: var(--color-brand);
@@ -380,6 +381,12 @@ h6 {
   }
 }
 
+/* Explicit editorial role for the two scoped typography pilots. Keep the
+   global heading and display roles on Manrope. */
+.tag08-editorial-heading {
+  font-family: var(--font-editorial);
+}
+
 /* Anchor targets must stop below the fixed navigation, not behind it. */
 main section[id] {
   scroll-margin-top: 6.5rem;
@@ -469,6 +476,10 @@ main section[id] {
 .tag08-action:focus-visible,
 .tag08-card--interactive:focus-visible {
   outline-offset: 4px;
+}
+
+.tag08-diagnostic-signal:focus-visible {
+  outline-color: var(--color-focus-ring);
 }
 
 /*

@@ -1,5 +1,41 @@
 import { expect, test } from "@playwright/test";
 
+test("editorial font stays opt-in and responsive", async ({ page }) => {
+  for (const width of [390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.evaluate(() => document.fonts.ready);
+
+    const heading = page.locator("#diagnostico h2");
+    await expect(heading).toHaveClass(/tag08-editorial-heading/);
+    const homeFonts = await heading.evaluate((element) => {
+      const navigationItem = document.querySelector("#main-header nav a, #main-header nav button");
+      return {
+        editorialFamily: getComputedStyle(element).fontFamily,
+        editorialLoaded: document.fonts.check("600 16px darkerGrotesque"),
+        navigationFamily: navigationItem ? getComputedStyle(navigationItem).fontFamily : "",
+        hasHorizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1
+      };
+    });
+    expect(homeFonts.editorialFamily).toContain("darkerGrotesque");
+    expect(homeFonts.editorialLoaded).toBe(true);
+    expect(homeFonts.navigationFamily).toContain("manrope");
+    expect(homeFonts.hasHorizontalOverflow).toBe(false);
+
+    await page.goto("/pt/servicos/desenvolvimento-web", { waitUntil: "domcontentloaded" });
+    await page.evaluate(() => document.fonts.ready);
+    const webHeading = page.locator("h2").filter({ hasText: "Quando o site deixa de ajudar a marca a ser entendida" }).first();
+    await expect(webHeading).toHaveClass(/tag08-editorial-heading/);
+    await expect(webHeading).toBeVisible();
+    const webFonts = await webHeading.evaluate((element) => ({
+      editorialFamily: getComputedStyle(element).fontFamily,
+      hasHorizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1
+    }));
+    expect(webFonts.editorialFamily).toContain("darkerGrotesque");
+    expect(webFonts.hasHorizontalOverflow).toBe(false);
+  }
+});
+
 test.describe("integridade de evidências na Home", () => {
   test("diagnóstico é qualitativo, interativo e responsivo", async ({ page }) => {
     for (const width of [390, 768, 1440]) {

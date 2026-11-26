@@ -11,6 +11,14 @@ const manrope = localFont({
   variable: "--font-manrope"
 });
 
+const darkerGrotesque = localFont({
+  src: "../../assets/fonts/darker-grotesque-latin.woff2",
+  display: "swap",
+  weight: "300 900",
+  variable: "--font-darker-grotesque",
+  preload: false
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://tag08.com.br"),
   applicationName: "TAG08",
@@ -29,7 +37,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
   const resolvedLocale = ROUTE_LOCALES.includes(locale as RouteLocale) ? (locale as RouteLocale) : "pt";
 
   return (
-    <html lang={getHreflang(resolvedLocale)} className={manrope.variable} suppressHydrationWarning>
+    <html lang={getHreflang(resolvedLocale)} className={`${manrope.variable} ${darkerGrotesque.variable}`} suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );
